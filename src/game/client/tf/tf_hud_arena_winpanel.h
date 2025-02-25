@@ -26,10 +26,10 @@ using namespace vgui;
 
 class CTFArenaWinPanel : public EditablePanel, public CGameEventListener, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFArenaWinPanel, EditablePanel );
 
-   public:
+    public:
     CTFArenaWinPanel( IViewPort *pViewPort );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -82,7 +82,7 @@ class CTFArenaWinPanel : public EditablePanel, public CGameEventListener, public
         return GAME_ACTION_SET_NONE;
     }
 
-   private:
+    private:
     EditablePanel *m_pTeamScorePanel;
     EditablePanel *m_pWinnerPanel;
     EditablePanel *m_pLoserPanel;

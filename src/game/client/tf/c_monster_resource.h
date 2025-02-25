@@ -9,7 +9,7 @@ class C_MonsterResource : public C_BaseEntity
 {
     DECLARE_CLASS( C_MonsterResource, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_MonsterResource();
@@ -32,7 +32,7 @@ class C_MonsterResource : public C_BaseEntity
         return m_iBossState;
     }
 
-   private:
+    private:
     int m_iBossHealthPercentageByte;
     int m_iBossStunPercentageByte;
 

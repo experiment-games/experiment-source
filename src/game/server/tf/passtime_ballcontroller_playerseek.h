@@ -18,10 +18,10 @@ class CBaseEntity;
 //-----------------------------------------------------------------------------
 class CPasstimeBallControllerPlayerSeek : public CPasstimeBallController
 {
-   public:
+    public:
     CPasstimeBallControllerPlayerSeek();
 
-   private:
+    private:
     virtual bool IsActive() const OVERRIDE
     {
         return true;

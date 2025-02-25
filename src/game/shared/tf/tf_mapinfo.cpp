@@ -223,7 +223,7 @@ void CLeaderboardInfo::SetMyScore( int score )
 //-----------------------------------------------------------------------------
 class CMapInfoContainer : public CAutoGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
     CMapInfoContainer()
     {
         memset( &m_findDuelLeaderboardResults, 0, sizeof( m_findDuelLeaderboardResults ) );
@@ -523,7 +523,7 @@ class CMapInfoContainer : public CAutoGameSystemPerFrame, public CGameEventListe
         }
     }
 
-   public:
+    public:
     CUtlVector< CLeaderboardInfo * > m_vecMapInfos;
     // for duels
     CCallResult< CMapInfoContainer, LeaderboardFindResult_t > m_findLeaderboardCallback;

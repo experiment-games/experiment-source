@@ -28,7 +28,7 @@ class CTFWearable : public CEconWearable, public IHasGenericMeter
 {
     DECLARE_CLASS( CTFWearable, CEconWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
     DECLARE_PREDICTABLE();
@@ -92,10 +92,10 @@ class CTFWearable : public CEconWearable, public IHasGenericMeter
 
     void AddHiddenBodyGroup( const char* bodygroup );
 
-   protected:
+    protected:
     virtual void InternalSetPlayerDisplayModel( void );
 
-   private:
+    private:
     CNetworkVar( bool, m_bDisguiseWearable );
     CNetworkHandle( CBaseEntity, m_hWeaponAssociatedWith );
 
@@ -121,7 +121,7 @@ class CTFWearableVM : public CTFWearable
 {
     DECLARE_CLASS( CTFWearableVM, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     virtual bool IsViewModelWearable( void )

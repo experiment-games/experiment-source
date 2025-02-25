@@ -24,10 +24,10 @@ class CCreditDisplayPanel;
 
 class CTFPVEWinPanel : public EditablePanel, public CGameEventListener, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFPVEWinPanel, EditablePanel );
 
-   public:
+    public:
     CTFPVEWinPanel( IViewPort *pViewPort );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -77,7 +77,7 @@ class CTFPVEWinPanel : public EditablePanel, public CGameEventListener, public I
         return GAME_ACTION_SET_NONE;
     }
 
-   private:
+    private:
     vgui::ScalableImagePanel *m_pRespecBackground;
     vgui::EditablePanel *m_pRespecContainerPanel;
     vgui::Label *m_pRespecTextLabel;

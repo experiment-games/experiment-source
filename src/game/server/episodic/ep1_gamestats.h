@@ -16,7 +16,7 @@ class CEP1GameStats : public CBaseGameStats
 {
     typedef CBaseGameStats BaseClass;
 
-   public:
+    public:
     CEP1GameStats( void );
 
     virtual CBaseGameStats *OnInit( CBaseGameStats *pCurrentGameStats, char const *gamedir );

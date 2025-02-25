@@ -23,7 +23,7 @@ using FnUnsafeCmdLineProcessor = void( const char *pchUnsafeCmdLine, int cubSize
 // to a function passed in at construction time).
 class CSecureLaunchSystem : public CAutoGameSystem
 {
-   public:
+    public:
     CSecureLaunchSystem( FnUnsafeCmdLineProcessor *pfnUnsafeCmdLineProcessor );
     virtual ~CSecureLaunchSystem();
 
@@ -32,7 +32,7 @@ class CSecureLaunchSystem : public CAutoGameSystem
 
     void ProcessCommandLine();
 
-   private:
+    private:
     FnUnsafeCmdLineProcessor *m_pfnUnsafeCmdLineProcessor;
 };
 

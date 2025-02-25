@@ -22,7 +22,7 @@ class CCreditDisplayPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCreditDisplayPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CCreditDisplayPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -33,7 +33,7 @@ class CCreditSpendPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCreditSpendPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CCreditSpendPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );

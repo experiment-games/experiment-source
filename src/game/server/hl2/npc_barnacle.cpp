@@ -841,28 +841,28 @@ void CNPC_Barnacle::PullEnemyTorwardsMouth( bool bAdjustEnemyOrigin )
         // vecNewPos.z += flPull;
 
 #if 0
-		// this is an example of one somewhat crude attempt to realign objects so that they are directly underneath
-		// the barnacle. It introduces unacceptable oscillation.
-		const float MAX_CENTERING_VELOCITY = 24.0f;
-		float distToMove = MAX_CENTERING_VELOCITY * dt;
-		Vector2D vToCenter = GetAbsOrigin().AsVector2D() - GetEnemy()->GetAbsOrigin().AsVector2D();
-		float distFromCenter = vToCenter.NormalizeInPlace();
+        // this is an example of one somewhat crude attempt to realign objects so that they are directly underneath
+        // the barnacle. It introduces unacceptable oscillation.
+        const float MAX_CENTERING_VELOCITY = 24.0f;
+        float distToMove = MAX_CENTERING_VELOCITY * dt;
+        Vector2D vToCenter = GetAbsOrigin().AsVector2D() - GetEnemy()->GetAbsOrigin().AsVector2D();
+        float distFromCenter = vToCenter.NormalizeInPlace();
 
-		Msg("<%.3f,%.3f>\n",vToCenter.x,vToCenter.y);
+        Msg("<%.3f,%.3f>\n",vToCenter.x,vToCenter.y);
 
-			
-		if ( distFromCenter < distToMove )
-		{
-			vecNewPos.x = GetAbsOrigin().x;
-			vecNewPos.y = GetAbsOrigin().y;
-		}
-		else
-		{
-			vToCenter *= distToMove;
-			vecNewPos.x += vToCenter.x;
-			vecNewPos.y += vToCenter.y;
-			// GetEnemy()->Teleport( &vecNewPos, NULL, NULL );
-		}
+
+        if ( distFromCenter < distToMove )
+        {
+            vecNewPos.x = GetAbsOrigin().x;
+            vecNewPos.y = GetAbsOrigin().y;
+        }
+        else
+        {
+            vToCenter *= distToMove;
+            vecNewPos.x += vToCenter.x;
+            vecNewPos.y += vToCenter.y;
+            // GetEnemy()->Teleport( &vecNewPos, NULL, NULL );
+        }
 
 #endif
         // recentering the player under the barnacle was tried in the code
@@ -870,35 +870,35 @@ void CNPC_Barnacle::PullEnemyTorwardsMouth( bool bAdjustEnemyOrigin )
         // jitter became unacceptably noisy after other changes to physics
         // and client.
 #if 0
-		// this technique is a little noisy and needs to be readdressed.
-		if (pEnemy->IsPlayer())
-		{
-			Vector playerOrigin = GetEnemy()->GetAbsOrigin();
-			Vector2D vToCenter = GetAbsOrigin().AsVector2D() - playerOrigin.AsVector2D();
-			float distFromCenter = vToCenter.NormalizeInPlace();
+        // this technique is a little noisy and needs to be readdressed.
+        if (pEnemy->IsPlayer())
+        {
+            Vector playerOrigin = GetEnemy()->GetAbsOrigin();
+            Vector2D vToCenter = GetAbsOrigin().AsVector2D() - playerOrigin.AsVector2D();
+            float distFromCenter = vToCenter.NormalizeInPlace();
 
-			// if we're off by more than a few inches
-			if ( distFromCenter > 6.0f )
-			{
-				// get us there in a second
-				Vector desiredVelocity;
-				float distToMove = min(distFromCenter, 24.0f * dt);
-				desiredVelocity.x = vToCenter.x * distToMove;
-				desiredVelocity.y = vToCenter.y * distToMove;
-				desiredVelocity.z = 0;
+            // if we're off by more than a few inches
+            if ( distFromCenter > 6.0f )
+            {
+                // get us there in a second
+                Vector desiredVelocity;
+                float distToMove = min(distFromCenter, 24.0f * dt);
+                desiredVelocity.x = vToCenter.x * distToMove;
+                desiredVelocity.y = vToCenter.y * distToMove;
+                desiredVelocity.z = 0;
 #if 0  // here is a physical force-based way (too noisy!):
-				IPhysicsObject *pTonguePhys = m_hTongueTip->VPhysicsGetObject();
-				pTonguePhys->ApplyForceCenter(desiredVelocity);
+                IPhysicsObject *pTonguePhys = m_hTongueTip->VPhysicsGetObject();
+                pTonguePhys->ApplyForceCenter(desiredVelocity);
 #else
-				vecNewPos = playerOrigin + desiredVelocity;
+                vecNewPos = playerOrigin + desiredVelocity;
 
-				// find how far we can actually transport the player
-				trace_t tr;
-				UTIL_TraceEntity( pEnemy, playerOrigin, vecNewPos, MASK_PLAYERSOLID, m_hTongueTip.Get(), pEnemy->GetCollisionGroup(), &tr );
-				pEnemy->Teleport(&tr.endpos, NULL, &desiredVelocity);
+                // find how far we can actually transport the player
+                trace_t tr;
+                UTIL_TraceEntity( pEnemy, playerOrigin, vecNewPos, MASK_PLAYERSOLID, m_hTongueTip.Get(), pEnemy->GetCollisionGroup(), &tr );
+                pEnemy->Teleport(&tr.endpos, NULL, &desiredVelocity);
 #endif
-			}
-		}
+            }
+        }
 
 #endif
 
@@ -1467,9 +1467,9 @@ void CNPC_Barnacle::AttachTongueToTarget( CBaseEntity *pTouchEnt, Vector vecGrab
     You can use this stanza to try to counterplace the constraint on the player's head so he gets hauled sideways to the right place on the barnacle, but it is better to just move the tongue before attachment.
         if ( IsEnemyAPlayer() )
         {
-          Vector2D vToCenter = GetAbsOrigin().AsVector2D() - pTouchEnt->EyePosition().AsVector2D();
-          fixed.attachedRefXform[0][3] -= vToCenter.x ;
-          fixed.attachedRefXform[1][3] -= vToCenter.y ;
+        Vector2D vToCenter = GetAbsOrigin().AsVector2D() - pTouchEnt->EyePosition().AsVector2D();
+        fixed.attachedRefXform[0][3] -= vToCenter.x ;
+        fixed.attachedRefXform[1][3] -= vToCenter.y ;
         }
         */
 
@@ -2185,7 +2185,7 @@ bool CNPC_Barnacle::IsPoisonous( CBaseEntity *pVictim )
         return true;
 
     if ( FClassnameIs( pVictim, "npc_antlion" ) &&
-         static_cast< CNPC_Antlion * >( pVictim )->IsWorker() )
+        static_cast< CNPC_Antlion * >( pVictim )->IsWorker() )
         return true;
 
     return false;
@@ -2288,7 +2288,7 @@ void CNPC_Barnacle::Precache()
 // enumerate entities that match a set of edict flags into a static array
 class CTongueEntitiesEnum : public IPartitionEnumerator
 {
-   public:
+    public:
     CTongueEntitiesEnum( CBaseEntity **pList, int listMax );
     // This gets called	by the enumeration methods with each element
     // that passes the test.
@@ -2300,7 +2300,7 @@ class CTongueEntitiesEnum : public IPartitionEnumerator
     }
     bool AddToList( CBaseEntity *pEntity );
 
-   private:
+    private:
     CBaseEntity **m_pList;
     int m_nListMax;
     int m_nCount;
@@ -2338,7 +2338,7 @@ class CBarnacleTongueFilter : public CTraceFilterSimple
 {
     DECLARE_CLASS( CBarnacleTongueFilter, CTraceFilterSimple );
 
-   public:
+    public:
     CBarnacleTongueFilter( CBaseEntity *pLastEnemy, const IHandleEntity *passedict, int collisionGroup )
         : CTraceFilterSimple( passedict, collisionGroup )
     {
@@ -2384,7 +2384,7 @@ class CBarnacleTongueFilter : public CTraceFilterSimple
         return BaseClass::ShouldHitEntity( pServerEntity, contentsMask );
     }
 
-   private:
+    private:
     CBaseEntity *m_pLastEnemy;
     CBaseEntity *m_pBarnacle;
 };
@@ -2493,10 +2493,10 @@ CBaseEntity *CNPC_Barnacle::TongueTouchEnt( float *pflLength )
 
         // only clients and monsters
         if ( pTest != this &&
-             IRelationType( pTest ) == D_HT &&
-             pVictim->m_lifeState != LIFE_DEAD &&
-             pVictim->m_lifeState != LIFE_DYING &&
-             !( pVictim->GetFlags() & FL_NOTARGET ) )
+            IRelationType( pTest ) == D_HT &&
+            pVictim->m_lifeState != LIFE_DEAD &&
+            pVictim->m_lifeState != LIFE_DYING &&
+            !( pVictim->GetFlags() & FL_NOTARGET ) )
         {
             // Allow the barnacles to grab stuff while their tongue is lowering
 #ifdef HL2_EPISODIC

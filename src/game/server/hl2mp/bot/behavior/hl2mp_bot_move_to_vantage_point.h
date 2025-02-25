@@ -7,7 +7,7 @@
 
 class CHL2MPBotMoveToVantagePoint : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotMoveToVantagePoint( float maxTravelDistance = 2000.0f );
     virtual ~CHL2MPBotMoveToVantagePoint() {}
 
@@ -23,7 +23,7 @@ class CHL2MPBotMoveToVantagePoint : public Action< CHL2MPBot >
         return "MoveToVantagePoint";
     };
 
-   private:
+    private:
     float m_maxTravelDistance;
     PathFollower m_path;
     CountdownTimer m_repathTimer;

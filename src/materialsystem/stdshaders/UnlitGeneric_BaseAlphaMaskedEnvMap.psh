@@ -6,7 +6,7 @@ ps.1.1
 ;
 ; The texture coordinates need to be defined as follows:
 ; tc0 - texcoords
-; c2 - envmaptint 
+; c2 - envmaptint
 ;------------------------------------------------------------------------------
 
 tex t0	; base color

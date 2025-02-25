@@ -21,7 +21,7 @@
 //
 class CTFNailgun : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFNailgun, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -39,7 +39,7 @@ class CTFNailgun : public CTFWeaponBaseGun
         return TF_WEAPON_NAILGUN;
     }
 
-   private:
+    private:
     CTFNailgun( const CTFNailgun& ) {}
 };
 

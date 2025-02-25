@@ -584,8 +584,8 @@ void CHL2MPBotMainAction::FireWeaponAtEnemy( CHL2MPBot *me )
     // misyl: make sure we are actually looking at the target...
     // tf2 doesn't do this check... i think its right to do this here...
     if ( me->GetBodyInterface()->GetLookAtSubject() == threat->GetEntity() &&
-         me->GetBodyInterface()->IsHeadAimingOnTarget() &&
-         threatRange < me->GetMaxAttackRange() )
+        me->GetBodyInterface()->IsHeadAimingOnTarget() &&
+        threatRange < me->GetMaxAttackRange() )
     {
         if ( me->IsCombatWeapon( MY_CURRENT_GUN ) )
         {

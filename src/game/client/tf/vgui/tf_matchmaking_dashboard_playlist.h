@@ -26,7 +26,7 @@ class CPlayListEntry : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CPlayListEntry, vgui::EditablePanel );
 
-   public:
+    public:
     CPlayListEntry( Panel* pParent, const char* pszName );
     virtual ~CPlayListEntry();
 
@@ -39,7 +39,7 @@ class CPlayListEntry : public vgui::EditablePanel
     virtual void UpdateDisabledState();
     virtual void OnPlaylistActive(){};
 
-   protected:
+    protected:
     CUtlString m_strImageName;
     CUtlString m_strButtonCommand;
     CUtlString m_strButtonToken;
@@ -49,7 +49,7 @@ class CPlayListEntry : public vgui::EditablePanel
     void SetEnabled();
     void SetDisabled( bool bUsersCanAccess, const char* pszImage, const char* pszCommand, const wchar_t* pszTooltipLocalized );
 
-   private:
+    private:
     void UpdateBannedState();
 
     struct DisabledStateDesc_t
@@ -71,7 +71,7 @@ class CEventPlayListEntry : public CPlayListEntry, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CEventPlayListEntry, CPlayListEntry );
 
-   public:
+    public:
     CEventPlayListEntry( Panel* pParent, const char* pszName );
 
     virtual void PerformLayout() OVERRIDE;
@@ -85,7 +85,7 @@ class CEventPlayListEntry : public CPlayListEntry, public CGameEventListener
     virtual void UpdateDisabledState() OVERRIDE;
     virtual void OnPlaylistActive() OVERRIDE;
 
-   private:
+    private:
     void UpdateExpireLabel();
 
     bool m_bFlashedOnce = false;
@@ -98,7 +98,7 @@ class CEventPlayListEntry : public CPlayListEntry, public CGameEventListener
 class CTFPlaylistPanel : public vgui::EditablePanel, public CLocalSteamSharedObjectListener, public CGameEventListener
 
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFPlaylistPanel, vgui::EditablePanel );
     CTFPlaylistPanel( Panel* parent, const char* panelName );
     virtual ~CTFPlaylistPanel();
@@ -126,7 +126,7 @@ class CTFPlaylistPanel : public vgui::EditablePanel, public CLocalSteamSharedObj
 
     MESSAGE_FUNC( SidePanelActive, "SidePanelActive" );
 
-   private:
+    private:
     void UpdateEventStatus();
     void SOEvent( const GCSDK::CSharedObject* pObject );
 
@@ -138,9 +138,9 @@ class CTFPlaylistPanel : public vgui::EditablePanel, public CLocalSteamSharedObj
 };
 
 class CTFDashboardPlaylistPanel : public CMatchMakingDashboardSidePanel,
-                                  public CGameEventListener
+                                public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFDashboardPlaylistPanel, CMatchMakingDashboardSidePanel );
     CTFDashboardPlaylistPanel( Panel* parent, const char* panelName );
     virtual ~CTFDashboardPlaylistPanel();
@@ -150,7 +150,7 @@ class CTFDashboardPlaylistPanel : public CMatchMakingDashboardSidePanel,
 
     virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
 
-   private:
+    private:
     CTFPlaylistPanel* m_pPlayList;
 };
 

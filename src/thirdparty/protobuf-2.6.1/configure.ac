@@ -23,9 +23,9 @@ AC_CONFIG_MACRO_DIR([m4])
 # autoconf's default CXXFLAGS are usually "-g -O2".  These aren't necessarily
 # the best choice for libprotobuf.
 AS_IF([test "x${ac_cv_env_CFLAGS_set}" = "x"],
-      [CFLAGS=""])
+    [CFLAGS=""])
 AS_IF([test "x${ac_cv_env_CXXFLAGS_set}" = "x"],
-      [CXXFLAGS=""])
+    [CXXFLAGS=""])
 
 AC_CANONICAL_TARGET
 
@@ -100,18 +100,18 @@ AS_IF([test "$with_zlib" != no], [
 
     # Also need to add -lz to the linker flags and make sure this succeeds.
     AC_SEARCH_LIBS([zlibVersion], [z], [
-      AC_DEFINE([HAVE_ZLIB], [1], [Enable classes using zlib compression.])
-      HAVE_ZLIB=1
+    AC_DEFINE([HAVE_ZLIB], [1], [Enable classes using zlib compression.])
+    HAVE_ZLIB=1
     ], [
-      AS_IF([test "$with_zlib" != check], [
+    AS_IF([test "$with_zlib" != check], [
         AC_MSG_FAILURE([--with-zlib was given, but no working zlib library was found])
-      ])
+    ])
     ])
   ], [
     AS_IF([test "$with_zlib" = check], [
-      AC_MSG_RESULT([headers missing or too old (requires 1.2.0.4)])
+    AC_MSG_RESULT([headers missing or too old (requires 1.2.0.4)])
     ], [
-      AC_MSG_FAILURE([--with-zlib was given, but zlib headers were not present or were too old (requires 1.2.0.4)])
+    AC_MSG_FAILURE([--with-zlib was given, but zlib headers were not present or were too old (requires 1.2.0.4)])
     ])
   ])
 ])

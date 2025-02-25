@@ -55,7 +55,7 @@ LUA_API IZip *luasrc_GetLcfFile( void )
 //			*fullpath -
 //-----------------------------------------------------------------------------
 LUA_API void luasrc_AddFileToLcf( const char *relativename,
-                                  const char *fullpath )
+                                const char *fullpath )
 {
     s_lcfFile->AddFileToZip( relativename, fullpath );
 }
@@ -241,7 +241,7 @@ void luasrc_sendfile( lua_State *L, const char *fullPath )
 }
 
 static const luaL_Reg lcf_funcs[] = { { "SendFile", luasrc_sendfile },
-                                      { NULL, NULL } };
+                                    { NULL, NULL } };
 
 #endif
 
@@ -376,7 +376,7 @@ extern void lcf_preparecachefile( void )
     if ( !buffer )
     {
         Warning( "lcf_preparecachefile:  Couldn't allocate buffer of size %i\n",
-                 size + 1 );
+                size + 1 );
         g_pFullFileSystem->Close( fh );
         return;
     }

@@ -117,8 +117,8 @@ inline KeyValues *ScriptTableToKeyValues( IScriptVM *pVM, char const *szName, HS
     {
         ScriptVariant_t varKey, varValue;
         for ( int nIterator = 0;
-              ( nIterator = pVM->GetKeyValue( hTable, nIterator, &varKey, &varValue ) ) != -1;
-              pVM->ReleaseValue( varKey ), pVM->ReleaseValue( varValue ) )
+            ( nIterator = pVM->GetKeyValue( hTable, nIterator, &varKey, &varValue ) ) != -1;
+            pVM->ReleaseValue( varKey ), pVM->ReleaseValue( varValue ) )
         {
             char chScratchBuffer[KV_VARIANT_SCRATCH_BUF_SIZE] = { 0 };
             ScriptVmStringFromVariant( varKey, chScratchBuffer );

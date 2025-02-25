@@ -49,4 +49,3 @@ dp4 oT4.y, $vTexCoord0, $SHADER_SPECIFIC_CONST_7
 mov oD0, $vColor
 
 &FreeRegister( \$worldPos ); # garymcthack
-

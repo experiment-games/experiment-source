@@ -89,7 +89,7 @@ static void Helper_RequestEconActionPreview( uint64 paramS, uint64 paramA, uint6
 // ********************************************************************************************************************************
 class CGCClient2GCEconPreviewDataBlockResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClient2GCEconPreviewDataBlockResponse( GCSDK::CGCClient *pGCClient )
         : GCSDK::CGCClientJob( pGCClient ) {}
 
@@ -626,22 +626,22 @@ void CTFItemInspectionPanel::RepopulateItemsForPaintkit( const CEconItemView *pI
         }
 
         vecSortedDefs.SortPredicate( []( const CEconItemDefinition *const &pA, const CEconItemDefinition *const &pB )
-                                     {
-			const wchar_t* pwszA = g_pVGuiLocalize->Find( pA->GetItemBaseName() );
-			const wchar_t* pwszB = g_pVGuiLocalize->Find( pB->GetItemBaseName() );
+                                    {
+            const wchar_t* pwszA = g_pVGuiLocalize->Find( pA->GetItemBaseName() );
+            const wchar_t* pwszB = g_pVGuiLocalize->Find( pB->GetItemBaseName() );
 
-			if ( !pwszA )
-				return true;
+            if ( !pwszA )
+                return true;
 
-			if ( !pwszB )
-				return false;
+            if ( !pwszB )
+                return false;
 
-			int nDif = wcsicmp( pwszA, pwszB );
+            int nDif = wcsicmp( pwszA, pwszB );
 
-			if ( nDif == 0 )
-				return false;
+            if ( nDif == 0 )
+                return false;
 
-			return nDif < 0; } );
+            return nDif < 0; } );
 
         FOR_EACH_VEC( vecSortedDefs, i )
         {
@@ -760,23 +760,23 @@ void CTFItemInspectionPanel::RepopulatePaintKitsForItem( const CEconItemView *pI
     }
 
     vecSortedDefs.SortPredicate( []( const CPaintKitDefinition *const &pA, const CPaintKitDefinition *const &pB )
-                                 {
-                                     const wchar_t *pwszA = g_pVGuiLocalize->Find( pA->GetDescriptionToken() );
-                                     const wchar_t *pwszB = g_pVGuiLocalize->Find( pB->GetDescriptionToken() );
+                                {
+                                    const wchar_t *pwszA = g_pVGuiLocalize->Find( pA->GetDescriptionToken() );
+                                    const wchar_t *pwszB = g_pVGuiLocalize->Find( pB->GetDescriptionToken() );
 
-                                     if ( !pwszA )
-                                         return false;
+                                    if ( !pwszA )
+                                        return false;
 
-                                     if ( !pwszB )
-                                         return true;
+                                    if ( !pwszB )
+                                        return true;
 
-                                     int nDif = wcsicmp( pwszA, pwszB );
+                                    int nDif = wcsicmp( pwszA, pwszB );
 
-                                     if ( nDif == 0 )
-                                         return false;
+                                    if ( nDif == 0 )
+                                        return false;
 
-                                     return nDif < 0;
-                                 } );
+                                    return nDif < 0;
+                                } );
 
     FOR_EACH_VEC( vecSortedDefs, i )
     {

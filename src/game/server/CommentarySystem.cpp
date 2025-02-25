@@ -66,7 +66,7 @@ class CPointCommentaryNode : public CBaseAnimating
 {
     DECLARE_CLASS( CPointCommentaryNode, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -113,7 +113,7 @@ class CPointCommentaryNode : public CBaseAnimating
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_iszPreCommands;
     string_t m_iszPostCommands;
     CNetworkVar( string_t, m_iszCommentaryFile );
@@ -208,7 +208,7 @@ class CCommentaryViewPosition : public CSprite
 {
     DECLARE_CLASS( CCommentaryViewPosition, CSprite );
 
-   public:
+    public:
     virtual void Spawn( void )
     {
         Precache();
@@ -260,7 +260,7 @@ void CV_GlobalChange_Commentary( IConVar *var, const char *pOldString, float flO
 //-----------------------------------------------------------------------------
 class CCommentarySystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     DECLARE_DATADESC();
 
     CCommentarySystem()
@@ -586,7 +586,7 @@ class CCommentarySystem : public CAutoGameSystemPerFrame
         Msg(" Convars stored: %d\n", m_ModifiedConvars.Count() );
         for ( int i = 0; i < m_ModifiedConvars.Count(); i++ )
         {
-          Msg("    Convar %d: %s, value %s (org %s)\n", i, m_ModifiedConvars[i].pszConvar, m_ModifiedConvars[i].pszCurrentValue, m_ModifiedConvars[i].pszOrgValue );
+        Msg("    Convar %d: %s, value %s (org %s)\n", i, m_ModifiedConvars[i].pszConvar, m_ModifiedConvars[i].pszCurrentValue, m_ModifiedConvars[i].pszOrgValue );
         }
         */
     }
@@ -796,7 +796,7 @@ class CCommentarySystem : public CAutoGameSystemPerFrame
         }
     }
 
-   private:
+    private:
     int m_afPlayersLastButtons;
     int m_iCommentaryNodeCount;
     bool m_bCommentaryConvarsChanging;
@@ -1517,7 +1517,7 @@ static short COMMENTARY_SAVE_RESTORE_VERSION = 2;
 
 class CCommentary_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     const char *GetBlockName()
     {
         return "Commentary";
@@ -1570,7 +1570,7 @@ class CCommentary_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
         }
     }
 
-   private:
+    private:
     bool m_fDoLoad;
 };
 
@@ -1593,7 +1593,7 @@ class CCommentaryAuto : public CBaseEntity
 {
     DECLARE_CLASS( CCommentaryAuto, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -1601,7 +1601,7 @@ class CCommentaryAuto : public CBaseEntity
 
     void InputMultiplayerSpawned( inputdata_t &inputdata );
 
-   private:
+    private:
     // fired if commentary started due to new map
     COutputEvent m_OnCommentaryNewGame;
 

@@ -21,7 +21,7 @@
 // on the network can connect to the messagemgr to get its output and display it.
 class IMessageMgr
 {
-   public:
+    public:
     virtual bool Init() = 0;
     virtual void Term() = 0;
 

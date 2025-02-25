@@ -23,7 +23,7 @@
 //
 class CTFWeaponBaseMerasmusGrenade : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponBaseMerasmusGrenade, CBaseGrenade );
     DECLARE_NETWORKCLASS();
 
@@ -33,7 +33,7 @@ class CTFWeaponBaseMerasmusGrenade : public CTFWeaponBaseGrenadeProj
     // Client specific.
 #ifdef CLIENT_DLL
 
-   public:
+    public:
     virtual int DrawModel( int flags );
 
 #endif

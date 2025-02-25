@@ -22,7 +22,7 @@ class CSprite;
 
 class CSatchelCharge : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CSatchelCharge, CBaseGrenade );
 
     void Spawn( void );
@@ -38,7 +38,7 @@ class CSatchelCharge : public CBaseGrenade
     bool m_bInAir;
     Vector m_vLastPosition;
 
-   public:
+    public:
     CWeapon_SLAM *m_pMyWeaponSLAM;  // Who shot me..
     bool m_bIsAttached;
     void Deactivate( void );
@@ -48,7 +48,7 @@ class CSatchelCharge : public CBaseGrenade
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     void CreateEffects( void );
     CHandle< CSprite > m_hGlowSprite;
 };

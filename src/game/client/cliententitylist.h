@@ -29,14 +29,14 @@ class C_BaseEntity;
 
 #define INPVS_YES 0x0001          // The entity thinks it's in the PVS.
 #define INPVS_THISFRAME 0x0002    // Accumulated as different views are rendered during the frame and used to notify the entity if
-                                  // it is not in the PVS anymore (at the end of the frame).
+                                // it is not in the PVS anymore (at the end of the frame).
 #define INPVS_NEEDSNOTIFY 0x0004  // The entity thinks it's in the PVS.
 
 class IClientEntityListener;
 
 abstract_class C_BaseEntityClassList
 {
-   public:
+    public:
     C_BaseEntityClassList();
     ~C_BaseEntityClassList();
     virtual void LevelShutdown() = 0;
@@ -47,7 +47,7 @@ abstract_class C_BaseEntityClassList
 template < class T >
 class C_EntityClassList : public C_BaseEntityClassList
 {
-   public:
+    public:
     virtual void LevelShutdown()
     {
         m_pClassList = NULL;
@@ -97,7 +97,7 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
     friend class C_BaseEntityIterator;
     friend class C_AllBaseEntityIterator;
 
-   public:
+    public:
     // Constructor, destructor
     CClientEntityList( void );
     virtual ~CClientEntityList( void );
@@ -105,7 +105,7 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
     void Release();  // clears everything and releases entities
 
     // Implement IClientEntityList
-   public:
+    public:
     virtual IClientNetworkable* GetClientNetworkable( int entnum );
     virtual IClientEntity* GetClientEntity( int entnum );
 
@@ -121,12 +121,12 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
     virtual int GetMaxEntities();
 
     // CBaseEntityList overrides.
-   protected:
+    protected:
     virtual void OnAddEntity( IHandleEntity* pEnt, CBaseHandle handle );
     virtual void OnRemoveEntity( IHandleEntity* pEnt, CBaseHandle handle );
 
     // Internal to client DLL.
-   public:
+    public:
     // All methods of accessing specialized IClientUnknown's go through here.
     IClientUnknown* GetListedEntity( int entnum );
 
@@ -160,7 +160,7 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
 
     class CPVSNotifyInfo
     {
-       public:
+        public:
         IPVSNotify* m_pNotify;
         IClientRenderable* m_pRenderable;
         unsigned char m_InPVSStatus;        // Combination of the INPVS_ flags.
@@ -179,7 +179,7 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
     void NotifyCreateEntity( C_BaseEntity* pEnt );
     void NotifyRemoveEntity( C_BaseEntity* pEnt );
 
-   private:
+    private:
     // Cached info for networked entities.
     struct EntityCacheInfo_t
     {
@@ -204,7 +204,7 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
     // For fast iteration.
     CUtlLinkedList< C_BaseEntity*, unsigned short > m_BaseEntities;
 
-   private:
+    private:
     void AddPVSNotifier( IClientUnknown* pUnknown );
     void RemovePVSNotifier( IClientUnknown* pUnknown );
 
@@ -218,25 +218,25 @@ class CClientEntityList : public CBaseEntityList, public IClientEntityList
 // Use this to iterate over *all* (even dormant) the C_BaseEntities in the client entity list.
 class C_AllBaseEntityIterator
 {
-   public:
+    public:
     C_AllBaseEntityIterator();
 
     void Restart();
     C_BaseEntity* Next();  // keep calling this until it returns null.
 
-   private:
+    private:
     unsigned short m_CurBaseEntity;
 };
 
 class C_BaseEntityIterator
 {
-   public:
+    public:
     C_BaseEntityIterator();
 
     void Restart();
     C_BaseEntity* Next();  // keep calling this until it returns null.
 
-   private:
+    private:
     unsigned short m_CurBaseEntity;
 };
 
@@ -287,7 +287,7 @@ inline CClientEntityList& ClientEntityList()
 // Implement this class and register with entlist to receive entity create/delete notification
 class IClientEntityListener
 {
-   public:
+    public:
     virtual void OnEntityCreated( C_BaseEntity* pEntity ){};
     // virtual void OnEntitySpawned( C_BaseEntity *pEntity ) {};
     virtual void OnEntityDeleted( C_BaseEntity* pEntity ){};

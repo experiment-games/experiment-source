@@ -14,14 +14,14 @@
 
 class CTFHudNotify : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFHudNotify, CPointEntity );
     DECLARE_DATADESC();
 
     void InputDisplay( inputdata_t &inputdata );
     void Display( CBaseEntity *pActivator );
 
-   private:
+    private:
     string_t m_iszMessage;
     string_t m_iszIcon;
     int m_iRecipientTeam;

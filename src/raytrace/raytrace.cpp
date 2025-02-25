@@ -115,48 +115,48 @@ void RayTracingEnvironment::AddAxisAlignedRectangularSolid( int id, Vector minc,
 {
     // "far" face
     AddQuad( id,
-             Vector( minc.x, maxc.y, maxc.z ),
-             Vector( maxc.x, maxc.y, maxc.z ),
-             Vector( maxc.x, minc.y, maxc.z ),
-             Vector( minc.x, minc.y, maxc.z ),
-             color );
+            Vector( minc.x, maxc.y, maxc.z ),
+            Vector( maxc.x, maxc.y, maxc.z ),
+            Vector( maxc.x, minc.y, maxc.z ),
+            Vector( minc.x, minc.y, maxc.z ),
+            color );
     // "near" face
     AddQuad( id,
-             Vector( minc.x, maxc.y, minc.z ),
-             Vector( maxc.x, maxc.y, minc.z ),
-             Vector( maxc.x, minc.y, minc.z ),
-             Vector( minc.x, minc.y, minc.z ),
-             color );
+            Vector( minc.x, maxc.y, minc.z ),
+            Vector( maxc.x, maxc.y, minc.z ),
+            Vector( maxc.x, minc.y, minc.z ),
+            Vector( minc.x, minc.y, minc.z ),
+            color );
 
     // "left" face
     AddQuad( id,
-             Vector( minc.x, maxc.y, maxc.z ),
-             Vector( minc.x, maxc.y, minc.z ),
-             Vector( minc.x, minc.y, minc.z ),
-             Vector( minc.x, minc.y, maxc.z ),
-             color );
+            Vector( minc.x, maxc.y, maxc.z ),
+            Vector( minc.x, maxc.y, minc.z ),
+            Vector( minc.x, minc.y, minc.z ),
+            Vector( minc.x, minc.y, maxc.z ),
+            color );
     // "right" face
     AddQuad( id,
-             Vector( maxc.x, maxc.y, maxc.z ),
-             Vector( maxc.x, maxc.y, minc.z ),
-             Vector( maxc.x, minc.y, minc.z ),
-             Vector( maxc.x, minc.y, maxc.z ),
-             color );
+            Vector( maxc.x, maxc.y, maxc.z ),
+            Vector( maxc.x, maxc.y, minc.z ),
+            Vector( maxc.x, minc.y, minc.z ),
+            Vector( maxc.x, minc.y, maxc.z ),
+            color );
 
     // "top" face
     AddQuad( id,
-             Vector( minc.x, maxc.y, maxc.z ),
-             Vector( maxc.x, maxc.y, maxc.z ),
-             Vector( maxc.x, maxc.y, minc.z ),
-             Vector( minc.x, maxc.y, minc.z ),
-             color );
+            Vector( minc.x, maxc.y, maxc.z ),
+            Vector( maxc.x, maxc.y, maxc.z ),
+            Vector( maxc.x, maxc.y, minc.z ),
+            Vector( minc.x, maxc.y, minc.z ),
+            color );
     // "bot" face
     AddQuad( id,
-             Vector( minc.x, minc.y, maxc.z ),
-             Vector( maxc.x, minc.y, maxc.z ),
-             Vector( maxc.x, minc.y, minc.z ),
-             Vector( minc.x, minc.y, minc.z ),
-             color );
+            Vector( minc.x, minc.y, maxc.z ),
+            Vector( maxc.x, minc.y, maxc.z ),
+            Vector( maxc.x, minc.y, minc.z ),
+            Vector( minc.x, minc.y, minc.z ),
+            color );
 }
 
 static Vector GetEdgeEquation( Vector p1, Vector p2, int c1, int c2, Vector InsidePoint )
@@ -303,11 +303,11 @@ void RayTracingEnvironment::Trace4Rays( const FourRays &rays, fltx4 TMin, fltx4 
                     {
                         if (
                             SameSign( rays.direction.X( try2 ),
-                                      rays.direction.X( try_trace ) ) &&
+                                    rays.direction.X( try_trace ) ) &&
                             SameSign( rays.direction.Y( try2 ),
-                                      rays.direction.Y( try_trace ) ) &&
+                                    rays.direction.Y( try_trace ) ) &&
                             SameSign( rays.direction.Z( try2 ),
-                                      rays.direction.Z( try_trace ) ) )
+                                    rays.direction.Z( try_trace ) ) )
                         {
                             need_trace[try2] = 2;
                             tmprays.direction.X( try2 ) = rays.direction.X( try2 );
@@ -412,7 +412,7 @@ void RayTracingEnvironment::Trace4Rays( const FourRays &rays, fltx4 TMin, fltx4 
             fltx4 dist_to_sep_plane =  // dist=(split-org)/dir
                 MulSIMD(
                     SubSIMD( ReplicateX4( CurNode->SplittingPlaneValue ),
-                             rays.origin[split_plane_number] ),
+                            rays.origin[split_plane_number] ),
                     OneOverRayDir[split_plane_number] );
             active = CmpLeSIMD( TMin, TMax );  // mask of which rays are active
 
@@ -492,9 +492,9 @@ void RayTracingEnvironment::Trace4Rays( const FourRays &rays, fltx4 TMin, fltx4 
 
                     // now, check 3 edges
                     fltx4 hitc1 = AddSIMD( rays.origin[tri->m_nCoordSelect0],
-                                           MulSIMD( isect_t, rays.direction[tri->m_nCoordSelect0] ) );
+                                            MulSIMD( isect_t, rays.direction[tri->m_nCoordSelect0] ) );
                     fltx4 hitc2 = AddSIMD( rays.origin[tri->m_nCoordSelect1],
-                                           MulSIMD( isect_t, rays.direction[tri->m_nCoordSelect1] ) );
+                                            MulSIMD( isect_t, rays.direction[tri->m_nCoordSelect1] ) );
 
                     // do barycentric coordinate check
                     fltx4 B0 = MulSIMD( ReplicateX4( tri->m_ProjectedEdgeEquations[0] ), hitc1 );
@@ -544,8 +544,8 @@ void RayTracingEnvironment::Trace4Rays( const FourRays &rays, fltx4 TMin, fltx4 
                     // now, set the hit_id and closest_hit fields for any enabled rays
                     fltx4 replicated_n = ReplicateIX4( tnum );
                     StoreAlignedSIMD( ( float * )rslt_out->HitIds,
-                                      OrSIMD( AndSIMD( replicated_n, did_hit ),
-                                              AndNotSIMD( did_hit, LoadAlignedSIMD( ( float * )rslt_out->HitIds ) ) ) );
+                                    OrSIMD( AndSIMD( replicated_n, did_hit ),
+                                            AndNotSIMD( did_hit, LoadAlignedSIMD( ( float * )rslt_out->HitIds ) ) ) );
                     rslt_out->HitDistance = OrSIMD( AndSIMD( isect_t, did_hit ),
                                                     AndNotSIMD( did_hit, rslt_out->HitDistance ) );
 
@@ -699,7 +699,7 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
     float SA_R = BoxSurfaceArea( RightMins, RightMaxes );
     float ISA = 1.0 / BoxSurfaceArea( MinBound, MaxBound );
     float cost_of_split = COST_OF_TRAVERSAL + COST_OF_INTERSECTION * ( nboth +
-                                                                       ( SA_L * ISA * ( nleft ) ) + ( SA_R * ISA * ( nright ) ) );
+                                                                        ( SA_L * ISA * ( nleft ) ) + ( SA_R * ISA * ( nright ) ) );
     return cost_of_split;
 }
 

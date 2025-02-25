@@ -18,7 +18,7 @@
 
 abstract_class IMapData
 {
-   public:
+    public:
     // World data queries.
     virtual void GetMapBounds( Vector & vecMins, Vector & vecMaxs ) = 0;
     virtual void GetMapOrigin( Vector & vecOrigin ) = 0;

@@ -755,7 +755,7 @@ int CBasePlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 
         CBasePlayer *pRecipientPlayer = static_cast< CBasePlayer * >( pRecipientEntity );
         if ( pRecipientPlayer->IsHLTV() ||
-             pRecipientPlayer->IsReplay() )
+            pRecipientPlayer->IsReplay() )
         {
             // HACK force calling RecomputePVSInformation to update PVS data
             NetworkProp()->AreaNum();
@@ -767,7 +767,7 @@ int CBasePlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
     // Note that if m_flDeathAnimTime is never set, as long as m_lifeState is set to LIFE_DEAD after dying, this
     // test will act as if the death anim is finished.
     if ( IsEffectActive( EF_NODRAW ) || ( IsObserver() && ( gpGlobals->curtime - m_flDeathTime > 0.5 ) &&
-                                          ( m_lifeState == LIFE_DEAD ) && ( gpGlobals->curtime - m_flDeathAnimTime > 0.5 ) ) )
+                                        ( m_lifeState == LIFE_DEAD ) && ( gpGlobals->curtime - m_flDeathAnimTime > 0.5 ) ) )
     {
         return FL_EDICT_DONTSEND;
     }
@@ -1578,13 +1578,13 @@ void CBasePlayer::PackDeadPlayerItems( void )
                         /*
                         if ( GetActiveWeapon() && i == GetActiveWeapon()->m_iPrimaryAmmoType )
                         {
-                          // this is the primary ammo type for the active weapon
-                          iPackAmmo[ iPA++ ] = i;
+                        // this is the primary ammo type for the active weapon
+                        iPackAmmo[ iPA++ ] = i;
                         }
                         else if ( GetActiveWeapon() && i == GetActiveWeapon()->m_iSecondaryAmmoType )
                         {
-                          // this is the secondary ammo type for the active weapon
-                          iPackAmmo[ iPA++ ] = i;
+                        // this is the secondary ammo type for the active weapon
+                        iPackAmmo[ iPA++ ] = i;
                         }
                         */
                         break;
@@ -1662,7 +1662,7 @@ int CBasePlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
     }
 
     if ( info.GetInflictor() && ( GetMoveType() == MOVETYPE_WALK ) &&
-         ( !attacker->IsSolidFlagSet( FSOLID_TRIGGER ) ) )
+        ( !attacker->IsSolidFlagSet( FSOLID_TRIGGER ) ) )
     {
         Vector force = vecDir * -DamageForce( WorldAlignSize(), info.GetBaseDamage() );
         if ( force.z > 250.0f )
@@ -1845,10 +1845,10 @@ void CBasePlayer::SetAnimation( PLAYER_ANIM playerAnim )
     else if ( playerAnim == PLAYER_ATTACK1 )
     {
         if ( m_Activity == ACT_HOVER ||
-             m_Activity == ACT_SWIM ||
-             m_Activity == ACT_HOP ||
-             m_Activity == ACT_LEAP ||
-             m_Activity == ACT_DIESIMPLE )
+            m_Activity == ACT_SWIM ||
+            m_Activity == ACT_HOP ||
+            m_Activity == ACT_LEAP ||
+            m_Activity == ACT_DIESIMPLE )
         {
             idealActivity = m_Activity;
         }
@@ -2245,14 +2245,14 @@ void CBasePlayer::StartDeathCam( void )
 
     while ( iRand > 0 )
     {
-      pNewSpot = gEntList.FindEntityByClassname( pSpot, "info_intermission");
+    pNewSpot = gEntList.FindEntityByClassname( pSpot, "info_intermission");
 
-      if ( pNewSpot )
-      {
+    if ( pNewSpot )
+    {
         pSpot = pNewSpot;
-      }
+    }
 
-      iRand--;
+    iRand--;
     }
 
     CreateCorpse();
@@ -2266,7 +2266,7 @@ void CBasePlayer::StartDeathCam( void )
     CreateCorpse();
 
     UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() + Vector( 0, 0, 128 ),
-      MASK_PLAYERSOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &tr );
+    MASK_PLAYERSOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &tr );
     QAngle angles;
     VectorAngles( GetAbsOrigin() - tr.endpos, angles );
     StartObserverMode( tr.endpos, angles );
@@ -2650,7 +2650,7 @@ void CBasePlayer::ObserverUse( bool bIsPressed )
     UTIL_TraceLine( start, end, MASK_PLAYERSOLID, this, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
 
     if ( tr.fraction == 1.0f )
-      return;	// no obstacles in spectators way
+    return;	// no obstacles in spectators way
 
     VectorMA( start, 128.0f, dir, end );
 
@@ -2660,7 +2660,7 @@ void CBasePlayer::ObserverUse( bool bIsPressed )
     UTIL_TraceRay( ray, MASK_PLAYERSOLID, this, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
 
     if ( tr.startsolid || tr.allsolid )
-      return;
+    return;
 
     SetAbsOrigin( tr.endpos ); */
 #endif
@@ -2723,7 +2723,7 @@ bool CBasePlayer::IsValidObserverTarget( CBaseEntity *target )
 
     /* Don't spec observers or players who haven't picked a class yet
     if ( player->IsObserver() )
-      return false;	*/
+    return false;	*/
 
     if ( player == this )
         return false;  // We can't observe ourselves.
@@ -2793,12 +2793,12 @@ CBaseEntity *CBasePlayer::FindNextObserverTarget( bool bReverse )
     //				only a subset of the players. e.g. Make it check the target's team.
 
     /*	if ( m_flNextFollowTime && m_flNextFollowTime > gpGlobals->time )
-      {
+    {
         return;
-      }
+    }
 
-      m_flNextFollowTime = gpGlobals->time + 0.25;
-      */
+    m_flNextFollowTime = gpGlobals->time + 0.25;
+    */
     // TODO move outside this function
 
     int startIndex = GetNextObserverSearchStartPoint( bReverse );
@@ -3212,7 +3212,7 @@ void CBasePlayer::AdjustPlayerTimeBase( int simulation_ticks )
 
         // See if we are too fast
         if ( nEstimatedFinalTick > too_fast_limit ||
-             nEstimatedFinalTick < too_slow_limit )
+            nEstimatedFinalTick < too_slow_limit )
         {
             int nCorrectedTick = nIdealFinalTick - simulation_ticks + gpGlobals->simTicksThisFrame;
 
@@ -3654,8 +3654,8 @@ void CBasePlayer::ProcessUsercmds( CUserCmd *cmds, int numcmds, int totalcmds, i
 
         // If no clipping and cheats enabled and sv_noclipduringpause enabled, then don't zero out movement part of CUserCmd
         if ( GetMoveType() == MOVETYPE_NOCLIP &&
-             sv_cheats->GetBool() &&
-             sv_noclipduringpause.GetBool() )
+            sv_cheats->GetBool() &&
+            sv_noclipduringpause.GetBool() )
         {
             clear_angles = false;
         }
@@ -3715,12 +3715,12 @@ bool CBasePlayer::IsUserCmdDataValid( CUserCmd *pCmd )
     const int nMaxDelta = gpGlobals->tickcount + nCmdMaxTickDelta;
 
     bool bValid = ( pCmd->tick_count >= nMinDelta && pCmd->tick_count < nMaxDelta ) &&
-                  // Prevent clients from sending invalid view angles to try to get leaf server code to crash
-                  ( pCmd->viewangles.IsValid() && IsEntityQAngleReasonable( pCmd->viewangles ) ) &&
-                  // Movement ranges
-                  ( IsFinite( pCmd->forwardmove ) && IsEntityCoordinateReasonable( pCmd->forwardmove ) ) &&
-                  ( IsFinite( pCmd->sidemove ) && IsEntityCoordinateReasonable( pCmd->sidemove ) ) &&
-                  ( IsFinite( pCmd->upmove ) && IsEntityCoordinateReasonable( pCmd->upmove ) );
+                // Prevent clients from sending invalid view angles to try to get leaf server code to crash
+                ( pCmd->viewangles.IsValid() && IsEntityQAngleReasonable( pCmd->viewangles ) ) &&
+                // Movement ranges
+                ( IsFinite( pCmd->forwardmove ) && IsEntityCoordinateReasonable( pCmd->forwardmove ) ) &&
+                ( IsFinite( pCmd->sidemove ) && IsEntityCoordinateReasonable( pCmd->sidemove ) ) &&
+                ( IsFinite( pCmd->upmove ) && IsEntityCoordinateReasonable( pCmd->upmove ) );
 
     int nWarningLevel = sv_player_display_usercommand_errors.GetInt();
     if ( !bValid && nWarningLevel > 0 )
@@ -3846,7 +3846,7 @@ void CBasePlayer::PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper )
     // Handle FL_FROZEN.
     // Prevent player moving for some seconds after New Game, so that they pick up everything
     if ( GetFlags() & FL_FROZEN ||
-         ( developer.GetInt() == 0 && gpGlobals->eLoadType == MapLoad_NewGame && gpGlobals->curtime < 3.0 ) )
+        ( developer.GetInt() == 0 && gpGlobals->eLoadType == MapLoad_NewGame && gpGlobals->curtime < 3.0 ) )
     {
         ucmd->forwardmove = 0;
         ucmd->sidemove = 0;
@@ -4083,24 +4083,24 @@ void CBasePlayer::PreThink( void )
 
   3) Every second that a tbd counter is running, the player takes damage.  The damage
     is determined by the type of tdb.
-      Paralyze		- 1/2 movement rate, 30 second duration.
-      Nervegas		- 5 points per second, 16 second duration = 80 points max dose.
-      Poison			- 2 points per second, 25 second duration = 50 points max dose.
-      Radiation		- 1 point per second, 50 second duration = 50 points max dose.
-      Drown			- 5 points per second, 2 second duration.
-      Acid/Chemical	- 5 points per second, 10 second duration = 50 points max.
-      Burn			- 10 points per second, 2 second duration.
-      Freeze			- 3 points per second, 10 second duration = 30 points max.
+    Paralyze		- 1/2 movement rate, 30 second duration.
+    Nervegas		- 5 points per second, 16 second duration = 80 points max dose.
+    Poison			- 2 points per second, 25 second duration = 50 points max dose.
+    Radiation		- 1 point per second, 50 second duration = 50 points max dose.
+    Drown			- 5 points per second, 2 second duration.
+    Acid/Chemical	- 5 points per second, 10 second duration = 50 points max.
+    Burn			- 10 points per second, 2 second duration.
+    Freeze			- 3 points per second, 10 second duration = 30 points max.
 
   4) Certain actions or countermeasures counteract the damaging effects of tbds:
 
     Armor/Heater/Cooler - Chemical(acid),burn, freeze all do damage to armor power, then to body
-              - recharged by suit recharger
+            - recharged by suit recharger
     Air In Lungs		- drowning damage is done to air in lungs first, then to body
-              - recharged by poking head out of water
-              - 10 seconds if swiming fast
+            - recharged by poking head out of water
+            - 10 seconds if swiming fast
     Air In SCUBA		- drowning damage is done to air in tanks first, then to body
-              - 2 minutes in tanks. Need new tank once empty.
+            - 2 minutes in tanks. Need new tank once empty.
     Radiation Syringe	- Each syringe full provides protection vs one radiation dosage
     Antitoxin Syringe	- Each syringe full provides protection vs one poisoning (nervegas or poison).
     Health kit			- Immediate stop to acid/chemical, fire or freeze damage.
@@ -4713,12 +4713,12 @@ void CBasePlayer::PostThink()
             {
                 // if they've moved too far from the gun, or deployed another weapon, unuse the gun
                 if ( m_hUseEntity->OnControls( this ) &&
-                     ( !GetActiveWeapon() || GetActiveWeapon()->IsEffectActive( EF_NODRAW ) ||
-                       ( GetActiveWeapon()->GetActivity() == ACT_VM_HOLSTER )
+                    ( !GetActiveWeapon() || GetActiveWeapon()->IsEffectActive( EF_NODRAW ) ||
+                        ( GetActiveWeapon()->GetActivity() == ACT_VM_HOLSTER )
 #ifdef PORTAL  // Portalgun view model stays up when holding an object -Jeep
-                       || FClassnameIs( GetActiveWeapon(), "weapon_portalgun" )
+                        || FClassnameIs( GetActiveWeapon(), "weapon_portalgun" )
 #endif  // #ifdef PORTAL
-                           ) )
+                            ) )
                 {
                     m_hUseEntity->Use( this, this, USE_SET, 2 );  // try fire the gun
                 }
@@ -5132,7 +5132,7 @@ void CBasePlayer::Spawn( void )
     m_flNextDecalTime = 0;  // let this player decal as soon as he spawns.
 
     m_flgeigerDelay = gpGlobals->curtime + 2.0;  // wait a few seconds until user-defined message registrations
-                                                 // are recieved by all clients
+                                                // are recieved by all clients
 
     m_flFieldOfView = 0.766;  // some NPCs use this to determine whether or not the player is looking at them.
 
@@ -5282,14 +5282,14 @@ void CBasePlayer::Precache( void )
     /* todo - put in better spot and use new ainetowrk stuff
     if ( WorldGraph.m_fGraphPresent && !WorldGraph.m_fGraphPointersSet )
     {
-      if ( !WorldGraph.FSetGraphPointers() )
-      {
+    if ( !WorldGraph.FSetGraphPointers() )
+    {
         Msg( "**Graph pointers were not set!\n");
-      }
-      else
-      {
+    }
+    else
+    {
         Msg( "**Graph Pointers Set!\n" );
-      }
+    }
     }
     */
 
@@ -5302,12 +5302,12 @@ void CBasePlayer::Precache( void )
     m_igeigerRangePrev = 1000;
 
 #if 0
-	// @Note (toml 04-19-04): These are saved, used to be slammed here
-	m_bitsDamageType = 0;
-	m_bitsHUDDamage = -1;
-	SetPlayerUnderwter( false );
+    // @Note (toml 04-19-04): These are saved, used to be slammed here
+    m_bitsDamageType = 0;
+    m_bitsHUDDamage = -1;
+    SetPlayerUnderwter( false );
 
-	m_iTrain = TRAIN_NEW;
+    m_iTrain = TRAIN_NEW;
 #endif
 
     m_iClientBattery = -1;
@@ -5345,7 +5345,7 @@ int CBasePlayer::Save( ISave &save )
 // Friend class of CBaseEntity to access private member data.
 class CPlayerRestoreHelper
 {
-   public:
+    public:
     const Vector &GetAbsOrigin( CBaseEntity *pent )
     {
         return pent->m_vecAbsOrigin;
@@ -5913,7 +5913,7 @@ bool CBasePlayer::ScriptIsPlayerNoclipping( void )
 //==============================================
 class CSprayCan : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CSprayCan, CPointEntity );
 
     void Spawn( CBasePlayer *pOwner );
@@ -5968,7 +5968,7 @@ void CSprayCan::Think( void )
 
 class CBloodSplat : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBloodSplat, CPointEntity );
 
     void Spawn( CBaseEntity *pOwner );
@@ -6865,8 +6865,8 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
         else if ( stricmp( cmd, "spec_goto" ) == 0 )  // chase next player
         {
             if ( ( GetObserverMode() == OBS_MODE_FIXED ||
-                   GetObserverMode() == OBS_MODE_ROAMING ) &&
-                 args.ArgC() == 6 )
+                    GetObserverMode() == OBS_MODE_ROAMING ) &&
+                args.ArgC() == 6 )
             {
                 Vector origin;
                 origin.x = clamp( atof( args[1] ), MIN_COORD_FLOAT, MAX_COORD_FLOAT );
@@ -7158,31 +7158,31 @@ void CBasePlayer::UpdateClientData( void )
     }
 
 #if 0  // BYE BYE!!
-	// Update Flashlight
-	if ((m_flFlashLightTime) && (m_flFlashLightTime <= gpGlobals->curtime))
-	{
-		if (FlashlightIsOn())
-		{
-			if (m_iFlashBattery)
-			{
-				m_flFlashLightTime = FLASH_DRAIN_TIME + gpGlobals->curtime;
-				m_iFlashBattery--;
+    // Update Flashlight
+    if ((m_flFlashLightTime) && (m_flFlashLightTime <= gpGlobals->curtime))
+    {
+        if (FlashlightIsOn())
+        {
+            if (m_iFlashBattery)
+            {
+                m_flFlashLightTime = FLASH_DRAIN_TIME + gpGlobals->curtime;
+                m_iFlashBattery--;
 
-				if (!m_iFlashBattery)
-					FlashlightTurnOff();
-			}
-		}
-		else
-		{
-			if (m_iFlashBattery < 100)
-			{
-				m_flFlashLightTime = FLASH_CHARGE_TIME + gpGlobals->curtime;
-				m_iFlashBattery++;
-			}
-			else
-				m_flFlashLightTime = 0;
-		}
-	}
+                if (!m_iFlashBattery)
+                    FlashlightTurnOff();
+            }
+        }
+        else
+        {
+            if (m_iFlashBattery < 100)
+            {
+                m_flFlashLightTime = FLASH_CHARGE_TIME + gpGlobals->curtime;
+                m_iFlashBattery++;
+            }
+            else
+                m_flFlashLightTime = 0;
+        }
+    }
 #endif
 
     CheckTrainUpdate();
@@ -7694,7 +7694,7 @@ void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= t
 
 #ifdef HL2_DLL
     if ( bShouldSwitch == false && PhysCannonGetHeldEntity( GetActiveWeapon() ) == pWeapon &&
-         Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
+        Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
     {
         bShouldSwitch = true;
     }
@@ -7901,7 +7901,7 @@ class CStripWeapons : public CPointEntity
 {
     DECLARE_CLASS( CStripWeapons, CPointEntity );
 
-   public:
+    public:
     void InputStripWeapons( inputdata_t &data );
     void InputStripWeaponsAndSuit( inputdata_t &data );
 
@@ -7966,7 +7966,7 @@ class CRevertSaved : public CPointEntity
 {
     DECLARE_CLASS( CRevertSaved, CPointEntity );
 
-   public:
+    public:
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
     void LoadThink( void );
 
@@ -8013,7 +8013,7 @@ class CRevertSaved : public CPointEntity
     }
 #endif
 
-   private:
+    private:
     float m_loadTime;
     float m_Duration;
     float m_HoldTime;
@@ -8145,10 +8145,10 @@ class CMovementSpeedMod : public CPointEntity
 {
     DECLARE_CLASS( CMovementSpeedMod, CPointEntity );
 
-   public:
+    public:
     void InputSpeedMod( inputdata_t &data );
 
-   private:
+    private:
     int GetDisabledButtonMask( void );
 
     DECLARE_DATADESC();
@@ -9316,7 +9316,7 @@ void CBasePlayer::SetPlayerName( const char *name )
 //-----------------------------------------------------------------------------
 class DisableAutokick
 {
-   public:
+    public:
     DisableAutokick( int userID )
     {
         m_userID = userID;
@@ -9334,7 +9334,7 @@ class DisableAutokick
         return true;  // keep looking at other players
     }
 
-   private:
+    private:
     int m_userID;
 };
 

@@ -28,13 +28,13 @@
 
 class CMessageWatchApp : public CWinApp
 {
-   public:
+    public:
     CMessageWatchApp();
 
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CMessageWatchApp)
-   public:
+    public:
     virtual BOOL InitInstance();
     //}}AFX_VIRTUAL
 

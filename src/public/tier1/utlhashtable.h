@@ -76,7 +76,7 @@ typedef unsigned int UtlHashHandle_t;
 template < typename KeyT, typename ValueT = empty_t >
 class CUtlHashtableEntry
 {
-   public:
+    public:
     typedef CUtlKeyValuePair< KeyT, ValueT > KVPair;
 
     enum
@@ -161,10 +161,10 @@ class CUtlHashtableEntry
 template < typename KeyT, typename ValueT = empty_t, typename KeyHashT = DefaultHashFunctor< KeyT >, typename KeyIsEqualT = DefaultEqualFunctor< KeyT >, typename AlternateKeyT = typename ArgumentTypeInfo< KeyT >::Alt_t >
 class CUtlHashtable
 {
-   public:
+    public:
     typedef UtlHashHandle_t handle_t;
 
-   protected:
+    protected:
     typedef CUtlKeyValuePair< KeyT, ValueT > KVPair;
     typedef typename ArgumentTypeInfo< KeyT >::Arg_t KeyArg_t;
     typedef typename ArgumentTypeInfo< ValueT >::Arg_t ValueArg_t;
@@ -222,7 +222,7 @@ class CUtlHashtable
     template < typename K, typename V, typename S, typename H, typename E, typename A >
     friend class CUtlStableHashtable;
 
-   public:
+    public:
     explicit CUtlHashtable( int minimumSize = 32 )
         : m_nUsed( 0 ), m_nMinSize( MAX( 8, minimumSize ) ), m_bSizeLocked( false ), m_eq(), m_hash() {}
 
@@ -495,7 +495,7 @@ class CUtlHashtable
     void DbgCheckIntegrity() const;
 #endif
 
-   private:
+    private:
     CUtlHashtable( const CUtlHashtable &copyConstructorIsNotImplemented );
 };
 
@@ -972,13 +972,13 @@ void CUtlHashtable< KeyT, ValueT, KeyHashT, KeyIsEqualT, AltKeyT >::DbgCheckInte
 template < typename KeyT, typename ValueT = empty_t, typename KeyHashT = DefaultHashFunctor< KeyT >, typename KeyIsEqualT = DefaultEqualFunctor< KeyT >, typename IndexStorageT = uint16, typename AlternateKeyT = typename ArgumentTypeInfo< KeyT >::Alt_t >
 class CUtlStableHashtable
 {
-   public:
+    public:
     typedef typename ArgumentTypeInfo< KeyT >::Arg_t KeyArg_t;
     typedef typename ArgumentTypeInfo< ValueT >::Arg_t ValueArg_t;
     typedef typename ArgumentTypeInfo< AlternateKeyT >::Arg_t KeyAlt_t;
     typedef typename CTypeSelect< sizeof( IndexStorageT ) == 2, uint16, uint32 >::type IndexStorage_t;
 
-   protected:
+    protected:
     COMPILE_TIME_ASSERT( sizeof( IndexStorage_t ) == sizeof( IndexStorageT ) );
 
     typedef CUtlKeyValuePair< KeyT, ValueT > KVPair;
@@ -998,7 +998,7 @@ class CUtlStableHashtable
     template < typename KeyArgumentT, typename ValueArgumentT >
     UtlHashHandle_t DoInsert( KeyArgumentT k, ValueArgumentT v );
 
-   public:
+    public:
     KeyHashT &GetHashRef()
     {
         return m_table.GetHashRef().m_hash;
@@ -1176,7 +1176,7 @@ class CUtlStableHashtable
         memcpy( &other.m_data, buf, sizeof( m_data ) );
     }
 
-   protected:
+    protected:
     // Perform extension of 0xFFFF to 0xFFFFFFFF if necessary. Note: ( a < CONSTANT ) ? 0 : -1 is usually branchless
     static UtlHashHandle_t ExtendInvalidHandle( uint32 x )
     {
@@ -1240,7 +1240,7 @@ class CUtlStableHashtable
 
     class CCustomLinkedList : public LinkedList_t
     {
-       public:
+        public:
         int AddToTailUnconstructed()
         {
             IndexStorage_t newNode = this->AllocInternal();

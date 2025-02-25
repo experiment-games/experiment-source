@@ -22,7 +22,7 @@ class CTFPowerupBottle : public CTFWearable
 {
     DECLARE_CLASS( CTFPowerupBottle, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -75,14 +75,14 @@ class CTFPowerupBottle : public CTFWearable
         return ( iMode == 1 );
     };
 
-   protected:
+    protected:
     // Used internally to remove the effect after a tunable amount of time
     void StatusThink();
 
     CNetworkVar( bool, m_bActive );
     CNetworkVar( uint8, m_usNumCharges );
 
-   private:
+    private:
 #ifdef TF_CLIENT_DLL
     virtual void FireGameEvent( IGameEvent* event );
     virtual int GetWorldModelIndex( void );
@@ -98,7 +98,7 @@ class CTFPowerupBottle : public CTFWearable
 // ******************************************************************************************
 class CEquipMvMCanteenNotification : public CEconNotification
 {
-   public:
+    public:
     CEquipMvMCanteenNotification()
         : CEconNotification()
     {
@@ -144,7 +144,7 @@ class CEquipMvMCanteenNotification : public CEconNotification
         return dynamic_cast< CEquipMvMCanteenNotification* >( pNotification ) != NULL;
     }
 
-   private:
+    private:
     bool m_bHasTriggered;
 };
 

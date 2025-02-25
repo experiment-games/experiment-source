@@ -38,7 +38,7 @@ class Panel;
 // Interface used to connect to the game specific implementations of the Economy UI
 abstract_class IEconRootUI
 {
-   public:
+    public:
     // Open the EconUI, optionally to a specific page (Backpack/Crafting/etc)
     // If bCheckForInventorySpaceOnExit is set, On closing the EconUI should make sure the user doesn't
     // have to throw out any items to make room in their inventory.

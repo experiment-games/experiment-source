@@ -357,7 +357,7 @@ void CGrenadeBeam::DebugBeams(void)
 
     for (int i=0;i<m_nNumHits-1;i++)
     {
-      NDebugOverlay::Line(m_pHitLocation[i], m_pHitLocation[i+1], 255,255,25, true, 0.1);
+    NDebugOverlay::Line(m_pHitLocation[i], m_pHitLocation[i+1], 255,255,25, true, 0.1);
     }
   }
   else

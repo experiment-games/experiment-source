@@ -71,17 +71,17 @@ class CHudScopeCharge : public vgui::Panel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudScopeCharge, vgui::Panel );
 
-   public:
+    public:
     CHudScopeCharge( const char *pElementName );
     virtual ~CHudScopeCharge( void );
 
     void Init( void );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint( void );
 
-   private:
+    private:
     int m_iChargeupTexture;
     int m_iChargeupTextureWidth;
     CPanelAnimationVarAliasType( float, m_iChargeup_xpos, "chargeup_xpos", "0", "proportional_float" );
@@ -230,18 +230,18 @@ class CHudScope : public vgui::Panel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudScope, vgui::Panel );
 
-   public:
+    public:
     CHudScope( const char *pElementName );
     virtual ~CHudScope( void );
 
     void Init( void );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint( void );
     virtual bool ShouldDraw( void );
 
-   private:
+    private:
     int m_iScopeTexture[4];
     int m_iScopeTextureAlt[4];
     bool m_bAltScopeMode;

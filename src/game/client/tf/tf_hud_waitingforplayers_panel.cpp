@@ -24,10 +24,10 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CTFWaitingForPlayersPanel : public EditablePanel, public CHudElement
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFWaitingForPlayersPanel, EditablePanel );
 
-   public:
+    public:
     CTFWaitingForPlayersPanel( const char *pElementName );
 
     virtual void LevelInit();
@@ -37,7 +37,7 @@ class CTFWaitingForPlayersPanel : public EditablePanel, public CHudElement
 
     virtual bool ShouldDraw( void );
 
-   private:
+    private:
     Label *m_pWaitingForPlayersLabel;
     Label *m_pWaitingForPlayersEndingLabel;
 };

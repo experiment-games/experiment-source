@@ -117,7 +117,7 @@ struct BrushVertex_t
     Vector2D m_TexCoord;
     Vector2D m_LightmapCoord;
 
-   private:
+    private:
     BrushVertex_t( const BrushVertex_t &src );
 };
 
@@ -136,7 +136,7 @@ struct VisOverrideData_t
 
 class IBrushSurface
 {
-   public:
+    public:
     // Computes texture coordinates + lightmap coordinates given a world position
     virtual void ComputeTextureCoordinate( Vector const &worldPos, Vector2D &texCoord ) = 0;
     virtual void ComputeLightmapCoordinate( Vector const &worldPos, Vector2D &lightmapCoord ) = 0;
@@ -155,7 +155,7 @@ class IBrushSurface
 
 class IBrushRenderer
 {
-   public:
+    public:
     // Draws the surface; returns true if decals should be rendered on this surface
     virtual bool RenderBrushModelSurface( IClientEntity *pBaseEntity, IBrushSurface *pBrushSurface ) = 0;
 };
@@ -175,7 +175,7 @@ enum DrawBrushModelMode_t
 
 class IVRenderView
 {
-   public:
+    public:
     // Draw normal brush model.
     // If pMaterialOverride is non-null, then all the faces of the bmodel will
     // set this material rather than their regular material.

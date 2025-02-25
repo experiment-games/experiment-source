@@ -30,10 +30,10 @@ extern vgui::Button *g_lastButton;
 template < class T >
 class MouseOverButton : public vgui::Button
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( MouseOverButton, vgui::Button );
 
-   public:
+    public:
     MouseOverButton( vgui::Panel *parent, const char *panelName, T *templatePanel )
         : Button( parent, panelName, "MouseOverButton" )
     {
@@ -183,7 +183,7 @@ class MouseOverButton : public vgui::Button
         }
     }
 
-   private:
+    private:
     T *m_pPanel;
     bool m_bPreserveArmedButtons;
     bool m_bUpdateDefaultButtons;

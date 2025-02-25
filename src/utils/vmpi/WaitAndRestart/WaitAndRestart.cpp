@@ -121,16 +121,16 @@ int main( int argc, char* argv[] )
     memset( &pi, 0, sizeof( pi ) );
 
     if ( CreateProcess(
-             NULL,
-             commandLine,
-             NULL,  // security
-             NULL,
-             FALSE,
-             0,            // flags
-             NULL,         // environment
-             pWorkingDir,  // current directory
-             &si,
-             &pi ) )
+            NULL,
+            commandLine,
+            NULL,  // security
+            NULL,
+            FALSE,
+            0,            // flags
+            NULL,         // environment
+            pWorkingDir,  // current directory
+            &si,
+            &pi ) )
     {
         VMPI_WriteToLogFile( "Process started.\n" );
         CloseHandle( pi.hThread );  // We don't care what the process does.

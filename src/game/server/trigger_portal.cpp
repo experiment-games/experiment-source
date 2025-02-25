@@ -27,7 +27,7 @@ ConVar portal_debug( "portal_debug", "0", FCVAR_CHEAT, "Turn on debugging for po
 //////////////////////////////////////////////////////////////////////////
 class CTriggerPortal : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerPortal, CBaseTrigger );
     DECLARE_SERVERCLASS();
@@ -45,7 +45,7 @@ class CTriggerPortal : public CBaseTrigger
     // TEMP: Since brushes have no directionality, give this wall a forward face specified in hammer
     QAngle m_qFaceAngles;
 
-   private:
+    private:
     string_t m_strRemotePortal;
     CNetworkHandle( CTriggerPortal, m_hRemotePortal );
     CUtlVector< EHANDLE > m_hDisabledForEntities;

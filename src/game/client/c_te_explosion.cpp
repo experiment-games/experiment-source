@@ -87,7 +87,7 @@ CRagdollExplosionEnumerator::~CRagdollExplosionEnumerator()
 //-----------------------------------------------------------------------------
 class C_TEExplosion : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEExplosion, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
@@ -98,11 +98,11 @@ class C_TEExplosion : public C_TEParticleSystem
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   private:
+    private:
     // Recording
     void RecordExplosion();
 
-   public:
+    public:
     void AffectRagdolls( void );
 
     int m_nModelIndex;

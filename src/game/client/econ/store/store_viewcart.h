@@ -23,7 +23,7 @@ class CCartViewItemEntry : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCartViewItemEntry, vgui::EditablePanel );
 
-   public:
+    public:
     CCartViewItemEntry( vgui::Panel *parent, const char *name )
         : vgui::EditablePanel( parent, name )
     {
@@ -36,7 +36,7 @@ class CCartViewItemEntry : public vgui::EditablePanel
         return m_pEntry;
     }
 
-   private:
+    private:
     cart_item_t *m_pEntry;
 };
 
@@ -47,7 +47,7 @@ class CStoreViewCartPanel : public vgui::Frame, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CStoreViewCartPanel, vgui::Frame );
 
-   public:
+    public:
     CStoreViewCartPanel( Panel *parent );
     virtual ~CStoreViewCartPanel();
 
@@ -60,7 +60,7 @@ class CStoreViewCartPanel : public vgui::Frame, public CGameEventListener
 
     void UpdateCartItemList( void );
 
-   private:
+    private:
     vgui::EditablePanel *m_pClientArea;
     vgui::EditablePanel *m_pPurchaseFooter;
     KeyValues *m_pItemEntryKVs;

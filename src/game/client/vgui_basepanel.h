@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class CBasePanel : public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CBasePanel, vgui::Panel );
 
     CBasePanel( vgui::Panel *pParent, const char *panelName );
@@ -53,7 +53,7 @@ class CBasePanel : public vgui::Panel
 
     virtual void OnTick( void );
 
-   protected:
+    protected:
     bool m_bTexturedBackground;
     int m_nBackgroundMaterial;
     char m_szBgTexture[256];
@@ -70,7 +70,7 @@ class CHudLabel : public vgui::Label
 {
     typedef vgui::Label BaseClass;
 
-   public:
+    public:
     CHudLabel( vgui::Panel *parent, const char *panelName, const char *text );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
@@ -79,7 +79,7 @@ class CHudLabel : public vgui::Label
 
     bool m_bSelected;
 
-   private:
+    private:
     CHudLabel( const CHudLabel & );  // not defined, not accessible
 };
 

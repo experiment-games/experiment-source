@@ -20,7 +20,7 @@
 
 class CTFRocketPack : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRocketPack, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -82,7 +82,7 @@ class CTFRocketPack : public CTFWeaponBaseMelee
         return m_flRefireTime;
     }
 
-   private:
+    private:
     CTFRocketPack( const CTFRocketPack & ) {}
 
     void ResetTransition( void );

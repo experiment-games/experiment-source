@@ -140,9 +140,9 @@ void CObjectTeleporter::TeleporterSend( CTFPlayer *pPlayer )
             kKillEaterEvent_TeleportsProvided );
 
         if ( GetBuilder() != pPlayer &&
-             TFGameRules() &&
-             TFGameRules()->GameModeUsesUpgrades() &&
-             TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
+            TFGameRules() &&
+            TFGameRules()->GameModeUsesUpgrades() &&
+            TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
         {
             CTF_GameStats.Event_PlayerAwardBonusPoints( GetBuilder(), pPlayer, 10 );
         }
@@ -613,7 +613,7 @@ void CObjectTeleporter::TeleporterTouch( CBaseEntity *pOther )
         if ( !bSetReserved )
         {
             bSetReserved = ( !PlayerCanBeTeleported( m_hReservedForPlayer ) || !m_hReservedForPlayer->IsAlive() ||
-                             ( m_flReserveAfterTouchUntil != 0 && m_flReserveAfterTouchUntil < gpGlobals->curtime ) );
+                            ( m_flReserveAfterTouchUntil != 0 && m_flReserveAfterTouchUntil < gpGlobals->curtime ) );
         }
 
         if ( bSetReserved )
@@ -724,9 +724,9 @@ bool CObjectTeleporter::IsMatchingTeleporterReady( void )
     }
 
     if ( m_hMatchingTeleporter &&
-         m_hMatchingTeleporter->GetState() != TELEPORTER_STATE_BUILDING &&
-         !m_hMatchingTeleporter->IsUpgrading() &&
-         !m_hMatchingTeleporter->IsDisabled() )
+        m_hMatchingTeleporter->GetState() != TELEPORTER_STATE_BUILDING &&
+        !m_hMatchingTeleporter->IsUpgrading() &&
+        !m_hMatchingTeleporter->IsDisabled() )
         return true;
 
     return false;
@@ -833,10 +833,10 @@ void CObjectTeleporter::DeterminePlaybackRate( void )
                 if ( flTimeSinceChange <= flFirstStage )
                 {
                     flPlaybackRate = RemapVal( gpGlobals->curtime,
-                                               m_flLastStateChangeTime,
-                                               m_flLastStateChangeTime + flFirstStage,
-                                               1.0f,
-                                               flLowSpinSpeed );
+                                                m_flLastStateChangeTime,
+                                                m_flLastStateChangeTime + flFirstStage,
+                                                1.0f,
+                                                flLowSpinSpeed );
                 }
                 else if ( flTimeSinceChange > flFirstStage && flTimeSinceChange <= flSecondStage )
                 {
@@ -845,10 +845,10 @@ void CObjectTeleporter::DeterminePlaybackRate( void )
                 else
                 {
                     flPlaybackRate = RemapVal( gpGlobals->curtime,
-                                               m_flLastStateChangeTime + flSecondStage,
-                                               m_flLastStateChangeTime + flTotalTime,
-                                               flLowSpinSpeed,
-                                               1.0f );
+                                                m_flLastStateChangeTime + flSecondStage,
+                                                m_flLastStateChangeTime + flTotalTime,
+                                                flLowSpinSpeed,
+                                                1.0f );
                 }
             }
             break;
@@ -948,7 +948,7 @@ void CObjectTeleporter::RecieveTeleportingPlayer( CTFPlayer *pTeleportingPlayer 
 
                 // Solid entities will prevent a teleport
                 if ( pEnts[i]->IsSolid() && pEnts[i]->ShouldCollide( pTeleportingPlayer->GetCollisionGroup(), MASK_SOLID ) &&
-                     g_pGameRules->ShouldCollide( pTeleportingPlayer->GetCollisionGroup(), pEnts[i]->GetCollisionGroup() ) )
+                    g_pGameRules->ShouldCollide( pTeleportingPlayer->GetCollisionGroup(), pEnts[i]->GetCollisionGroup() ) )
                 {
                     // HACK to solve the problem of building teleporter exits in CDynamicProp entities at
                     // the end of maps like Badwater that have the VPhysics explosions when the point is capped
@@ -1497,7 +1497,7 @@ void CObjectTeleporter::SpawnBread( const CTFPlayer *pTeleportingPlayer )
 void CObjectTeleporter::FireGameEvent( IGameEvent *event )
 {
     if ( FStrEq( event->GetName(), "player_spawn" ) ||
-         FStrEq( event->GetName(), "player_team" ) )
+        FStrEq( event->GetName(), "player_team" ) )
     {
         // On instant-spawn servers, players can change teams just as the teleporter
         // queues them for a teleport and will still teleport them even if they respawn / change team.

@@ -41,7 +41,7 @@ class CDmeMDL : public CDmeShape
 {
     DEFINE_ELEMENT( CDmeMDL, CDmeShape );
 
-   public:
+    public:
     virtual void Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDrawSettings = NULL );
 
     void DrawInEngine( bool bDrawInEngine );
@@ -56,7 +56,7 @@ class CDmeMDL : public CDmeShape
     // Computes bone-to-world transforms
     void SetUpBones( const matrix3x4_t &shapeToWorld, int nMaxBoneCount, matrix3x4_t *pOutputMatrices );
 
-   public:
+    public:
     CDmaColor m_Color;
     CDmaVar< int > m_nSkin;
     CDmaVar< int > m_nBody;
@@ -67,7 +67,7 @@ class CDmeMDL : public CDmeShape
     CDmaVar< Vector > m_vecViewTarget;
     CDmaVar< bool > m_bWorldSpaceViewTarget;
 
-   private:
+    private:
     void UpdateMDL();
 
     CMDL m_MDL;

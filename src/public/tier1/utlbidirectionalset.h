@@ -46,7 +46,7 @@
 template < class CBucketHandle, class CElementHandle, class S, class I = S >
 class CBidirectionalSet
 {
-   public:
+    public:
     // Install methods to get at the first bucket given a element
     // and vice versa...
     typedef S& ( *FirstElementFunc_t )( CBucketHandle );
@@ -104,7 +104,7 @@ class CBidirectionalSet
 
     int NumAllocated( void ) const;
 
-   private:
+    private:
     struct BucketListInfo_t
     {
         CElementHandle m_Element;

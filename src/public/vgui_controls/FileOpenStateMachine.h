@@ -27,7 +27,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 abstract_class IFileOpenStateMachineClient
 {
-   public:
+    public:
     // Called by to allow clients to set up the save dialog
     virtual void SetupFileOpenDialog( vgui::FileOpenDialog * pDialog, bool bOpenFile, const char *pFileFormat, KeyValues *pContextKeyValues ) = 0;
 
@@ -51,7 +51,7 @@ class FileOpenStateMachine : public Panel
 {
     DECLARE_CLASS_SIMPLE( FileOpenStateMachine, Panel );
 
-   public:
+    public:
     enum CompletionState_t
     {
         IN_PROGRESS = 0,               // Still not finished, not successful or error
@@ -84,7 +84,7 @@ class FileOpenStateMachine : public Panel
     CompletionState_t GetCompletionState();
 
     /* MESSAGES SENT
-      "FileStateMachineFinished" - Called when we exit the state machine for any reason
+    "FileStateMachineFinished" - Called when we exit the state machine for any reason
         "completionState" - See the CompletionState_t enum above
         "wroteFile" - Indicates whether a file was written or not
         "fullPath" - Indicates the full path of the file read for OpenFile or written for SaveFile
@@ -92,7 +92,7 @@ class FileOpenStateMachine : public Panel
         Use GetFirstTrueSubKey() to get the context passed into the OpenFile/SaveFile methods
     */
 
-   private:
+    private:
     enum FOSMState_t
     {
         STATE_NONE = -1,

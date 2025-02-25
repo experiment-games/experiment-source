@@ -112,7 +112,7 @@ class CDmeClip : public CDmElement
 {
     DEFINE_ELEMENT( CDmeClip, CDmElement );
 
-   public:
+    public:
     // Inherited from IDmElement
     virtual void OnAttributeArrayElementAdded( CDmAttribute *pAttribute, int nFirstElem, int nLastElem );
     virtual void OnAttributeArrayElementRemoved( CDmAttribute *pAttribute, int nFirstElem, int nLastElem );
@@ -205,7 +205,7 @@ class CDmeClip : public CDmElement
     void SetMute( bool state );
     bool IsMute() const;
 
-   protected:
+    protected:
     virtual int AllowedClipTypes() const
     {
         return 1 << DMECLIP_CHANNEL;
@@ -244,7 +244,7 @@ class CDmeSoundClip : public CDmeClip
 {
     DEFINE_ELEMENT( CDmeSoundClip, CDmeClip );
 
-   public:
+    public:
     virtual DmeClipType_t GetClipType()
     {
         return DMECLIP_SOUND;
@@ -264,7 +264,7 @@ class CDmeChannelsClip : public CDmeClip
 {
     DEFINE_ELEMENT( CDmeChannelsClip, CDmeClip );
 
-   public:
+    public:
     virtual DmeClipType_t GetClipType()
     {
         return DMECLIP_CHANNEL;
@@ -290,7 +290,7 @@ class CDmeFXClip : public CDmeClip
 {
     DEFINE_ELEMENT( CDmeFXClip, CDmeClip );
 
-   public:
+    public:
     virtual DmeClipType_t GetClipType()
     {
         return DMECLIP_FX;
@@ -310,7 +310,7 @@ class CDmeFXClip : public CDmeClip
     static const char *FXClipType( int nIndex );
     static const char *FXClipDescription( int nIndex );
 
-   private:
+    private:
     enum
     {
         MAX_FXCLIP_TYPES = 16
@@ -326,7 +326,7 @@ class CDmeFXClip : public CDmeClip
 template < class T >
 class CDmFXClipFactory : public CDmElementFactory< T >
 {
-   public:
+    public:
     CDmFXClipFactory( const char *pLookupName, const char *pDescription )
         : CDmElementFactory< T >( pLookupName )
     {
@@ -362,7 +362,7 @@ class CDmeFilmClip : public CDmeClip
 {
     DEFINE_ELEMENT( CDmeFilmClip, CDmeClip );
 
-   public:
+    public:
     virtual DmeClipType_t GetClipType()
     {
         return DMECLIP_FILM;
@@ -485,7 +485,7 @@ class CDmeFilmClip : public CDmeClip
     // Shifts associated clips so they remain in the same relative time when pClip is scaled
     void ScaleAssociatedClips( CDmeClip *pClip, CUtlVector< ClipAssociation_t > &association, float ratio, DmeTime_t oldOffset );
 
-   private:
+    private:
     virtual int AllowedClipTypes() const
     {
         return ( 1 << DMECLIP_CHANNEL ) | ( 1 << DMECLIP_SOUND ) | ( 1 << DMECLIP_FX ) | ( 1 << DMECLIP_FILM );
@@ -540,7 +540,7 @@ CDmeFilmClip *CreateSlugClip( const char *pClipName, DmeTime_t startTime, DmeTim
 template < class T >
 class CDmeClipInfo
 {
-   public:
+    public:
     static DmeClipType_t ClipType()
     {
         return DMECLIP_UNKNOWN;
@@ -551,7 +551,7 @@ class CDmeClipInfo
     template <>                                          \
     class CDmeClipInfo< _className >                     \
     {                                                    \
-       public:                                           \
+        public:                                           \
         static DmeClipType_t ClipType()                  \
         {                                                \
             return _dmeClipType;                         \

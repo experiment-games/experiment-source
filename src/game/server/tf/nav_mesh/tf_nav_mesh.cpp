@@ -57,7 +57,7 @@ ConVar tf_select_ambush_areas_max_enemy_exposure_area( "tf_select_ambush_areas_m
 
 class ScanSelectAmbushAreas
 {
-   public:
+    public:
     ScanSelectAmbushAreas( CUtlVector< CTFNavArea * > *ambushAreaVector, int teamToAmbush, float enemyIncursionLimit )
     {
         m_ambushAreaVector = ambushAreaVector;
@@ -345,7 +345,7 @@ CON_COMMAND_F( tf_assign_territory, "Divvy up the mesh into red and blue territo
             CTFNavArea *adjArea = static_cast< CTFNavArea * >( connect->area );
 
             if ( adjArea->ComputeAdjacentConnectionHeightChange( area ) > TF_PLAYER_JUMP_HEIGHT ||
-                 area->ComputeAdjacentConnectionHeightChange( adjArea ) > TF_PLAYER_JUMP_HEIGHT )
+                area->ComputeAdjacentConnectionHeightChange( adjArea ) > TF_PLAYER_JUMP_HEIGHT )
             {
                 // don't go up ledges too high to jump
                 continue;
@@ -548,7 +548,7 @@ class DoorSetter
 {
     CBaseEntity *m_door;
 
-   public:
+    public:
     DoorSetter( CBaseEntity *door )
     {
         m_door = door;
@@ -1334,9 +1334,9 @@ void CTFNavMesh::FireGameEvent( IGameEvent *event )
         ScheduleRecomputationOfInternalData( POINT_UNLOCKED, whichPoint );
     }
     else if ( eventName == "player_builtobject" ||
-              eventName == "player_carryobject" ||
-              eventName == "object_detonated" ||
-              eventName == "object_destroyed" )
+            eventName == "player_carryobject" ||
+            eventName == "object_detonated" ||
+            eventName == "object_destroyed" )
     {
         // We don't need "player_dropobject" as "player_builtobject" is sent right after.
         // Some message have "object", some have "objectid" - use the one that is set.
@@ -1627,7 +1627,7 @@ void CTFNavMesh::ComputeInvasionAreas( void )
 //--------------------------------------------------------------------------------------------------------
 class CCollectAndLabelSpawnRoomAreas
 {
-   public:
+    public:
     CCollectAndLabelSpawnRoomAreas( void )
     {
         m_room = NULL;
@@ -1648,10 +1648,10 @@ class CCollectAndLabelSpawnRoomAreas
             return true;
 
         if ( m_room->PointIsWithin( baseArea->GetCenter() + stepHeight ) ||
-             m_room->PointIsWithin( baseArea->GetCorner( NORTH_WEST ) + stepHeight ) ||
-             m_room->PointIsWithin( baseArea->GetCorner( NORTH_EAST ) + stepHeight ) ||
-             m_room->PointIsWithin( baseArea->GetCorner( SOUTH_WEST ) + stepHeight ) ||
-             m_room->PointIsWithin( baseArea->GetCorner( SOUTH_EAST ) + stepHeight ) )
+            m_room->PointIsWithin( baseArea->GetCorner( NORTH_WEST ) + stepHeight ) ||
+            m_room->PointIsWithin( baseArea->GetCorner( NORTH_EAST ) + stepHeight ) ||
+            m_room->PointIsWithin( baseArea->GetCorner( SOUTH_WEST ) + stepHeight ) ||
+            m_room->PointIsWithin( baseArea->GetCorner( SOUTH_EAST ) + stepHeight ) )
         {
             CTFNavArea *area = ( CTFNavArea * )baseArea;
 
@@ -1834,7 +1834,7 @@ void CTFNavMesh::ResetMeshAttributes( bool bScheduleRecomputation )
 //--------------------------------------------------------------------------------------------------------
 class DrawIncursionFlow
 {
-   public:
+    public:
     bool operator()( CNavArea *baseArea )
     {
         CTFNavArea *area = static_cast< CTFNavArea * >( baseArea );
@@ -2339,41 +2339,41 @@ void CTFNavMesh::UpdateDebugDisplay( void ) const
     }
 
     /*
-      if ( tf_show_gate_defense_areas.GetBool() )
-      {
+    if ( tf_show_gate_defense_areas.GetBool() )
+    {
         FOR_EACH_VEC( TheNavAreas, it )
         {
-          CTFNavArea *area = static_cast< CTFNavArea * >( TheNavAreas[ it ] );
+        CTFNavArea *area = static_cast< CTFNavArea * >( TheNavAreas[ it ] );
 
-          if ( area->HasAttributeTF( TF_NAV_DEFEND_SETUP_GATES ) )
-          {
+        if ( area->HasAttributeTF( TF_NAV_DEFEND_SETUP_GATES ) )
+        {
             if ( area->HasAttributeTF( TF_NAV_DEFEND_VIA_SNIPING ) )
-              area->DrawFilled( 0, 255, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
+            area->DrawFilled( 0, 255, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
             else if ( area->HasAttributeTF( TF_NAV_DEFEND_VIA_AMBUSH ) )
-              area->DrawFilled( 255, 0, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
+            area->DrawFilled( 255, 0, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
             else
-              area->DrawFilled( 0, 0, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
-          }
+            area->DrawFilled( 0, 0, 255, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
         }
-      }
+        }
+    }
 
-      if ( tf_show_point_defense_areas.GetBool() )
-      {
+    if ( tf_show_point_defense_areas.GetBool() )
+    {
         FOR_EACH_VEC( TheNavAreas, it )
         {
-          CTFNavArea *area = static_cast< CTFNavArea * >( TheNavAreas[ it ] );
+        CTFNavArea *area = static_cast< CTFNavArea * >( TheNavAreas[ it ] );
 
-          if ( area->HasAttributeTF( TF_NAV_DEFEND_POINT ) )
-          {
+        if ( area->HasAttributeTF( TF_NAV_DEFEND_POINT ) )
+        {
             if ( area->HasAttributeTF( TF_NAV_DEFEND_VIA_SNIPING ) )
-              area->DrawFilled( 0, 255, 100, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
+            area->DrawFilled( 0, 255, 100, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
             else if ( area->HasAttributeTF( TF_NAV_DEFEND_VIA_AMBUSH ) )
-              area->DrawFilled( 255, 150, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
+            area->DrawFilled( 255, 150, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
             else
-              area->DrawFilled( 0, 150, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
-          }
+            area->DrawFilled( 0, 150, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
         }
-      }
+        }
+    }
     */
 
     if ( tf_show_control_points.GetBool() )

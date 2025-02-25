@@ -18,7 +18,7 @@ class CTFObjectiveResource : public CBaseTeamObjectiveResource
 {
     DECLARE_CLASS( CTFObjectiveResource, CBaseTeamObjectiveResource );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -143,7 +143,7 @@ class CTFObjectiveResource : public CBaseTeamObjectiveResource
         return m_teleporterString;
     }
 
-   private:
+    private:
     CNetworkVar( int, m_nMannVsMachineMaxWaveCount );
     CNetworkVar( int, m_nMannVsMachineWaveCount );
     CNetworkVar( int, m_nMannVsMachineWaveEnemyCount );

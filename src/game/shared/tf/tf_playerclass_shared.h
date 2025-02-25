@@ -29,7 +29,7 @@ EXTERN_SEND_TABLE( DT_TFPlayerClassShared );
 //-----------------------------------------------------------------------------
 class CTFPlayerClassShared
 {
-   public:
+    public:
     CTFPlayerClassShared();
 
     DECLARE_EMBEDDED_NETWORKVAR()
@@ -148,7 +148,7 @@ class CTFPlayerClassShared
     // If needed, put this into playerclass scripts
     bool CanBuildObject( int iObjectType );
 
-   protected:
+    protected:
     CNetworkVar( int, m_iClass );
 
 #ifdef CLIENT_DLL

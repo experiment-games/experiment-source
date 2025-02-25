@@ -87,8 +87,8 @@ void FormatViewModelAttachment( Vector &vOrigin, bool bInverse )
 
     // Transform back to world space.
     Vector vOut = ( MainViewRight() * vTransformed.x ) +
-                  ( MainViewUp() * vTransformed.y ) +
-                  ( MainViewForward() * vTransformed.z );
+                ( MainViewUp() * vTransformed.y ) +
+                ( MainViewForward() * vTransformed.z );
     vOrigin = pViewSetup->origin + vOut;
 }
 
@@ -181,7 +181,7 @@ bool C_BaseViewModel::Interpolate( float currentTime )
     }
 
     float dt = elapsed_time * GetSequenceCycleRate( pStudioHdr, GetSequence() ) *
-               GetPlaybackRate();
+                GetPlaybackRate();
     if ( dt >= 1.0f )
     {
         if ( !IsSequenceLooping( GetSequence() ) )
@@ -207,7 +207,7 @@ bool C_BaseViewModel::ShouldFlipViewModel()
     {
         const FileWeaponInfo_t *pInfo = &pWeapon->GetWpnData();
         return pInfo->m_bAllowFlipping &&
-               pInfo->m_bBuiltRightHanded != cl_righthand.GetBool();
+                pInfo->m_bBuiltRightHanded != cl_righthand.GetBool();
     }
 #endif
 
@@ -267,13 +267,13 @@ bool C_BaseViewModel::ShouldDraw()
     if ( engine->IsHLTV() )
     {
         return ( HLTVCamera()->GetMode() == OBS_MODE_IN_EYE &&
-                 HLTVCamera()->GetPrimaryTarget() == GetOwner() );
+                HLTVCamera()->GetPrimaryTarget() == GetOwner() );
     }
 #if defined( REPLAY_ENABLED )
     else if ( g_pEngineClientReplay->IsPlayingReplayDemo() )
     {
         return ( ReplayCamera()->GetMode() == OBS_MODE_IN_EYE &&
-                 ReplayCamera()->GetPrimaryTarget() == GetOwner() );
+                ReplayCamera()->GetPrimaryTarget() == GetOwner() );
     }
 #endif
     else

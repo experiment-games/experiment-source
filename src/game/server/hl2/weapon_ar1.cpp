@@ -43,7 +43,7 @@ class CWeaponAR1 : public CHLMachineGun
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponAR1, CHLMachineGun );
 
     DECLARE_SERVERCLASS();

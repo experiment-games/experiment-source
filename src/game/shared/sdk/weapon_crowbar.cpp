@@ -21,7 +21,7 @@
 
 class CWeaponCrowbar : public CWeaponSDKMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponCrowbar, CWeaponSDKMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -42,7 +42,7 @@ class CWeaponCrowbar : public CWeaponSDKMelee
         return false;
     }
 
-   private:
+    private:
     CWeaponCrowbar( const CWeaponCrowbar& );
 };
 

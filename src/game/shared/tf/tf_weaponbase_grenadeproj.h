@@ -27,7 +27,7 @@
 //
 class CTFWeaponBaseGrenadeProj : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponBaseGrenadeProj, CBaseGrenade );
     DECLARE_NETWORKCLASS();
 
@@ -112,10 +112,10 @@ class CTFWeaponBaseGrenadeProj : public CBaseGrenade
     }
     void BounceOff( IPhysicsObject *pPhysics );
 
-   protected:
+    protected:
     CNetworkHandleForDerived( CBaseEntity, m_hLauncher );
 
-   private:
+    private:
     CTFWeaponBaseGrenadeProj( const CTFWeaponBaseGrenadeProj & );
     CNetworkVar( int, m_iDeflected );
 
@@ -124,7 +124,7 @@ class CTFWeaponBaseGrenadeProj : public CBaseGrenade
     // Client specific.
 #ifdef CLIENT_DLL
 
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t type );
 
     float m_flSpawnTime;
@@ -133,7 +133,7 @@ class CTFWeaponBaseGrenadeProj : public CBaseGrenade
     // Server specific.
 #else
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     static CTFWeaponBaseGrenadeProj *Create( const char *szName, const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iFlags );
@@ -193,7 +193,7 @@ class CTFWeaponBaseGrenadeProj : public CBaseGrenade
         return m_hEnemy;
     }
 
-   protected:
+    protected:
     bool m_bUseImpactNormal;
     Vector m_vecImpactNormal;
 
@@ -203,7 +203,7 @@ class CTFWeaponBaseGrenadeProj : public CBaseGrenade
     float m_flDetonateTime;
     CHandle< CBaseEntity > m_hEnemy;
 
-   private:
+    private:
     bool m_bInSolid;
 
     CNetworkVar( bool, m_bCritical );

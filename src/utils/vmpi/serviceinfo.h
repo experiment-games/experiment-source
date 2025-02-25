@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -8,12 +8,12 @@
 
 class CServiceInfo
 {
-   public:
+    public:
     bool IsOff() const;  // Returns true if the time since we've heard from this guy is too long.
     CServiceInfo()
         : m_bFromRegistry( false ) {}
 
-   public:
+    public:
     CString m_ComputerName;
     CString m_MasterName;
     CString m_Password;
@@ -25,7 +25,7 @@ class CServiceInfo
     DWORD m_WorkerAppTimeMS;  // How long the worker app has been running (0 if it's not running).
 
     DWORD m_LastPingTimeMS;  // Last time we heard from this machine. Used to detect if the service
-                             // is off or not.
+                            // is off or not.
 
     // Used to detect if we need to re-sort the list.
     const char *m_pLastStatusText;

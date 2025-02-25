@@ -42,7 +42,7 @@ class CObjectSentrygun : public CBaseObject
 {
     DECLARE_CLASS( CObjectSentrygun, CBaseObject );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CObjectSentrygun();
@@ -157,7 +157,7 @@ class CObjectSentrygun : public CBaseObject
         return true;
     }
 
-   private:
+    private:
     Vector GetEnemyAimPosition( CBaseEntity *pEnemy ) const;
 
     // Main think
@@ -268,7 +268,7 @@ class CObjectSentrygun : public CBaseObject
 // sentry rocket class just to give it a unique class name, so we can distinguish it from other rockets
 class CTFProjectile_SentryRocket : public CTFProjectile_Rocket
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SentryRocket, CTFProjectile_Rocket );
     DECLARE_NETWORKCLASS();
 

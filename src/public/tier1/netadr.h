@@ -28,7 +28,7 @@ typedef enum
 
 typedef struct netadr_s
 {
-   public:
+    public:
     netadr_s()
     {
         SetIP( 0 );
@@ -107,7 +107,7 @@ typedef struct netadr_s
     }
     bool operator<( const netadr_s &netadr ) const;
 
-   public:  // members are public to avoid to much changes
+    public:  // members are public to avoid to much changes
     netadrtype_t type;
     unsigned char ip[4];
     unsigned short port;
@@ -117,7 +117,7 @@ typedef struct netadr_s
 /// in a printf.  Don't use adr.ToString()!
 class CUtlNetAdrRender
 {
-   public:
+    public:
     CUtlNetAdrRender( const netadr_t &obj, bool bBaseOnly = false )
     {
         obj.ToString( m_rgchString, sizeof( m_rgchString ), bBaseOnly );
@@ -149,7 +149,7 @@ class CUtlNetAdrRender
         return m_rgchString;
     }
 
-   private:
+    private:
     char m_rgchString[32];
 };
 

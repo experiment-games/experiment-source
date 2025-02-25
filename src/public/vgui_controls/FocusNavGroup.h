@@ -25,7 +25,7 @@ class Panel;
 //-----------------------------------------------------------------------------
 class FocusNavGroup
 {
-   public:
+    public:
     FocusNavGroup( Panel *panel );
     ~FocusNavGroup();
     virtual Panel *GetDefaultPanel();  // returns a pointer to the panel with the default focus
@@ -46,7 +46,7 @@ class FocusNavGroup
 
     virtual void SetCurrentDefaultButton( VPANEL panel, bool sendCurrentDefaultButtonMessage = true );
 
-   private:
+    private:
     bool CanButtonBeDefault( VPANEL panel );
 
     VPanelHandle _defaultButton;

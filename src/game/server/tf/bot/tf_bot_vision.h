@@ -11,7 +11,7 @@
 //----------------------------------------------------------------------------
 class CTFBotVision : public IVision
 {
-   public:
+    public:
     CTFBotVision( INextBot *bot )
         : IVision( bot )
     {
@@ -22,9 +22,9 @@ class CTFBotVision : public IVision
     virtual void Update( void );  // update internal state
 
     /**
-     * Populate "potentiallyVisible" with the set of all entities we could potentially see.
-     * Entities in this set will be tested for visibility/recognition in IVision::Update()
-     */
+    * Populate "potentiallyVisible" with the set of all entities we could potentially see.
+    * Entities in this set will be tested for visibility/recognition in IVision::Update()
+    */
     virtual void CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * > *potentiallyVisible );
 
     virtual bool IsIgnored( CBaseEntity *subject ) const;               // return true to completely ignore this entity (may not be in sight when this is called)
@@ -33,7 +33,7 @@ class CTFBotVision : public IVision
     virtual float GetMaxVisionRange( void ) const;    // return maximum distance vision can reach
     virtual float GetMinRecognizeTime( void ) const;  // return VISUAL reaction time
 
-   private:
+    private:
     CUtlVector< CHandle< CBaseCombatCharacter > > m_potentiallyVisibleNPCVector;
     CountdownTimer m_potentiallyVisibleUpdateTimer;
     void UpdatePotentiallyVisibleNPCVector( void );

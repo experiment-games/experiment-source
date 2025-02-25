@@ -17,14 +17,14 @@
 //-----------------------------------------------------------------------------
 class CTEFireBullets : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEFireBullets, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
     CTEFireBullets( const char *name );
     virtual ~CTEFireBullets( void );
 
-   public:
+    public:
     CNetworkVar( int, m_iPlayer );
     CNetworkVector( m_vecOrigin );
     CNetworkQAngle( m_vecAngles );
@@ -94,13 +94,13 @@ void TE_FireBullets( int iPlayerIndex, const Vector &vOrigin, const QAngle &vAng
 //
 class CTETFExplosion : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTETFExplosion, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
     CTETFExplosion( const char *name );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecNormal;
     int m_iWeaponID;
@@ -166,7 +166,7 @@ void TE_TFExplosion( IRecipientFilter &filter, float flDelay, const Vector &vecO
 //
 class CTETFParticleEffect : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTETFParticleEffect, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
@@ -174,7 +174,7 @@ class CTETFParticleEffect : public CBaseTempEntity
 
     void Init( void );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecStart;
     QAngle m_vecAngles;

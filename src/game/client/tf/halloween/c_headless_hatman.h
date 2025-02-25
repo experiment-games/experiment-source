@@ -10,14 +10,14 @@
  */
 class C_HeadlessHatman : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_HeadlessHatman, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
     C_HeadlessHatman();
     virtual ~C_HeadlessHatman();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual bool IsNextBot()
     {
@@ -30,7 +30,7 @@ class C_HeadlessHatman : public C_NextBotCombatCharacter
 
     virtual void ClientThink();
 
-   private:
+    private:
     C_HeadlessHatman( const C_HeadlessHatman& );  // not defined, not accessible
 
     HPARTICLEFFECT m_ghostEffect;

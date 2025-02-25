@@ -19,7 +19,7 @@ const int k_cubAppProofOfPurchaseKeyMax = 240;  // max supported length of a leg
 //-----------------------------------------------------------------------------
 class ISteamApps
 {
-   public:
+    public:
     virtual bool BIsSubscribed() = 0;
     virtual bool BIsLowViolence() = 0;
     virtual bool BIsCybercafe() = 0;

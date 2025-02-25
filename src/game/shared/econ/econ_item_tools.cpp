@@ -148,9 +148,9 @@ bool CEconTool_GiftWrap::CanApplyTo( const IEconItemInterface *pTool, const IEco
     Assert( pToolSubject );
 
     if ( pToolSubject->GetQuality() == AE_SELFMADE ||
-         pToolSubject->GetQuality() == AE_COMMUNITY ||
-         pToolSubject->GetQuality() == AE_CUSTOMIZED ||
-         pToolSubject->GetQuality() == AE_NORMAL )
+        pToolSubject->GetQuality() == AE_COMMUNITY ||
+        pToolSubject->GetQuality() == AE_CUSTOMIZED ||
+        pToolSubject->GetQuality() == AE_NORMAL )
     {
         return false;
     }
@@ -245,8 +245,8 @@ bool CEconTool_StrangePart::CanApplyTo( const IEconItemInterface *pTool, const I
     {
         float flScoreType;
         if ( FindAttribute_UnsafeBitwiseCast< attrib_value_t >( pToolSubject, GetKillEaterAttr_Type( i ), &flScoreType ) &&  // if we have a counter in this slot...
-             RoundFloatToInt( flScoreType ) == RoundFloatToInt( flNewScoreType ) &&                                          // ...and it's counting the same thing...
-             !pToolSubject->FindAttribute( GetKillEaterAttr_Restriction( i ) ) )                                             // ...and that counter isn't restricted
+            RoundFloatToInt( flScoreType ) == RoundFloatToInt( flNewScoreType ) &&                                          // ...and it's counting the same thing...
+            !pToolSubject->FindAttribute( GetKillEaterAttr_Restriction( i ) ) )                                             // ...and that counter isn't restricted
         {
             return false;
         }
@@ -330,8 +330,8 @@ COMPILE_TIME_ASSERT( ARRAYSIZE( s_pszStrangeRestrictionTypes ) == kStrangeEventR
 
 CEconTool_StrangePartRestriction::CEconTool_StrangePartRestriction( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
     : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ), m_eRestrictionType( kStrangeEventRestriction_None )  // default-initialize to failure
-      ,
-      m_unRestrictionValue( ( unsigned int )-1 )
+    ,
+    m_unRestrictionValue( ( unsigned int )-1 )
 {
     Assert( pUsageKV != NULL );
 
@@ -637,11 +637,11 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::ParseKV( K
 
     // Make sure only one of the above is set
     SCHEMA_INIT_CHECK( bNoItemDef != bItemName,
-                       "Both \"no_item_def\" and \"item_name\" specified in component." );
+                        "Both \"no_item_def\" and \"item_name\" specified in component." );
 
     // Make sure at least one of the above is set
     SCHEMA_INIT_CHECK( bNoItemDef || bItemName,
-                       "Neither \"no_item_def\" or \"item_name\" specified in component." );
+                        "Neither \"no_item_def\" or \"item_name\" specified in component." );
 
     // If they specified an item name, then we need to grab it
     if ( bItemName )
@@ -689,7 +689,7 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentLootList::ParseKV( KeyV
 {
     const char *pszLootListName = pKV->GetString( "lootlist_name" );
     SCHEMA_INIT_CHECK( pszLootListName != NULL,
-                       "Missing lootlist name in lootlist recipe component" );
+                        "Missing lootlist name in lootlist recipe component" );
 
     m_strName = pszLootListName;
 
@@ -1182,7 +1182,7 @@ bool CEconTool_ClassTransmogrifier::CanApplyTo( const IEconItemInterface *pTool,
 
     // Abort if we're trying to apply to a Self-Made or Community item
     if ( pToolSubject->GetQuality() == AE_SELFMADE ||
-         pToolSubject->GetQuality() == AE_COMMUNITY )
+        pToolSubject->GetQuality() == AE_COMMUNITY )
     {
         return false;
     }
@@ -1297,8 +1297,8 @@ bool CEconTool_DuckToken::CanApplyTo( const IEconItemInterface *pTool, const IEc
         // If this tool can apply to anything then we don't care about the checks below
         // making sure restrictions match.
         const char *pszToolRestriction = BStringsEqual( pEconTool->GetUsageRestriction(), "any" )
-                                             ? pSubjectEconTool->GetUsageRestriction()
-                                             : pEconTool->GetUsageRestriction();
+                                            ? pSubjectEconTool->GetUsageRestriction()
+                                            : pEconTool->GetUsageRestriction();
 
         if ( !BStringsEqual( pszToolRestriction, pSubjectEconTool->GetUsageRestriction() ) )
             return false;

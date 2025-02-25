@@ -15,7 +15,7 @@
 
 class CMuzzleFlashEmitter_1stPerson : public CLocalSpaceEmitter
 {
-   public:
+    public:
     DECLARE_CLASS( CMuzzleFlashEmitter_1stPerson, CLocalSpaceEmitter );
 
     static CSmartPtr< CMuzzleFlashEmitter_1stPerson > Create( const char *pDebugName, int entIndex, int nAttachment, int fFlags = 0 );
@@ -25,10 +25,10 @@ class CMuzzleFlashEmitter_1stPerson : public CLocalSpaceEmitter
         BaseClass::Update( t );
     }
 
-   protected:
+    protected:
     CMuzzleFlashEmitter_1stPerson( const char *pDebugName );
 
-   private:
+    private:
     CMuzzleFlashEmitter_1stPerson( const CMuzzleFlashEmitter_1stPerson & );
 
     int m_iMuzzleFlashType;
@@ -39,7 +39,7 @@ class C_MuzzleFlashModel : public C_BaseAnimating
 {
     DECLARE_CLASS( C_MuzzleFlashModel, C_BaseAnimating );
 
-   public:
+    public:
     static C_MuzzleFlashModel *CreateMuzzleFlashModel( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, float flLifetime = 0.2 );
     bool InitializeMuzzleFlash( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, float flLifetime );
     void ClientThink( void );
@@ -52,7 +52,7 @@ class C_MuzzleFlashModel : public C_BaseAnimating
 
     void SetIs3rdPersonFlash( bool bEnable );
 
-   private:
+    private:
     float m_flExpiresAt;
     float m_flRotateAt;
     bool m_bIs3rdPersonFlash;

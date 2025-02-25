@@ -112,13 +112,13 @@ enum OpMode
 
 #define GET_OPCODE( i ) ( cast( OpCode, ( ( i ) >> POS_OP ) & MASK1( SIZE_OP, 0 ) ) )
 #define SET_OPCODE( i, o ) ( ( i ) = ( ( ( i ) & MASK0( SIZE_OP, POS_OP ) ) | \
-                                       ( ( cast( Instruction, o ) << POS_OP ) & MASK1( SIZE_OP, POS_OP ) ) ) )
+                                        ( ( cast( Instruction, o ) << POS_OP ) & MASK1( SIZE_OP, POS_OP ) ) ) )
 
 #define checkopm( i, m ) ( getOpMode( GET_OPCODE( i ) ) == m )
 
 #define getarg( i, pos, size ) ( cast_int( ( ( i ) >> ( pos ) ) & MASK1( size, 0 ) ) )
 #define setarg( i, v, pos, size ) ( ( i ) = ( ( ( i ) & MASK0( size, pos ) ) | \
-                                              ( ( cast( Instruction, v ) << pos ) & MASK1( size, pos ) ) ) )
+                                            ( ( cast( Instruction, v ) << pos ) & MASK1( size, pos ) ) ) )
 
 #define GETARG_A( i ) getarg( i, POS_A, SIZE_A )
 #define SETARG_A( i, v ) setarg( i, v, POS_A, SIZE_A )
@@ -181,7 +181,7 @@ enum OpMode
 typedef enum
 {
     /*----------------------------------------------------------------------
-      name		args	description
+    name		args	description
     ------------------------------------------------------------------------*/
     OP_MOVE,       /*	A B	R[A] := R[B]					*/
     OP_LOADI,      /*	A sBx	R[A] := sBx					*/
@@ -277,7 +277,7 @@ typedef enum
 
     OP_FORLOOP, /*	A Bx	update counters; if loop continues then pc-=Bx; */
     OP_FORPREP, /*	A Bx	<check values and prepare counters>;
-                             if not to run then pc+=Bx+1;			*/
+                            if not to run then pc+=Bx+1;			*/
 
     OP_TFORPREP, /*	A Bx	create upvalue for R[A + 3]; pc+=Bx		*/
     OP_TFORCALL, /*	A C	R[A+4], ... ,R[A+3+C] := R[A](R[A+1], R[A+2]);	*/
@@ -334,7 +334,7 @@ typedef enum
   (true or false).
 
   (*) In OP_MMBINI/OP_MMBINK, k means the arguments were flipped
-   (the constant is the first operand).
+    (the constant is the first operand).
 
   (*) All 'skips' (pc++) assume that next instruction is a jump.
 
@@ -371,7 +371,7 @@ LUAI_DDEC( const lu_byte luaP_opmodes[NUM_OPCODES]; )
 /* "out top" (set top for next instruction) */
 #define isOT( i )                                                \
     ( ( testOTMode( GET_OPCODE( i ) ) && GETARG_C( i ) == 0 ) || \
-      GET_OPCODE( i ) == OP_TAILCALL )
+    GET_OPCODE( i ) == OP_TAILCALL )
 
 /* "in top" (uses top from previous instruction) */
 #define isIT( i ) ( testITMode( GET_OPCODE( i ) ) && GETARG_B( i ) == 0 )

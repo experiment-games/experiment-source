@@ -16,7 +16,7 @@
 
 class ITCPSocket : public IChannel
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     // Bind to the specified port on any address this host has. Note that the address the
@@ -51,7 +51,7 @@ class ITCPSocket : public IChannel
 // Use these to get incoming connections.
 class ITCPListenSocket
 {
-   public:
+    public:
     // Call this to stop listening for connections and delete the object.
     virtual void Release() = 0;
 

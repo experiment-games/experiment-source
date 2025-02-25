@@ -108,7 +108,7 @@ T *_CreateEntity( T *newClass, const char *className )
 // This is the glue that hooks .MAP entity class names to our CPP classes
 abstract_class IEntityFactoryDictionary
 {
-   public:
+    public:
     virtual void InstallFactory( IEntityFactory * pFactory, const char *pClassName ) = 0;
 #ifdef LUA_SDK
     virtual void RemoveFactory( IEntityFactory * pFactory,
@@ -129,7 +129,7 @@ inline bool CanCreateEntityClass( const char *pszClassname )
 
 abstract_class IEntityFactory
 {
-   public:
+    public:
     virtual IServerNetworkable *Create( const char *pClassName ) = 0;
     virtual void Destroy( IServerNetworkable * pNetworkable ) = 0;
     virtual size_t GetEntitySize() = 0;
@@ -138,7 +138,7 @@ abstract_class IEntityFactory
 template < class T >
 class CEntityFactory : public IEntityFactory
 {
-   public:
+    public:
     CEntityFactory( const char *pClassName )
     {
         EntityFactoryDictionary()->InstallFactory( this, pClassName );
@@ -174,7 +174,7 @@ class CEntityFactory : public IEntityFactory
     }
 
 #ifdef LUA_SDK
-   private:
+    private:
     char classname[255];
 #endif
 };
@@ -226,9 +226,9 @@ inline bool FStrEq( const char *sz1, const char *sz2 )
 // UNDONE: Remove/alter MAKE_STRING so we can do this?
 inline bool FStrEq( string_t str1, string_t str2 )
 {
-	// now that these are pooled, we can compare them with
-	// integer equality
-	return str1 == str2;
+    // now that these are pooled, we can compare them with
+    // integer equality
+    return str1 == str2;
 }
 #endif
 
@@ -304,7 +304,7 @@ CBaseEntity *UTIL_EntitiesInPVS( CBaseEntity *pPVSEntity, CBaseEntity *pStarting
 // enumerate entities that match a set of edict flags into a static array
 class CFlaggedEntitiesEnum : public IPartitionEnumerator
 {
-   public:
+    public:
     CFlaggedEntitiesEnum( CBaseEntity **pList, int listMax, int flagMask );
 
     // This gets called	by the enumeration methods with each element
@@ -317,7 +317,7 @@ class CFlaggedEntitiesEnum : public IPartitionEnumerator
     }
     bool AddToList( CBaseEntity *pEntity );
 
-   private:
+    private:
     CBaseEntity **m_pList;
     int m_listMax;
     int m_flagMask;
@@ -360,7 +360,7 @@ void UTIL_RemoveImmediate( CBaseEntity *oldObj );
 #define MAX_SPHERE_QUERY 512
 class CEntitySphereQuery
 {
-   public:
+    public:
     // currently this builds the list in the constructor
     // UNDONE: make an iterative query of ISpatialPartition so we could
     // make queries like this optimal
@@ -371,7 +371,7 @@ class CEntitySphereQuery
         m_listIndex++;
     }
 
-   private:
+    private:
     int m_listIndex;
     int m_listCount;
     CBaseEntity *m_pList[MAX_SPHERE_QUERY];
@@ -592,7 +592,7 @@ void UTIL_RestartAmbientSounds( void );
 
 class EntityMatrix : public VMatrix
 {
-   public:
+    public:
     void InitFromEntity( CBaseEntity *pEntity, int iAttachment = 0 );
     void InitFromEntityLocal( CBaseEntity *entity );
 

@@ -23,13 +23,13 @@ class CTGAPreviewPanel : public CProceduralTexturePanel
 {
     DECLARE_CLASS_SIMPLE( CTGAPreviewPanel, CProceduralTexturePanel );
 
-   public:
+    public:
     // constructor
     CTGAPreviewPanel( vgui::Panel *pParent, const char *pName );
     void SetTGA( const char *pFullPath );
     const char *GetTGA() const;
 
-   private:
+    private:
     CUtlString m_TGAName;
 };
 

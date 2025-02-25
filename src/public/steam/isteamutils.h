@@ -58,7 +58,7 @@ enum ETextFilteringContext
 //-----------------------------------------------------------------------------
 class ISteamUtils
 {
-   public:
+    public:
     // return the number of seconds since the user
     virtual uint32 GetSecondsSinceAppActive() = 0;
     virtual uint32 GetSecondsSinceComputerActive() = 0;

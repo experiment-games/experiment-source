@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2014 Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2014 Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to Steam Inventory
 //
@@ -67,7 +67,7 @@ const SteamInventoryUpdateHandle_t k_SteamInventoryUpdateHandleInvalid = 0xfffff
 //-----------------------------------------------------------------------------
 class ISteamInventory
 {
-   public:
+    public:
     // INVENTORY ASYNC RESULT MANAGEMENT
     //
     // Asynchronous inventory queries always output a result handle which can be used with
@@ -88,8 +88,8 @@ class ISteamInventory
     // Copies the contents of a result set into a flat array. The specific
     // contents of the result set depend on which query which was used.
     virtual bool GetResultItems( SteamInventoryResult_t resultHandle,
-                                 STEAM_OUT_ARRAY_COUNT( punOutItemsArraySize, Output array ) SteamItemDetails_t *pOutItemsArray,
-                                 uint32 *punOutItemsArraySize ) = 0;
+                                STEAM_OUT_ARRAY_COUNT( punOutItemsArraySize, Output array ) SteamItemDetails_t *pOutItemsArray,
+                                uint32 *punOutItemsArraySize ) = 0;
 
     // In combination with GetResultItems, you can use GetResultItemProperty to retrieve
     // dynamic string properties for a given item returned in the result set.
@@ -316,9 +316,9 @@ class ISteamInventory
     // Returns item definition ids and their prices in the user's local currency.
     // Need to call RequestPrices() first.
   virtual bool GetItemsWithPrices( STEAM_ARRAY_COUNT(unArrayLength) STEAM_OUT_ARRAY_COUNT(pArrayItemDefs, Items with prices) SteamItemDef_t *pArrayItemDefs,
-									 STEAM_ARRAY_COUNT(unArrayLength) STEAM_OUT_ARRAY_COUNT(pPrices, List of prices for the given item defs) uint64 *pCurrentPrices,
-									 STEAM_ARRAY_COUNT(unArrayLength) STEAM_OUT_ARRAY_COUNT(pPrices, List of prices for the given item defs) uint64 *pBasePrices,
-									 uint32 unArrayLength ) = 0;
+                                    STEAM_ARRAY_COUNT(unArrayLength) STEAM_OUT_ARRAY_COUNT(pPrices, List of prices for the given item defs) uint64 *pCurrentPrices,
+                                    STEAM_ARRAY_COUNT(unArrayLength) STEAM_OUT_ARRAY_COUNT(pPrices, List of prices for the given item defs) uint64 *pBasePrices,
+                                    uint32 unArrayLength ) = 0;
 
   // Retrieves the price for the item definition id
   // Returns false if there is no price stored for the item definition.

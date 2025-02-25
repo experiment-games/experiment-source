@@ -92,7 +92,7 @@ bool CTFAbuseReportManager::CreateAndPopulateIncident()
 
     // Check if we can report abuse against the game server.
     if ( m_pIncidentData->m_adrGameServer.IsValid() &&
-         !GTFGCClientSystem()->BIsIPRecentMatchServer( m_pIncidentData->m_adrGameServer ) )
+        !GTFGCClientSystem()->BIsIPRecentMatchServer( m_pIncidentData->m_adrGameServer ) )
     {
         m_pIncidentData->m_bCanReportGameServer = true;
     }

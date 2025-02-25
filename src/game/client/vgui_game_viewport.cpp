@@ -17,7 +17,7 @@
 
 class CViewportClientSystem : public IGameSystem
 {
-   public:
+    public:
     CViewportClientSystem()
     {
     }

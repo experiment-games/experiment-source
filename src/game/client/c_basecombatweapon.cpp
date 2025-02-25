@@ -234,30 +234,30 @@ void C_BaseCombatWeapon::DrawCrosshair()
     Color clr = gHUD.m_clrNormal;
     /*
 
-      // TEST: if the thing under your crosshair is on a different team, light the crosshair with a different color.
-      Vector vShootPos, vShootAngles;
-      GetShootPosition( vShootPos, vShootAngles );
+    // TEST: if the thing under your crosshair is on a different team, light the crosshair with a different color.
+    Vector vShootPos, vShootAngles;
+    GetShootPosition( vShootPos, vShootAngles );
 
-      Vector vForward;
-      AngleVectors( vShootAngles, &vForward );
+    Vector vForward;
+    AngleVectors( vShootAngles, &vForward );
 
 
-      // Change the color depending on if we're looking at a friend or an enemy.
-      CPartitionFilterListMask filter( PARTITION_ALL_CLIENT_EDICTS );
-      trace_t tr;
-      traceline->TraceLine( vShootPos, vShootPos + vForward * 10000, COLLISION_GROUP_NONE, MASK_SHOT, &tr, true, ~0, &filter );
+    // Change the color depending on if we're looking at a friend or an enemy.
+    CPartitionFilterListMask filter( PARTITION_ALL_CLIENT_EDICTS );
+    trace_t tr;
+    traceline->TraceLine( vShootPos, vShootPos + vForward * 10000, COLLISION_GROUP_NONE, MASK_SHOT, &tr, true, ~0, &filter );
 
-      if ( tr.index != 0 && tr.index != INVALID_CLIENTENTITY_HANDLE )
-      {
+    if ( tr.index != 0 && tr.index != INVALID_CLIENTENTITY_HANDLE )
+    {
         C_BaseEntity *pEnt = ClientEntityList().GetBaseEntityFromHandle( tr.index );
         if ( pEnt )
         {
-          if ( pEnt->GetTeamNumber() != player->GetTeamNumber() )
-          {
+        if ( pEnt->GetTeamNumber() != player->GetTeamNumber() )
+        {
             g = b = 0;
-          }
         }
-      }
+        }
+    }
     */
 
     CHudCrosshair *pCrosshair = GET_HUDELEMENT( CHudCrosshair );
@@ -484,7 +484,7 @@ int C_BaseCombatWeapon::DrawModel( int flags )
         // without notification
 
         if ( localplayer->GetObserverMode() == OBS_MODE_IN_EYE &&
-             localplayer->GetObserverTarget() == GetOwner() )
+            localplayer->GetObserverTarget() == GetOwner() )
             return false;
     }
 
@@ -501,8 +501,8 @@ int C_BaseCombatWeapon::CalcOverrideModelIndex()
 {
     C_BasePlayer *localplayer = C_BasePlayer::GetLocalPlayer();
     if ( localplayer &&
-         localplayer == GetOwner() &&
-         ShouldDrawLocalPlayerViewModel() )
+        localplayer == GetOwner() &&
+        ShouldDrawLocalPlayerViewModel() )
     {
         return BaseClass::CalcOverrideModelIndex();
     }

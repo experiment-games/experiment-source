@@ -14,7 +14,7 @@
  */
 class CTFSpawnTemplate : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSpawnTemplate, CPointEntity );
 
     virtual ~CTFSpawnTemplate() {}
@@ -25,7 +25,7 @@ class CTFSpawnTemplate : public CPointEntity
 //--------------------------------------------------------
 class CTFSpawner : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSpawner, CPointEntity );
     DECLARE_DATADESC();
 
@@ -42,7 +42,7 @@ class CTFSpawner : public CPointEntity
     // Output
     void OnKilled( CBaseEntity *dead );
 
-   private:
+    private:
     void Reset( void );
 
     bool m_bExpended;

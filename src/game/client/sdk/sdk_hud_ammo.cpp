@@ -25,7 +25,7 @@ class CHudAmmo : public CHudNumericDisplay, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudAmmo, CHudNumericDisplay );
 
-   public:
+    public:
     CHudAmmo( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -34,13 +34,13 @@ class CHudAmmo : public CHudNumericDisplay, public CHudElement
     void SetAmmo( int ammo, bool playAnimation );
     void SetAmmo2( int ammo2, bool playAnimation );
 
-   protected:
+    protected:
     virtual void OnThink();
 
     void UpdateAmmoDisplays();
     void UpdatePlayerAmmo( C_BasePlayer *player );
 
-   private:
+    private:
     CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
     CHandle< C_BaseEntity > m_hCurrentVehicle;
     int m_iAmmo;
@@ -223,13 +223,13 @@ void CHudAmmo::UpdateVehicleAmmo( C_BasePlayer *player, IClientVehicle *pVehicle
     // update whether or not we show the total ammo display
     if (pVehicle->PrimaryAmmoUsesClips())
     {
-      SetShouldDisplaySecondaryValue(true);
-      g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponUsesClips");
+    SetShouldDisplaySecondaryValue(true);
+    g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponUsesClips");
     }
     else
     {
-      g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponDoesNotUseClips");
-      SetShouldDisplaySecondaryValue(false);
+    g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponDoesNotUseClips");
+    SetShouldDisplaySecondaryValue(false);
     }
 
     g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponChanged");
@@ -319,7 +319,7 @@ class CHudSecondaryAmmo : public CHudNumericDisplay, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudSecondaryAmmo, CHudNumericDisplay );
 
-   public:
+    public:
     CHudSecondaryAmmo( const char *pElementName )
         : BaseClass( NULL, "HudAmmoSecondary" ), CHudElement( pElementName )
     {
@@ -370,7 +370,7 @@ class CHudSecondaryAmmo : public CHudNumericDisplay, public CHudElement
         UpdateAmmoState();
     }
 
-   protected:
+    protected:
     virtual void OnThink()
     {
         // set whether or not the panel draws based on if we have a weapon that supports secondary ammo
@@ -419,7 +419,7 @@ class CHudSecondaryAmmo : public CHudNumericDisplay, public CHudElement
         }
     }
 
-   private:
+    private:
     CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
     int m_iAmmo;
 };

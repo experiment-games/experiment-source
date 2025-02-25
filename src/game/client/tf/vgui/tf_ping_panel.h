@@ -20,7 +20,7 @@ using namespace vgui;
 class CTFPingPanel : public CMatchMakingDashboardSidePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTFPingPanel, CMatchMakingDashboardSidePanel )
-   public:
+    public:
     CTFPingPanel( Panel *pPanel, const char *pszName, ETFMatchGroup eMatchGroup );
     ~CTFPingPanel();
 
@@ -31,7 +31,7 @@ class CTFPingPanel : public CMatchMakingDashboardSidePanel, public CGameEventLis
 
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     void CleanupPingPanels();
     void RegeneratePingPanels();
     void UpdateCurrentPing();

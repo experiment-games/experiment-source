@@ -231,11 +231,11 @@ float3 LightMapSample( sampler LightmapSampler, float2 vTexCoord )
 #else
     {
 #if 0  // 1 for cheap sampling, 0 for accurate scaling from the individual samples
-		{
-			float4 sample = tex2D( LightmapSampler, vTexCoord );
+        {
+            float4 sample = tex2D( LightmapSampler, vTexCoord );
 
-			return sample.rgb * sample.a;
-		}
+            return sample.rgb * sample.a;
+        }
 #else
         {
             float4 Weights;
@@ -245,12 +245,12 @@ float3 LightMapSample( sampler LightmapSampler, float2 vTexCoord )
             float4 samples_3;
 
             asm {
-				tfetch2D samples_0, vTexCoord.xy, LightmapSampler, OffsetX = -0.5, OffsetY = -0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
-				tfetch2D samples_1, vTexCoord.xy, LightmapSampler, OffsetX =  0.5, OffsetY = -0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
-				tfetch2D samples_2, vTexCoord.xy, LightmapSampler, OffsetX = -0.5, OffsetY =  0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
-				tfetch2D samples_3, vTexCoord.xy, LightmapSampler, OffsetX =  0.5, OffsetY =  0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
+                tfetch2D samples_0, vTexCoord.xy, LightmapSampler, OffsetX = -0.5, OffsetY = -0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
+                tfetch2D samples_1, vTexCoord.xy, LightmapSampler, OffsetX =  0.5, OffsetY = -0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
+                tfetch2D samples_2, vTexCoord.xy, LightmapSampler, OffsetX = -0.5, OffsetY =  0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
+                tfetch2D samples_3, vTexCoord.xy, LightmapSampler, OffsetX =  0.5, OffsetY =  0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
 
-				getWeights2D Weights, vTexCoord.xy, LightmapSampler
+                getWeights2D Weights, vTexCoord.xy, LightmapSampler
             }
             ;
 

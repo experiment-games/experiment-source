@@ -33,7 +33,7 @@ class CTargetID : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTargetID, vgui::EditablePanel );
 
-   public:
+    public:
     CTargetID( const char *pElementName );
 
     virtual void LevelShutdown( void );
@@ -64,11 +64,11 @@ class CTargetID : public CHudElement, public vgui::EditablePanel
     virtual bool DrawHealthIcon();
     virtual C_TFPlayer *GetTargetForSteamAvatar( C_TFPlayer *pTFPlayer );
 
-   private:
+    private:
     bool IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, float &flNewTargetRetainFOV );
     void UpdateFloatingHealthIconVisibility( bool bVisible );
 
-   protected:
+    protected:
     vgui::HFont m_hFont;
     int m_iLastEntIndex;
     float m_flLastChangeTime;
@@ -106,7 +106,7 @@ class CMainTargetID : public CTargetID
 {
     DECLARE_CLASS_SIMPLE( CMainTargetID, CTargetID );
 
-   public:
+    public:
     CMainTargetID( const char *pElementName )
         : CTargetID( pElementName ) {}
 
@@ -117,7 +117,7 @@ class CSpectatorTargetID : public CTargetID
 {
     DECLARE_CLASS_SIMPLE( CSpectatorTargetID, CTargetID );
 
-   public:
+    public:
     CSpectatorTargetID( const char *pElementName )
         : CTargetID( pElementName ) {}
 
@@ -131,7 +131,7 @@ class CSpectatorTargetID : public CTargetID
         return true;
     }
 
-   private:
+    private:
     vgui::Panel *m_pBGPanel_Spec_Blue;
     vgui::Panel *m_pBGPanel_Spec_Red;
 };
@@ -143,7 +143,7 @@ class CSecondaryTargetID : public CTargetID
 {
     DECLARE_CLASS_SIMPLE( CSecondaryTargetID, CTargetID );
 
-   public:
+    public:
     CSecondaryTargetID( const char *pElementName );
 
     virtual bool ShouldDraw( void );
@@ -158,7 +158,7 @@ class CSecondaryTargetID : public CTargetID
         return true;
     }
 
-   private:
+    private:
     wchar_t m_wszPrepend[MAX_PREPEND_STRING];
 
     bool m_bWasHidingLowerElements;
@@ -171,7 +171,7 @@ class CFloatingHealthIcon : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CFloatingHealthIcon, vgui::EditablePanel );
 
-   public:
+    public:
     CFloatingHealthIcon( vgui::Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -192,7 +192,7 @@ class CFloatingHealthIcon : public vgui::EditablePanel
 
     bool CalculatePosition();
 
-   private:
+    private:
     CTFSpectatorGUIHealth *m_pTargetHealth;
     CHandle< C_BaseEntity > m_hEntity;
     float m_flPrevHealth;

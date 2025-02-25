@@ -158,7 +158,7 @@ void CItemEffectMeterManager::FireGameEvent( IGameEvent *event )
     bool bNeedsUpdate = false;
 
     if ( FStrEq( "localplayer_pickup_weapon", type ) ||
-         FStrEq( "localplayer_respawn", type ) )
+        FStrEq( "localplayer_respawn", type ) )
     {
         bNeedsUpdate = true;
     }
@@ -352,9 +352,9 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer *pPlayer, CUtlVe
     /*hNewMeter = new CHudItemEffectMeter_HalloweenSouls( pszElementName, pPlayer );
     if ( hNewMeter )
     {
-      gHUD.AddHudElement( hNewMeter );
-      outMeters.AddToHead( hNewMeter );
-      hNewMeter->SetVisible( false );
+    gHUD.AddHudElement( hNewMeter );
+    outMeters.AddToHead( hNewMeter );
+    hNewMeter->SetVisible( false );
     }*/
 
     // Mvm canteen
@@ -522,7 +522,7 @@ void CHudItemEffectMeter::Update( C_TFPlayer *pPlayer )
 
     // Play a sound if we are refreshed.
     if ( C_TFPlayer::GetLocalTFPlayer() && flProgress >= 1.f && m_flOldProgress < 1.f &&
-         pPlayer->IsAlive() && ShouldBeep() )
+        pPlayer->IsAlive() && ShouldBeep() )
     {
         m_flOldProgress = flProgress;
         C_TFPlayer::GetLocalTFPlayer()->EmitSound( GetBeepSound() );

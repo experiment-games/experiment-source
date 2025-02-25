@@ -23,12 +23,12 @@ class CDmeJoint : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeJoint, CDmeDag );
 
-   public:
+    public:
     virtual void Draw( CDmeDrawSettings *pDrawSettings = NULL );
 
     static void DrawJointHierarchy( bool bDrawJoints );
 
-   private:
+    private:
     void DrawJoints();
 
     CMaterialReference m_JointMaterial;

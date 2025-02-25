@@ -13,33 +13,32 @@ $include "$SRCDIR\vpc_scripts\source_lib_base.vpc"
 
 $Configuration
 {
-	$Compiler
-	{
-		$AdditionalIncludeDirectories	"$BASE;../zlib/include"
-		$PreprocessorDefinitions		"$BASE;SPNG_STATIC"
+    $Compiler
+    {
+        $AdditionalIncludeDirectories	"$BASE;../zlib/include"
+        $PreprocessorDefinitions		"$BASE;SPNG_STATIC"
         $PreprocessorDefinitions        "$BASE;MAKEFILE_FORCE_C_COMPILE" [$LINUXALL || $ANDROIDALL]
-		$CompileAs						"Compile as C Code (/TC)"
+        $CompileAs						"Compile as C Code (/TC)"
 
-		// Force the tier0 stdlib routines to be used for basic CRT functions.		
-		//$ForcedIncludeFile				"tier0_force_stdlib.h"
+        // Force the tier0 stdlib routines to be used for basic CRT functions.
+        //$ForcedIncludeFile				"tier0_force_stdlib.h"
 
-		$GCC_ExtraCompilerFlags			"$BASE -Wno-implicit-function-declaration"	//Warn about implicit function declarations
-		$GCC_ExtraCompilerFlags			"$BASE -x c" [$OSXALL]
+        $GCC_ExtraCompilerFlags			"$BASE -Wno-implicit-function-declaration"	//Warn about implicit function declarations
+        $GCC_ExtraCompilerFlags			"$BASE -x c" [$OSXALL]
 
-		$TreatWarningsAsErrors				"No"
-	}
+        $TreatWarningsAsErrors				"No"
+    }
 }
 
 $Project "libspng"
 {
-	$Folder	"Header Files"
-	{
-		$File "spng\spng.h"
-	}
+    $Folder	"Header Files"
+    {
+        $File "spng\spng.h"
+    }
 
-	$Folder	"Source Files"
-	{
-		$File "spng\spng.c"
-	}
+    $Folder	"Source Files"
+    {
+        $File "spng\spng.c"
+    }
 }
-

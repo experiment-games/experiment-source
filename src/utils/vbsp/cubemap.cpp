@@ -25,19 +25,19 @@
 
   While loading the map, it calls:
     *** Cubemap_SaveBrushSides
-      Builds a list of what cubemaps manually were assigned to what faces
-      in s_EnvCubemapToBrushSides.
+    Builds a list of what cubemaps manually were assigned to what faces
+    in s_EnvCubemapToBrushSides.
 
   Immediately after loading the map, it calls:
     *** Cubemap_FixupBrushSidesMaterials
-      Goes through s_EnvCubemapToBrushSides and does Cubemap_CreateTexInfo for each
-      side referenced by an env_cubemap manually.
+    Goes through s_EnvCubemapToBrushSides and does Cubemap_CreateTexInfo for each
+    side referenced by an env_cubemap manually.
 
   Then it calls Cubemap_AttachDefaultCubemapToSpecularSides:
     *** Cubemap_InitCubemapSideData:
-      Setup s_aCubemapSideData.bHasEnvMapInMaterial and bManuallyPickedByAnEnvCubemap for each side.
-      bHasEnvMapInMaterial is set if the side's material has $envmap.
-      bManuallyPickedByAnEnvCubemap is true if the side was in s_EnvCubemapToBrushSides.
+    Setup s_aCubemapSideData.bHasEnvMapInMaterial and bManuallyPickedByAnEnvCubemap for each side.
+    bHasEnvMapInMaterial is set if the side's material has $envmap.
+    bManuallyPickedByAnEnvCubemap is true if the side was in s_EnvCubemapToBrushSides.
 
     Then, for each bHasEnvMapInMaterial and !bManuallyPickedByAnEnvCubemap (ie: every specular surface that wasn't
     referenced by some env_cubemap), it does Cubemap_CreateTexInfo.
@@ -237,8 +237,8 @@ static bool LoadSrcVTFFiles( IVTFTexture *pSrcVTFTextures[6], const char *pSkybo
 
         // NOTE: texture[0] is a side texture that could be 1/2 height, so allow this and also allow 4x4 faces
         if ( ( ( pSrcVTFTextures[i]->Width() != pSrcVTFTextures[0]->Width() ) && ( pSrcVTFTextures[i]->Width() != 4 ) ) ||
-             ( ( pSrcVTFTextures[i]->Height() != pSrcVTFTextures[0]->Height() ) && ( pSrcVTFTextures[i]->Height() != pSrcVTFTextures[0]->Height() * 2 ) && ( pSrcVTFTextures[i]->Height() != 4 ) ) ||
-             ( flagsNoAlpha != flagsFirstNoAlpha ) )
+            ( ( pSrcVTFTextures[i]->Height() != pSrcVTFTextures[0]->Height() ) && ( pSrcVTFTextures[i]->Height() != pSrcVTFTextures[0]->Height() * 2 ) && ( pSrcVTFTextures[i]->Height() != 4 ) ) ||
+            ( flagsNoAlpha != flagsFirstNoAlpha ) )
         {
             Warning( "*** Error: Skybox vtf files for %s weren't compiled with the same size texture and/or same flags!\n", pSkyboxMaterialBaseName );
             return false;
@@ -300,9 +300,9 @@ void CreateDefaultCubemaps( bool bHDR )
         return;
     }
     Msg( "Creating default %scubemaps for env_cubemap using skybox materials:\n   %s*.vmt\n"
-         " ! Run buildcubemaps in the engine to get the correct cube maps.\n",
-         bHDR ? "HDR " : "LDR ",
-         skyboxMaterialName );
+        " ! Run buildcubemaps in the engine to get the correct cube maps.\n",
+        bHDR ? "HDR " : "LDR ",
+        skyboxMaterialName );
 
     // Figure out the mip differences between the two textures
     int iMipLevelOffset = 0;
@@ -703,9 +703,9 @@ void Cubemap_FixupBrushSidesMaterials( void )
             if ( sideIndex < 0 )
             {
                 Warning( "env_cubemap pointing at deleted brushside near (%d, %d, %d)\n",
-                         g_CubemapSamples[cubemapID].origin[0],
-                         g_CubemapSamples[cubemapID].origin[1],
-                         g_CubemapSamples[cubemapID].origin[2] );
+                        g_CubemapSamples[cubemapID].origin[0],
+                        g_CubemapSamples[cubemapID].origin[1],
+                        g_CubemapSamples[cubemapID].origin[2] );
 
                 continue;
             }

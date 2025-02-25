@@ -29,7 +29,7 @@ class CDmeShape : public CDmElement
 {
     DEFINE_ELEMENT( CDmeShape, CDmElement );
 
-   public:
+    public:
     virtual void Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDmeDrawSettings = NULL );
 
     virtual void GetBoundingSphere( Vector &c, float &r ) const;
@@ -43,7 +43,7 @@ class CDmeShape : public CDmElement
     // Get the Nth World Matrix for the shape (the world matrix of the Nth DmeDag parent)
     void GetShapeToWorldTransform( matrix3x4_t &mat, int nParentIndex = 0 ) const;
 
-   protected:
+    protected:
     CDmaVar< bool > m_visible;
 };
 

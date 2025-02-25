@@ -18,7 +18,7 @@
 
 class CMumbleSystem : public CBaseGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
     // Methods of IGameSystem
     virtual bool Init();
     virtual void LevelInitPostEntity();
@@ -28,7 +28,7 @@ class CMumbleSystem : public CBaseGameSystemPerFrame, public CGameEventListener
     // Methods of IGameSystem
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     char m_szSteamIDCurrentServer[32];
     int m_cubSteamIDCurrentServer;
     bool m_bHasSetPlayerUniqueId;

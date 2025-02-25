@@ -48,7 +48,7 @@ class CWeaponSniperRifle : public CBaseHLCombatWeapon
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponSniperRifle, CBaseHLCombatWeapon );
 
     CWeaponSniperRifle( void );
@@ -75,7 +75,7 @@ class CWeaponSniperRifle : public CBaseHLCombatWeapon
 
     DECLARE_ACTTABLE();
 
-   protected:
+    protected:
     float m_fNextZoom;
     int m_nZoomLevel;
 };

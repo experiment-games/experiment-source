@@ -34,7 +34,7 @@ class CBackpackPanel : public CBaseLoadoutPanel
 {
     DECLARE_CLASS_SIMPLE( CBackpackPanel, CBaseLoadoutPanel );
 
-   public:
+    public:
     CBackpackPanel( vgui::Panel *parent, const char *panelName );
     virtual ~CBackpackPanel();
 
@@ -167,7 +167,7 @@ class CBackpackPanel : public CBaseLoadoutPanel
     void OpenInspectModelPanelAndCopyItem( CEconItemView *pItemView );
     CCollectionCraftingPanel *GetCollectionCraftPanel();
 
-   protected:
+    protected:
     virtual void StartDrag( int x, int y );
     virtual void StopDrag( bool bSucceeded );
     virtual bool CanDragTo( CItemModelPanel *pItemPanel, int iPanelIndex )
@@ -236,7 +236,7 @@ class CBackpackPanel : public CBaseLoadoutPanel
     void AddCommerceSubmenus( Menu *pSubMenu, item_definition_index_t iItemDef, const char *pszActionFmt );
     void DoGiftToPlayer();
 
-   protected:
+    protected:
     vgui::TextEntry *m_pNameFilterTextEntry;
     CUtlVector< wchar_t > m_wNameFilter;
     float m_flFilterItemTime;

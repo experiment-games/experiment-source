@@ -20,7 +20,7 @@ class CTFPlayer;
 // General purpose collector class for ForAllArea-style functor methods
 class CTFAreaCollector
 {
-   public:
+    public:
     bool operator()( CNavArea *area )
     {
         m_vector.AddToTail( ( CTFNavArea * )area );
@@ -33,7 +33,7 @@ class CTFAreaCollector
 //-------------------------------------------------------------------------
 class CTFNavMesh : public CNavMesh
 {
-   public:
+    public:
     CTFNavMesh( void );
 
     virtual CTFNavArea *CreateArea( void ) const;  // CNavArea factory
@@ -50,9 +50,9 @@ class CTFNavMesh : public CNavMesh
     virtual void FireGameEvent( IGameEvent *event );
 
     /**
-     * Return true if nav mesh can be trusted for all climbing/jumping decisions because game environment is fairly simple.
-     * Authoritative meshes mean path followers can skip CPU intesive realtime scanning of unpredictable geometry.
-     */
+    * Return true if nav mesh can be trusted for all climbing/jumping decisions because game environment is fairly simple.
+    * Authoritative meshes mean path followers can skip CPU intesive realtime scanning of unpredictable geometry.
+    */
     virtual bool IsAuthoritative( void ) const
     {
         return true;
@@ -112,12 +112,12 @@ class CTFNavMesh : public CNavMesh
 
     virtual void OnDoorCreated( CBaseEntity *door );  // invoked when a door is created
 
-   protected:
+    protected:
     virtual void BeginCustomAnalysis( bool bIncremental );
     virtual void PostCustomAnalysis( void );  // invoked when custom analysis step is complete
     virtual void EndCustomAnalysis();
 
-   private:
+    private:
     void ComputeIncursionDistances( void );  // recompute travel distance from each team's spawn room for each nav area
     void ComputeIncursionDistances( CTFNavArea *spawnArea, int team );
     void ComputeInvasionAreas( void );

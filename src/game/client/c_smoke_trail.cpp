@@ -27,7 +27,7 @@
 
 class CRocketTrailParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CRocketTrailParticle( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -59,7 +59,7 @@ class CRocketTrailParticle : public CSimpleEmitter
         return ( ( ( float )pParticle->m_uchStartAlpha / 255.0f ) * sin( M_PI * ( pParticle->m_flLifetime / pParticle->m_flDieTime ) ) );
     }
 
-   private:
+    private:
     CRocketTrailParticle( const CRocketTrailParticle & );
 };
 
@@ -69,7 +69,7 @@ class CRocketTrailParticle : public CSimpleEmitter
 
 class CSmokeParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CSmokeParticle( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -116,7 +116,7 @@ class CSmokeParticle : public CSimpleEmitter
         return pParticle->m_flRoll;
     }
 
-   private:
+    private:
     CSmokeParticle( const CSmokeParticle & );
 };
 
@@ -1116,33 +1116,33 @@ DECLARE_CLIENT_EFFECT( "RPGShotDown", RPGShotDownCallback );
 
 class C_SporeTrail : public C_BaseParticleEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_SporeTrail, C_BaseParticleEntity );
     DECLARE_CLIENTCLASS();
 
     C_SporeTrail( void );
     virtual ~C_SporeTrail( void );
 
-   public:
+    public:
     void SetEmit( bool bEmit );
 
     // C_BaseEntity
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pAbsOrigin, QAngle *pAbsAngles );
 
     // IPrototypeAppEffect
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
 
     // IParticleEffect
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
     virtual void StartRender( VMatrix &effectMatrix );
 
-   public:
+    public:
     Vector m_vecEndColor;
 
     float m_flSpawnRate;
@@ -1155,7 +1155,7 @@ class C_SporeTrail : public C_BaseParticleEntity
 
     bool m_bEmit;
 
-   private:
+    private:
     C_SporeTrail( const C_SporeTrail & );
 
     void AddParticles( void );
@@ -1166,7 +1166,7 @@ class C_SporeTrail : public C_BaseParticleEntity
 
     Vector m_vecPos;
     Vector m_vecLastPos;  // This is stored so we can spawn particles in between the previous and new position
-                          // to eliminate holes in the trail.
+                        // to eliminate holes in the trail.
 
     VMatrix m_mAttachmentMatrix;
     CParticleMgr *m_pParticleMgr;
@@ -1562,7 +1562,7 @@ void C_FireTrail::Update( float fTimeDelta )
 
 class CDustFollower : public CSimpleEmitter
 {
-   public:
+    public:
     CDustFollower( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -1593,7 +1593,7 @@ class CDustFollower : public CSimpleEmitter
         return pParticle->m_flRoll;
     }
 
-   private:
+    private:
     CDustFollower( const CDustFollower & );
 };
 

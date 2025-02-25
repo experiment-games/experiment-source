@@ -61,7 +61,7 @@ namespace java
 class ImmutableLazyMessageFieldGenerator
     : public ImmutableMessageFieldGenerator
 {
-   public:
+    public:
     explicit ImmutableLazyMessageFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -80,14 +80,14 @@ class ImmutableLazyMessageFieldGenerator
     void GenerateSerializationCode( io::Printer* printer ) const;
     void GenerateSerializedSizeCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutableLazyMessageFieldGenerator );
 };
 
 class ImmutableLazyMessageOneofFieldGenerator
     : public ImmutableLazyMessageFieldGenerator
 {
-   public:
+    public:
     ImmutableLazyMessageOneofFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -103,14 +103,14 @@ class ImmutableLazyMessageOneofFieldGenerator
     void GenerateSerializationCode( io::Printer* printer ) const;
     void GenerateSerializedSizeCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutableLazyMessageOneofFieldGenerator );
 };
 
 class RepeatedImmutableLazyMessageFieldGenerator
     : public RepeatedImmutableMessageFieldGenerator
 {
-   public:
+    public:
     explicit RepeatedImmutableLazyMessageFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -125,7 +125,7 @@ class RepeatedImmutableLazyMessageFieldGenerator
     void GenerateSerializationCode( io::Printer* printer ) const;
     void GenerateSerializedSizeCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( RepeatedImmutableLazyMessageFieldGenerator );
 };
 

@@ -123,8 +123,8 @@ enum EGLMTexFlags
     kGLMTexIsDepth = 0x10,
     kGLMTexSRGB = 0x20,
     kGLMTexMultisampled = 0x40,  // has an RBO backing it.  Cannot combine with Mipped, MippedAuto.  One slice maximum, only targeting GL_TEXTURE_2D.
-                                 // actually not 100% positive on the mipmapping, the RBO itself can't be mipped, but the resulting texture could
-                                 // have mipmaps generated.
+                                // actually not 100% positive on the mipmapping, the RBO itself can't be mipped, but the resulting texture could
+                                // have mipmaps generated.
 };
 
 //===============================================================================
@@ -173,7 +173,7 @@ struct GLMTexLayout
 
 class CGLMTexLayoutTable
 {
-   public:
+    public:
     CGLMTexLayoutTable();
 
     GLMTexLayout *NewLayoutRef( GLMTexLayoutKey *pDesiredKey );  // pass in a pointer to layout key - receive ptr to completed layout
@@ -181,7 +181,7 @@ class CGLMTexLayoutTable
 
     void DumpStats( void );
 
-   protected:
+    protected:
     CUtlMap< GLMTexLayoutKey, GLMTexLayout * > m_layoutMap;
 };
 
@@ -365,9 +365,9 @@ struct GLMTexSamplingParams
         }
 
         if ( ( m_packed.m_minFilter != curState.m_packed.m_minFilter ) ||
-             ( m_packed.m_magFilter != curState.m_packed.m_magFilter ) ||
-             ( m_packed.m_mipFilter != curState.m_packed.m_mipFilter ) ||
-             ( m_packed.m_maxAniso != curState.m_packed.m_maxAniso ) )
+            ( m_packed.m_magFilter != curState.m_packed.m_magFilter ) ||
+            ( m_packed.m_mipFilter != curState.m_packed.m_mipFilter ) ||
+            ( m_packed.m_maxAniso != curState.m_packed.m_maxAniso ) )
         {
             gGL->glTexParameteri( target, GL_TEXTURE_MIN_FILTER, dxtogl_minFilter[m_packed.m_minFilter][m_packed.m_mipFilter] );
             gGL->glTexParameteri( target, GL_TEXTURE_MAG_FILTER, dxtogl_magFilter[m_packed.m_magFilter] );
@@ -460,7 +460,7 @@ struct GLMTexSamplingParams
 
 class CGLMTex
 {
-   public:
+    public:
     void Lock( GLMTexLockParams *params, char **addressOut, int *yStrideOut, int *zStrideOut );
     void Unlock( GLMTexLockParams *params );
     GLuint GetTexName()
@@ -468,7 +468,7 @@ class CGLMTex
         return m_texName;
     }
 
-   protected:
+    protected:
     friend class GLMContext;  // only GLMContext can make CGLMTex objects
     friend class GLMTester;
     friend class CGLMFBO;

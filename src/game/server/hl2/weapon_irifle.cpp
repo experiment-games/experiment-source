@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //
 //=============================================================================//
-//========= Copyright © 1996-2003, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2003, Valve LLC, All rights reserved. ============
 //
 // Purpose: This is the incendiary rifle.
 //
@@ -31,7 +31,7 @@
 
 class CWeaponIRifle : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     CWeaponIRifle();
 
     DECLARE_SERVERCLASS();

@@ -122,7 +122,7 @@ class CTFBotController : public CPointEntity
 {
     DECLARE_CLASS( CTFBotController, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     // Input.
@@ -136,7 +136,7 @@ class CTFBotController : public CPointEntity
     void InputBotPreventMovement( inputdata_t &inputdata );
     void InputBotClearQueue( inputdata_t &inputdata );
 
-   public:
+    public:
     COutputEvent m_outputOnCommandFinished;  // Fired when the entity is done respawning the players.
     CHandle< CTFPlayer > m_hBot;
     string_t m_iszBotName;
@@ -432,9 +432,9 @@ CON_COMMAND_F( bot_kick, "Remove a bot by name, or an entire team (\"red\" or \"
         if ( player->GetFlags() & FL_FAKECLIENT )
         {
             if ( FStrEq( args.Arg( 1 ), "all" ) ||
-                 FStrEq( args.Arg( 1 ), player->GetPlayerName() ) ||
-                 ( FStrEq( args.Arg( 1 ), "red" ) && player->GetTeamNumber() == TF_TEAM_RED ) ||
-                 ( FStrEq( args.Arg( 1 ), "blue" ) && player->GetTeamNumber() == TF_TEAM_BLUE ) )
+                FStrEq( args.Arg( 1 ), player->GetPlayerName() ) ||
+                ( FStrEq( args.Arg( 1 ), "red" ) && player->GetTeamNumber() == TF_TEAM_RED ) ||
+                ( FStrEq( args.Arg( 1 ), "blue" ) && player->GetTeamNumber() == TF_TEAM_BLUE ) )
             {
                 engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", player->GetUserID() ) );
             }
@@ -647,9 +647,9 @@ CON_COMMAND_F( bot_hurt, "Hurt a bot by team, or all bots (\"all\").", FCVAR_GAM
         if ( player->GetFlags() & FL_FAKECLIENT )
         {
             if ( iTeam == TEAM_ANY ||
-                 FStrEq( pPlayerName, player->GetPlayerName() ) ||
-                 ( player->GetTeamNumber() == iTeam ) ||
-                 ( player->GetTeamNumber() == iTeam ) )
+                FStrEq( pPlayerName, player->GetPlayerName() ) ||
+                ( player->GetTeamNumber() == iTeam ) ||
+                ( player->GetTeamNumber() == iTeam ) )
             {
                 player->m_iHealth -= nDamage;
 

@@ -38,7 +38,7 @@
 
 class CInfoTarget : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CInfoTarget, CPointEntity );
 
     void Spawn( void );
@@ -70,7 +70,7 @@ bool IsStaticPointEntity( CBaseEntity *pEnt )
         return 1;
 
     if ( FClassnameIs( pEnt, "info_target" ) || FClassnameIs( pEnt, "info_landmark" ) ||
-         FClassnameIs( pEnt, "path_corner" ) )
+        FClassnameIs( pEnt, "path_corner" ) )
         return true;
 
     return false;
@@ -954,7 +954,7 @@ int CBeam::DrawModel( int flags )
 
 #ifdef PORTAL
     if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) ||
-         ( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
+        ( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
     {
         return 0;
     }

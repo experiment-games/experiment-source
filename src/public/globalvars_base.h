@@ -18,7 +18,7 @@ class CSaveRestoreData;
 //-----------------------------------------------------------------------------
 class CGlobalVarsBase
 {
-   public:
+    public:
     CGlobalVarsBase( bool bIsClient );
 
     // This can be used to filter debug output or to catch the client or server in the act.
@@ -27,7 +27,7 @@ class CGlobalVarsBase
     // for encoding m_flSimulationTime, m_flAnimTime
     int GetNetworkBase( int nTick, int nEntity );
 
-   public:
+    public:
     // Absolute time (per frame still - Use Plat_FloatTime() for a high precision real time
     //  perf clock, but note that it doesn't obey host_timescale/host_framerate)
     float realtime;
@@ -78,7 +78,7 @@ class CGlobalVarsBase
         return min( maxClients, nMaxCount );
     }
 
-   private:
+    private:
     // Set to true in client code.
     bool m_bClient;
 
@@ -98,8 +98,8 @@ inline int CGlobalVarsBase::GetNetworkBase( int nTick, int nEntity )
 
 inline CGlobalVarsBase::CGlobalVarsBase( bool bIsClient )
     : m_bClient( bIsClient ),
-      nTimestampNetworkingBase( 100 ),
-      nTimestampRandomizeWindow( 32 )
+    nTimestampNetworkingBase( 100 ),
+    nTimestampRandomizeWindow( 32 )
 {
 }
 

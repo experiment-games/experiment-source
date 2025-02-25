@@ -14,24 +14,24 @@ void ListPeople(const tutorial::AddressBook& address_book) {
     cout << "Person ID: " << person.id() << endl;
     cout << "  Name: " << person.name() << endl;
     if (person.has_email()) {
-      cout << "  E-mail address: " << person.email() << endl;
+    cout << "  E-mail address: " << person.email() << endl;
     }
 
     for (int j = 0; j < person.phone_size(); j++) {
-      const tutorial::Person::PhoneNumber& phone_number = person.phone(j);
+    const tutorial::Person::PhoneNumber& phone_number = person.phone(j);
 
-      switch (phone_number.type()) {
+    switch (phone_number.type()) {
         case tutorial::Person::MOBILE:
-          cout << "  Mobile phone #: ";
-          break;
+        cout << "  Mobile phone #: ";
+        break;
         case tutorial::Person::HOME:
-          cout << "  Home phone #: ";
-          break;
+        cout << "  Home phone #: ";
+        break;
         case tutorial::Person::WORK:
-          cout << "  Work phone #: ";
-          break;
-      }
-      cout << phone_number.number() << endl;
+        cout << "  Work phone #: ";
+        break;
+    }
+    cout << phone_number.number() << endl;
     }
   }
 }
@@ -54,8 +54,8 @@ int main(int argc, char* argv[]) {
     // Read the existing address book.
     fstream input(argv[1], ios::in | ios::binary);
     if (!address_book.ParseFromIstream(&input)) {
-      cerr << "Failed to parse address book." << endl;
-      return -1;
+    cerr << "Failed to parse address book." << endl;
+    return -1;
     }
   }
 

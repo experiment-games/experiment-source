@@ -46,7 +46,7 @@ typedef CTypedProtoBufScriptObjectDefinition< CMsgQuestMapStarType, DEF_TYPE_QUE
 //
 class CQuestMapNodeDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQuestMapNodeDef, DEF_TYPE_QUEST_MAP_NODE >
 {
-   public:
+    public:
     CQuestMapNodeDefinition();
     virtual ~CQuestMapNodeDefinition();
 
@@ -117,7 +117,7 @@ class CQuestMapNodeDefinition : public CTypedProtoBufScriptObjectDefinition< CMs
         return m_msgData.stars_to_unlock();
     }
 
-   private:
+    private:
     bool BConditionsMet_Recursive( const CMsgQuestMapNodeCondition& msgCondition, const MapQuestNodes_t& nodes, CUtlMap< uint32, bool >* pMapOutConnectedNodeCondition ) const;
 
     virtual bool BPostDataLoaded( CUtlVector< CUtlString >* pVecErrors ) OVERRIDE;
@@ -135,7 +135,7 @@ class CQuestMapNodeDefinition : public CTypedProtoBufScriptObjectDefinition< CMs
 //---------------------------------------------------------------------------------
 class CQuestMapNode : public GCSDK::CProtoBufSharedObject< CSOQuestMapNode, k_EEconTypeQuestMapNode >
 {
-   public:
+    public:
     CQuestMapNode();
 
     uint64 GetID() const

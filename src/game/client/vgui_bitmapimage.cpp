@@ -263,7 +263,7 @@ bool InitializeImage( KeyValues *pInitData, const char* pSectionName, vgui::Pane
   {
     pBitmapImageSection = pInitData->FindKey( pSectionName );
     if ( !pBitmapImageSection )
-      return false;
+    return false;
   }
   else
   {

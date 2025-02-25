@@ -18,7 +18,7 @@ class CWaterBullet : public CBaseAnimating
 {
     DECLARE_CLASS( CWaterBullet, CBaseAnimating );
 
-   public:
+    public:
     void Precache();
     void Spawn( const Vector &vecOrigin, const Vector &vecDir );
     void Touch( CBaseEntity *pOther );

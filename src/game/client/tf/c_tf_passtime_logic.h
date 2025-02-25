@@ -21,7 +21,7 @@ class C_TFPlayer;
 class C_PasstimeReticle;
 class C_TFPasstimeLogic : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TFPasstimeLogic, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -57,7 +57,7 @@ class C_TFPasstimeLogic : public C_BaseEntity
         return m_iBallPower;
     }
 
-   private:
+    private:
     bool GetImportantEntities( C_PasstimeBall **ppBall, C_TFPlayer **ppCarrier, C_TFPlayer **ppHomingTarget ) const;
     void DestroyBeam( int i, C_PasstimeBall *pBall );
 

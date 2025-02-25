@@ -22,7 +22,7 @@ namespace GCSDK
 // exact time wise should use this );
 class CJobTime
 {
-   public:
+    public:
     CJobTime();
 
     void SetToJobTime();
@@ -76,7 +76,7 @@ class CJobTime
         return *this;
     }
 
-   private:
+    private:
     uint64 m_lTime;             // Our time value (microseconds since 1/1/1601)
     static uint64 sm_lTimeCur;  // Cached value of the current time (updated each frame)
 };

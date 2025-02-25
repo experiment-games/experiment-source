@@ -179,7 +179,7 @@ static int s_iAngryZombies = 0;
 //=========================================================
 class CAngryZombieCounter : public CAutoGameSystem
 {
-   public:
+    public:
     CAngryZombieCounter( char const *name )
         : CAutoGameSystem( name )
     {
@@ -300,10 +300,10 @@ bool CNPC_BaseZombie::FindNearestPhysicsObject( int iMaxMass )
 
     class CZombieSwatEntitiesEnum : public CFlaggedEntitiesEnum
     {
-       public:
+        public:
         CZombieSwatEntitiesEnum( CBaseEntity **pList, int listMax, int iMaxMass )
             : CFlaggedEntitiesEnum( pList, listMax, 0 ),
-              m_iMaxMass( iMaxMass )
+            m_iMaxMass( iMaxMass )
         {
         }
 
@@ -311,10 +311,10 @@ bool CNPC_BaseZombie::FindNearestPhysicsObject( int iMaxMass )
         {
             CBaseEntity *pEntity = gEntList.GetBaseEntity( pHandleEntity->GetRefEHandle() );
             if ( pEntity &&
-                 pEntity->VPhysicsGetObject() &&
-                 pEntity->VPhysicsGetObject()->GetMass() <= m_iMaxMass &&
-                 pEntity->VPhysicsGetObject()->IsAsleep() &&
-                 pEntity->VPhysicsGetObject()->IsMoveable() )
+                pEntity->VPhysicsGetObject() &&
+                pEntity->VPhysicsGetObject()->GetMass() <= m_iMaxMass &&
+                pEntity->VPhysicsGetObject()->IsAsleep() &&
+                pEntity->VPhysicsGetObject()->IsMoveable() )
             {
                 return CFlaggedEntitiesEnum::EnumElement( pHandleEntity );
             }
@@ -600,8 +600,8 @@ int CNPC_BaseZombie::MeleeAttack1Conditions( float flDot, float flDist )
     }
 
     if ( tr.m_pEnt == GetEnemy() ||
-         tr.m_pEnt->IsNPC() ||
-         ( tr.m_pEnt->m_takedamage == DAMAGE_YES && ( dynamic_cast< CBreakableProp * >( tr.m_pEnt ) ) ) )
+        tr.m_pEnt->IsNPC() ||
+        ( tr.m_pEnt->m_takedamage == DAMAGE_YES && ( dynamic_cast< CBreakableProp * >( tr.m_pEnt ) ) ) )
     {
         // -Let the zombie swipe at his enemy if he's going to hit them.
         // -Also let him swipe at NPC's that happen to be between the zombie and the enemy.
@@ -744,13 +744,13 @@ bool CNPC_BaseZombie::ShouldBecomeTorso( const CTakeDamageInfo &info, float flDa
     }
 
 #if 0
-	if( info.GetDamageType() & DMG_BUCKSHOT )
-	{
-		if( m_iHealth <= 0 || flDamageThreshold >= 0.5 )
-		{
-			return true;
-		}
-	}
+    if( info.GetDamageType() & DMG_BUCKSHOT )
+    {
+        if( m_iHealth <= 0 || flDamageThreshold >= 0.5 )
+        {
+            return true;
+        }
+    }
 #endif
 
     return false;
@@ -1841,8 +1841,8 @@ int CNPC_BaseZombie::SelectFailSchedule( int failedSchedule, int failedTask, AI_
     if ( CanSwatPhysicsObjects() )
     {
         if ( !m_fIsTorso && IsPathTaskFailure( taskFailCode ) &&
-             m_hObstructor != NULL && m_hObstructor->VPhysicsGetObject() &&
-             m_hObstructor->VPhysicsGetObject()->GetMass() < 100 )
+            m_hObstructor != NULL && m_hObstructor->VPhysicsGetObject() &&
+            m_hObstructor->VPhysicsGetObject()->GetMass() < 100 )
         {
             m_hPhysicsEnt = m_hObstructor;
             m_hObstructor = NULL;
@@ -2039,18 +2039,18 @@ void CNPC_BaseZombie::PrescheduleThink( void )
     BaseClass::PrescheduleThink();
 
 #if 0
-	DevMsg(" ** %d Angry Zombies **\n", s_iAngryZombies );
+    DevMsg(" ** %d Angry Zombies **\n", s_iAngryZombies );
 #endif
 
 #if 0
-	if( m_NPCState == NPC_STATE_COMBAT )
-	{
-		// Zombies should make idle sounds in combat
-		if( random->RandomInt( 0, 30 ) == 0 )
-		{
-			IdleSound();
-		}
-	}
+    if( m_NPCState == NPC_STATE_COMBAT )
+    {
+        // Zombies should make idle sounds in combat
+        if( random->RandomInt( 0, 30 ) == 0 )
+        {
+            IdleSound();
+        }
+    }
 #endif
 
     //
@@ -2334,12 +2334,12 @@ bool CNPC_BaseZombie::HeadcrabFits( CBaseAnimating *pCrab )
 
     trace_t tr;
     AI_TraceHull( vecSpawnLoc,
-                  vecSpawnLoc - Vector( 0, 0, 1 ),
-                  NAI_Hull::Mins( HULL_TINY ) * CRAB_HULL_EXPAND,
-                  NAI_Hull::Maxs( HULL_TINY ) * CRAB_HULL_EXPAND,
-                  MASK_NPCSOLID,
-                  &traceFilter,
-                  &tr );
+                vecSpawnLoc - Vector( 0, 0, 1 ),
+                NAI_Hull::Mins( HULL_TINY ) * CRAB_HULL_EXPAND,
+                NAI_Hull::Maxs( HULL_TINY ) * CRAB_HULL_EXPAND,
+                MASK_NPCSOLID,
+                &traceFilter,
+                &tr );
 
     if ( tr.fraction != 1.0 )
     {

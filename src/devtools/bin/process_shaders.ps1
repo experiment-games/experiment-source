@@ -7,25 +7,25 @@ param (
 )
 
 if ($Version -notin @("20b", "30", "40", "41", "50", "51")) {
-	return
+    return
 }
 
 $fileList = $File.OpenText()
 while ($null -ne ($line = $fileList.ReadLine())) {
-	if ($line -match '^\s*$' -or $line -match '^\s*//') {
-		continue
-	}
+    if ($line -match '^\s*$' -or $line -match '^\s*//') {
+        continue
+    }
 
-	if ($Dynamic) {
-		& "$PSScriptRoot\ShaderCompile2" "-dynamic" "-ver" $Version "-shaderpath" $File.DirectoryName $line
-		continue
-	}
+    if ($Dynamic) {
+        & "$PSScriptRoot\ShaderCompile2" "-dynamic" "-ver" $Version "-shaderpath" $File.DirectoryName $line
+        continue
+    }
 
-	if ($Threads -ne 0) {
-		& "$PSScriptRoot\ShaderCompile2" "-threads" $Threads "-ver" $Version "-shaderpath" $File.DirectoryName $line
-		continue
-	}
+    if ($Threads -ne 0) {
+        & "$PSScriptRoot\ShaderCompile2" "-threads" $Threads "-ver" $Version "-shaderpath" $File.DirectoryName $line
+        continue
+    }
 
-	& "$PSScriptRoot\ShaderCompile2" "-ver" $Version "-shaderpath" $File.DirectoryName $line
+    & "$PSScriptRoot\ShaderCompile2" "-ver" $Version "-shaderpath" $File.DirectoryName $line
 }
 $fileList.Close()

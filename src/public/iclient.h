@@ -19,7 +19,7 @@ class INetMessage;
 
 abstract_class IClient : public INetChannelHandler
 {
-   public:
+    public:
     virtual ~IClient() {}
 
     // connect client

@@ -16,7 +16,7 @@ $WARPPARAM = $SHADER_SPECIFIC_CONST_2;
 $ENTITY_ORIGIN = $SHADER_SPECIFIC_CONST_3;
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 alloc $worldPos
 alloc $worldNormal
@@ -27,11 +27,11 @@ alloc $worldNormal
 ;------------------------------------------------------------------------------
 if ( $INTRO == 1 )
 {
-	alloc $tmp
-	sub $tmp.xyz, $worldPos, $ENTITY_ORIGIN
-	mul $tmp.xy, $tmp, $WARPPARAM
-	add $worldPos.xyz, $tmp, $ENTITY_ORIGIN
-	free $tmp
+    alloc $tmp
+    sub $tmp.xyz, $worldPos, $ENTITY_ORIGIN
+    mul $tmp.xy, $tmp, $WARPPARAM
+    add $worldPos.xyz, $tmp, $ENTITY_ORIGIN
+    free $tmp
 }
 
 ;------------------------------------------------------------------------------
@@ -92,6 +92,3 @@ free $tmp
 ;------------------------------------------------------------------------------
 
 mov oT0, $vTexCoord0
-
-
-

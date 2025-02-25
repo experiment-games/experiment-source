@@ -29,7 +29,7 @@ enum fisttypes_t
 //
 class CTFFists : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFFists, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -72,7 +72,7 @@ class CTFFists : public CTFWeaponBaseMelee
     virtual void SetWeaponVisible( bool visible ) OVERRIDE;
     virtual bool Deploy( void );
 
-   private:
+    private:
     CTFFists( const CTFFists & ) {}
 };
 

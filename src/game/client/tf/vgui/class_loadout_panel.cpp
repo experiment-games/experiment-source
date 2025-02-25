@@ -518,7 +518,7 @@ void CClassLoadoutPanel::PerformLayout( void )
     // This is disabled by default in res file. IF we turn it on again, uncomment this.
     /*if ( m_pPassiveAttribsLabel )
     {
-      m_pPassiveAttribsLabel->SetVisible( !m_bInTauntLoadoutMode );
+    m_pPassiveAttribsLabel->SetVisible( !m_bInTauntLoadoutMode );
     }*/
 
     if ( m_pTauntHintLabel )
@@ -608,8 +608,8 @@ void CClassLoadoutPanel::PerformLayout( void )
                 int iButtonWide = m_pItemModelPanels[i]->GetWide();
                 int iMyWide = pItemOptionsPanel->GetWide();
                 int iOptionsXPos = iColumn == 0
-                                       ? iXPos + iButtonWide - iMyWide
-                                       : iXPos;
+                                        ? iXPos + iButtonWide - iMyWide
+                                        : iXPos;
                 pItemOptionsPanel->SetPos( iOptionsXPos, iYPos );
 
                 CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
@@ -644,25 +644,25 @@ void CClassLoadoutPanel::OnKeyCodePressed( vgui::KeyCode code )
     ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
     if ( nButtonCode == KEY_XBUTTON_LEFT ||
-         nButtonCode == KEY_XSTICK1_LEFT ||
-         nButtonCode == KEY_XSTICK2_LEFT ||
-         nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-         code == KEY_LEFT ||
-         nButtonCode == KEY_XBUTTON_RIGHT ||
-         nButtonCode == KEY_XSTICK1_RIGHT ||
-         nButtonCode == KEY_XSTICK2_RIGHT ||
-         nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-         code == KEY_RIGHT ||
-         nButtonCode == KEY_XBUTTON_UP ||
-         nButtonCode == KEY_XSTICK1_UP ||
-         nButtonCode == KEY_XSTICK2_UP ||
-         nButtonCode == STEAMCONTROLLER_DPAD_UP ||
-         code == KEY_UP ||
-         nButtonCode == KEY_XBUTTON_DOWN ||
-         nButtonCode == KEY_XSTICK1_DOWN ||
-         nButtonCode == KEY_XSTICK2_DOWN ||
-         nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-         code == KEY_DOWN )
+        nButtonCode == KEY_XSTICK1_LEFT ||
+        nButtonCode == KEY_XSTICK2_LEFT ||
+        nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
+        code == KEY_LEFT ||
+        nButtonCode == KEY_XBUTTON_RIGHT ||
+        nButtonCode == KEY_XSTICK1_RIGHT ||
+        nButtonCode == KEY_XSTICK2_RIGHT ||
+        nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
+        code == KEY_RIGHT ||
+        nButtonCode == KEY_XBUTTON_UP ||
+        nButtonCode == KEY_XSTICK1_UP ||
+        nButtonCode == KEY_XSTICK2_UP ||
+        nButtonCode == STEAMCONTROLLER_DPAD_UP ||
+        code == KEY_UP ||
+        nButtonCode == KEY_XBUTTON_DOWN ||
+        nButtonCode == KEY_XSTICK1_DOWN ||
+        nButtonCode == KEY_XSTICK2_DOWN ||
+        nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
+        code == KEY_DOWN )
     {
         // just eat all navigation keys so we don't
         // end up with undesirable navigation behavior bubbling from
@@ -1268,7 +1268,7 @@ struct passive_attrib_to_print_t
 //-----------------------------------------------------------------------------
 class CAttributeIterator_AddPassiveAttribsToPassiveList : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     CAttributeIterator_AddPassiveAttribsToPassiveList( CUtlVector< passive_attrib_to_print_t > *pList, bool bForceAdd )
         : m_pList( pList ), m_bForceAdd( bForceAdd )
     {
@@ -1319,7 +1319,7 @@ class CAttributeIterator_AddPassiveAttribsToPassiveList : public CEconItemSpecif
 
     // Other types are ignored.
 
-   private:
+    private:
     CUtlVector< passive_attrib_to_print_t > *m_pList;
     bool m_bForceAdd;
 };

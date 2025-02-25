@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotWander : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotWander( void );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -31,7 +31,7 @@ class CTFBotWander : public Action< CTFBot >
         return "Wander";
     };
 
-   private:
+    private:
     CountdownTimer m_visionTimer;
     CountdownTimer m_vocalizeTimer;
 };

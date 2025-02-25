@@ -12,7 +12,7 @@
 
 class CAnimatedOffsetTextureProxy : public CBaseAnimatedTextureProxy
 {
-   public:
+    public:
     CAnimatedOffsetTextureProxy()
         : m_flFrameOffset( 0.0f ) {}
 
@@ -21,7 +21,7 @@ class CAnimatedOffsetTextureProxy : public CBaseAnimatedTextureProxy
     virtual float GetAnimationStartTime( void* pBaseEntity );
     virtual void OnBind( void* pBaseEntity );
 
-   protected:
+    protected:
     float m_flFrameOffset;
 };
 

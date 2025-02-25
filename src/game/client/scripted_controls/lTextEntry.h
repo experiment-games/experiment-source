@@ -17,10 +17,10 @@ class LTextEntry : public TextEntry
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LTextEntry, "TextEntry" );
 
-   public:
+    public:
     LTextEntry( Panel *parent, const char *panelName, lua_State *L = NULL );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         // Not sure why this is the order that causes text to be drawn in the Lua specified colour :/

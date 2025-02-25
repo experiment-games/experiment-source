@@ -46,46 +46,46 @@ public class CheckUtf8Test extends TestCase {
 
   private static final String UTF8_BYTE_STRING_TEXT = "some text";
   private static final ByteString UTF8_BYTE_STRING =
-      ByteString.copyFromUtf8(UTF8_BYTE_STRING_TEXT);
+    ByteString.copyFromUtf8(UTF8_BYTE_STRING_TEXT);
   private static final ByteString NON_UTF8_BYTE_STRING =
-      ByteString.copyFrom(new byte[]{(byte) 0x80}); // A lone continuation byte.
+    ByteString.copyFrom(new byte[]{(byte) 0x80}); // A lone continuation byte.
 
   public void testBuildRequiredStringWithGoodUtf8() throws Exception {
     assertEquals(UTF8_BYTE_STRING_TEXT,
-                 StringWrapper.newBuilder().setReqBytes(UTF8_BYTE_STRING).getReq());
+                StringWrapper.newBuilder().setReqBytes(UTF8_BYTE_STRING).getReq());
   }
 
   public void testParseRequiredStringWithGoodUtf8() throws Exception {
     ByteString serialized =
         BytesWrapper.newBuilder().setReq(UTF8_BYTE_STRING).build().toByteString();
     assertEquals(UTF8_BYTE_STRING_TEXT,
-                 StringWrapper.PARSER.parseFrom(serialized).getReq());
+                StringWrapper.PARSER.parseFrom(serialized).getReq());
   }
 
   public void testBuildRequiredStringWithBadUtf8() throws Exception {
     try {
-      StringWrapper.newBuilder().setReqBytes(NON_UTF8_BYTE_STRING);
-      fail("Expected IllegalArgumentException for non UTF-8 byte string.");
+    StringWrapper.newBuilder().setReqBytes(NON_UTF8_BYTE_STRING);
+    fail("Expected IllegalArgumentException for non UTF-8 byte string.");
     } catch (IllegalArgumentException exception) {
-      assertEquals("Byte string is not UTF-8.", exception.getMessage());
+    assertEquals("Byte string is not UTF-8.", exception.getMessage());
     }
   }
 
   public void testBuildOptionalStringWithBadUtf8() throws Exception {
     try {
-      StringWrapper.newBuilder().setOptBytes(NON_UTF8_BYTE_STRING);
-      fail("Expected IllegalArgumentException for non UTF-8 byte string.");
+    StringWrapper.newBuilder().setOptBytes(NON_UTF8_BYTE_STRING);
+    fail("Expected IllegalArgumentException for non UTF-8 byte string.");
     } catch (IllegalArgumentException exception) {
-      assertEquals("Byte string is not UTF-8.", exception.getMessage());
+    assertEquals("Byte string is not UTF-8.", exception.getMessage());
     }
   }
 
   public void testBuildRepeatedStringWithBadUtf8() throws Exception {
     try {
-      StringWrapper.newBuilder().addRepBytes(NON_UTF8_BYTE_STRING);
-      fail("Expected IllegalArgumentException for non UTF-8 byte string.");
+    StringWrapper.newBuilder().addRepBytes(NON_UTF8_BYTE_STRING);
+    fail("Expected IllegalArgumentException for non UTF-8 byte string.");
     } catch (IllegalArgumentException exception) {
-      assertEquals("Byte string is not UTF-8.", exception.getMessage());
+    assertEquals("Byte string is not UTF-8.", exception.getMessage());
     }
   }
 
@@ -93,37 +93,37 @@ public class CheckUtf8Test extends TestCase {
     ByteString serialized =
         BytesWrapper.newBuilder().setReq(NON_UTF8_BYTE_STRING).build().toByteString();
     try {
-      StringWrapper.PARSER.parseFrom(serialized);
-      fail("Expected InvalidProtocolBufferException for non UTF-8 byte string.");
+    StringWrapper.PARSER.parseFrom(serialized);
+    fail("Expected InvalidProtocolBufferException for non UTF-8 byte string.");
     } catch (InvalidProtocolBufferException exception) {
-      assertEquals("Protocol message had invalid UTF-8.", exception.getMessage());
+    assertEquals("Protocol message had invalid UTF-8.", exception.getMessage());
     }
   }
 
   public void testBuildRequiredStringWithBadUtf8Size() throws Exception {
     try {
-      StringWrapperSize.newBuilder().setReqBytes(NON_UTF8_BYTE_STRING);
-      fail("Expected IllegalArgumentException for non UTF-8 byte string.");
+    StringWrapperSize.newBuilder().setReqBytes(NON_UTF8_BYTE_STRING);
+    fail("Expected IllegalArgumentException for non UTF-8 byte string.");
     } catch (IllegalArgumentException exception) {
-      assertEquals("Byte string is not UTF-8.", exception.getMessage());
+    assertEquals("Byte string is not UTF-8.", exception.getMessage());
     }
   }
 
   public void testBuildOptionalStringWithBadUtf8Size() throws Exception {
     try {
-      StringWrapperSize.newBuilder().setOptBytes(NON_UTF8_BYTE_STRING);
-      fail("Expected IllegalArgumentException for non UTF-8 byte string.");
+    StringWrapperSize.newBuilder().setOptBytes(NON_UTF8_BYTE_STRING);
+    fail("Expected IllegalArgumentException for non UTF-8 byte string.");
     } catch (IllegalArgumentException exception) {
-      assertEquals("Byte string is not UTF-8.", exception.getMessage());
+    assertEquals("Byte string is not UTF-8.", exception.getMessage());
     }
   }
 
   public void testBuildRepeatedStringWithBadUtf8Size() throws Exception {
     try {
-      StringWrapperSize.newBuilder().addRepBytes(NON_UTF8_BYTE_STRING);
-      fail("Expected IllegalArgumentException for non UTF-8 byte string.");
+    StringWrapperSize.newBuilder().addRepBytes(NON_UTF8_BYTE_STRING);
+    fail("Expected IllegalArgumentException for non UTF-8 byte string.");
     } catch (IllegalArgumentException exception) {
-      assertEquals("Byte string is not UTF-8.", exception.getMessage());
+    assertEquals("Byte string is not UTF-8.", exception.getMessage());
     }
   }
 
@@ -131,10 +131,10 @@ public class CheckUtf8Test extends TestCase {
     ByteString serialized =
         BytesWrapperSize.newBuilder().setReq(NON_UTF8_BYTE_STRING).build().toByteString();
     try {
-      StringWrapperSize.PARSER.parseFrom(serialized);
-      fail("Expected InvalidProtocolBufferException for non UTF-8 byte string.");
+    StringWrapperSize.PARSER.parseFrom(serialized);
+    fail("Expected InvalidProtocolBufferException for non UTF-8 byte string.");
     } catch (InvalidProtocolBufferException exception) {
-      assertEquals("Protocol message had invalid UTF-8.", exception.getMessage());
+    assertEquals("Protocol message had invalid UTF-8.", exception.getMessage());
     }
   }
 

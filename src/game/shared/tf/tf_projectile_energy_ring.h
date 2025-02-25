@@ -24,7 +24,7 @@
 
 class CTFProjectile_EnergyRing : public CTFBaseProjectile
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_EnergyRing, CTFBaseProjectile );
     DECLARE_NETWORKCLASS();
 
@@ -77,7 +77,7 @@ class CTFProjectile_EnergyRing : public CTFBaseProjectile
 
     float GetInitialVelocity( void );
 
-   private:
+    private:
     bool ShouldPenetrate() const;
     const char *GetTrailParticleName() const;
 
@@ -91,7 +91,7 @@ class CTFProjectile_EnergyRing : public CTFBaseProjectile
     void PlayImpactEffects( const Vector &vecPos, bool bHitFlesh );
 #endif
 
-   protected:
+    protected:
     float m_flInitTime;
 };
 

@@ -7,7 +7,7 @@
 
 class CHL2MPBotMainAction : public Action< CHL2MPBot >
 {
-   public:
+    public:
     virtual Action< CHL2MPBot > *InitialContainedAction( CHL2MPBot *me );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -28,16 +28,16 @@ class CHL2MPBotMainAction : public Action< CHL2MPBot >
     virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const;
 
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
     virtual const char *GetName( void ) const
     {
         return "MainAction";
     };
 
-   private:
+    private:
     CountdownTimer m_reloadTimer;
     mutable CountdownTimer m_aimAdjustTimer;
     mutable float m_aimErrorRadius;
@@ -59,9 +59,9 @@ class CHL2MPBotMainAction : public Action< CHL2MPBot >
     const CKnownEntity *GetHealerOfThreat( const CKnownEntity *threat ) const;
 
     const CKnownEntity *SelectMoreDangerousThreatInternal( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;
 
     void Dodge( CHL2MPBot *me );
 

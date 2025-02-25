@@ -20,7 +20,7 @@ class CMoviePlayerPanel : public CReplayBasePanel
 {
     DECLARE_CLASS_SIMPLE( CMoviePlayerPanel, CReplayBasePanel );
 
-   public:
+    public:
     CMoviePlayerPanel( Panel *pParent, const char *pName, const char *pMovieFilename );
     ~CMoviePlayerPanel();
 
@@ -40,7 +40,7 @@ class CMoviePlayerPanel : public CReplayBasePanel
     void FreeMaterial();
     void ToggleFullscreen();
 
-   private:
+    private:
     virtual void PerformLayout();
     virtual void OnMousePressed( MouseCode code );
     virtual void OnTick();

@@ -6,16 +6,16 @@
 #define CRLF "\xD\xA"
 
 #define candidate(c) (c == CR || c == LF)
-static int pushchar(int c, int last, const char *marker, 
+static int pushchar(int c, int last, const char *marker,
     luaL_Buffer *buffer) {
   if (candidate(c)) {
     if (candidate(last)) {
-      if (c == last) 
+    if (c == last)
         luaL_addstring(buffer, marker);
-      return 0;
+    return 0;
     } else {
-      luaL_addstring(buffer, marker);
-      return c;
+    luaL_addstring(buffer, marker);
+    return c;
     }
   } else {
     luaL_putchar(buffer, c);
@@ -50,5 +50,5 @@ static luaL_reg func[] = {
 
 int luaopen_gem(lua_State *L) {
     luaL_openlib(L, "gem", func, 0);
-	return 0;
+    return 0;
 }

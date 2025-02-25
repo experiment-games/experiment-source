@@ -350,7 +350,7 @@ void C_BaseObject::FireEvent( const Vector &origin, const QAngle &angles, int ev
                 if ( subpartcount == 2 )
                 {
                     SetBodygroup( i,
-                                  ( event == TF_OBJ_ENABLEALLBODYGROUPS ) ? TF_OBJ_BODYGROUPTURNON : TF_OBJ_BODYGROUPTURNOFF );
+                                ( event == TF_OBJ_ENABLEALLBODYGROUPS ) ? TF_OBJ_BODYGROUPTURNON : TF_OBJ_BODYGROUPTURNOFF );
                 }
                 else
                 {
@@ -1057,7 +1057,7 @@ BuildingHudAlert_t C_BaseObject::GetBuildingAlertLevel( void )
     BuildingHudAlert_t iFakeAlert = ( BuildingHudAlert_t )cl_obj_fake_alert.GetInt();
 
     if ( iFakeAlert > BUILDING_HUD_ALERT_NONE &&
-         iFakeAlert < MAX_BUILDING_HUD_ALERT_LEVEL )
+        iFakeAlert < MAX_BUILDING_HUD_ALERT_LEVEL )
     {
         alertLevel = iFakeAlert;
     }
@@ -1128,11 +1128,11 @@ void C_BaseObject::StopAnimGeneratedSounds( void )
 //============================================================================================================
 class CObjectPowerProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Factor;
 };
 
@@ -1173,7 +1173,7 @@ class CBasicControlPanel : public CObjectControlPanel
 {
     DECLARE_CLASS( CBasicControlPanel, CObjectControlPanel );
 
-   public:
+    public:
     CBasicControlPanel( vgui::Panel *parent, const char *panelName );
 };
 
@@ -1192,7 +1192,7 @@ CBasicControlPanel::CBasicControlPanel( vgui::Panel *parent, const char *panelNa
 //-----------------------------------------------------------------------------
 class CBuildingInvisProxy : public CBaseInvisMaterialProxy
 {
-   public:
+    public:
     virtual void OnBind( C_BaseEntity *pBaseEntity ) OVERRIDE;
 };
 

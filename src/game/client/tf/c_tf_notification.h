@@ -18,7 +18,7 @@ class CClientNotification : public CEconNotification
 {
     friend class CTFSupportNotificationDialog;
 
-   public:
+    public:
     CClientNotification();
     virtual ~CClientNotification() OVERRIDE;
 
@@ -41,7 +41,7 @@ class CClientNotification : public CEconNotification
         return m_ulNotificationID;
     }
 
-   private:
+    private:
     void OnDialogAcknowledged();
     void GCAcknowledge();
 

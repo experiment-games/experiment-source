@@ -22,7 +22,7 @@ CBaseTransmitProxy::~CBaseTransmitProxy()
     if ( m_hEnt )
     {
         m_refCount = 0xFFFF;  // Prevent us from deleting ourselves again.
-                              // m_hEnt->NetworkProp()->SetTransmitProxy( NULL );
+                            // m_hEnt->NetworkProp()->SetTransmitProxy( NULL );
     }
 }
 

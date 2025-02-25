@@ -15,7 +15,7 @@
 
 class IWorkUnitDistributorCallbacks
 {
-   public:
+    public:
     // Called every 200ms or so as it does the work.
     // Return true to stop distributing work.
     virtual bool Update()

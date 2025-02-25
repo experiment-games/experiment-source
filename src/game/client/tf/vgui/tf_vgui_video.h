@@ -16,7 +16,7 @@ class CTFVideoPanel : public VideoPanel
 {
     DECLARE_CLASS_SIMPLE( CTFVideoPanel, VideoPanel );
 
-   public:
+    public:
     CTFVideoPanel( vgui::Panel *parent, const char *panelName );
     ~CTFVideoPanel();
 
@@ -38,11 +38,11 @@ class CTFVideoPanel : public VideoPanel
 
     virtual bool BeginPlayback( const char *pFilename ) OVERRIDE;
 
-   protected:
+    protected:
     virtual void ReleaseVideo();
     virtual void OnVideoOver();
 
-   private:
+    private:
     float m_flStartAnimDelay;
     float m_flEndAnimDelay;
     bool m_bLoop;

@@ -76,44 +76,44 @@ namespace {
 
 #define TEST_1D(FIXTURE, NAME, CASES)                                      \
   class FIXTURE##_##NAME##_DD : public FIXTURE {                           \
-   protected:                                                              \
+    protected:                                                              \
     template <typename CaseType>                                           \
     void DoSingleCase(const CaseType& CASES##_case);                       \
   };                                                                       \
-                                                                           \
+                                                                            \
   TEST_F(FIXTURE##_##NAME##_DD, NAME) {                                    \
     for (int i = 0; i < GOOGLE_ARRAYSIZE(CASES); i++) {                           \
-      SCOPED_TRACE(testing::Message()                                      \
+    SCOPED_TRACE(testing::Message()                                      \
         << #CASES " case #" << i << ": " << CASES[i]);                     \
-      DoSingleCase(CASES[i]);                                              \
+    DoSingleCase(CASES[i]);                                              \
     }                                                                      \
   }                                                                        \
-                                                                           \
+                                                                            \
   template <typename CaseType>                                             \
   void FIXTURE##_##NAME##_DD::DoSingleCase(const CaseType& CASES##_case)
 
 #define TEST_2D(FIXTURE, NAME, CASES1, CASES2)                             \
   class FIXTURE##_##NAME##_DD : public FIXTURE {                           \
-   protected:                                                              \
+    protected:                                                              \
     template <typename CaseType1, typename CaseType2>                      \
     void DoSingleCase(const CaseType1& CASES1##_case,                      \
-                      const CaseType2& CASES2##_case);                     \
+                    const CaseType2& CASES2##_case);                     \
   };                                                                       \
-                                                                           \
+                                                                            \
   TEST_F(FIXTURE##_##NAME##_DD, NAME) {                                    \
     for (int i = 0; i < GOOGLE_ARRAYSIZE(CASES1); i++) {                          \
-      for (int j = 0; j < GOOGLE_ARRAYSIZE(CASES2); j++) {                        \
+    for (int j = 0; j < GOOGLE_ARRAYSIZE(CASES2); j++) {                        \
         SCOPED_TRACE(testing::Message()                                    \
-          << #CASES1 " case #" << i << ": " << CASES1[i] << ", "           \
-          << #CASES2 " case #" << j << ": " << CASES2[j]);                 \
+        << #CASES1 " case #" << i << ": " << CASES1[i] << ", "           \
+        << #CASES2 " case #" << j << ": " << CASES2[j]);                 \
         DoSingleCase(CASES1[i], CASES2[j]);                                \
-      }                                                                    \
+    }                                                                    \
     }                                                                      \
   }                                                                        \
-                                                                           \
+                                                                            \
   template <typename CaseType1, typename CaseType2>                        \
   void FIXTURE##_##NAME##_DD::DoSingleCase(const CaseType1& CASES1##_case, \
-                                           const CaseType2& CASES2##_case)
+                                            const CaseType2& CASES2##_case)
 
 // -------------------------------------------------------------------
 
@@ -130,13 +130,13 @@ class TestInputStream : public ZeroCopyInputStream {
     // We'll return empty buffers starting with the first buffer, and every
     // 3 and 5 buffers after that.
     if (counter_ % 3 == 0 || counter_ % 5 == 0) {
-      *data = NULL;
-      *size = 0;
-      ++counter_;
-      return true;
+    *data = NULL;
+    *size = 0;
+    ++counter_;
+    return true;
     } else {
-      ++counter_;
-      return array_stream_.Next(data, size);
+    ++counter_;
+    return array_stream_.Next(data, size);
     }
   }
 
@@ -163,7 +163,7 @@ class TestErrorCollector : public ErrorCollector {
   // implements ErrorCollector ---------------------------------------
   void AddError(int line, int column, const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
-                                 line, column, message);
+                                line, column, message);
   }
 };
 
@@ -199,7 +199,7 @@ struct SimpleTokenCase {
 };
 
 inline ostream& operator<<(ostream& out,
-                           const SimpleTokenCase& test_case) {
+                            const SimpleTokenCase& test_case) {
   return out << CEscape(test_case.input);
 }
 
@@ -333,7 +333,7 @@ struct MultiTokenCase {
 };
 
 inline ostream& operator<<(ostream& out,
-                           const MultiTokenCase& test_case) {
+                            const MultiTokenCase& test_case) {
   return out << CEscape(test_case.input);
 }
 
@@ -446,9 +446,9 @@ TEST_2D(TokenizerTest, MultipleTokens, kMultiTokenCases, kBlockSizes) {
 
     // Next() should only return false when it hits the end token.
     if (token.type != Tokenizer::TYPE_END) {
-      ASSERT_TRUE(tokenizer.Next());
+    ASSERT_TRUE(tokenizer.Next());
     } else {
-      ASSERT_FALSE(tokenizer.Next());
+    ASSERT_FALSE(tokenizer.Next());
     }
 
     // Check that the previous token is set correctly.
@@ -479,13 +479,13 @@ TEST_1D(TokenizerTest, ShCommentStyle, kBlockSizes) {
   // Test the "comment_style" option.
 
   const char* text = "foo # bar\n"
-                     "baz // qux\n"
-                     "corge /* grault */\n"
-                     "garply";
+                    "baz // qux\n"
+                    "corge /* grault */\n"
+                    "garply";
   const char* const kTokens[] = {"foo",  // "# bar" is ignored
-                                 "baz", "/", "/", "qux",
-                                 "corge", "/", "*", "grault", "*", "/",
-                                 "garply"};
+                                "baz", "/", "/", "qux",
+                                "corge", "/", "*", "grault", "*", "/",
+                                "garply"};
 
   // Set up the tokenizer.
   TestInputStream input(text, strlen(text), kBlockSizes_case);
@@ -520,7 +520,7 @@ struct DocCommentCase {
 };
 
 inline ostream& operator<<(ostream& out,
-                           const DocCommentCase& test_case) {
+                            const DocCommentCase& test_case) {
   return out << CEscape(test_case.input);
 }
 
@@ -531,38 +531,38 @@ DocCommentCase kDocCommentCases[] = {
     "",
     {},
     ""
-      },
+    },
 
         {
-      "prev /* ignored */ next",
+    "prev /* ignored */ next",
 
-      "",
-      {},
-      ""
+    "",
+    {},
+    ""
         },
 
-          {
+        {
         "prev // trailing comment\n"
             "next",
 
             " trailing comment\n",
             {},
             ""
-          },
+        },
 
             {
-          "prev\n"
-              "// leading comment\n"
-              "// line 2\n"
-              "next",
+        "prev\n"
+            "// leading comment\n"
+            "// line 2\n"
+            "next",
 
-              "",
-              {},
-              " leading comment\n"
-              " line 2\n"
+            "",
+            {},
+            " leading comment\n"
+            " line 2\n"
             },
 
-              {
+            {
             "prev\n"
                 "// trailing comment\n"
                 "// line 2\n"
@@ -573,21 +573,21 @@ DocCommentCase kDocCommentCases[] = {
                 " line 2\n",
                 {},
                 ""
-              },
+            },
 
                 {
-              "prev // trailing comment\n"
-                  "// leading comment\n"
-                  "// line 2\n"
-                  "next",
+            "prev // trailing comment\n"
+                "// leading comment\n"
+                "// line 2\n"
+                "next",
 
-                  " trailing comment\n",
-                  {},
-                  " leading comment\n"
-                  " line 2\n"
+                " trailing comment\n",
+                {},
+                " leading comment\n"
+                " line 2\n"
                 },
 
-                  {
+                {
                 "prev /* trailing block comment */\n"
                     "/* leading block comment\n"
                     " * line 2\n"
@@ -599,29 +599,29 @@ DocCommentCase kDocCommentCases[] = {
                     " leading block comment\n"
                     " line 2\n"
                     " line 3 "
-                  },
+                },
 
                     {
-                  "prev\n"
-                      "/* trailing block comment\n"
-                      " * line 2\n"
-                      " * line 3\n"
-                      " */\n"
-                      "/* leading block comment\n"
-                      " * line 2\n"
-                      " * line 3 */"
-                      "next",
+                "prev\n"
+                    "/* trailing block comment\n"
+                    " * line 2\n"
+                    " * line 3\n"
+                    " */\n"
+                    "/* leading block comment\n"
+                    " * line 2\n"
+                    " * line 3 */"
+                    "next",
 
-                      " trailing block comment\n"
-                      " line 2\n"
-                      " line 3\n",
-                      {},
-                      " leading block comment\n"
-                      " line 2\n"
-                      " line 3 "
+                    " trailing block comment\n"
+                    " line 2\n"
+                    " line 3\n",
+                    {},
+                    " leading block comment\n"
+                    " line 2\n"
+                    " line 3 "
                     },
 
-                      {
+                    {
                     "prev\n"
                         "// trailing comment\n"
                         "\n"
@@ -636,16 +636,16 @@ DocCommentCase kDocCommentCases[] = {
 
                         " trailing comment\n",
                         {
-                      " detached comment\n"
-                          " line 2\n",
-                          " second detached comment\n",
-                          " third detached comment\n"
-                          " line 2 "
+                    " detached comment\n"
+                        " line 2\n",
+                        " second detached comment\n",
+                        " third detached comment\n"
+                        " line 2 "
                         },
-                          " leading comment\n"
+                        " leading comment\n"
                         },
 
-                          {
+                        {
                         "prev /**/\n"
                             "\n"
                             "// detached comment\n"
@@ -655,12 +655,12 @@ DocCommentCase kDocCommentCases[] = {
 
                             "",
                             {
-                          " detached comment\n"
+                        " detached comment\n"
                             },
-                              " leading comment\n"
+                            " leading comment\n"
                             },
 
-                              {
+                            {
                             "prev /**/\n"
                                 "// leading comment\n"
                                 "next",
@@ -668,8 +668,8 @@ DocCommentCase kDocCommentCases[] = {
                                 "",
                                 {},
                                 " leading comment\n"
-                              },
-                              };
+                            },
+                            };
 
 TEST_2D(TokenizerTest, DocComments, kDocCommentCases, kBlockSizes) {
   // Set up the tokenizer.
@@ -695,7 +695,7 @@ TEST_2D(TokenizerTest, DocComments, kDocCommentCases, kBlockSizes) {
   vector<string> detached_comments;
   string next_leading_comments;
   tokenizer.NextWithComments(&prev_trailing_comments, &detached_comments,
-                             &next_leading_comments);
+                            &next_leading_comments);
   tokenizer2.NextWithComments(NULL, NULL, NULL);
   EXPECT_EQ("next", tokenizer.current().text);
   EXPECT_EQ("next", tokenizer2.current().text);
@@ -707,12 +707,12 @@ TEST_2D(TokenizerTest, DocComments, kDocCommentCases, kBlockSizes) {
     ASSERT_LT(i, GOOGLE_ARRAYSIZE(kDocCommentCases));
     ASSERT_TRUE(kDocCommentCases_case.detached_comments[i] != NULL);
     EXPECT_EQ(kDocCommentCases_case.detached_comments[i],
-              detached_comments[i]);
+            detached_comments[i]);
   }
 
   // Verify that we matched all the detached comments.
   EXPECT_EQ(NULL,
-      kDocCommentCases_case.detached_comments[detached_comments.size()]);
+    kDocCommentCases_case.detached_comments[detached_comments.size()]);
 
   EXPECT_EQ(kDocCommentCases_case.next_leading_comments,
             next_leading_comments);
@@ -859,14 +859,14 @@ TEST_F(TokenizerTest, ParseStringAppend) {
 struct ErrorCase {
   string input;
   bool recoverable;  // True if the tokenizer should be able to recover and
-                     // parse more tokens after seeing this error.  Cases
-                     // for which this is true must end with "foo" as
-                     // the last token, which the test will check for.
+                    // parse more tokens after seeing this error.  Cases
+                    // for which this is true must end with "foo" as
+                    // the last token, which the test will check for.
   const char* errors;
 };
 
 inline ostream& operator<<(ostream& out,
-                           const ErrorCase& test_case) {
+                            const ErrorCase& test_case) {
   return out << CEscape(test_case.input);
 }
 

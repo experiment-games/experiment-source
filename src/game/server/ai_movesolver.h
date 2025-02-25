@@ -48,7 +48,7 @@ struct AI_Arc_t
 {
     AI_Arc_t()
         : center( 0 ),
-          span( 0 )
+        span( 0 )
     {
     }
 
@@ -148,7 +148,7 @@ struct AI_MoveSolution_t
 
 class CAI_MoveSolver
 {
-   public:
+    public:
     CAI_MoveSolver();
 
     //---------------------------------
@@ -175,7 +175,7 @@ class CAI_MoveSolver
     // Visualization
     void VisualizeRegulations( const Vector &origin );
 
-   private:
+    private:
     enum
     {
         REGS_RESERVE = 8,
@@ -232,8 +232,8 @@ inline void AI_MoveSuggestion_t::Set( AI_MoveSuggType_t newType, float newWeight
 
 inline AI_MoveSuggestion_t::AI_MoveSuggestion_t()
     : type( AIMS_INVALID ),
-      weight( 0 ),
-      flags( 0 )
+    weight( 0 ),
+    flags( 0 )
 {
 }
 

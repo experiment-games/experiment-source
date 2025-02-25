@@ -50,7 +50,7 @@ class CHalloweenPickup
     : public C_BaseAnimating
 #endif
 {
-   public:
+    public:
 #ifdef GAME_DLL
     DECLARE_CLASS( CHalloweenPickup, CTFPowerup );
 #else
@@ -81,7 +81,7 @@ class CHalloweenPickup
     virtual bool ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer );
 #endif  // GAME_DLL
 
-   private:
+    private:
     string_t m_iszSound;
     string_t m_iszParticle;
 
@@ -95,7 +95,7 @@ class CHalloweenPickup
 
 class CBonusDuckPickup : public CHalloweenPickup
 {
-   public:
+    public:
     DECLARE_CLASS( CBonusDuckPickup, CHalloweenPickup );
 
     DECLARE_NETWORKCLASS();
@@ -170,7 +170,7 @@ class CBonusDuckPickup : public CHalloweenPickup
     virtual void OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
 #endif  // GAME_DLL
 
-   private:
+    private:
     string_t m_iszSound;
     string_t m_iszParticle;
 
@@ -200,7 +200,7 @@ DECLARE_AUTO_LIST( IHalloweenGiftSpawnAutoList );
 // On Map load, server finds all the locations and makes note then deletes the entity
 class CHalloweenGiftSpawnLocation : public CBaseEntity, public IHalloweenGiftSpawnAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CHalloweenGiftSpawnLocation, CBaseEntity );
 
     CHalloweenGiftSpawnLocation();
@@ -214,7 +214,7 @@ class CHalloweenGiftSpawnLocation : public CBaseEntity, public IHalloweenGiftSpa
 // A server can spawn multiple of these for different people or the same person but each gift has a single target
 class CHalloweenGiftPickup : public CHalloweenPickup
 {
-   public:
+    public:
     DECLARE_CLASS( CHalloweenGiftPickup, CHalloweenPickup );
 
     DECLARE_NETWORKCLASS();

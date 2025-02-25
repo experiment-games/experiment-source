@@ -22,7 +22,7 @@ class CBallPlayerToucher;
 //-----------------------------------------------------------------------------
 class CPasstimeBall : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CPasstimeBall, CBaseAnimating );
     DECLARE_NETWORKCLASS();
     CPasstimeBall();
@@ -66,7 +66,7 @@ class CPasstimeBall : public CBaseAnimating
     void StartLagCompensation( CBasePlayer *player, CUserCmd *cmd );
     void FinishLagCompensation( CBasePlayer *player );
 
-   private:
+    private:
     friend class CBallPlayerToucher;
     void OnTouch( CBaseEntity *pOther );
     void DefaultThink();

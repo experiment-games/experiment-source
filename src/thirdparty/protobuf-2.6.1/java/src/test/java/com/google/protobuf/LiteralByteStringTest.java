@@ -79,7 +79,7 @@ public class LiteralByteStringTest extends TestCase {
   public void testByteAt() {
     boolean stillEqual = true;
     for (int i = 0; stillEqual && i < referenceBytes.length; ++i) {
-      stillEqual = (referenceBytes[i] == stringUnderTest.byteAt(i));
+    stillEqual = (referenceBytes[i] == stringUnderTest.byteAt(i));
     }
     assertTrue(classUnderTest + " must capture the right bytes", stillEqual);
   }
@@ -88,16 +88,16 @@ public class LiteralByteStringTest extends TestCase {
     boolean stillEqual = true;
     ByteString.ByteIterator iter = stringUnderTest.iterator();
     for (int i = 0; stillEqual && i < referenceBytes.length; ++i) {
-      stillEqual = (iter.hasNext() && referenceBytes[i] == iter.nextByte());
+    stillEqual = (iter.hasNext() && referenceBytes[i] == iter.nextByte());
     }
     assertTrue(classUnderTest + " must capture the right bytes", stillEqual);
     assertFalse(classUnderTest + " must have exhausted the itertor", iter.hasNext());
 
     try {
-      iter.nextByte();
-      fail("Should have thrown an exception.");
+    iter.nextByte();
+    fail("Should have thrown an exception.");
     } catch (NoSuchElementException e) {
-      // This is success
+    // This is success
     }
   }
 
@@ -105,8 +105,8 @@ public class LiteralByteStringTest extends TestCase {
     boolean stillEqual = true;
     int j = 0;
     for (byte quantum : stringUnderTest) {
-      stillEqual = (referenceBytes[j] == quantum);
-      ++j;
+    stillEqual = (referenceBytes[j] == quantum);
+    ++j;
     }
     assertTrue(classUnderTest + " must capture the right bytes as Bytes", stillEqual);
     assertEquals(classUnderTest + " iterable character count", referenceBytes.length, j);
@@ -133,7 +133,7 @@ public class LiteralByteStringTest extends TestCase {
     stringUnderTest.copyTo(destination, sourceOffset, destinationOffset, length);
     boolean stillEqual = true;
     for (int i = 0; stillEqual && i < length; ++i) {
-      stillEqual = referenceBytes[i + sourceOffset] == destination[i + destinationOffset];
+    stillEqual = referenceBytes[i + sourceOffset] == destination[i + destinationOffset];
     }
     assertTrue(classUnderTest + ".copyTo(4 arg) must give the expected bytes", stillEqual);
   }
@@ -144,58 +144,58 @@ public class LiteralByteStringTest extends TestCase {
     byte[] destination = new byte[destinationOffset + length];
 
     try {
-      // Copy one too many bytes
-      stringUnderTest.copyTo(destination, stringUnderTest.size() + 1 - length,
-          destinationOffset, length);
-      fail("Should have thrown an exception when copying too many bytes of a "
-          + classUnderTest);
+    // Copy one too many bytes
+    stringUnderTest.copyTo(destination, stringUnderTest.size() + 1 - length,
+        destinationOffset, length);
+    fail("Should have thrown an exception when copying too many bytes of a "
+        + classUnderTest);
     } catch (IndexOutOfBoundsException expected) {
-      // This is success
+    // This is success
     }
 
     try {
-      // Copy with illegal negative sourceOffset
-      stringUnderTest.copyTo(destination, -1, destinationOffset, length);
-      fail("Should have thrown an exception when given a negative sourceOffset in "
-          + classUnderTest);
+    // Copy with illegal negative sourceOffset
+    stringUnderTest.copyTo(destination, -1, destinationOffset, length);
+    fail("Should have thrown an exception when given a negative sourceOffset in "
+        + classUnderTest);
     } catch (IndexOutOfBoundsException expected) {
-      // This is success
+    // This is success
     }
 
     try {
-      // Copy with illegal negative destinationOffset
-      stringUnderTest.copyTo(destination, 0, -1, length);
-      fail("Should have thrown an exception when given a negative destinationOffset in "
-          + classUnderTest);
+    // Copy with illegal negative destinationOffset
+    stringUnderTest.copyTo(destination, 0, -1, length);
+    fail("Should have thrown an exception when given a negative destinationOffset in "
+        + classUnderTest);
     } catch (IndexOutOfBoundsException expected) {
-      // This is success
+    // This is success
     }
 
     try {
-      // Copy with illegal negative size
-      stringUnderTest.copyTo(destination, 0, 0, -1);
-      fail("Should have thrown an exception when given a negative size in "
-          + classUnderTest);
+    // Copy with illegal negative size
+    stringUnderTest.copyTo(destination, 0, 0, -1);
+    fail("Should have thrown an exception when given a negative size in "
+        + classUnderTest);
     } catch (IndexOutOfBoundsException expected) {
-      // This is success
+    // This is success
     }
 
     try {
-      // Copy with illegal too-large sourceOffset
-      stringUnderTest.copyTo(destination, 2 * stringUnderTest.size(), 0, length);
-      fail("Should have thrown an exception when the destinationOffset is too large in "
-          + classUnderTest);
+    // Copy with illegal too-large sourceOffset
+    stringUnderTest.copyTo(destination, 2 * stringUnderTest.size(), 0, length);
+    fail("Should have thrown an exception when the destinationOffset is too large in "
+        + classUnderTest);
     } catch (IndexOutOfBoundsException expected) {
-      // This is success
+    // This is success
     }
 
     try {
-      // Copy with illegal too-large destinationOffset
-      stringUnderTest.copyTo(destination, 0, 2 * destination.length, length);
-      fail("Should have thrown an exception when the destinationOffset is too large in "
-          + classUnderTest);
+    // Copy with illegal too-large destinationOffset
+    stringUnderTest.copyTo(destination, 0, 2 * destination.length, length);
+    fail("Should have thrown an exception when the destinationOffset is too large in "
+        + classUnderTest);
     } catch (IndexOutOfBoundsException expected) {
-      // This is success
+    // This is success
     }
   }
 
@@ -221,11 +221,11 @@ public class LiteralByteStringTest extends TestCase {
     int bytesSeen = 0;
     byte[] roundTripBytes = new byte[referenceBytes.length];
     for (ByteBuffer byteBuffer : byteBuffers) {
-      int thisLength = byteBuffer.remaining();
-      assertTrue(byteBuffer.isReadOnly());
-      assertTrue(bytesSeen + thisLength <= referenceBytes.length);
-      byteBuffer.get(roundTripBytes, bytesSeen, thisLength);
-      bytesSeen += thisLength;
+    int thisLength = byteBuffer.remaining();
+    assertTrue(byteBuffer.isReadOnly());
+    assertTrue(bytesSeen + thisLength <= referenceBytes.length);
+    byteBuffer.get(roundTripBytes, bytesSeen, thisLength);
+    bytesSeen += thisLength;
     }
     assertTrue(bytesSeen == referenceBytes.length);
     assertTrue(classUnderTest + ".asReadOnlyByteBufferTest() must give back the same bytes",
@@ -245,20 +245,20 @@ public class LiteralByteStringTest extends TestCase {
     assertTrue(classUnderTest + ".writeTo() must give back the same bytes",
         Arrays.equals(referenceBytes, roundTripBytes));
   }
-  
+
   public void testWriteTo_mutating() throws IOException {
     OutputStream os = new OutputStream() {
-      @Override
-      public void write(byte[] b, int off, int len) {
+    @Override
+    public void write(byte[] b, int off, int len) {
         for (int x = 0; x < len; ++x) {
-          b[off + x] = (byte) 0;
+        b[off + x] = (byte) 0;
         }
-      }
+    }
 
-      @Override
-      public void write(int b) {
+    @Override
+    public void write(int b) {
         // Purposefully left blank.
-      }
+    }
     };
 
     stringUnderTest.writeTo(os);
@@ -286,7 +286,7 @@ public class LiteralByteStringTest extends TestCase {
     assertEquals("Output.reset() resets the output", 0, output.size());
     assertEquals("Output.reset() resets the output",
         ByteString.EMPTY, output.toByteString());
-    
+
   }
 
   public void testToString() throws UnsupportedEncodingException {
@@ -340,8 +340,8 @@ public class LiteralByteStringTest extends TestCase {
         stringUnderTest.size(), input.available());
     boolean stillEqual = true;
     for (byte referenceByte : referenceBytes) {
-      int expectedInt = (referenceByte & 0xFF);
-      stillEqual = (expectedInt == input.read());
+    int expectedInt = (referenceByte & 0xFF);
+    stillEqual = (expectedInt == input.read());
     }
     assertEquals("InputStream.available() returns correct value",
         0, input.available());
@@ -362,7 +362,7 @@ public class LiteralByteStringTest extends TestCase {
     assertEquals("InputStream.skip(), read()",
         stringUnderTest.byteAt(nearEndIndex) & 0xFF, input.read());
     assertEquals("InputStream.available()",
-                 stringSize - skipped1 - 1, input.available());
+                stringSize - skipped1 - 1, input.available());
     long skipped2 = input.skip(stringSize);
     assertEquals("InputStream.skip() incomplete",
         skipped2, stringSize - skipped1 - 1);
@@ -370,7 +370,7 @@ public class LiteralByteStringTest extends TestCase {
     assertEquals("InputStream.skip(), no more input", -1, input.read());
     input.reset();
     assertEquals("InputStream.reset() succeded",
-                 stringSize - skipped1, input.available());
+                stringSize - skipped1, input.available());
     assertEquals("InputStream.reset(), read()",
         stringUnderTest.byteAt(nearEndIndex) & 0xFF, input.read());
   }
@@ -384,9 +384,9 @@ public class LiteralByteStringTest extends TestCase {
   }
 
   /**
-   * Make sure we keep things simple when concatenating with empty. See also
-   * {@link ByteStringTest#testConcat_empty()}.
-   */
+    * Make sure we keep things simple when concatenating with empty. See also
+    * {@link ByteStringTest#testConcat_empty()}.
+    */
   public void testConcat_empty() {
     assertSame(classUnderTest + " concatenated with empty must give " + classUnderTest,
         stringUnderTest.concat(ByteString.EMPTY), stringUnderTest);

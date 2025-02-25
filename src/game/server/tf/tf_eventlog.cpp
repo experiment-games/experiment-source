@@ -19,10 +19,10 @@ extern ConVar tf_flag_caps_per_round;
 
 class CTFEventLog : public CEventLog
 {
-   private:
+    private:
     typedef CEventLog BaseClass;
 
-   public:
+    public:
     bool PrintEvent( IGameEvent *event )  // override virtual function
     {
         if ( !PrintTFEvent( event ) )  // allow TF to override logging
@@ -62,7 +62,7 @@ class CTFEventLog : public CEventLog
         return true;
     }
 
-   protected:
+    protected:
     bool PrintTFEvent( IGameEvent *event )  // print Mod specific logs
     {
         const char *eventName = event->GetName();
@@ -331,10 +331,10 @@ class CTFEventLog : public CEventLog
             return true;
         }
         else if ( FStrEq( eventName, "player_builtobject" ) ||
-                  FStrEq( eventName, "player_carryobject" ) ||
-                  FStrEq( eventName, "player_dropobject" ) ||
-                  FStrEq( eventName, "player_removed" ) ||
-                  FStrEq( eventName, "object_detonated" ) )
+                FStrEq( eventName, "player_carryobject" ) ||
+                FStrEq( eventName, "player_dropobject" ) ||
+                FStrEq( eventName, "player_removed" ) ||
+                FStrEq( eventName, "object_detonated" ) )
         {
             const int userid = event->GetInt( "userid" );
             CBasePlayer *pPlayer = UTIL_PlayerByUserId( userid );

@@ -95,7 +95,7 @@ void CWindowPane::Precache( void )
 void CWindowPane::PaneTouch( CBaseEntity *pOther )
 {
     if ( pOther &&
-         pOther->GetCollisionGroup() != COLLISION_GROUP_BREAKABLE_GLASS )
+        pOther->GetCollisionGroup() != COLLISION_GROUP_BREAKABLE_GLASS )
     {
         Die();
     }
@@ -556,8 +556,8 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
                         else if ( nHCount > 0 )
                         {
                             Vector vBreakPos = m_vCorner +
-                                               ( width * vWidthDir * m_flPanelWidth ) +
-                                               ( ( height - nHCount ) * vHeightDir * m_flPanelHeight );
+                                                ( width * vWidthDir * m_flPanelWidth ) +
+                                                ( ( height - nHCount ) * vHeightDir * m_flPanelHeight );
 
                             CreateShards( vBreakPos, vAngles, vBlastDir, ptr->endpos, m_flPanelWidth, nHCount * m_flPanelHeight, WINDOW_LARGE_SHARD_SIZE );
 
@@ -567,8 +567,8 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
                     if ( nHCount )
                     {
                         Vector vBreakPos = m_vCorner +
-                                           ( width * vWidthDir * m_flPanelWidth ) +
-                                           ( ( height - nHCount ) * vHeightDir * m_flPanelHeight );
+                                            ( width * vWidthDir * m_flPanelWidth ) +
+                                            ( ( height - nHCount ) * vHeightDir * m_flPanelHeight );
 
                         CreateShards( vBreakPos, vAngles, vBlastDir, ptr->endpos, m_flPanelWidth, nHCount * m_flPanelHeight, WINDOW_LARGE_SHARD_SIZE );
                     }
@@ -743,8 +743,8 @@ void CBreakableSurface::InputShatter( inputdata_t &inputdata )
             if ( pt.DistToSqr( vecActualCenter ) <= vecShatterInfo.z * vecShatterInfo.z )
             {
                 Vector vBreakPos = m_vCorner +
-                                   ( width * vWidthDir * m_flPanelWidth ) +
-                                   ( height * vHeightDir * m_flPanelHeight );
+                                    ( width * vWidthDir * m_flPanelWidth ) +
+                                    ( height * vHeightDir * m_flPanelHeight );
 
                 ShatterPane( width, height, m_vNormal * 500, vBreakPos );
             }
@@ -1068,8 +1068,8 @@ void CBreakableSurface::DropPane( int nWidth, int nHeight )
         Vector vWidthDir, vHeightDir;
         AngleVectors( vAngles, NULL, &vWidthDir, &vHeightDir );
         Vector vBreakPos = m_vCorner +
-                           ( nWidth * vWidthDir * m_flPanelWidth ) +
-                           ( nHeight * vHeightDir * m_flPanelHeight );
+                            ( nWidth * vWidthDir * m_flPanelWidth ) +
+                            ( nHeight * vHeightDir * m_flPanelHeight );
 
         CreateShards( vBreakPos, vAngles, vec3_origin, vec3_origin, WINDOW_PANEL_SIZE, WINDOW_PANEL_SIZE, WINDOW_SMALL_SHARD_SIZE );
 
@@ -1140,8 +1140,8 @@ bool CBreakableSurface::ShatterPane( int nWidth, int nHeight, const Vector &vFor
     Vector vWidthDir, vHeightDir;
     AngleVectors( vAngles, NULL, &vWidthDir, &vHeightDir );
     Vector vBreakPos = m_vCorner +
-                       ( nWidth * vWidthDir * m_flPanelWidth ) +
-                       ( nHeight * vHeightDir * m_flPanelHeight );
+                        ( nWidth * vWidthDir * m_flPanelWidth ) +
+                        ( nHeight * vHeightDir * m_flPanelHeight );
 
     CreateShards( vBreakPos, vAngles, vForce, vForcePos, m_flPanelWidth, m_flPanelHeight, WINDOW_SMALL_SHARD_SIZE );
 

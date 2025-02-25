@@ -23,7 +23,7 @@ DECLARE_AUTO_LIST( IDroppedWeaponAutoList );
 
 class CTFDroppedWeapon : public CBaseAnimating, public IDroppedWeaponAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CTFDroppedWeapon, CBaseAnimating );
     DECLARE_NETWORKCLASS();
 
@@ -69,7 +69,7 @@ class CTFDroppedWeapon : public CBaseAnimating, public IDroppedWeaponAutoList
         return m_flChargeLevel;
     }
 
-   private:
+    private:
     CNetworkVarEmbedded( CEconItemView, m_Item );
     CNetworkVar( float, m_flChargeLevel );
 

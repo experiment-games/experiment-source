@@ -1302,31 +1302,31 @@ const mstudioiklock_t &CStudioHdr::pIKAutoplayLock( int i )
 #if 0
 int	CStudioHdr::CountAutoplaySequences() const
 {
-	int count = 0;
-	for (int i = 0; i < GetNumSeq(); i++)
-	{
-		mstudioseqdesc_t &seqdesc = pSeqdesc( i );
-		if (seqdesc.flags & STUDIO_AUTOPLAY)
-		{
-			count++;
-		}
-	}
-	return count;
+    int count = 0;
+    for (int i = 0; i < GetNumSeq(); i++)
+    {
+        mstudioseqdesc_t &seqdesc = pSeqdesc( i );
+        if (seqdesc.flags & STUDIO_AUTOPLAY)
+        {
+            count++;
+        }
+    }
+    return count;
 }
 
 int	CStudioHdr::CopyAutoplaySequences( unsigned short *pOut, int outCount ) const
 {
-	int outIndex = 0;
-	for (int i = 0; i < GetNumSeq() && outIndex < outCount; i++)
-	{
-		mstudioseqdesc_t &seqdesc = pSeqdesc( i );
-		if (seqdesc.flags & STUDIO_AUTOPLAY)
-		{
-			pOut[outIndex] = i;
-			outIndex++;
-		}
-	}
-	return outIndex;
+    int outIndex = 0;
+    for (int i = 0; i < GetNumSeq() && outIndex < outCount; i++)
+    {
+        mstudioseqdesc_t &seqdesc = pSeqdesc( i );
+        if (seqdesc.flags & STUDIO_AUTOPLAY)
+        {
+            pOut[outIndex] = i;
+            outIndex++;
+        }
+    }
+    return outIndex;
 }
 
 #endif
@@ -1391,7 +1391,7 @@ void CStudioHdr::RunFlexRulesOld( const float *src, float *dest )
             const char *pszExpression = flex_maxrule.GetString();
             if ( pszExpression )
             {
-              nFlexRulesToRun = atoi(pszExpression);				// 0 will be returned if not a numeric string
+            nFlexRulesToRun = atoi(pszExpression);				// 0 will be returned if not a numeric string
             }
             // end JasonM hack
         //*/
@@ -1668,13 +1668,13 @@ void CStudioHdr::RunFlexRulesOld( const float *src, float *dest )
             // JasonM hack
             if ( nFlexRulesToRun == 0)					// 0 means run all rules correctly
             {
-              dest[prule->flex] = stack[0];
+            dest[prule->flex] = stack[0];
             }
             else // run only up to nFlexRulesToRun correctly...zero out the rest
             {
-              if ( j < nFlexRulesToRun )
+            if ( j < nFlexRulesToRun )
                 dest[prule->flex] = stack[0];
-              else
+            else
                 dest[prule->flex] = 0.0f;
             }
 
@@ -2027,8 +2027,8 @@ void CStudioHdr::CActivityToSequenceMapping::Initialize( CStudioHdr *__restrict 
     int sequenceCount = 0;
     int topActivity = 0;  // this will store the highest seen activity number (used later to make an ad hoc map on the stack)
     for ( UtlHashHandle_t handle = m_ActToSeqHash.GetFirstHandle();
-          m_ActToSeqHash.IsValidHandle( handle );
-          handle = m_ActToSeqHash.GetNextHandle( handle ) )
+        m_ActToSeqHash.IsValidHandle( handle );
+        handle = m_ActToSeqHash.GetNextHandle( handle ) )
     {
         HashValueType &element = m_ActToSeqHash[handle];
         element.startingIdx = sequenceCount;
@@ -2179,7 +2179,7 @@ bool CStudioHdr::CActivityToSequenceMapping::ValidateAgainst( const CStudioHdr *
     if ( m_bIsInitialized )
     {
         return m_expectedPStudioHdr == pstudiohdr->GetRenderHdr() &&
-               m_expectedVModel == pstudiohdr->GetVirtualModel();
+                m_expectedVModel == pstudiohdr->GetVirtualModel();
     }
     else
     {

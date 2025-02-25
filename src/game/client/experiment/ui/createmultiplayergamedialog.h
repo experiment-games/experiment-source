@@ -24,14 +24,14 @@ class CCreateMultiplayerGameDialog : public vgui::PropertyDialog
 {
     DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameDialog, vgui::PropertyDialog );
 
-   public:
+    public:
     CCreateMultiplayerGameDialog( vgui::Panel *parent );
     ~CCreateMultiplayerGameDialog();
 
-   protected:
+    protected:
     virtual bool OnOK( bool applyOnly );
 
-   private:
+    private:
     CCreateMultiplayerGameServerPage *m_pServerPage;
     CCreateMultiplayerGameGameplayPage *m_pGameplayPage;
     CCreateMultiplayerGameBotPage *m_pBotPage;

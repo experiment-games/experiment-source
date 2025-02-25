@@ -23,7 +23,7 @@ class CTFParty : public GCSDK::CProtoBufSharedObject< CSOTFParty, k_EProtoObject
 {
     typedef GCSDK::CProtoBufSharedObject< CSOTFParty, k_EProtoObjectTFParty > BaseClass;
 
-   public:
+    public:
     CTFParty();
     virtual ~CTFParty();
 
@@ -123,7 +123,7 @@ class CTFPartyInvite : public GCSDK::CProtoBufSharedObject< CSOTFPartyInvite, k_
 {
     typedef GCSDK::CProtoBufSharedObject< CSOTFPartyInvite, k_EProtoObjectTFPartyInvite > BaseClass;
 
-   public:
+    public:
     const static int k_nTypeID = k_EProtoObjectTFPartyInvite;
 
     virtual GCSDK::PlayerGroupID_t GetGroupID() const OVERRIDE

@@ -52,7 +52,7 @@ class CRadarTarget : public CPointEntity
 {
     DECLARE_CLASS( CRadarTarget, CPointEntity );
 
-   public:
+    public:
     void Spawn();
 
     bool IsDisabled()
@@ -71,12 +71,12 @@ class CRadarTarget : public CPointEntity
     void InputDisable( inputdata_t &inputdata );
     int ObjectCaps();
 
-   private:
+    private:
     bool m_bDisabled;
     int m_iType;
     int m_iMode;
 
-   public:
+    public:
     float m_flRadius;
 
     DECLARE_DATADESC();
@@ -136,7 +136,7 @@ class CVehicleCargoTrigger : public CBaseEntity
 {
     DECLARE_CLASS( CVehicleCargoTrigger, CBaseEntity );
 
-   public:
+    public:
     //
     // Creates a trigger with the specified bounds
 
@@ -179,7 +179,7 @@ class CVehicleCargoTrigger : public CBaseEntity
     {
         // For now, only bother with strider busters
         if ( ( FClassnameIs( pOther, "weapon_striderbuster" ) == false ) &&
-             ( FClassnameIs( pOther, "npc_grenade_magna" ) == false ) )
+            ( FClassnameIs( pOther, "npc_grenade_magna" ) == false ) )
             return false;
 
         // Must be a physics prop
@@ -265,7 +265,7 @@ class CVehicleCargoTrigger : public CBaseEntity
         SetTouch( &CVehicleCargoTrigger::CargoTouch );
     }
 
-   protected:
+    protected:
     float m_flIgnoreDuration;
     CHandle< CBaseEntity > m_hIgnoreEntity;
 
@@ -286,7 +286,7 @@ DEFINE_FIELD( m_flIgnoreDuration, FIELD_TIME ),
 
 class CInfoTargetVehicleTransition : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CInfoTargetVehicleTransition, CPointEntity );
 
     void Enable( void )
@@ -303,7 +303,7 @@ class CInfoTargetVehicleTransition : public CPointEntity
         return m_bDisabled;
     }
 
-   private:
+    private:
     void InputEnable( inputdata_t &data )
     {
         Enable();
@@ -399,9 +399,9 @@ SendPropInt( SENDINFO( m_iNumRadarContacts ), 8 ),
 
     CPropJeepEpisodic::CPropJeepEpisodic( void )
     : m_bEntranceLocked( false ),
-      m_bExitLocked( false ),
-      m_bAddingCargo( false ),
-      m_flNextAvoidBroadcastTime( 0.0f )
+    m_bExitLocked( false ),
+    m_bAddingCargo( false ),
+    m_flNextAvoidBroadcastTime( 0.0f )
 {
     m_bHasGun = false;
     m_bUnableToFire = true;
@@ -655,7 +655,7 @@ bool CPropJeepEpisodic::PassengerInTransition( void )
     if ( pAlyx )
     {
         if ( pAlyx->GetPassengerState() == PASSENGER_STATE_ENTERING ||
-             pAlyx->GetPassengerState() == PASSENGER_STATE_EXITING )
+            pAlyx->GetPassengerState() == PASSENGER_STATE_EXITING )
             return true;
     }
 
@@ -753,8 +753,8 @@ void CPropJeepEpisodic::UpdateWheelDust( void )
 
     // Must be moving quickly enough or skidding along the ground
     bool bCreateDust = ( bCarOn &&
-                         bAllowDust &&
-                         ( m_VehiclePhysics.GetSpeed() >= MIN_WHEEL_DUST_SPEED || carState->skidSpeed > DEFAULT_SKID_THRESHOLD ) );
+                        bAllowDust &&
+                        ( m_VehiclePhysics.GetSpeed() >= MIN_WHEEL_DUST_SPEED || carState->skidSpeed > DEFAULT_SKID_THRESHOLD ) );
 
     // Update our wheel dust
     Vector vecPos;
@@ -1333,20 +1333,20 @@ static void KillBlockingEnemyNPCs( CBasePlayer *pPlayer, CBaseEntity *pVehicleEn
 void CPropJeepEpisodic::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased )
 {
     /* The car headlight hurts perf, there's no timer to turn it off automatically,
-       and we haven't built any gameplay around it.
+        and we haven't built any gameplay around it.
 
-       Furthermore, I don't think I've ever seen a playtester turn it on.
+        Furthermore, I don't think I've ever seen a playtester turn it on.
 
     if ( ucmd->impulse == 100 )
     {
-      if (HeadlightIsOn())
-      {
+    if (HeadlightIsOn())
+    {
         HeadlightTurnOff();
-      }
-      else
-      {
+    }
+    else
+    {
         HeadlightTurnOn();
-      }
+    }
     }*/
 
     if ( ucmd->forwardmove != 0.0f )

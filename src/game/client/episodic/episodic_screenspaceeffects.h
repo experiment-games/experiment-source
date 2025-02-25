@@ -14,11 +14,11 @@
 
 class CStunEffect : public IScreenSpaceEffect
 {
-   public:
+    public:
     CStunEffect( void )
         : m_flDuration( 0.0f ),
-          m_flFinishTime( 0.0f ),
-          m_bUpdateView( true ) {}
+        m_flFinishTime( 0.0f ),
+        m_bUpdateView( true ) {}
 
     virtual void Init( void );
     virtual void Shutdown( void );
@@ -31,7 +31,7 @@ class CStunEffect : public IScreenSpaceEffect
 
     virtual void Render( int x, int y, int w, int h );
 
-   private:
+    private:
     CTextureReference m_StunTexture;
     CMaterialReference m_EffectMaterial;
     float m_flDuration;
@@ -47,13 +47,13 @@ ADD_SCREENSPACE_EFFECT( CStunEffect, episodic_stun );
 
 class CEP1IntroEffect : public IScreenSpaceEffect
 {
-   public:
+    public:
     CEP1IntroEffect( void )
         : m_flDuration( 0.0f ),
-          m_flFinishTime( 0.0f ),
-          m_bUpdateView( true ),
-          m_bEnabled( false ),
-          m_bFadeOut( false ) {}
+        m_flFinishTime( 0.0f ),
+        m_bUpdateView( true ),
+        m_bEnabled( false ),
+        m_bFadeOut( false ) {}
 
     virtual void Init( void );
     virtual void Shutdown( void );
@@ -69,7 +69,7 @@ class CEP1IntroEffect : public IScreenSpaceEffect
 
     virtual void Render( int x, int y, int w, int h );
 
-   private:
+    private:
     inline unsigned char GetFadeAlpha( void );
 
     CTextureReference m_StunTexture;
@@ -93,13 +93,13 @@ ADD_SCREENSPACE_EFFECT( CEP1IntroEffect, episodic_intro );
 
 class CEP2StunEffect : public IScreenSpaceEffect
 {
-   public:
+    public:
     CEP2StunEffect( void )
         : m_flDuration( 0.0f ),
-          m_flFinishTime( 0.0f ),
-          m_bUpdateView( true ),
-          m_bEnabled( false ),
-          m_bFadeOut( false ) {}
+        m_flFinishTime( 0.0f ),
+        m_bUpdateView( true ),
+        m_bEnabled( false ),
+        m_bFadeOut( false ) {}
 
     virtual void Init( void );
     virtual void Shutdown( void );
@@ -115,7 +115,7 @@ class CEP2StunEffect : public IScreenSpaceEffect
 
     virtual void Render( int x, int y, int w, int h );
 
-   private:
+    private:
     inline unsigned char GetFadeAlpha( void );
 
     CTextureReference m_StunTexture;

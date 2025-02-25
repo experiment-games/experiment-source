@@ -20,7 +20,7 @@ class CConfirmDeleteDialog : public CConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmDeleteDialog, CConfirmDialog );
 
-   public:
+    public:
     CConfirmDeleteDialog( vgui::Panel *parent );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );

@@ -259,26 +259,26 @@ bool CTFLobbyShared::BAssertValidPendingPlayerIndex( int iPendingPlayerIndex ) c
 void CTFLobbyShared::SpewDebugSummary() const
 {
     Msg( "CTFLobbyShared: ID:%016llx  %d member(s), %d pending\n",
-         GetGroupID(),
-         GetNumMembers(),
-         GetNumPendingPlayers() );
+        GetGroupID(),
+        GetNumMembers(),
+        GetNumPendingPlayers() );
     for ( int i = 0; i < GetNumMembers(); i++ )
     {
         ConstTFLobbyPlayer details = GetMemberDetails( i );
         Msg( "  Member[%d] %s  team = %s  type = %s\n",
-             i,
-             GetMember( i ).Render(),
-             TF_GC_TEAM_Name( details.GetTeam() ).c_str(),
-             CTFLobbyPlayerProto_Type_Name( details.Proto().type() ).c_str() );
+            i,
+            GetMember( i ).Render(),
+            TF_GC_TEAM_Name( details.GetTeam() ).c_str(),
+            CTFLobbyPlayerProto_Type_Name( details.Proto().type() ).c_str() );
     }
     for ( int i = 0; i < GetNumPendingPlayers(); i++ )
     {
         ConstTFLobbyPlayer details = GetPendingPlayerDetails( i );
         Msg( "  Pending[%d] %s  team = %s  type = %s\n",
-             i,
-             GetPendingPlayer( i ).Render(),
-             TF_GC_TEAM_Name( details.GetTeam() ).c_str(),
-             CTFLobbyPlayerProto_Type_Name( details.Proto().type() ).c_str() );
+            i,
+            GetPendingPlayer( i ).Render(),
+            TF_GC_TEAM_Name( details.GetTeam() ).c_str(),
+            CTFLobbyPlayerProto_Type_Name( details.Proto().type() ).c_str() );
     }
 }
 

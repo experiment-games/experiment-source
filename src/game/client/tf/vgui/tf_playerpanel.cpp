@@ -93,8 +93,8 @@ bool CTFPlayerPanel::Update( void )
     bool bVisible = GetTeam() >= FIRST_GAME_TEAM;
     int iRespawnWait = -1;
     m_bPlayerReadyModeActive = ( !bObserver &&
-                                 TFGameRules()->UsePlayerReadyStatusMode() &&
-                                 TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS );
+                                TFGameRules()->UsePlayerReadyStatusMode() &&
+                                TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS );
 
     CTFGSLobby *pLobby = GTFGCClientSystem()->GetLobby();
     if ( pLobby )
@@ -156,8 +156,8 @@ bool CTFPlayerPanel::Update( void )
 
                 // Hide class info from the other team?
                 if ( !bObserver &&
-                     TFGameRules()->IsCompetitiveMode() &&
-                     GetTeam() != g_TF_PR->GetTeam( pLocalPlayer->entindex() ) )
+                    TFGameRules()->IsCompetitiveMode() &&
+                    GetTeam() != g_TF_PR->GetTeam( pLocalPlayer->entindex() ) )
                 {
                     iClass = TF_CLASS_UNDEFINED;
                 }

@@ -23,7 +23,7 @@ using namespace vgui;
 
 class CaptionLabel : public Label
 {
-   public:
+    public:
     CaptionLabel( Panel *parent, const char *panelName, const char *text )
         : Label( parent, panelName, text )
     {

@@ -68,7 +68,7 @@ struct LayerRecord
 
 struct LagRecord
 {
-   public:
+    public:
     LagRecord()
     {
         m_fFlags = 0;
@@ -182,7 +182,7 @@ static void RestorePlayerTo( CBasePlayer *pPlayer, const Vector &vWantedPos )
 //-----------------------------------------------------------------------------
 class CLagCompensationManager : public CAutoGameSystemPerFrame, public ILagCompensationManager
 {
-   public:
+    public:
     CLagCompensationManager( char const *name )
         : CAutoGameSystemPerFrame( name ), m_flTeleportDistanceSqr( 64 * 64 )
     {
@@ -214,7 +214,7 @@ class CLagCompensationManager : public CAutoGameSystemPerFrame, public ILagCompe
         return m_isCurrentlyDoingCompensation;
     }
 
-   private:
+    private:
     void BacktrackPlayer( CBasePlayer *player, float flTargetTime );
 
     void ClearHistory()
@@ -371,10 +371,10 @@ void CLagCompensationManager::StartLagCompensation( CBasePlayer *player, CUserCm
     m_pCurrentPlayer = player;
 
     if ( !player->m_bLagCompensation        // Player not wanting lag compensation
-         || ( gpGlobals->maxClients <= 1 )  // no lag compensation in single player
-         || !sv_unlag.GetBool()             // disabled by server admin
-         || player->IsBot()                 // not for bots
-         || player->IsObserver()            // not for spectators
+        || ( gpGlobals->maxClients <= 1 )  // no lag compensation in single player
+        || !sv_unlag.GetBool()             // disabled by server admin
+        || player->IsBot()                 // not for bots
+        || player->IsObserver()            // not for spectators
     )
         return;
 
@@ -516,8 +516,8 @@ void CLagCompensationManager::BacktrackPlayer( CBasePlayer *pPlayer, float flTar
 
     float frac = 0.0f;
     if ( prevRecord &&
-         ( record->m_flSimulationTime < flTargetTime ) &&
-         ( record->m_flSimulationTime < prevRecord->m_flSimulationTime ) )
+        ( record->m_flSimulationTime < flTargetTime ) &&
+        ( record->m_flSimulationTime < prevRecord->m_flSimulationTime ) )
     {
         // we didn't find the exact time but have a valid previous record
         // so interpolate between these two records;
@@ -527,7 +527,7 @@ void CLagCompensationManager::BacktrackPlayer( CBasePlayer *pPlayer, float flTar
 
         // calc fraction between both records
         frac = ( flTargetTime - record->m_flSimulationTime ) /
-               ( prevRecord->m_flSimulationTime - record->m_flSimulationTime );
+                ( prevRecord->m_flSimulationTime - record->m_flSimulationTime );
 
         Assert( frac > 0 && frac < 1 );  // should never extrapolate
 
@@ -819,7 +819,7 @@ void CLagCompensationManager::FinishLagCompensation( CBasePlayer *player )
             // see if simulation made any changes, if no, then do the restore, otherwise,
             //  leave new values in
             if ( pPlayer->CollisionProp()->OBBMinsPreScaled() == change->m_vecMinsPreScaled &&
-                 pPlayer->CollisionProp()->OBBMaxsPreScaled() == change->m_vecMaxsPreScaled )
+                pPlayer->CollisionProp()->OBBMaxsPreScaled() == change->m_vecMaxsPreScaled )
             {
                 // Restore it
                 pPlayer->SetSize( restore->m_vecMinsPreScaled, restore->m_vecMaxsPreScaled );

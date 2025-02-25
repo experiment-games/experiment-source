@@ -72,13 +72,13 @@ const TValue *luaT_gettmbyobj (lua_State *L, const TValue *o, TMS event) {
   Table *mt;
   switch (ttype(o)) {
     case LUA_TTABLE:
-      mt = hvalue(o)->metatable;
-      break;
+    mt = hvalue(o)->metatable;
+    break;
     case LUA_TUSERDATA:
-      mt = uvalue(o)->metatable;
-      break;
+    mt = uvalue(o)->metatable;
+    break;
     default:
-      mt = G(L)->mt[ttype(o)];
+    mt = G(L)->mt[ttype(o)];
   }
   return (mt ? luaH_getshortstr(mt, G(L)->tmname[event]) : &G(L)->nilvalue);
 }
@@ -91,17 +91,17 @@ const TValue *luaT_gettmbyobj (lua_State *L, const TValue *o, TMS event) {
 const char *luaT_objtypename (lua_State *L, const TValue *o) {
   Table *mt;
   if ((ttistable(o) && (mt = hvalue(o)->metatable) != NULL) ||
-      (ttisfulluserdata(o) && (mt = uvalue(o)->metatable) != NULL)) {
+    (ttisfulluserdata(o) && (mt = uvalue(o)->metatable) != NULL)) {
     const TValue *name = luaH_getshortstr(mt, luaS_new(L, "__name"));
     if (ttisstring(name))  /* is '__name' a string? */
-      return getstr(tsvalue(name));  /* use it as type name */
+    return getstr(tsvalue(name));  /* use it as type name */
   }
   return ttypename(ttype(o));  /* else use standard type name */
 }
 
 
 void luaT_callTM (lua_State *L, const TValue *f, const TValue *p1,
-                  const TValue *p2, const TValue *p3) {
+                const TValue *p2, const TValue *p3) {
   StkId func = L->top.p;
   setobj2s(L, func, f);  /* push function (assume EXTRA_STACK) */
   setobj2s(L, func + 1, p1);  /* 1st argument */
@@ -117,7 +117,7 @@ void luaT_callTM (lua_State *L, const TValue *f, const TValue *p1,
 
 
 void luaT_callTMres (lua_State *L, const TValue *f, const TValue *p1,
-                     const TValue *p2, StkId res) {
+                    const TValue *p2, StkId res) {
   ptrdiff_t result = savestack(L, res);
   StkId func = L->top.p;
   setobj2s(L, func, f);  /* push function (assume EXTRA_STACK) */
@@ -135,7 +135,7 @@ void luaT_callTMres (lua_State *L, const TValue *f, const TValue *p1,
 
 
 static int callbinTM (lua_State *L, const TValue *p1, const TValue *p2,
-                      StkId res, TMS event) {
+                    StkId res, TMS event) {
   const TValue *tm = luaT_gettmbyobj(L, p1, event);  /* try first operand */
   if (notm(tm))
     tm = luaT_gettmbyobj(L, p2, event);  /* try second operand */
@@ -149,15 +149,15 @@ void luaT_trybinTM (lua_State *L, const TValue *p1, const TValue *p2,
                     StkId res, TMS event) {
   if (l_unlikely(!callbinTM(L, p1, p2, res, event))) {
     switch (event) {
-      case TM_BAND: case TM_BOR: case TM_BXOR:
-      case TM_SHL: case TM_SHR: case TM_BNOT: {
+    case TM_BAND: case TM_BOR: case TM_BXOR:
+    case TM_SHL: case TM_SHR: case TM_BNOT: {
         if (ttisnumber(p1) && ttisnumber(p2))
-          luaG_tointerror(L, p1, p2);
+        luaG_tointerror(L, p1, p2);
         else
-          luaG_opinterror(L, p1, p2, "perform bitwise operation on");
-      }
-      /* calls never return, but to avoid warnings: *//* FALLTHROUGH */
-      default:
+        luaG_opinterror(L, p1, p2, "perform bitwise operation on");
+    }
+    /* calls never return, but to avoid warnings: *//* FALLTHROUGH */
+    default:
         luaG_opinterror(L, p1, p2, "perform arithmetic on");
     }
   }
@@ -167,13 +167,13 @@ void luaT_trybinTM (lua_State *L, const TValue *p1, const TValue *p2,
 void luaT_tryconcatTM (lua_State *L) {
   StkId top = L->top.p;
   if (l_unlikely(!callbinTM(L, s2v(top - 2), s2v(top - 1), top - 2,
-                               TM_CONCAT)))
+                                TM_CONCAT)))
     luaG_concaterror(L, s2v(top - 2), s2v(top - 1));
 }
 
 
 void luaT_trybinassocTM (lua_State *L, const TValue *p1, const TValue *p2,
-                                       int flip, StkId res, TMS event) {
+                                        int flip, StkId res, TMS event) {
   if (flip)
     luaT_trybinTM(L, p2, p1, res, event);
   else
@@ -182,7 +182,7 @@ void luaT_trybinassocTM (lua_State *L, const TValue *p1, const TValue *p2,
 
 
 void luaT_trybiniTM (lua_State *L, const TValue *p1, lua_Integer i2,
-                                   int flip, StkId res, TMS event) {
+                                    int flip, StkId res, TMS event) {
   TValue aux;
   setivalue(&aux, i2);
   luaT_trybinassocTM(L, p1, &aux, flip, res, event);
@@ -199,18 +199,18 @@ void luaT_trybiniTM (lua_State *L, const TValue *p1, lua_Integer i2,
 ** information.
 */
 int luaT_callorderTM (lua_State *L, const TValue *p1, const TValue *p2,
-                      TMS event) {
+                    TMS event) {
   if (callbinTM(L, p1, p2, L->top.p, event))  /* try original event */
     return !l_isfalse(s2v(L->top.p));
 #if defined(LUA_COMPAT_LT_LE)
   else if (event == TM_LE) {
-      /* try '!(p2 < p1)' for '(p1 <= p2)' */
-      L->ci->callstatus |= CIST_LEQ;  /* mark it is doing 'lt' for 'le' */
-      if (callbinTM(L, p2, p1, L->top.p, TM_LT)) {
+    /* try '!(p2 < p1)' for '(p1 <= p2)' */
+    L->ci->callstatus |= CIST_LEQ;  /* mark it is doing 'lt' for 'le' */
+    if (callbinTM(L, p2, p1, L->top.p, TM_LT)) {
         L->ci->callstatus ^= CIST_LEQ;  /* clear mark */
         return l_isfalse(s2v(L->top.p));
-      }
-      /* else error will remove this 'ci'; no need to clear mark */
+    }
+    /* else error will remove this 'ci'; no need to clear mark */
   }
 #endif
   luaG_ordererror(L, p1, p2);  /* no metamethod found */
@@ -219,7 +219,7 @@ int luaT_callorderTM (lua_State *L, const TValue *p1, const TValue *p2,
 
 
 int luaT_callorderiTM (lua_State *L, const TValue *p1, int v2,
-                       int flip, int isfloat, TMS event) {
+                        int flip, int isfloat, TMS event) {
   TValue aux; const TValue *p2;
   if (isfloat) {
     setfltvalue(&aux, cast_num(v2));
@@ -236,7 +236,7 @@ int luaT_callorderiTM (lua_State *L, const TValue *p1, int v2,
 
 
 void luaT_adjustvarargs (lua_State *L, int nfixparams, CallInfo *ci,
-                         const Proto *p) {
+                        const Proto *p) {
   int i;
   int actual = cast_int(L->top.p - ci->func.p) - 1;  /* number of arguments */
   int nextra = actual - nfixparams;  /* number of extra arguments */
@@ -268,4 +268,3 @@ void luaT_getvarargs (lua_State *L, CallInfo *ci, StkId where, int wanted) {
   for (; i < wanted; i++)   /* complete required results with nil */
     setnilvalue(s2v(where + i));
 }
-

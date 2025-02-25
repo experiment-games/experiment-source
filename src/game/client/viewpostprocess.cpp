@@ -250,8 +250,8 @@ void ApplyPostProcessingPasses( PostProcessingPass *pass_list,  // table of effe
             if ( !src_mat )
             {
                 src_mat = materials->FindMaterial( pass_list->material_name,
-                                                   TEXTURE_GROUP_OTHER,
-                                                   true );
+                                                    TEXTURE_GROUP_OTHER,
+                                                    true );
                 if ( src_mat )
                 {
                     pass_list->m_mat_ref.Init( src_mat );
@@ -276,7 +276,7 @@ void ApplyPostProcessingPasses( PostProcessingPass *pass_list,  // table of effe
             if ( pass_list->src_rendering_target )
             {
                 ITexture *src_rt = materials->FindTexture( pass_list->src_rendering_target,
-                                                           TEXTURE_GROUP_RENDER_TARGET );
+                                                            TEXTURE_GROUP_RENDER_TARGET );
                 int src_width = src_rt->GetActualWidth();
                 int src_height = src_rt->GetActualHeight();
                 int ssrc_width = ( src_width - 1 ) / pass_list->xsrc_scale;
@@ -413,7 +413,7 @@ enum Histogram_entry_state_t
 
 class CHistogram_entry_t
 {
-   public:
+    public:
     Histogram_entry_state_t m_state;
     OcclusionQueryObjectHandle_t m_occ_handle;  // the occlusion query handle
     int m_frame_queued;                         // when this query was last queued
@@ -507,16 +507,16 @@ void CHistogram_entry_t::IssueQuery( int frm_num )
     scrx_max -= skip_edgex;
     scry_max -= skip_edgey;
     pRenderContext->DrawScreenSpaceRectangle( test_mat,
-                                              scrx_min,
-                                              scry_min,
-                                              1 + scrx_max - scrx_min,
-                                              1 + scry_max - scry_min,
-                                              scrx_min,
-                                              scry_min,
-                                              scrx_max,
-                                              scry_max,
-                                              dest_width,
-                                              dest_height );
+                                            scrx_min,
+                                            scry_min,
+                                            1 + scrx_max - scrx_min,
+                                            1 + scry_max - scry_min,
+                                            scrx_min,
+                                            scry_min,
+                                            scrx_max,
+                                            scry_max,
+                                            dest_width,
+                                            dest_height );
 
     if ( mat_tonemapping_occlusion_use_stencil.GetInt() )
     {
@@ -533,16 +533,16 @@ void CHistogram_entry_t::IssueQuery( int frm_num )
         pRenderContext->SetStencilReferenceValue( 1 );
         IMaterial *stest_mat = materials->FindMaterial( "dev/no_pixel_write", TEXTURE_GROUP_OTHER, true );
         pRenderContext->DrawScreenSpaceRectangle( stest_mat,
-                                                  scrx_min,
-                                                  scry_min,
-                                                  1 + scrx_max - scrx_min,
-                                                  1 + scry_max - scry_min,
-                                                  scrx_min,
-                                                  scry_min,
-                                                  scrx_max,
-                                                  scry_max,
-                                                  dest_width,
-                                                  dest_height );
+                                                scrx_min,
+                                                scry_min,
+                                                1 + scrx_max - scrx_min,
+                                                1 + scry_max - scry_min,
+                                                scrx_min,
+                                                scry_min,
+                                                scrx_max,
+                                                scry_max,
+                                                dest_width,
+                                                dest_height );
         pRenderContext->SetStencilEnable( false );
     }
     pRenderContext->EndOcclusionQueryDrawing( m_occ_handle );
@@ -560,7 +560,7 @@ class CLuminanceHistogramSystem
     CHistogram_entry_t CurHistogram[N_LUMINANCE_RANGES];
     int cur_query_frame;
 
-   public:
+    public:
     float FindLocationOfPercentBrightPixels( float flPercentBrightPixels, float flPercentTarget );
 
     float GetTargetTonemapScalar( bool bGetIdealTargetForDebugMode );
@@ -609,7 +609,7 @@ void CLuminanceHistogramSystem::Update( void )
                     int np = pRenderContext->OcclusionQuery_GetNumPixelsRendered(
                         CurHistogram[i].m_occ_handle );
                     if ( np != -1 )  // -1=query not finished. wait until
-                                     // next time
+                                    // next time
                     {
                         CurHistogram[i].m_npixels_in_range = np;
                         // 						    if (mat_debug_autoexposure.GetInt())
@@ -630,9 +630,9 @@ void CLuminanceHistogramSystem::Update( void )
         int oldest_so_far = -1;
         for ( int i = 0; i < nNumRanges; i++ )
             if ( ( CurHistogram[i].m_state == HESTATE_QUERY_DONE ) &&
-                 ( ( oldest_so_far == -1 ) ||
-                   ( CurHistogram[i].m_frame_queued <
-                     CurHistogram[oldest_so_far].m_frame_queued ) ) )
+                ( ( oldest_so_far == -1 ) ||
+                    ( CurHistogram[i].m_frame_queued <
+                    CurHistogram[oldest_so_far].m_frame_queued ) ) )
                 oldest_so_far = i;
         if ( oldest_so_far == -1 )  // nothing to do
             break;
@@ -993,30 +993,30 @@ void CLuminanceHistogramSystem::DisplayHistogram( void )
         /* // This code works when N_LUMINANCE_RANGES_NEW = 11
         if ( bDrawTextThisFrame == true )
         {
-          engine->Con_NPrintf( 17, "%04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f   ",
-             100.0f * float( vTotalPixelsAndHigher[9] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[8] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[7] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[6] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[5] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[4] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[3] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[2] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[1] ) / float( nTotalValidPixels ),
-             100.0f * float( vTotalPixelsAndHigher[0] ) / float( nTotalValidPixels ) );
+        engine->Con_NPrintf( 17, "%04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f   ",
+            100.0f * float( vTotalPixelsAndHigher[9] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[8] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[7] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[6] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[5] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[4] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[3] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[2] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[1] ) / float( nTotalValidPixels ),
+            100.0f * float( vTotalPixelsAndHigher[0] ) / float( nTotalValidPixels ) );
 
-          engine->Con_NPrintf( 15, "%04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f   ",
-             100.0f * float( CurHistogram[nNumRanges-1-9].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-8].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-7].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-6].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-5].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-4].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-3].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-2].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-1].m_npixels_in_range ) / float( nTotalValidPixels ),
-             100.0f * float( CurHistogram[nNumRanges-1-0].m_npixels_in_range ) / float( nTotalValidPixels ) );
-          }
+        engine->Con_NPrintf( 15, "%04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f         %04.2f   ",
+            100.0f * float( CurHistogram[nNumRanges-1-9].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-8].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-7].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-6].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-5].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-4].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-3].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-2].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-1].m_npixels_in_range ) / float( nTotalValidPixels ),
+            100.0f * float( CurHistogram[nNumRanges-1-0].m_npixels_in_range ) / float( nTotalValidPixels ) );
+        }
         //*/
     }
     else
@@ -1116,9 +1116,9 @@ void CLuminanceHistogramSystem::DisplayHistogram( void )
         pRenderContext->ClearBuffers( true, true );
 
         pRenderContext->Viewport( flBarStart + ( flBarWidth * ( ( pRenderContext->GetToneMappingScaleLinear().x - flAutoExposureMin ) / ( flAutoExposureMax - flAutoExposureMin ) ) ),
-                                  4 + HISTOGRAM_BAR_SIZE - 4 + 75 - 6,
-                                  4,
-                                  16 );
+                                4 + HISTOGRAM_BAR_SIZE - 4 + 75 - 6,
+                                4,
+                                16 );
         pRenderContext->ClearColor3ub( 255, 0, 0 );
         pRenderContext->ClearBuffers( true, true );
 
@@ -1221,14 +1221,14 @@ static ConVar mat_software_aa_strength_vgui( "mat_software_aa_strength_vgui", "-
 
 class CEnginePostMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CEnginePostMaterialProxy();
     virtual ~CEnginePostMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pMaterialParam_AAValues;
     IMaterialVar *m_pMaterialParam_AAValues2;
     IMaterialVar *m_pMaterialParam_BloomEnable;
@@ -1238,12 +1238,12 @@ class CEnginePostMaterialProxy : public CEntityMaterialProxy
     IMaterialVar *m_pMaterialParam_ColCorrectDefaultWeight;
     IMaterialVar *m_pMaterialParam_ColCorrectLookupWeights;
 
-   public:
+    public:
     static IMaterial *SetupEnginePostMaterial( const Vector4D &fullViewportBloomUVs, const Vector4D &fullViewportFBUVs, const Vector2D &destTexSize, bool bPerformSoftwareAA, bool bPerformBloom, bool bPerformColCorrect, float flAAStrength );
     static void SetupEnginePostMaterialAA( bool bPerformSoftwareAA, float flAAStrength );
     static void SetupEnginePostMaterialTextureTransform( const Vector4D &fullViewportBloomUVs, const Vector4D &fullViewportFBUVs, Vector2D destTexSize );
 
-   private:
+    private:
     static float s_vBloomAAValues[4];
     static float s_vBloomAAValues2[4];
     static float s_vBloomUVTransform[4];
@@ -1863,11 +1863,11 @@ static int PryoSideIndexes[6][2] =
         { 1, 0 } };
 
 static void DrawPyroVignette( int nDestX, int nDestY, int nWidth, int nHeight,  // Rect to draw into in screen space
-                              float flSrcTextureX0,
-                              float flSrcTextureY0,  // which texel you want to appear at destx/y
-                              float flSrcTextureX1,
-                              float flSrcTextureY1,  // which texel you want to appear at destx+width-1, desty+height-1
-                              void *pClientRenderable )
+                            float flSrcTextureX0,
+                            float flSrcTextureY0,  // which texel you want to appear at destx/y
+                            float flSrcTextureX1,
+                            float flSrcTextureY1,  // which texel you want to appear at destx+width-1, desty+height-1
+                            void *pClientRenderable )
 {
     static bool bInit = false;
     static int nNextSide = 0;
@@ -1990,17 +1990,17 @@ static void DrawPyroVignette( int nDestX, int nDestY, int nWidth, int nHeight,  
 }
 
 static void DrawPyroPost( IMaterial *pMaterial,
-                          int nDestX,
-                          int nDestY,
-                          int nWidth,
-                          int nHeight,  // Rect to draw into in screen space
-                          float flSrcTextureX0,
-                          float flSrcTextureY0,  // which texel you want to appear at destx/y
-                          float flSrcTextureX1,
-                          float flSrcTextureY1,  // which texel you want to appear at destx+width-1, desty+height-1
-                          int nSrcTextureWidth,
-                          int nSrcTextureHeight,     // needed for fixup
-                          void *pClientRenderable )  // Used to pass to the bind proxies
+                        int nDestX,
+                        int nDestY,
+                        int nWidth,
+                        int nHeight,  // Rect to draw into in screen space
+                        float flSrcTextureX0,
+                        float flSrcTextureY0,  // which texel you want to appear at destx/y
+                        float flSrcTextureX1,
+                        float flSrcTextureY1,  // which texel you want to appear at destx+width-1, desty+height-1
+                        int nSrcTextureWidth,
+                        int nSrcTextureHeight,     // needed for fixup
+                        void *pClientRenderable )  // Used to pass to the bind proxies
 {
     bool bFound = false;
     IMaterialVar *pVar = pMaterial->FindVar( "$disabled", &bFound, false );
@@ -2167,36 +2167,36 @@ static void DrawPyroPost( IMaterial *pMaterial,
 
 #if 0
 
-	for ( int x=0; x < xSegments; x++ )
-	{
-		for ( int y=0; y < ySegments; y++ )
-		{
-			if ( ( x == 1 || x == 2 ) && ( y == 1 || y == 2 ) )
-			{	// skip the center 4 segments
-				continue;
-			}
+    for ( int x=0; x < xSegments; x++ )
+    {
+        for ( int y=0; y < ySegments; y++ )
+        {
+            if ( ( x == 1 || x == 2 ) && ( y == 1 || y == 2 ) )
+            {	// skip the center 4 segments
+                continue;
+            }
 
-			// Top left
-			meshBuilder.Position3f( flLeftX   + (float) x * flWidth, flTopY - (float) y * flHeight, 0.0f );
-			meshBuilder.TexCoord2f( 0, flLeftU   + (float) x * flUWidth, flTopV + (float) y * flVHeight);
-			meshBuilder.AdvanceVertex();
+            // Top left
+            meshBuilder.Position3f( flLeftX   + (float) x * flWidth, flTopY - (float) y * flHeight, 0.0f );
+            meshBuilder.TexCoord2f( 0, flLeftU   + (float) x * flUWidth, flTopV + (float) y * flVHeight);
+            meshBuilder.AdvanceVertex();
 
-			// Top right (x+1)
-			meshBuilder.Position3f( flLeftX   + (float) (x+1) * flWidth, flTopY - (float) y * flHeight, 0.0f );
-			meshBuilder.TexCoord2f( 0, flLeftU   + (float) (x+1) * flUWidth, flTopV + (float) y * flVHeight);
-			meshBuilder.AdvanceVertex();
+            // Top right (x+1)
+            meshBuilder.Position3f( flLeftX   + (float) (x+1) * flWidth, flTopY - (float) y * flHeight, 0.0f );
+            meshBuilder.TexCoord2f( 0, flLeftU   + (float) (x+1) * flUWidth, flTopV + (float) y * flVHeight);
+            meshBuilder.AdvanceVertex();
 
-			// Bottom right (x+1), (y+1)
-			meshBuilder.Position3f( flLeftX   + (float) (x+1) * flWidth, flTopY - (float) (y+1) * flHeight, 0.0f );
-			meshBuilder.TexCoord2f( 0, flLeftU   + (float) (x+1) * flUWidth, flTopV + (float)(y+1) * flVHeight);
-			meshBuilder.AdvanceVertex();
+            // Bottom right (x+1), (y+1)
+            meshBuilder.Position3f( flLeftX   + (float) (x+1) * flWidth, flTopY - (float) (y+1) * flHeight, 0.0f );
+            meshBuilder.TexCoord2f( 0, flLeftU   + (float) (x+1) * flUWidth, flTopV + (float)(y+1) * flVHeight);
+            meshBuilder.AdvanceVertex();
 
-			// Bottom left (y+1)
-			meshBuilder.Position3f( flLeftX   + (float) x * flWidth, flTopY - (float) (y+1) * flHeight, 0.0f );
-			meshBuilder.TexCoord2f( 0, flLeftU   + (float) x * flUWidth, flTopV + (float)(y+1) * flVHeight);
-			meshBuilder.AdvanceVertex();
-		}
-	}
+            // Bottom left (y+1)
+            meshBuilder.Position3f( flLeftX   + (float) x * flWidth, flTopY - (float) (y+1) * flHeight, 0.0f );
+            meshBuilder.TexCoord2f( 0, flLeftU   + (float) x * flUWidth, flTopV + (float)(y+1) * flVHeight);
+            meshBuilder.AdvanceVertex();
+        }
+    }
 #endif
 
     meshBuilder.End();
@@ -2332,10 +2332,10 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
             bool bPerformSoftwareAA = IsX360() && ( engine->GetDXSupportLevel() >= 90 ) && ( flAAStrength != 0.0f );
             bool bPerformBloom = !bPostVGui && ( flBloomScale > 0.0f ) && ( engine->GetDXSupportLevel() >= 90 );
             bool bPerformColCorrect = !bPostVGui &&
-                                      ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 90 ) &&
-                                      ( g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_FLOAT ) &&
-                                      g_pColorCorrectionMgr->HasNonZeroColorCorrectionWeights() &&
-                                      mat_colorcorrection.GetInt();
+                                    ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 90 ) &&
+                                    ( g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_FLOAT ) &&
+                                    g_pColorCorrectionMgr->HasNonZeroColorCorrectionWeights() &&
+                                    mat_colorcorrection.GetInt();
             bool bSplitScreenHDR = mat_show_ab_hdr.GetInt();
             pRenderContext->EnableColorCorrection( bPerformColCorrect );
             if ( bPerformBloom || bPerformSoftwareAA || bPerformColCorrect )
@@ -2374,7 +2374,7 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
                 // (due to a stretchrect blit being used in UpdateScreenEffectTexture()), so
                 // we need to adjust the corner-pixel UVs sent to our drawrect call:
                 Vector2D uvScale( ( nSrcWidth - ( nSrcWidth / ( float )w ) ) / ( nSrcWidth - 1 ),
-                                  ( nSrcHeight - ( nSrcHeight / ( float )h ) ) / ( nSrcHeight - 1 ) );
+                                ( nSrcHeight - ( nSrcHeight / ( float )h ) ) / ( nSrcHeight - 1 ) );
                 CenterScaleQuadUVs( fullViewportPostSrcCorners, uvScale );
                 CenterScaleQuadUVs( fullViewportPostDestCorners, uvScale );
 
@@ -2391,7 +2391,7 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
 
                     // This math interprets texel coords as being at corner pixel centers (*not* at corner vertices):
                     Vector2D uvScalePost( 1.0f - ( ( w / 2 ) / ( float )( w - 1 ) ),
-                                          1.0f - ( ( h / 2 ) / ( float )( h - 1 ) ) );
+                                        1.0f - ( ( h / 2 ) / ( float )( h - 1 ) ) );
                     CenterScaleQuadUVs( partialViewportPostSrcCorners, uvScalePost );
                 }
 
@@ -2416,20 +2416,20 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
                         }
 
                         pRenderContext->DrawScreenSpaceRectangle( post_mat,
-                                                                  // TomF - offset already done by the viewport.
-                                                                  0,
-                                                                  0,  // partialViewportPostDestRect.x,				partialViewportPostDestRect.y,
-                                                                  partialViewportPostDestRect.width,
-                                                                  partialViewportPostDestRect.height,
-                                                                  partialViewportPostSrcCorners.x,
-                                                                  partialViewportPostSrcCorners.y,
-                                                                  partialViewportPostSrcCorners.z,
-                                                                  partialViewportPostSrcCorners.w,
-                                                                  dest_rt1->GetActualWidth(),
-                                                                  dest_rt1->GetActualHeight(),
-                                                                  GetClientWorldEntity()->GetClientRenderable(),
-                                                                  mat_postprocess_x.GetInt(),
-                                                                  mat_postprocess_y.GetInt() );
+                                                                // TomF - offset already done by the viewport.
+                                                                0,
+                                                                0,  // partialViewportPostDestRect.x,				partialViewportPostDestRect.y,
+                                                                partialViewportPostDestRect.width,
+                                                                partialViewportPostDestRect.height,
+                                                                partialViewportPostSrcCorners.x,
+                                                                partialViewportPostSrcCorners.y,
+                                                                partialViewportPostSrcCorners.z,
+                                                                partialViewportPostSrcCorners.w,
+                                                                dest_rt1->GetActualWidth(),
+                                                                dest_rt1->GetActualHeight(),
+                                                                GetClientWorldEntity()->GetClientRenderable(),
+                                                                mat_postprocess_x.GetInt(),
+                                                                mat_postprocess_y.GetInt() );
 
                         if ( bSplitScreenHDR )
                         {
@@ -2450,18 +2450,18 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
                             }
 
                             pRenderContext->DrawScreenSpaceRectangle( aa_mat,
-                                                                      // TODO: check if offsets should be 0,0 here, as with the combined-pass case
-                                                                      partialViewportPostDestRect.x,
-                                                                      partialViewportPostDestRect.y,
-                                                                      partialViewportPostDestRect.width,
-                                                                      partialViewportPostDestRect.height,
-                                                                      partialViewportPostSrcCorners.x,
-                                                                      partialViewportPostSrcCorners.y,
-                                                                      partialViewportPostSrcCorners.z,
-                                                                      partialViewportPostSrcCorners.w,
-                                                                      dest_rt1->GetActualWidth(),
-                                                                      dest_rt1->GetActualHeight(),
-                                                                      GetClientWorldEntity()->GetClientRenderable() );
+                                                                    // TODO: check if offsets should be 0,0 here, as with the combined-pass case
+                                                                    partialViewportPostDestRect.x,
+                                                                    partialViewportPostDestRect.y,
+                                                                    partialViewportPostDestRect.width,
+                                                                    partialViewportPostDestRect.height,
+                                                                    partialViewportPostSrcCorners.x,
+                                                                    partialViewportPostSrcCorners.y,
+                                                                    partialViewportPostSrcCorners.z,
+                                                                    partialViewportPostSrcCorners.w,
+                                                                    dest_rt1->GetActualWidth(),
+                                                                    dest_rt1->GetActualHeight(),
+                                                                    GetClientWorldEntity()->GetClientRenderable() );
 
                             if ( bSplitScreenHDR )
                             {
@@ -2480,18 +2480,18 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
                             }
 
                             pRenderContext->DrawScreenSpaceRectangle( bloom_mat,
-                                                                      // TODO: check if offsets should be 0,0 here, as with the combined-pass case
-                                                                      partialViewportPostDestRect.x,
-                                                                      partialViewportPostDestRect.y,
-                                                                      partialViewportPostDestRect.width,
-                                                                      partialViewportPostDestRect.height,
-                                                                      partialViewportPostSrcCorners.x,
-                                                                      partialViewportPostSrcCorners.y,
-                                                                      partialViewportPostSrcCorners.z,
-                                                                      partialViewportPostSrcCorners.w,
-                                                                      dest_rt1->GetActualWidth(),
-                                                                      dest_rt1->GetActualHeight(),
-                                                                      GetClientWorldEntity()->GetClientRenderable() );
+                                                                    // TODO: check if offsets should be 0,0 here, as with the combined-pass case
+                                                                    partialViewportPostDestRect.x,
+                                                                    partialViewportPostDestRect.y,
+                                                                    partialViewportPostDestRect.width,
+                                                                    partialViewportPostDestRect.height,
+                                                                    partialViewportPostSrcCorners.x,
+                                                                    partialViewportPostSrcCorners.y,
+                                                                    partialViewportPostSrcCorners.z,
+                                                                    partialViewportPostSrcCorners.w,
+                                                                    dest_rt1->GetActualWidth(),
+                                                                    dest_rt1->GetActualHeight(),
+                                                                    GetClientWorldEntity()->GetClientRenderable() );
 
                             if ( bSplitScreenHDR )
                             {
@@ -2516,18 +2516,18 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
                             }
 
                             pRenderContext->DrawScreenSpaceRectangle( colcorrect_mat,
-                                                                      // TODO: check if offsets should be 0,0 here, as with the combined-pass case
-                                                                      partialViewportPostDestRect.x,
-                                                                      partialViewportPostDestRect.y,
-                                                                      partialViewportPostDestRect.width,
-                                                                      partialViewportPostDestRect.height,
-                                                                      partialViewportPostSrcCorners.x,
-                                                                      partialViewportPostSrcCorners.y,
-                                                                      partialViewportPostSrcCorners.z,
-                                                                      partialViewportPostSrcCorners.w,
-                                                                      dest_rt1->GetActualWidth(),
-                                                                      dest_rt1->GetActualHeight(),
-                                                                      GetClientWorldEntity()->GetClientRenderable() );
+                                                                    // TODO: check if offsets should be 0,0 here, as with the combined-pass case
+                                                                    partialViewportPostDestRect.x,
+                                                                    partialViewportPostDestRect.y,
+                                                                    partialViewportPostDestRect.width,
+                                                                    partialViewportPostDestRect.height,
+                                                                    partialViewportPostSrcCorners.x,
+                                                                    partialViewportPostSrcCorners.y,
+                                                                    partialViewportPostSrcCorners.z,
+                                                                    partialViewportPostSrcCorners.w,
+                                                                    dest_rt1->GetActualWidth(),
+                                                                    dest_rt1->GetActualHeight(),
+                                                                    GetClientWorldEntity()->GetClientRenderable() );
 
                             if ( bSplitScreenHDR )
                             {
@@ -2561,18 +2561,18 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
 
                         IMaterial *pPyroVisionPostMaterial = materials->FindMaterial( "dev/pyro_post", TEXTURE_GROUP_OTHER, true );
                         DrawPyroPost( pPyroVisionPostMaterial,
-                                      // TODO: check if offsets should be 0,0 here, as with the combined-pass case
-                                      partialViewportPostDestRect.x,
-                                      partialViewportPostDestRect.y,
-                                      partialViewportPostDestRect.width,
-                                      partialViewportPostDestRect.height,
-                                      partialViewportPostSrcCorners.x,
-                                      partialViewportPostSrcCorners.y,
-                                      partialViewportPostSrcCorners.z,
-                                      partialViewportPostSrcCorners.w,
-                                      dest_rt1->GetActualWidth(),
-                                      dest_rt1->GetActualHeight(),
-                                      GetClientWorldEntity()->GetClientRenderable() );
+                                    // TODO: check if offsets should be 0,0 here, as with the combined-pass case
+                                    partialViewportPostDestRect.x,
+                                    partialViewportPostDestRect.y,
+                                    partialViewportPostDestRect.width,
+                                    partialViewportPostDestRect.height,
+                                    partialViewportPostSrcCorners.x,
+                                    partialViewportPostSrcCorners.y,
+                                    partialViewportPostSrcCorners.z,
+                                    partialViewportPostSrcCorners.w,
+                                    dest_rt1->GetActualWidth(),
+                                    dest_rt1->GetActualHeight(),
+                                    GetClientWorldEntity()->GetClientRenderable() );
                     }
 
                     if ( g_bDumpRenderTargets )
@@ -2671,14 +2671,14 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
 static float g_vMotionBlurValues[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 class CMotionBlurMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CMotionBlurMaterialProxy();
     virtual ~CMotionBlurMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pMaterialParam;
 };
 
@@ -2873,7 +2873,7 @@ void DoImageSpaceMotionBlur( const CViewSetup &viewBlur, int x, int y, int w, in
             float flSideDotMotion = DotProduct( vCurrentSideVec, vPositionChange );
             float flYawDiffOriginal = s_flPreviousYaw - flCurrentYaw;
             if ( ( ( s_flPreviousYaw - flCurrentYaw > 180.0f ) || ( s_flPreviousYaw - flCurrentYaw < -180.0f ) ) &&
-                 ( ( s_flPreviousYaw + flCurrentYaw > -180.0f ) && ( s_flPreviousYaw + flCurrentYaw < 180.0f ) ) )
+                ( ( s_flPreviousYaw + flCurrentYaw > -180.0f ) && ( s_flPreviousYaw + flCurrentYaw < 180.0f ) ) )
                 flYawDiffOriginal = s_flPreviousYaw + flCurrentYaw;
 
             float flYawDiffAdjusted = flYawDiffOriginal + ( flSideDotMotion / 3.0f );  // Yes, 3.0 is a magic number, sue me

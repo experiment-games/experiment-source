@@ -4,7 +4,7 @@
 // Controls compilation of the replay system via the REPLAY_ENABLE preprocessor
 // definition.
 //
-// The BUILD_REPLAY macro (below) controls the definition of REPLAY_ENABLE 
+// The BUILD_REPLAY macro (below) controls the definition of REPLAY_ENABLE
 // across multiple projects like engine, TF client & server DLL's, and any
 // other games with replay support.
 //
@@ -29,7 +29,7 @@
 //
 // Replay is only loaded for games explicitly specified in engine/replay.cpp
 // (see s_pSupportedReplayGames).
-// 
+//
 //-----------------------------------------------------------------------------
 
 $Conditional BUILD_REPLAY		1

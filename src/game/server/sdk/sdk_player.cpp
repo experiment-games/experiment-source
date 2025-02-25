@@ -25,7 +25,7 @@ ConVar sv_motd_unload_on_dismissal( "sv_motd_unload_on_dismissal", "0", 0, "If e
 
 class CTEPlayerAnimEvent : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEPlayerAnimEvent, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
@@ -96,7 +96,7 @@ SendPropInt( SENDINFO( m_iShotsFired ), 8, SPROP_UNSIGNED ),
 
         class CSDKRagdoll : public CBaseAnimatingOverlay
 {
-   public:
+    public:
     DECLARE_CLASS( CSDKRagdoll, CBaseAnimatingOverlay );
     DECLARE_SERVERCLASS();
 
@@ -106,7 +106,7 @@ SendPropInt( SENDINFO( m_iShotsFired ), 8, SPROP_UNSIGNED ),
         return SetTransmitState( FL_EDICT_ALWAYS );
     }
 
-   public:
+    public:
     // In case the client has the player entity, we transmit the player index.
     // In case the client doesn't have it, we transmit the player's model index, origin, and angles
     // so they can create a ragdoll in the right place.

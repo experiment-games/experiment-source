@@ -23,7 +23,7 @@
 // @note Currently not used since we cache the image on disk as a VTF
 class CRGBAImageTextureRegenerator : public ITextureRegenerator
 {
-   public:
+    public:
     CRGBAImageTextureRegenerator() {}
     virtual ~CRGBAImageTextureRegenerator() {}
 

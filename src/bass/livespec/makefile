@@ -7,4 +7,4 @@ LIBS += -lgdi32 -lwinmm
 all: $(TARGET)
 
 clean:
-	$(RM) $(OUTDIR)\$(TARGET)
+    $(RM) $(OUTDIR)\$(TARGET)

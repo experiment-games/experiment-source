@@ -235,10 +235,10 @@ void CTFHudPlayerClass::OnThink()
     bool bForceEyeUpdate = false;
     // set our class image
     if ( m_nClass != pPlayer->GetPlayerClass()->GetClassIndex() || bTeamChange || bCloakChange || bLoadoutPositionChange || bPlayerClassModeChange ||
-         ( m_nClass == TF_CLASS_SPY &&
-           ( m_nDisguiseClass != pPlayer->m_Shared.GetDisguiseClass() ||
-             m_nDisguiseTeam != pPlayer->m_Shared.GetDisguiseTeam() ||
-             m_hDisguiseWeapon != pPlayer->m_Shared.GetDisguiseWeapon() ) ) )
+        ( m_nClass == TF_CLASS_SPY &&
+            ( m_nDisguiseClass != pPlayer->m_Shared.GetDisguiseClass() ||
+            m_nDisguiseTeam != pPlayer->m_Shared.GetDisguiseTeam() ||
+            m_hDisguiseWeapon != pPlayer->m_Shared.GetDisguiseWeapon() ) ) )
     {
         bForceEyeUpdate = true;
         m_nClass = pPlayer->GetPlayerClass()->GetClassIndex();
@@ -357,7 +357,7 @@ void CTFHudPlayerClass::OnThink()
 
                     m_pCarryingBG->SetWide( nMaxWide + ( m_pCarryingLabel->GetXPos() * 2 ) );
                     m_pCarryingBG->SetTall( bHasOwner ? m_pCarryingOwnerLabel->GetYPos() + m_pCarryingOwnerLabel->GetTall() + YRES( 2 )
-                                                      : m_pCarryingLabel->GetYPos() + m_pCarryingLabel->GetTall() + YRES( 2 ) );
+                                                    : m_pCarryingLabel->GetYPos() + m_pCarryingLabel->GetTall() + YRES( 2 ) );
                 }
                 else
                 {
@@ -419,10 +419,10 @@ void CTFHudPlayerClass::UpdateModelPanel()
     {
         // only show this message one time
         ShowConfirmDialog( "#GameUI_HudPlayerClassUsePlayerModelDialogTitle",
-                           "#GameUI_HudPlayerClassUsePlayerModelDialogMessage",
-                           "#GameUI_HudPlayerClassUsePlayerModelDialogConfirm",
-                           "#GameUI_HudPlayerClassUsePlayerModelDialogCancel",
-                           &HudPlayerClassUsePlayerModelDialogCallback );
+                            "#GameUI_HudPlayerClassUsePlayerModelDialogMessage",
+                            "#GameUI_HudPlayerClassUsePlayerModelDialogConfirm",
+                            "#GameUI_HudPlayerClassUsePlayerModelDialogCancel",
+                            &HudPlayerClassUsePlayerModelDialogCallback );
         cl_hud_playerclass_playermodel_showed_confirm_dialog.SetValue( true );
     }
 

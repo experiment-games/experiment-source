@@ -25,7 +25,7 @@ namespace vgui
 // Things the user typed in and hit submit/return with
 class CHistoryItem
 {
-   public:
+    public:
     CHistoryItem( void );
     CHistoryItem( const char *text, const char *extra = NULL );
     CHistoryItem( const CHistoryItem &src );
@@ -39,7 +39,7 @@ class CHistoryItem
         return m_bHasExtra;
     }
 
-   private:
+    private:
     char *m_text;
     char *m_extraText;
     bool m_bHasExtra;
@@ -52,7 +52,7 @@ class CConsolePanel : public vgui::EditablePanel, public IConsoleDisplayFunc
 {
     DECLARE_CLASS_SIMPLE( CConsolePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CConsolePanel( Panel *pParent, const char *pName, bool bStatusVersion );
     ~CConsolePanel();
 
@@ -74,7 +74,7 @@ class CConsolePanel : public vgui::EditablePanel, public IConsoleDisplayFunc
     bool TextEntryHasFocus() const;
     void TextEntryRequestFocus();
 
-   private:
+    private:
     enum
     {
         MAX_HISTORY_ITEMS = 100,
@@ -82,7 +82,7 @@ class CConsolePanel : public vgui::EditablePanel, public IConsoleDisplayFunc
 
     class CompletionItem
     {
-       public:
+        public:
         CompletionItem( void );
         CompletionItem( const CompletionItem &src );
         CompletionItem &operator=( const CompletionItem &src );
@@ -96,7 +96,7 @@ class CConsolePanel : public vgui::EditablePanel, public IConsoleDisplayFunc
         CHistoryItem *m_pText;
     };
 
-   protected:
+    protected:
     // methods
     void OnAutoComplete( bool reverse );
     MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
@@ -138,7 +138,7 @@ class CConsoleDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CConsoleDialog, vgui::Frame );
 
-   public:
+    public:
     CConsoleDialog( vgui::Panel *pParent, const char *pName, bool bStatusVersion );
 
     virtual void OnScreenSizeChanged( int iOldWide, int iOldTall );
@@ -161,7 +161,7 @@ class CConsoleDialog : public vgui::Frame
 
     virtual void OnKeyCodePressed( vgui::KeyCode code );
 
-   protected:
+    protected:
     CConsolePanel *m_pConsolePanel;
 };
 

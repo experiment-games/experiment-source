@@ -23,7 +23,7 @@ class IClientUnknown;
 
 abstract_class ICollideable
 {
-   public:
+    public:
     // Gets at the entity handle associated with the collideable
     virtual IHandleEntity* GetEntityHandle() = 0;
 

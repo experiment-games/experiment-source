@@ -25,7 +25,7 @@ class CInviteNotification : public CTFDashboardNotification, public CEconNotific
 {
     DECLARE_CLASS_SIMPLE( CInviteNotification, CTFDashboardNotification );
 
-   public:
+    public:
     CInviteNotification( CSteamID steamID, CTFParty::EPendingType eType, bool bIncoming );
     virtual ~CInviteNotification();
 
@@ -50,7 +50,7 @@ class CInviteNotification : public CTFDashboardNotification, public CEconNotific
 
     InviteKey_t GetKey() const;
 
-   private:
+    private:
     class CAvatarImagePanel* m_pAvatar;
     CTFParty::EPendingType m_eType;
     bool m_bIncoming;

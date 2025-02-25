@@ -37,7 +37,7 @@ class CFourWheelServerVehicle : public CBaseServerVehicle
     DECLARE_CLASS( CFourWheelServerVehicle, CBaseServerVehicle );
 
     // IServerVehicle
-   public:
+    public:
     virtual ~CFourWheelServerVehicle( void )
     {
     }
@@ -58,7 +58,7 @@ class CFourWheelServerVehicle : public CBaseServerVehicle
     CPropVehicleDriveable *GetFourWheelVehicle( void );
     bool GetWheelContactPoint( int nWheelIndex, Vector &vecPos );
 
-   public:
+    public:
     virtual void SetVehicle( CBaseEntity *pVehicle );
     void InitViewSmoothing( const Vector &vecStartOrigin, const QAngle &vecStartAngles );
     bool IsPassengerEntering( void );
@@ -66,7 +66,7 @@ class CFourWheelServerVehicle : public CBaseServerVehicle
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     CFourWheelVehiclePhysics *GetFourWheelVehiclePhysics( void );
 
     ViewSmoothingData_t m_ViewSmoothing;
@@ -79,7 +79,7 @@ class CPropVehicle : public CBaseProp, public CDefaultPlayerPickupVPhysics
 {
     DECLARE_CLASS( CPropVehicle, CBaseProp );
 
-   public:
+    public:
     CPropVehicle();
     virtual ~CPropVehicle();
 
@@ -125,7 +125,7 @@ class CPropVehicle : public CBaseProp, public CDefaultPlayerPickupVPhysics
     void RemovePhysicsChild( CBaseEntity *pChild );
 #endif  // HL2_EPISODIC
 
-   protected:
+    protected:
     // engine sounds
     void SoundInit();
     void SoundShutdown();
@@ -143,7 +143,7 @@ class CPropVehicle : public CBaseProp, public CDefaultPlayerPickupVPhysics
         return 5.0f;
     }
 
-   protected:
+    protected:
     CFourWheelVehiclePhysics m_VehiclePhysics;
     unsigned int m_nVehicleType;
     string_t m_vehicleScript;
@@ -152,7 +152,7 @@ class CPropVehicle : public CBaseProp, public CDefaultPlayerPickupVPhysics
     CUtlVector< EHANDLE > m_hPhysicsChildren;  // List of entities who wish to get physics callbacks from the vehicle
 #endif                                         // HL2_EPISODIC
 
-   private:
+    private:
     Vector m_vecSmoothedVelocity;
 
     CHandle< CBasePlayer > m_hPhysicsAttacker;
@@ -165,7 +165,7 @@ class CPropVehicle : public CBaseProp, public CDefaultPlayerPickupVPhysics
 
 class INPCPassengerCarrier
 {
-   public:
+    public:
     virtual bool NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
     virtual bool NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) = 0;
     virtual bool NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID ) = 0;
@@ -183,7 +183,7 @@ class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, publ
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     CPropVehicleDriveable( void );
     ~CPropVehicleDriveable( void );
 
@@ -232,7 +232,7 @@ class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, publ
     bool IsEngineOn( void );
 
     // IDrivableVehicle
-   public:
+    public:
     virtual CBaseEntity *GetDriver( void );
     virtual void ItemPostFrame( CBasePlayer *pPlayer )
     {
@@ -286,7 +286,7 @@ class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, publ
         return m_pServerVehicle;
     }
 
-   protected:
+    protected:
     virtual bool ShouldThink()
     {
         return ( GetDriver() != NULL );
@@ -309,7 +309,7 @@ class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, publ
 
     CNetworkHandle( CBasePlayer, m_hPlayer );
 
-   public:
+    public:
     CNetworkVar( int, m_nSpeed );
     CNetworkVar( int, m_nRPM );
     CNetworkVar( float, m_flThrottle );
@@ -330,7 +330,7 @@ class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, publ
 
     // --------------------------------
     // NPC Passengers
-   public:
+    public:
     virtual bool NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
     virtual bool NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
     virtual bool NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID );
@@ -354,7 +354,7 @@ class CPropVehicleDriveable : public CPropVehicle, public IDrivableVehicle, publ
         return m_vecEyeExitEndpoint;
     }
 
-   protected:
+    protected:
     // Entering / Exiting
     bool m_bEngineLocked;  // Mapmaker override on whether the vehicle's allowed to be turned on/off
     bool m_bLocked;

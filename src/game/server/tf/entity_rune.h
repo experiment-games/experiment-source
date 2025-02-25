@@ -39,7 +39,7 @@ DECLARE_AUTO_LIST( IInfoPowerupSpawnAutoList );
 
 class CTFRune : public CTFPowerup
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRune, CTFPowerup );
 
     CTFRune();
@@ -108,12 +108,12 @@ class CTFRune : public CTFPowerup
     virtual int UpdateTransmitState( void ) OVERRIDE;
     virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
 
-   protected:
+    protected:
     bool m_bApplyForce;
     virtual void ComeToRest( void );
     Vector m_vecSpawnDirection;
 
-   private:
+    private:
     void BlinkThink();
 
     RuneTypes_t m_nRuneType;
@@ -132,7 +132,7 @@ class CTFRune : public CTFPowerup
 
 class CTFRuneTemp : public CTFPowerup
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRuneTemp, CTFPowerup );
 
     CTFRuneTemp();
@@ -146,7 +146,7 @@ class CTFRuneTemp : public CTFPowerup
     }
     virtual float GetRespawnDelay( void ) OVERRIDE;
 
-   protected:
+    protected:
     void TempRuneRespawnThink( void );
 
     int m_nRuneTempType;
@@ -160,7 +160,7 @@ class CTFRuneTemp : public CTFPowerup
 
 class CTFRuneTempCrit : public CTFRuneTemp
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRuneTempCrit, CTFRuneTemp );
 
     CTFRuneTempCrit();
@@ -174,7 +174,7 @@ class CTFRuneTempCrit : public CTFRuneTemp
 
 class CTFRuneTempUber : public CTFRuneTemp
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRuneTempUber, CTFRuneTemp );
 
     CTFRuneTempUber();
@@ -193,7 +193,7 @@ class CTFRuneTempUber : public CTFRuneTemp
 
 class CTFInfoPowerupSpawn : public CPointEntity, public IInfoPowerupSpawnAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CTFInfoPowerupSpawn, CPointEntity );
     CTFInfoPowerupSpawn();
     DECLARE_DATADESC();
@@ -213,7 +213,7 @@ class CTFInfoPowerupSpawn : public CPointEntity, public IInfoPowerupSpawnAutoLis
         m_hRune = pRune;
     }
 
-   private:
+    private:
     bool m_bDisabled;
     int m_nTeam;
     CHandle< CTFRune > m_hRune;

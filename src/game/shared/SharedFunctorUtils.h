@@ -23,7 +23,7 @@
 template < class PlayerType >
 class TargetScan
 {
-   public:
+    public:
     TargetScan( PlayerType *me, int team, float aimTolerance = 0.01f, float maxRange = 2000.0f, float closestPointTestDistance = 50.0f, bool debug = false )
     {
         m_me = me;
@@ -41,9 +41,9 @@ class TargetScan
     {
         VPROF( "TargetScan()" );
         if ( them != m_me &&
-             them->IsAlive() &&
-             ( m_team == TEAM_ANY || them->GetTeamNumber() == m_team ) &&
-             IsPotentialTarget( them ) )
+            them->IsAlive() &&
+            ( m_team == TEAM_ANY || them->GetTeamNumber() == m_team ) &&
+            IsPotentialTarget( them ) )
         {
             // move the start point out for determining closestPos, to help with close-in checks (healing, etc)
             Vector closestPos;
@@ -111,18 +111,18 @@ class TargetScan
         return m_bestDot;
     }
 
-   protected:
+    protected:
     /**
-     * Is the point in our FOV?
-     */
+    * Is the point in our FOV?
+    */
     virtual float ViewDot( const Vector &dir ) const
     {
         return DotProduct( m_viewForward, dir );
     }
 
     /**
-     * Is the given actor a visible target?
-     */
+    * Is the given actor a visible target?
+    */
     virtual bool IsTargetVisible( PlayerType *them ) const
     {
         // The default check is a straight-up IsAbleToSee
@@ -130,8 +130,8 @@ class TargetScan
     }
 
     /**
-     * Is the given player a possible target at all?
-     */
+    * Is the given player a possible target at all?
+    */
     virtual bool IsPotentialTarget( PlayerType *them ) const
     {
         return true;

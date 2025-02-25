@@ -586,7 +586,7 @@ struct ControllerMotionData_t
 //-----------------------------------------------------------------------------
 class ISteamController
 {
-   public:
+    public:
     // Init and Shutdown must be called when starting/ending use of this interface
     virtual bool Init() = 0;
     virtual bool Shutdown() = 0;

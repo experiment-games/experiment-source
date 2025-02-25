@@ -131,7 +131,7 @@ static bool Scissor( int &x, int &y, int &width, int &height, float &u0, float &
         return false;
 
     if ( ( x + width <= scissor_x ) || ( x >= scissor_x + scissor_width ) ||
-         ( y + height <= scissor_y ) || ( y >= scissor_y + scissor_height ) )
+        ( y + height <= scissor_y ) || ( y >= scissor_y + scissor_height ) )
         return false;
 
     float dudx = ( u1 - u0 ) / width;

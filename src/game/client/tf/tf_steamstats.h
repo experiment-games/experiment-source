@@ -16,13 +16,13 @@
 
 class CTFSteamStats : public CAutoGameSystem, public CGameEventListener
 {
-   public:
+    public:
     CTFSteamStats();
     virtual void PostInit();
     virtual void LevelShutdownPreEntity();
     virtual void UploadStats();
 
-   private:
+    private:
     void FireGameEvent( IGameEvent *event );
     void SetNextForceUploadTime();
     void ReportLiveStats();  // Xbox 360

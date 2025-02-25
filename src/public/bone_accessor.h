@@ -16,7 +16,7 @@ class C_BaseAnimating;
 
 class CBoneAccessor
 {
-   public:
+    public:
     CBoneAccessor();
     CBoneAccessor( matrix3x4_t *pBones );  // This can be used to allow access to all bones.
 
@@ -38,7 +38,7 @@ class CBoneAccessor
 
     matrix3x4_t *GetBoneArrayForWrite() const;
 
-   private:
+    private:
 #if defined( CLIENT_DLL ) && defined( _DEBUG )
     void SanityCheckBone( int iBone, bool bReadable ) const;
 #endif

@@ -29,7 +29,7 @@ enum shovel_weapontypes_t
 //
 class CTFShovel : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShovel, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -69,7 +69,7 @@ class CTFShovel : public CTFWeaponBaseMelee
     virtual int GetDamageCustom();
 #endif
 
-   private:
+    private:
     CTFShovel( const CTFShovel& ) {}
 
     bool m_bHolstering;

@@ -14,7 +14,7 @@
 
 class CBloodSprayEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     CBloodSprayEmitter( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -38,7 +38,7 @@ class CBloodSprayEmitter : public CSimpleEmitter
         /*
         if ( fabs( pParticle->m_flRollDelta ) < 0.5f )
         {
-          pParticle->m_flRollDelta = ( pParticle->m_flRollDelta > 0.0f ) ? 0.5f : -0.5f;
+        pParticle->m_flRollDelta = ( pParticle->m_flRollDelta > 0.0f ) ? 0.5f : -0.5f;
         }
         */
 
@@ -64,7 +64,7 @@ class CBloodSprayEmitter : public CSimpleEmitter
         }
     }
 
-   private:
+    private:
     float m_flGravity;
 
     CBloodSprayEmitter( const CBloodSprayEmitter & );

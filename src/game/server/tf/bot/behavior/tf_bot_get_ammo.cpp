@@ -25,7 +25,7 @@ CTFBotGetAmmo::CTFBotGetAmmo( void )
 //---------------------------------------------------------------------------------------------
 class CAmmoFilter : public INextBotFilter
 {
-   public:
+    public:
     CAmmoFilter( CTFBot *me )
     {
         m_me = me;
@@ -59,7 +59,7 @@ class CAmmoFilter : public INextBotFilter
             }
 
             if ( ( m_me->GetTeamNumber() == TF_TEAM_RED && m_ammoArea->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) ) ||
-                 ( m_me->GetTeamNumber() == TF_TEAM_BLUE && m_ammoArea->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) ) )
+                ( m_me->GetTeamNumber() == TF_TEAM_BLUE && m_ammoArea->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) ) )
             {
                 // the supply cabinet is in my spawn room, or not in any spawn room
                 return true;
@@ -241,8 +241,8 @@ ActionResult< CTFBot > CTFBotGetAmmo::Update( CTFBot *me, float interval )
             // engineers try to gather all the metal they can
             if ( me->IsPlayerClass( TF_CLASS_ENGINEER ) && CTFBotGetAmmo::IsPossible( me ) )
             {
-              // more ammo to be had
-              return ChangeTo( new CTFBotGetAmmo, "Not full yet - grabbing more ammo" );
+            // more ammo to be had
+            return ChangeTo( new CTFBotGetAmmo, "Not full yet - grabbing more ammo" );
             }
         */
 
@@ -280,10 +280,10 @@ ActionResult< CTFBot > CTFBotGetAmmo::Update( CTFBot *me, float interval )
     }
 
     /* TODO: Rethink this. Currently creates zombie behavior loop.
-      // if the closest player to the item we're after is an enemy, give up
-      CClosestTFPlayer close( m_ammo );
-      ForEachPlayer( close );
-      if ( close.m_closePlayer && !me->InSameTeam( close.m_closePlayer ) )
+    // if the closest player to the item we're after is an enemy, give up
+    CClosestTFPlayer close( m_ammo );
+    ForEachPlayer( close );
+    if ( close.m_closePlayer && !me->InSameTeam( close.m_closePlayer ) )
         return Done( "An enemy is closer to it" );
     */
 

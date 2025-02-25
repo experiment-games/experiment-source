@@ -23,7 +23,7 @@ class CHudNotificationPanel : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudNotificationPanel, EditablePanel );
 
-   public:
+    public:
     typedef enum
     {
         kBackground_Blue,
@@ -55,7 +55,7 @@ class CHudNotificationPanel : public CHudElement, public EditablePanel
 
     bool LoadManifest( void );
 
-   private:
+    private:
     float m_flFadeTime;
 
     Label *m_pText;

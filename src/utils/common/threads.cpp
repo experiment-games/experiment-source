@@ -23,7 +23,7 @@
 
 class CRunThreadsData
 {
-   public:
+    public:
     int m_iThread;
     void *m_pUserData;
     RunThreadsFn m_Fn;
@@ -106,7 +106,7 @@ static int enter;
 
 class CCritInit
 {
-   public:
+    public:
     CCritInit()
     {
         InitializeCriticalSection( &crit );

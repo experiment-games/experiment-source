@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ====
+//========= Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. ====
 //
 // Purpose:		Player for HL2.
 //
@@ -33,7 +33,7 @@ DEFINE_KEYFIELD( m_iszEventName, FIELD_STRING, "EventName" ),
 
         class CScriptEventTableWriter : public IGameEventVisitor2
 {
-   public:
+    public:
     CScriptEventTableWriter( IScriptVM *pVM, HSCRIPT table )
         : mVM( pVM ), mTable( table )
     {
@@ -66,7 +66,7 @@ DEFINE_KEYFIELD( m_iszEventName, FIELD_STRING, "EventName" ),
 
     // TODO: Uint64, wstring?
 
-   private:
+    private:
     IScriptVM *mVM;
     HSCRIPT mTable;
 };

@@ -26,7 +26,7 @@ class CKeyBoardEditorPage : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CKeyBoardEditorPage, EditablePanel );
 
-   public:
+    public:
     CKeyBoardEditorPage( Panel *parent, Panel *panelToEdit, KeyBindingContextHandle_t handle );
     ~CKeyBoardEditorPage();
 
@@ -40,7 +40,7 @@ class CKeyBoardEditorPage : public EditablePanel
     void OnRevert();
     void OnUseDefaults();
 
-   protected:
+    protected:
     virtual void OnPageHide();
 
     virtual void OnCommand( char const *cmd );
@@ -61,7 +61,7 @@ class CKeyBoardEditorPage : public EditablePanel
     void RestoreMappings();
     void ApplyMappings();
 
-   protected:
+    protected:
     void AnsiText( char const *token, char *out, int nBuflen );
 
     Panel *m_pPanel;
@@ -89,7 +89,7 @@ class CKeyBoardEditorSheet : public PropertySheet
 {
     DECLARE_CLASS_SIMPLE( CKeyBoardEditorSheet, PropertySheet );
 
-   public:
+    public:
     CKeyBoardEditorSheet( Panel *parent, Panel *panelToEdit, KeyBindingContextHandle_t handle );
 
     void SetKeybindingsSaveFile( char const *filename, char const *pathID = 0 );
@@ -98,7 +98,7 @@ class CKeyBoardEditorSheet : public PropertySheet
     void OnRevert();
     void OnUseDefaults();
 
-   protected:
+    protected:
     vgui::PHandle m_hPanel;
     KeyBindingContextHandle_t m_Handle;
     bool m_bSaveToExternalFile;
@@ -114,14 +114,14 @@ class CKeyBoardEditorDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( CKeyBoardEditorDialog, Frame );
 
-   public:
+    public:
     CKeyBoardEditorDialog( Panel *parent, Panel *panelToEdit, KeyBindingContextHandle_t handle );
 
     void SetKeybindingsSaveFile( char const *filename, char const *pathID = 0 );
 
     virtual void OnCommand( char const *cmd );
 
-   private:
+    private:
     CKeyBoardEditorSheet *m_pKBEditor;
 
     Button *m_pSave;

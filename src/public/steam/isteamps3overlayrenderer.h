@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2010, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2010, Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface the game must provide Steam with on PS3 in order for the
 // Steam overlay to render.
@@ -41,7 +41,7 @@ enum EOverlayGradientDirection
 //-----------------------------------------------------------------------------
 class ISteamPS3OverlayRenderHost
 {
-   public:
+    public:
     // Interface for game engine to implement which Steam requires to render.
 
     // Draw a textured rect.  This may use only part of the texture and will pass texture coords, it will also possibly request a gradient and will specify colors for vertexes.
@@ -62,7 +62,7 @@ class ISteamPS3OverlayRenderHost
 //-----------------------------------------------------------------------------
 class ISteamPS3OverlayRender
 {
-   public:
+    public:
     // Call once at startup to initialize the Steam overlay and pass it your host interface ptr
     virtual bool BHostInitialize( uint32 unScreenWidth, uint32 unScreenHeight, uint32 unRefreshRate, ISteamPS3OverlayRenderHost *pRenderHost, void *CellFontLib ) = 0;
 

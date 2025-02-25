@@ -52,16 +52,16 @@ public abstract class Extension<ContainingType extends MessageLite, Type> {
   public abstract Type getDefaultValue();
 
   /**
-   * Returns the default instance of the extension field, if it's a message
-   * extension.
-   */
+    * Returns the default instance of the extension field, if it's a message
+    * extension.
+    */
   public abstract MessageLite getMessageDefaultInstance();
 
   // All the methods below are extension implementation details.
 
   /**
-   * The API type that the extension is used for.
-   */
+    * The API type that the extension is used for.
+    */
   protected enum ExtensionType {
     IMMUTABLE,
     MUTABLE,
@@ -74,17 +74,17 @@ public abstract class Extension<ContainingType extends MessageLite, Type> {
   }
 
   /**
-   * Type of a message extension.
-   */
+    * Type of a message extension.
+    */
   public enum MessageType {
     PROTO1,
     PROTO2,
   }
-  
+
   /**
-   * If the extension is a message extension (i.e., getLiteType() == MESSAGE),
-   * returns the type of the message, otherwise undefined.
-   */
+    * If the extension is a message extension (i.e., getLiteType() == MESSAGE),
+    * returns the type of the message, otherwise undefined.
+    */
   public MessageType getMessageType() {
     return MessageType.PROTO2;
   }

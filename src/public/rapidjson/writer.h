@@ -89,7 +89,7 @@ enum WriteFlag
 template < typename OutputStream, typename SourceEncoding = UTF8<>, typename TargetEncoding = UTF8<>, typename StackAllocator = CrtAllocator, unsigned writeFlags = kWriteDefaultFlags >
 class Writer
 {
-   public:
+    public:
     typedef typename SourceEncoding::Ch Ch;
 
     static const int kDefaultMaxDecimalPlaces = 324;
@@ -327,13 +327,13 @@ class Writer
     //! Flush the output stream.
     /*!
         Allows the user to flush the output stream immediately.
-     */
+    */
     void Flush()
     {
         os_->Flush();
     }
 
-   protected:
+    protected:
     //! Information for each nested level
     struct Level
     {
@@ -682,7 +682,7 @@ class Writer
     int maxDecimalPlaces_;
     bool hasRoot_;
 
-   private:
+    private:
     // Prohibit copy constructor & assignment operator.
     Writer( const Writer& );
     Writer& operator=( const Writer& );

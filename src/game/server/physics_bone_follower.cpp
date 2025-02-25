@@ -291,7 +291,7 @@ void CBoneFollower::VPhysicsUpdate( IPhysicsObject *pPhysics )
 // for an entity - and change it back when it goes out of scope.
 class CPhysicsSwapTemp
 {
-   public:
+    public:
     CPhysicsSwapTemp( CBaseEntity *pEntity, IPhysicsObject *pTmpPhysics )
     {
         Assert( pEntity );
@@ -312,7 +312,7 @@ class CPhysicsSwapTemp
         m_pEntity->VPhysicsSwapObject( m_pPhysics );
     }
 
-   private:
+    private:
     CBaseEntity *m_pEntity;
     IPhysicsObject *m_pPhysics;
 };

@@ -85,7 +85,7 @@ bool CHintCriteria::MatchesSingleHintType() const
     }
 
     if ( m_iFirstHintType != HINT_ANY &&
-         m_iLastHintType == HINT_NONE )
+        m_iLastHintType == HINT_NONE )
     {
         return true;
     }
@@ -505,13 +505,13 @@ CAI_Hint *CAI_HintManager::FindHint( CAI_BaseNPC *pNPC, const Vector &position, 
     if ( !pBestHint )
     {
         Msg( "%i search failed for [%d] at pos %.3f %.3f %.3f [%.4f msec ~ %.4f msec per node]\n",
-             gpGlobals->tickcount,
-             pNPC ? pNPC->entindex() : -1,
-             position.x,
-             position.y,
-             position.z,
-             timer.GetDuration().GetMillisecondsF(),
-             timer.GetDuration().GetMillisecondsF() / MAX( ( float )visited, 1.0f ) );
+            gpGlobals->tickcount,
+            pNPC ? pNPC->entindex() : -1,
+            position.x,
+            position.y,
+            position.z,
+            timer.GetDuration().GetMillisecondsF(),
+            timer.GetDuration().GetMillisecondsF() / MAX( ( float )visited, 1.0f ) );
     }
 #endif
     return pBestHint;
@@ -711,7 +711,7 @@ int CAI_HintManager::GetFlags( const char *token )
 
     // Can't be nearest and random, defer to nearest
     if ( ( bits & bits_HINT_NODE_NEAREST ) &&
-         ( bits & bits_HINT_NODE_RANDOM ) )
+        ( bits & bits_HINT_NODE_RANDOM ) )
     {
         // Remove random
         bits &= ~bits_HINT_NODE_RANDOM;
@@ -769,12 +769,12 @@ void CAI_HintManager::DumpHints()
     {
         const Vector &v = pCurHint->GetAbsOrigin();
         Msg( "(%.1f, %.1f, %.1f) -- Node ID: %d; WC id %d; type %d\n",
-             v.x,
-             v.y,
-             v.z,
-             pCurHint->GetNodeId(),
-             pCurHint->GetWCId(),
-             pCurHint->HintType() );
+            v.x,
+            v.y,
+            v.z,
+            pCurHint->GetNodeId(),
+            pCurHint->GetWCId(),
+            pCurHint->HintType() );
         pCurHint = GetNextHint( &iter );
     }
 }
@@ -1054,8 +1054,8 @@ bool CAI_Hint::IsInNodeFOV( CBaseEntity *pOther )
         return true;
     }
 
-#if 0 
-	NDebugOverlay::Line( GetAbsOrigin(), GetAbsOrigin() + m_vecForward * 16, 255, 255, 0, false, 1 );
+#if 0
+    NDebugOverlay::Line( GetAbsOrigin(), GetAbsOrigin() + m_vecForward * 16, 255, 255, 0, false, 1 );
 #endif
 
     Vector vecToNPC = pOther->GetAbsOrigin() - GetAbsOrigin();
@@ -1064,14 +1064,14 @@ bool CAI_Hint::IsInNodeFOV( CBaseEntity *pOther )
 
     if ( flDot > m_nodeFOV )
     {
-#if 0 
-		NDebugOverlay::Line( GetAbsOrigin(), pOther->GetAbsOrigin(), 0, 255, 0, false, 1 );
+#if 0
+        NDebugOverlay::Line( GetAbsOrigin(), pOther->GetAbsOrigin(), 0, 255, 0, false, 1 );
 #endif
         return true;
     }
 
-#if 0 
-	NDebugOverlay::Line( GetAbsOrigin(), pOther->GetAbsOrigin(), 255, 0, 0, false, 1 );
+#if 0
+    NDebugOverlay::Line( GetAbsOrigin(), pOther->GetAbsOrigin(), 255, 0, 0, false, 1 );
 #endif
 
     return false;

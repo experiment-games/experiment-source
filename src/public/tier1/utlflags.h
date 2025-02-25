@@ -18,7 +18,7 @@
 template < class T >
 class CUtlFlags
 {
-   public:
+    public:
     CUtlFlags( int nInitialFlags = 0 );
 
     // Flag setting
@@ -33,7 +33,7 @@ class CUtlFlags
     // Is any flag set?
     bool IsAnyFlagSet() const;
 
-   private:
+    private:
     T m_nFlags;
 };
 

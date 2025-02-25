@@ -36,7 +36,7 @@ class BuildGroup final
 {
     DECLARE_HANDLES( BuildGroup, 20 );
 
-   public:
+    public:
     BuildGroup( Panel *parentPanel, Panel *contextPanel );
     ~BuildGroup();
 
@@ -133,7 +133,7 @@ class BuildGroup final
     static bool PrecacheResFile( const char *pszResFileName );
     static void ClearResFileCache();
 
-   protected:
+    protected:
     bool CursorMoved( int x, int y, Panel *panel );
     bool MouseDoublePressed( MouseCode code, Panel *panel );
     bool KeyCodeTyped( KeyCode code, Panel *panel );
@@ -143,7 +143,7 @@ class BuildGroup final
 
     HCursor GetCursor( Panel *panel );
 
-   private:
+    private:
     void ApplySnap( Panel *panel );
     Panel *CreateBuildDialog();
     void ActivateBuildDialog();

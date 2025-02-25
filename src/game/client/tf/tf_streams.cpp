@@ -36,13 +36,13 @@
 // extern CMsgGCCStrike15_v2_MatchmakingGC2ClientHello g_GC2ClientHello;
 
 ConVar cl_streams_request_url( "cl_streams_request_url",
-                               "https://api.twitch.tv/helix/streams?game_id=16676&first=5",
-                               FCVAR_DEVELOPMENTONLY,
-                               "Number of streams requested for display" );
+                                "https://api.twitch.tv/helix/streams?game_id=16676&first=5",
+                                FCVAR_DEVELOPMENTONLY,
+                                "Number of streams requested for display" );
 ConVar cl_streams_image_sfurl( "cl_streams_image_sfurl",
-                               "img://loadjpeg:(320x200):",
-                               FCVAR_DEVELOPMENTONLY,
-                               "Format of Scaleform image representing the stream" );
+                                "img://loadjpeg:(320x200):",
+                                FCVAR_DEVELOPMENTONLY,
+                                "Format of Scaleform image representing the stream" );
 
 ConVar cl_streams_request_count( "cl_streams_request_count", "6", FCVAR_DEVELOPMENTONLY, "How many streams are displayed in main menu" );
 
@@ -66,7 +66,7 @@ static CUtlVector< CHelperStreamDownloadUrlToLocalFile * > s_arrDeleteCHelperStr
 
 class CHelperStreamDownloadUrlToLocalFile
 {
-   public:
+    public:
     CHelperStreamDownloadUrlToLocalFile( char const *szUrlGet, char const *szLocalFile, long lTimeStampLocal, CTFStreamPanel *pStreamPanel )
     {
         m_sUrlGet = szUrlGet;
@@ -90,7 +90,7 @@ class CHelperStreamDownloadUrlToLocalFile
         m_hStreamPanel = pStreamPanel;
     }
 
-   private:
+    private:
     CUtlString m_sUrlGet;
     CUtlString m_sLocalFile;
     long m_lTimestampLocal;
@@ -159,9 +159,9 @@ static void Helper_ConfigureStreamInfoPreviewImages( CStreamInfo &info, CTFStrea
         if ( pchLocalEnd - pchLocalCur < 4 )
             break;
         if ( ( ( pch[0] >= 'a' ) && ( pch[0] <= 'z' ) ) ||
-             ( ( pch[0] >= 'A' ) && ( pch[0] <= 'Z' ) ) ||
-             ( ( pch[0] >= '0' ) && ( pch[0] <= '9' ) ) ||
-             ( pch[0] == '-' ) || ( pch[0] == '.' ) )
+            ( ( pch[0] >= 'A' ) && ( pch[0] <= 'Z' ) ) ||
+            ( ( pch[0] >= '0' ) && ( pch[0] <= '9' ) ) ||
+            ( pch[0] == '-' ) || ( pch[0] == '.' ) )
         {
             *( pchLocalCur++ ) = *pch;
         }
@@ -195,8 +195,8 @@ static void Helper_ConfigureStreamInfoPreviewImages( CStreamInfo &info, CTFStrea
                 FileFindHandle_t hFind = NULL;
                 int numRemove = 0;
                 for ( char const *szFileName = g_pFullFileSystem->FindFirst( CFmtStr( "%s/*", s_pszCacheImagePath ), &hFind );
-                      szFileName && *szFileName;
-                      szFileName = g_pFullFileSystem->FindNext( hFind ) )
+                    szFileName && *szFileName;
+                    szFileName = g_pFullFileSystem->FindNext( hFind ) )
                 {
                     if ( !Q_strcmp( ".", szFileName ) || !Q_strcmp( "..", szFileName ) ) continue;
                     CFmtStr fmtFilename( "%s/%s", s_pszCacheImagePath, szFileName );
@@ -372,19 +372,19 @@ void CTFStreamManager::Steam_OnHTTPRequestCompletedStreams( HTTPRequestCompleted
                     for ( GCSDK::CWebAPIValues *pvStream = pvStreams->GetFirstChild(); pvStream; pvStream = pvStream->GetNextChild() )
                     {
 #if 0  // this is the code to print JSON output as DevMsgs to figure out which element is where in the response
-						DevMsg( "----STREAM----\n" );
-						for ( GCSDK::CWebAPIValues *pTest = pvStream->GetFirstChild(); pTest; pTest = pTest->GetNextChild() )
-						{
-							CUtlString sValueText;
-							pTest->GetStringValue( sValueText );
-							DevMsg( "child: %s = (%u) %s\n", pTest->GetName(), pTest->GetUInt32Value(), sValueText.Get() );
+                        DevMsg( "----STREAM----\n" );
+                        for ( GCSDK::CWebAPIValues *pTest = pvStream->GetFirstChild(); pTest; pTest = pTest->GetNextChild() )
+                        {
+                            CUtlString sValueText;
+                            pTest->GetStringValue( sValueText );
+                            DevMsg( "child: %s = (%u) %s\n", pTest->GetName(), pTest->GetUInt32Value(), sValueText.Get() );
 
-							for ( GCSDK::CWebAPIValues *pTest2 = pTest->GetFirstChild(); pTest2; pTest2 = pTest2->GetNextChild() )
-							{
-								pTest2->GetStringValue( sValueText );
-								DevMsg( "     child2: %s = (%u) %s\n", pTest2->GetName(), pTest2->GetUInt32Value(), sValueText.Get() );
-							}
-						}
+                            for ( GCSDK::CWebAPIValues *pTest2 = pTest->GetFirstChild(); pTest2; pTest2 = pTest2->GetNextChild() )
+                            {
+                                pTest2->GetStringValue( sValueText );
+                                DevMsg( "     child2: %s = (%u) %s\n", pTest2->GetName(), pTest2->GetUInt32Value(), sValueText.Get() );
+                            }
+                        }
 #endif
 
                         CStreamInfo info;
@@ -402,8 +402,8 @@ void CTFStreamManager::Steam_OnHTTPRequestCompletedStreams( HTTPRequestCompleted
                         info.m_sPreviewImage.Set( pTempURL );
 
                         if ( ( info.m_numViewers > 0 ) &&
-                             !info.m_sGlobalName.IsEmpty() &&
-                             !info.m_sTextDescription.IsEmpty() )
+                            !info.m_sGlobalName.IsEmpty() &&
+                            !info.m_sTextDescription.IsEmpty() )
                         {
                             // DevMsg( 2, "Channel: %s (%u viewers) -- %s [[%s]]\n", info.m_sGlobalName.Get(), info.m_numViewers, info.m_sTextDescription.Get(), info.m_sVideoFeedUrl.Get() );
 
@@ -471,8 +471,8 @@ TwitchTvAccountInfo_t *CTFStreamManager::GetTwitchTvAccountInfo( uint64 uiSteamI
             // info needs update if it's been longer than 300 secs from the last update
             /*if ( pInfo->m_dblTimeStampTwitchTvUpdate && ( Plat_FloatTime() - pInfo->m_dblTimeStampTwitchTvUpdate > 300 ) )
             {
-              m_vecTwitchTvAccounts.Remove( i );
-              pInfo = NULL;
+            m_vecTwitchTvAccounts.Remove( i );
+            pInfo = NULL;
             }*/
 
             break;

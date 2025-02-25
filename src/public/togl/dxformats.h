@@ -5,7 +5,7 @@
 
 #define OUR_MAKEFOURCC( ch0, ch1, ch2, ch3 )                                                           \
     ( ( unsigned long )( unsigned char )( ch0 ) | ( ( unsigned long )( unsigned char )( ch1 ) << 8 ) | \
-      ( ( unsigned long )( unsigned char )( ch2 ) << 16 ) | ( ( unsigned long )( unsigned char )( ch3 ) << 24 ) )
+    ( ( unsigned long )( unsigned char )( ch2 ) << 16 ) | ( ( unsigned long )( unsigned char )( ch3 ) << 24 ) )
 
 typedef enum _D3DFORMAT
 {

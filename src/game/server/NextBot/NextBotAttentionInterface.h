@@ -18,7 +18,7 @@ class IBody;
  */
 class IAttention : public INextBotComponent
 {
-   public:
+    public:
     IAttention( INextBot *bot )
         : INextBotComponent( bot ) {}
     virtual ~IAttention() {}
@@ -54,7 +54,7 @@ class IAttention : public INextBotComponent
     virtual void OnLostSight( CBaseEntity *subject );                             // when subject leaves enters bot's visual awareness
     virtual void OnSound( CBaseEntity *source, const CSoundParameters &params );  // when an entity emits a sound
 
-   private:
+    private:
     IBody *m_body;  // to access head aiming
 
     struct PointOfInterest

@@ -25,7 +25,7 @@
 // ------------------------------------------------------------------------- //
 class MovieExplosionEmitter
 {
-   public:
+    public:
     Vector m_Pos;
     Vector m_Velocity;
     float m_Lifetime;
@@ -34,7 +34,7 @@ class MovieExplosionEmitter
 
 class C_MovieExplosion : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_MovieExplosion, C_BaseParticleEntity );
     DECLARE_CLIENTCLASS();
 
@@ -42,20 +42,20 @@ class C_MovieExplosion : public C_BaseParticleEntity, public IPrototypeAppEffect
     ~C_MovieExplosion();
 
     // C_BaseEntity.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     // IPrototypeAppEffect.
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
 
     // IParticleEffect.
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   public:
+    public:
     MovieExplosionEmitter m_Emitters[NUM_MOVIEEXPLOSION_EMITTERS];
     float m_EmitterLifetime;
 
@@ -65,7 +65,7 @@ class C_MovieExplosion : public C_BaseParticleEntity, public IPrototypeAppEffect
     // Setup for temporary usage in SimulateAndRender.
     float m_EmitterAlpha;
 
-   private:
+    private:
     C_MovieExplosion( const C_MovieExplosion & );
 };
 

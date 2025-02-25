@@ -17,7 +17,7 @@ class CBeam;
 
 class CTripmineGrenade : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTripmineGrenade, CBaseGrenade );
 
     CTripmineGrenade();
@@ -25,7 +25,7 @@ class CTripmineGrenade : public CBaseGrenade
     void Precache( void );
 
 #if 0  // FIXME: OnTakeDamage_Alive() is no longer called now that base grenade derives from CBaseAnimating
-	int OnTakeDamage_Alive( const CTakeDamageInfo &info );
+    int OnTakeDamage_Alive( const CTakeDamageInfo &info );
 #endif
     void WarningThink( void );
     void PowerupThink( void );
@@ -36,10 +36,10 @@ class CTripmineGrenade : public CBaseGrenade
     void MakeBeam( void );
     void KillBeam( void );
 
-   public:
+    public:
     EHANDLE m_hOwner;
 
-   private:
+    private:
     float m_flPowerUp;
     Vector m_vecDir;
     Vector m_vecEnd;

@@ -122,7 +122,7 @@ const char *GetHintTypeDescription( CAI_Hint *pHint );
 
 class CHintCriteria
 {
-   public:
+    public:
     CHintCriteria();
     ~CHintCriteria();
 
@@ -171,7 +171,7 @@ class CHintCriteria
     int NumHintTypes() const;
     int GetHintType( int idx ) const;
 
-   private:
+    private:
     struct hintZone_t
     {
         Vector position;
@@ -204,7 +204,7 @@ DECLARE_POINTER_HANDLE( AIHintIter_t );
 
 class CAIHintVector : public CUtlVector< CAI_Hint * >
 {
-   public:
+    public:
     CAIHintVector()
         : CUtlVector< CAI_Hint * >( 1, 0 )
     {
@@ -226,7 +226,7 @@ class CAI_HintManager
 {
     friend class CAI_Hint;
 
-   public:
+    public:
     // Hint node creation
     static CAI_Hint *CreateHint( HintNodeData *pNodeData, const char *pMapData = NULL );
     static void DrawHintOverlays( float flDrawDuration );
@@ -262,7 +262,7 @@ class CAI_HintManager
 
     static void ValidateHints();
 
-   private:
+    private:
     enum
     {
         // MUST BE POWER OF 2
@@ -291,7 +291,7 @@ class CAI_Hint : public CServerOnlyEntity
 {
     DECLARE_CLASS( CAI_Hint, CServerOnlyEntity );
 
-   public:
+    public:
     CAI_Hint( void );
     ~CAI_Hint( void );
 
@@ -366,7 +366,7 @@ class CAI_Hint : public CServerOnlyEntity
     bool HintMatchesCriteria( CAI_BaseNPC *pNPC, const CHintCriteria &hintCriteria, const Vector &position, float *flNearestDistance, bool bIgnoreLock = false, bool bIgnoreHintType = false );
     bool IsInNodeFOV( CBaseEntity *pOther );
 
-   private:
+    private:
     void Spawn( void );
     virtual void Activate();
     virtual void UpdateOnRemove( void );
@@ -382,7 +382,7 @@ class CAI_Hint : public CServerOnlyEntity
     void InputEnableHint( inputdata_t &inputdata );
     void InputDisableHint( inputdata_t &inputdata );
 
-   private:
+    private:
     HintNodeData m_NodeData;
     int m_nTargetNodeID;
     EHANDLE m_hHintOwner;                // Is hint locked (being used by NPC / NPC en-route to use it)

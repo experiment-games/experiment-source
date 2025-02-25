@@ -1764,7 +1764,7 @@ bool CFuncTank::RotateTankToAngles( const QAngle &angles, float *pDistX, float *
     float flActualPitch = m_pitchCenter + offsetX;
 
     if ( ( fabs( offsetY ) > m_yawRange + m_yawTolerance ) ||
-         ( fabs( offsetX ) > m_pitchRange + m_pitchTolerance ) )
+        ( fabs( offsetX ) > m_pitchRange + m_pitchTolerance ) )
     {
         // Limit against range in x
         flActualYaw = clamp( flActualYaw, m_yawCenter - m_yawRange, m_yawCenter + m_yawRange );
@@ -2397,7 +2397,7 @@ bool CFuncTank::HasLOSTo( CBaseEntity *pEntity )
 // #############################################################################
 class CFuncTankGun : public CFuncTank
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankGun, CFuncTank );
 
     void Fire( int bulletCount, const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker, bool bIgnoreSpread );
@@ -2475,7 +2475,7 @@ void CFuncTankGun::Fire( int bulletCount, const Vector &barrelEnd, const Vector 
 // #############################################################################
 class CFuncTankPulseLaser : public CFuncTankGun
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankPulseLaser, CFuncTankGun );
     DECLARE_DATADESC();
 
@@ -2572,7 +2572,7 @@ class CFuncTankLaser : public CFuncTank
 {
     DECLARE_CLASS( CFuncTankLaser, CFuncTank );
 
-   public:
+    public:
     void Activate( void );
     void Fire( int bulletCount, const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker, bool bIgnoreSpread );
     void Think( void );
@@ -2580,7 +2580,7 @@ class CFuncTankLaser : public CFuncTank
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     CEnvLaser *m_pLaser;
     float m_laserTime;
     string_t m_iszLaserName;
@@ -2666,7 +2666,7 @@ void CFuncTankLaser::Fire( int bulletCount, const Vector &barrelEnd, const Vecto
 
 class CFuncTankRocket : public CFuncTank
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankRocket, CFuncTank );
 
     void Precache( void );
@@ -2676,7 +2676,7 @@ class CFuncTankRocket : public CFuncTank
         return m_flRocketSpeed;
     }
 
-   protected:
+    protected:
     float m_flRocketSpeed;
 
     DECLARE_DATADESC();
@@ -2720,7 +2720,7 @@ void CFuncTankRocket::Fire( int bulletCount, const Vector &barrelEnd, const Vect
 //-----------------------------------------------------------------------------
 class CFuncTankAirboatGun : public CFuncTank
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankAirboatGun, CFuncTank );
     DECLARE_DATADESC();
 
@@ -2734,7 +2734,7 @@ class CFuncTankAirboatGun : public CFuncTank
     virtual Vector WorldBarrelPosition( void );
     virtual void DoImpactEffect( trace_t &tr, int nDamageType );
 
-   private:
+    private:
     void CreateSounds();
     void DestroySounds();
     void DoMuzzleFlash();
@@ -2989,7 +2989,7 @@ void CFuncTankAirboatGun::Fire( int bulletCount, const Vector &barrelEnd, const 
 
 class CFuncTankAPCRocket : public CFuncTank
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankAPCRocket, CFuncTank );
 
     void Precache( void );
@@ -3002,7 +3002,7 @@ class CFuncTankAPCRocket : public CFuncTank
         return m_flRocketSpeed;
     }
 
-   protected:
+    protected:
     void InputDeathVolley( inputdata_t &inputdata );
     void FireDying( const Vector &barrelEnd );
 
@@ -3170,7 +3170,7 @@ void CFuncTankAPCRocket::InputDeathVolley( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 class CMortarShell : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMortarShell, CBaseEntity );
 
     static CMortarShell *Create( const Vector &vecStart, const Vector &vecTarget, const Vector &vecShotDir, float flImpactDelay, float flWarnDelay, string_t warnSound );
@@ -3183,7 +3183,7 @@ class CMortarShell : public CBaseEntity
     void FadeThink( void );
     int UpdateTransmitState( void );
 
-   private:
+    private:
     void FixUpImpactPoint( const Vector &initialPos, const Vector &initialNormal, Vector *endPos, Vector *endNormal );
 
     float m_flFadeTime;
@@ -3597,41 +3597,41 @@ void CMortarShell::Impact( void )
     // Shockring
     CBroadcastRecipientFilter filter2;
     te->BeamRingPoint( filter2, 0, GetAbsOrigin(),  // origin
-                       8.0f,                        // start radius
-                       flRadius * 2,                // end radius
-                       m_iSpriteTexture,            // texture
-                       0,                           // halo index
-                       0,                           // start frame
-                       2,                           // framerate
-                       0.2f,                        // life
-                       32,                          // width
-                       0,                           // spread
-                       0,                           // amplitude
-                       255,                         // r
-                       255,                         // g
-                       225,                         // b
-                       32,                          // a
-                       0,                           // speed
-                       FBEAM_FADEOUT );
+                        8.0f,                        // start radius
+                        flRadius * 2,                // end radius
+                        m_iSpriteTexture,            // texture
+                        0,                           // halo index
+                        0,                           // start frame
+                        2,                           // framerate
+                        0.2f,                        // life
+                        32,                          // width
+                        0,                           // spread
+                        0,                           // amplitude
+                        255,                         // r
+                        255,                         // g
+                        225,                         // b
+                        32,                          // a
+                        0,                           // speed
+                        FBEAM_FADEOUT );
 
     // Shockring
     te->BeamRingPoint( filter2, 0, GetAbsOrigin(),  // origin
-                       8.0f,                        // start radius
-                       flRadius,                    // end radius
-                       m_iSpriteTexture,            // texture
-                       0,                           // halo index
-                       0,                           // start frame
-                       2,                           // framerate
-                       0.2f,                        // life
-                       64,                          // width
-                       0,                           // spread
-                       0,                           // amplitude
-                       255,                         // r
-                       255,                         // g
-                       225,                         // b
-                       64,                          // a
-                       0,                           // speed
-                       FBEAM_FADEOUT );
+                        8.0f,                        // start radius
+                        flRadius,                    // end radius
+                        m_iSpriteTexture,            // texture
+                        0,                           // halo index
+                        0,                           // start frame
+                        2,                           // framerate
+                        0.2f,                        // life
+                        64,                          // width
+                        0,                           // spread
+                        0,                           // amplitude
+                        255,                         // r
+                        255,                         // g
+                        225,                         // b
+                        64,                          // a
+                        0,                           // speed
+                        FBEAM_FADEOUT );
 
     RadiusDamage( CTakeDamageInfo( this, GetOwnerEntity(), MORTAR_BLAST_DAMAGE, ( DMG_BLAST | DMG_DISSOLVE ) ), GetAbsOrigin(), MORTAR_BLAST_RADIUS, CLASS_NONE, NULL );
 
@@ -3705,7 +3705,7 @@ void CMortarShell::FadeThink( void )
 //=========================================================
 class CFuncTankMortar : public CFuncTank
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankMortar, CFuncTank );
 
     CFuncTankMortar()
@@ -3924,13 +3924,13 @@ void CFuncTankMortar::Fire( int bulletCount, const Vector &barrelEnd, const Vect
 //-----------------------------------------------------------------------------
 class CFuncTankPhysCannister : public CFuncTank
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankPhysCannister, CFuncTank );
     DECLARE_DATADESC();
 
     void Fire( int bulletCount, const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker, bool bIgnoreSpread );
 
-   protected:
+    protected:
     string_t m_iszBarrelVolume;
     CHandle< CBaseTrigger > m_hBarrelVolume;
 };
@@ -4009,7 +4009,7 @@ class CFuncTankCombineCannon : public CFuncTankGun
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     float m_originalFireRate;
     float m_flTimeNextSweep;
     float m_flTimeBeamOn;
@@ -4110,16 +4110,16 @@ void CFuncTankCombineCannon::AdjustRateOfFire()
     // Maintain 1.5 rounds per second rate of fire.
     m_fireRate = 1.5;
     /*
-      if( m_hTarget.Get() != NULL && m_hTarget->IsPlayer() )
-      {
+    if( m_hTarget.Get() != NULL && m_hTarget->IsPlayer() )
+    {
         if( m_bLastTargetWasNPC )
         {
-          // Cheat, and be able to fire RIGHT NOW if the target is a player and the
-          // last target I fired at was an NPC. This prevents the player from running
-          // for it while the gun is busy dealing with NPCs
-          SetNextAttack( gpGlobals->curtime );
+        // Cheat, and be able to fire RIGHT NOW if the target is a player and the
+        // last target I fired at was an NPC. This prevents the player from running
+        // for it while the gun is busy dealing with NPCs
+        SetNextAttack( gpGlobals->curtime );
         }
-      }
+    }
     */
 }
 
@@ -4357,11 +4357,11 @@ void CFuncTankCombineCannon::InputSetTargetEntity( inputdata_t &inputdata )
 void CFuncTankCombineCannon::InputClearTargetEntity( inputdata_t &inputdata )
 {
     /*
-      m_targetEntityName = NULL_STRING;
-      m_hTarget = NULL;
+    m_targetEntityName = NULL_STRING;
+    m_hTarget = NULL;
 
-      // No longer aim at target position if have one
-      m_spawnflags &= ~SF_TANK_AIM_AT_POS;
+    // No longer aim at target position if have one
+    m_spawnflags &= ~SF_TANK_AIM_AT_POS;
     */
     BaseClass::InputClearTargetEntity( inputdata );
 }

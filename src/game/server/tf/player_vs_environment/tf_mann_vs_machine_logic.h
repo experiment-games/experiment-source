@@ -15,7 +15,7 @@ class CMannVsMachineLogic : public CPointEntity
 {
     DECLARE_CLASS( CMannVsMachineLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CMannVsMachineLogic();
@@ -31,7 +31,7 @@ class CMannVsMachineLogic : public CPointEntity
         return SetTransmitState( FL_EDICT_ALWAYS );
     }
 
-   private:
+    private:
     CHandle< CPopulationManager > m_populationManager;
     void InitPopulationManager( void );
 

@@ -18,7 +18,7 @@
 //------------------------------------------------------------------------------
 class C_ShadowControl : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_ShadowControl, C_BaseEntity );
 
     DECLARE_CLIENTCLASS();
@@ -26,7 +26,7 @@ class C_ShadowControl : public C_BaseEntity
     void OnDataChanged( DataUpdateType_t updateType );
     bool ShouldDraw();
 
-   private:
+    private:
     Vector m_shadowDirection;
     color32 m_shadowColor;
     float m_flShadowMaxDist;

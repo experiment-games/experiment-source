@@ -75,7 +75,7 @@ void TE_ClientProjectile( IRecipientFilter& filter, float delay, const Vector* v
 
 class C_TempEntsSystem : public ITempEntsSystem
 {
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose: Returning true means don't even call TE func
     // Input  : filter -
@@ -99,7 +99,7 @@ class C_TempEntsSystem : public ITempEntsSystem
         return false;
     }
 
-   public:
+    public:
     virtual void ArmorRicochet( IRecipientFilter& filter, float delay, const Vector* pos, const Vector* dir )
     {
         if ( !SuppressTE( filter ) )

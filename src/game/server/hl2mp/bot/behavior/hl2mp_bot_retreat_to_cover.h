@@ -5,7 +5,7 @@
 
 class CHL2MPBotRetreatToCover : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotRetreatToCover( float hideDuration = -1.0f );
     CHL2MPBotRetreatToCover( Action< CHL2MPBot > *actionToChangeToOnceCoverReached );
 
@@ -23,7 +23,7 @@ class CHL2MPBotRetreatToCover : public Action< CHL2MPBot >
         return "RetreatToCover";
     };
 
-   private:
+    private:
     float m_hideDuration;
     Action< CHL2MPBot > *m_actionToChangeToOnceCoverReached;
 

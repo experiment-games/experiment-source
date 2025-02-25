@@ -73,14 +73,14 @@ int main( int argc, char *argv[] )
         cRequest = VMPI_KILL_PROCESS;
     }
     /*
-      else if ( FindArg( argc, argv, "-ShowConsole" ) )
-      {
+    else if ( FindArg( argc, argv, "-ShowConsole" ) )
+    {
         cRequest = VMPI_SHOW_CONSOLE_WINDOW;
-      }
-      else if ( FindArg( argc, argv, "-HideConsole" ) )
-      {
+    }
+    else if ( FindArg( argc, argv, "-HideConsole" ) )
+    {
         cRequest = VMPI_HIDE_CONSOLE_WINDOW;
-      }
+    }
     */
     else if ( FindArg( argc, argv, "-ShowCache" ) )
     {
@@ -136,9 +136,9 @@ int main( int argc, char *argv[] )
                 break;
 
             if ( len >= 2 &&
-                 in[0] == VMPI_PROTOCOL_VERSION &&
-                 in[1] == VMPI_PING_RESPONSE &&
-                 addrs.Find( ipFrom ) == -1 )
+                in[0] == VMPI_PROTOCOL_VERSION &&
+                in[1] == VMPI_PING_RESPONSE &&
+                addrs.Find( ipFrom ) == -1 )
             {
                 char *pStateString = "(unknown)";
                 if ( len >= 3 )

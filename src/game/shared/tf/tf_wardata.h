@@ -22,7 +22,7 @@
 //---------------------------------------------------------------------------------
 class CWarData : public GCSDK::CProtoBufSharedObject< CSOWarData, k_EEConTypeWarData >
 {
-   public:
+    public:
     CWarData();
 };
 
@@ -38,7 +38,7 @@ class CWarData : public GCSDK::CProtoBufSharedObject< CSOWarData, k_EEConTypeWar
 //---------------------------------------------------------------------------------
 class CTFWarGlobalDataHelper
 {
-   public:
+    public:
 #ifdef CLIENT_DLL
     struct LeaderBoardEntries_t
     {
@@ -76,7 +76,7 @@ class CTFWarGlobalDataHelper
     }
 #endif  // CLIENT_DLL
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     void RequestUpdateGlobalStats();
     void CheckGlobalStatsStaleness();

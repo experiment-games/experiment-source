@@ -22,7 +22,7 @@ class CLogicMirrorMovement : public CLogicalEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CLogicMirrorMovement, CLogicalEntity );
 
-   private:
+    private:
     void SetMirrorTarget( const char *pName );    // Set entity to watch and mirror (ex. the player)
     void SetTarget( const char *pName );          // Set entity to move based on the Mirror Target entity (ex. a point_camera)
     void SetMirrorRelative( const char *pName );  // Set the point about which to measure an offset to orient based upon (ex. portal 1)

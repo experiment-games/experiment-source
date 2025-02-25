@@ -20,7 +20,7 @@ class CDashboardPartyMember : public vgui::EditablePanel, public CGameEventListe
 {
     DECLARE_CLASS_SIMPLE( CDashboardPartyMember, EditablePanel );
 
-   public:
+    public:
     enum EMemberState
     {
         MEMBER_NONE,
@@ -50,7 +50,7 @@ class CDashboardPartyMember : public vgui::EditablePanel, public CGameEventListe
     MESSAGE_FUNC( DoOpenSettings, "Context_OpenSettings" );
     MESSAGE_FUNC( DoPromoteToLeader, "Context_PromoteToLeader" );
 
-   private:
+    private:
     bool BIsLocalPlayerSlot() const
     {
         return m_nDisplayPartySlot == 0;

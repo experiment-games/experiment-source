@@ -4,7 +4,7 @@
 
 class C_CurrencyPack : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( C_CurrencyPack, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
 
@@ -14,7 +14,7 @@ class C_CurrencyPack : public C_BaseAnimating
     virtual void OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
     virtual void ClientThink();
 
-   private:
+    private:
     void UpdateGlowEffect( void );
     void DestroyGlowEffect( void );
     CGlowObject *m_pGlowEffect;

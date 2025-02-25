@@ -22,7 +22,7 @@ class CTier3DmAppSystem : public CTier2DmAppSystem< IInterface, ConVarFlag >
 {
     typedef CTier2DmAppSystem< IInterface, ConVarFlag > BaseClass;
 
-   public:
+    public:
     CTier3DmAppSystem( bool bIsPrimaryAppSystem = true )
         : BaseClass( bIsPrimaryAppSystem )
     {

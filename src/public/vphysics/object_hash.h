@@ -12,7 +12,7 @@
 
 class IPhysicsObjectPairHash
 {
-   public:
+    public:
     virtual ~IPhysicsObjectPairHash() {}
     virtual void AddObjectPair( void *pObject0, void *pObject1 ) = 0;
     virtual void RemoveObjectPair( void *pObject0, void *pObject1 ) = 0;

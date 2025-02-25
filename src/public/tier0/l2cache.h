@@ -13,7 +13,7 @@ class P4Event_BSQ_cache_reference;
 
 class CL2Cache
 {
-   public:
+    public:
     CL2Cache();
     ~CL2Cache();
 
@@ -32,7 +32,7 @@ class CL2Cache
     void Validate( CValidator &validator, tchar *pchName );  // Validate our internal structures
 #endif                                                       // DBGFLAG_VALIDATE
 
-   private:
+    private:
     int m_nID;
 
     P4Event_BSQ_cache_reference *m_pL2CacheEvent;

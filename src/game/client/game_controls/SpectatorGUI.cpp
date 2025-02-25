@@ -85,11 +85,11 @@ ConVar cl_spec_mode(
 //-----------------------------------------------------------------------------
 class CSpecButton : public Button
 {
-   public:
+    public:
     CSpecButton( Panel *parent, const char *panelName )
         : Button( parent, panelName, "" ) {}
 
-   private:
+    private:
     void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         Button::ApplySchemeSettings( pScheme );

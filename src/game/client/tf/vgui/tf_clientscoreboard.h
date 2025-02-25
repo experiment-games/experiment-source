@@ -27,10 +27,10 @@ class CTFBadgePanel;
 
 class CTFClientScoreBoardDialog : public CClientScoreBoardDialog
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFClientScoreBoardDialog, CClientScoreBoardDialog );
 
-   public:
+    public:
     CTFClientScoreBoardDialog( IViewPort *pViewPort );
     virtual ~CTFClientScoreBoardDialog();
 
@@ -54,7 +54,7 @@ class CTFClientScoreBoardDialog : public CClientScoreBoardDialog
 
     MESSAGE_FUNC_PARAMS( OnVoteKickPlayer, "VoteKickPlayer", pData );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
@@ -69,7 +69,7 @@ class CTFClientScoreBoardDialog : public CClientScoreBoardDialog
         return m_pPlayerListBlue;
     }
 
-   private:
+    private:
     void InitPlayerList( vgui::SectionedListPanel *pPlayerList );
     void SetPlayerListImages( vgui::SectionedListPanel *pPlayerList );
     void UpdateTeamInfo();

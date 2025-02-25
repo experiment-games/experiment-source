@@ -54,7 +54,7 @@
 // All interfaces derive from this.
 class IBaseInterface
 {
-   public:
+    public:
     virtual ~IBaseInterface() {}
 };
 
@@ -71,10 +71,10 @@ typedef void *( *InstantiateInterfaceFn )();
 // Used internally to register classes.
 class InterfaceReg
 {
-   public:
+    public:
     InterfaceReg( InstantiateInterfaceFn fn, const char *pName );
 
-   public:
+    public:
     InstantiateInterfaceFn m_CreateFn;
     const char *m_pName;
 
@@ -223,13 +223,13 @@ bool Sys_IsDebuggerPresent();
 //-----------------------------------------------------------------------------
 class CDllDemandLoader
 {
-   public:
+    public:
     CDllDemandLoader( char const *pchModuleName );
     virtual ~CDllDemandLoader();
     CreateInterfaceFn GetFactory();
     void Unload();
 
-   private:
+    private:
     char const *m_pchModuleName;
     CSysModule *m_hModule;
     bool m_bLoadAttempted;

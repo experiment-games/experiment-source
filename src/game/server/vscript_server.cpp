@@ -79,7 +79,7 @@ ConVar script_break_in_native_debugger_on_error( "script_break_in_native_debugge
 /// Exposes convars to script
 class CScriptConvarAccessor : public CAutoGameSystem
 {
-   public:
+    public:
     ScriptVariant_t GetBool( const char *cvar );
     ScriptVariant_t GetInt( const char *cvar );
     ScriptVariant_t GetFloat( const char *cvar );
@@ -266,7 +266,7 @@ END_SCRIPTDESC()
 //-----------------------------------------------------------------------------
 class CScriptEntityOutputs
 {
-   public:
+    public:
     int GetNumElements( HSCRIPT hEntity, const char *szOutputName )
     {
         CBaseEntity *pBaseEntity = ToEnt( hEntity );
@@ -394,7 +394,7 @@ END_SCRIPTDESC();
 //-----------------------------------------------------------------------------
 class CScrollingScreenOverlay
 {
-   public:
+    public:
     CScrollingScreenOverlay( float x = 0.01, float y = 0.0, float duration = FLT_MAX, int iFirstLine = 1, int nLines = 50, int r = 255, int g = 255, int b = 255 );
 
     void SetXY( float x, float y );
@@ -409,7 +409,7 @@ class CScrollingScreenOverlay
 
     void Draw();
 
-   private:
+    private:
     struct TextLine_t
     {
         CUtlString m_text;
@@ -427,13 +427,13 @@ class CScrollingScreenOverlay
 
 CScrollingScreenOverlay::CScrollingScreenOverlay( float x, float y, float duration, int iFirstLine, int nLines, int r, int g, int b )
     : m_x( x ),
-      m_y( y ),
-      m_duration( duration ),
-      m_iFirstLine( iFirstLine ),
-      m_nLines( nLines ),
-      m_r( r ),
-      m_g( g ),
-      m_b( b )
+    m_y( y ),
+    m_duration( duration ),
+    m_iFirstLine( iFirstLine ),
+    m_nLines( nLines ),
+    m_r( r ),
+    m_g( g ),
+    m_b( b )
 {
 }
 
@@ -865,22 +865,22 @@ class CScriptPanorama
 {
 public:
 
-	void DispatchEvent( const char *pszEventName, const char *pszMessage )
-	{
-		CBroadcastRecipientFilter filter;
-		filter.MakeReliable();
+    void DispatchEvent( const char *pszEventName, const char *pszMessage )
+    {
+        CBroadcastRecipientFilter filter;
+        filter.MakeReliable();
 
-		CCSUsrMsg_PanoramaDispatchEvent msg;
-		msg.set_event( pszEventName );
-		msg.set_message( pszMessage );
-		SendUserMessage( filter, CS_UM_PanoramaDispatchEvent, msg );
-	}
+        CCSUsrMsg_PanoramaDispatchEvent msg;
+        msg.set_event( pszEventName );
+        msg.set_message( pszMessage );
+        SendUserMessage( filter, CS_UM_PanoramaDispatchEvent, msg );
+    }
 
 private:
 } g_ScriptPanorama;
 
 BEGIN_SCRIPTDESC_ROOT_NAMED( CScriptPanorama, "CPanorama", SCRIPT_SINGLETON "Panorama VScript Interface" )
-	DEFINE_SCRIPTFUNC( DispatchEvent, "Trigger a panorama event to the vscript event handler" )
+    DEFINE_SCRIPTFUNC( DispatchEvent, "Trigger a panorama event to the vscript event handler" )
 END_SCRIPTDESC();
 #endif
 
@@ -1483,33 +1483,33 @@ static void Script_EmitSoundEx( HSCRIPT params )
 
     IScriptVM *pVM = g_pScriptVM;
     pVM->IfHas< int >( params, "channel", [&]( int value )
-                       { soundParams.m_nChannel = value; } );
+                        { soundParams.m_nChannel = value; } );
     pVM->IfHas< CUtlString >( params, "sound_name", [&]( CUtlString value )
-                              { szSoundName = std::move( value ); soundParams.m_pSoundName = szSoundName.Get(); } );
+                            { szSoundName = std::move( value ); soundParams.m_pSoundName = szSoundName.Get(); } );
     pVM->IfHas< float >( params, "volume", [&]( float value )
-                         { soundParams.m_flVolume = value; } );
+                        { soundParams.m_flVolume = value; } );
     pVM->IfHas< int >( params, "sound_level", [&]( int value )
-                       { soundParams.m_SoundLevel = soundlevel_t(  value  ); } );
+                        { soundParams.m_SoundLevel = soundlevel_t(  value  ); } );
     pVM->IfHas< int >( params, "flags", [&]( int value )
-                       { soundParams.m_nFlags = value; } );
+                        { soundParams.m_nFlags = value; } );
     pVM->IfHas< int >( params, "pitch", [&]( int value )
-                       { soundParams.m_nPitch = value; } );
+                        { soundParams.m_nPitch = value; } );
     pVM->IfHas< int >( params, "special_dsp", [&]( int value )
-                       { soundParams.m_nSpecialDSP = value; } );
+                        { soundParams.m_nSpecialDSP = value; } );
     pVM->IfHas< Vector >( params, "origin", [&]( Vector value )
-                          { vecOriginCache = value; bSetOrigin = true; soundParams.m_pOrigin = &vecOriginCache; } );
+                        { vecOriginCache = value; bSetOrigin = true; soundParams.m_pOrigin = &vecOriginCache; } );
     pVM->IfHas< float >( params, "delay", [&]( float value )
-                         { soundParams.m_flSoundTime = gpGlobals->curtime + value; } );
+                        { soundParams.m_flSoundTime = gpGlobals->curtime + value; } );
     pVM->IfHas< float >( params, "sound_time", [&]( float value )
-                         { soundParams.m_flSoundTime = value; } );
+                        { soundParams.m_flSoundTime = value; } );
     pVM->IfHas< HSCRIPT >( params, "speaker_entity", [&]( HSCRIPT value )
-                           { CBaseEntity *pEntity = ToEnt( value ); if ( pEntity ) soundParams.m_nSpeakerEntity = pEntity->entindex(); } );
+                            { CBaseEntity *pEntity = ToEnt( value ); if ( pEntity ) soundParams.m_nSpeakerEntity = pEntity->entindex(); } );
     pVM->IfHas< HSCRIPT >( params, "entity", [&]( HSCRIPT value )
-                           { pOutputEntity = ToEnt( value ); } );
+                            { pOutputEntity = ToEnt( value ); } );
     pVM->IfHas< int >( params, "filter_type", [&]( int value )
-                       { eFilter = EScriptRecipientFilter( value ); } );
+                        { eFilter = EScriptRecipientFilter( value ); } );
     pVM->IfHas< int >( params, "filter_param", [&]( int value )
-                       { nFilterParam = value; } );
+                        { nFilterParam = value; } );
     soundParams.m_bWarnOnMissingCloseCaption = false;
     soundParams.m_bWarnOnDirectWaveReference = false;
 
@@ -2133,43 +2133,43 @@ static void Script_FadeClientVolume( HSCRIPT hPlayer, float fadePercent, float f
 #if 0
 static void Script_QueueSpeak( HSCRIPT hEntity, const char *pszConcept, float flDelay, const char *pszCriteria )
 {
-	CBaseEntity *pBaseEntity = ToEnt( hEntity );
-	if ( !pBaseEntity )
-		return;
+    CBaseEntity *pBaseEntity = ToEnt( hEntity );
+    if ( !pBaseEntity )
+        return;
 
-	if ( !pszCriteria )
-		pszCriteria = "";
+    if ( !pszCriteria )
+        pszCriteria = "";
 
-	AI_CriteriaSet criteria;
-	if ( V_strlen( pszCriteria ) > 0 )
-	{
-		criteria.Merge( pszCriteria );
-	}
+    AI_CriteriaSet criteria;
+    if ( V_strlen( pszCriteria ) > 0 )
+    {
+        criteria.Merge( pszCriteria );
+    }
 
-	AIConcept_t concept( pszConcept );
-	QueueSpeak( concept, pBaseEntity, flDelay, criteria );
+    AIConcept_t concept( pszConcept );
+    QueueSpeak( concept, pBaseEntity, flDelay, criteria );
 }
 #endif
 
 #if 0
 static void DoRecordAchievementEvent( const char *pszAchievementname, int iPlayerIndex )
 {
-	if ( iPlayerIndex < 0 )
-	{
-		DevWarning( "DoRecordAchievementEvent called with invalid player index (%s, %d)!\n", pszAchievementname, iPlayerIndex );
-		return;
-	}
-	CBasePlayer *pPlayer = NULL;
-	if ( iPlayerIndex > 0 )
-	{
-		pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
-		if ( !pPlayer )
-		{
-			DevWarning( "DoRecordAchievementEvent called with a player index that doesn't resolve to a player (%s, %d)!\n", pszAchievementname, iPlayerIndex );
-			return;
-		}
-	}
-	UTIL_RecordAchievementEvent( pszAchievementname, pPlayer );
+    if ( iPlayerIndex < 0 )
+    {
+        DevWarning( "DoRecordAchievementEvent called with invalid player index (%s, %d)!\n", pszAchievementname, iPlayerIndex );
+        return;
+    }
+    CBasePlayer *pPlayer = NULL;
+    if ( iPlayerIndex > 0 )
+    {
+        pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
+        if ( !pPlayer )
+        {
+            DevWarning( "DoRecordAchievementEvent called with a player index that doesn't resolve to a player (%s, %d)!\n", pszAchievementname, iPlayerIndex );
+            return;
+        }
+    }
+    UTIL_RecordAchievementEvent( pszAchievementname, pPlayer );
 }
 #endif
 
@@ -2563,10 +2563,10 @@ bool VScriptServerInit()
 
 // Josh: Bring this back if we have response rules and stuff.
 #if 0
-				ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_AddDecisionRule, "rr_AddDecisionRule", "Add a rule to the decision database." );
-				ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_FindBestResponse, "rr_QueryBestResponse", "Params: (entity, query) : tests 'query' against entity's response system and returns the best response found (or null if none found)." );
-				ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_CommitAIResponse, "rr_CommitAIResponse", "Commit the result of QueryBestResponse back to the given entity to play. Call with params (entity, airesponse)" );
-				ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_GetExpressers, "rr_GetResponseTargets", "Retrieve a table of all available expresser targets, in the form { name : handle, name: handle }." );
+                ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_AddDecisionRule, "rr_AddDecisionRule", "Add a rule to the decision database." );
+                ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_FindBestResponse, "rr_QueryBestResponse", "Params: (entity, query) : tests 'query' against entity's response system and returns the best response found (or null if none found)." );
+                ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_CommitAIResponse, "rr_CommitAIResponse", "Commit the result of QueryBestResponse back to the given entity to play. Call with params (entity, airesponse)" );
+                ScriptRegisterFunctionNamed( g_pScriptVM, CSpeechScriptBridge::Script_GetExpressers, "rr_GetResponseTargets", "Retrieve a table of all available expresser targets, in the form { name : handle, name: handle }." );
 #endif
 
                 ScriptRegisterFunctionNamed( g_pScriptVM, Script_PickupObject, "PickupObject", "Have a player pickup a nearby named entity" );
@@ -2597,7 +2597,7 @@ bool VScriptServerInit()
                 ScriptRegisterFunctionNamed( g_pScriptVM, Script_IsSoundPrecached, "IsSoundPrecached", "Takes a sound name" );
                 ScriptRegisterFunctionNamed( g_pScriptVM, Script_GetLocalTime, "LocalTime", "Fills out a table with the local time (second, minute, hour, day, month, year, dayofweek, dayofyear, daylightsavings)" );
 #if 0
-				ScriptRegisterFunctionNamed( g_pScriptVM, Script_QueueSpeak, "QueueSpeak", "(hEntity, szConcept, flDelay, szCriteria) Queue a speech concept" );
+                ScriptRegisterFunctionNamed( g_pScriptVM, Script_QueueSpeak, "QueueSpeak", "(hEntity, szConcept, flDelay, szCriteria) Queue a speech concept" );
 #endif
 
                 ScriptRegisterFunction( g_pScriptVM, GetMapName, "Get the name of the map." );
@@ -2638,7 +2638,7 @@ bool VScriptServerInit()
 #endif
                 g_pScriptVM->RegisterInstance( &g_ScriptEntityIterator, "Entities" );
 #if 0
-				g_pScriptVM->RegisterInstance( &g_ScriptPanorama, "Panorama" );
+                g_pScriptVM->RegisterInstance( &g_ScriptPanorama, "Panorama" );
 #endif
                 g_pScriptVM->RegisterInstance( &g_ScriptConvars, "Convars" );
                 g_pScriptVM->RegisterInstance( &g_ScriptEntityOutputs, "EntityOutputs" );
@@ -3972,7 +3972,7 @@ CON_COMMAND( script_reload_think, "Execute an activation script, replacing exist
 
 class CVScriptGameSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     // Inherited from IAutoServerSystem
     virtual void LevelInitPreEntity( void )
     {
@@ -4023,7 +4023,7 @@ static short VSCRIPT_SERVER_SAVE_RESTORE_VERSION = 2;
 
 class CVScriptSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     CVScriptSaveRestoreBlockHandler()
         : m_InstanceMap( DefLessFunc( const char * ) )
     {
@@ -4134,7 +4134,7 @@ class CVScriptSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 
     CUtlMap< const char *, CBaseEntity * > m_InstanceMap;
 
-   private:
+    private:
     bool m_fDoLoad;
 };
 

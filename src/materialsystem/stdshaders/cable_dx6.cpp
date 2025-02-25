@@ -12,7 +12,7 @@
 DEFINE_FALLBACK_SHADER( Cable, Cable_DX6 )
 
 BEGIN_SHADER( Cable_DX6,
-              "Help for Cable_DX6" )
+            "Help for Cable_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( MINLIGHT, SHADER_PARAM_TYPE_FLOAT, "0.25", "Minimum amount of light (0-1 value)" )

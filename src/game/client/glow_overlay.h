@@ -24,7 +24,7 @@ extern float g_flOverlayRange;
 
 class CGlowSprite
 {
-   public:
+    public:
     Vector m_vColor;         // 0-1
     float m_flHorzSize;      // Horizontal and vertical sizes.
     float m_flVertSize;      // 1 = size of the sun
@@ -33,7 +33,7 @@ class CGlowSprite
 
 class CGlowOverlay
 {
-   public:
+    public:
     CGlowOverlay();
     virtual ~CGlowOverlay();
 
@@ -41,7 +41,7 @@ class CGlowOverlay
     virtual bool Update();
 
     // Data the creator should fill in.
-   public:
+    public:
     // Position of the light source. If m_bDirectional is set, then it ignores
     // this and uses m_vDirection as the direction of the light source.
     Vector m_vPos;
@@ -65,7 +65,7 @@ class CGlowOverlay
 
     float m_flHDRColorScale;
 
-   public:
+    public:
     // After creating the overlay, call this to add it to the active list.
     // You can also call Activate and Deactivate as many times as you want.
     void Activate();
@@ -80,7 +80,7 @@ class CGlowOverlay
     static void RestoreSkyOverlayData( int iRestoreFromSlot );
 #endif
 
-   protected:
+    protected:
     void UpdateGlowObstruction( const Vector &vToGlow, bool bCacheFullSceneState );
     void UpdateSkyGlowObstruction( float zFar, bool bCacheFullSceneState );
 
@@ -106,7 +106,7 @@ class CGlowOverlay
     bool m_bCacheGlowObstruction;  // Flags to cache obstruction scales
     bool m_bCacheSkyObstruction;   // Used in IFM poster rendering
 
-   private:
+    private:
     short m_bActivated;
     unsigned short m_ListIndex;  // index into s_GlowOverlays.
     pixelvis_handle_t m_queryHandle;
@@ -115,7 +115,7 @@ class CGlowOverlay
 // Override for warping
 class CWarpOverlay : public CGlowOverlay
 {
-   protected:
+    protected:
     virtual void Draw( bool bCacheFullSceneState );
 };
 

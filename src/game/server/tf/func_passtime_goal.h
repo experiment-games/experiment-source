@@ -21,7 +21,7 @@ class CPasstimeBall;
 // TODO: make AutoList work without inheritance
 class CFuncPasstimeGoalShim : public CBaseTrigger
 {
-   public:
+    public:
     virtual void StartTouch( CBaseEntity *pOther ) OVERRIDE
     {
         CBaseTrigger::StartTouch( pOther );
@@ -33,7 +33,7 @@ class CFuncPasstimeGoalShim : public CBaseTrigger
         ShimEndTouch( pOther );
     }
 
-   private:
+    private:
     virtual void ShimStartTouch( CBaseEntity *pOther ) = 0;
     virtual void ShimEndTouch( CBaseEntity *pOther ) = 0;
 };
@@ -41,7 +41,7 @@ class CFuncPasstimeGoalShim : public CBaseTrigger
 //-----------------------------------------------------------------------------
 class CFuncPasstimeGoal : public CFuncPasstimeGoalShim, public TAutoList< CFuncPasstimeGoal >
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncPasstimeGoal, CFuncPasstimeGoalShim );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -91,7 +91,7 @@ class CFuncPasstimeGoal : public CFuncPasstimeGoalShim, public TAutoList< CFuncP
         return ( GetSpawnFlags() & ( CFuncPasstimeGoal::TYPE_TOWER_GOAL << 24 ) ) != 0;
     }
 
-   private:
+    private:
     virtual void ShimStartTouch( CBaseEntity *pOther ) OVERRIDE;
     virtual void ShimEndTouch( CBaseEntity *pOther ) OVERRIDE;
     bool CanTouchMe( CBaseEntity *pOther );

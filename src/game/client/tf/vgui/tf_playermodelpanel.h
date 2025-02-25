@@ -23,7 +23,7 @@ class CTFPlayerModelPanel : public CBaseModelPanel, public IChoreoEventCallback,
 {
     DECLARE_CLASS_SIMPLE( CTFPlayerModelPanel, CBaseModelPanel );
 
-   public:
+    public:
     CTFPlayerModelPanel( vgui::Panel *pParent, const char *pName );
     ~CTFPlayerModelPanel( void );
 
@@ -93,7 +93,7 @@ class CTFPlayerModelPanel : public CBaseModelPanel, public IChoreoEventCallback,
 
     void InvalidateParticleEffects();
 
-   protected:
+    protected:
     // From CBaseModelPanel
     virtual void PrePaint3D( IMatRenderContext *pRenderContext ) OVERRIDE;
     virtual void PostPaint3D( IMatRenderContext *pRenderContext ) OVERRIDE;
@@ -101,7 +101,7 @@ class CTFPlayerModelPanel : public CBaseModelPanel, public IChoreoEventCallback,
     virtual void RenderingMergedModel( IMatRenderContext *pRenderContext, CStudioHdr *pStudioHdr, MDLHandle_t mdlHandle, matrix3x4_t *pWorldMatrix );
     virtual IMaterial *GetOverrideMaterial( MDLHandle_t mdlHandle ) OVERRIDE;
 
-   private:
+    private:
     enum modelpanel_particle_system_t
     {
         SYSTEM_HEAD = 0,

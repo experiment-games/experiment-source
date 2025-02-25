@@ -143,9 +143,9 @@ enum ESteamNetworkingIdentityType
     k_ESteamNetworkingIdentityType_XboxPairwiseID = 17,  // Publisher-specific user identity, as string
     k_ESteamNetworkingIdentityType_SonyPSN = 18,         // 64-bit ID
     k_ESteamNetworkingIdentityType_GoogleStadia = 19,    // 64-bit ID
-                                                       // k_ESteamNetworkingIdentityType_NintendoNetworkServiceAccount,
-                                                       // k_ESteamNetworkingIdentityType_EpicGameStore
-                                                       // k_ESteamNetworkingIdentityType_WeGame
+                                                        // k_ESteamNetworkingIdentityType_NintendoNetworkServiceAccount,
+                                                        // k_ESteamNetworkingIdentityType_EpicGameStore
+                                                        // k_ESteamNetworkingIdentityType_WeGame
 
     //
     // Special identifiers.
@@ -964,7 +964,7 @@ struct SteamNetworkingMessage_t
         return m_nMessageNumber;
     }
 #endif
-   protected:
+    protected:
     // Declare destructor protected.  You should never need to declare a message
     // object on the stack or create one yourself.
     // - You will receive a pointer to a message object when you receive messages (e.g. ISteamNetworkingSockets::ReceiveMessagesOnConnection)
@@ -1845,7 +1845,7 @@ struct SteamNetworkingPOPIDRender
         return buf;
     }
 
-   private:
+    private:
     char buf[8];
 };
 

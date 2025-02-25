@@ -16,12 +16,12 @@
 //-----------------------------------------------------------------------------
 class CTriggerPasstimeBall : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerPasstimeBall, CBaseEntity );
     DECLARE_DATADESC();
     virtual void Spawn() OVERRIDE;
 
-   private:
+    private:
     void Update();
     bool BTouching( CBaseEntity *pEnt );
 

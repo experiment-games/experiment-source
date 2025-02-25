@@ -27,7 +27,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class CGlowOverlaySystem : public CAutoGameSystem
 {
-   public:
+    public:
     CGlowOverlaySystem()
         : CAutoGameSystem( "CGlowOverlaySystem" )
     {

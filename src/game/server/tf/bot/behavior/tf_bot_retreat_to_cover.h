@@ -8,7 +8,7 @@
 
 class CTFBotRetreatToCover : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotRetreatToCover( float hideDuration = -1.0f );
     CTFBotRetreatToCover( Action< CTFBot > *actionToChangeToOnceCoverReached );
 
@@ -26,7 +26,7 @@ class CTFBotRetreatToCover : public Action< CTFBot >
         return "RetreatToCover";
     };
 
-   private:
+    private:
     float m_hideDuration;
     Action< CTFBot > *m_actionToChangeToOnceCoverReached;
 

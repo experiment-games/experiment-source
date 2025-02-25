@@ -12,7 +12,7 @@
 
 class CWinIdle
 {
-   protected:
+    protected:
     HANDLE m_hIdleEvent, m_hStopEvent;
 
     HWND m_hWnd;
@@ -29,7 +29,7 @@ class CWinIdle
     // The actual idle loop
     virtual DWORD RunIdle();
 
-   public:
+    public:
     CWinIdle();
     virtual ~CWinIdle();
 
@@ -62,7 +62,7 @@ class CWinIdle
 // Used to slow down the idle thread while dialogs are up.
 class IdleChanger
 {
-   public:
+    public:
     IdleChanger( CWinIdle *pIdle, DWORD msDelay )
     {
         m_pIdle = pIdle;

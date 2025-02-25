@@ -152,8 +152,3 @@ mad r0.xyz, t1, r1.w, r0
 dp3 r1, c1, c0
 mov r0.w, r1.w
 #endif
-
-
-
-
-

@@ -31,7 +31,7 @@ class CSelectPlayerTargetPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSelectPlayerTargetPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CSelectPlayerTargetPanel( vgui::Panel *parent, const char *name )
         : vgui::EditablePanel( parent, name )
     {
@@ -55,7 +55,7 @@ class CSelectPlayerTargetPanel : public vgui::EditablePanel
         return m_pButton;
     }
 
-   private:
+    private:
     // Embedded panels
     CAvatarImagePanel *m_pAvatar;
     CExButton *m_pButton;
@@ -68,7 +68,7 @@ class CSelectPlayerDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSelectPlayerDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CSelectPlayerDialog( vgui::Panel *parent );
     ~CSelectPlayerDialog( void );
 
@@ -90,7 +90,7 @@ class CSelectPlayerDialog : public vgui::EditablePanel
 
     virtual void OnSelectPlayer( const CSteamID &steamID ) = 0;
 
-   protected:
+    protected:
     virtual const char *GetResFile()
     {
         return "resource/ui/SelectPlayerDialog.res";

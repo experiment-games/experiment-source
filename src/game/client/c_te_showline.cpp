@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class C_TEShowLine : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEShowLine, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
@@ -30,7 +30,7 @@ class C_TEShowLine : public C_TEParticleSystem
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecEnd;
 };
 

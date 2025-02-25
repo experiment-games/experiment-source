@@ -182,36 +182,36 @@ void MessageBox::DoModal( Frame *pFrameOver )
 {
     ShowWindow( pFrameOver );
     /*
-      // move to the middle of the screen
-      // get the screen size
-      int wide, tall;
-      // get our dialog size
-      GetSize(wide, tall);
+    // move to the middle of the screen
+    // get the screen size
+    int wide, tall;
+    // get our dialog size
+    GetSize(wide, tall);
 
-      if (pFrameOver)
-      {
+    if (pFrameOver)
+    {
         int frameX, frameY;
         int frameWide, frameTall;
         pFrameOver->GetPos(frameX, frameY);
         pFrameOver->GetSize(frameWide, frameTall);
 
         SetPos((frameWide - wide) / 2 + frameX, (frameTall - tall) / 2 + frameY);
-      }
-      else
-      {
+    }
+    else
+    {
         int swide, stall;
         surface()->GetScreenSize(swide, stall);
         // put the dialog in the middle of the screen
         SetPos((swide - wide) / 2, (stall - tall) / 2);
-      }
+    }
 
-      SetVisible( true );
-      SetEnabled( true );
-      MoveToFront();
+    SetVisible( true );
+    SetEnabled( true );
+    MoveToFront();
 
-      if (m_pOkButton->IsVisible())
+    if (m_pOkButton->IsVisible())
         m_pOkButton->RequestFocus();
-      else	 // handle message boxes with no button
+    else	 // handle message boxes with no button
         RequestFocus();
     */
     input()->SetAppModalSurface( GetVPanel() );

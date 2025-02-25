@@ -22,13 +22,13 @@ DECLARE_AUTO_LIST( IPasstimeBallSpawnAutoList );
 //-----------------------------------------------------------------------------
 class CPasstimeBallSpawn : public CPointEntity, public IPasstimeBallSpawnAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CPasstimeBallSpawn, CPointEntity );
     DECLARE_DATADESC();
     CPasstimeBallSpawn();
     bool IsEnabled() const;
 
-   private:
+    private:
     friend class CTFPasstimeLogic;
     void InputEnable( inputdata_t &input );
     void InputDisable( inputdata_t &input );

@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
@@ -23,7 +23,7 @@
 
 class CUtlStringToken
 {
-   public:
+    public:
     uint32 m_nHashCode;
 #if DEBUG_STRINGTOKENS
     char const *m_pDebugName;

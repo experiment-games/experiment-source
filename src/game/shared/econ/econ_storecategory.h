@@ -19,7 +19,7 @@ typedef CRC32_t StoreCategoryID_t;
 // sort by price highest to lowest
 class CEconStoreEntryLess
 {
-   public:
+    public:
     bool Less( const uint16 &lhs, const uint16 &rhs, void *pContext );
 };
 
@@ -27,7 +27,7 @@ class CEconStoreEntryLess
 
 class CEconStoreCategoryManager
 {
-   public:
+    public:
     CEconStoreCategoryManager();
 
     bool BInit( CEconStorePriceSheet *pPriceSheet, KeyValues *pStoreMetaDataKV );
@@ -109,7 +109,7 @@ class CEconStoreCategoryManager
         return NULL;
     }
 
-   private:
+    private:
     bool BInitCategory( CEconStorePriceSheet *pPriceSheet, StoreCategory_t *pCategory, KeyValues *pKVTab );
 
     StoreCategory_t *GetStoreCategoryFromID( StoreCategoryID_t unID );

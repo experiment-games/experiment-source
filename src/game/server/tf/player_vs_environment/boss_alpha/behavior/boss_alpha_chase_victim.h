@@ -13,7 +13,7 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaChaseVictim : public Action< CBossAlpha >
 {
-   public:
+    public:
     CBossAlphaChaseVictim( CBaseCombatCharacter *chaseTarget );
 
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
@@ -29,7 +29,7 @@ class CBossAlphaChaseVictim : public Action< CBossAlpha >
         return "ChaseVictim";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     IntervalTimer m_visibleTimer;
     CHandle< CBaseCombatCharacter > m_lastTarget;

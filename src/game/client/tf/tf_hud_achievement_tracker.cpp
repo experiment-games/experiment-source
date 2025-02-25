@@ -18,7 +18,7 @@ class CHudAchievementTracker : public CHudBaseAchievementTracker
 {
     DECLARE_CLASS_SIMPLE( CHudAchievementTracker, CHudBaseAchievementTracker );
 
-   public:
+    public:
     CHudAchievementTracker( const char *pElementName );
     virtual void OnThink();
     virtual void PerformLayout();
@@ -26,7 +26,7 @@ class CHudAchievementTracker : public CHudBaseAchievementTracker
     virtual bool ShouldShowAchievement( IAchievement *pAchievement );
     virtual bool ShouldDraw();
 
-   private:
+    private:
     int m_iPlayerClass;
     CPanelAnimationVarAliasType( int, m_iNormalY, "NormalY", "5", "proportional_int" );
     CPanelAnimationVarAliasType( int, m_iEngineerY, "EngineerY", "170", "proportional_int" );

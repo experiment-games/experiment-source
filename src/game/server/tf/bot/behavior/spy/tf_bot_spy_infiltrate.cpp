@@ -54,9 +54,9 @@ ActionResult< CTFBot > CTFBotSpyInfiltrate::Update( CTFBot *me, float interval )
 
     // cloak when we first enter an area of active combat
     if ( !me->m_Shared.IsStealthed() &&
-         !isInMySpawn &&
-         myArea->IsInCombat() &&
-         !m_hasEnteredCombatZone )
+        !isInMySpawn &&
+        myArea->IsInCombat() &&
+        !m_hasEnteredCombatZone )
     {
         m_hasEnteredCombatZone = true;
         me->PressAltFireButton();

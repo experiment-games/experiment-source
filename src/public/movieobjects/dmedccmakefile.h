@@ -20,7 +20,7 @@ class CDmeSourceDCCFile : public CDmeSource
 {
     DEFINE_ELEMENT( CDmeSourceDCCFile, CDmeSource );
 
-   public:
+    public:
     CDmaStringArray m_RootDCCObjects;
     CDmaVar< int > m_ExportType;  // 0 == model, 1 == skeletal animation
     CDmaVar< float > m_FrameStart;
@@ -58,10 +58,10 @@ class CDmeDCCMakefile : public CDmeMakefile
 {
     DEFINE_ELEMENT( CDmeDCCMakefile, CDmeMakefile );
 
-   public:
+    public:
     virtual void GetOutputs( CUtlVector< CUtlString > &fullPaths );
 
-   private:
+    private:
     virtual CDmElement *CreateOutputElement();
     virtual void DestroyOutputElement( CDmElement *pOutput );
     virtual const char *GetOutputDirectoryID()
@@ -86,7 +86,7 @@ class CDmeXSIMakefile : public CDmeDCCMakefile
 {
     DEFINE_ELEMENT( CDmeXSIMakefile, CDmeDCCMakefile );
 
-   public:
+    public:
     // Compiling is just exporting the data in the file
     virtual DmeMakefileType_t *GetMakefileType();
     virtual DmeMakefileType_t *GetSourceTypes();
@@ -99,7 +99,7 @@ class CDmeMayaModelMakefile : public CDmeMayaMakefile
 {
     DEFINE_ELEMENT( CDmeMayaModelMakefile, CDmeMayaMakefile );
 
-   public:
+    public:
     // Compiling is just exporting the data in the file
     virtual DmeMakefileType_t *GetMakefileType();
     virtual DmeMakefileType_t *GetSourceTypes();
@@ -109,7 +109,7 @@ class CDmeMayaAnimationMakefile : public CDmeMayaMakefile
 {
     DEFINE_ELEMENT( CDmeMayaAnimationMakefile, CDmeMayaMakefile );
 
-   public:
+    public:
     // Compiling is just exporting the data in the file
     virtual DmeMakefileType_t *GetMakefileType();
     virtual DmeMakefileType_t *GetSourceTypes();

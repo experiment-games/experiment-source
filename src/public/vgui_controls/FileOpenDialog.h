@@ -34,7 +34,7 @@ class FileOpenDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( FileOpenDialog, Frame );
 
-   public:
+    public:
     // NOTE: Backward compat constructor
     FileOpenDialog( Panel *parent, const char *title, bool bOpenFile, KeyValues *pContextKeyValues = 0 );
 
@@ -66,14 +66,14 @@ class FileOpenDialog : public vgui::Frame
     void GetSelectedFileName( char *buf, int bufSize );
 
     /*
-      messages sent:
+    messages sent:
         "FileSelected"
-          "fullpath"	// specifies the fullpath of the file
-          "filterinfo"	// Returns the filter info associated with the active filter
+        "fullpath"	// specifies the fullpath of the file
+        "filterinfo"	// Returns the filter info associated with the active filter
         "FileSelectionCancelled"
     */
 
-   protected:
+    protected:
     virtual void OnCommand( const char *command );
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void OnClose();
@@ -110,7 +110,7 @@ class FileOpenDialog : public vgui::Frame
     MESSAGE_FUNC( OnInputCanceled, "InputCanceled" );
     MESSAGE_FUNC_PARAMS( OnInputCompleted, "InputCompleted", data );
 
-   private:
+    private:
     // Necessary because we have 2 constructors
     void Init( const char *title, KeyValues *pContextKeyValues );
 

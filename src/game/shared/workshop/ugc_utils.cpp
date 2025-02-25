@@ -52,8 +52,8 @@ ISteamRemoteStorage *GetSteamRemoteStorage()
 //-----------------------------------------------------------------------------
 CUGCFileRequest::CUGCFileRequest( void )
     : m_hCloudID( k_UGCHandleInvalid ),
-      m_UGCStatus( UGCFILEREQUEST_READY ),
-      m_AsyncControl( NULL )
+    m_UGCStatus( UGCFILEREQUEST_READY ),
+    m_AsyncControl( NULL )
 {
     // Start with these disabled
     m_szFileName[0] = '\0';
@@ -378,9 +378,9 @@ bool UGC_SetFileTime( const char *pFileRelativePath, RTime32 uTimestamp )
 {
     char chFullFilePathForTimestamp[MAX_PATH] = { 0 };
     char const *pchFullPath = g_pFullFileSystem->RelativePathToFullPath( pFileRelativePath,
-                                                                         UGC_PATHID,
-                                                                         chFullFilePathForTimestamp,
-                                                                         sizeof( chFullFilePathForTimestamp ) );
+                                                                        UGC_PATHID,
+                                                                        chFullFilePathForTimestamp,
+                                                                        sizeof( chFullFilePathForTimestamp ) );
     if ( pchFullPath )
     {
         struct utimbuf tbuffer;

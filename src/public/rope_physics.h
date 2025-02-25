@@ -16,14 +16,14 @@
 
 class CRopeSpring
 {
-   public:
+    public:
     Vector *m_pNode1;
     Vector *m_pNode2;
 };
 
 class CBaseRopePhysics : public CSimplePhysics::IHelper
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CBaseRopePhysics );
 
     CBaseRopePhysics(
@@ -68,17 +68,17 @@ class CBaseRopePhysics : public CSimplePhysics::IHelper
         return &m_pNodes[m_nNodes - 1];
     }
 
-   public:
+    public:
     virtual void GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
     virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
 
-   private:
+    private:
     int NumSprings()
     {
         return m_nNodes - 1;
     }
 
-   protected:
+    protected:
     CSimplePhysics::IHelper *m_pDelegate;
 
     CSimplePhysics::CNode *m_pNodes;
@@ -98,7 +98,7 @@ class CBaseRopePhysics : public CSimplePhysics::IHelper
 template < int NUM_NODES >
 class CRopePhysics : public CBaseRopePhysics
 {
-   public:
+    public:
     CRopePhysics();
 
     CSimplePhysics::CNode m_Nodes[NUM_NODES];

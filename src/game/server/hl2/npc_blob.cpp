@@ -67,7 +67,7 @@ enum
 //=========================================================
 class CBlobElement : public CBaseAnimating
 {
-   public:
+    public:
     void Precache();
     void Spawn();
     int DrawDebugTextOverlays( void );
@@ -124,7 +124,7 @@ class CBlobElement : public CBaseAnimating
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     Vector m_vecPrevOrigin;  // Only exists for debugging (isolating stuck elements)
     int m_iStuckCount;
     bool m_bOnWall;
@@ -133,7 +133,7 @@ class CBlobElement : public CBaseAnimating
     Vector m_vecTargetLocation;
     float m_flRandomEightyPercent;
 
-   private:
+    private:
     EHANDLE m_hTargetEntity;
     float m_flSinePhase;
     float m_flSineAmplitude;
@@ -410,7 +410,7 @@ class CNPC_Blob : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Blob, CAI_BaseNPC );
 
-   public:
+    public:
     CNPC_Blob();
     void Precache( void );
     void Spawn( void );
@@ -456,7 +456,7 @@ class CNPC_Blob : public CAI_BaseNPC
 
     DEFINE_CUSTOM_AI;
 
-   public:
+    public:
     void InputFormPathShape( inputdata_t &inputdata );
     void InputSetRadius( inputdata_t &inputdata );
     void InputChaseEntity( inputdata_t &inputdata );
@@ -464,11 +464,11 @@ class CNPC_Blob : public CAI_BaseNPC
     void InputFormHemisphere( inputdata_t &inputdata );
     void InputFormTwoSpheres( inputdata_t &inputdata );
 
-   public:
+    public:
     Vector m_vecAvoidOrigin[BLOB_MAX_AVOID_ORIGINS];
     float m_flAvoidRadiusSqr;
 
-   private:
+    private:
     int m_iReconfigureElement;
     int m_iNumAvoidOrigins;
 
@@ -964,7 +964,7 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
             //
             if( pThisElement->m_flDistFromCentroidSqr > flStragglerDistSqr )
             {
-              NDebugOverlay::Line( pThisElement->GetAbsOrigin(), m_vecCentroid, 255, 0, 0, false, 0.025f );
+            NDebugOverlay::Line( pThisElement->GetAbsOrigin(), m_vecCentroid, 255, 0, 0, false, 0.025f );
             }
         */
     }

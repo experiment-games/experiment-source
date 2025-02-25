@@ -140,15 +140,15 @@ WEAPON_FILE_INFO_HANDLE GetInvalidWeaponInfoHandle( void )
 #if 0
 void ResetFileWeaponInfoDatabase( void )
 {
-	int c = m_WeaponInfoDatabase.Count(); 
-	for ( int i = 0; i < c; ++i )
-	{
-		delete m_WeaponInfoDatabase[ i ];
-	}
-	m_WeaponInfoDatabase.RemoveAll();
+    int c = m_WeaponInfoDatabase.Count();
+    for ( int i = 0; i < c; ++i )
+    {
+        delete m_WeaponInfoDatabase[ i ];
+    }
+    m_WeaponInfoDatabase.RemoveAll();
 
 #ifdef _DEBUG
-	memset(g_bUsedWeaponSlots, 0, sizeof(g_bUsedWeaponSlots));
+    memset(g_bUsedWeaponSlots, 0, sizeof(g_bUsedWeaponSlots));
 #endif
 }
 #endif
@@ -279,9 +279,9 @@ bool ReadWeaponDataFromFileForSlot( IFileSystem *pFilesystem, const char *szWeap
 
     KeyValues *pKV = ReadEncryptedKVFile( pFilesystem, sz, pICEKey,
 #if defined( DOD_DLL )
-                                          true  // Only read .ctx files!
+                                        true  // Only read .ctx files!
 #else
-                                          false
+                                        false
 #endif
     );
 
@@ -405,13 +405,13 @@ void FileWeaponInfo_t::Parse( KeyValues *pKeyValuesData, const char *szWeaponNam
 #if defined( _DEBUG ) && defined( HL2_CLIENT_DLL )
     // make sure two weapons aren't in the same slot & position
     if ( iSlot >= MAX_WEAPON_SLOTS ||
-         iPosition >= MAX_WEAPON_POSITIONS )
+        iPosition >= MAX_WEAPON_POSITIONS )
     {
         Warning( "Invalid weapon slot or position [slot %d/%d max], pos[%d/%d max]\n",
-                 iSlot,
-                 MAX_WEAPON_SLOTS - 1,
-                 iPosition,
-                 MAX_WEAPON_POSITIONS - 1 );
+                iSlot,
+                MAX_WEAPON_SLOTS - 1,
+                iPosition,
+                MAX_WEAPON_POSITIONS - 1 );
     }
     else
     {

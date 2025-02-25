@@ -50,7 +50,7 @@ struct IClientStatsTextDisplay
 
 abstract_class IClientStats
 {
-   public:
+    public:
     // This is called at startup to tell the stats about time
     virtual void Init( IClientStatsTime * pTime ) = 0;
 
@@ -80,7 +80,7 @@ abstract_class IClientStats
 template < int timedStatCount, int countedStatCount >
 abstract_class CBaseClientStats : public IClientStats
 {
-   public:
+    public:
     void Init( IClientStatsTime * pTime );
     void BeginRun();
     void EndRun();
@@ -110,13 +110,13 @@ abstract_class CBaseClientStats : public IClientStats
     virtual const char *GetCountedStatName( int statID ) const = 0;
     virtual const char *GetTimedStatName( int statID ) const = 0;
 
-   protected:
+    protected:
     // Timed statistics
     double m_StatFrameTime[timedStatCount];
     double m_StatStartTime[timedStatCount];
     double m_TotalStatTime[timedStatCount];
 
-   private:
+    private:
     IClientStatsTime *m_pTime;
 };
 

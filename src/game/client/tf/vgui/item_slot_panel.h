@@ -17,7 +17,7 @@ class CItemSlotPanel : public CBaseLoadoutPanel
 {
     DECLARE_CLASS_SIMPLE( CItemSlotPanel, CBaseLoadoutPanel );
 
-   public:
+    public:
     CItemSlotPanel( vgui::Panel *parent );
     ~CItemSlotPanel();
 
@@ -36,7 +36,7 @@ class CItemSlotPanel : public CBaseLoadoutPanel
 
     void SetItem( CEconItem *pItem );
 
-   private:
+    private:
     CEconItem *m_pItem;
 
     struct ItemSlot_t

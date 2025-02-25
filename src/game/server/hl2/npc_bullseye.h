@@ -20,7 +20,7 @@ class CNPC_Bullseye : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Bullseye, CAI_BaseNPC );
 
-   public:
+    public:
     CNPC_Bullseye( void );
     ~CNPC_Bullseye();
 
@@ -64,7 +64,7 @@ class CNPC_Bullseye : public CAI_BaseNPC
 
     bool CanBeAnEnemyOf( CBaseEntity *pEnemy );
 
-   protected:
+    protected:
     EHANDLE m_hPainPartner;  // Entity that the bullseye will pass any damage it take to
     COutputEvent m_OnTargeted;
     COutputEvent m_OnReleased;

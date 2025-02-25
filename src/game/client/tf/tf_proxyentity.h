@@ -14,14 +14,14 @@
 //-----------------------------------------------------------------------------
 abstract_class CBaseInvisMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CBaseInvisMaterialProxy();
 
     virtual bool Init( IMaterial * pMaterial, KeyValues * pKeyValues ) OVERRIDE;
     virtual void Release() OVERRIDE;
     virtual IMaterial *GetMaterial() OVERRIDE;
 
-   protected:
+    protected:
     virtual void OnBindNotEntity( void *pRenderable ) OVERRIDE;
     IMaterialVar *m_pPercentInvisible;
 };

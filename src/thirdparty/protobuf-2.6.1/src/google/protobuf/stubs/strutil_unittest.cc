@@ -55,10 +55,10 @@ TEST(StringUtilityTest, ImmuneToLocales) {
   EXPECT_EQ("1.5", SimpleFtoa(1.5));
 
   if (setlocale(LC_NUMERIC, "es_ES") == NULL &&
-      setlocale(LC_NUMERIC, "es_ES.utf8") == NULL) {
+    setlocale(LC_NUMERIC, "es_ES.utf8") == NULL) {
     // Some systems may not have the desired locale available.
     GOOGLE_LOG(WARNING)
-      << "Couldn't set locale to es_ES.  Skipping this test.";
+    << "Couldn't set locale to es_ES.  Skipping this test.";
   } else {
     EXPECT_EQ("1.5", SimpleDtoa(1.5));
     EXPECT_EQ("1.5", SimpleFtoa(1.5));

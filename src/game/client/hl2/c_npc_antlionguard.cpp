@@ -19,7 +19,7 @@
 
 class C_NPC_AntlionGuard : public C_AI_BaseNPC
 {
-   public:
+    public:
     C_NPC_AntlionGuard() {}
 
     DECLARE_CLASS( C_NPC_AntlionGuard, C_AI_BaseNPC );
@@ -29,7 +29,7 @@ class C_NPC_AntlionGuard : public C_AI_BaseNPC
     virtual void OnDataChanged( DataUpdateType_t type );
     virtual void ClientThink();
 
-   private:
+    private:
     bool m_bCavernBreed;
     bool m_bInCavern;
     dlight_t *m_dlight;

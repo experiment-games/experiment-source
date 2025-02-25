@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotAttackFlagDefenders : public CTFBotAttack
 {
-   public:
+    public:
     CTFBotAttackFlagDefenders( float minDuration = -1.0f );
     virtual ~CTFBotAttackFlagDefenders() {}
 
@@ -24,7 +24,7 @@ class CTFBotAttackFlagDefenders : public CTFBotAttack
         return "AttackFlagDefenders";
     }
 
-   private:
+    private:
     CountdownTimer m_minDurationTimer;
     CountdownTimer m_watchFlagTimer;
     CHandle< CTFPlayer > m_chasePlayer;

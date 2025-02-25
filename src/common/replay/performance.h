@@ -22,7 +22,7 @@ class KeyValues;
 
 class CReplayPerformance
 {
-   public:
+    public:
     CReplayPerformance( CReplay *pReplay );
 
     inline bool HasInTick() const
@@ -66,7 +66,7 @@ class CReplayPerformance
     int m_nTickIn;
     int m_nTickOut;
 
-   private:
+    private:
     CReplayPerformance( const CReplayPerformance *pPerformance );
 };
 

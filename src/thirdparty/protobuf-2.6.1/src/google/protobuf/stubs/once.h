@@ -150,7 +150,7 @@ inline void GoogleOnceInit( ProtobufOnceType* once, void ( *init_func )( Arg* ),
 
 class GoogleOnceDynamic
 {
-   public:
+    public:
     GoogleOnceDynamic()
         : state_( GOOGLE_PROTOBUF_ONCE_INIT ) {}
 
@@ -162,11 +162,11 @@ class GoogleOnceDynamic
     void Init( void ( *func_with_arg )( T* ), T* arg )
     {
         GoogleOnceInit< T >( &this->state_,
-                             func_with_arg,
-                             arg );
+                            func_with_arg,
+                            arg );
     }
 
-   private:
+    private:
     ProtobufOnceType state_;
 };
 

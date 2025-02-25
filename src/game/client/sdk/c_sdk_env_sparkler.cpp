@@ -11,14 +11,14 @@
 // Declare the sparkler entity for the client-side
 class C_Sparkler : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_Sparkler, C_BaseEntity );
 
     virtual void OnDataChanged( DataUpdateType_t updateType );  // Called when data changes on the server
     virtual void ClientThink( void );                           // Client-side think function for the entity
 
-   private:
+    private:
     bool m_bEmit;     // Determines whether or not we should emit particles
     float m_flScale;  // Size of the effect
 

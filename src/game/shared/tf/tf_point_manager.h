@@ -36,7 +36,7 @@ class CTFPointManager : public CBaseEntity
 {
     DECLARE_CLASS( CTFPointManager, CBaseEntity );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -62,7 +62,7 @@ class CTFPointManager : public CBaseEntity
 
     void ClearPoints( void );
 
-   protected:
+    protected:
     virtual void InitializePoint( tf_point_t *pPoint, int nPointIndex );
     virtual Vector GetInitialPosition() const
     {
@@ -145,7 +145,7 @@ class CTFPointManager : public CBaseEntity
 
     mutable CUniformRandomStream m_randomStream;
 
-   private:
+    private:
     tf_point_t *AddPointInternal( int nPointIndex );
 
     CNetworkVar( int, m_nRandomSeed );

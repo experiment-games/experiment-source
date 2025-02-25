@@ -33,7 +33,7 @@
 //-----------------------------------------------------------------------------
 class CThreadSafeMultiMemoryPool
 {
-   public:
+    public:
     struct MemPoolConfig_t
     {
         uint32 m_cubBlockSize;
@@ -70,7 +70,7 @@ class CThreadSafeMultiMemoryPool
     void Validate( CValidator &validator, const char *pchName );  // Validate our internal structures
 #endif                                                            // DBGFLAG_VALIDATE
 
-   private:
+    private:
     struct MemPoolRecord_t
     {
         CThreadSafeMemoryPool *m_pMemPool;

@@ -15,7 +15,7 @@
 
 class CLogicRelay : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLogicRelay, CLogicalEntity );
 
     CLogicRelay();
@@ -42,7 +42,7 @@ class CLogicRelay : public CLogicalEntity
         return m_bDisabled;
     }
 
-   private:
+    private:
     bool m_bDisabled;
     bool m_bWaitForRefire;  // Set to disallow a refire while we are waiting for our outputs to finish firing.
 };

@@ -21,7 +21,7 @@ class CControllerMap : public vgui::Panel
 
     virtual void OnKeyCodeTyped( vgui::KeyCode code );
 
-   public:
+    public:
     CControllerMap( vgui::Panel *parent, const char *name );
 
     virtual void ApplySettings( KeyValues *inResourceData );
@@ -34,7 +34,7 @@ class CControllerMap : public vgui::Panel
     const char *GetBindingText( int idx );
     const char *GetBindingIcon( int idx );
 
-   private:
+    private:
     struct button_t
     {
         CUtlSymbol cmd;

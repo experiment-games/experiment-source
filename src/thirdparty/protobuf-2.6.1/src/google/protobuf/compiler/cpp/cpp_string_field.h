@@ -50,9 +50,9 @@ namespace cpp
 
 class StringFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit StringFieldGenerator( const FieldDescriptor* descriptor,
-                                   const Options& options );
+                                    const Options& options );
     ~StringFieldGenerator();
 
     // implements FieldGenerator ---------------------------------------
@@ -73,17 +73,17 @@ class StringFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( StringFieldGenerator );
 };
 
 class StringOneofFieldGenerator : public StringFieldGenerator
 {
-   public:
+    public:
     explicit StringOneofFieldGenerator( const FieldDescriptor* descriptor,
                                         const Options& options );
     ~StringOneofFieldGenerator();
@@ -95,15 +95,15 @@ class StringOneofFieldGenerator : public StringFieldGenerator
     void GenerateConstructorCode( io::Printer* printer ) const;
     void GenerateDestructorCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( StringOneofFieldGenerator );
 };
 
 class RepeatedStringFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedStringFieldGenerator( const FieldDescriptor* descriptor,
-                                           const Options& options );
+                                            const Options& options );
     ~RepeatedStringFieldGenerator();
 
     // implements FieldGenerator ---------------------------------------
@@ -119,7 +119,7 @@ class RepeatedStringFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

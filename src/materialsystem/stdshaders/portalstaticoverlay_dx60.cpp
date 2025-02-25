@@ -12,7 +12,7 @@
 DEFINE_FALLBACK_SHADER( PortalStaticOverlay, PortalStaticOverlay_DX60 );
 
 BEGIN_VS_SHADER( PortalStaticOverlay_DX60,
-                 "Help for PortalStaticOverlay_DX60 shader" )
+                "Help for PortalStaticOverlay_DX60 shader" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( COLOR, SHADER_PARAM_TYPE_COLOR, "{255 255 255}", "unused", SHADER_PARAM_NOT_EDITABLE )
@@ -100,16 +100,16 @@ void StaticPass_NoAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *pS
         pShaderShadow->CustomTextureStages( 1 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_TEXTURE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_TEXTURE );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_BLEND_CONSTANTALPHA,
-                                               SHADER_TEXARG_ZERO,
-                                               SHADER_TEXARG_ONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_BLEND_CONSTANTALPHA,
+                                                SHADER_TEXARG_ZERO,
+                                                SHADER_TEXARG_ONE );
     }
     DYNAMIC_STATE
     {
@@ -140,29 +140,29 @@ void StaticPass_WithAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *
 
         // portal static
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_TEXTURE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_TEXTURE );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_BLEND_CONSTANTALPHA,
-                                               SHADER_TEXARG_ZERO,
-                                               SHADER_TEXARG_ONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_BLEND_CONSTANTALPHA,
+                                                SHADER_TEXARG_ZERO,
+                                                SHADER_TEXARG_ONE );
 
         // alpha mask
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_TEXTUREALPHA,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_TEXTUREALPHA,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
     }
     DYNAMIC_STATE
     {

@@ -22,7 +22,7 @@
 // This automatically calls WSAStartup for the app at startup.
 class CIPStarter
 {
-   public:
+    public:
     CIPStarter()
     {
         WSADATA wsaData;
@@ -219,7 +219,7 @@ void SockAddrToIPAddr( const struct sockaddr_in *pIn, CIPAddr *pOut )
 
 class CIPSocket : public ISocket
 {
-   public:
+    public:
     CIPSocket()
     {
         m_Socket = INVALID_SOCKET;
@@ -232,7 +232,7 @@ class CIPSocket : public ISocket
     }
 
     // ISocket implementation.
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -432,7 +432,7 @@ class CIPSocket : public ISocket
         return IP_FloatTime() - m_flLastRecvTime;
     }
 
-   private:
+    private:
     void Term()
     {
         if ( m_Socket != INVALID_SOCKET )
@@ -451,7 +451,7 @@ class CIPSocket : public ISocket
         m_bMulticastGroupMembership = false;
     }
 
-   private:
+    private:
     SOCKET m_Socket;
 
     bool m_bMulticastGroupMembership;  // Did we join a multicast group?
@@ -477,7 +477,7 @@ ISocket *CreateMulticastListenSocket(
     bindAddr.port = addr.port;
 
     if ( pSocket->Bind( &bindAddr ) &&
-         pSocket->ListenToMulticastStream( addr, localInterface ) )
+        pSocket->ListenToMulticastStream( addr, localInterface ) )
     {
         return pSocket;
     }

@@ -55,17 +55,17 @@ RecvPropArray3( RECVINFO_ARRAY( m_flexWeight ), RecvPropFloat( RECVINFO( m_flexW
         BEGIN_PREDICTION_DATA( C_BaseFlex )
 
     /*
-      // DEFINE_FIELD( C_BaseFlex, m_viewtarget, FIELD_VECTOR ),
-      // DEFINE_ARRAY( C_BaseFlex, m_flexWeight, FIELD_FLOAT, 64 ),
-      // DEFINE_FIELD( C_BaseFlex, m_blinktoggle, FIELD_INTEGER ),
-      // DEFINE_FIELD( C_BaseFlex, m_blinktime, FIELD_FLOAT ),
-      // DEFINE_FIELD( C_BaseFlex, m_prevviewtarget, FIELD_VECTOR ),
-      // DEFINE_ARRAY( C_BaseFlex, m_prevflexWeight, FIELD_FLOAT, 64 ),
-      // DEFINE_FIELD( C_BaseFlex, m_prevblinktoggle, FIELD_INTEGER ),
-      // DEFINE_FIELD( C_BaseFlex, m_iBlink, FIELD_INTEGER ),
-      // DEFINE_FIELD( C_BaseFlex, m_iEyeUpdown, FIELD_INTEGER ),
-      // DEFINE_FIELD( C_BaseFlex, m_iEyeRightleft, FIELD_INTEGER ),
-      // DEFINE_FIELD( C_BaseFlex, m_FileList, CUtlVector < CFlexSceneFile * > ),
+    // DEFINE_FIELD( C_BaseFlex, m_viewtarget, FIELD_VECTOR ),
+    // DEFINE_ARRAY( C_BaseFlex, m_flexWeight, FIELD_FLOAT, 64 ),
+    // DEFINE_FIELD( C_BaseFlex, m_blinktoggle, FIELD_INTEGER ),
+    // DEFINE_FIELD( C_BaseFlex, m_blinktime, FIELD_FLOAT ),
+    // DEFINE_FIELD( C_BaseFlex, m_prevviewtarget, FIELD_VECTOR ),
+    // DEFINE_ARRAY( C_BaseFlex, m_prevflexWeight, FIELD_FLOAT, 64 ),
+    // DEFINE_FIELD( C_BaseFlex, m_prevblinktoggle, FIELD_INTEGER ),
+    // DEFINE_FIELD( C_BaseFlex, m_iBlink, FIELD_INTEGER ),
+    // DEFINE_FIELD( C_BaseFlex, m_iEyeUpdown, FIELD_INTEGER ),
+    // DEFINE_FIELD( C_BaseFlex, m_iEyeRightleft, FIELD_INTEGER ),
+    // DEFINE_FIELD( C_BaseFlex, m_FileList, CUtlVector < CFlexSceneFile * > ),
     */
 
     END_PREDICTION_DATA()
@@ -119,12 +119,12 @@ RecvPropArray3( RECVINFO_ARRAY( m_flexWeight ), RecvPropFloat( RECVINFO( m_flexW
 
 C_BaseFlex::C_BaseFlex()
     : m_iv_viewtarget( "C_BaseFlex::m_iv_viewtarget" ),
-      m_iv_flexWeight( "C_BaseFlex:m_iv_flexWeight" ),
+    m_iv_flexWeight( "C_BaseFlex:m_iv_flexWeight" ),
 #ifdef HL2_CLIENT_DLL
-      m_iv_vecLean( "C_BaseFlex:m_iv_vecLean" ),
-      m_iv_vecShift( "C_BaseFlex:m_iv_vecShift" ),
+    m_iv_vecLean( "C_BaseFlex:m_iv_vecLean" ),
+    m_iv_vecShift( "C_BaseFlex:m_iv_vecShift" ),
 #endif
-      m_LocalToGlobal( 0, 0, FlexSettingLessFunc )
+    m_LocalToGlobal( 0, 0, FlexSettingLessFunc )
 {
 #ifdef _DEBUG
     ( ( Vector & )m_viewtarget ).Init();
@@ -318,14 +318,14 @@ void C_BaseFlex::RunFlexRules( CStudioHdr *hdr, float *dest )
         return;
 
     /*
-      // 0 means run them all
-      int nFlexRulesToRun = 0;
+    // 0 means run them all
+    int nFlexRulesToRun = 0;
 
-      const char *pszExpression = flex_expression.GetString();
-      if ( pszExpression )
-      {
+    const char *pszExpression = flex_expression.GetString();
+    if ( pszExpression )
+    {
         nFlexRulesToRun = atoi(pszExpression); // 0 will be returned if not a numeric string
-      }
+    }
     //*/
 
     hdr->RunFlexRules( g_flexweight, dest );
@@ -639,8 +639,8 @@ Vector C_BaseFlex::SetViewTarget( CStudioHdr *pStudioHdr )
 
     /*
     debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), 0, 0, "%.2f %.2f %.2f  : %.2f %.2f %.2f",
-      m_viewtarget.x, m_viewtarget.y, m_viewtarget.z,
-      m_prevviewtarget.x, m_prevviewtarget.y, m_prevviewtarget.z );
+    m_viewtarget.x, m_viewtarget.y, m_viewtarget.z,
+    m_prevviewtarget.x, m_prevviewtarget.y, m_prevviewtarget.z );
     */
 
     return tmp;
@@ -952,7 +952,7 @@ void C_BaseFlex::ProcessVisemes( Emphasized_Phoneme *classes )
         bool streaming = engine->IsStreaming( vd->m_pAudioSource );
         if ( streaming )
         {
-          t -= g_CV_PhonemeDelayStreaming.GetFloat();
+        t -= g_CV_PhonemeDelayStreaming.GetFloat();
         }
         */
 
@@ -1305,15 +1305,15 @@ void C_BaseFlex::SetupLocalWeights( const matrix3x4_t *pBoneToWorld, int nFlexWe
 
     for (i = 0; i < hdr->numflexdesc; i++)
     {
-      debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), i-hdr->numflexcontrollers, 0, "%2d:%s : %3.2f", i, hdr->pFlexdesc( i )->pszFACS(), pFlexWeights[i] );
+    debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), i-hdr->numflexcontrollers, 0, "%2d:%s : %3.2f", i, hdr->pFlexdesc( i )->pszFACS(), pFlexWeights[i] );
     }
     */
 
     /*
     for (i = 0; i < g_numflexcontrollers; i++)
     {
-      int j = hdr->pFlexcontroller( i )->link;
-      debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -i, 0, "%s %3.2f", g_flexcontroller[i], g_flexweight[j] );
+    int j = hdr->pFlexcontroller( i )->link;
+    debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -i, 0, "%s %3.2f", g_flexcontroller[i], g_flexweight[j] );
     }
     */
 }

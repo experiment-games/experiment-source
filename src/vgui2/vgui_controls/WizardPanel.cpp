@@ -189,7 +189,7 @@ void WizardPanel::ResetDefaultButton()
     /* Don't ever set the cancel button as the default, as it is too easy for users to quit the wizard without realizing
     else if (_cancelButton->IsEnabled())
     {
-      _cancelButton->SetAsDefaultButton(true);
+    _cancelButton->SetAsDefaultButton(true);
     }
     */
 

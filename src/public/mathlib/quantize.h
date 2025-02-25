@@ -35,9 +35,9 @@ struct QuantizedValue
     uint8 *Mins;           // min box for children and this
     uint8 *Maxs;           // max box for children and this
     int NQuant;            // the number of samples which were
-                           // quantzied to this node since the
-                           // last time OptimizeQuantizer()
-                           // was called.
+                            // quantzied to this node since the
+                            // last time OptimizeQuantizer()
+                            // was called.
     int *Sums;             // sum used by OptimizeQuantizer
     int sortdim;           // dimension currently sorted along.
 };
@@ -45,14 +45,14 @@ struct QuantizedValue
 struct Sample
 {
     int32 ID;                     // identifier of this sample. can
-                                  // be used for any purpose.
+                                // be used for any purpose.
     int32 Count;                  // number of samples this sample
-                                  // represents
+                                // represents
     int32 QNum;                   // what value this sample ended up quantized
-                                  // to.
+                                // to.
     struct QuantizedValue *qptr;  // ptr to what this was quantized to.
     uint8 Value[1];               // array of values for multi-dimensional
-                                  // variables.
+                                // variables.
 };
 
 void FreeQuantization( struct QuantizedValue *t );
@@ -62,9 +62,9 @@ struct QuantizedValue *Quantize( struct Sample *s, int nsamples, int ndims, int 
 int CompressSamples( struct Sample *s, int nsamples, int ndims );
 
 struct QuantizedValue *FindMatch( uint8 const *sample,
-                                  int ndims,
-                                  uint8 *weights,
-                                  struct QuantizedValue *QTable );
+                                int ndims,
+                                uint8 *weights,
+                                struct QuantizedValue *QTable );
 void PrintSamples( struct Sample const *s, int nsamples, int ndims );
 
 struct QuantizedValue *FindQNode( struct QuantizedValue const *q, int32 code );
@@ -102,7 +102,7 @@ void OptimizeQuantizer( struct QuantizedValue *q, int ndims );
 void RecalculateValues( struct QuantizedValue *q, int ndims );
 
 extern double SquaredError;  // may be reset and examined. updated by
-                             // FindMatch()
+                            // FindMatch()
 
 // the routines below can be used for uniform quantization via dart-throwing.
 typedef void ( *GENERATOR )( void * );  // generate a random sample

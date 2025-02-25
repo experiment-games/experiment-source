@@ -1,4 +1,4 @@
-//====== Copyright ©, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Holds the CMsgBase_t class
 //
@@ -42,7 +42,7 @@ enum EMsgFormatType
 //
 class IMsgNetPacket : public CRefCount
 {
-   public:
+    public:
     virtual EMsgFormatType GetEMsgFormatType() const = 0;
 
     virtual CNetPacket *GetCNetPacket() const = 0;
@@ -73,7 +73,7 @@ class IMsgNetPacket : public CRefCount
     virtual bool BHasTargetJobName() const = 0;
     virtual const char *GetTargetJobName() const = 0;
 
-   protected:
+    protected:
     // Needed due to CRefCount inheritance which makes this not a pure interface class
     virtual ~IMsgNetPacket() {}
 };
@@ -83,7 +83,7 @@ IMsgNetPacket *IMsgNetPacketFromCNetPacket( CNetPacket *pNetPacket );
 // Wrapper around IMsgNetPacket which auto-releases
 class CIMsgNetPacketAutoRelease
 {
-   public:
+    public:
     CIMsgNetPacketAutoRelease( CNetPacket *pNetPacket )
     {
         m_pMsgNetPacket = IMsgNetPacketFromCNetPacket( pNetPacket );
@@ -108,7 +108,7 @@ class CIMsgNetPacketAutoRelease
         return m_pMsgNetPacket;
     }
 
-   protected:
+    protected:
     void operator=( const CIMsgNetPacketAutoRelease &that )
     {
         AssertMsg( false, "Not safe to copy since releases references on destruction" );
@@ -130,7 +130,7 @@ class CIMsgNetPacketAutoRelease
 template < typename MSG_HEADER_TYPE >
 class CMsgBase_t
 {
-   public:
+    public:
     // Send constructor
     CMsgBase_t( uint32 cubStruct, uint32 cubReserve = 0 );
 
@@ -301,15 +301,15 @@ class CMsgBase_t
     void ReportBufferOverflow();
     void PacketDump();  // spews complete packet content to console
 
-   protected:
+    protected:
     // Shared by send & receive
     uint8 *m_pubPkt;           // Raw packet data
     uint8 *m_pubBody;          // pointer to body; always equal to m_pubPkt + m_cubMsgHdr
     uint32 m_cubPkt;           // Raw packet size
     const uint32 m_cubMsgHdr;  // Size of our message header
     uint32 m_cubStruct;        // Size of our message-specific struct
-                               // HCONNECTION m_hConnection;		// Connection on which we received the message
-   private:
+                                // HCONNECTION m_hConnection;		// Connection on which we received the message
+    private:
     // stop people from hurting themselves
     CMsgBase_t( const CMsgBase_t &rhs ){};
     CMsgBase_t &operator=( const CMsgBase_t &rhs ){};

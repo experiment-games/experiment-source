@@ -17,7 +17,7 @@ class C_BreakableProp : public C_BaseAnimating
 {
     typedef C_BaseAnimating BaseClass;
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_BreakableProp();

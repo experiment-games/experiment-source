@@ -186,7 +186,7 @@ float CBotNPCDecoyLocomotion::GetMaxDeceleration( void ) const
 //---------------------------------------------------------------------------------------------
 class CBotNPCDecoyBehavior : public Action< CBotNPCDecoy >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCDecoy > OnStart( CBotNPCDecoy *me, Action< CBotNPCDecoy > *priorAction )
     {
         m_timer.Start( tf_decoy_lifetime.GetFloat() );
@@ -231,7 +231,7 @@ class CBotNPCDecoyBehavior : public Action< CBotNPCDecoy >
         return "Behavior";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 

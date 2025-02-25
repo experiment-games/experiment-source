@@ -27,7 +27,7 @@ class SmdExportClass : public SceneExport
     friend class DumpModelTEP;
     friend class DumpDeformsTEP;
 
-   public:
+    public:
     CONSTRUCTOR SmdExportClass( void );
     DESTRUCTOR ~SmdExportClass( void );
 
@@ -103,7 +103,7 @@ class SmdExportClass : public SceneExport
     TimeValue m_tvEnd;
     int m_tpf;  // ticks-per-frame
 
-   private:
+    private:
     BOOL CollectNodes( ExpInterface *expiface );
     BOOL DumpBones( FILE *pFile, ExpInterface *pexpiface );
     BOOL DumpRotations( FILE *pFile, ExpInterface *pexpiface );
@@ -121,7 +121,7 @@ class SmdExportClass : public SceneExport
 //
 class SmdExportClassDesc : public ClassDesc
 {
-   public:
+    public:
     int IsPublic( void )
     {
         return TRUE;
@@ -154,7 +154,7 @@ class SmdExportClassDesc : public ClassDesc
 //
 class CountNodesTEP : public ITreeEnumProc
 {
-   public:
+    public:
     virtual int callback( INode *node );
     int m_cNodes;  // running count of nodes
 };
@@ -165,7 +165,7 @@ class CountNodesTEP : public ITreeEnumProc
 //
 class CollectNodesTEP : public ITreeEnumProc
 {
-   public:
+    public:
     virtual int callback( INode *node );
     SmdExportClass *m_phec;
 };
@@ -176,7 +176,7 @@ class CollectNodesTEP : public ITreeEnumProc
 //
 class DumpNodesTEP : public ITreeEnumProc
 {
-   public:
+    public:
     virtual int callback( INode *node );
     FILE *m_pfile;  // write to this file
     SmdExportClass *m_phec;
@@ -188,7 +188,7 @@ class DumpNodesTEP : public ITreeEnumProc
 //
 class DumpFrameRotationsTEP : public ITreeEnumProc
 {
-   public:
+    public:
     virtual int callback( INode *node );
     void cleanup( void );
     FILE *m_pfile;         // write to this file
@@ -202,7 +202,7 @@ class DumpFrameRotationsTEP : public ITreeEnumProc
 //
 class DumpModelTEP : public ITreeEnumProc
 {
-   public:
+    public:
     virtual int callback( INode *node );
     void cleanup( void );
     FILE *m_pfile;         // write to this file
@@ -214,7 +214,7 @@ class DumpModelTEP : public ITreeEnumProc
     Modifier *m_bonesProMod;
     BonesPro_WeightArray *m_wa;
 
-   private:
+    private:
     Point3 Pt3GetRVertexNormal( RVertex *prvertex, DWORD smGroupFace );
     void DumpWeights( int iVertex );
 };

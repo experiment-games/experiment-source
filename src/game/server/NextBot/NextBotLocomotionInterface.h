@@ -38,7 +38,7 @@ class CNavLadder;
  */
 class ILocomotion : public INextBotComponent
 {
-   public:
+    public:
     ILocomotion( INextBot *bot );
     virtual ~ILocomotion();
 
@@ -166,9 +166,9 @@ class ILocomotion : public INextBotComponent
     };
 
     /**
-     * Return true if this locomotor could potentially move along the line given.
-     * If false is returned, fraction of walkable ray is returned in 'fraction'
-     */
+    * Return true if this locomotor could potentially move along the line given.
+    * If false is returned, fraction of walkable ray is returned in 'fraction'
+    */
     virtual bool IsPotentiallyTraversable( const Vector &from, const Vector &to, TraverseWhenType when = EVENTUALLY, float *fraction = NULL ) const;
     float ScriptFractionPotentiallyTraversable( const Vector &from, const Vector &to, bool bImmediately )
     {
@@ -182,9 +182,9 @@ class ILocomotion : public INextBotComponent
     }
 
     /**
-     * Return true if there is a possible "gap" that will need to be jumped over
-     * If true is returned, fraction of ray before gap is returned in 'fraction'
-     */
+    * Return true if there is a possible "gap" that will need to be jumped over
+    * If true is returned, fraction of ray before gap is returned in 'fraction'
+    */
     virtual bool HasPotentialGap( const Vector &from, const Vector &to, float *fraction = NULL ) const;
     float ScriptFractionPotentialGap( const Vector &from, const Vector &to )
     {
@@ -223,8 +223,8 @@ class ILocomotion : public INextBotComponent
     void TraceHull( const Vector &start, const Vector &end, const Vector &mins, const Vector &maxs, unsigned int fMask, ITraceFilter *pFilter, trace_t *pTrace ) const;
 
     /**
-     * Should we collide with this entity?
-     */
+    * Should we collide with this entity?
+    */
     virtual bool ShouldCollideWith( const CBaseEntity *object ) const
     {
         return true;
@@ -233,11 +233,11 @@ class ILocomotion : public INextBotComponent
     //- Script access to locomotion functions ------------------------------------------------------------------
     DECLARE_ENT_SCRIPTDESC();
 
-   protected:
+    protected:
     virtual void AdjustPosture( const Vector &moveGoal );
     virtual void StuckMonitor( void );
 
-   private:
+    private:
     Vector m_motionVector;
     Vector m_groundMotionVector;
     float m_speed;

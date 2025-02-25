@@ -74,7 +74,7 @@ struct AccumParams_t
 
 class CAccumBuffProxy : public IMaterialProxy
 {
-   public:
+    public:
     CAccumBuffProxy();
     virtual ~CAccumBuffProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -85,7 +85,7 @@ class CAccumBuffProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pTexture0;
     IMaterialVar *m_pTexture1;
     IMaterialVar *m_pAccumBuffWeights;
@@ -160,23 +160,23 @@ EXPOSE_INTERFACE( CAccumBuffProxy, IMaterialProxy, "accumbuff4sample" IMATERIAL_
 
 CReplayRenderer::CReplayRenderer( CReplayRenderOverlay *pOverlay )
     : m_bIsAudioSyncFrame( false ),
-      m_pRenderOverlay( pOverlay ),
-      m_nCurrentPingPong( 0 ),
-      m_nCurSample( 0 ),
-      m_nTimeStep( 0 ),
-      m_curSampleTime( 0 ),
-      m_nFrame( 0 ),
-      m_nNumJitterSamples( 0 ),
-      m_iTgaFrame( 0 ),
-      m_pLayoffBuf( NULL ),
-      m_pMovie( NULL ),
-      m_pMovieMaker( NULL ),
-      m_pJitterTable( NULL ),
-      m_pViewmodelFov( NULL ),
-      m_pDefaultFov( NULL ),
-      m_bCacheFullSceneState( false ),
-      m_bShutterClosed( false ),
-      m_bForceCheapDoF( false )
+    m_pRenderOverlay( pOverlay ),
+    m_nCurrentPingPong( 0 ),
+    m_nCurSample( 0 ),
+    m_nTimeStep( 0 ),
+    m_curSampleTime( 0 ),
+    m_nFrame( 0 ),
+    m_nNumJitterSamples( 0 ),
+    m_iTgaFrame( 0 ),
+    m_pLayoffBuf( NULL ),
+    m_pMovie( NULL ),
+    m_pMovieMaker( NULL ),
+    m_pJitterTable( NULL ),
+    m_pViewmodelFov( NULL ),
+    m_pDefaultFov( NULL ),
+    m_bCacheFullSceneState( false ),
+    m_bShutterClosed( false ),
+    m_bForceCheapDoF( false )
 {
 }
 
@@ -610,36 +610,36 @@ void CReplayRenderer::SetupDOFMatrixSkewView( const Vector &pos, const QAngle &a
     }
 
 #if 0
-	if ( IsDepthOfFieldEnabled() || m_bForceCheapDoF )											// DoF (independent of AA jitter)
-	{
-		// Try to match the amount of blurriness from legacy fulcrum method
-		const float flDoFHack = 0.0008f;
-		Vector2D vDoFJitter = DepthOfFieldJitter( nSample ) * pCamera->GetAperture() * flDoFHack;
+    if ( IsDepthOfFieldEnabled() || m_bForceCheapDoF )											// DoF (independent of AA jitter)
+    {
+        // Try to match the amount of blurriness from legacy fulcrum method
+        const float flDoFHack = 0.0008f;
+        Vector2D vDoFJitter = DepthOfFieldJitter( nSample ) * pCamera->GetAperture() * flDoFHack;
 
-		float fov43 = pCamera->GetFOVx();
-		float fHalfAngleRadians43 = DEG2RAD( 0.5f * fov43 );
-		float t = tan( fHalfAngleRadians43 ) * (viewSetup.m_flAspectRatio / ( 4.0f / 3.0f ));
+        float fov43 = pCamera->GetFOVx();
+        float fHalfAngleRadians43 = DEG2RAD( 0.5f * fov43 );
+        float t = tan( fHalfAngleRadians43 ) * (viewSetup.m_flAspectRatio / ( 4.0f / 3.0f ));
 
-		float flZFocalWidth = t * pCamera->GetFocalDistance() * 2.0f;									// Width of Viewport at Focal plane
-		Vector2D vFocalZJitter = vDoFJitter * flZFocalWidth;
+        float flZFocalWidth = t * pCamera->GetFocalDistance() * 2.0f;									// Width of Viewport at Focal plane
+        Vector2D vFocalZJitter = vDoFJitter * flZFocalWidth;
 
-		viewSetup.m_flOffCenterBottom += vDoFJitter.y;
-		viewSetup.m_flOffCenterTop    += vDoFJitter.y;
-		viewSetup.m_flOffCenterLeft   += vDoFJitter.x;
-		viewSetup.m_flOffCenterRight  += vDoFJitter.x;
+        viewSetup.m_flOffCenterBottom += vDoFJitter.y;
+        viewSetup.m_flOffCenterTop    += vDoFJitter.y;
+        viewSetup.m_flOffCenterLeft   += vDoFJitter.x;
+        viewSetup.m_flOffCenterRight  += vDoFJitter.x;
 
-		viewSetup.origin = vPosition + vViewLeft * vFocalZJitter.x - vViewUp * vFocalZJitter.y * (1.0f / viewSetup.m_flAspectRatio);
+        viewSetup.origin = vPosition + vViewLeft * vFocalZJitter.x - vViewUp * vFocalZJitter.y * (1.0f / viewSetup.m_flAspectRatio);
 
-		if ( !m_bForceCheapDoF )
-		{
-			Vector2D vAAJitter = g_vJitterTable32[nSample % 32];										// Jitter in addition to DoF offset
-			const float fHalfPixelRadius = 0.6f;
-			viewSetup.m_flOffCenterBottom += (vAAJitter.y / (float) viewSetup.height) * fHalfPixelRadius;
-			viewSetup.m_flOffCenterTop    += (vAAJitter.y / (float) viewSetup.height) * fHalfPixelRadius;
-			viewSetup.m_flOffCenterLeft   += (vAAJitter.x / (float) viewSetup.width)  * fHalfPixelRadius;
-			viewSetup.m_flOffCenterRight  += (vAAJitter.x / (float) viewSetup.width)  * fHalfPixelRadius;
-		}
-	}
+        if ( !m_bForceCheapDoF )
+        {
+            Vector2D vAAJitter = g_vJitterTable32[nSample % 32];										// Jitter in addition to DoF offset
+            const float fHalfPixelRadius = 0.6f;
+            viewSetup.m_flOffCenterBottom += (vAAJitter.y / (float) viewSetup.height) * fHalfPixelRadius;
+            viewSetup.m_flOffCenterTop    += (vAAJitter.y / (float) viewSetup.height) * fHalfPixelRadius;
+            viewSetup.m_flOffCenterLeft   += (vAAJitter.x / (float) viewSetup.width)  * fHalfPixelRadius;
+            viewSetup.m_flOffCenterRight  += (vAAJitter.x / (float) viewSetup.width)  * fHalfPixelRadius;
+        }
+    }
 #endif
 
     MatrixAngles( matViewMatrix, viewSetup.angles );

@@ -31,7 +31,7 @@ CTFMapsWorkshop *TFMapsWorkshop();
 // Represents a workshop map
 class CTFWorkshopMap
 {
-   public:
+    public:
     // Rechecks local files and steam for map status. Currently triggers a synchronous fstat(), so only call during
     // initialization/user-action.
     // If eRefresh_HighPriority is passed, we will ask UGC to retreive any available updates as high priority.
@@ -80,7 +80,7 @@ class CTFWorkshopMap
         return m_rtimeUpdated;
     }
 
-   private:
+    private:
     friend class CTFMapsWorkshop;
     CTFWorkshopMap( PublishedFileId_t nMapID );
 
@@ -108,7 +108,7 @@ class CTFWorkshopMap
 // Autogamesystem to request user maps on startup and call update on the workshop manager.
 class CTFMapsWorkshop : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CTFMapsWorkshop();
 
     bool Init( void ) OVERRIDE;
@@ -182,7 +182,7 @@ class CTFMapsWorkshop : public CAutoGameSystemPerFrame
 
     bool GetWorkshopMapDesc( uint32 uIndex, WorkshopMapDesc_t *pDesc );
 
-   private:
+    private:
     CCallback< CTFMapsWorkshop, DownloadItemResult_t, false > m_callbackDownloadItem;
     CCallback< CTFMapsWorkshop, ItemInstalled_t, false > m_callbackItemInstalled;
 

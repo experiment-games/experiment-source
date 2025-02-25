@@ -44,7 +44,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CServerDescription : public CDescription
 {
-   public:
+    public:
     CServerDescription( vgui::PanelListPanel *panel );
 
     void WriteScriptHeader( FileHandle_t fp );

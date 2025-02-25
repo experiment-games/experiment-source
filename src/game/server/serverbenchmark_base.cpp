@@ -42,7 +42,7 @@ static double Benchmark_ValidTime()
 // ---------------------------------------------------------------------------------------------- //
 class CServerBenchmark : public IServerBenchmark
 {
-   public:
+    public:
     CServerBenchmark()
     {
         m_BenchmarkState = BENCHMARKSTATE_NOT_RUNNING;
@@ -362,7 +362,7 @@ class CServerBenchmark : public IServerBenchmark
         return m_RandomStream.RandomInt( nMin, nMax );
     }
 
-   private:
+    private:
     enum EBenchmarkState
     {
         BENCHMARKSTATE_NOT_RUNNING,

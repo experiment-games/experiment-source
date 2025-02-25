@@ -42,7 +42,7 @@ float CTFTankBoss::m_flLastTankAlert = 0.0f;
 
 class CTFTankDestruction : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CTFTankDestruction, CBaseAnimating );
     DECLARE_DATADESC();
 
@@ -53,10 +53,10 @@ class CTFTankDestruction : public CBaseAnimating
 
     void AnimThink( void );
 
-   private:
+    private:
     float m_flVanishTime;
 
-   public:
+    public:
     bool m_bIsAtCapturePoint;
     int m_nDeathAnimPick;
     char m_szDeathPostfix[8];
@@ -773,7 +773,7 @@ void CTFTankBoss::TankBossThink( void )
 
                 /*if ( TFGameRules() )
                 {
-                  TFGameRules()->SetBossNormalizedTravelDistance( 1.0f );
+                TFGameRules()->SetBossNormalizedTravelDistance( 1.0f );
                 }*/
 
                 // reached end of track - deploy the bomb

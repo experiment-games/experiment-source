@@ -73,7 +73,7 @@ bool IsEntityCreationAllowedInScripts( void );
  */
 class CScriptAutoRef
 {
-   public:
+    public:
     /// Construct from a handle, adding a reference to it.
     inline CScriptAutoRef( void )
         : m_h( NULL ) {}
@@ -114,7 +114,7 @@ class CScriptAutoRef
     /// always one single global VM, so is defined in the same header that defines the extern g_pScriptVM
     static inline IScriptVM *VM();
 
-   private:
+    private:
     HSCRIPT m_h;
 };
 

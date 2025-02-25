@@ -36,7 +36,7 @@ class CNPC_Combine : public CAI_BaseActor
     DEFINE_CUSTOM_AI;
     DECLARE_CLASS( CNPC_Combine, CAI_BaseActor );
 
-   public:
+    public:
     CNPC_Combine();
 
     // Create components
@@ -161,7 +161,7 @@ class CNPC_Combine : public CAI_BaseActor
 
     virtual bool ShouldPickADeathPose( void );
 
-   protected:
+    protected:
     void SetKickDamage( int nDamage )
     {
         m_nKickDamage = nDamage;
@@ -171,7 +171,7 @@ class CNPC_Combine : public CAI_BaseActor
         return &m_Sentences;
     }
 
-   private:
+    private:
     //=========================================================
     // Combine S schedules
     //=========================================================
@@ -245,7 +245,7 @@ class CNPC_Combine : public CAI_BaseActor
         NEXT_CONDITION
     };
 
-   private:
+    private:
     // Select the combat schedule
     int SelectCombatSchedule();
 
@@ -279,7 +279,7 @@ class CNPC_Combine : public CAI_BaseActor
         m_RappelBehavior.BeginRappel();
     }
 
-   private:
+    private:
     int m_nKickDamage;
     Vector m_vecTossVelocity;
     EHANDLE m_hForcedGrenadeTarget;
@@ -308,7 +308,7 @@ class CNPC_Combine : public CAI_BaseActor
     CAI_RappelBehavior m_RappelBehavior;
     CAI_ActBusyBehavior m_ActBusyBehavior;
 
-   public:
+    public:
     int m_iLastAnimEventHandled;
     bool m_fIsElite;
     Vector m_vecAltFireTarget;

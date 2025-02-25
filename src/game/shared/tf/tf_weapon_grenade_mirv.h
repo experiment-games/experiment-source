@@ -24,7 +24,7 @@
 //
 class CTFGrenadeMirv : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeMirv, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -52,7 +52,7 @@ class CTFGrenadeMirv : public CTFWeaponBaseGrenade
 // Demoman version calls different models
 class CTFGrenadeMirv_Demoman : public CTFGrenadeMirv
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeMirv_Demoman, CTFGrenadeMirv );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -71,7 +71,7 @@ class CTFGrenadeMirv_Demoman : public CTFGrenadeMirv
 
 class CTFGrenadeMirvProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeMirvProjectile, CTFWeaponBaseGrenadeProj );
 
     // Unique identifier.
@@ -93,13 +93,13 @@ class CTFGrenadeMirvProjectile : public CTFWeaponBaseGrenadeProj
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool m_bPlayedLeadIn;
 };
 
 class CTFGrenadeMirvBomb : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeMirvBomb, CTFWeaponBaseGrenadeProj );
 
     // Creation.

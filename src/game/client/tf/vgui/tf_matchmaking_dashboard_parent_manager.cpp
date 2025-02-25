@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 class CMatchMakingHUDPopupContainer : public Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CMatchMakingHUDPopupContainer, Panel );
     CMatchMakingHUDPopupContainer()
         : Panel( g_pClientMode->GetViewport(), "MMDashboardPopupContainer" )
@@ -45,14 +45,14 @@ class CMatchMakingHUDPopupContainer : public Panel
 
         SetVisible( GetMMDashboard()->BIsExpanded() );
         /*	bool bChildrenVisible = false;
-          int nCount = GetChildCount();
-          for( int i=0; i < nCount && !bChildrenVisible; ++i )
-          {
+        int nCount = GetChildCount();
+        for( int i=0; i < nCount && !bChildrenVisible; ++i )
+        {
             CExpandablePanel* pChild = assert_cast< CExpandablePanel* >( GetChild( i ) );
             bChildrenVisible = bChildrenVisible || pChild->BIsExpanded() || ( !pChild->BIsExpanded() && pChild->GetPercentAnimated() != 1.f );
-          }
+        }
 
-          SetVisible( bChildrenVisible );*/
+        SetVisible( bChildrenVisible );*/
     }
 };
 
@@ -156,10 +156,10 @@ void CMMDashboardParentManager::AttachToTopMostPopup()
 
             // traverse the hierarchy and check if the popup really is visible
             if ( top &&
-                 // top->IsPopup() &&  // These are right out of of the popups list!!!
-                 top->IsVisible() &&
-                 top->IsKeyBoardInputEnabled() &&
-                 !vgui::surface()->IsMinimized( ( VPANEL )top ) )
+                // top->IsPopup() &&  // These are right out of of the popups list!!!
+                top->IsVisible() &&
+                top->IsKeyBoardInputEnabled() &&
+                !vgui::surface()->IsMinimized( ( VPANEL )top ) )
             {
                 Panel *pPopup = ipanel()->GetPanel( ( VPANEL )top, GetControlsModuleName() );
                 if ( pPopup && pPopup->GetParent() != g_pClientMode->GetViewport() )

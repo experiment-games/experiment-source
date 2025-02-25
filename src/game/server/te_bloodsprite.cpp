@@ -24,7 +24,7 @@ extern short g_sModelIndexBloodSpray;  // (in combatweapon.cpp) holds the sprite
 //-----------------------------------------------------------------------------
 class CTEBloodSprite : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBloodSprite, CBaseTempEntity );
 
     CTEBloodSprite( const char* name );
@@ -34,7 +34,7 @@ class CTEBloodSprite : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecDirection );
     CNetworkVar( int, m_nSprayModel );

@@ -23,7 +23,7 @@ class CTFHudPasstimePlayerOffscreenArrow;
 //-----------------------------------------------------------------------------
 class CTFHudPasstimePanel : public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHudPasstimePanel, vgui::EditablePanel );
     CTFHudPasstimePanel( vgui::Panel *pParent, const char *name );
 
@@ -33,14 +33,14 @@ class CTFHudPasstimePanel : public vgui::EditablePanel
 //-----------------------------------------------------------------------------
 class CTFHudTeamScore : public CTFHudPasstimePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHudTeamScore, CTFHudPasstimePanel );
     CTFHudTeamScore( vgui::Panel *pParent );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     int GetTeamScore( int iTeam );
 
     vgui::EditablePanel *m_pPlayingToCluster;
@@ -49,13 +49,13 @@ class CTFHudTeamScore : public CTFHudPasstimePanel
 //-----------------------------------------------------------------------------
 class CTFHudPasstimePassNotify : public CTFHudPasstimePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHudPasstimePassNotify, CTFHudPasstimePanel );
     CTFHudPasstimePassNotify( vgui::Panel *pParent );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     vgui::EditablePanel *m_pTextBox;
     vgui::Label *m_pTextInPassRange;
     vgui::Label *m_pTextLockedOn;
@@ -71,7 +71,7 @@ class CTFHudPasstimePassNotify : public CTFHudPasstimePanel
 //-----------------------------------------------------------------------------
 class CTFHudPasstimeEventText
 {
-   public:
+    public:
     CTFHudPasstimeEventText();
     ~CTFHudPasstimeEventText();
     void Tick();
@@ -83,7 +83,7 @@ class CTFHudPasstimeEventText
     void EnqueueScore( C_TFPlayer *pThrower, C_TFPlayer *pAssister );
     void EnqueueGeneric( const char *pTitle, const char *pDetail, const char *pBonus );
 
-   private:
+    private:
     // this would make more sense as a vgui animation but I need more control than that can reliably give me
     enum class State
     {
@@ -133,7 +133,7 @@ class CTFHudPasstimeOffscreenArrow;
 class C_FuncPasstimeGoal;
 class CTFHudPasstimeBallStatus : public CTFHudPasstimePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHudPasstimeBallStatus, CTFHudPasstimePanel );
     CTFHudPasstimeBallStatus( vgui::Panel *pParent );
     ~CTFHudPasstimeBallStatus();
@@ -144,7 +144,7 @@ class CTFHudPasstimeBallStatus : public CTFHudPasstimePanel, public CGameEventLi
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     static const int NumGoalIcons = 3;
     bool m_bInitialized;
     bool m_bReset;
@@ -190,7 +190,7 @@ class CTFHudPasstimeBallStatus : public CTFHudPasstimePanel, public CGameEventLi
 //-----------------------------------------------------------------------------
 class CTFHudPasstime : public CTFHudPasstimePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHudPasstime, CTFHudPasstimePanel );
     CTFHudPasstime( vgui::Panel *pParent );
     ~CTFHudPasstime();
@@ -198,7 +198,7 @@ class CTFHudPasstime : public CTFHudPasstimePanel
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     CTFHudPasstimeBallStatus *m_pBallStatus;
     CTFHudTeamScore *m_pTeamScore;
     CTFHudPasstimeOffscreenArrow *m_pBallOffscreenArrow;

@@ -25,7 +25,7 @@ class CHudMenuTauntSelection : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudMenuTauntSelection, EditablePanel );
 
-   public:
+    public:
     CHudMenuTauntSelection( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -48,12 +48,12 @@ class CHudMenuTauntSelection : public CHudElement, public EditablePanel
         return IsActive() ? GAME_ACTION_SET_IN_GAME_HUD : GAME_ACTION_SET_NONE;
     }
 
-   private:
+    private:
     void SetSelectedItem( int iSlot );
     void FindTauntKeyBinding( void );
     void UpdateItemModelPanels();
 
-   private:
+    private:
     CItemModelPanel *m_pItemModelPanels[NUM_TAUNT_SLOTS];
     // CIconPanel *m_pKeyIcons[NUM_TAUNT_SLOTS];
     // CExLabel *m_pKeyLabels[NUM_TAUNT_SLOTS];

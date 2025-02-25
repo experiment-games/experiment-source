@@ -13,7 +13,7 @@ class CTFBotProxy : public CPointEntity
 {
     DECLARE_CLASS( CTFBotProxy, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTFBotProxy( void );
@@ -33,7 +33,7 @@ class CTFBotProxy : public CPointEntity
     void OnAttackingEnemy( void );
     void OnKilledEnemy( void );
 
-   protected:
+    protected:
     // Output
     COutputEvent m_onSpawned;
     COutputEvent m_onInjured;

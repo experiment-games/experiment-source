@@ -27,7 +27,7 @@ namespace GCSDK
 //-----------------------------------------------------------------------------
 class CGCClient
 {
-   public:
+    public:
     CGCClient( ISteamGameCoordinator *pSteamGameCoordinator = NULL, bool bGameserver = false );
     virtual ~CGCClient();
 
@@ -77,7 +77,7 @@ class CGCClient
 #ifdef DBGFLAG_VALIDATE
     static void ValidateStatics( CValidator &validator );
 #endif
-   protected:
+    protected:
     ISteamGameCoordinator *m_pSteamGameCoordinator;
     CUtlMemory< uint8 > m_memMsg;
 

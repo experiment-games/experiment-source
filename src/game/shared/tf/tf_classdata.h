@@ -82,13 +82,13 @@ struct TFPlayerClassData_t
 
 class CTFPlayerClassDataMgr : public CAutoGameSystem
 {
-   public:
+    public:
     CTFPlayerClassDataMgr();
     virtual bool Init( void );
     TFPlayerClassData_t *Get( unsigned int iClass );
     void AddAdditionalPlayerDeathSounds( void );
 
-   private:
+    private:
     TFPlayerClassData_t m_aTFPlayerClassData[TF_CLASS_COUNT_ALL];
 };
 

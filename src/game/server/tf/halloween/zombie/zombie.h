@@ -17,7 +17,7 @@ class CZombie;
 //----------------------------------------------------------------------------
 class CZombieLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CZombieLocomotion( INextBot *bot )
         : NextBotGroundLocomotion( bot ) {}
     virtual ~CZombieLocomotion() {}
@@ -28,14 +28,14 @@ class CZombieLocomotion : public NextBotGroundLocomotion
 
     virtual bool ShouldCollideWith( const CBaseEntity *object ) const;
 
-   private:
+    private:
     virtual float GetMaxYawRate( void ) const;  // return max rate of yaw rotation
 };
 
 //----------------------------------------------------------------------------
 class CZombieIntention : public IIntention
 {
-   public:
+    public:
     CZombieIntention( CZombie *me );
     virtual ~CZombieIntention();
 
@@ -53,7 +53,7 @@ class CZombieIntention : public IIntention
         return NULL;
     }
 
-   private:
+    private:
     Behavior< CZombie > *m_behavior;
 };
 
@@ -62,7 +62,7 @@ DECLARE_AUTO_LIST( IZombieAutoList );
 
 class CZombie : public NextBotCombatCharacter, public IZombieAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CZombie, NextBotCombatCharacter );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -129,7 +129,7 @@ class CZombie : public NextBotCombatCharacter, public IZombieAutoList
 
     void FireDeathOutput( CBaseEntity *pCulprit );
 
-   private:
+    private:
     CZombieIntention *m_intention;
     CZombieLocomotion *m_locomotor;
     CHeadlessHatmanBody *m_body;
@@ -161,7 +161,7 @@ class CZombie : public NextBotCombatCharacter, public IZombieAutoList
 //--------------------------------------------------------------------------------------------------------------
 class CZombiePathCost : public IPathCost
 {
-   public:
+    public:
     CZombiePathCost( CZombie *me )
     {
         m_me = me;

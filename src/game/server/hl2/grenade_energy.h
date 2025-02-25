@@ -18,12 +18,12 @@
 
 class CGrenadeEnergy : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeEnergy, CBaseGrenade );
 
     static void Shoot( CBaseEntity *pOwner, const Vector &vStart, Vector vVelocity );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void Animate( void );

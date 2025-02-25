@@ -775,23 +775,23 @@ void CEquipGrapplingHookNotification::Accept()
 
     if ( pItemDef_GrapplingHook )
     {
-      for ( int i = 0 ; i < pLocalInv->GetItemCount() ; ++i )
-      {
+    for ( int i = 0 ; i < pLocalInv->GetItemCount() ; ++i )
+    {
         CEconItemView *pItem = pLocalInv->GetItem( i );
         Assert( pItem );
         if ( pItem->GetItemDefinition() == pItemDef_GrapplingHook )
         {
-          pGrapplingHook = pItem;
-          break;
+        pGrapplingHook = pItem;
+        break;
         }
-      }
+    }
     }*/
 
     // Default item becomes a grappling hook in this mode
     itemid_t iItemId = INVALID_ITEM_ID;
     /*if ( pGrapplingHook )
     {
-      iItemId = pGrapplingHook->GetItemID();
+    iItemId = pGrapplingHook->GetItemID();
     }*/
 
     if ( iItemId == INVALID_ITEM_ID )

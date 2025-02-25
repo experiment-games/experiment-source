@@ -114,7 +114,7 @@ struct IntRect
 //-----------------------------------------------------------------------------
 class ISurface : public IAppSystem
 {
-   public:
+    public:
     // call to Shutdown surface; surface can no longer be used after this is called
     virtual void Shutdown() = 0;
 

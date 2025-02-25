@@ -36,8 +36,8 @@ alloc $worldNormal
 alloc $worldTangentS
 alloc $worldTangentT
 
-&SkinPositionNormalAndTangentSpace( $worldPos, $worldNormal, 
-					$worldTangentS, $worldTangentT );
+&SkinPositionNormalAndTangentSpace( $worldPos, $worldNormal,
+                    $worldTangentS, $worldTangentT );
 
 alloc $projPos
 
@@ -64,7 +64,7 @@ alloc $bumpTexCoord
 
 dp4 $bumpTexCoord.x, $vTexCoord0, $SHADER_SPECIFIC_CONST_1
 dp4 $bumpTexCoord.y, $vTexCoord0, $SHADER_SPECIFIC_CONST_2
- 
+
 ; dudv map
 mov oT0.xy, $bumpTexCoord
 

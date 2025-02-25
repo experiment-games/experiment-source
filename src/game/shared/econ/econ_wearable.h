@@ -39,7 +39,7 @@ class CEconWearable : public CEconEntity
 {
     DECLARE_CLASS( CEconWearable, CEconEntity );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -101,10 +101,10 @@ class CEconWearable : public CEconEntity
     // Static
     static void UpdateWearableBodyGroups( CBasePlayer *pPlayer );
 
-   protected:
+    protected:
     virtual void InternalSetPlayerDisplayModel( void );
 
-   private:
+    private:
     bool m_bAlwaysAllow;  // Wearable will not be removed by ManageRegularWeapons. Only use this for wearables managed by other items!
 };
 
@@ -115,7 +115,7 @@ class CTFWearableItem : public CEconWearable
 {
     DECLARE_CLASS( CTFWearableItem, CEconWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -128,7 +128,7 @@ class C_EconWearableGib : public CEconEntity
 {
     DECLARE_CLASS( C_EconWearableGib, CEconEntity );
 
-   public:
+    public:
     C_EconWearableGib();
     ~C_EconWearableGib();
 
@@ -151,11 +151,11 @@ class C_EconWearableGib : public CEconEntity
 
     bool UpdateThinkState( void );
 
-   private:
+    private:
     bool m_bParented;
     bool m_bDelayedInit;
     float m_fDeathTime;  // Point at which this object self destructs.
-                         // The default of -1 indicates the object shouldn't destruct.
+                        // The default of -1 indicates the object shouldn't destruct.
 };
 #endif
 

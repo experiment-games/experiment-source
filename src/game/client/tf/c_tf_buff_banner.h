@@ -23,7 +23,7 @@ class C_TFBuffBanner : public CBaseAnimating
 {
     DECLARE_CLASS( C_TFBuffBanner, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     C_TFBuffBanner();
@@ -43,7 +43,7 @@ class C_TFBuffBanner : public CBaseAnimating
         m_iBuffType = iBuffType;
     }
 
-   private:
+    private:
     float m_flDetachTime;
     int m_iBuffType;
     CHandle< C_TFBuffItem > m_hBuffItem;

@@ -313,7 +313,7 @@ int CPropData::ParsePropFromKV( CBaseEntity *pProp, KeyValues *pSection, KeyValu
 
     // Get multiplayer physics mode if not set by map
     pBreakableInterface->SetPhysicsMode( pSection->GetInt( "physicsmode",
-                                                           pBreakableInterface->GetPhysicsMode() ) );
+                                                            pBreakableInterface->GetPhysicsMode() ) );
 
     const char *multiplayer_break = pSection->GetString( "multiplayer_break", NULL );
     if ( multiplayer_break )
@@ -518,7 +518,7 @@ static const char *FixupModelName( char *pOut, int sizeOut, const char *pModelNa
 // list of models to break into
 class CBreakParser : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     CBreakParser( float defaultBurstScale, int defaultCollisionGroup )
         : m_defaultBurstScale( defaultBurstScale ), m_defaultCollisionGroup( defaultCollisionGroup ) {}
 
@@ -621,7 +621,7 @@ class CBreakParser : public IVPhysicsKeyHandler
         m_wroteCollisionGroup = false;
     }
 
-   private:
+    private:
     int m_defaultCollisionGroup;
     float m_defaultBurstScale;
     bool m_wroteCollisionGroup;
@@ -740,7 +740,7 @@ class CGameGibManager : public CBaseEntity
     DECLARE_CLASS( CGameGibManager, CBaseEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CGameGibManager()
         : m_iCurrentMaxPieces( -1 ), m_iMaxPieces( -1 ), m_iMaxPiecesDX8( -1 ) {}
 
@@ -749,7 +749,7 @@ class CGameGibManager : public CBaseEntity
 
     inline bool AllowedToSpawnGib( void );
 
-   private:
+    private:
     void UpdateMaxPieces();
 
     void InputSetMaxPieces( inputdata_t &inputdata );

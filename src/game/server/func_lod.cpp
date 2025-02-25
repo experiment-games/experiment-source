@@ -16,7 +16,7 @@ class CFunc_LOD : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CFunc_LOD, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CFunc_LOD();
@@ -37,7 +37,7 @@ class CFunc_LOD : public CBaseEntity
     CNetworkVar( float, m_fDisappearDist );
 
     // CBaseEntity overrides.
-   public:
+    public:
     virtual void Spawn();
     bool CreateVPhysics();
     virtual void Activate();

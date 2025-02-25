@@ -25,14 +25,14 @@ class CQuestObjectivePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQuestObjectivePanel, EditablePanel );
 
-   public:
+    public:
     CQuestObjectivePanel( Panel* pParent, const char* pszPanelname );
 
     virtual void PerformLayout() OVERRIDE;
 
     void SetQuestData( const CQuest* pQuest, const CQuestDefinition* pQuestDef );
 
-   private:
+    private:
     CQuestProgressTrackerPanel* m_pItemTrackerPanel;
 };
 
@@ -43,7 +43,7 @@ class CQuestObjectiveTooltip : public vgui::BaseTooltip
 {
     DECLARE_CLASS_SIMPLE( CQuestObjectiveTooltip, vgui::BaseTooltip );
 
-   public:
+    public:
     CQuestObjectiveTooltip( vgui::Panel* parent, const char* text = NULL );
 
     void SetText( const char* text )
@@ -64,7 +64,7 @@ class CQuestObjectiveTooltip : public vgui::BaseTooltip
         m_pObjectivePanel = pObjectivePanel;
     }
 
-   private:
+    private:
     CQuestObjectivePanel* m_pObjectivePanel;  // This is the tooltip panel we make visible. Must be a CQuestObjectivePanel.
     vgui::DHANDLE< CQuestViewSubPanel > m_hCurrentPanel;
 };
@@ -73,7 +73,7 @@ class CQuestViewSubPanel : public CExpandablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CQuestViewSubPanel, CExpandablePanel );
 
-   public:
+    public:
     CQuestViewSubPanel( Panel* pParent,
                         const char* pszPanelName,
                         const CQuest* pQuest,
@@ -109,7 +109,7 @@ class CQuestViewSubPanel : public CExpandablePanel, public CGameEventListener
 
     MESSAGE_FUNC( OnShowTurnInSuccess, "ShowTurnInSuccess" );
 
-   private:
+    private:
     void HideSelectQuestInfo();
     void BeginTurnInAnimation();
 
@@ -136,7 +136,7 @@ class CQuestViewSubPanel : public CExpandablePanel, public CGameEventListener
 //-----------------------------------------------------------------------------
 class CQuestNodeViewPanel : public CExpandablePanel, public CLocalSteamSharedObjectListener, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CQuestNodeViewPanel, CExpandablePanel );
     CQuestNodeViewPanel( Panel* pParent, const char* pszPanelname );
 
@@ -170,7 +170,7 @@ class CQuestNodeViewPanel : public CExpandablePanel, public CLocalSteamSharedObj
     MESSAGE_FUNC_PARAMS( QuestClicked, "QuestClicked", pParams );
     MESSAGE_FUNC( TurnInComplete, "TurnInComplete" );
 
-   private:
+    private:
     void UpdatePosition();
     void UpdateQuestSubPanels();
     void UpdateHeights();

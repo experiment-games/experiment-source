@@ -27,7 +27,7 @@ class CDmeCombinationOperator;
 //-----------------------------------------------------------------------------
 class CDmObjSerializer : public IDmSerializer
 {
-   public:
+    public:
     // Inherited from IDMSerializer
     virtual const char *GetName() const
     {
@@ -68,7 +68,7 @@ class CDmObjSerializer : public IDmSerializer
 
     CDmeVertexDeltaData *GetDelta( const char *pDeltaName, bool bAbsolute );
 
-   private:
+    private:
     CDmElement *ReadOBJ(
         CUtlBuffer &buf,
         DmFileId_t dmFileId,

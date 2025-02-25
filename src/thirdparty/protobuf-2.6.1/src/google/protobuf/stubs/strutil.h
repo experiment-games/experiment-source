@@ -64,8 +64,8 @@ namespace protobuf
 inline bool ascii_isalnum( char c )
 {
     return ( 'a' <= c && c <= 'z' ) ||
-           ( 'A' <= c && c <= 'Z' ) ||
-           ( '0' <= c && c <= '9' );
+            ( 'A' <= c && c <= 'Z' ) ||
+            ( '0' <= c && c <= '9' );
 }
 
 inline bool ascii_isdigit( char c )
@@ -82,10 +82,10 @@ inline bool ascii_isdigit( char c )
 //    string.
 // ----------------------------------------------------------------------
 inline bool HasPrefixString( const string& str,
-                             const string& prefix )
+                            const string& prefix )
 {
     return str.size() >= prefix.size() &&
-           str.compare( 0, prefix.size(), prefix ) == 0;
+            str.compare( 0, prefix.size(), prefix ) == 0;
 }
 
 inline string StripPrefixString( const string& str, const string& prefix )
@@ -109,10 +109,10 @@ inline string StripPrefixString( const string& str, const string& prefix )
 //    string.
 // ----------------------------------------------------------------------
 inline bool HasSuffixString( const string& str,
-                             const string& suffix )
+                            const string& suffix )
 {
     return str.size() >= suffix.size() &&
-           str.compare( str.size() - suffix.size(), suffix.size(), suffix ) == 0;
+            str.compare( str.size() - suffix.size(), suffix.size(), suffix ) == 0;
 }
 
 inline string StripSuffixString( const string& str, const string& suffix )
@@ -200,8 +200,8 @@ LIBPROTOBUF_EXPORT void SplitStringUsing( const string& full, const char* delim,
 // If "full" is the empty string, yields an empty string as the only value.
 // ----------------------------------------------------------------------
 LIBPROTOBUF_EXPORT void SplitStringAllowEmpty( const string& full,
-                                               const char* delim,
-                                               vector< string >* result );
+                                                const char* delim,
+                                                vector< string >* result );
 
 // ----------------------------------------------------------------------
 // Split()
@@ -233,11 +233,11 @@ inline vector< string > Split(
 //    target string is cleared and overwritten.
 // ----------------------------------------------------------------------
 LIBPROTOBUF_EXPORT void JoinStrings( const vector< string >& components,
-                                     const char* delim,
-                                     string* result );
+                                    const char* delim,
+                                    string* result );
 
 inline string JoinStrings( const vector< string >& components,
-                           const char* delim )
+                            const char* delim )
 {
     string result;
     JoinStrings( components, delim, &result );
@@ -361,14 +361,14 @@ inline uint32 strtou32( const char* nptr, char** endptr, int base )
 inline int64 strto64( const char* nptr, char** endptr, int base )
 {
     GOOGLE_COMPILE_ASSERT( sizeof( int64 ) == sizeof( long long ),
-                           sizeof_int64_is_not_sizeof_long_long );
+                            sizeof_int64_is_not_sizeof_long_long );
     return strtoll( nptr, endptr, base );
 }
 
 inline uint64 strtou64( const char* nptr, char** endptr, int base )
 {
     GOOGLE_COMPILE_ASSERT( sizeof( uint64 ) == sizeof( unsigned long long ),
-                           sizeof_uint64_is_not_sizeof_long_long );
+                            sizeof_uint64_is_not_sizeof_long_long );
     return strtoull( nptr, endptr, base );
 }
 
@@ -540,7 +540,7 @@ string StrCat(
     const T5& e )
 {
     return internal::ToString( a ) + internal::ToString( b ) +
-           internal::ToString( c ) + internal::ToString( d ) + internal::ToString( e );
+            internal::ToString( c ) + internal::ToString( d ) + internal::ToString( e );
 }
 
 template < typename T1, typename T2, typename T3, typename T4 >
@@ -551,14 +551,14 @@ string StrCat(
     const T4& d )
 {
     return internal::ToString( a ) + internal::ToString( b ) +
-           internal::ToString( c ) + internal::ToString( d );
+            internal::ToString( c ) + internal::ToString( d );
 }
 
 template < typename T1, typename T2, typename T3 >
 string StrCat( const T1& a, const T2& b, const T3& c )
 {
     return internal::ToString( a ) + internal::ToString( b ) +
-           internal::ToString( c );
+            internal::ToString( c );
 }
 
 template < typename T1, typename T2 >
@@ -587,7 +587,7 @@ void Join( Iterator start, Iterator end, const char* delim, string* result )
 
 template < typename Range >
 string Join( const Range& components,
-             const char* delim )
+            const char* delim )
 {
     string result;
     Join( components.begin(), components.end(), delim, &result );

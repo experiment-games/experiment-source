@@ -54,7 +54,7 @@ void CTFDisconnectConfirmDialog::OnCommand( const char *command )
     {
         bool bAbandonStatusCurrent = ( GTFGCClientSystem()->GetCurrentServerAbandonStatus() == m_eAbandonStatus );
         AssertMsg( bAbandonStatusCurrent,
-                   "Abandon status changed while disconnect dialog shown, user may not be agreeing to what they think" );
+                    "Abandon status changed while disconnect dialog shown, user may not be agreeing to what they think" );
 
         // If the abandon status changed from what we were configured for, just disconnect without abandoning, and let
         // the MM system figure it out (it will throw up a new prompt or otherwise handle them being still wanted in
@@ -185,11 +185,11 @@ CTFRejoinConfirmDialog *BuildRejoinConfirmDialog()
 CON_COMMAND( cl_disconnect_prompt, "Prompt about disconnect" )
 {
     CTFDisconnectConfirmDialog *pDialog = vgui::SETUP_PANEL( new CTFDisconnectConfirmDialog( "#TF_MM_Abandon_Title",
-                                                                                             "#TF_MM_Abandon",
-                                                                                             "#TF_Coach_Yes",
-                                                                                             "#TF_Coach_No",
-                                                                                             NULL,
-                                                                                             NULL ) );
+                                                                                            "#TF_MM_Abandon",
+                                                                                            "#TF_Coach_Yes",
+                                                                                            "#TF_Coach_No",
+                                                                                            NULL,
+                                                                                            NULL ) );
 
     if ( pDialog )
     {
@@ -202,14 +202,14 @@ bool HandleDisconnectAttempt()
     // !FIXME! We could show different messages depending on the abandon status
 
     if ( engine->IsInGame() && GameRules() && GameRules()->ShouldConfirmOnDisconnect() &&
-         GTFGCClientSystem()->GetCurrentServerAbandonStatus() == k_EAbandonGameStatus_AbandonWithPenalty )
+        GTFGCClientSystem()->GetCurrentServerAbandonStatus() == k_EAbandonGameStatus_AbandonWithPenalty )
     {
         CTFDisconnectConfirmDialog *pDialog = vgui::SETUP_PANEL( new CTFDisconnectConfirmDialog( "#TF_MM_Abandon_Title",
-                                                                                                 "#TF_MM_Abandon",
-                                                                                                 "#TF_Coach_Yes",
-                                                                                                 "#TF_Coach_No",
-                                                                                                 NULL,
-                                                                                                 NULL ) );
+                                                                                                "#TF_MM_Abandon",
+                                                                                                "#TF_Coach_Yes",
+                                                                                                "#TF_Coach_No",
+                                                                                                NULL,
+                                                                                                NULL ) );
 
         if ( pDialog )
         {

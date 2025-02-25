@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 class CSDKInput : public CInput
 {
-   public:
+    public:
 };
 
 static CSDKInput g_Input;

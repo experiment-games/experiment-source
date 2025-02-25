@@ -8,7 +8,7 @@
 
 class CHL2MPBotNavEntMoveTo : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotNavEntMoveTo( const CFuncNavPrerequisite *prereq );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -19,7 +19,7 @@ class CHL2MPBotNavEntMoveTo : public Action< CHL2MPBot >
         return "NavEntMoveTo";
     };
 
-   private:
+    private:
     CHandle< CFuncNavPrerequisite > m_prereq;
     Vector m_goalPosition;  // specific position within entity to move to
     CNavArea *m_pGoalArea;

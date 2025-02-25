@@ -200,7 +200,7 @@ void Interpolator_CurveInterpolate( int interpolationType,
     {
         default:
             Warning( "Unknown interpolation type %d\n",
-                     ( int )interpolationType );
+                    ( int )interpolationType );
             // break; // Fall through and use catmull_rom as default
         case INTERPOLATE_DEFAULT:
         case INTERPOLATE_CATMULL_ROM_NORMALIZEX:
@@ -315,12 +315,12 @@ void Interpolator_CurveInterpolate( int interpolationType,
 }
 
 void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
-                                                  const Vector &vPre,
-                                                  const Vector &vStart,
-                                                  const Vector &vEnd,
-                                                  const Vector &vNext,
-                                                  float f,
-                                                  Vector &vOut )
+                                                const Vector &vPre,
+                                                const Vector &vStart,
+                                                const Vector &vEnd,
+                                                const Vector &vNext,
+                                                float f,
+                                                Vector &vOut )
 {
     vOut.Init();
 
@@ -328,7 +328,7 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
     {
         default:
             Warning( "Unknown interpolation type %d\n",
-                     ( int )interpolationType );
+                    ( int )interpolationType );
             // break; // Fall through and use catmull_rom as default
         case INTERPOLATE_CATMULL_ROM_NORMALIZEX:
         case INTERPOLATE_DEFAULT:
@@ -419,12 +419,12 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
 }
 
 void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
-                                                  const Quaternion &vPre,
-                                                  const Quaternion &vStart,
-                                                  const Quaternion &vEnd,
-                                                  const Quaternion &vNext,
-                                                  float f,
-                                                  Quaternion &vOut )
+                                                const Quaternion &vPre,
+                                                const Quaternion &vStart,
+                                                const Quaternion &vEnd,
+                                                const Quaternion &vNext,
+                                                float f,
+                                                Quaternion &vOut )
 {
     vOut.Init();
 
@@ -432,7 +432,7 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
     {
         default:
             Warning( "Unknown interpolation type %d\n",
-                     ( int )interpolationType );
+                    ( int )interpolationType );
             // break; // Fall through and use catmull_rom as default
         case INTERPOLATE_CATMULL_ROM_NORMALIZEX:
         case INTERPOLATE_DEFAULT:

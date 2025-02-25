@@ -15,7 +15,7 @@
 
 class CActAnimating : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CActAnimating, CBaseAnimating );
 
     void SetActivity( Activity act );
@@ -31,7 +31,7 @@ class CActAnimating : public CBaseAnimating
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     Activity m_Activity;
 };
 

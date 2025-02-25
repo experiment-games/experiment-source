@@ -19,7 +19,7 @@ extern bool g_bVMPIEarlyExit;
 // These classes are overridden to handle the details of communicating and scheduling work units.
 class IWorkUnitDistributorMaster
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     virtual void DistributeWork_Master( CDSInfo *pInfo ) = 0;
@@ -36,7 +36,7 @@ class IWorkUnitDistributorMaster
 
 class IWorkUnitDistributorWorker
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     virtual void Init( CDSInfo *pInfo ) = 0;
@@ -56,11 +56,11 @@ class CVisibleWindowVectorT : protected CUtlVector< T >
 {
     typedef CUtlVector< T > BaseClass;
 
-   public:
+    public:
     CVisibleWindowVectorT()
         : m_uiBase( 0 ), m_uiTotal( 0 ) {}
 
-   public:
+    public:
     inline void PostInitElement( uint64 uiRealIdx, T &newElement )
     { /* do nothing */
         return;
@@ -70,7 +70,7 @@ class CVisibleWindowVectorT : protected CUtlVector< T >
         newElement = x;
     }
 
-   public:
+    public:
     // Resets the content and makes size "uiTotal"
     void Reset( uint64 uiTotal )
     {
@@ -147,14 +147,14 @@ class CVisibleWindowVectorT : protected CUtlVector< T >
         return m_uiBase + BaseClass::Count();
     }
 
-   protected:
+    protected:
     uint64 m_uiBase, m_uiTotal;
 };
 
 template < typename T >
 class CVisibleWindowVector : public CVisibleWindowVectorT< T, CVisibleWindowVector< T > >
 {
-   public:
+    public:
     CVisibleWindowVector() {}
 };
 
@@ -178,7 +178,7 @@ T *GenericFind( T *pBegin, T *pEnd, T const &x )
 
 class CWorkerInfo
 {
-   public:
+    public:
     ProcessWorkUnitFn m_pProcessFn;
     CVisibleWindowVector< WUIndexType > m_WorkUnitsRunning;  // A list of work units currently running, index is the thread index
     CVMPICriticalSection m_WorkUnitsRunningCS;
@@ -186,14 +186,14 @@ class CWorkerInfo
 
 class CMasterInfo
 {
-   public:
+    public:
     // Only used by the master.
     ReceiveWorkUnitFn m_ReceiveFn;
 };
 
 class CDSInfo
 {
-   public:
+    public:
     inline void WriteWUIndex( WUIndexType iWU, MessageBuffer *pBuf )
     {
         if ( m_nWorkUnits <= 0xFFFF )
@@ -234,7 +234,7 @@ class CDSInfo
         }
     }
 
-   public:
+    public:
     CWorkerInfo m_WorkerInfo;
     CMasterInfo m_MasterInfo;
 

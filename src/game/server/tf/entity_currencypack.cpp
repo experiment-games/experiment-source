@@ -309,7 +309,7 @@ bool CCurrencyPack::MyTouch( CBasePlayer *pPlayer )
         }
 
         if ( ( !pTFTouchPlayer->IsPlayerClass( TF_CLASS_SPY ) ) ||
-             ( !pTFTouchPlayer->m_Shared.IsStealthed() && !pTFTouchPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) && !pTFTouchPlayer->m_Shared.InCond( TF_COND_DISGUISED ) ) )
+            ( !pTFTouchPlayer->m_Shared.IsStealthed() && !pTFTouchPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) && !pTFTouchPlayer->m_Shared.InCond( TF_COND_DISGUISED ) ) )
         {
             pTFTouchPlayer->SpeakConceptIfAllowed( MP_CONCEPT_MVM_MONEY_PICKUP );
         }

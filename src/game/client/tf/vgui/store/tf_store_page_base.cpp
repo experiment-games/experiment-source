@@ -95,9 +95,9 @@ void CTFStorePageBase::GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<
     // Add item to unowned filter only if it doesn't belong to these categories.
     const econ_store_entry_t *pEntry = EconUI()->GetStorePanel()->GetPriceSheet()->GetEntry( pDef->GetDefinitionIndex() );
     if ( !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Tools ) &&
-         !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Maps ) &&
-         !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Bundles ) &&
-         !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Collections ) )
+        !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Maps ) &&
+        !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Bundles ) &&
+        !pEntry->IsListedInCategory( CEconStoreCategoryManager::k_CategoryID_Collections ) )
     {
         bool bItemOwned = false;
         int iCount = InventoryManager()->GetLocalInventory()->GetItemCount();

@@ -135,8 +135,8 @@ const char *CTeamplayRules::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
     // copy out the team name from the model
     int clientIndex = pPlayer->entindex();
     const char *team = ( !pPlayer->IsNetClient() ) ? "default"
-                                                   : engine->GetClientConVarValue(
-                                                         clientIndex, "cl_team" );
+                                                    : engine->GetClientConVarValue(
+                                                        clientIndex, "cl_team" );
 
     /* TODO
 
@@ -200,9 +200,9 @@ void CTeamplayRules::InitHUD( CBasePlayer *pPlayer )
 }
 
 void CTeamplayRules::ChangePlayerTeam( CBasePlayer *pPlayer,
-                                       const char *pTeamName,
-                                       bool bKill,
-                                       bool bGib )
+                                        const char *pTeamName,
+                                        bool bKill,
+                                        bool bGib )
 {
     int damageFlags = DMG_GENERIC;
     // int clientIndex = pPlayer->entindex();
@@ -319,7 +319,7 @@ void CTeamplayRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 // Deathnotice.
 //=========================================================
 void CTeamplayRules::DeathNotice( CBasePlayer *pVictim,
-                                  const CTakeDamageInfo &info )
+                                const CTakeDamageInfo &info )
 {
     if ( m_DisableDeathMessages )
         return;
@@ -332,7 +332,7 @@ void CTeamplayRules::DeathNotice( CBasePlayer *pVictim,
         if ( pk )
         {
             if ( ( pk != pVictim ) &&
-                 ( PlayerRelationship( pVictim, pk ) == GR_TEAMMATE ) )
+                ( PlayerRelationship( pVictim, pk ) == GR_TEAMMATE ) )
             {
                 IGameEvent *event =
                     gameeventmanager->CreateEvent( "player_death" );
@@ -341,7 +341,7 @@ void CTeamplayRules::DeathNotice( CBasePlayer *pVictim,
                     event->SetInt( "killer", pk->GetUserID() );
                     event->SetInt( "victim", pVictim->GetUserID() );
                     event->SetInt( "priority",
-                                   7 );  // HLTV event priority, not transmitted
+                                    7 );  // HLTV event priority, not transmitted
 
                     gameeventmanager->FireEvent( event );
                 }
@@ -356,7 +356,7 @@ void CTeamplayRules::DeathNotice( CBasePlayer *pVictim,
 //=========================================================
 //=========================================================
 void CTeamplayRules::PlayerKilled( CBasePlayer *pVictim,
-                                   const CTakeDamageInfo &info )
+                                    const CTakeDamageInfo &info )
 {
     if ( !m_DisableDeathPenalty )
     {
@@ -374,11 +374,11 @@ bool CTeamplayRules::IsTeamplay( void )
 }
 
 bool CTeamplayRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer,
-                                           CBaseEntity *pAttacker,
-                                           const CTakeDamageInfo &info )
+                                            CBaseEntity *pAttacker,
+                                            const CTakeDamageInfo &info )
 {
     if ( pAttacker && PlayerRelationship( pPlayer, pAttacker ) == GR_TEAMMATE &&
-         !info.IsForceFriendlyFire() )
+        !info.IsForceFriendlyFire() )
     {
         // my teammate hit me.
         if ( ( friendlyfire.GetInt() == 0 ) && ( pAttacker != pPlayer ) )
@@ -403,7 +403,7 @@ int CTeamplayRules::PlayerRelationship( CBaseEntity *pPlayer,
         return GR_NOTTEAMMATE;
 
     if ( ( *GetTeamID( pPlayer ) != '\0' ) && ( *GetTeamID( pTarget ) != '\0' ) &&
-         !stricmp( GetTeamID( pPlayer ), GetTeamID( pTarget ) ) )
+        !stricmp( GetTeamID( pPlayer ), GetTeamID( pTarget ) ) )
     {
         return GR_TEAMMATE;
     }
@@ -450,7 +450,7 @@ int CTeamplayRules::IPointsForKill( CBasePlayer *pAttacker,
         return 1;
 
     if ( pAttacker != pKilled &&
-         PlayerRelationship( pAttacker, pKilled ) == GR_TEAMMATE )
+        PlayerRelationship( pAttacker, pKilled ) == GR_TEAMMATE )
         return -1;
 
     return 1;

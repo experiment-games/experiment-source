@@ -301,7 +301,7 @@ void CCharacterInfoPanel::OnCommand( const char *command )
         const bool bIsInSelectionPanel = iShowingPanel == CHAP_LOADOUT && m_pLoadoutPanel->GetClassLoadoutPanel()->IsInSelectionPanel();
         const bool bNoClass = iCurrentClassIndex == TF_CLASS_UNDEFINED;
         const bool bAtClosePanel = !bIsInSelectionPanel &&
-                                   ( ( iShowingPanel == m_iClosePanel && bNoClass ) || ( iShowingPanel == CHAP_LOADOUT && -m_iClosePanel == iCurrentClassIndex ) );
+                                    ( ( iShowingPanel == m_iClosePanel && bNoClass ) || ( iShowingPanel == CHAP_LOADOUT && -m_iClosePanel == iCurrentClassIndex ) );
         const bool bAtBaseLoadoutPage = iShowingPanel == CHAP_LOADOUT && bNoClass;
         if ( bAtClosePanel || bAtBaseLoadoutPage )
         {
@@ -836,8 +836,8 @@ void CCharacterInfoPanel::AddPanelCloseListener( vgui::Panel *pListener )
 void CCharacterInfoPanel::SetClosePanel( int iPanel )
 {
     AssertMsg( ( iPanel < 0 && IsValidTFPlayerClass( -iPanel ) ) ||
-                   ( iPanel >= ECONUI_FIRST_PANEL && iPanel <= ECONUI_LAST_PANEL ),
-               "Panel out of range!" );
+                    ( iPanel >= ECONUI_FIRST_PANEL && iPanel <= ECONUI_LAST_PANEL ),
+                "Panel out of range!" );
     m_iClosePanel = iPanel;
 }
 

@@ -20,7 +20,7 @@ class CBaseToolUsageDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseToolUsageDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CBaseToolUsageDialog( vgui::Panel *pParent, const char *panelName, CEconItemView *pTool, CEconItemView *pToolSubject );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -43,7 +43,7 @@ class CBaseToolUsageDialog : public vgui::EditablePanel
         return m_pSubjectModelPanel->GetItem();
     };
 
-   protected:
+    protected:
     CItemModelPanel *m_pToolModelPanel;
     CItemModelPanel *m_pSubjectModelPanel;
     CItemModelPanel *m_pMouseOverItemPanel;

@@ -8,7 +8,7 @@ class CTFBotHintSentrygun;
 
 class CTFBotMvMEngineerBuildSentryGun : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMvMEngineerBuildSentryGun( CTFBotHintSentrygun *pSentryHint );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -20,7 +20,7 @@ class CTFBotMvMEngineerBuildSentryGun : public Action< CTFBot >
         return "MvMEngineerBuildSentryGun";
     };
 
-   private:
+    private:
     CHandle< CTFBotHintSentrygun > m_sentryBuildHint;
     CHandle< CObjectSentrygun > m_sentry;
 

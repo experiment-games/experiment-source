@@ -32,7 +32,7 @@ class CGiveawayPlayerPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CGiveawayPlayerPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CGiveawayPlayerPanel( vgui::Panel *parent, const char *name );
 
     virtual void PerformLayout( void );
@@ -49,7 +49,7 @@ class CGiveawayPlayerPanel : public vgui::EditablePanel
     void SpinBonus( void );
     void LockBonus( int iRoll );
 
-   private:
+    private:
     vgui::Label *m_pNameLabel;
     vgui::Label *m_pScoreLabel;
     Color m_PlayerColorLocal;
@@ -66,7 +66,7 @@ class CTFGiveawayItemPanel : public vgui::Frame, public IViewPortPanel, public C
 {
     DECLARE_CLASS_SIMPLE( CTFGiveawayItemPanel, vgui::Frame );
 
-   public:
+    public:
     CTFGiveawayItemPanel( IViewPort *pViewPort );
     ~CTFGiveawayItemPanel( void );
 
@@ -122,7 +122,7 @@ class CTFGiveawayItemPanel : public vgui::Frame, public IViewPortPanel, public C
         return GAME_ACTION_SET_MENUCONTROLS;
     }
 
-   private:
+    private:
     IViewPort *m_pViewPort;
     CItemModelPanel *m_pModelPanel;
     CUtlVector< CGiveawayPlayerPanel * > m_aPlayerList;

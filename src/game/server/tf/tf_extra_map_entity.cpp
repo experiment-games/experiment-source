@@ -111,26 +111,26 @@ void CExtraMapEntity::PrepareModelName( const char *szModelName )
 void CExtraMapEntity::SpawnExtraModel( void )
 {
     /*
-      const char *pszMapName = STRING( gpGlobals->mapname );
-      if ( !pszMapName || !pszMapName[0] )
+    const char *pszMapName = STRING( gpGlobals->mapname );
+    if ( !pszMapName || !pszMapName[0] )
         return;
 
-      KeyValues *pFileKV = new KeyValues( "models" );
-      if ( !pFileKV->LoadFromFile( g_pFullFileSystem, "scripts/extra_models.txt", "MOD" ) )
+    KeyValues *pFileKV = new KeyValues( "models" );
+    if ( !pFileKV->LoadFromFile( g_pFullFileSystem, "scripts/extra_models.txt", "MOD" ) )
         return;
 
-      // See if we have an entry for this map.
-      KeyValues *pMapKV = pFileKV->FindKey( pszMapName );
-      if ( pMapKV )
-      {
+    // See if we have an entry for this map.
+    KeyValues *pMapKV = pFileKV->FindKey( pszMapName );
+    if ( pMapKV )
+    {
         FOR_EACH_SUBKEY( pMapKV, pSubKeyEnt )
         {
-          const char *pszEntName = ValidateKeyName( pSubKeyEnt->GetName() );
-          if ( !pszEntName )
+        const char *pszEntName = ValidateKeyName( pSubKeyEnt->GetName() );
+        if ( !pszEntName )
             continue;
 
-          FOR_EACH_SUBKEY( pSubKeyEnt, pSubKeyCount )
-          {
+        FOR_EACH_SUBKEY( pSubKeyEnt, pSubKeyCount )
+        {
             Vector loc = vec3_origin;
             QAngle rot( 0, 0, 0 );
             char szModelName[MAX_PATH];
@@ -139,44 +139,44 @@ void CExtraMapEntity::SpawnExtraModel( void )
 
             FOR_EACH_SUBKEY( pSubKeyCount, pSubKey )
             {
-              if ( FStrEq( pSubKey->GetName(), "location" ) )
-              {
+            if ( FStrEq( pSubKey->GetName(), "location" ) )
+            {
                 const char *pszLoc = pSubKey->GetString();
                 UTIL_StringToVector( loc.Base(), pszLoc );
-              }
-              else if ( FStrEq( pSubKey->GetName(), "rotation" ) )
-              {
+            }
+            else if ( FStrEq( pSubKey->GetName(), "rotation" ) )
+            {
                 const char *pszRot = pSubKey->GetString();
                 UTIL_StringToVector( rot.Base(), pszRot );
-              }
-              else if ( FStrEq( pSubKey->GetName(), "model" ) )
-              {
+            }
+            else if ( FStrEq( pSubKey->GetName(), "model" ) )
+            {
                 V_strcpy_safe( szModelName, pSubKey->GetString() );
-              }
-              else if ( FStrEq( pSubKey->GetName(), "chance" ) )
-              {
+            }
+            else if ( FStrEq( pSubKey->GetName(), "chance" ) )
+            {
                 flChance = pSubKey->GetFloat();
                 if ( flChance > 1.0f )
                 {
-                  flChance = 1.0f;
+                flChance = 1.0f;
                 }
-              }
+            }
             }
 
             if ( ( flChance > 0.0f ) && ( RandomFloat( 0, 1 ) < flChance ) )
             {
-              CExtraMapEntity *pExtraMapEntity = static_cast< CExtraMapEntity* >( CBaseEntity::CreateNoSpawn( pszEntName, loc, rot ) );
-              if ( pExtraMapEntity )
-              {
+            CExtraMapEntity *pExtraMapEntity = static_cast< CExtraMapEntity* >( CBaseEntity::CreateNoSpawn( pszEntName, loc, rot ) );
+            if ( pExtraMapEntity )
+            {
                 pExtraMapEntity->PrepareModelName( szModelName );
                 DispatchSpawn( pExtraMapEntity );
-              }
             }
-          }
+            }
         }
-      }
+        }
+    }
 
-      pFileKV->deleteThis();
+    pFileKV->deleteThis();
     */
 }
 

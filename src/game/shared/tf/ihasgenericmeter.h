@@ -13,7 +13,7 @@
 // Derive from this interface if your entity can have objects placed on build points on it
 class IHasGenericMeter
 {
-   public:
+    public:
     // Tell me how many build points you have
     virtual bool ShouldUpdateMeter() const
     {

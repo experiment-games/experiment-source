@@ -41,8 +41,8 @@ namespace internal
 {
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     return __sync_val_compare_and_swap( ptr, old_value, new_value );
 }

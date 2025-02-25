@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2014 Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2014 Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to Steam Video
 //
@@ -49,7 +49,7 @@ struct SteamTVRegion_t
 //-----------------------------------------------------------------------------
 class ISteamTV
 {
-   public:
+    public:
     // Returns true if user is uploading a live broadcast
     virtual bool IsBroadcasting( int *pnNumViewers ) = 0;
 

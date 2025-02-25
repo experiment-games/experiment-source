@@ -34,7 +34,7 @@ enum RifleTypes_t
 //
 class CSniperDot : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CSniperDot, CBaseEntity );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -88,7 +88,7 @@ class CSniperDot : public CBaseEntity
     HPARTICLEFFECT m_laserBeamEffect;
 #endif
 
-   protected:
+    protected:
     Vector m_vecSurfaceNormal;
     EHANDLE m_hTargetEnt;
 
@@ -101,7 +101,7 @@ class CSniperDot : public CBaseEntity
 //
 class CTFSniperRifle : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSniperRifle, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -199,7 +199,7 @@ class CTFSniperRifle : public CTFWeaponBaseGun
     void ApplyScopeSpeedModifications( float &flBaseRef );
     void ApplyChargeSpeedModifications( float &flBaseRef );
 
-   protected:
+    protected:
     float GetJarateTimeInternal( void ) const;
 
     bool m_bCurrentShotIsHeadshot;
@@ -232,7 +232,7 @@ class CTFSniperRifle : public CTFWeaponBaseGun
 
     void SetInternalUnzoomTime( float flUnzoomTime );
 
-   private:
+    private:
     // Handles rezooming after the post-fire unzoom
     float m_flUnzoomTime;
     float m_flRezoomTime;
@@ -242,7 +242,7 @@ class CTFSniperRifle : public CTFWeaponBaseGun
 
 class CTFSniperRifleDecap : public CTFSniperRifle
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSniperRifleDecap, CTFSniperRifle );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -274,7 +274,7 @@ class CTFSniperRifleDecap : public CTFSniperRifle
 //
 class CTFSniperRifleClassic : public CTFSniperRifle
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSniperRifleClassic, CTFSniperRifle );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -308,7 +308,7 @@ class CTFSniperRifleClassic : public CTFSniperRifle
 
     void Detach( void ) OVERRIDE;
 
-   private:
+    private:
     CNetworkVar( bool, m_bCharging );
 #ifdef CLIENT_DLL
     void ManageChargeBeam( void );

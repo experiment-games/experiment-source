@@ -27,7 +27,7 @@ class CEscortHillPanel : public vgui::Panel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CEscortHillPanel, vgui::Panel );
 
-   public:
+    public:
     CEscortHillPanel( vgui::Panel *parent, const char *name );
 
     virtual void Paint( void );
@@ -44,13 +44,13 @@ class CEscortHillPanel : public vgui::Panel, public CGameEventListener
 
     virtual void OnTick( void );
 
-   public:  // CGameEventListener:
+    public:  // CGameEventListener:
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     void UpdateHillAnimations( bool bOnHill );
 
-   private:
+    private:
     int m_iTexture;
     int m_nHill;  // hill number this panel represents
     int m_nTeam;
@@ -69,7 +69,7 @@ class CEscortStatusTeardrop : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CEscortStatusTeardrop, vgui::EditablePanel );
 
-   public:
+    public:
     CEscortStatusTeardrop( Panel *parent );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -78,7 +78,7 @@ class CEscortStatusTeardrop : public vgui::EditablePanel
     void SetupForPoint( int iCPIndex );
     void UpdateBarText( int iCPIndex );
 
-   private:
+    private:
     vgui::Label *m_pBarText;
     CIconPanel *m_pTeardrop;
     CIconPanel *m_pBlocked;
@@ -89,7 +89,7 @@ class CEscortStatusTeardrop : public vgui::EditablePanel
 
 class CTFHudEscortProgressBar : public vgui::ImagePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHudEscortProgressBar, vgui::ImagePanel );
 
     CTFHudEscortProgressBar( vgui::Panel *parent, const char *name );
@@ -102,7 +102,7 @@ class CTFHudEscortProgressBar : public vgui::ImagePanel
 
     void SetTeam( int nTeam );
 
-   private:
+    private:
     float m_flPercent;
     int m_iTexture;
     int m_nTeam;
@@ -112,7 +112,7 @@ class CSimpleControlPoint : public vgui::ImagePanel
 {
     DECLARE_CLASS_SIMPLE( CSimpleControlPoint, vgui::ImagePanel );
 
-   public:
+    public:
     CSimpleControlPoint( Panel *parent, const char *name, int index )
         : vgui::ImagePanel( parent, name )
     {
@@ -187,7 +187,7 @@ class CSimpleControlPoint : public vgui::ImagePanel
         UpdateImage();
     }
 
-   private:
+    private:
     int m_iCPIndex;
     bool m_bForceOpaque;
 };
@@ -199,7 +199,7 @@ class CTFHudEscort : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTFHudEscort, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudEscort( vgui::Panel *parent, const char *name );
     ~CTFHudEscort();
 
@@ -229,13 +229,13 @@ class CTFHudEscort : public vgui::EditablePanel, public CGameEventListener
         m_bTopPanel = bTopPanel;
     }
 
-   public:  // CGameEventListener:
+    public:  // CGameEventListener:
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     void UpdateAlarmAnimations( void );
 
-   private:
+    private:
     int m_iSpeedLevel;   // how fast is the escorted object moving
     float m_flProgress;  // left to right progress percent
     CInterpolatedVar< float > m_flProgressHistory;
@@ -291,7 +291,7 @@ class CTFHudMultipleEscort : public vgui::EditablePanel, public CGameEventListen
 {
     DECLARE_CLASS_SIMPLE( CTFHudMultipleEscort, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudMultipleEscort( vgui::Panel *parent, const char *name );
     ~CTFHudMultipleEscort();
 
@@ -299,10 +299,10 @@ class CTFHudMultipleEscort : public vgui::EditablePanel, public CGameEventListen
     virtual void SetVisible( bool state );
     virtual void Reset();
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     CTFHudEscort *m_pBluePanel;
     CTFHudEscort *m_pRedPanel;
 };

@@ -116,7 +116,7 @@ extern "C" {
         const_cast<char*>(kModuleDocstring));
 #endif
     if (module == NULL) {
-      return INITFUNC_ERRORVAL;
+    return INITFUNC_ERRORVAL;
     }
 
     // Adds the module variable "api_version".
@@ -125,9 +125,9 @@ extern "C" {
         const_cast<char*>(kImplVersionName),
         kImplVersion))
 #if PY_MAJOR_VERSION < 3
-      return;
+    return;
 #else
-      { Py_DECREF(module); return NULL; }
+    { Py_DECREF(module); return NULL; }
 
     return module;
 #endif

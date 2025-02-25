@@ -13,7 +13,7 @@
 // solid_t parsing
 class CSolidSetDefaults : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     virtual void ParseKeyValue( void *pData, const char *pKey, const char *pValue );
     virtual void SetDefaults( void *pData );
 
@@ -22,7 +22,7 @@ class CSolidSetDefaults : public IVPhysicsKeyHandler
         return m_contentsMask;
     }
 
-   private:
+    private:
     unsigned int m_contentsMask;
 };
 

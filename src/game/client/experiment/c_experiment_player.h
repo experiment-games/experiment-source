@@ -23,7 +23,7 @@ class C_Experiment_Player : public C_BaseHLPlayer
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_Experiment_Player, LUA_EXPERIMENTPLAYERLIBNAME )
 #endif
 
-   public:
+    public:
     DECLARE_CLASS( C_Experiment_Player, C_BaseHLPlayer );
 
     DECLARE_CLIENTCLASS();
@@ -130,7 +130,7 @@ class C_Experiment_Player : public C_BaseHLPlayer
         return IsEffectActive( EF_DIMLIGHT );
     }
 
-   private:
+    private:
     C_Experiment_Player( const C_Experiment_Player & );
 
     CExperimentPlayerAnimState *m_PlayerAnimState;
@@ -184,7 +184,7 @@ inline C_Experiment_Player *ToExperimentPlayer( CBaseEntity *pEntity )
 
 class C_ExperimentRagdoll : public C_BaseAnimatingOverlay
 {
-   public:
+    public:
     DECLARE_CLASS( C_ExperimentRagdoll, C_BaseAnimatingOverlay );
     DECLARE_CLIENTCLASS();
 
@@ -199,16 +199,16 @@ class C_ExperimentRagdoll : public C_BaseAnimatingOverlay
     void ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName );
     void UpdateOnRemove( void );
     virtual void SetupWeights( const matrix3x4_t *pBoneToWorld,
-                               int nFlexWeightCount,
-                               float *pFlexWeights,
-                               float *pFlexDelayedWeights );
+                                int nFlexWeightCount,
+                                float *pFlexWeights,
+                                float *pFlexDelayedWeights );
 
     C_BasePlayer *GetRagdollPlayer() const
     {
         return dynamic_cast< C_BasePlayer * >( m_hPlayer.Get() );
     }
 
-   private:
+    private:
     C_ExperimentRagdoll( const C_ExperimentRagdoll & )
     {
     }
@@ -216,7 +216,7 @@ class C_ExperimentRagdoll : public C_BaseAnimatingOverlay
     void Interp_Copy( C_BaseAnimatingOverlay *pDestinationEntity );
     void CreateExperimentRagdoll( void );
 
-   private:
+    private:
     EHANDLE m_hPlayer;
     CNetworkVector( m_vecRagdollVelocity );
     CNetworkVector( m_vecRagdollOrigin );

@@ -15,7 +15,7 @@
 
 class CTEParticleSystem : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEParticleSystem, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 

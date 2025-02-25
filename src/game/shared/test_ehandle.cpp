@@ -23,7 +23,7 @@
 // ------------------------------------------------------------------------------------ //
 class CHandleTest : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CHandleTest, CBaseEntity );
     DECLARE_SERVERCLASS();
 
@@ -68,7 +68,7 @@ class CHandleDummy : public CBaseEntity
 {
     DECLARE_CLASS( CHandleDummy, CBaseEntity );
 
-   public:
+    public:
 };
 LINK_ENTITY_TO_CLASS( handle_dummy, CHandleDummy );
 
@@ -96,7 +96,7 @@ ConCommand Test_EHandle( "Test_EHandle", CC_Test_EHandle, 0, FCVAR_CHEAT );
 
 class C_HandleTest : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_HandleTest, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 

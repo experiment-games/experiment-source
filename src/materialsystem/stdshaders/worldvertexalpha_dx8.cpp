@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( WorldVertexAlpha, WorldVertexAlpha_DX8 )
 
 BEGIN_VS_SHADER( WorldVertexAlpha_DX8,
-                 "Help for WorldVertexAlpha_DX8" )
+                "Help for WorldVertexAlpha_DX8" )
 
 BEGIN_SHADER_PARAMS
 END_SHADER_PARAMS
@@ -99,7 +99,7 @@ SHADER_DRAW
             }
 
             pShaderShadow->DrawFlags( colorFlag | SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD1 |
-                                      SHADER_DRAW_LIGHTMAP_TEXCOORD0 );
+                                    SHADER_DRAW_LIGHTMAP_TEXCOORD0 );
         }
         DYNAMIC_STATE
         {

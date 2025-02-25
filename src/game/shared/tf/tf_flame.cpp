@@ -318,7 +318,7 @@ Vector CTFFlameManager::GetInitialVelocity() const
 
 class CFlameManagerHelper : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CFlameManagerHelper( const char *pszName )
         : CAutoGameSystemPerFrame( pszName )
     {
@@ -526,10 +526,10 @@ float CTFFlameManager::GetFlameDamageScale( const tf_point_t *pPoint, CTFPlayer 
         if ( iEntIndex != m_mapEntitiesBurnt.InvalidIndex() )
         {
             flIndexMod = RemapValClamped( m_mapEntitiesBurnt[iEntIndex].m_flHeatIndex,
-                                          tf_flame_burn_index_per_collide_remap_x,
-                                          tf_flame_burn_index_per_collide_remap_y,
-                                          tf_flame_burn_index_damage_scale_min,
-                                          1.f );
+                                        tf_flame_burn_index_per_collide_remap_x,
+                                        tf_flame_burn_index_per_collide_remap_y,
+                                        tf_flame_burn_index_damage_scale_min,
+                                        1.f );
         }
 
         flDamageScale *= flIndexMod;
@@ -780,8 +780,8 @@ void CTFFlameManager::OnCollide( CBaseEntity *pEnt, int iPointIndex )
         // Track hits for the Flamethrower, which is used to change the weapon sound based on hit ratio
         /*if ( m_hFlameThrower )
         {
-          m_bBurnedEnemy = true;
-          m_hFlameThrower->IncrementFlameDamageCount();
+        m_bBurnedEnemy = true;
+        m_hFlameThrower->IncrementFlameDamageCount();
         }*/
 
         // We collided with pEnt, so try to find a place on their surface to show blood

@@ -34,7 +34,7 @@ class CQuestObjectiveTextPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQuestObjectiveTextPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CQuestObjectiveTextPanel( vgui::Panel* pParent, const char* pElementName, const QuestObjectiveInstance_t& objective, const char* pszResFileName );
     virtual ~CQuestObjectiveTextPanel() {}
 
@@ -67,7 +67,7 @@ class CQuestObjectiveTextPanel : public vgui::EditablePanel
 
     MESSAGE_FUNC( HighlightCompletion, "HighlightCompletion" );
 
-   private:
+    private:
     void UpdateText();
 
     Label* m_pAttribDesc;
@@ -88,7 +88,7 @@ class CQuestProgressTrackerPanel : public vgui::EditablePanel, public CGameEvent
 {
     DECLARE_CLASS_SIMPLE( CQuestProgressTrackerPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CQuestProgressTrackerPanel( vgui::Panel* pParent,
                                 const char* pElementName,
                                 const CQuest* pQuest,
@@ -126,7 +126,7 @@ class CQuestProgressTrackerPanel : public vgui::EditablePanel, public CGameEvent
         return m_vecObjectivePanels;
     }
 
-   protected:
+    protected:
     MESSAGE_FUNC_PARAMS( UpdateStar, "UpdateStar", pParams );
 
     void UpdateStars();
@@ -204,7 +204,7 @@ class CHudItemAttributeTracker : public CHudElement, public EditablePanel, publi
 {
     DECLARE_CLASS_SIMPLE( CHudItemAttributeTracker, EditablePanel );
 
-   public:
+    public:
     CHudItemAttributeTracker( const char* pElementName );
     virtual void ApplySchemeSettings( IScheme* pScheme ) OVERRIDE;
     virtual void PerformLayout() OVERRIDE;
@@ -232,7 +232,7 @@ class CHudItemAttributeTracker : public CHudElement, public EditablePanel, publi
     virtual void LevelInit( void ) OVERRIDE;
     virtual void LevelShutdown( void ) OVERRIDE;
 
-   private:
+    private:
     void HandleSOEvent( const CSteamID& steamIDOwner, const CSharedObject* pObject );
     bool FindTrackerForItem( const CQuest* pItem, CQuestProgressTrackerPanel** ppTracker, bool bCreateIfNotFound );
 

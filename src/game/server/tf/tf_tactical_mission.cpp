@@ -35,21 +35,21 @@ public:
 
     if ( !m_isKingOfTheHill )
     {
-      // don't select areas that are beyond the point
-      if ( area->GetIncursionDistance( TF_TEAM_RED ) > m_incursionFlowLimit )
+    // don't select areas that are beyond the point
+    if ( area->GetIncursionDistance( TF_TEAM_RED ) > m_incursionFlowLimit )
         return true;
     }
 
     if ( area->IsPotentiallyVisible( m_pointArea ) )
     {
-      // a bit of a hack here to avoid bots choosing to defend in bottom of ravine at stage 3 of dustbowl
-      const float tooLow = 220.0f;
-      if ( m_pointArea->GetCenter().z - area->GetCenter().z < tooLow )
-      {
+    // a bit of a hack here to avoid bots choosing to defend in bottom of ravine at stage 3 of dustbowl
+    const float tooLow = 220.0f;
+    if ( m_pointArea->GetCenter().z - area->GetCenter().z < tooLow )
+    {
         // valid defense position
         area->SetAttributeTF( TF_NAV_DEFEND_POINT );
         m_areaVector->AddToTail( area );
-      }
+    }
     }
 
     return true;
@@ -59,13 +59,13 @@ public:
   {
     if ( adjArea->IsBlocked( m_isKingOfTheHill ? TEAM_ANY : TF_TEAM_RED ) )
     {
-      return false;
+    return false;
     }
 
     if ( travelDistanceSoFar > tf_bot_max_point_defend_range.GetFloat() )
     {
-      // too far away
-      return false;
+    // too far away
+    return false;
     }
 
     const float maxHeightChange = 65.0f;
@@ -93,7 +93,7 @@ CTFDefendPointZone::CTFDefendPointZone( CTeamControlPoint *point )
     CTeamControlPointMaster *master = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
     if ( master )
     {
-      isKingOfTheHill = ( master->GetNumPoints() == 1 );
+    isKingOfTheHill = ( master->GetNumPoints() == 1 );
     }
 
     // search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly

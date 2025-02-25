@@ -87,7 +87,7 @@ const uint32 kTradeRequestLifetime = 30.0f;
 // waiting dialog
 class CTradingWaitDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CTradingWaitDialog( const char *pText = "#TF_Trading_Timeout_Text", const wchar_t *pPlayerName = NULL )
         : CGenericWaitingDialog( NULL ), m_pText( pText ), m_pKeyValues( NULL )
     {
@@ -106,7 +106,7 @@ class CTradingWaitDialog : public CGenericWaitingDialog
         }
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         ShowMessageBox( "#TF_Trading_Timeout_Title", m_pText, m_pKeyValues, "#GameUI_OK" );
@@ -137,7 +137,7 @@ static void TradeCompleteDialogClosed( bool bConfirmed, void *pContext )
 // jobs
 class CTFTradeRequestNotification : public CEconNotification
 {
-   public:
+    public:
     CTFTradeRequestNotification( uint64 ulInitiatorSteamID, uint32 unTradeRequestID, const char *pPlayerName )
         : CEconNotification(), m_unTradeRequestID( unTradeRequestID )
     {
@@ -192,7 +192,7 @@ class CTFTradeRequestNotification : public CEconNotification
         return dynamic_cast< CTFTradeRequestNotification * >( pNotification ) != NULL;
     }
 
-   public:
+    public:
     uint32 m_unTradeRequestID;
     wchar_t m_wszPlayerName[MAX_PLAYER_NAME_LENGTH];
 };
@@ -200,7 +200,7 @@ class CTFTradeRequestNotification : public CEconNotification
 // request from party A (through GC) to start trading
 class CGCTrading_InitiateTradeRequest : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCTrading_InitiateTradeRequest( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -313,7 +313,7 @@ class CGCTrading_InitiateTradeRequest : public GCSDK::CGCClientJob
         return true;
     }
 
-   protected:
+    protected:
 };
 GC_REG_JOB( GCSDK::CGCClient, CGCTrading_InitiateTradeRequest, "CGCTrading_InitiateTradeRequest", k_EMsgGCTrading_InitiateTradeRequest, GCSDK::k_EServerTypeGCClient );
 
@@ -335,7 +335,7 @@ CON_COMMAND( cl_trading_test, "Tests the trade ui notification." )
  */
 class CEconNotificationVisitor_RemoveTradeRequest : public CEconNotificationVisitor
 {
-   public:
+    public:
     CEconNotificationVisitor_RemoveTradeRequest( uint32 unTradeRequestID )
         : m_unTradeRequestID( unTradeRequestID ) {}
     virtual void Visit( CEconNotification &notification )
@@ -350,7 +350,7 @@ class CEconNotificationVisitor_RemoveTradeRequest : public CEconNotificationVisi
         }
     }
 
-   private:
+    private:
     uint32 m_unTradeRequestID;
 };
 
@@ -384,7 +384,7 @@ static const char *g_pszTradeResponseDescLocKeys[] =
 
 class CGCTrading_InitiateTradeResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCTrading_InitiateTradeResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -464,7 +464,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCTrading_InitiateTradeResponse, "CGCTrading_Init
 // start trading session
 class CGCTrading_StartSession : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCTrading_StartSession( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )

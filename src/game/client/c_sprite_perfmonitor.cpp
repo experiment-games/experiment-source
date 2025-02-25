@@ -17,18 +17,18 @@ class C_ParticlePerformanceMonitor : public C_BaseEntity
 {
     DECLARE_CLASS( C_ParticlePerformanceMonitor, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ParticlePerformanceMonitor();
     ~C_ParticlePerformanceMonitor();
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   private:
+    private:
     bool m_bDisplayPerf;
     bool m_bMeasurePerf;
 
-   private:
+    private:
     C_ParticlePerformanceMonitor( const C_ParticlePerformanceMonitor& );
 };
 

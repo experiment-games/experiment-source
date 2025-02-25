@@ -100,13 +100,13 @@ int main( int argc, char **argv )
         exit( -1 );
     }
 #if 0
-	// have to allow for different formats for now due to *.txt file screwup.
-	if( imageFormat1 != imageFormat2 )
-	{
-		printf( "image format different (%s!=%s). . can't do diff for %s\n", 
-			ImageLoader::GetName( imageFormat1 ), ImageLoader::GetName( imageFormat2 ), pFileName[2] );
-		exit( -1 );
-	}
+    // have to allow for different formats for now due to *.txt file screwup.
+    if( imageFormat1 != imageFormat2 )
+    {
+        printf( "image format different (%s!=%s). . can't do diff for %s\n",
+            ImageLoader::GetName( imageFormat1 ), ImageLoader::GetName( imageFormat2 ), pFileName[2] );
+        exit( -1 );
+    }
 #endif
     if ( gamma1 != gamma2 )
     {

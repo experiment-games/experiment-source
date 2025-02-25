@@ -16,12 +16,12 @@ class CTFLeaderboardPanel : public CBaseASyncPanel
 {
     DECLARE_CLASS_SIMPLE( CTFLeaderboardPanel, CBaseASyncPanel );
 
-   public:
+    public:
     CTFLeaderboardPanel( Panel *pParent, const char *pszPanelName );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void ApplySettings( KeyValues *inResourceData );
 
-   protected:
+    protected:
     virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t * > &scores ) = 0;
     virtual bool UpdateLeaderboards();
     virtual bool CheckForData_Internal() OVERRIDE;

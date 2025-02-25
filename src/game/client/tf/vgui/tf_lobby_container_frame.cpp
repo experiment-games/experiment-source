@@ -359,7 +359,7 @@ void CBaseLobbyContainerFrame::WriteControls()
 
     bool bNoGC = false;
     if ( !GCClientSystem()->BConnectedtoGC() || GTFGCClientSystem()->BHaveLiveMatch() ||
-         !GTFGCClientSystem()->BHealthyGCConnection() )
+        !GTFGCClientSystem()->BHealthyGCConnection() )
     {
         bNoGC = true;
     }
@@ -518,9 +518,9 @@ void CBaseLobbyContainerFrame::HandleBackPressed()
 bool CBaseLobbyContainerFrame::ShouldShowPartyButton() const
 {
     return ( !m_pContents->IsPartyActiveGroupBoxVisible() &&
-             GTFPartyClient()->BInQueue() &&
-             GCClientSystem()->BConnectedtoGC() &&
-             GTFPartyClient()->BIsPartyLeader() );
+            GTFPartyClient()->BInQueue() &&
+            GCClientSystem()->BConnectedtoGC() &&
+            GTFPartyClient()->BIsPartyLeader() );
 }
 
 //-----------------------------------------------------------------------------

@@ -17,7 +17,7 @@ class CTFPumpkinBombShim : public CBaseAnimating
 {
     virtual void PumpkinTouch( CBaseEntity *pOther ) = 0;
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther )
     {
         return PumpkinTouch( pOther );
@@ -31,7 +31,7 @@ class CTFPumpkinBomb : public CTFPumpkinBombShim, public ITFPumpkinBomb
     DECLARE_CLASS( CTFPumpkinBomb, CBaseAnimating );
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
     CTFPumpkinBomb();
     ~CTFPumpkinBomb() {}
 
@@ -59,7 +59,7 @@ class CTFPumpkinBomb : public CTFPumpkinBombShim, public ITFPumpkinBomb
     }
 #endif
 
-   private:
+    private:
 #ifdef GAME_DLL
     bool m_bIsSpell;
 #endif

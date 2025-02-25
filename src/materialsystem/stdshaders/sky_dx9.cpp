@@ -93,7 +93,7 @@ SHADER_DRAW
         if (
             ( fmt == IMAGE_FORMAT_RGBA16161616 ) ||
             ( ( fmt == IMAGE_FORMAT_RGBA16161616F ) &&
-              ( g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER ) ) )
+            ( g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER ) ) )
         {
             c0[0] *= 16.0;
             c0[1] *= 16.0;

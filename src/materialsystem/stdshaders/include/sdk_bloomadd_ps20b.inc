@@ -12,14 +12,14 @@
 class sdk_bloomadd_ps20b_Static_Index
 {
 public:
-	sdk_bloomadd_ps20b_Static_Index(  )
-	{
-	}
+    sdk_bloomadd_ps20b_Static_Index(  )
+    {
+    }
 
-	int GetIndex() const
-	{
-		return 0;
-	}
+    int GetIndex() const
+    {
+        return 0;
+    }
 };
 
 #define shaderStaticTest_sdk_bloomadd_ps20b 1
@@ -28,15 +28,14 @@ public:
 class sdk_bloomadd_ps20b_Dynamic_Index
 {
 public:
-	sdk_bloomadd_ps20b_Dynamic_Index(  )
-	{
-	}
+    sdk_bloomadd_ps20b_Dynamic_Index(  )
+    {
+    }
 
-	int GetIndex() const
-	{
-		return 0;
-	}
+    int GetIndex() const
+    {
+        return 0;
+    }
 };
 
 #define shaderDynamicTest_sdk_bloomadd_ps20b 1
-

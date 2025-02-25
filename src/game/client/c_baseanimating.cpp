@@ -107,13 +107,13 @@ bool C_AnimationLayer::IsActive( void )
 //-----------------------------------------------------------------------------
 class C_InfoLightingRelative : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_InfoLightingRelative, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     void GetLightingOffset( matrix3x4_t &offset );
 
-   private:
+    private:
     EHANDLE m_hLightingLandmark;
 };
 
@@ -211,7 +211,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_BaseAnimating, DT_BaseAnimating, CBaseAnimating )
     RecvPropFloat( RECVINFO( m_flFadeScale ) ),
 
     // Experiment; Material override and submaterial override
-	RecvPropString( RECVINFO( m_MaterialOverride ) ),
+    RecvPropString( RECVINFO( m_MaterialOverride ) ),
     RecvPropArray( RecvPropString( RECVINFO(m_SubMaterialOverrides[0]) ), m_SubMaterialOverrides ),
 
 END_RECV_TABLE()
@@ -682,8 +682,8 @@ class C_BaseAnimatingGameSystem : public CAutoGameSystem
 //-----------------------------------------------------------------------------
 C_BaseAnimating::C_BaseAnimating()
     : m_iv_flCycle( "C_BaseAnimating::m_iv_flCycle" ),
-      m_iv_flPoseParameter( "C_BaseAnimating::m_iv_flPoseParameter" ),
-      m_iv_flEncodedController( "C_BaseAnimating::m_iv_flEncodedController" )
+    m_iv_flPoseParameter( "C_BaseAnimating::m_iv_flPoseParameter" ),
+    m_iv_flEncodedController( "C_BaseAnimating::m_iv_flEncodedController" )
 {
     m_vecForce.Init();
     m_nForceBone = -1;
@@ -980,18 +980,18 @@ void C_BaseAnimating::UnlockStudioHdr()
         Assert( m_pStudioHdr && m_pStudioHdr->GetRenderHdr() == pStudioHdr );
 
 #if 0
-		// XXX need to figure out where to flush the queue on map change to not crash
-		if ( ICallQueue *pCallQueue = materials->GetRenderContext()->GetCallQueue() )
-		{
-			// Parallel rendering: don't unlock model data until end of rendering
-			if ( pStudioHdr->GetVirtualModel() )
-			{
-				MDLHandle_t hVirtualModel = (MDLHandle_t)(int)pStudioHdr->virtualModel&0xffff;
-				pCallQueue->QueueCall( mdlcache, &IMDLCache::UnlockStudioHdr, hVirtualModel );
-			}
-			pCallQueue->QueueCall( mdlcache, &IMDLCache::UnlockStudioHdr, m_hStudioHdr );
-		}
-		else
+        // XXX need to figure out where to flush the queue on map change to not crash
+        if ( ICallQueue *pCallQueue = materials->GetRenderContext()->GetCallQueue() )
+        {
+            // Parallel rendering: don't unlock model data until end of rendering
+            if ( pStudioHdr->GetVirtualModel() )
+            {
+                MDLHandle_t hVirtualModel = (MDLHandle_t)(int)pStudioHdr->virtualModel&0xffff;
+                pCallQueue->QueueCall( mdlcache, &IMDLCache::UnlockStudioHdr, hVirtualModel );
+            }
+            pCallQueue->QueueCall( mdlcache, &IMDLCache::UnlockStudioHdr, m_hStudioHdr );
+        }
+        else
 #endif
         {
             // Immediate-mode rendering, can unlock immediately
@@ -1420,18 +1420,18 @@ void C_BaseAnimating::GetPoseParameters( CStudioHdr *pStudioHdr, float poseParam
     }
 
 #if 0  // _DEBUG
-	if (/* Q_stristr( pStudioHdr->pszName(), r_sequence_debug.GetString()) != NULL || */ r_sequence_debug.GetInt() == entindex())
-	{
-		DevMsgRT( "%s\n", pStudioHdr->pszName() );
-		DevMsgRT( "%6.2f : ", gpGlobals->curtime );
-		for( i=0; i < pStudioHdr->GetNumPoseParameters(); i++)
-		{
-			const mstudioposeparamdesc_t &Pose = pStudioHdr->pPoseParameter( i );
+    if (/* Q_stristr( pStudioHdr->pszName(), r_sequence_debug.GetString()) != NULL || */ r_sequence_debug.GetInt() == entindex())
+    {
+        DevMsgRT( "%s\n", pStudioHdr->pszName() );
+        DevMsgRT( "%6.2f : ", gpGlobals->curtime );
+        for( i=0; i < pStudioHdr->GetNumPoseParameters(); i++)
+        {
+            const mstudioposeparamdesc_t &Pose = pStudioHdr->pPoseParameter( i );
 
-			DevMsgRT( "%s %6.2f ", Pose.pszName(), poseParameter[i] * Pose.end + (1 - poseParameter[i]) * Pose.start );
-		}
-		DevMsgRT( "\n" );
-	}
+            DevMsgRT( "%s %6.2f ", Pose.pszName(), poseParameter[i] * Pose.end + (1 - poseParameter[i]) * Pose.start );
+        }
+        DevMsgRT( "\n" );
+    }
 #endif
 }
 
@@ -1486,8 +1486,8 @@ void C_BaseAnimating::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
 #if defined( REPLAY_ENABLED )
         // If we're playing back a demo, override the ragdoll bones with cached version if available - otherwise, simulate.
         if ( ( !engine->IsPlayingDemo() && !engine->IsPlayingTimeDemo() ) ||
-             !CReplayRagdollCache::Instance().IsInitialized() ||
-             !CReplayRagdollCache::Instance().GetFrame( this, engine->GetDemoPlaybackTick(), boneSimulated, &m_BoneAccessor ) )
+            !CReplayRagdollCache::Instance().IsInitialized() ||
+            !CReplayRagdollCache::Instance().GetFrame( this, engine->GetDemoPlaybackTick(), boneSimulated, &m_BoneAccessor ) )
 #endif
         {
             m_pRagdoll->RagdollBone( this, pbones, hdr->numbones(), boneSimulated, m_BoneAccessor );
@@ -1548,7 +1548,7 @@ void C_BaseAnimating::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
             Assert( fabs( pos[i].z ) < 100000 );
 
             if ( ( hdr->boneFlags( i ) & BONE_ALWAYS_PROCEDURAL ) &&
-                 ( hdr->pBone( i )->proctype & STUDIO_PROC_JIGGLE ) )
+                ( hdr->pBone( i )->proctype & STUDIO_PROC_JIGGLE ) )
             {
                 //
                 // Physics-based "jiggle" bone
@@ -1730,8 +1730,8 @@ void C_BaseAnimating::CreateUnragdollInfo( C_BaseAnimating *pRagdoll )
         ConcatTransforms( inverted, pRagdoll->m_BoneAccessor.GetBone( i ), output );
 
         MatrixAngles( output,
-                      m_pRagdollInfo->m_rgBoneQuaternion[i],
-                      m_pRagdollInfo->m_rgBonePos[i] );
+                    m_pRagdollInfo->m_rgBoneQuaternion[i],
+                    m_pRagdollInfo->m_rgBonePos[i] );
     }
 }
 
@@ -1779,8 +1779,8 @@ void C_BaseAnimating::SaveRagdollInfo( int numbones, const matrix3x4_t &cameraTr
         ConcatTransforms( inverted, pBoneToWorld.GetBone( i ), output );
 
         MatrixAngles( output,
-                      m_pRagdollInfo->m_rgBoneQuaternion[i],
-                      m_pRagdollInfo->m_rgBonePos[i] );
+                    m_pRagdollInfo->m_rgBoneQuaternion[i],
+                    m_pRagdollInfo->m_rgBonePos[i] );
     }
 }
 
@@ -2354,7 +2354,7 @@ CBoneCache *C_BaseAnimating::GetBoneCache( CStudioHdr *pStudioHdr )
 
 class CTraceFilterSkipNPCsAndPlayers : public CTraceFilterSimple
 {
-   public:
+    public:
     CTraceFilterSkipNPCsAndPlayers( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -2543,7 +2543,7 @@ void C_BaseAnimating::CalculateIKLocks( float currentTime )
                         /*
                         if (DotProduct( pTarget->est.pos, up ) < DotProduct( estGround, up ))
                         {
-                          pTarget->est.pos = estGround;
+                        pTarget->est.pos = estGround;
                         }
                         */
                     }
@@ -2566,7 +2566,7 @@ void C_BaseAnimating::CalculateIKLocks( float currentTime )
                         /*
                         if (DotProduct( pTarget->est.pos, up ) < DotProduct( estGround, up ))
                         {
-                          pTarget->est.pos = estGround;
+                        pTarget->est.pos = estGround;
                         }
                         */
                     }
@@ -2591,7 +2591,7 @@ void C_BaseAnimating::CalculateIKLocks( float currentTime )
 
                 /*
                 debugoverlay->AddTextOverlay( p1, i, 0, "%d %.1f %.1f %.1f ", i,
-                  pTarget->latched.deltaPos.x, pTarget->latched.deltaPos.y, pTarget->latched.deltaPos.z );
+                pTarget->latched.deltaPos.x, pTarget->latched.deltaPos.y, pTarget->latched.deltaPos.z );
                 debugoverlay->AddBoxOverlay( pTarget->est.pos, Vector( -r, -r, -1 ), Vector( r, r, 1), QAngle( 0, 0, 0 ), 255, 0, 0, 0, 0 );
                 */
                 // debugoverlay->AddBoxOverlay( pTarget->latched.pos, Vector( -2, -2, 2 ), Vector( 2, 2, 6), QAngle( 0, 0, 0 ), 0, 255, 0, 0, 0 );
@@ -3034,9 +3034,9 @@ C_BaseAnimating *C_BaseAnimating::FindFollowedEntity()
     if ( modelinfo->GetModelType( follow->GetModel() ) != mod_studio )
     {
         Warning( "Attached %s (mod_studio) to %s (%d)\n",
-                 modelinfo->GetModelName( GetModel() ),
-                 modelinfo->GetModelName( follow->GetModel() ),
-                 modelinfo->GetModelType( follow->GetModel() ) );
+                modelinfo->GetModelName( GetModel() ),
+                modelinfo->GetModelName( follow->GetModel() ),
+                modelinfo->GetModelType( follow->GetModel() ) );
         return NULL;
     }
 
@@ -3194,7 +3194,7 @@ int C_BaseAnimating::DrawModel( int flags )
         }
 
         if ( ( flags & ( STUDIO_SSAODEPTHTEXTURE | STUDIO_SHADOWDEPTHTEXTURE ) ) == 0 &&
-             g_pStudioStatsEntity != NULL && g_pStudioStatsEntity == GetClientRenderable() )
+            g_pStudioStatsEntity != NULL && g_pStudioStatsEntity == GetClientRenderable() )
         {
             extraFlags |= STUDIO_GENERATE_STATS;
         }
@@ -3341,7 +3341,7 @@ void C_BaseAnimating::DoInternalDrawModel( ClientModelRenderInfo_t *pInfo, DrawM
 // Move this elsewhere if we ever need it again.
 class MaterialOverrideRestore
 {
-   public:
+    public:
     MaterialOverrideRestore()
         : m_bRestore( false ), m_pOverrideMaterial( NULL ), m_nOverrideType( OVERRIDE_NORMAL )
     {
@@ -3362,7 +3362,7 @@ class MaterialOverrideRestore
         m_nOverrideType = overType;
     }
 
-   private:
+    private:
     bool m_bRestore;
     IMaterial *m_pOverrideMaterial;
     OverrideType_t m_nOverrideType;
@@ -3628,12 +3628,12 @@ void C_BaseAnimating::DoAnimationEvents( CStudioHdr *pStudioHdr )
         if ( watch )
         {
             Msg( "new seq: %i - old seq: %i - reset: %s - m_flCycle %f - Model Name: %s - (time %.3f)\n",
-                 GetSequence(),
-                 m_nEventSequence,
-                 resetEvents ? "true" : "false",
-                 GetCycle(),
-                 pStudioHdr->pszName(),
-                 gpGlobals->curtime );
+                GetSequence(),
+                m_nEventSequence,
+                resetEvents ? "true" : "false",
+                GetCycle(),
+                pStudioHdr->pszName(),
+                gpGlobals->curtime );
         }
 
         m_nEventSequence = GetSequence();
@@ -3648,12 +3648,12 @@ void C_BaseAnimating::DoAnimationEvents( CStudioHdr *pStudioHdr )
     if ( watch )
     {
         Msg( "%i (seq %d cycle %.3f ) evcycle %.3f prevevcycle %.3f (time %.3f)\n",
-             gpGlobals->tickcount,
-             GetSequence(),
-             GetCycle(),
-             flEventCycle,
-             m_flPrevEventCycle,
-             gpGlobals->curtime );
+            gpGlobals->tickcount,
+            GetSequence(),
+            GetCycle(),
+            flEventCycle,
+            m_flPrevEventCycle,
+            gpGlobals->curtime );
     }
 
     // check for looping
@@ -3694,12 +3694,12 @@ void C_BaseAnimating::DoAnimationEvents( CStudioHdr *pStudioHdr )
             if ( watch )
             {
                 Msg( "%i FE %i Looped cycle %f, prev %f ev %f (time %.3f)\n",
-                     gpGlobals->tickcount,
-                     pevent[i].event,
-                     pevent[i].cycle,
-                     m_flPrevEventCycle,
-                     flEventCycle,
-                     gpGlobals->curtime );
+                    gpGlobals->tickcount,
+                    pevent[i].event,
+                    pevent[i].cycle,
+                    m_flPrevEventCycle,
+                    flEventCycle,
+                    gpGlobals->curtime );
             }
 
             FireEvent( GetAbsOrigin(), GetAbsAngles(), pevent[i].event, pevent[i].pszOptions() );
@@ -3724,13 +3724,13 @@ void C_BaseAnimating::DoAnimationEvents( CStudioHdr *pStudioHdr )
             if ( watch )
             {
                 Msg( "%i (seq: %d) FE %i Normal cycle %f, prev %f ev %f (time %.3f)\n",
-                     gpGlobals->tickcount,
-                     GetSequence(),
-                     pevent[i].event,
-                     pevent[i].cycle,
-                     m_flPrevEventCycle,
-                     flEventCycle,
-                     gpGlobals->curtime );
+                    gpGlobals->tickcount,
+                    GetSequence(),
+                    pevent[i].event,
+                    pevent[i].cycle,
+                    m_flPrevEventCycle,
+                    flEventCycle,
+                    gpGlobals->curtime );
             }
 
             FireEvent( GetAbsOrigin(), GetAbsAngles(), pevent[i].event, pevent[i].pszOptions() );
@@ -4425,10 +4425,10 @@ bool C_BaseAnimating::IsSelfAnimating()
     // Yes, we use animtime.
     int iMoveType = GetMoveType();
     if ( iMoveType != MOVETYPE_STEP &&
-         iMoveType != MOVETYPE_NONE &&
-         iMoveType != MOVETYPE_WALK &&
-         iMoveType != MOVETYPE_FLY &&
-         iMoveType != MOVETYPE_FLYGRAVITY )
+        iMoveType != MOVETYPE_NONE &&
+        iMoveType != MOVETYPE_WALK &&
+        iMoveType != MOVETYPE_FLY &&
+        iMoveType != MOVETYPE_FLYGRAVITY )
     {
         return true;
     }
@@ -4891,9 +4891,9 @@ C_BaseAnimating *C_BaseAnimating::BecomeRagdollOnClient()
         if ( !bInitAsClient || !bInitBoneArrays )
         {
             Warning( "C_BaseAnimating::BecomeRagdollOnClient failed. pRagdoll:%p bInitBoneArrays:%d bInitAsClient:%d\n",
-                     pRagdoll,
-                     bInitBoneArrays,
-                     bInitAsClient );
+                    pRagdoll,
+                    bInitBoneArrays,
+                    bInitAsClient );
             pRagdoll->Release();
             return NULL;
         }
@@ -5052,8 +5052,8 @@ void C_BaseAnimating::OnDataChanged( DataUpdateType_t updateType )
     // If ragdolling and get EF_NOINTERP, we probably were dead and are now respawning,
     //  don't do blend out of ragdoll at respawn spot.
     if ( IsNoInterpolationFrame() &&
-         m_pRagdollInfo &&
-         m_pRagdollInfo->m_bActive )
+        m_pRagdollInfo &&
+        m_pRagdollInfo->m_bActive )
     {
         Msg( "delete ragdoll due to nointerp\n" );
         // Remove ragdoll info
@@ -5319,7 +5319,7 @@ void C_BaseAnimating::SetSequence( int nSequence )
         // Assert( hdr );
         if ( hdr )
         {
-          Assert( nSequence >= 0 && nSequence < hdr->GetNumSeq() );
+        Assert( nSequence >= 0 && nSequence < hdr->GetNumSeq() );
         }
         */
 
@@ -5395,10 +5395,10 @@ void C_BaseAnimating::StudioFrameAdvance()
     m_flGroundSpeed = GetSequenceGroundSpeed( hdr, GetSequence() ) * GetModelScale();
 
 #if 0
-	// I didn't have a test case for this, but it seems like the right thing to do.  Check multi-player!
+    // I didn't have a test case for this, but it seems like the right thing to do.  Check multi-player!
 
-	// Msg("%s : %s : %5.1f\n", GetClassname(), GetSequenceName( GetSequence() ), GetCycle() );
-	InvalidatePhysicsRecursive( ANIMATION_CHANGED );
+    // Msg("%s : %s : %5.1f\n", GetClassname(), GetSequenceName( GetSequence() ), GetCycle() );
+    InvalidatePhysicsRecursive( ANIMATION_CHANGED );
 #endif
 
     if ( watch )
@@ -5544,12 +5544,12 @@ float C_BaseAnimating::FrameAdvance( float flInterval )
     if ( bWatch )
     {
         Msg( "%i CLIENT Time: %6.3f : (Interval %f) : cycle %f rate %f add %f\n",
-             gpGlobals->tickcount,
-             gpGlobals->curtime,
-             flInterval,
-             flNewCycle,
-             cyclerate,
-             addcycle );
+            gpGlobals->tickcount,
+            gpGlobals->curtime,
+            flInterval,
+            flNewCycle,
+            cyclerate,
+            addcycle );
     }
 
     if ( ( flNewCycle < 0.0f ) || ( flNewCycle >= 1.0f ) )
@@ -6218,7 +6218,7 @@ class C_BoneFollower : public C_BaseEntity
     DECLARE_CLASS( C_BoneFollower, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_BoneFollower( void )
     {
     }
@@ -6227,7 +6227,7 @@ class C_BoneFollower : public C_BaseEntity
     int DrawModel( int flags );
     bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t &trace );
 
-   private:
+    private:
     int m_modelIndex;
     int m_solidIndex;
 };
@@ -6435,8 +6435,8 @@ CBoneList *C_BaseAnimating::RecordBones( CStudioHdr *hdr, matrix3x4_t *pBoneStat
         ConcatTransforms( inverted, pBoneState[i], output );
 
         MatrixAngles( output,
-                      boneList->m_quatRot[i],
-                      boneList->m_vecPos[i] );
+                    boneList->m_quatRot[i],
+                    boneList->m_vecPos[i] );
     }
 
     return boneList;

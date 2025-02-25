@@ -49,13 +49,13 @@ inline Atomic32 QNXCmpxchg( Atomic32 old_value,
 {
     return static_cast< Atomic32 >(
         _smp_cmpxchg( ( volatile unsigned* )ptr,
-                      ( unsigned )old_value,
-                      ( unsigned )new_value ) );
+                    ( unsigned )old_value,
+                    ( unsigned )new_value ) );
 }
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     Atomic32 prev_value = *ptr;
     do
@@ -70,7 +70,7 @@ inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     Atomic32 old_value;
     do
@@ -81,13 +81,13 @@ inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     return Barrier_AtomicIncrement( ptr, increment );
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     for ( ;; )
     {

@@ -27,11 +27,11 @@
 template < class T >
 class CStridedPtr
 {
-   protected:
+    protected:
     T *m_pData = nullptr;
     size_t m_nStride = 0;
 
-   public:
+    public:
     FORCEINLINE CStridedPtr( void *pData, size_t nByteStride )
     {
         m_pData = reinterpret_cast< T * >( pData );
@@ -69,11 +69,11 @@ class CStridedPtr
 template < class T >
 class CStridedConstPtr
 {
-   protected:
+    protected:
     const T *m_pData;
     size_t m_nStride;
 
-   public:
+    public:
     FORCEINLINE CStridedConstPtr( void const *pData, size_t nByteStride )
     {
         m_pData = reinterpret_cast< T const * >( pData );
@@ -114,7 +114,7 @@ enum EAttributeDataType
     ATTRDATATYPE_FLOAT = 0,    // a float attribute
     ATTRDATATYPE_4V = 1,       // vector data type, stored as class FourVectors
     ATTRDATATYPE_INT = 2,      // integer. not especially sse-able on
-                               // all architectures.
+                                // all architectures.
     ATTRDATATYPE_POINTER = 3,  // a pointer.
     ATTRDATATYPE_NONE = -1,    // pad and varargs ender
 };
@@ -123,7 +123,7 @@ enum EAttributeDataType
 
 class CSOAContainer
 {
-   protected:
+    protected:
     int m_nColumns;  // # of rows and columns created with
     int m_nRows;
     int m_nSlices;
@@ -150,7 +150,7 @@ class CSOAContainer
         m_nFieldPresentMask = 0;
     }
 
-   public:
+    public:
     CSOAContainer( void )  // an empoty one with no attributes
     {
         Init();
@@ -235,7 +235,7 @@ class CSOAContainer
         Assert( m_nDataType[nAttributeIdx] != ATTRDATATYPE_NONE );
         Assert( m_nFieldPresentMask & ( 1 << nAttributeIdx ) );
         return m_pAttributePtrs[nAttributeIdx] +
-               +nRowNumber * m_nRowStrideInBytes[nAttributeIdx] + nSliceNumber * m_nSliceStrideInBytes[nAttributeIdx];
+                +nRowNumber * m_nRowStrideInBytes[nAttributeIdx] + nSliceNumber * m_nSliceStrideInBytes[nAttributeIdx];
     }
 
     FORCEINLINE void const *ConstRowPtr( int nAttributeIdx, int nRowNumber, int nSliceNumber = 0 ) const
@@ -248,9 +248,9 @@ class CSOAContainer
 
     template < class T >
     FORCEINLINE T *ElementPointer( int nAttributeIdx,
-                                   int nX = 0,
-                                   int nY = 0,
-                                   int nZ = 0 ) const
+                                    int nX = 0,
+                                    int nY = 0,
+                                    int nZ = 0 ) const
     {
         Assert( nAttributeIdx < MAX_SOA_FIELDS );
         Assert( nX < m_nColumns );
@@ -298,7 +298,7 @@ class CFltX4AttributeIterator : public CStridedConstPtr< fltx4 >
 {
     FORCEINLINE CFltX4AttributeIterator( CSOAContainer const *pContainer, int nAttribute, int nRowNumber = 0 )
         : CStridedConstPtr< fltx4 >( pContainer->ConstRowPtr( nAttribute, nRowNumber ),
-                                     pContainer->ItemByteStride( nAttribute ) )
+                                    pContainer->ItemByteStride( nAttribute ) )
     {
     }
 };

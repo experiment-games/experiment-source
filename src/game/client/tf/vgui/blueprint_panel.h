@@ -23,7 +23,7 @@ class CBlueprintPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBlueprintPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CBlueprintPanel( vgui::Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );

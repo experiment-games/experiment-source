@@ -41,19 +41,19 @@ enum TYPE
 
 abstract_class ISocket
 {
-   public:
+    public:
     bool IsValid() const;
 };
 
 abstract_class ISendData
 {
-   public:
+    public:
     virtual bool Send( const char *data, size_t dataLength ) = 0;
 };
 
 abstract_class ITcpSocket : public ISocket
 {
-   public:
+    public:
     virtual bool IsServer() const = 0;
 };
 

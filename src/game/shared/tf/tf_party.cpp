@@ -227,10 +227,10 @@ void CTFParty::SpewDebug()
         RTime32 rtQueued = GetQueueEntryStartTime( idx );
         CRTime time( rtQueued );
         Msg( "    MatchGroup: %d  Started matchmaking: %s (%d seconds ago, now is %s)\n",
-             GetQueueEntryMatchGroup( idx ),
-             time.Render( time_buf ),
-             CRTime::RTime32TimeCur() - rtQueued,
-             now.Render( now_buf ) );
+            GetQueueEntryMatchGroup( idx ),
+            time.Render( time_buf ),
+            CRTime::RTime32TimeCur() - rtQueued,
+            now.Render( now_buf ) );
     }
     Msg( "------\n" );
     Msg( "%s\n", Obj().DebugString().c_str() );

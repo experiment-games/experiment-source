@@ -46,7 +46,7 @@ class CClientRenderablesList : public CRefCounted<>
 {
     DECLARE_FIXEDSIZE_ALLOCATOR( CClientRenderablesList );
 
-   public:
+    public:
     enum
     {
 #ifdef EXPERIMENT_SOURCE
@@ -105,7 +105,7 @@ enum
 //-----------------------------------------------------------------------------
 abstract_class IClientLeafShadowEnum
 {
-   public:
+    public:
     // The user ID is the id passed into CreateShadow
     virtual void EnumShadow( ClientShadowHandle_t userId ) = 0;
 };
@@ -113,7 +113,7 @@ abstract_class IClientLeafShadowEnum
 // subclassed by things which wish to add per-leaf data managed by the client leafsystem
 class CClientLeafSubSystemData
 {
-   public:
+    public:
     virtual ~CClientLeafSubSystemData( void )
     {
     }
@@ -128,7 +128,7 @@ class CClientLeafSubSystemData
 //-----------------------------------------------------------------------------
 abstract_class IClientLeafSystem : public IClientLeafSystemEngine, public IGameSystemPerFrame
 {
-   public:
+    public:
     // Adds and removes renderables from the leaf lists
     virtual void AddRenderable( IClientRenderable * pRenderable, RenderGroup_t group ) = 0;
 

@@ -17,7 +17,7 @@ class CTFBotHintEngineerNest : public CBaseTFBotHintEntity
 {
     DECLARE_CLASS( CTFBotHintEngineerNest, CBaseTFBotHintEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -45,7 +45,7 @@ class CTFBotHintEngineerNest : public CBaseTFBotHintEntity
     CTFBotHintSentrygun* GetSentryHint() const;
     CTFBotHintTeleporterExit* GetTeleporterHint() const;
 
-   private:
+    private:
     void DetonateObjectsFromHints( const HintVector_t& hints );
     CBaseTFBotHintEntity* GetHint( const HintVector_t& hints ) const;
 

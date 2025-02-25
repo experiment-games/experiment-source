@@ -83,8 +83,8 @@ static QueryCacheEntry_t *FindOrAllocateCacheEntry( QueryCacheKey_t const &entry
     else
     {
         if ( sv_disable_querycache.GetInt() ||
-             ( gpGlobals->curtime - pFound->m_flLastUpdateTime >=
-               pFound->m_QueryParams.m_flMinimumUpdateInterval ) )
+            ( gpGlobals->curtime - pFound->m_flLastUpdateTime >=
+                pFound->m_QueryParams.m_flMinimumUpdateInterval ) )
         {
             pFound->m_bSpeculativelyDone = false;
             pFound->IssueQuery();
@@ -174,7 +174,7 @@ void ProcessQueryCacheUpdate( QueryCacheUpdateRecord_t &workItem )
             if ( pEntry->m_bUsedSinceUpdated )
             {
                 if ( flCurTime - pEntry->m_flLastUpdateTime >=
-                     pEntry->m_QueryParams.m_flMinimumUpdateInterval )
+                    pEntry->m_QueryParams.m_flMinimumUpdateInterval )
                 {
                     // don't bother updating if we have recently
                     pEntry->IssueQuery();
@@ -264,8 +264,8 @@ void QueryCacheEntry_t::IssueQuery( void )
         CalculateOffsettedPosition( pEntity, m_QueryParams.m_nOffsetMode[i], &( m_QueryParams.m_Points[i] ) );
     }
     CTraceFilterSimple filter( m_QueryParams.m_pEntities[2],
-                               m_QueryParams.m_nCollisionGroup,
-                               m_QueryParams.m_pTraceFilterFunction );
+                                m_QueryParams.m_nCollisionGroup,
+                                m_QueryParams.m_pTraceFilterFunction );
     trace_t result;
     s_nNumCacheMisses++;
     UTIL_TraceLine( m_QueryParams.m_Points[0], m_QueryParams.m_Points[1], m_QueryParams.m_nTraceMask, &filter, &result );
@@ -274,14 +274,14 @@ void QueryCacheEntry_t::IssueQuery( void )
 }
 
 bool IsLineOfSightBetweenTwoEntitiesClear( CBaseEntity *pSrcEntity,
-                                           EEntityOffsetMode_t nSrcOffsetMode,
-                                           CBaseEntity *pDestEntity,
-                                           EEntityOffsetMode_t nDestOffsetMode,
-                                           CBaseEntity *pSkipEntity,
-                                           int nCollisionGroup,
-                                           unsigned int nTraceMask,
-                                           ShouldHitFunc_t pTraceFilterCallback,
-                                           float flMinimumUpdateInterval )
+                                            EEntityOffsetMode_t nSrcOffsetMode,
+                                            CBaseEntity *pDestEntity,
+                                            EEntityOffsetMode_t nDestOffsetMode,
+                                            CBaseEntity *pSkipEntity,
+                                            int nCollisionGroup,
+                                            unsigned int nTraceMask,
+                                            ShouldHitFunc_t pTraceFilterCallback,
+                                            float flMinimumUpdateInterval )
 {
     QueryCacheKey_t entry;
     entry.m_Type = EQUERY_ENTITY_LOS_CHECK;
@@ -316,9 +316,9 @@ CON_COMMAND( sv_querycache_stats, "Display status of the query cache (client onl
 #endif
 
     Warning( "%d queries, %d misses (%d free) suc spec = %d wasted spec=%d\n",
-             s_nNumCacheQueries,
-             s_nNumCacheMisses,
-             s_VictimList.Count(),
-             s_SuccessfulSpeculatives,
-             s_WastedSpeculativeUpdates );
+            s_nNumCacheQueries,
+            s_nNumCacheMisses,
+            s_VictimList.Count(),
+            s_SuccessfulSpeculatives,
+            s_WastedSpeculativeUpdates );
 }

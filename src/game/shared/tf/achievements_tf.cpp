@@ -652,7 +652,7 @@ bool GameRulesAllowsAchievements( void )
     bool bRetVal = false;
 
     if ( ( TFGameRules()->State_Get() < GR_STATE_TEAM_WIN ) ||
-         ( TFGameRules()->State_Get() == GR_STATE_STALEMATE ) )
+        ( TFGameRules()->State_Get() == GR_STATE_STALEMATE ) )
     {
         bRetVal = true;
     }
@@ -977,10 +977,10 @@ class CAchievementTF_KillBalloonicornOwners : public CBaseTFAchievement
                             if ( pItem && pItem->IsValid() )
                             {
                                 if ( pItem->GetItemDefinition() == pItemDef_Balloonicorn ||
-                                     pItem->GetItemDefinition() == pItemDef_BalloonicornPromo ||
-                                     pItem->GetItemDefinition() == pItemDef_BalloonicornPlushPromo ||
-                                     pItem->GetItemDefinition() == pItemDef_Reindoonicorn ||
-                                     pItem->GetItemDefinition() == pItemDef_Balloonicorpse )
+                                    pItem->GetItemDefinition() == pItemDef_BalloonicornPromo ||
+                                    pItem->GetItemDefinition() == pItemDef_BalloonicornPlushPromo ||
+                                    pItem->GetItemDefinition() == pItemDef_Reindoonicorn ||
+                                    pItem->GetItemDefinition() == pItemDef_Balloonicorpse )
                                 {
                                     IncrementCount();
                                 }
@@ -1094,7 +1094,7 @@ class CAchievementTF_MultipleBFF : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlVector< CHandle< C_TFPlayer > > m_hBFFs;
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MultipleBFF, ACHIEVEMENT_TF_MULTIPLE_BFF, "TF_MULTIPLE_BFF", 5 );
@@ -1184,7 +1184,7 @@ class CAchievementTF_DominateForGoggles : public CBaseTFAchievement
                     if ( pItem && pItem->IsValid() )
                     {
                         if ( ( pItem->GetItemDefIndex() == 743 ) ||  // Autogrant PyroVision Goggles
-                             ( pItem->GetItemDefIndex() == 744 ) )   // PyroVision Goggles
+                            ( pItem->GetItemDefIndex() == 744 ) )   // PyroVision Goggles
                         {
                             IncrementCount();
                         }
@@ -1199,7 +1199,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_DominateForGoggles, ACHIEVEMENT_TF_DOMINATE_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_ParachuteKillGrind : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1224,7 +1224,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_ParachuteKillGrind, ACHIEVEMENT_TF_PARACHUTE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MeleeKillClassicRifleSniper : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1239,7 +1239,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MeleeKillClassicRifleSniper, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_KillChargingDemo : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1263,7 +1263,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_KillChargingDemo, ACHIEVEMENT_TF_KILL_CHARGI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFTaunt_CongaKill : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1301,7 +1301,7 @@ class CAchievementTFTaunt_CongaKill : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlVector< float > m_Times;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFTaunt_CongaKill, ACHIEVEMENT_TF_TAUNT_CONGA_KILL, "TF_TAUNT_CONGA_KILL", 5 );
@@ -1309,7 +1309,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFTaunt_CongaKill, ACHIEVEMENT_TF_TAUNT_CONGA_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFTaunt_CongaLine : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1323,7 +1323,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFTaunt_CongaLine, ACHIEVEMENT_TF_TAUNT_CONGA_L
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFTaunt_RPSRock : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1362,7 +1362,7 @@ class CAchievementTFTaunt_RPSRock : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iCount;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFTaunt_RPSRock, ACHIEVEMENT_TF_TAUNT_RPS_ROCK, "TF_TAUNT_RPS_ROCK", 5 );
@@ -1370,7 +1370,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFTaunt_RPSRock, ACHIEVEMENT_TF_TAUNT_RPS_ROCK,
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFTaunt_RPSScissors : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1409,7 +1409,7 @@ class CAchievementTFTaunt_RPSScissors : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iCount;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFTaunt_RPSScissors, ACHIEVEMENT_TF_TAUNT_RPS_SCISSORS, "TF_TAUNT_RPS_SCISSORS", 5 );
@@ -1417,7 +1417,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFTaunt_RPSScissors, ACHIEVEMENT_TF_TAUNT_RPS_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFTaunt_DosidoMeleeKill : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1432,7 +1432,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFTaunt_DosidoMeleeKill, ACHIEVEMENT_TF_TAUNT_D
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFTaunt_TauntWhileCapping : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1447,7 +1447,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFTaunt_TauntWhileCapping, ACHIEVEMENT_TF_TAUNT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_PassTimeHat : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1461,7 +1461,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_PassTimeHat, ACHIEVEMENT_TF_PASS_TIME_HAT, "
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_PassTimeGrind : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );

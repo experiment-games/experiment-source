@@ -20,7 +20,7 @@ class CHalloweenOfferingSelectionPanel : public CCollectionCraftingSelectionPane
 {
     DECLARE_CLASS_SIMPLE( CHalloweenOfferingSelectionPanel, CCollectionCraftingSelectionPanel );
 
-   public:
+    public:
     CHalloweenOfferingSelectionPanel( Panel *pParent )
         : BaseClass( pParent ) {}
 
@@ -36,7 +36,7 @@ class CHalloweenOfferingSelectionPanel : public CCollectionCraftingSelectionPane
 //-----------------------------------------------------------------------------
 class CHalloweenOfferingPanel : public CCollectionCraftingPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHalloweenOfferingPanel, CCollectionCraftingPanel );
     CHalloweenOfferingPanel( vgui::Panel *parent, CItemModelPanelToolTip *pTooltip );
     ~CHalloweenOfferingPanel( void );
@@ -52,7 +52,7 @@ class CHalloweenOfferingPanel : public CCollectionCraftingPanel
         return HALLOWEEN_OFFERING_ITEM_COUNT;
     }
 
-   protected:
+    protected:
     virtual void CreateSelectionPanel();
 };
 

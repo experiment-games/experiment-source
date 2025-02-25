@@ -42,7 +42,7 @@ SRes Lzma86_Decode(Byte *dest, SizeT *destLen, const Byte *src, SizeT *srcLen)
 
   inSizePure = *srcLen - LZMA86_HEADER_SIZE;
   res = LzmaDecode(dest, destLen, src + LZMA86_HEADER_SIZE, &inSizePure,
-      src + 1, LZMA_PROPS_SIZE, LZMA_FINISH_ANY, &status, &g_Alloc);
+    src + 1, LZMA_PROPS_SIZE, LZMA_FINISH_ANY, &status, &g_Alloc);
   *srcLen = inSizePure + LZMA86_HEADER_SIZE;
   if (res != SZ_OK)
     return res;

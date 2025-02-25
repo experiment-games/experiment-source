@@ -35,7 +35,7 @@ CScreenSpaceEffectRegistration::CScreenSpaceEffectRegistration( const char *pNam
 //------------------------------------------------------------------------------
 class CScreenSpaceEffectManager : public IScreenSpaceEffectManager
 {
-   public:
+    public:
     virtual void InitScreenSpaceEffects();
     virtual void ShutdownScreenSpaceEffects();
 
@@ -202,7 +202,7 @@ void CScreenSpaceEffectManager::RenderEffects( int x, int y, int w, int h )
 //------------------------------------------------------------------------------
 class CExampleEffect : public IScreenSpaceEffect
 {
-   public:
+    public:
     CExampleEffect();
     ~CExampleEffect();
 
@@ -216,7 +216,7 @@ class CExampleEffect : public IScreenSpaceEffect
     void Enable( bool bEnable );
     bool IsEnabled();
 
-   private:
+    private:
     bool m_bEnable;
 
     CMaterialReference m_Material;

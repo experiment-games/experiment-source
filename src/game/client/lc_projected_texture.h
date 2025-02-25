@@ -10,7 +10,7 @@
 */
 class LProjectedTexture
 {
-   public:
+    public:
     LUA_DECLARE_SINGLE_LUA_INSTANCE( LProjectedTexture, LUA_PROJECTEDTEXTUREMETANAME );
 
     LProjectedTexture();
@@ -22,7 +22,7 @@ class LProjectedTexture
     virtual void SetupRefTable( lua_State *L );
     int m_nTableReference;
 
-   public:
+    public:
     Vector GetAbsOrigin() const
     {
         return m_vecOrigin;

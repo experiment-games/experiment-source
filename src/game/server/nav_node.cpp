@@ -33,7 +33,7 @@ extern Vector NavTraceMaxs;
 
 class CNodeHashFuncs
 {
-   public:
+    public:
     CNodeHashFuncs( int ) {}
 
     bool operator()( const CNavNode *pLhs, const CNavNode *pRhs ) const
@@ -466,10 +466,10 @@ BOOL CNavNode::IsBiLinked( NavDirType dir ) const
 BOOL CNavNode::IsClosedCell( void ) const
 {
     if ( IsBiLinked( SOUTH ) &&
-         IsBiLinked( EAST ) &&
-         m_to[EAST]->IsBiLinked( SOUTH ) &&
-         m_to[SOUTH]->IsBiLinked( EAST ) &&
-         m_to[EAST]->m_to[SOUTH] == m_to[SOUTH]->m_to[EAST] )
+        IsBiLinked( EAST ) &&
+        m_to[EAST]->IsBiLinked( SOUTH ) &&
+        m_to[SOUTH]->IsBiLinked( EAST ) &&
+        m_to[EAST]->m_to[SOUTH] == m_to[SOUTH]->m_to[EAST] )
     {
         return true;
     }

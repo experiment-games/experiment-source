@@ -27,20 +27,20 @@ class CTeamControlPoint : public CBaseAnimating
 {
     DECLARE_CLASS( CTeamControlPoint, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTeamControlPoint();
 
     // Derived, game-specific control points must override these functions
-   public:
+    public:
     // Used to find game specific entities
     virtual const char *GetControlPointMasterName( void )
     {
         return "team_control_point_master";
     }
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
     virtual void Precache( void );
@@ -151,7 +151,7 @@ class CTeamControlPoint : public CBaseAnimating
 
     void EXPORT UnlockThink( void );
 
-   private:
+    private:
     void SendCapString( int iCapTeam, int iNumCappingPlayers, int *pCappingPlayers );
     void InternalSetOwner( int iCapTeam, bool bMakeSound = true, int iNumCappers = 0, int *iCappingPlayers = NULL );
     void HandleScoring( int iTeam );

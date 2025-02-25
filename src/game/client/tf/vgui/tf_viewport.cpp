@@ -106,7 +106,7 @@ CON_COMMAND( showmapinfo, "Show map info panel" )
     if ( pPlayer )
     {
         if ( ( pPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ||
-             ( ( pPlayer->GetTeamNumber() != TEAM_UNASSIGNED ) && ( pPlayer->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
+            ( ( pPlayer->GetTeamNumber() != TEAM_UNASSIGNED ) && ( pPlayer->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
         {
             // close all the other panels that could be open
             gViewPortInterface->ShowPanel( PANEL_TEAM, false );

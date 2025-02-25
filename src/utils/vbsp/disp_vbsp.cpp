@@ -49,8 +49,8 @@ bool GetBarycentricCoordsFromLightmapCoords( Vector2D tri[3], Vector2D const &lm
     GetBarycentricCoords2D( tri[0], tri[1], tri[2], lmCoords, bcCoords );
 
     return ( bcCoords[0] >= 0.0f && bcCoords[0] <= 1.0f ) &&
-           ( bcCoords[1] >= 0.0f && bcCoords[1] <= 1.0f ) &&
-           ( bcCoords[2] >= 0.0f && bcCoords[2] <= 1.0f );
+            ( bcCoords[1] >= 0.0f && bcCoords[1] <= 1.0f ) &&
+            ( bcCoords[2] >= 0.0f && bcCoords[2] <= 1.0f );
 }
 
 bool FindTriIndexMapByUV( CCoreDispInfo *pCoreDisp, Vector2D const &lmCoords, int &iTriangle, float flBarycentric[3] )
@@ -200,15 +200,15 @@ void DispMapToCoreDispInfo( mapdispinfo_t *pMapDisp, CCoreDispInfo *pCoreDispInf
 
     // Set the luxel coordinates on the base displacement surface.
     Vector vecTmp( pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][0],
-                   pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
-                   pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
+                    pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
+                    pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
     int nLuxelsPerWorldUnit = static_cast< int >( 1.0f / VectorLength( vecTmp ) );
     Vector vecU( pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][0],
-                 pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
-                 pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
+                pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
+                pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
     Vector vecV( pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][0],
-                 pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][1],
-                 pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][2] );
+                pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][1],
+                pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][2] );
     bool bSwap = pSurf->CalcLuxelCoords( nLuxelsPerWorldUnit, false, vecU, vecV );
 
     // Set the face m_LightmapExtents
@@ -413,8 +413,8 @@ bool FindEnclosingTri(
             bcCoords );
 
         if ( bcCoords[0] >= 0 && bcCoords[0] <= 1 &&
-             bcCoords[1] >= 0 && bcCoords[1] <= 1 &&
-             bcCoords[2] >= 0 && bcCoords[2] <= 1 )
+            bcCoords[1] >= 0 && bcCoords[1] <= 1 &&
+            bcCoords[2] >= 0 && bcCoords[2] <= 1 )
         {
             *pStartVert = i;
             return true;

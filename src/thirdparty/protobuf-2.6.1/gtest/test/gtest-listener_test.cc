@@ -106,7 +106,7 @@ class EventRecordingListener : public TestEventListener {
   }
 
   virtual void OnTestIterationEnd(const UnitTest& /*unit_test*/,
-                                  int iteration) {
+                                int iteration) {
     Message message;
     message << GetFullMethodName("OnTestIterationEnd")
             << "("  << iteration << ")";
@@ -175,8 +175,8 @@ using ::testing::internal::EnvironmentInvocationCatcher;
 using ::testing::internal::EventRecordingListener;
 
 void VerifyResults(const std::vector<std::string>& data,
-                   const char* const* expected_data,
-                   int expected_data_size) {
+                    const char* const* expected_data,
+                    int expected_data_size) {
   const int actual_size = data.size();
   // If the following assertion fails, a new entry will be appended to
   // data.  Hence we save data.size() first.
@@ -184,7 +184,7 @@ void VerifyResults(const std::vector<std::string>& data,
 
   // Compares the common prefix.
   const int shorter_size = expected_data_size <= actual_size ?
-      expected_data_size : actual_size;
+    expected_data_size : actual_size;
   int i = 0;
   for (; i < shorter_size; ++i) {
     ASSERT_STREQ(expected_data[i], data[i].c_str())
@@ -203,14 +203,14 @@ int main(int argc, char **argv) {
   InitGoogleTest(&argc, argv);
 
   UnitTest::GetInstance()->listeners().Append(
-      new EventRecordingListener("1st"));
+    new EventRecordingListener("1st"));
   UnitTest::GetInstance()->listeners().Append(
-      new EventRecordingListener("2nd"));
+    new EventRecordingListener("2nd"));
 
   AddGlobalTestEnvironment(new EnvironmentInvocationCatcher);
 
   GTEST_CHECK_(events.size() == 0)
-      << "AddGlobalTestEnvironment should not generate any events itself.";
+    << "AddGlobalTestEnvironment should not generate any events itself.";
 
   ::testing::GTEST_FLAG(repeat) = 2;
   int ret_val = RUN_ALL_TESTS();

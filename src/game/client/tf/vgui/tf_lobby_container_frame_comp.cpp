@@ -32,7 +32,7 @@ class CTFCompetitiveWelcomeDialog : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFCompetitiveWelcomeDialog, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFCompetitiveWelcomeDialog()
         : CTFMessageBoxDialog( NULL, ( const char * )NULL, NULL, NULL, NULL )
     {

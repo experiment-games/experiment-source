@@ -59,7 +59,7 @@ struct WeaponData_t
 
 class CTFWeaponInfo : public FileWeaponInfo_t
 {
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CTFWeaponInfo, FileWeaponInfo_t );
 
     CTFWeaponInfo();
@@ -72,7 +72,7 @@ class CTFWeaponInfo : public FileWeaponInfo_t
         return m_WeaponData[iWeapon];
     }
 
-   public:
+    public:
     WeaponData_t m_WeaponData[2];
 
     int m_iWeaponType;

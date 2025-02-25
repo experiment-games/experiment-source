@@ -24,7 +24,7 @@
 
 class WashEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     WashEmitter( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -62,7 +62,7 @@ class WashEmitter : public CSimpleEmitter
         return ( ( ( float )pParticle->m_uchStartAlpha / 255.0f ) * sin( M_PI * ( pParticle->m_flLifetime / pParticle->m_flDieTime ) ) );
     }
 
-   private:
+    private:
     WashEmitter( const WashEmitter & );
 };
 
@@ -76,7 +76,7 @@ class WashEmitter : public CSimpleEmitter
 
 class C_RotorWashEmitter : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_RotorWashEmitter, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -85,7 +85,7 @@ class C_RotorWashEmitter : public C_BaseEntity
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ClientThink( void );
 
-   protected:
+    protected:
     float m_flAltitude;
 
     PMaterialHandle m_hWaterMaterial[2];

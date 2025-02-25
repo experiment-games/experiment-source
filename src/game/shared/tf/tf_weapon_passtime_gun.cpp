@@ -214,8 +214,8 @@ float CPasstimeGun::GetChargeBeginTime()
 float CPasstimeGun::GetChargeMaxTime()
 {
     return ( tf_passtime_experiment_instapass.GetBool() && tf_passtime_experiment_instapass_charge.GetBool() )
-               ? 3.0f
-               : 0.0f;
+                ? 3.0f
+                : 0.0f;
 }
 
 //-----------------------------------------------------------------------------
@@ -298,8 +298,8 @@ acttable_t *CPasstimeGun::ActivityList( int &iActivityCount )
 {
     iActivityCount = ARRAYSIZE( s_acttablePasstime );
     return GetTFPlayerOwner()
-               ? s_acttablePasstime
-               : BaseClass::ActivityList( iActivityCount );
+                ? s_acttablePasstime
+                : BaseClass::ActivityList( iActivityCount );
 }
 
 //-----------------------------------------------------------------------------
@@ -515,8 +515,8 @@ void CPasstimeGun::ItemPostFrame()
         // See if the current pass target is still valid
         //
         else if ( pCurrentTarget && ( !BValidPassTarget( pOwner, pCurrentTarget ) || ( bCanAttack2Cancel && m_attack2.Is( BUTTONSTATE_DOWN ) )  // right click prevents pass lock
-                                      || ( ( m_flTargetResetTime > 0 ) && ( m_flTargetResetTime < gpGlobals->curtime ) ) || ( pCurrentTarget->WorldSpaceCenter().DistToSqr( vecEyePos ) >= flMaxPassDistSqr ) ) &&
-                  !m_attack.Is( BUTTONSTATE_DOWN ) )  // left click prevents pass unlock
+                                    || ( ( m_flTargetResetTime > 0 ) && ( m_flTargetResetTime < gpGlobals->curtime ) ) || ( pCurrentTarget->WorldSpaceCenter().DistToSqr( vecEyePos ) >= flMaxPassDistSqr ) ) &&
+                !m_attack.Is( BUTTONSTATE_DOWN ) )  // left click prevents pass unlock
         {
             pOwner->m_Shared.SetPasstimePassTarget( 0 );
             m_flTargetResetTime = 0;

@@ -320,12 +320,12 @@ bool CAI_BehaviorAlyxInjured::FindCoverFromEnemyBehindTarget( CBaseEntity *pTarg
 
         AIMoveTrace_t moveTrace;
         GetOuter()->GetMoveProbe()->MoveLimit( NAV_GROUND,
-                                               GetOuter()->GetAbsOrigin(),
-                                               vecTestPos,
-                                               MASK_SOLID_BRUSHONLY,
-                                               NULL,
-                                               0,
-                                               &moveTrace );
+                                                GetOuter()->GetAbsOrigin(),
+                                                vecTestPos,
+                                                MASK_SOLID_BRUSHONLY,
+                                                NULL,
+                                                0,
+                                                &moveTrace );
 
         bool bWithinRangeToGoal = ( moveTrace.vEndPosition - vecTestPos ).Length2DSqr() < Square( GetOuter()->GetHullWidth() * 3.0f );
         bool bCanStandAtGoal = GetOuter()->GetMoveProbe()->CheckStandPosition( moveTrace.vEndPosition, MASK_SOLID_BRUSHONLY );
@@ -420,8 +420,8 @@ void CAI_BehaviorAlyxInjured::GatherConditions( void )
 
     // Determines whether we consider ourselves in danger
     bool bInDanger = ( HasCondition( COND_LIGHT_DAMAGE ) ||
-                       HasCondition( COND_HEAVY_DAMAGE ) ||
-                       HasCondition( COND_INJURED_OVERWHELMED ) );
+                        HasCondition( COND_HEAVY_DAMAGE ) ||
+                        HasCondition( COND_INJURED_OVERWHELMED ) );
 
     // See if we're too far away from the player and in danger
     if ( AI_IsSinglePlayer() && bInDanger )
@@ -467,8 +467,8 @@ void CAI_BehaviorAlyxInjured::GatherConditions( void )
             /*
             else
             {
-              SpeakIfAllowed( TLK_INJURED_FOLLOW_TOO_FAR );
-              m_flNextWarnTime = gpGlobals->curtime + random->RandomFloat( 3.0f, 5.0f );
+            SpeakIfAllowed( TLK_INJURED_FOLLOW_TOO_FAR );
+            m_flNextWarnTime = gpGlobals->curtime + random->RandomFloat( 3.0f, 5.0f );
             }
             */
 

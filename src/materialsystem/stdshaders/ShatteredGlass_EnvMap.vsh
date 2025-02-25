@@ -10,6 +10,5 @@ $envmapcameraspace = 0;
 $envmapsphere = 0;
 $vertexcolor = 0;
 
-&ShatteredGlass( $detail, $envmap, $envmapcameraspace, $envmapsphere, 
-				$vertexcolor );
-
+&ShatteredGlass( $detail, $envmap, $envmapcameraspace, $envmapsphere,
+                $vertexcolor );

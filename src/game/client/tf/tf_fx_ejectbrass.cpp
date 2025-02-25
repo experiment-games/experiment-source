@@ -57,8 +57,8 @@ void TF_EjectBrassCallback( const CEffectData &data )
     VectorAngles( -vUp, vecShellAngles );
 
     Vector vecVelocity = random->RandomFloat( 130, 180 ) * vForward +
-                         random->RandomFloat( -30, 30 ) * vRight +
-                         random->RandomFloat( -30, 30 ) * vUp;
+                        random->RandomFloat( -30, 30 ) * vRight +
+                        random->RandomFloat( -30, 30 ) * vUp;
 
     float flLifeTime = 10.0f;
 
@@ -72,8 +72,8 @@ void TF_EjectBrassCallback( const CEffectData &data )
     {
         // More velocity for Jake
         vecVelocity = random->RandomFloat( 130, 250 ) * vForward +
-                      random->RandomFloat( -100, 100 ) * vRight +
-                      random->RandomFloat( -30, 80 ) * vUp;
+                    random->RandomFloat( -100, 100 ) * vRight +
+                    random->RandomFloat( -30, 80 ) * vUp;
     }
 
     Assert( pModel );

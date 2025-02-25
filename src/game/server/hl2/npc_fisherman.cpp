@@ -57,7 +57,7 @@ int AE_FISHERMAN_HAT_OFF;
 
 class CNPC_Fisherman : public CNPC_PlayerCompanion
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Fisherman, CNPC_PlayerCompanion );
     // DECLARE_SERVERCLASS();
     DECLARE_DATADESC();

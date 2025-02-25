@@ -18,7 +18,7 @@ class C_ObjectTeleporter : public C_BaseObject
 {
     DECLARE_CLASS( C_ObjectTeleporter, C_BaseObject );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ObjectTeleporter();
@@ -77,7 +77,7 @@ class C_ObjectTeleporter : public C_BaseObject
 
     virtual void OnGoInactive( void ) OVERRIDE;
 
-   private:
+    private:
     int m_iState;
     int m_iOldState;
     float m_flRechargeTime;
@@ -100,7 +100,7 @@ class C_ObjectTeleporter : public C_BaseObject
 
     CSoundPatch *m_pSpinSound;
 
-   private:
+    private:
     C_ObjectTeleporter( const C_ObjectTeleporter & );  // not defined, not accessible
 };
 

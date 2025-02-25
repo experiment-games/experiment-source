@@ -31,14 +31,14 @@
 
 class CSDKGameRulesProxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CSDKGameRulesProxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 };
 
 class CSDKGameRules : public CTeamplayRules
 {
-   public:
+    public:
     DECLARE_CLASS( CSDKGameRules, CTeamplayRules );
 
     virtual bool ShouldCollide( int collisionGroup0, int collisionGroup1 );
@@ -66,7 +66,7 @@ class CSDKGameRules : public CTeamplayRules
 
     virtual const char *GetChatPrefix( bool bTeamOnly, CBasePlayer *pPlayer );
 
-   private:
+    private:
     void RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrcIn, float flRadius, int iClassIgnore, bool bIgnoreWorld );
 
 #endif

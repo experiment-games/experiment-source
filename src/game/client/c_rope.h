@@ -27,14 +27,14 @@ struct RopeSegData_t;
 //=============================================================================
 class C_RopeKeyframe : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_RopeKeyframe, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   private:
+    private:
     class CPhysicsDelegate : public CSimplePhysics::IHelper
     {
-       public:
+        public:
         virtual void GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
         virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
 
@@ -43,7 +43,7 @@ class C_RopeKeyframe : public C_BaseEntity
 
     friend class CPhysicsDelegate;
 
-   public:
+    public:
     C_RopeKeyframe();
     ~C_RopeKeyframe();
 
@@ -115,7 +115,7 @@ class C_RopeKeyframe : public C_BaseEntity
     void BuildRope( RopeSegData_t *pRopeSegment, const Vector &vCurrentViewForward, const Vector &vCurrentViewOrigin, BuildRopeQueuedData_t *pQueuedData, bool bQueued );
 
     // C_BaseEntity overrides.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ClientThink();
     virtual int DrawModel( int flags );
@@ -128,7 +128,7 @@ class C_RopeKeyframe : public C_BaseEntity
     virtual bool GetAttachment( int number, Vector &origin );
     virtual bool GetAttachmentVelocity( int number, Vector &originVel, Quaternion &angleVel );
 
-   private:
+    private:
     void FinishInit( const char *pMaterialName );
 
     void RunRopeSimulation( float flSeconds );
@@ -151,7 +151,7 @@ class C_RopeKeyframe : public C_BaseEntity
     void ReceiveMessage( int classID, bf_read &msg );
     bool CalculateEndPointAttachment( C_BaseEntity *pEnt, int iAttachment, Vector &vPos, QAngle *pAngles );
 
-   private:
+    private:
     // Track which links touched something last frame. Used to prevent wind from gusting on them.
     CBitVec< ROPE_MAX_SEGMENTS > m_LinksTouchingSomething;
     int m_nLinksTouchingSomething;
@@ -237,7 +237,7 @@ void Rope_ResetCounters();
 //
 abstract_class IRopeManager
 {
-   public:
+    public:
     virtual ~IRopeManager() {}
     virtual void ResetRenderCache( void ) = 0;
     virtual void AddToRenderCache( C_RopeKeyframe * pRope ) = 0;

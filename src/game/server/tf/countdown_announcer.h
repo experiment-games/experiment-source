@@ -18,7 +18,7 @@
 
 class CCountdownAnnouncer
 {
-   public:
+    public:
     struct TimeSounds
     {
         const char *at60;
@@ -114,7 +114,7 @@ class CCountdownAnnouncer
         return m_state == Disabled;
     }
 
-   private:
+    private:
     void BroadcastSound( const char *name )
     {
         if ( name && *name )

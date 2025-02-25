@@ -8,7 +8,7 @@
 
 class CTFBotUseItem : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotUseItem( CTFWeaponBase *item );
     virtual ~CTFBotUseItem() {}
 
@@ -21,7 +21,7 @@ class CTFBotUseItem : public Action< CTFBot >
         return "UseItem";
     };
 
-   private:
+    private:
     CHandle< CTFWeaponBase > m_item;
     CountdownTimer m_cooldownTimer;
 };

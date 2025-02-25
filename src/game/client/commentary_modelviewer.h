@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 class CCommentaryModelPanel : public CModelPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CCommentaryModelPanel, CModelPanel );
 
     CCommentaryModelPanel( vgui::Panel *parent, const char *name );
@@ -33,7 +33,7 @@ class CCommentaryModelViewer : public vgui::Frame, public IViewPortPanel
 {
     DECLARE_CLASS_SIMPLE( CCommentaryModelViewer, vgui::Frame );
 
-   public:
+    public:
     CCommentaryModelViewer( IViewPort *pViewPort );
     virtual ~CCommentaryModelViewer();
 
@@ -48,7 +48,7 @@ class CCommentaryModelViewer : public vgui::Frame, public IViewPortPanel
     void HandleMovementInput( void );
 
     // IViewPortPanel
-   public:
+    public:
     virtual const char *GetName( void )
     {
         return PANEL_COMMENTARY_MODELVIEWER;
@@ -85,7 +85,7 @@ class CCommentaryModelViewer : public vgui::Frame, public IViewPortPanel
         return GAME_ACTION_SET_MENUCONTROLS;
     }
 
-   private:
+    private:
     IViewPort *m_pViewPort;
     CCommentaryModelPanel *m_pModelPanel;
 

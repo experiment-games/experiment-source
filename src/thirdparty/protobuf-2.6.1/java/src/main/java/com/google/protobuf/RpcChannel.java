@@ -54,18 +54,18 @@ package com.google.protobuf;
  */
 public interface RpcChannel {
   /**
-   * Call the given method of the remote service.  This method is similar to
-   * {@code Service.callMethod()} with one important difference:  the caller
-   * decides the types of the {@code Message} objects, not the callee.  The
-   * request may be of any type as long as
-   * {@code request.getDescriptor() == method.getInputType()}.
-   * The response passed to the callback will be of the same type as
-   * {@code responsePrototype} (which must have
-   * {@code getDescriptor() == method.getOutputType()}).
-   */
+    * Call the given method of the remote service.  This method is similar to
+    * {@code Service.callMethod()} with one important difference:  the caller
+    * decides the types of the {@code Message} objects, not the callee.  The
+    * request may be of any type as long as
+    * {@code request.getDescriptor() == method.getInputType()}.
+    * The response passed to the callback will be of the same type as
+    * {@code responsePrototype} (which must have
+    * {@code getDescriptor() == method.getOutputType()}).
+    */
   void callMethod(Descriptors.MethodDescriptor method,
-                  RpcController controller,
-                  Message request,
-                  Message responsePrototype,
-                  RpcCallback<Message> done);
+                RpcController controller,
+                Message request,
+                Message responsePrototype,
+                RpcCallback<Message> done);
 }

@@ -42,7 +42,7 @@
 // The prime table interface.
 class PrimeTable
 {
-   public:
+    public:
     virtual ~PrimeTable() {}
 
     // Returns true iff n is a prime number.
@@ -56,7 +56,7 @@ class PrimeTable
 // Implementation #1 calculates the primes on-the-fly.
 class OnTheFlyPrimeTable : public PrimeTable
 {
-   public:
+    public:
     virtual bool IsPrime( int n ) const
     {
         if ( n <= 1 ) return false;
@@ -85,7 +85,7 @@ class OnTheFlyPrimeTable : public PrimeTable
 // in an array.
 class PreCalculatedPrimeTable : public PrimeTable
 {
-   public:
+    public:
     // 'max' specifies the maximum number the prime table holds.
     explicit PreCalculatedPrimeTable( int max )
         : is_prime_size_( max + 1 ), is_prime_( new bool[max + 1] )
@@ -112,7 +112,7 @@ class PreCalculatedPrimeTable : public PrimeTable
         return -1;
     }
 
-   private:
+    private:
     void CalculatePrimesUpTo( int max )
     {
         ::std::fill( is_prime_, is_prime_ + is_prime_size_, true );

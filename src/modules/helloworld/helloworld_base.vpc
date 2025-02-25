@@ -25,44 +25,44 @@ $MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
 
 $Configuration	"Debug"
 {
-	$General
-	{
-		$OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
-		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
+    $General
+    {
+        $OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
+        $IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
 
-		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
-		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
-	}
+        $OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+        $IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+    }
 }
 
 $Configuration	"Release"
 {
-	$General
-	{
-		$OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
-		$IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
+    $General
+    {
+        $OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
+        $IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
 
-		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
-		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
-	}
+        $OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+        $IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+    }
 }
 
 $Configuration
 {
-	$Compiler
-	{
-		$AdditionalIncludeDirectories   "$BASE;$SRCDIR\modules\helloworld;$SRCDIR\modules\helloworld\include"
+    $Compiler
+    {
+        $AdditionalIncludeDirectories   "$BASE;$SRCDIR\modules\helloworld;$SRCDIR\modules\helloworld\include"
         $PreprocessorDefinitions        "$BASE;"
-		$RuntimeLibrary					"Multi-threaded DLL (/MD)"
-		$WarningLevel					"Level 3 (/W3)"
+        $RuntimeLibrary					"Multi-threaded DLL (/MD)"
+        $WarningLevel					"Level 3 (/W3)"
         $EnableC++Exceptions	        "Yes (/EHsc)" [!$X360]
-	}
+    }
 }
 
 $Project "HelloWorld (Experiment Module)"
 {
-	$Folder	"Source Files"
-	{
+    $Folder	"Source Files"
+    {
         $File	"HelloWorld.cpp"
     }
 }

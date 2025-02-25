@@ -25,7 +25,7 @@ extern ConVar NextBotStop;
  */
 class NextBotCombatCharacter : public CBaseCombatCharacter, public INextBot
 {
-   public:
+    public:
     DECLARE_CLASS( NextBotCombatCharacter, CBaseCombatCharacter );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -83,7 +83,7 @@ class NextBotCombatCharacter : public CBaseCombatCharacter, public INextBot
         return const_cast< NextBotCombatCharacter * >( this );
     }
 
-   private:
+    private:
     EHANDLE m_lastAttacker;
 
     bool m_didModelChange;
@@ -102,7 +102,7 @@ inline int NextBotCombatCharacter::GetLastHitGroup( void ) const
 //-----------------------------------------------------------------------------------------------------
 class NextBotDestroyer
 {
-   public:
+    public:
     NextBotDestroyer( int team );
     bool operator()( INextBot *bot );
     int m_team;  // the team to delete bots from, or TEAM_ANY for any team

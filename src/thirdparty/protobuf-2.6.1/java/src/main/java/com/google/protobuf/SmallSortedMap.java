@@ -87,50 +87,50 @@ import java.util.SortedMap;
 class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
 
   /**
-   * Creates a new instance for mapping FieldDescriptors to their values.
-   * The {@link #makeImmutable()} implementation will convert the List values
-   * of any repeated fields to unmodifiable lists.
-   *
-   * @param arraySize The size of the entry array containing the
-   *        lexicographically smallest mappings.
-   */
+    * Creates a new instance for mapping FieldDescriptors to their values.
+    * The {@link #makeImmutable()} implementation will convert the List values
+    * of any repeated fields to unmodifiable lists.
+    *
+    * @param arraySize The size of the entry array containing the
+    *        lexicographically smallest mappings.
+    */
   static <FieldDescriptorType extends
-      FieldSet.FieldDescriptorLite<FieldDescriptorType>>
-      SmallSortedMap<FieldDescriptorType, Object> newFieldMap(int arraySize) {
+    FieldSet.FieldDescriptorLite<FieldDescriptorType>>
+    SmallSortedMap<FieldDescriptorType, Object> newFieldMap(int arraySize) {
     return new SmallSortedMap<FieldDescriptorType, Object>(arraySize) {
-      @Override
-      @SuppressWarnings("unchecked")
-      public void makeImmutable() {
+    @Override
+    @SuppressWarnings("unchecked")
+    public void makeImmutable() {
         if (!isImmutable()) {
-          for (int i = 0; i < getNumArrayEntries(); i++) {
+        for (int i = 0; i < getNumArrayEntries(); i++) {
             final Map.Entry<FieldDescriptorType, Object> entry =
                 getArrayEntryAt(i);
             if (entry.getKey().isRepeated()) {
-              final List value = (List) entry.getValue();
-              entry.setValue(Collections.unmodifiableList(value));
+            final List value = (List) entry.getValue();
+            entry.setValue(Collections.unmodifiableList(value));
             }
-          }
-          for (Map.Entry<FieldDescriptorType, Object> entry :
-                   getOverflowEntries()) {
+        }
+        for (Map.Entry<FieldDescriptorType, Object> entry :
+                    getOverflowEntries()) {
             if (entry.getKey().isRepeated()) {
-              final List value = (List) entry.getValue();
-              entry.setValue(Collections.unmodifiableList(value));
+            final List value = (List) entry.getValue();
+            entry.setValue(Collections.unmodifiableList(value));
             }
-          }
+        }
         }
         super.makeImmutable();
-      }
+    }
     };
   }
 
   /**
-   * Creates a new instance for testing.
-   *
-   * @param arraySize The size of the entry array containing the
-   *        lexicographically smallest mappings.
-   */
+    * Creates a new instance for testing.
+    *
+    * @param arraySize The size of the entry array containing the
+    *        lexicographically smallest mappings.
+    */
   static <K extends Comparable<K>, V> SmallSortedMap<K, V> newInstanceForTest(
-      int arraySize) {
+    int arraySize) {
     return new SmallSortedMap<K, V>(arraySize);
   }
 
@@ -146,10 +146,10 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
   private volatile EntrySet lazyEntrySet;
 
   /**
-   * @code arraySize Size of the array in which the lexicographically smallest
-   *       mappings are stored. (i.e. the {@code k} referred to in the class
-   *       documentation).
-   */
+    * @code arraySize Size of the array in which the lexicographically smallest
+    *       mappings are stored. (i.e. the {@code k} referred to in the class
+    *       documentation).
+    */
   private SmallSortedMap(int arraySize) {
     this.maxArraySize = arraySize;
     this.entryList = Collections.emptyList();
@@ -159,14 +159,14 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
   /** Make this map immutable from this point forward. */
   public void makeImmutable() {
     if (!isImmutable) {
-      // Note: There's no need to wrap the entryList in an unmodifiableList
-      // because none of the list's accessors are exposed. The iterator() of
-      // overflowEntries, on the other hand, is exposed so it must be made
-      // unmodifiable.
-      overflowEntries = overflowEntries.isEmpty() ?
-          Collections.<K, V>emptyMap() :
-          Collections.unmodifiableMap(overflowEntries);
-      isImmutable = true;
+    // Note: There's no need to wrap the entryList in an unmodifiableList
+    // because none of the list's accessors are exposed. The iterator() of
+    // overflowEntries, on the other hand, is exposed so it must be made
+    // unmodifiable.
+    overflowEntries = overflowEntries.isEmpty() ?
+        Collections.<K, V>emptyMap() :
+        Collections.unmodifiableMap(overflowEntries);
+    isImmutable = true;
     }
   }
 
@@ -203,11 +203,11 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
   }
 
   /**
-   * The implementation throws a {@code ClassCastException} if o is not an
-   * object of type {@code K}.
-   *
-   * {@inheritDoc}
-   */
+    * The implementation throws a {@code ClassCastException} if o is not an
+    * object of type {@code K}.
+    *
+    * {@inheritDoc}
+    */
   @Override
   public boolean containsKey(Object o) {
     @SuppressWarnings("unchecked")
@@ -216,18 +216,18 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
   }
 
   /**
-   * The implementation throws a {@code ClassCastException} if o is not an
-   * object of type {@code K}.
-   *
-   * {@inheritDoc}
-   */
+    * The implementation throws a {@code ClassCastException} if o is not an
+    * object of type {@code K}.
+    *
+    * {@inheritDoc}
+    */
   @Override
   public V get(Object o) {
     @SuppressWarnings("unchecked")
     final K key = (K) o;
     final int index = binarySearchInArray(key);
     if (index >= 0) {
-      return entryList.get(index).getValue();
+    return entryList.get(index).getValue();
     }
     return overflowEntries.get(key);
   }
@@ -237,21 +237,21 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     checkMutable();
     final int index = binarySearchInArray(key);
     if (index >= 0) {
-      // Replace existing array entry.
-      return entryList.get(index).setValue(value);
+    // Replace existing array entry.
+    return entryList.get(index).setValue(value);
     }
     ensureEntryArrayMutable();
     final int insertionPoint = -(index + 1);
     if (insertionPoint >= maxArraySize) {
-      // Put directly in overflow.
-      return getOverflowEntriesMutable().put(key, value);
+    // Put directly in overflow.
+    return getOverflowEntriesMutable().put(key, value);
     }
     // Insert new Entry in array.
     if (entryList.size() == maxArraySize) {
-      // Shift the last array entry into overflow.
-      final Entry lastEntryInArray = entryList.remove(maxArraySize - 1);
-      getOverflowEntriesMutable().put(lastEntryInArray.getKey(),
-                                      lastEntryInArray.getValue());
+    // Shift the last array entry into overflow.
+    final Entry lastEntryInArray = entryList.remove(maxArraySize - 1);
+    getOverflowEntriesMutable().put(lastEntryInArray.getKey(),
+                                    lastEntryInArray.getValue());
     }
     entryList.add(insertionPoint, new Entry(key, value));
     return null;
@@ -261,19 +261,19 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
   public void clear() {
     checkMutable();
     if (!entryList.isEmpty()) {
-      entryList.clear();
+    entryList.clear();
     }
     if (!overflowEntries.isEmpty()) {
-      overflowEntries.clear();
+    overflowEntries.clear();
     }
   }
 
   /**
-   * The implementation throws a {@code ClassCastException} if o is not an
-   * object of type {@code K}.
-   *
-   * {@inheritDoc}
-   */
+    * The implementation throws a {@code ClassCastException} if o is not an
+    * object of type {@code K}.
+    *
+    * {@inheritDoc}
+    */
   @Override
   public V remove(Object o) {
     checkMutable();
@@ -281,14 +281,14 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     final K key = (K) o;
     final int index = binarySearchInArray(key);
     if (index >= 0) {
-      return removeArrayEntryAt(index);
+    return removeArrayEntryAt(index);
     }
     // overflowEntries might be Collections.unmodifiableMap(), so only
     // call remove() if it is non-empty.
     if (overflowEntries.isEmpty()) {
-      return null;
+    return null;
     } else {
-      return overflowEntries.remove(key);
+    return overflowEntries.remove(key);
     }
   }
 
@@ -296,21 +296,21 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     checkMutable();
     final V removed = entryList.remove(index).getValue();
     if (!overflowEntries.isEmpty()) {
-      // Shift the first entry in the overflow to be the last entry in the
-      // array.
-      final Iterator<Map.Entry<K, V>> iterator =
-          getOverflowEntriesMutable().entrySet().iterator();
-      entryList.add(new Entry(iterator.next()));
-      iterator.remove();
+    // Shift the first entry in the overflow to be the last entry in the
+    // array.
+    final Iterator<Map.Entry<K, V>> iterator =
+        getOverflowEntriesMutable().entrySet().iterator();
+    entryList.add(new Entry(iterator.next()));
+    iterator.remove();
     }
     return removed;
   }
 
   /**
-   * @param key The key to find in the entry array.
-   * @return The returned integer position follows the same semantics as the
-   *     value returned by {@link java.util.Arrays#binarySearch()}.
-   */
+    * @param key The key to find in the entry array.
+    * @return The returned integer position follows the same semantics as the
+    *     value returned by {@link java.util.Arrays#binarySearch()}.
+    */
   private int binarySearchInArray(K key) {
     int left = 0;
     int right = entryList.size() - 1;
@@ -319,216 +319,216 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     // ascending tag order, check the largest element in the array before
     // doing a full binary search.
     if (right >= 0) {
-      int cmp = key.compareTo(entryList.get(right).getKey());
-      if (cmp > 0) {
+    int cmp = key.compareTo(entryList.get(right).getKey());
+    if (cmp > 0) {
         return -(right + 2);  // Insert point is after "right".
-      } else if (cmp == 0) {
+    } else if (cmp == 0) {
         return right;
-      }
+    }
     }
 
     while (left <= right) {
-      int mid = (left + right) / 2;
-      int cmp = key.compareTo(entryList.get(mid).getKey());
-      if (cmp < 0) {
+    int mid = (left + right) / 2;
+    int cmp = key.compareTo(entryList.get(mid).getKey());
+    if (cmp < 0) {
         right = mid - 1;
-      } else if (cmp > 0) {
+    } else if (cmp > 0) {
         left = mid + 1;
-      } else {
+    } else {
         return mid;
-      }
+    }
     }
     return -(left + 1);
   }
 
   /**
-   * Similar to the AbstractMap implementation of {@code keySet()} and
-   * {@code values()}, the entry set is created the first time this method is
-   * called, and returned in response to all subsequent calls.
-   *
-   * {@inheritDoc}
-   */
+    * Similar to the AbstractMap implementation of {@code keySet()} and
+    * {@code values()}, the entry set is created the first time this method is
+    * called, and returned in response to all subsequent calls.
+    *
+    * {@inheritDoc}
+    */
   @Override
   public Set<Map.Entry<K, V>> entrySet() {
     if (lazyEntrySet == null) {
-      lazyEntrySet = new EntrySet();
+    lazyEntrySet = new EntrySet();
     }
     return lazyEntrySet;
   }
 
   /**
-   * @throws UnsupportedOperationException if {@link #makeImmutable()} has
-   *         has been called.
-   */
+    * @throws UnsupportedOperationException if {@link #makeImmutable()} has
+    *         has been called.
+    */
   private void checkMutable() {
     if (isImmutable) {
-      throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException();
     }
   }
 
   /**
-   * @return a {@link SortedMap} to which overflow entries mappings can be
-   *         added or removed.
-   * @throws UnsupportedOperationException if {@link #makeImmutable()} has been
-   *         called.
-   */
+    * @return a {@link SortedMap} to which overflow entries mappings can be
+    *         added or removed.
+    * @throws UnsupportedOperationException if {@link #makeImmutable()} has been
+    *         called.
+    */
   @SuppressWarnings("unchecked")
   private SortedMap<K, V> getOverflowEntriesMutable() {
     checkMutable();
     if (overflowEntries.isEmpty() && !(overflowEntries instanceof TreeMap)) {
-      overflowEntries = new TreeMap<K, V>();
+    overflowEntries = new TreeMap<K, V>();
     }
     return (SortedMap<K, V>) overflowEntries;
   }
 
   /**
-   * Lazily creates the entry list. Any code that adds to the list must first
-   * call this method.
-   */
+    * Lazily creates the entry list. Any code that adds to the list must first
+    * call this method.
+    */
   private void ensureEntryArrayMutable() {
     checkMutable();
     if (entryList.isEmpty() && !(entryList instanceof ArrayList)) {
-      entryList = new ArrayList<Entry>(maxArraySize);
+    entryList = new ArrayList<Entry>(maxArraySize);
     }
   }
 
   /**
-   * Entry implementation that implements Comparable in order to support
-   * binary search within the entry array. Also checks mutability in
-   * {@link #setValue()}.
-   */
+    * Entry implementation that implements Comparable in order to support
+    * binary search within the entry array. Also checks mutability in
+    * {@link #setValue()}.
+    */
   private class Entry implements Map.Entry<K, V>, Comparable<Entry> {
 
     private final K key;
     private V value;
 
     Entry(Map.Entry<K, V> copy) {
-      this(copy.getKey(), copy.getValue());
+    this(copy.getKey(), copy.getValue());
     }
 
     Entry(K key, V value) {
-      this.key = key;
-      this.value = value;
+    this.key = key;
+    this.value = value;
     }
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public K getKey() {
-      return key;
+    return key;
     }
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public V getValue() {
-      return value;
+    return value;
     }
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public int compareTo(Entry other) {
-      return getKey().compareTo(other.getKey());
+    return getKey().compareTo(other.getKey());
     }
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public V setValue(V newValue) {
-      checkMutable();
-      final V oldValue = this.value;
-      this.value = newValue;
-      return oldValue;
+    checkMutable();
+    final V oldValue = this.value;
+    this.value = newValue;
+    return oldValue;
     }
 
     @Override
     public boolean equals(Object o) {
-      if (o == this) {
+    if (o == this) {
         return true;
-      }
-      if (!(o instanceof Map.Entry)) {
+    }
+    if (!(o instanceof Map.Entry)) {
         return false;
-      }
-      @SuppressWarnings("unchecked")
-      Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
-      return equals(key, other.getKey()) && equals(value, other.getValue());
+    }
+    @SuppressWarnings("unchecked")
+    Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
+    return equals(key, other.getKey()) && equals(value, other.getValue());
     }
 
     @Override
     public int hashCode() {
-      return (key == null ? 0 : key.hashCode()) ^
-          (value == null ? 0 : value.hashCode());
+    return (key == null ? 0 : key.hashCode()) ^
+        (value == null ? 0 : value.hashCode());
     }
 
     @Override
     public String toString() {
-      return key + "=" + value;
+    return key + "=" + value;
     }
 
     /** equals() that handles null values. */
     private boolean equals(Object o1, Object o2) {
-      return o1 == null ? o2 == null : o1.equals(o2);
+    return o1 == null ? o2 == null : o1.equals(o2);
     }
   }
 
   /**
-   * Stateless view of the entries in the field map.
-   */
+    * Stateless view of the entries in the field map.
+    */
   private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
     @Override
     public Iterator<Map.Entry<K, V>> iterator() {
-      return new EntryIterator();
+    return new EntryIterator();
     }
 
     @Override
     public int size() {
-      return SmallSortedMap.this.size();
+    return SmallSortedMap.this.size();
     }
 
     /**
-     * Throws a {@link ClassCastException} if o is not of the expected type.
-     *
-     * {@inheritDoc}
-     */
+    * Throws a {@link ClassCastException} if o is not of the expected type.
+    *
+    * {@inheritDoc}
+    */
     @Override
     public boolean contains(Object o) {
-      @SuppressWarnings("unchecked")
-      final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
-      final V existing = get(entry.getKey());
-      final V value = entry.getValue();
-      return existing == value ||
-          (existing != null && existing.equals(value));
+    @SuppressWarnings("unchecked")
+    final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
+    final V existing = get(entry.getKey());
+    final V value = entry.getValue();
+    return existing == value ||
+        (existing != null && existing.equals(value));
     }
 
     @Override
     public boolean add(Map.Entry<K, V> entry) {
-      if (!contains(entry)) {
+    if (!contains(entry)) {
         put(entry.getKey(), entry.getValue());
         return true;
-      }
-      return false;
+    }
+    return false;
     }
 
     /**
-     * Throws a {@link ClassCastException} if o is not of the expected type.
-     *
-     * {@inheritDoc}
-     */
+    * Throws a {@link ClassCastException} if o is not of the expected type.
+    *
+    * {@inheritDoc}
+    */
     @Override
     public boolean remove(Object o) {
-      @SuppressWarnings("unchecked")
-      final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
-      if (contains(entry)) {
+    @SuppressWarnings("unchecked")
+    final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
+    if (contains(entry)) {
         SmallSortedMap.this.remove(entry.getKey());
         return true;
-      }
-      return false;
+    }
+    return false;
     }
 
     @Override
     public void clear() {
-      SmallSortedMap.this.clear();
+    SmallSortedMap.this.clear();
     }
   }
 
   /**
-   * Iterator implementation that switches from the entry array to the overflow
-   * entries appropriately.
-   */
+    * Iterator implementation that switches from the entry array to the overflow
+    * entries appropriately.
+    */
   private class EntryIterator implements Iterator<Map.Entry<K, V>> {
 
     private int pos = -1;
@@ -537,82 +537,82 @@ class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public boolean hasNext() {
-      return (pos + 1) < entryList.size() ||
-          getOverflowIterator().hasNext();
+    return (pos + 1) < entryList.size() ||
+        getOverflowIterator().hasNext();
     }
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public Map.Entry<K, V> next() {
-      nextCalledBeforeRemove = true;
-      // Always increment pos so that we know whether the last returned value
-      // was from the array or from overflow.
-      if (++pos < entryList.size()) {
+    nextCalledBeforeRemove = true;
+    // Always increment pos so that we know whether the last returned value
+    // was from the array or from overflow.
+    if (++pos < entryList.size()) {
         return entryList.get(pos);
-      }
-      return getOverflowIterator().next();
+    }
+    return getOverflowIterator().next();
     }
 
     //@Override (Java 1.6 override semantics, but we must support 1.5)
     public void remove() {
-      if (!nextCalledBeforeRemove) {
+    if (!nextCalledBeforeRemove) {
         throw new IllegalStateException("remove() was called before next()");
-      }
-      nextCalledBeforeRemove = false;
-      checkMutable();
+    }
+    nextCalledBeforeRemove = false;
+    checkMutable();
 
-      if (pos < entryList.size()) {
+    if (pos < entryList.size()) {
         removeArrayEntryAt(pos--);
-      } else {
+    } else {
         getOverflowIterator().remove();
-      }
+    }
     }
 
     /**
-     * It is important to create the overflow iterator only after the array
-     * entries have been iterated over because the overflow entry set changes
-     * when the client calls remove() on the array entries, which invalidates
-     * any existing iterators.
-     */
+    * It is important to create the overflow iterator only after the array
+    * entries have been iterated over because the overflow entry set changes
+    * when the client calls remove() on the array entries, which invalidates
+    * any existing iterators.
+    */
     private Iterator<Map.Entry<K, V>> getOverflowIterator() {
-      if (lazyOverflowIterator == null) {
+    if (lazyOverflowIterator == null) {
         lazyOverflowIterator = overflowEntries.entrySet().iterator();
-      }
-      return lazyOverflowIterator;
+    }
+    return lazyOverflowIterator;
     }
   }
 
   /**
-   * Helper class that holds immutable instances of an Iterable/Iterator that
-   * we return when the overflow entries is empty. This eliminates the creation
-   * of an Iterator object when there is nothing to iterate over.
-   */
+    * Helper class that holds immutable instances of an Iterable/Iterator that
+    * we return when the overflow entries is empty. This eliminates the creation
+    * of an Iterator object when there is nothing to iterate over.
+    */
   private static class EmptySet {
 
     private static final Iterator<Object> ITERATOR = new Iterator<Object>() {
-      //@Override (Java 1.6 override semantics, but we must support 1.5)
-      public boolean hasNext() {
+    //@Override (Java 1.6 override semantics, but we must support 1.5)
+    public boolean hasNext() {
         return false;
-      }
-      //@Override (Java 1.6 override semantics, but we must support 1.5)
-      public Object next() {
+    }
+    //@Override (Java 1.6 override semantics, but we must support 1.5)
+    public Object next() {
         throw new NoSuchElementException();
-      }
-      //@Override (Java 1.6 override semantics, but we must support 1.5)
-      public void remove() {
+    }
+    //@Override (Java 1.6 override semantics, but we must support 1.5)
+    public void remove() {
         throw new UnsupportedOperationException();
-      }
+    }
     };
 
     private static final Iterable<Object> ITERABLE = new Iterable<Object>() {
-      //@Override (Java 1.6 override semantics, but we must support 1.5)
-      public Iterator<Object> iterator() {
+    //@Override (Java 1.6 override semantics, but we must support 1.5)
+    public Iterator<Object> iterator() {
         return ITERATOR;
-      }
+    }
     };
 
     @SuppressWarnings("unchecked")
     static <T> Iterable<T> iterable() {
-      return (Iterable<T>) ITERABLE;
+    return (Iterable<T>) ITERABLE;
     }
   }
 }

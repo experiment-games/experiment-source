@@ -21,7 +21,7 @@ class CSDKPlayer;
 
 class CSDKPlayerShared
 {
-   public:
+    public:
 #ifdef CLIENT_DLL
     friend class C_SDKPlayer;
     typedef C_SDKPlayer OuterClass;
@@ -93,7 +93,7 @@ class CSDKPlayerShared
 
     void ComputeWorldSpaceSurroundingBox( Vector *pVecWorldMins, Vector *pVecWorldMaxs );
 
-   private:
+    private:
 #if defined( SDK_USE_PRONE )
     CNetworkVar( bool, m_bProne );
 #endif
@@ -112,7 +112,7 @@ class CSDKPlayerShared
     CNetworkVar( float, m_flStamina );
 #endif  // SDK_USE_STAMINA || SDK_USE_SPRINTING
 
-   public:
+    public:
 #ifdef SDK_USE_PRONE
     float m_flNextProneCheck;  // Prevent it switching their prone state constantly.
 
@@ -130,7 +130,7 @@ class CSDKPlayerShared
     float m_flSprintSpeed;
     float m_flProneSpeed;
 
-   private:
+    private:
     OuterClass *m_pOuter;
 };
 

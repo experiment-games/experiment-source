@@ -78,7 +78,7 @@ void CStorePricePanel_New::SetItem( const econ_store_entry_t *pEntry )
 //-----------------------------------------------------------------------------
 CStorePricePanel_Bundles::CStorePricePanel_Bundles( vgui::Panel *pParent, const char *pPanelName )
     : CStorePricePanel( pParent, pPanelName ),
-      m_pLimitedLarge( NULL )
+    m_pLimitedLarge( NULL )
 {
 }
 

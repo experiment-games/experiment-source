@@ -68,18 +68,18 @@ bool CTFBotDefendPoint::IsPointThreatened( CTFBot *me )
     }
 
     /*
-      // if an enemy is closer to the point than we are, head them off
-      // TODO: Compare time to reach, not distance
-      const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-      if ( threat )
-      {
+    // if an enemy is closer to the point than we are, head them off
+    // TODO: Compare time to reach, not distance
+    const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
+    if ( threat )
+    {
         const float tolerance = 100.0f;
 
         float themRange = ( threat->GetLastKnownPosition() - point->GetAbsOrigin() ).Length();
         float myRange = ( me->GetAbsOrigin() - point->GetAbsOrigin() ).Length();
         if ( myRange + tolerance > themRange )
-          return true;
-      }
+        return true;
+    }
     */
 
     return false;
@@ -300,7 +300,7 @@ EventDesiredResult< CTFBot > CTFBotDefendPoint::OnTerritoryLost( CTFBot *me, int
 //---------------------------------------------------------------------------------------------
 class CSelectDefenseAreaForPoint : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CSelectDefenseAreaForPoint( CTFNavArea *pointArea, int myTeam, CUtlVector< CTFNavArea * > *areaVector )
     {
         m_pointArea = pointArea;
@@ -380,16 +380,16 @@ CTFNavArea *CTFBotDefendPoint::SelectAreaToDefendFrom( CTFBot *me )
     CUtlVector< CTFNavArea * > defenseAreas;
 
     /*
-      if ( !TFGameRules()->IsInKothMode() &&
-         point->GetTeamCapPercentage( me->GetTeamNumber() ) <= 0.0f &&	// point is currently safe
-         ( ObjectiveResource()->GetPreviousPointForPoint( point->GetPointIndex(), me->GetTeamNumber(), 0 ) < 0 ||		 // this is the first cap point
-          me->IsPlayerClass( TF_CLASS_PYRO ) ) )						// pyros are skirmishers
-      {
+    if ( !TFGameRules()->IsInKothMode() &&
+        point->GetTeamCapPercentage( me->GetTeamNumber() ) <= 0.0f &&	// point is currently safe
+        ( ObjectiveResource()->GetPreviousPointForPoint( point->GetPointIndex(), me->GetTeamNumber(), 0 ) < 0 ||		 // this is the first cap point
+        me->IsPlayerClass( TF_CLASS_PYRO ) ) )						// pyros are skirmishers
+    {
         if ( TheTFNavMesh()->GetSetupGateDefenseAreas() )
         {
-          defenseAreas = *TheTFNavMesh()->GetSetupGateDefenseAreas();
+        defenseAreas = *TheTFNavMesh()->GetSetupGateDefenseAreas();
         }
-      }
+    }
     */
 
     if ( defenseAreas.Count() == 0 )

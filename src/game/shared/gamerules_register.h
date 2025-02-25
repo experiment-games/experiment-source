@@ -34,7 +34,7 @@
 
 class CGameRulesRegister
 {
-   public:
+    public:
     typedef void ( *CreateGameRulesFn )();
 
     CGameRulesRegister( const char *pClassName, CreateGameRulesFn fn );
@@ -44,7 +44,7 @@ class CGameRulesRegister
 
     static CGameRulesRegister *FindByName( const char *pName );
 
-   private:
+    private:
     const char *m_pClassName;
     CreateGameRulesFn m_pFn;
     CGameRulesRegister *m_pNext;  // Links it into the global list.

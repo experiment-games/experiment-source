@@ -10,7 +10,7 @@ class CObjectTeleporter;
 
 class CTFBotTacticalMonitor : public Action< CTFBot >
 {
-   public:
+    public:
     virtual Action< CTFBot > *InitialContainedAction( CTFBot *me );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -28,7 +28,7 @@ class CTFBotTacticalMonitor : public Action< CTFBot >
         return "TacticalMonitor";
     }
 
-   private:
+    private:
     CountdownTimer m_maintainTimer;
 
     CountdownTimer m_acknowledgeAttentionTimer;

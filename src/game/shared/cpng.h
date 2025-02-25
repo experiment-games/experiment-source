@@ -25,7 +25,7 @@ class CPngMaterialProxy;
 
 class CPngTextureRegen : public ITextureRegenerator
 {
-   public:
+    public:
     CPngTextureRegen( CPngMaterialProxy *pProxy )
         : m_pProxy( pProxy ) {}
 
@@ -34,10 +34,10 @@ class CPngTextureRegen : public ITextureRegenerator
     {
     }
 
-   private:
+    private:
     CPngMaterialProxy *m_pProxy;
 
-   public:
+    public:
     static CUtlMap< const char *, CPngMaterialProxy * > m_mapProceduralMaterials;
 
     static IMaterial *GetOrCreateProceduralMaterial(
@@ -51,7 +51,7 @@ class CPngTextureRegen : public ITextureRegenerator
 
 class CPngMaterialProxy : public IMaterialProxy
 {
-   public:
+    public:
     CPngMaterialProxy();
     virtual ~CPngMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -75,7 +75,7 @@ class CPngMaterialProxy : public IMaterialProxy
 
     lua_Color GetColorAtPosition( int x, int y );
 
-   private:
+    private:
     void LoadTextureFromDisk();
     CPngTextureRegen m_TextureRegen;
     ITexture *m_pTexture;

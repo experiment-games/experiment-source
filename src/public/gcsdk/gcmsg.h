@@ -81,7 +81,7 @@ struct ProtoBufMsgHeader_t
 //-----------------------------------------------------------------------------
 class CStructNetPacket : public IMsgNetPacket
 {
-   public:
+    public:
     CStructNetPacket( CNetPacket *pNetPacket )
     {
         m_pHeader = ( GCMsgHdrEx_t * )pNetPacket->PubData();
@@ -148,7 +148,7 @@ class CStructNetPacket : public IMsgNetPacket
         return NULL;
     }
 
-   private:
+    private:
     virtual ~CStructNetPacket()
     {
         m_pNetPacket->Release();
@@ -196,7 +196,7 @@ typedef CMsgBase_t< GCMsgHdrEx_t > CGCMsgBase;
 template < typename MSG_BODY_TYPE >
 class CGCMsg : public CGCMsgBase
 {
-   public:
+    public:
     // Client send constructor
     CGCMsg( MsgType_t eMsg, uint32 cubReserve = 64 )
         : CGCMsgBase( sizeof( MSG_BODY_TYPE ), cubReserve )

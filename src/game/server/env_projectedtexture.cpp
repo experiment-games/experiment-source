@@ -19,7 +19,7 @@ class CEnvProjectedTexture : public CPointEntity
 {
     DECLARE_CLASS( CEnvProjectedTexture, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -46,7 +46,7 @@ class CEnvProjectedTexture : public CPointEntity
 
     CNetworkHandle( CBaseEntity, m_hTargetEntity );
 
-   private:
+    private:
     CNetworkVar( bool, m_bState );
     CNetworkVar( float, m_flLightFOV );
     CNetworkVar( bool, m_bEnableShadows );

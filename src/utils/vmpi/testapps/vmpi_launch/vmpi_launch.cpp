@@ -29,8 +29,8 @@ int GetCurMicrosecondsAndSleep( int sleepLen )
     int retVal;
     __asm
     {
-		rdtsc
-		mov		retVal,   eax
+        rdtsc
+        mov		retVal,   eax
     }
     return retVal;
 }
@@ -163,9 +163,9 @@ bool WaitForJobStart( ISocket *pSocket, const CIPAddr &remoteIP, const int jobID
             pSocket->RecvFrom( data, sizeof( data ), NULL );
 
         if ( len == 19 &&
-             memcmp( senderAddr.ip, remoteIP.ip, sizeof( senderAddr.ip ) ) == 0 &&
-             data[1] == VMPI_NOTIFY_START_STATUS &&
-             memcmp( &data[2], jobID, 16 ) == 0 )
+            memcmp( senderAddr.ip, remoteIP.ip, sizeof( senderAddr.ip ) ) == 0 &&
+            data[1] == VMPI_NOTIFY_START_STATUS &&
+            memcmp( &data[2], jobID, 16 ) == 0 )
         {
             if ( data[18] == 0 )
             {
@@ -193,9 +193,9 @@ void WaitForJobEnd( ISocket *pSocket, const CIPAddr &remoteIP, const int jobID[4
         char data[4096];
         int len = pSocket->RecvFrom( data, sizeof( data ), &senderAddr );
         if ( len == 18 &&
-             memcmp( senderAddr.ip, remoteIP.ip, sizeof( senderAddr.ip ) ) == 0 &&
-             data[1] == VMPI_NOTIFY_END_STATUS &&
-             memcmp( &data[2], jobID, 16 ) == 0 )
+            memcmp( senderAddr.ip, remoteIP.ip, sizeof( senderAddr.ip ) ) == 0 &&
+            data[1] == VMPI_NOTIFY_END_STATUS &&
+            memcmp( &data[2], jobID, 16 ) == 0 )
         {
             int ret = *( ( int * )&data[2] );
             printf( "Finished [%d].\n", ret );

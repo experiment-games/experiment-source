@@ -6,7 +6,7 @@ class CTFPlayer;
 
 class CTFArcherProxy : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CTFArcherProxy, CBaseAnimating );
 
     virtual void Precache( void );
@@ -17,7 +17,7 @@ class CTFArcherProxy : public CBaseAnimating
     void ShootArrowAt( CBaseEntity *target );
     void ShootGrenadeAt( CBaseEntity *target );
 
-   protected:
+    protected:
     CTFPlayer *SelectTarget( void );
 
     enum BehaviorStateType

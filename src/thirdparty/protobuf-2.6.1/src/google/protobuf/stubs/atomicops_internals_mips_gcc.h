@@ -53,8 +53,8 @@ namespace internal
 //
 // This routine implies no memory barriers.
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     Atomic32 prev, tmp;
     __asm__ __volatile__(
@@ -78,7 +78,7 @@ inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
 // Atomically store new_value into *ptr, returning the previous value held in
 // *ptr.  This routine implies no memory barriers.
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     Atomic32 temp, old;
     __asm__ __volatile__(
@@ -101,7 +101,7 @@ inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
 // Atomically increment *ptr by "increment".  Returns the new value of
 // *ptr with the increment applied.  This routine implies no memory barriers.
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     Atomic32 temp, temp2;
 
@@ -123,7 +123,7 @@ inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     ATOMICOPS_COMPILER_BARRIER();
     Atomic32 res = NoBarrier_AtomicIncrement( ptr, increment );
@@ -201,8 +201,8 @@ inline Atomic32 Release_Load( volatile const Atomic32* ptr )
 // 64-bit versions of the atomic ops.
 
 inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
-                                          Atomic64 old_value,
-                                          Atomic64 new_value )
+                                        Atomic64 old_value,
+                                        Atomic64 new_value )
 {
     Atomic64 prev, tmp;
     __asm__ __volatile__(
@@ -226,7 +226,7 @@ inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
 // Atomically store new_value into *ptr, returning the previous value held in
 // *ptr.  This routine implies no memory barriers.
 inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
-                                          Atomic64 new_value )
+                                        Atomic64 new_value )
 {
     Atomic64 temp, old;
     __asm__ __volatile__(
@@ -249,7 +249,7 @@ inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
 // Atomically increment *ptr by "increment".  Returns the new value of
 // *ptr with the increment applied.  This routine implies no memory barriers.
 inline Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr,
-                                           Atomic64 increment )
+                                            Atomic64 increment )
 {
     Atomic64 temp, temp2;
 
@@ -271,7 +271,7 @@ inline Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr,
 }
 
 inline Atomic64 Barrier_AtomicIncrement( volatile Atomic64* ptr,
-                                         Atomic64 increment )
+                                        Atomic64 increment )
 {
     MemoryBarrier();
     Atomic64 res = NoBarrier_AtomicIncrement( ptr, increment );

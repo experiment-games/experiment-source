@@ -38,7 +38,7 @@ void DecommitDMXMemory();
 //-----------------------------------------------------------------------------
 class CDMXContextHelper
 {
-   public:
+    public:
     CDMXContextHelper( bool bDecommitMemory )
     {
         m_bDecommitMemory = bDecommitMemory;
@@ -49,7 +49,7 @@ class CDMXContextHelper
         EndDMXContext( m_bDecommitMemory );
     }
 
-   private:
+    private:
     bool m_bDecommitMemory;
 };
 
@@ -66,7 +66,7 @@ void *DMXAlloc( size_t size );
 // Helper macro
 //-----------------------------------------------------------------------------
 #define DECLARE_DMX_ALLOCATOR()                                                               \
-   public:                                                                                    \
+    public:                                                                                    \
     inline void *operator new( size_t size )                                                  \
     {                                                                                         \
         MEM_ALLOC_CREDIT_( "DMXAlloc" );                                                      \

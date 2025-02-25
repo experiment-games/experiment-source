@@ -192,7 +192,7 @@ bool PlayerIndexLessFunc( const int &lhs, const int &rhs )
 // ropes aren't transmitted to guys who don't own them.
 class CObjectRopeTransmitProxy : public CBaseTransmitProxy
 {
-   public:
+    public:
     CObjectRopeTransmitProxy( CBaseEntity *pRope )
         : CBaseTransmitProxy( pRope )
     {
@@ -728,7 +728,7 @@ void CBaseObject::DeterminePlaybackRate( void )
 
     // If a sapper was added or removed part way through construction we need to invert the time to completion
     bool bAdjustCompleteTime = ( flReverseBuildingConstructionSpeed > 0.0f && GetPlaybackRate() < 0.0f ) ||
-                               ( flReverseBuildingConstructionSpeed < 0.0f && GetPlaybackRate() >= 0.0f );
+                                ( flReverseBuildingConstructionSpeed < 0.0f && GetPlaybackRate() >= 0.0f );
 
     if ( IsBuilding() )
     {
@@ -1014,7 +1014,7 @@ public:
 
     if ( pEntity->IsPlayer() )
     {
-      return false;
+    return false;
     }
 
     return true;
@@ -1081,7 +1081,7 @@ bool CBaseObject::TestPositionForPlayerBlock( Vector vecBuildOrigin, CBasePlayer
     // Store off the first clear location
     if ( iFirstClear < 0 && bNodeClear[i] )
     {
-      iFirstClear = i;
+    iFirstClear = i;
     }
   }
 
@@ -1101,7 +1101,7 @@ bool CBaseObject::TestPositionForPlayerBlock( Vector vecBuildOrigin, CBasePlayer
   {
     if ( bNodeVisited[i] == false && bNodeClear[i] == true )
     {
-      return false;
+    return false;
     }
   }
 
@@ -1206,7 +1206,7 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 
             // See if we're allowed to build on Robots
             if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() &&
-                 GetType() == OBJ_ATTACHMENT_SAPPER && !pPlayer->IsBot() )
+                GetType() == OBJ_ATTACHMENT_SAPPER && !pPlayer->IsBot() )
             {
                 CUtlVector< CTFPlayer * > playerVector;
                 CollectPlayers( &playerVector, pPlayer->GetOpposingTFTeam()->GetTeamNumber(), COLLECT_ONLY_LIVING_PLAYERS );
@@ -1317,7 +1317,7 @@ bool CBaseObject::StartBuilding( CBaseEntity *pBuilder )
         /*
         if ( ((CTFPlayer*)pBuilder)->IsPlayerClass( TF_CLASS_ENGINEER ) )
         {
-          ((CTFPlayer*)pBuilder)->HintMessage( HINT_ENGINEER_USE_WRENCH_ONOWN );
+        ((CTFPlayer*)pBuilder)->HintMessage( HINT_ENGINEER_USE_WRENCH_ONOWN );
         }
         */
 
@@ -1609,7 +1609,7 @@ void CBaseObject::SetHealth( float flHealth )
     // If we a pose parameter, set the pose parameter to reflect our health
     if ( LookupPoseParameter( "object_health") >= 0 && GetMaxHealth() > 0 )
     {
-      SetPoseParameter( "object_health", 100 * ( GetHealth() / (float)GetMaxHealth() ) );
+    SetPoseParameter( "object_health", 100 * ( GetHealth() / (float)GetMaxHealth() ) );
     }
     */
 
@@ -2423,9 +2423,9 @@ void CBaseObject::Killed( const CTakeDamageInfo &info )
             if ( pSapperOwner )
             {
                 EconEntity_OnOwnerKillEaterEvent( dynamic_cast< CEconEntity * >( pSapperOwner->GetEntityForLoadoutSlot( LOADOUT_POSITION_BUILDING ) ),
-                                                  pSapperOwner,
-                                                  GetOwner(),
-                                                  kKillEaterEvent_BuildingSapped );
+                                                pSapperOwner,
+                                                GetOwner(),
+                                                kKillEaterEvent_BuildingSapped );
             }
         }
 
@@ -2493,16 +2493,16 @@ void CBaseObject::Killed( const CTakeDamageInfo &info )
     if ( info.GetWeapon() )
     {
         EconEntity_OnOwnerKillEaterEvent( dynamic_cast< CEconEntity * >( info.GetWeapon() ),
-                                          pScorer,
-                                          GetOwner(),
-                                          kKillEaterEvent_BuildingDestroyed );
+                                        pScorer,
+                                        GetOwner(),
+                                        kKillEaterEvent_BuildingDestroyed );
     }
     else if ( pScorer && GetOwner() )
     {
         //  we still want strange cosmetics to count buildings destroyed
         HatAndMiscEconEntities_OnOwnerKillEaterEvent( pScorer,
-                                                      GetOwner(),
-                                                      kKillEaterEvent_BuildingDestroyed );
+                                                    GetOwner(),
+                                                    kKillEaterEvent_BuildingDestroyed );
     }
 
     UTIL_Remove( this );
@@ -3042,8 +3042,8 @@ void CBaseObject::StartUpgrading( void )
     RemoveAllGestures();
 
     if ( TFGameRules() && TFGameRules()->IsInTraining() &&
-         TFGameRules()->GetTrainingModeLogic() &&
-         GetOwner() && GetOwner()->IsFakeClient() == false )
+        TFGameRules()->GetTrainingModeLogic() &&
+        GetOwner() && GetOwner()->IsFakeClient() == false )
     {
         TFGameRules()->GetTrainingModeLogic()->OnPlayerUpgradedBuilding( GetOwner(), this );
     }
@@ -3122,11 +3122,11 @@ void CBaseObject::DetermineAnimation( void )
                 /*
                 if (1 || m_bPlacementOK )
                 {
-                  desiredActivity = ACT_OBJ_PLACING;
+                desiredActivity = ACT_OBJ_PLACING;
                 }
                 else
                 {
-                  desiredActivity = ACT_OBJ_IDLE;
+                desiredActivity = ACT_OBJ_IDLE;
                 }
                 */
             }

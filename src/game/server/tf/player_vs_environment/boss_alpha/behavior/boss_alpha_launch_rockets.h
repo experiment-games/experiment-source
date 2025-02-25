@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaLaunchRockets : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
     virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
     virtual void OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
@@ -26,7 +26,7 @@ class CBossAlphaLaunchRockets : public Action< CBossAlpha >
         return "LaunchRockets";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 
     CountdownTimer m_launchTimer;

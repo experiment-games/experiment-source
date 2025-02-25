@@ -260,7 +260,7 @@ class CFastZombie : public CNPC_BaseZombie
 {
     DECLARE_CLASS( CFastZombie, CNPC_BaseZombie );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
@@ -364,7 +364,7 @@ class CFastZombie : public CNPC_BaseZombie
 //=============================================================================
 #ifdef HL2_EPISODIC
 
-   public:
+    public:
     virtual bool CreateBehaviors( void );
     virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
     virtual void UpdateEfficiency( bool bInPVS );
@@ -372,7 +372,7 @@ class CFastZombie : public CNPC_BaseZombie
     void InputAttachToVehicle( inputdata_t &inputdata );
     void VehicleLeapAttackTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     void VehicleLeapAttack( void );
     bool CanEnterVehicle( CPropJeepEpisodic *pVehicle );
 
@@ -381,7 +381,7 @@ class CFastZombie : public CNPC_BaseZombie
 #endif  // HL2_EPISODIC
     //=============================================================================
 
-   protected:
+    protected:
     static const char *pMoanSounds[];
 
     // Sound stuff
@@ -394,7 +394,7 @@ class CFastZombie : public CNPC_BaseZombie
 
     bool m_fHasScreamed;
 
-   private:
+    private:
     float m_flNextMeleeAttack;
     bool m_fJustJumped;
     float m_flJumpStartAltitude;
@@ -402,7 +402,7 @@ class CFastZombie : public CNPC_BaseZombie
 
     CSoundPatch *m_pLayer2;  // used for climbing ladders, and when jumping (pre apex)
 
-   public:
+    public:
     DEFINE_CUSTOM_AI;
     DECLARE_DATADESC();
 };
@@ -1560,9 +1560,9 @@ void CFastZombie::ClimbTouch( CBaseEntity *pOther )
         pOther->VelocityPunch( vecDir );
 
         if ( GetActivity() != ACT_CLIMB_DISMOUNT ||
-             ( pOther->GetGroundEntity() == NULL &&
-               GetNavigator()->IsGoalActive() &&
-               pOther->GetAbsOrigin().z - GetNavigator()->GetCurWaypointPos().z < -1.0 ) )
+            ( pOther->GetGroundEntity() == NULL &&
+                GetNavigator()->IsGoalActive() &&
+                pOther->GetAbsOrigin().z - GetNavigator()->GetCurWaypointPos().z < -1.0 ) )
         {
             SetCondition( COND_FASTZOMBIE_CLIMB_TOUCH );
         }
@@ -1861,35 +1861,35 @@ void CFastZombie::Event_Killed( const CTakeDamageInfo &info )
 
 #if 0
 
-	// Become a server-side ragdoll and create a constraint at the hand
-	if ( m_PassengerBehavior.GetPassengerState() == PASSENGER_STATE_INSIDE )
-	{
-		IPhysicsObject *pVehiclePhys = m_PassengerBehavior.GetTargetVehicle()->GetServerVehicle()->GetVehicleEnt()->VPhysicsGetObject();
-		CBaseAnimating *pVehicleAnimating = m_PassengerBehavior.GetTargetVehicle()->GetServerVehicle()->GetVehicleEnt()->GetBaseAnimating();
-		int nRightHandBone = 31;//GetBaseAnimating()->LookupBone( "ValveBiped.Bip01_R_Finger2" );
-		Vector vecRightHandPos;
-		QAngle vecRightHandAngle;
-		GetAttachment( LookupAttachment( "Blood_Right" ), vecRightHandPos, vecRightHandAngle );
-		//CTakeDamageInfo dInfo( GetEnemy(), GetEnemy(), RandomVector( -200, 200 ), WorldSpaceCenter(), 50.0f, DMG_CRUSH );
-		dInfo.SetDamageType( info.GetDamageType() | DMG_REMOVENORAGDOLL );
-		dInfo.ScaleDamageForce( 10.0f );
-		CBaseEntity *pRagdoll = CreateServerRagdoll( GetBaseAnimating(), 0, info, COLLISION_GROUP_DEBRIS );
+    // Become a server-side ragdoll and create a constraint at the hand
+    if ( m_PassengerBehavior.GetPassengerState() == PASSENGER_STATE_INSIDE )
+    {
+        IPhysicsObject *pVehiclePhys = m_PassengerBehavior.GetTargetVehicle()->GetServerVehicle()->GetVehicleEnt()->VPhysicsGetObject();
+        CBaseAnimating *pVehicleAnimating = m_PassengerBehavior.GetTargetVehicle()->GetServerVehicle()->GetVehicleEnt()->GetBaseAnimating();
+        int nRightHandBone = 31;//GetBaseAnimating()->LookupBone( "ValveBiped.Bip01_R_Finger2" );
+        Vector vecRightHandPos;
+        QAngle vecRightHandAngle;
+        GetAttachment( LookupAttachment( "Blood_Right" ), vecRightHandPos, vecRightHandAngle );
+        //CTakeDamageInfo dInfo( GetEnemy(), GetEnemy(), RandomVector( -200, 200 ), WorldSpaceCenter(), 50.0f, DMG_CRUSH );
+        dInfo.SetDamageType( info.GetDamageType() | DMG_REMOVENORAGDOLL );
+        dInfo.ScaleDamageForce( 10.0f );
+        CBaseEntity *pRagdoll = CreateServerRagdoll( GetBaseAnimating(), 0, info, COLLISION_GROUP_DEBRIS );
 
-		/*
-		GetBaseAnimating()->GetBonePosition( nRightHandBone, vecRightHandPos, vecRightHandAngle );
+        /*
+        GetBaseAnimating()->GetBonePosition( nRightHandBone, vecRightHandPos, vecRightHandAngle );
 
-		CBaseEntity *pRagdoll = CreateServerRagdollAttached(	GetBaseAnimating(), 
-																vec3_origin, 
-																-1, 
-																COLLISION_GROUP_DEBRIS, 
-																pVehiclePhys,
-																pVehicleAnimating, 
-																0, 
-																vecRightHandPos,
-																nRightHandBone,	
-																vec3_origin );*/
+        CBaseEntity *pRagdoll = CreateServerRagdollAttached(	GetBaseAnimating(),
+                                                                vec3_origin,
+                                                                -1,
+                                                                COLLISION_GROUP_DEBRIS,
+                                                                pVehiclePhys,
+                                                                pVehicleAnimating,
+                                                                0,
+                                                                vecRightHandPos,
+                                                                nRightHandBone,
+                                                                vec3_origin );*/
 
-	}
+    }
 #endif
 
     BaseClass::Event_Killed( dInfo );

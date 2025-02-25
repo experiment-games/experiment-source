@@ -16,7 +16,7 @@
 // Use this to make a graph.
 class CScratchPadGraph
 {
-   public:
+    public:
     typedef int LineID;
 
     CScratchPadGraph();
@@ -50,13 +50,13 @@ class CScratchPadGraph
     // Get the 3D position of a sample on the graph (so you can draw other things there).
     Vector GetSamplePosition( float flTime, float flValue );
 
-   private:
+    private:
     void UpdateTicksAndStuff( float flTime, float flValue );
 
-   private:
+    private:
     class CLineInfo
     {
-       public:
+        public:
         bool m_bFirst;
         float m_flLastTime;
         float m_flLastValue;

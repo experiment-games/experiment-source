@@ -18,7 +18,7 @@ class CItemQuickSwitchPanel : public vgui::EditablePanel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CItemQuickSwitchPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CItemQuickSwitchPanel( const char *pElementName );
     virtual ~CItemQuickSwitchPanel();
 
@@ -51,7 +51,7 @@ class CItemQuickSwitchPanel : public vgui::EditablePanel, public CHudElement
     MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
     MESSAGE_FUNC_PTR( OnItemPanelExited, "ItemPanelExited", panel );
 
-   private:
+    private:
     int m_iClass;  // Class of the player we're selecting an item for
     int m_iSlot;   // Slot on the player that we're selecting an item for
     bool m_bLoadoutHasChanged;

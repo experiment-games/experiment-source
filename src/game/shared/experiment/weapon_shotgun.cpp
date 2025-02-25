@@ -25,20 +25,20 @@ extern ConVar sk_plr_num_shotgun_pellets;
 
 class CWeaponShotgun : public CBaseExperimentCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponShotgun, CBaseExperimentCombatWeapon );
 
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
-   private:
+    private:
     CNetworkVar( bool, m_bNeedPump );      // When emptied completely
     CNetworkVar( bool, m_bDelayedFire1 );  // Fire primary when finished reloading
     CNetworkVar( bool,
-                 m_bDelayedFire2 );         // Fire secondary when finished reloading
+                m_bDelayedFire2 );         // Fire secondary when finished reloading
     CNetworkVar( bool, m_bDelayedReload );  // Reload when finished pump
 
-   public:
+    public:
     virtual const Vector &GetBulletSpread( void )
     {
         static Vector cone = VECTOR_CONE_10DEGREES;
@@ -75,7 +75,7 @@ class CWeaponShotgun : public CBaseExperimentCombatWeapon
 
     CWeaponShotgun( void );
 
-   private:
+    private:
     CWeaponShotgun( const CWeaponShotgun & );
 };
 
@@ -379,7 +379,7 @@ void CWeaponShotgun::SecondaryAttack( void )
     // player "shoot" animation
     pPlayer->DoAnimationEvent(
         PLAYERANIMEVENT_ATTACK_PRIMARY );  // Tony; shotgun doesn't have a
-                                           // secondary anim, use primary.
+                                            // secondary anim, use primary.
 
     Vector vecSrc = pPlayer->Weapon_ShootPosition();
     Vector vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_10DEGREES );
@@ -420,7 +420,7 @@ void CWeaponShotgun::ItemPostFrame( void )
     {
         // If I'm primary firing and have one round stop reloading and fire
         if ( ( pOwner->m_nButtons & IN_ATTACK ) && ( m_iClip1 >= 1 ) &&
-             !m_bNeedPump )
+            !m_bNeedPump )
         {
             m_bInReload = false;
             m_bNeedPump = false;
@@ -428,7 +428,7 @@ void CWeaponShotgun::ItemPostFrame( void )
         }
         // If I'm secondary firing and have two rounds stop reloading and fire
         else if ( ( pOwner->m_nButtons & IN_ATTACK2 ) && ( m_iClip1 >= 2 ) &&
-                  !m_bNeedPump )
+                !m_bNeedPump )
         {
             m_bInReload = false;
             m_bNeedPump = false;
@@ -470,7 +470,7 @@ void CWeaponShotgun::ItemPostFrame( void )
 
     // Shotgun uses same timing and ammo for secondary attack
     if ( ( m_bDelayedFire2 || pOwner->m_nButtons & IN_ATTACK2 ) &&
-         ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
+        ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
     {
         m_bDelayedFire2 = false;
 
@@ -493,7 +493,7 @@ void CWeaponShotgun::ItemPostFrame( void )
 
         // Fire underwater?
         else if ( GetOwner()->GetWaterLevel() == 3 &&
-                  m_bFiresUnderwater == false )
+                m_bFiresUnderwater == false )
         {
             WeaponSound( EMPTY );
             m_flNextPrimaryAttack = gpGlobals->curtime + 0.2;
@@ -510,12 +510,12 @@ void CWeaponShotgun::ItemPostFrame( void )
         }
     }
     else if ( ( m_bDelayedFire1 || pOwner->m_nButtons & IN_ATTACK ) &&
-              m_flNextPrimaryAttack <= gpGlobals->curtime )
+            m_flNextPrimaryAttack <= gpGlobals->curtime )
     {
         m_bDelayedFire1 = false;
         if ( ( m_iClip1 <= 0 && UsesClipsForAmmo1() ) ||
-             ( !UsesClipsForAmmo1() &&
-               !pOwner->GetAmmoCount( m_iPrimaryAmmoType ) ) )
+            ( !UsesClipsForAmmo1() &&
+                !pOwner->GetAmmoCount( m_iPrimaryAmmoType ) ) )
         {
             if ( !pOwner->GetAmmoCount( m_iPrimaryAmmoType ) )
             {
@@ -560,7 +560,7 @@ void CWeaponShotgun::ItemPostFrame( void )
         {
             // weapon isn't useable, switch.
             if ( !( GetWeaponFlags() & ITEM_FLAG_NOAUTOSWITCHEMPTY ) &&
-                 pOwner->SwitchToNextBestWeapon( this ) )
+                pOwner->SwitchToNextBestWeapon( this ) )
             {
                 m_flNextPrimaryAttack = gpGlobals->curtime + 0.3;
                 return;
@@ -571,7 +571,7 @@ void CWeaponShotgun::ItemPostFrame( void )
             // weapon is useable. Reload if empty and weapon has waited as long
             // as it has to after firing
             if ( m_iClip1 <= 0 && !( GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD ) &&
-                 m_flNextPrimaryAttack < gpGlobals->curtime )
+                m_flNextPrimaryAttack < gpGlobals->curtime )
             {
                 if ( StartReload() )
                 {
@@ -618,7 +618,7 @@ void CWeaponShotgun::ItemHolsterFrame( void )
 
     // If it's been longer than three seconds, reload
     if ( ( gpGlobals->curtime - m_flHolsterTime ) >
-         sk_auto_reload_time.GetFloat() )
+        sk_auto_reload_time.GetFloat() )
     {
         // Reset the timer
         m_flHolsterTime = gpGlobals->curtime;

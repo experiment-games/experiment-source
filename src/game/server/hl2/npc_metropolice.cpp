@@ -269,7 +269,7 @@ CBaseEntity *CNPC_MetroPolice::CheckTraceHullAttack( float flDist, const Vector 
 //------------------------------------------------------------------------------
 class CTraceFilterMetroPolice : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterMetroPolice );
 
@@ -368,7 +368,7 @@ class CTraceFilterMetroPolice : public CTraceFilterEntitiesOnly
         return false;
     }
 
-   public:
+    public:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
     CTakeDamageInfo *m_dmgInfo;
@@ -546,15 +546,15 @@ bool CNPC_MetroPolice::OverrideMoveFacing( const AILocalMoveGoal_t &move, float 
 
     // ROBIN: Disabled at request of mapmakers for now
     /*
-      // If we're moving during a police sequence, always face our target
+    // If we're moving during a police sequence, always face our target
     if ( m_PolicingBehavior.IsEnabled() )
-      {
-      CBaseEntity *pTarget = m_PolicingBehavior.GetGoalTarget();
+    {
+    CBaseEntity *pTarget = m_PolicingBehavior.GetGoalTarget();
 
-      if ( pTarget )
-      {
+    if ( pTarget )
+    {
         AddFacingTarget( pTarget, pTarget->WorldSpaceCenter(), 1.0f, 0.2f );
-      }
+    }
     }
     */
 
@@ -1566,7 +1566,7 @@ void CNPC_MetroPolice::AimBurstTightGrouping( float flShotTime )
     Vector vecTargetVel;
     GetShootTarget()->GetVelocity( &vecTargetVel, NULL );
     if ( ( flDistToTargetSqr > TIGHT_GROUP_MIN_DIST * TIGHT_GROUP_MIN_DIST ) ||
-         ( vecTargetVel.LengthSqr() > TIGHT_GROUP_MIN_SPEED * TIGHT_GROUP_MIN_SPEED ) )
+        ( vecTargetVel.LengthSqr() > TIGHT_GROUP_MIN_SPEED * TIGHT_GROUP_MIN_SPEED ) )
     {
         m_nMaxBurstHits = random->RandomInt( nHitCount, nHitCount + 1 );
     }
@@ -1988,9 +1988,9 @@ void CNPC_MetroPolice::AimBurstAlongSideOfEnemy( float flFollowTime )
 // Different burst steering modes
 //-----------------------------------------------------------------------------
 void CNPC_MetroPolice::SteerBurstTowardTargetUseSpeedOnly( const Vector &vecShootAt,
-                                                           const Vector &vecShootAtVelocity,
-                                                           float flPredictTime,
-                                                           int nShotsTillPredict )
+                                                            const Vector &vecShootAtVelocity,
+                                                            float flPredictTime,
+                                                            int nShotsTillPredict )
 {
     // Only account for changes in *speed*; ignore all changes in velocity direction, etc.
     // This one only hits the player if there is *no* steering, just acceleration or decceleration
@@ -2176,8 +2176,8 @@ Vector CNPC_MetroPolice::ComputeBurstTrajectory( const Vector &shootOrigin )
         Vector vecNormalizedPt;
         pEnemy->CollisionProp()->WorldToNormalizedSpace( vecPos, &vecNormalizedPt );
         if ( ( vecNormalizedPt.x >= -0.1f ) && ( vecNormalizedPt.x <= 1.1f ) &&
-             ( vecNormalizedPt.y >= -0.1f ) && ( vecNormalizedPt.y <= 1.1f ) &&
-             ( vecNormalizedPt.z >= -0.7f ) && ( vecNormalizedPt.z < 1.1f ) )
+            ( vecNormalizedPt.y >= -0.1f ) && ( vecNormalizedPt.y <= 1.1f ) &&
+            ( vecNormalizedPt.z >= -0.7f ) && ( vecNormalizedPt.z < 1.1f ) )
         {
             vecPos.z = pEnemy->WorldSpaceCenter().z;
         }
@@ -2624,7 +2624,7 @@ void CNPC_MetroPolice::PainSound( const CTakeDamageInfo &info )
 int CNPC_MetroPolice::GetSoundInterests( void )
 {
     return SOUND_WORLD | SOUND_COMBAT | SOUND_PLAYER | SOUND_PLAYER_VEHICLE | SOUND_DANGER |
-           SOUND_PHYSICS_DANGER | SOUND_BULLET_IMPACT | SOUND_MOVE_AWAY;
+            SOUND_PHYSICS_DANGER | SOUND_BULLET_IMPACT | SOUND_MOVE_AWAY;
 }
 
 //-----------------------------------------------------------------------------
@@ -3064,7 +3064,7 @@ bool CNPC_MetroPolice::TryToEnterPistolSlot( int nSquadSlot )
     // This logic here will not allow us to occupy the a squad slot
     // too soon after we already were in it.
     if ( ( m_LastShootSlot != nSquadSlot || !m_TimeYieldShootSlot.Expired() ) &&
-         OccupyStrategySlot( nSquadSlot ) )
+        OccupyStrategySlot( nSquadSlot ) )
     {
         if ( m_LastShootSlot != nSquadSlot )
         {
@@ -3116,7 +3116,7 @@ int CNPC_MetroPolice::SquadArrestCount()
     while ( pSquadmate )
     {
         if ( pSquadmate->IsCurSchedule( SCHED_METROPOLICE_ARREST_ENEMY ) ||
-             pSquadmate->IsCurSchedule( SCHED_METROPOLICE_WARN_AND_ARREST_ENEMY ) )
+            pSquadmate->IsCurSchedule( SCHED_METROPOLICE_WARN_AND_ARREST_ENEMY ) )
         {
             ++nCount;
         }
@@ -3462,7 +3462,7 @@ float CNPC_MetroPolice::StitchAlongSideWeight( float flDist, float flSpeed, floa
 {
     // No squad slots? no way.
     if ( IsStrategySlotRangeOccupied( SQUAD_SLOT_ATTACK1, SQUAD_SLOT_ATTACK2 ) &&
-         IsStrategySlotRangeOccupied( SQUAD_SLOT_POLICE_COVERING_FIRE1, SQUAD_SLOT_POLICE_COVERING_FIRE2 ) )
+        IsStrategySlotRangeOccupied( SQUAD_SLOT_POLICE_COVERING_FIRE1, SQUAD_SLOT_POLICE_COVERING_FIRE2 ) )
         return 0.0f;
 
     if ( flDist < ( AIM_ALONG_SIDE_LINE_OF_DEATH_DISTANCE + AIM_ALONG_SIDE_STEER_DISTANCE + 100.0f ) )
@@ -3493,7 +3493,7 @@ float CNPC_MetroPolice::StitchBehindWeight( float flDist, float flSpeed, float f
 
     // No squad slots? no way.
     if ( IsStrategySlotRangeOccupied( SQUAD_SLOT_ATTACK1, SQUAD_SLOT_ATTACK2 ) &&
-         IsStrategySlotRangeOccupied( SQUAD_SLOT_POLICE_COVERING_FIRE1, SQUAD_SLOT_POLICE_COVERING_FIRE2 ) )
+        IsStrategySlotRangeOccupied( SQUAD_SLOT_POLICE_COVERING_FIRE1, SQUAD_SLOT_POLICE_COVERING_FIRE2 ) )
         return 0.0f;
 
     if ( flDist < AIM_BEHIND_MINIMUM_DISTANCE )
@@ -3518,7 +3518,7 @@ float CNPC_MetroPolice::StitchTightWeight( float flDist, float flSpeed, const Ve
 {
     // No squad slots? no way.
     if ( IsStrategySlotRangeOccupied( SQUAD_SLOT_ATTACK1, SQUAD_SLOT_ATTACK2 ) &&
-         IsStrategySlotRangeOccupied( SQUAD_SLOT_POLICE_COVERING_FIRE1, SQUAD_SLOT_POLICE_COVERING_FIRE2 ) )
+        IsStrategySlotRangeOccupied( SQUAD_SLOT_POLICE_COVERING_FIRE1, SQUAD_SLOT_POLICE_COVERING_FIRE2 ) )
         return 0.0f;
 
     if ( flDist > STITCH_MIN_DISTANCE )
@@ -3783,8 +3783,8 @@ Activity CNPC_MetroPolice::GetFlinchActivity( bool bHeavyDamage, bool bGesture )
         }
 
         if ( ( LastHitGroup() == HITGROUP_CHEST ) ||
-             ( LastHitGroup() == HITGROUP_LEFTLEG ) ||
-             ( LastHitGroup() == HITGROUP_RIGHTLEG ) )
+            ( LastHitGroup() == HITGROUP_LEFTLEG ) ||
+            ( LastHitGroup() == HITGROUP_RIGHTLEG ) )
         {
             Activity flinchActivity = ACT_FLINCH_STOMACH;
             if ( SelectWeightedSequence( ACT_FLINCH_STOMACH ) != ACTIVITY_NOT_AVAILABLE )
@@ -3917,7 +3917,7 @@ void CNPC_MetroPolice::AdministerJustice( void )
                 {
                     // Is he within site & range?
                     if ( FVisible( pNPC ) && pNPC->FVisible( UTIL_PlayerByIndex( 1 ) ) &&
-                         UTIL_DistApprox( WorldSpaceCenter(), pNPC->WorldSpaceCenter() ) < 512 )
+                        UTIL_DistApprox( WorldSpaceCenter(), pNPC->WorldSpaceCenter() ) < 512 )
                     {
                         pNPC->AdministerJustice();
                         break;
@@ -4006,8 +4006,8 @@ int CNPC_MetroPolice::SelectSchedule( void )
         {
             // If we're not in combat, and we've got a pre-chase origin, move back to it
             if ( ( m_NPCState != NPC_STATE_COMBAT ) &&
-                 ( m_vecPreChaseOrigin != vec3_origin ) &&
-                 ( m_flChasePlayerTime < gpGlobals->curtime ) )
+                ( m_vecPreChaseOrigin != vec3_origin ) &&
+                ( m_flChasePlayerTime < gpGlobals->curtime ) )
             {
                 return SCHED_METROPOLICE_RETURN_TO_PRECHASE;
             }
@@ -4113,8 +4113,8 @@ int CNPC_MetroPolice::SelectSchedule( void )
 
     // If we're not in combat, and we've got a pre-chase origin, move back to it
     if ( ( m_NPCState != NPC_STATE_COMBAT ) &&
-         ( m_vecPreChaseOrigin != vec3_origin ) &&
-         ( m_flChasePlayerTime < gpGlobals->curtime ) )
+        ( m_vecPreChaseOrigin != vec3_origin ) &&
+        ( m_flChasePlayerTime < gpGlobals->curtime ) )
     {
         return SCHED_METROPOLICE_RETURN_TO_PRECHASE;
     }
@@ -4770,11 +4770,11 @@ int CNPC_MetroPolice::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
     }
 
 #if 0
-	// Die instantly from a hit in idle/alert states
-	if( m_NPCState == NPC_STATE_IDLE || m_NPCState == NPC_STATE_ALERT )
-	{
-		info.SetDamage( m_iHealth );
-	}
+    // Die instantly from a hit in idle/alert states
+    if( m_NPCState == NPC_STATE_IDLE || m_NPCState == NPC_STATE_ALERT )
+    {
+        info.SetDamage( m_iHealth );
+    }
 #endif  // 0
 
     if ( info.GetAttacker() == GetEnemy() )
@@ -4822,10 +4822,10 @@ void CNPC_MetroPolice::BuildScheduleTestBits( void )
 
     // FIXME: Always interrupt for now
     if ( !IsInAScript() &&
-         !IsCurSchedule( SCHED_METROPOLICE_SHOVE ) &&
-         !IsCurSchedule( SCHED_MELEE_ATTACK1 ) &&
-         !IsCurSchedule( SCHED_RELOAD ) &&
-         !IsCurSchedule( SCHED_METROPOLICE_ACTIVATE_BATON ) )
+        !IsCurSchedule( SCHED_METROPOLICE_SHOVE ) &&
+        !IsCurSchedule( SCHED_MELEE_ATTACK1 ) &&
+        !IsCurSchedule( SCHED_RELOAD ) &&
+        !IsCurSchedule( SCHED_METROPOLICE_ACTIVATE_BATON ) )
     {
         SetCustomInterruptCondition( COND_METROPOLICE_PLAYER_TOO_CLOSE );
     }
@@ -4842,10 +4842,10 @@ void CNPC_MetroPolice::BuildScheduleTestBits( void )
     }
 
     if ( !IsCurSchedule( SCHED_CHASE_ENEMY ) &&
-         !IsCurSchedule( SCHED_METROPOLICE_ACTIVATE_BATON ) &&
-         !IsCurSchedule( SCHED_METROPOLICE_DEACTIVATE_BATON ) &&
-         !IsCurSchedule( SCHED_METROPOLICE_SHOVE ) &&
-         !IsCurSchedule( SCHED_METROPOLICE_RETURN_TO_PRECHASE ) )
+        !IsCurSchedule( SCHED_METROPOLICE_ACTIVATE_BATON ) &&
+        !IsCurSchedule( SCHED_METROPOLICE_DEACTIVATE_BATON ) &&
+        !IsCurSchedule( SCHED_METROPOLICE_SHOVE ) &&
+        !IsCurSchedule( SCHED_METROPOLICE_RETURN_TO_PRECHASE ) )
     {
         SetCustomInterruptCondition( COND_METROPOLICE_CHANGE_BATON_STATE );
     }

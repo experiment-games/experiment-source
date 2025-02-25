@@ -18,7 +18,7 @@ class CTFPlayer;
 //----------------------------------------------------------------------------
 class CBotNPCArcher : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCArcher, NextBotCombatCharacter );
 
     CBotNPCArcher();
@@ -48,7 +48,7 @@ class CBotNPCArcher : public NextBotCombatCharacter
     void SetHomePosition( const Vector &pos );
     const Vector &GetHomePosition( void ) const;
 
-   private:
+    private:
     NextBotGroundLocomotion *m_locomotor;
     CBotNPCBody *m_body;
 

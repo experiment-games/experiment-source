@@ -180,7 +180,7 @@ ActionResult< CTFBot > CTFBotCreepAttack::Update( CTFBot *me, float interval )
     }
 
     if ( me->IsRangeGreaterThan( m_victim, tf_creep_give_up_range.GetFloat() ) ||
-         !me->IsLineOfFireClear( m_victim ) )
+        !me->IsLineOfFireClear( m_victim ) )
     {
         me->SpeakConceptIfAllowed( MP_CONCEPT_PLAYER_NEGATIVE );
         return Done( "Lost victim" );

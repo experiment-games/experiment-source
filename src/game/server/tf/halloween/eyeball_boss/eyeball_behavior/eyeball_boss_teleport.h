@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossTeleport : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
@@ -19,7 +19,7 @@ class CEyeballBossTeleport : public Action< CEyeballBoss >
         return "Teleport";
     }  // return name of this action
 
-   private:
+    private:
     enum TeleportState
     {
         TELEPORTING_OUT,
@@ -33,7 +33,7 @@ class CEyeballBossTeleport : public Action< CEyeballBoss >
 //---------------------------------------------------------------------------------------------
 class CEyeballBossEscape : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
@@ -42,7 +42,7 @@ class CEyeballBossEscape : public Action< CEyeballBoss >
         return "Escape";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 

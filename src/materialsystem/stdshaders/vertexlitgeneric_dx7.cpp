@@ -15,7 +15,7 @@ DEFINE_FALLBACK_SHADER( VertexLitGeneric, VertexLitGeneric_DX7 )
 DEFINE_FALLBACK_SHADER( Skin_DX9, VertexLitGeneric_DX7 )
 
 BEGIN_SHADER( VertexLitGeneric_DX7,
-              "Help for VertexLitGeneric_DX7" )
+            "Help for VertexLitGeneric_DX7" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/detail", "detail texture" )
@@ -131,38 +131,38 @@ void DrawBaseTimesVertexColor( IMaterialVar** params, IShaderDynamicAPI* pShader
         pShaderShadow->CustomTextureStages( 1 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE2X,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_VERTEXCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE2X,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_VERTEXCOLOR );
 
         // Get alpha from the texture so that alpha blend and alpha test work properly.
         bool bTextureIsTranslucent = TextureIsTranslucent( BASETEXTURE, true );
         if ( bTextureIsTranslucent )
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_ALPHA,
-                                                   SHADER_TEXOP_SELECTARG1,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_NONE );
+                                                    SHADER_TEXCHANNEL_ALPHA,
+                                                    SHADER_TEXOP_SELECTARG1,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_NONE );
         }
         else
         {
             if ( IsAlphaModulating() )
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_CONSTANTCOLOR,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_CONSTANTCOLOR,
+                                                        SHADER_TEXARG_NONE );
             }
             else
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_ONE,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_ONE,
+                                                        SHADER_TEXARG_NONE );
             }
         }
 
@@ -178,36 +178,36 @@ void DrawBaseTimesVertexColor( IMaterialVar** params, IShaderDynamicAPI* pShader
             if ( IsColorModulating() )
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_COLOR,
-                                                       SHADER_TEXOP_MODULATE,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_CONSTANTCOLOR );
+                                                        SHADER_TEXCHANNEL_COLOR,
+                                                        SHADER_TEXOP_MODULATE,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_CONSTANTCOLOR );
             }
             else
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_COLOR,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_COLOR,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_NONE );
             }
 
             // Get alpha from the texture so that alpha blend and alpha test work properly.
             if ( IsAlphaModulating() && bTextureIsTranslucent )
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_MODULATE,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_CONSTANTCOLOR );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_MODULATE,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_CONSTANTCOLOR );
             }
             else
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_NONE );
             }
         }
 
@@ -231,10 +231,10 @@ void DrawVertexColorNoBase( IMaterialVar** params, IShaderDynamicAPI* pShaderAPI
         pShaderShadow->CustomTextureStages( 1 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE2X,
-                                               SHADER_TEXARG_ONE,
-                                               SHADER_TEXARG_VERTEXCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE2X,
+                                                SHADER_TEXARG_ONE,
+                                                SHADER_TEXARG_VERTEXCOLOR );
 
         int flags = SHADER_DRAW_POSITION;
         pShaderShadow->DrawFlags( flags );
@@ -268,38 +268,38 @@ void DrawBaseTimesBakedVertexLighting( IMaterialVar** params, IShaderDynamicAPI*
         pShaderShadow->CustomTextureStages( 1 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE2X,
-                                               SHADER_TEXARG_SPECULARCOLOR,
-                                               SHADER_TEXARG_TEXTURE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE2X,
+                                                SHADER_TEXARG_SPECULARCOLOR,
+                                                SHADER_TEXARG_TEXTURE );
 
         // Get alpha from the texture so that alpha blend and alpha test work properly.
         bool bTextureIsTranslucent = TextureIsTranslucent( BASETEXTURE, true );
         if ( bTextureIsTranslucent )
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_ALPHA,
-                                                   SHADER_TEXOP_SELECTARG1,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_NONE );
+                                                    SHADER_TEXCHANNEL_ALPHA,
+                                                    SHADER_TEXOP_SELECTARG1,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_NONE );
         }
         else
         {
             if ( IsAlphaModulating() )
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_CONSTANTCOLOR,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_CONSTANTCOLOR,
+                                                        SHADER_TEXARG_NONE );
             }
             else
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_ONE,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_ONE,
+                                                        SHADER_TEXARG_NONE );
             }
         }
 
@@ -310,36 +310,36 @@ void DrawBaseTimesBakedVertexLighting( IMaterialVar** params, IShaderDynamicAPI*
             if ( IsColorModulating() )
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_COLOR,
-                                                       SHADER_TEXOP_MODULATE,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_CONSTANTCOLOR );
+                                                        SHADER_TEXCHANNEL_COLOR,
+                                                        SHADER_TEXOP_MODULATE,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_CONSTANTCOLOR );
             }
             else
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_COLOR,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_COLOR,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_NONE );
             }
 
             // Get alpha from the texture so that alpha blend and alpha test work properly.
             if ( IsAlphaModulating() && bTextureIsTranslucent )
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_MODULATE,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_CONSTANTCOLOR );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_MODULATE,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_CONSTANTCOLOR );
             }
             else
             {
                 pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                                       SHADER_TEXCHANNEL_ALPHA,
-                                                       SHADER_TEXOP_SELECTARG1,
-                                                       SHADER_TEXARG_PREVIOUSSTAGE,
-                                                       SHADER_TEXARG_NONE );
+                                                        SHADER_TEXCHANNEL_ALPHA,
+                                                        SHADER_TEXOP_SELECTARG1,
+                                                        SHADER_TEXARG_PREVIOUSSTAGE,
+                                                        SHADER_TEXARG_NONE );
             }
         }
 
@@ -366,17 +366,17 @@ void DrawBakedVertexLightingNoBase( IMaterialVar** params, IShaderDynamicAPI* pS
         pShaderShadow->CustomTextureStages( 1 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE2X,
-                                               SHADER_TEXARG_SPECULARCOLOR,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE2X,
+                                                SHADER_TEXARG_SPECULARCOLOR,
+                                                SHADER_TEXARG_NONE );
 
         // Alpha isn't used, it doesn't matter what we set it to.
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_NONE,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_NONE,
+                                                SHADER_TEXARG_NONE );
     }
     DYNAMIC_STATE
     {

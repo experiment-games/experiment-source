@@ -16,12 +16,12 @@ const float4 g_EyePos_SpecExponent		: register( PSREG_EYEPOS_SPEC_EXPONENT );
 
 struct PS_INPUT
 {
-	HALF2 baseTexCoord				: TEXCOORD0;		// Base texture coordinate
-	
-	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
-	float4 fogFactorW				: COLOR1;
-	
-#if defined( _X360 ) //matching pixel shader inputs to vertex shader outputs to avoid shader patches	
+    HALF2 baseTexCoord				: TEXCOORD0;		// Base texture coordinate
+
+    float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
+    float4 fogFactorW				: COLOR1;
+
+#if defined( _X360 ) //matching pixel shader inputs to vertex shader outputs to avoid shader patches
     HALF2 detailTexCoord			: TEXCOORD1;
     float4 color					: TEXCOORD2;
     float3 worldVertToEyeVector		: TEXCOORD3;
@@ -32,14 +32,14 @@ struct PS_INPUT
 
 float4 main( PS_INPUT i ) : COLOR
 {
-	float4 result = tex2D( TexSampler, i.baseTexCoord );
-	
-	float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos_SpecExponent.xyz, i.worldPos_projPosZ.xyz, i.worldPos_projPosZ.w );
-	
-	// Since we're blending with a mod2x, we need to compensate with this hack
-	// NOTE: If the fog color (not fog density) is extremely dark, this can makes some decals seem
-	//       a little transparent, but it's better than not doing this
-	fogFactor = pow( saturate( fogFactor ), 0.4f );
+    float4 result = tex2D( TexSampler, i.baseTexCoord );
 
-	return FinalOutput( result, fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE );
+    float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos_SpecExponent.xyz, i.worldPos_projPosZ.xyz, i.worldPos_projPosZ.w );
+
+    // Since we're blending with a mod2x, we need to compensate with this hack
+    // NOTE: If the fog color (not fog density) is extremely dark, this can makes some decals seem
+    //       a little transparent, but it's better than not doing this
+    fogFactor = pow( saturate( fogFactor ), 0.4f );
+
+    return FinalOutput( result, fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE );
 }

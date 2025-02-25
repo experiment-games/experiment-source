@@ -7,7 +7,7 @@
 
 //-----------------------------------------------------------------------------
 bool ValveProtoUtils::MessageHasExactFields( const google::protobuf::Message &msg,
-                                             std::initializer_list< int > fields )
+                                            std::initializer_list< int > fields )
 {
     auto &desc = *msg.GetDescriptor();
     return ValveProtoUtils::MessageHasExactFields( desc, std::move( fields ) );
@@ -15,7 +15,7 @@ bool ValveProtoUtils::MessageHasExactFields( const google::protobuf::Message &ms
 
 //-----------------------------------------------------------------------------
 bool ValveProtoUtils::MessageHasExactFields( const google::protobuf::Descriptor &msgDesc,
-                                             std::initializer_list< int > fields )
+                                            std::initializer_list< int > fields )
 {
     int nFields = msgDesc.field_count();
     if ( nFields != ( int )fields.size() )

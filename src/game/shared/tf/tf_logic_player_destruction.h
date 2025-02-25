@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CTFPlayerDestructionLogic : public CTFRobotDestructionLogic
 {
-   public:
+    public:
 #ifdef GAME_DLL
     DECLARE_DATADESC();
 #endif  // GAME_DLL
@@ -90,7 +90,7 @@ class CTFPlayerDestructionLogic : public CTFRobotDestructionLogic
         return m_bUsingCountdownImage;
     }
 
-   private:
+    private:
 #ifdef GAME_DLL
     void PlaySound( const char* pszSound, CTFPlayer* pPlayer );
     virtual void OnRedScoreChanged() OVERRIDE;
@@ -152,7 +152,7 @@ class CPlayerDestructionDispenser :
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
 #ifdef GAME_DLL
     virtual float GetDispenserRadius( void ) OVERRIDE
     {

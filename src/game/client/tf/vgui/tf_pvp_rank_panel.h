@@ -32,7 +32,7 @@ using namespace GCSDK;
 
 class CPvPRankPanel : public vgui::EditablePanel, public CLocalSteamSharedObjectListener, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CPvPRankPanel, vgui::EditablePanel );
 
     CPvPRankPanel( Panel* parent, const char* panelName );
@@ -53,11 +53,11 @@ class CPvPRankPanel : public vgui::EditablePanel, public CLocalSteamSharedObject
 
     MESSAGE_FUNC_PARAMS( OnAnimEvent, "AnimEvent", pParams );
 
-   protected:
+    protected:
     virtual void PlayLevelUpEffects( const LevelInfo_t& level ) const;
     virtual void PlayLevelDownEffects( const LevelInfo_t& level ) const;
 
-   private:
+    private:
     struct RatingState_t : public CGameEventListener, public CLocalSteamSharedObjectListener
     {
         RatingState_t( ETFMatchGroup eMatchGroup );
@@ -90,7 +90,7 @@ class CPvPRankPanel : public vgui::EditablePanel, public CLocalSteamSharedObject
             return m_bInitialized;
         }
 
-       private:
+        private:
         void UpdateRating( bool bInitial );
 
         const ETFMatchGroup m_eMatchGroup;

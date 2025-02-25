@@ -17,7 +17,7 @@
 
 abstract_class IReplayRenderQueue : IBaseInterface
 {
-   public:
+    public:
     virtual void Add( ReplayHandle_t hReplay, int iPerformance ) = 0;
     virtual void Remove( ReplayHandle_t hReplay, int iPerformance ) = 0;
     virtual void Clear() = 0;

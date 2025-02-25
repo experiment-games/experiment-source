@@ -27,7 +27,7 @@ class WizardPanel : public Frame
 {
     DECLARE_CLASS_SIMPLE( WizardPanel, Frame );
 
-   public:
+    public:
     WizardPanel( Panel *parent, const char *panelName );
     ~WizardPanel();
 
@@ -81,7 +81,7 @@ class WizardPanel : public Frame
     virtual void ShowButtons( bool state );
     virtual void GetClientArea( int &x, int &y, int &wide, int &tall );
 
-   protected:
+    protected:
     MESSAGE_FUNC_PTR( InternalActivateNextSubPanel, "ActivateNextSubPanel", panel )
     {
         ActivateNextSubPanel( ( WizardSubPanel * )panel );
@@ -108,7 +108,7 @@ class WizardPanel : public Frame
     virtual void OnCommand( const char *command );
     virtual void OnCloseFrameButtonPressed();
 
-   private:
+    private:
     WizardSubPanel *FindNextValidSubPanel( WizardSubPanel *currentPanel );
 
     Button *_prevButton;

@@ -143,7 +143,7 @@ void CMessage::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 
 class CCredits : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMessage, CPointEntity );
     DECLARE_DATADESC();
 
@@ -157,7 +157,7 @@ class CCredits : public CPointEntity
 
     virtual void OnRestore();
 
-   private:
+    private:
     void RollOutroCredits();
 
     bool m_bRolledOutroCredits;

@@ -62,11 +62,11 @@ inline bool is_packable(WireFormatLite::WireType type) {
     case WireFormatLite::WIRETYPE_VARINT:
     case WireFormatLite::WIRETYPE_FIXED64:
     case WireFormatLite::WIRETYPE_FIXED32:
-      return true;
+    return true;
     case WireFormatLite::WIRETYPE_LENGTH_DELIMITED:
     case WireFormatLite::WIRETYPE_START_GROUP:
     case WireFormatLite::WIRETYPE_END_GROUP:
-      return false;
+    return false;
 
     // Do not add a default statement. Let the compiler complain when someone
     // adds a new wire type.
@@ -75,7 +75,7 @@ inline bool is_packable(WireFormatLite::WireType type) {
 
 // Registry stuff.
 typedef hash_map<pair<const MessageLite*, int>,
-                 ExtensionInfo> ExtensionRegistry;
+                ExtensionInfo> ExtensionRegistry;
 ExtensionRegistry* registry_ = NULL;
 GOOGLE_PROTOBUF_DECLARE_ONCE(registry_init_);
 
@@ -92,21 +92,21 @@ void InitRegistry() {
 // This function is only called at startup, so there is no need for thread-
 // safety.
 void Register(const MessageLite* containing_type,
-              int number, ExtensionInfo info) {
+            int number, ExtensionInfo info) {
   ::google::protobuf::GoogleOnceInit(&registry_init_, &InitRegistry);
 
   if (!InsertIfNotPresent(registry_, make_pair(containing_type, number),
-                          info)) {
+                        info)) {
     GOOGLE_LOG(FATAL) << "Multiple extension registrations for type \""
-               << containing_type->GetTypeName()
-               << "\", field number " << number << ".";
+                << containing_type->GetTypeName()
+                << "\", field number " << number << ".";
   }
 }
 
 const ExtensionInfo* FindRegisteredExtension(
     const MessageLite* containing_type, int number) {
   return (registry_ == NULL) ? NULL :
-         FindOrNull(*registry_, make_pair(containing_type, number));
+        FindOrNull(*registry_, make_pair(containing_type, number));
 }
 
 }  // namespace
@@ -115,7 +115,7 @@ ExtensionFinder::~ExtensionFinder() {}
 
 bool GeneratedExtensionFinder::Find(int number, ExtensionInfo* output) {
   const ExtensionInfo* extension =
-      FindRegisteredExtension(containing_type_, number);
+    FindRegisteredExtension(containing_type_, number);
   if (extension == NULL) {
     return false;
   } else {
@@ -125,8 +125,8 @@ bool GeneratedExtensionFinder::Find(int number, ExtensionInfo* output) {
 }
 
 void ExtensionSet::RegisterExtension(const MessageLite* containing_type,
-                                     int number, FieldType type,
-                                     bool is_repeated, bool is_packed) {
+                                    int number, FieldType type,
+                                    bool is_repeated, bool is_packed) {
   GOOGLE_CHECK_NE(type, WireFormatLite::TYPE_ENUM);
   GOOGLE_CHECK_NE(type, WireFormatLite::TYPE_MESSAGE);
   GOOGLE_CHECK_NE(type, WireFormatLite::TYPE_GROUP);
@@ -148,9 +148,9 @@ static bool CallNoArgValidityFunc(const void* arg, int number) {
 }
 
 void ExtensionSet::RegisterEnumExtension(const MessageLite* containing_type,
-                                         int number, FieldType type,
-                                         bool is_repeated, bool is_packed,
-                                         EnumValidityFunc* is_valid) {
+                                        int number, FieldType type,
+                                        bool is_repeated, bool is_packed,
+                                        EnumValidityFunc* is_valid) {
   GOOGLE_CHECK_EQ(type, WireFormatLite::TYPE_ENUM);
   ExtensionInfo info(type, is_repeated, is_packed);
   info.enum_validity_check.func = CallNoArgValidityFunc;
@@ -178,7 +178,7 @@ ExtensionSet::ExtensionSet() {}
 
 ExtensionSet::~ExtensionSet() {
   for (map<int, Extension>::iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
+        iter != extensions_.end(); ++iter) {
     iter->second.Free();
   }
 }
@@ -198,9 +198,9 @@ bool ExtensionSet::Has(int number) const {
 int ExtensionSet::NumExtensions() const {
   int result = 0;
   for (map<int, Extension>::const_iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
+        iter != extensions_.end(); ++iter) {
     if (!iter->second.is_cleared) {
-      ++result;
+    ++result;
     }
   }
   return result;
@@ -250,9 +250,9 @@ enum Cardinality {
 // Primitives
 
 #define PRIMITIVE_ACCESSORS(UPPERCASE, LOWERCASE, CAMELCASE)                   \
-                                                                               \
+                                                                                \
 LOWERCASE ExtensionSet::Get##CAMELCASE(int number,                             \
-                                       LOWERCASE default_value) const {        \
+                                        LOWERCASE default_value) const {        \
   map<int, Extension>::const_iterator iter = extensions_.find(number);         \
   if (iter == extensions_.end() || iter->second.is_cleared) {                  \
     return default_value;                                                      \
@@ -261,10 +261,10 @@ LOWERCASE ExtensionSet::Get##CAMELCASE(int number,                             \
     return iter->second.LOWERCASE##_value;                                     \
   }                                                                            \
 }                                                                              \
-                                                                               \
+                                                                                \
 void ExtensionSet::Set##CAMELCASE(int number, FieldType type,                  \
-                                  LOWERCASE value,                             \
-                                  const FieldDescriptor* descriptor) {         \
+                                LOWERCASE value,                             \
+                                const FieldDescriptor* descriptor) {         \
   Extension* extension;                                                        \
   if (MaybeNewExtension(number, descriptor, &extension)) {                     \
     extension->type = type;                                                    \
@@ -276,14 +276,14 @@ void ExtensionSet::Set##CAMELCASE(int number, FieldType type,                  \
   extension->is_cleared = false;                                               \
   extension->LOWERCASE##_value = value;                                        \
 }                                                                              \
-                                                                               \
+                                                                                \
 LOWERCASE ExtensionSet::GetRepeated##CAMELCASE(int number, int index) const {  \
   map<int, Extension>::const_iterator iter = extensions_.find(number);         \
   GOOGLE_CHECK(iter != extensions_.end()) << "Index out-of-bounds (field is empty)."; \
   GOOGLE_DCHECK_TYPE(iter->second, REPEATED, UPPERCASE);                              \
   return iter->second.repeated_##LOWERCASE##_value->Get(index);                \
 }                                                                              \
-                                                                               \
+                                                                                \
 void ExtensionSet::SetRepeated##CAMELCASE(                                     \
     int number, int index, LOWERCASE value) {                                  \
   map<int, Extension>::iterator iter = extensions_.find(number);               \
@@ -291,10 +291,10 @@ void ExtensionSet::SetRepeated##CAMELCASE(                                     \
   GOOGLE_DCHECK_TYPE(iter->second, REPEATED, UPPERCASE);                              \
   iter->second.repeated_##LOWERCASE##_value->Set(index, value);                \
 }                                                                              \
-                                                                               \
+                                                                                \
 void ExtensionSet::Add##CAMELCASE(int number, FieldType type,                  \
-                                  bool packed, LOWERCASE value,                \
-                                  const FieldDescriptor* descriptor) {         \
+                                bool packed, LOWERCASE value,                \
+                                const FieldDescriptor* descriptor) {         \
   Extension* extension;                                                        \
   if (MaybeNewExtension(number, descriptor, &extension)) {                     \
     extension->type = type;                                                    \
@@ -320,7 +320,7 @@ PRIMITIVE_ACCESSORS(  BOOL,   bool,   Bool)
 #undef PRIMITIVE_ACCESSORS
 
 const void* ExtensionSet::GetRawRepeatedField(int number,
-                                              const void* default_value) const {
+                                            const void* default_value) const {
   map<int, Extension>::const_iterator iter = extensions_.find(number);
   if (iter == extensions_.end()) {
     return default_value;
@@ -344,34 +344,34 @@ void* ExtensionSet::MutableRawRepeatedField(int number, FieldType field_type,
 
     switch (WireFormatLite::FieldTypeToCppType(
         static_cast<WireFormatLite::FieldType>(field_type))) {
-      case WireFormatLite::CPPTYPE_INT32:
+    case WireFormatLite::CPPTYPE_INT32:
         extension->repeated_int32_value = new RepeatedField<int32>();
         break;
-      case WireFormatLite::CPPTYPE_INT64:
+    case WireFormatLite::CPPTYPE_INT64:
         extension->repeated_int64_value = new RepeatedField<int64>();
         break;
-      case WireFormatLite::CPPTYPE_UINT32:
+    case WireFormatLite::CPPTYPE_UINT32:
         extension->repeated_uint32_value = new RepeatedField<uint32>();
         break;
-      case WireFormatLite::CPPTYPE_UINT64:
+    case WireFormatLite::CPPTYPE_UINT64:
         extension->repeated_uint64_value = new RepeatedField<uint64>();
         break;
-      case WireFormatLite::CPPTYPE_DOUBLE:
+    case WireFormatLite::CPPTYPE_DOUBLE:
         extension->repeated_double_value = new RepeatedField<double>();
         break;
-      case WireFormatLite::CPPTYPE_FLOAT:
+    case WireFormatLite::CPPTYPE_FLOAT:
         extension->repeated_float_value = new RepeatedField<float>();
         break;
-      case WireFormatLite::CPPTYPE_BOOL:
+    case WireFormatLite::CPPTYPE_BOOL:
         extension->repeated_bool_value = new RepeatedField<bool>();
         break;
-      case WireFormatLite::CPPTYPE_ENUM:
+    case WireFormatLite::CPPTYPE_ENUM:
         extension->repeated_enum_value = new RepeatedField<int>();
         break;
-      case WireFormatLite::CPPTYPE_STRING:
+    case WireFormatLite::CPPTYPE_STRING:
         extension->repeated_string_value = new RepeatedPtrField< ::std::string>();
         break;
-      case WireFormatLite::CPPTYPE_MESSAGE:
+    case WireFormatLite::CPPTYPE_MESSAGE:
         extension->repeated_message_value = new RepeatedPtrField<MessageLite>();
         break;
     }
@@ -408,7 +408,7 @@ int ExtensionSet::GetEnum(int number, int default_value) const {
 }
 
 void ExtensionSet::SetEnum(int number, FieldType type, int value,
-                           const FieldDescriptor* descriptor) {
+                            const FieldDescriptor* descriptor) {
   Extension* extension;
   if (MaybeNewExtension(number, descriptor, &extension)) {
     extension->type = type;
@@ -436,8 +436,8 @@ void ExtensionSet::SetRepeatedEnum(int number, int index, int value) {
 }
 
 void ExtensionSet::AddEnum(int number, FieldType type,
-                           bool packed, int value,
-                           const FieldDescriptor* descriptor) {
+                            bool packed, int value,
+                            const FieldDescriptor* descriptor) {
   Extension* extension;
   if (MaybeNewExtension(number, descriptor, &extension)) {
     extension->type = type;
@@ -456,7 +456,7 @@ void ExtensionSet::AddEnum(int number, FieldType type,
 // Strings
 
 const string& ExtensionSet::GetString(int number,
-                                      const string& default_value) const {
+                                    const string& default_value) const {
   map<int, Extension>::const_iterator iter = extensions_.find(number);
   if (iter == extensions_.end() || iter->second.is_cleared) {
     // Not present.  Return the default value.
@@ -523,9 +523,9 @@ const MessageLite& ExtensionSet::GetMessage(
   } else {
     GOOGLE_DCHECK_TYPE(iter->second, OPTIONAL, MESSAGE);
     if (iter->second.is_lazy) {
-      return iter->second.lazymessage_value->GetMessage(default_value);
+    return iter->second.lazymessage_value->GetMessage(default_value);
     } else {
-      return *iter->second.message_value;
+    return *iter->second.message_value;
     }
   }
 }
@@ -536,8 +536,8 @@ const MessageLite& ExtensionSet::GetMessage(
 //                                             MessageFactory* factory) const
 
 MessageLite* ExtensionSet::MutableMessage(int number, FieldType type,
-                                          const MessageLite& prototype,
-                                          const FieldDescriptor* descriptor) {
+                                        const MessageLite& prototype,
+                                        const FieldDescriptor* descriptor) {
   Extension* extension;
   if (MaybeNewExtension(number, descriptor, &extension)) {
     extension->type = type;
@@ -551,9 +551,9 @@ MessageLite* ExtensionSet::MutableMessage(int number, FieldType type,
     GOOGLE_DCHECK_TYPE(*extension, OPTIONAL, MESSAGE);
     extension->is_cleared = false;
     if (extension->is_lazy) {
-      return extension->lazymessage_value->MutableMessage(prototype);
+    return extension->lazymessage_value->MutableMessage(prototype);
     } else {
-      return extension->message_value;
+    return extension->message_value;
     }
   }
 }
@@ -564,8 +564,8 @@ MessageLite* ExtensionSet::MutableMessage(int number, FieldType type,
 //                                           MessageFactory* factory)
 
 void ExtensionSet::SetAllocatedMessage(int number, FieldType type,
-                                       const FieldDescriptor* descriptor,
-                                       MessageLite* message) {
+                                        const FieldDescriptor* descriptor,
+                                        MessageLite* message) {
   if (message == NULL) {
     ClearExtension(number);
     return;
@@ -580,17 +580,17 @@ void ExtensionSet::SetAllocatedMessage(int number, FieldType type,
   } else {
     GOOGLE_DCHECK_TYPE(*extension, OPTIONAL, MESSAGE);
     if (extension->is_lazy) {
-      extension->lazymessage_value->SetAllocatedMessage(message);
+    extension->lazymessage_value->SetAllocatedMessage(message);
     } else {
-      delete extension->message_value;
-      extension->message_value = message;
+    delete extension->message_value;
+    extension->message_value = message;
     }
   }
   extension->is_cleared = false;
 }
 
 MessageLite* ExtensionSet::ReleaseMessage(int number,
-                                          const MessageLite& prototype) {
+                                        const MessageLite& prototype) {
   map<int, Extension>::iterator iter = extensions_.find(number);
   if (iter == extensions_.end()) {
     // Not present.  Return NULL.
@@ -599,10 +599,10 @@ MessageLite* ExtensionSet::ReleaseMessage(int number,
     GOOGLE_DCHECK_TYPE(iter->second, OPTIONAL, MESSAGE);
     MessageLite* ret = NULL;
     if (iter->second.is_lazy) {
-      ret = iter->second.lazymessage_value->ReleaseMessage(prototype);
-      delete iter->second.lazymessage_value;
+    ret = iter->second.lazymessage_value->ReleaseMessage(prototype);
+    delete iter->second.lazymessage_value;
     } else {
-      ret = iter->second.message_value;
+    ret = iter->second.message_value;
     }
     extensions_.erase(number);
     return ret;
@@ -629,15 +629,15 @@ MessageLite* ExtensionSet::MutableRepeatedMessage(int number, int index) {
 }
 
 MessageLite* ExtensionSet::AddMessage(int number, FieldType type,
-                                      const MessageLite& prototype,
-                                      const FieldDescriptor* descriptor) {
+                                    const MessageLite& prototype,
+                                    const FieldDescriptor* descriptor) {
   Extension* extension;
   if (MaybeNewExtension(number, descriptor, &extension)) {
     extension->type = type;
     GOOGLE_DCHECK_EQ(cpp_type(extension->type), WireFormatLite::CPPTYPE_MESSAGE);
     extension->is_repeated = true;
     extension->repeated_message_value =
-      new RepeatedPtrField<MessageLite>();
+    new RepeatedPtrField<MessageLite>();
   } else {
     GOOGLE_DCHECK_TYPE(*extension, REPEATED, MESSAGE);
   }
@@ -645,7 +645,7 @@ MessageLite* ExtensionSet::AddMessage(int number, FieldType type,
   // RepeatedPtrField<MessageLite> does not know how to Add() since it cannot
   // allocate an abstract object, so we have to be tricky.
   MessageLite* result = extension->repeated_message_value
-      ->AddFromCleared<GenericTypeHandler<MessageLite> >();
+    ->AddFromCleared<GenericTypeHandler<MessageLite> >();
   if (result == NULL) {
     result = prototype.New();
     extension->repeated_message_value->AddAllocated(result);
@@ -669,35 +669,35 @@ void ExtensionSet::RemoveLast(int number) {
 
   switch(cpp_type(extension->type)) {
     case WireFormatLite::CPPTYPE_INT32:
-      extension->repeated_int32_value->RemoveLast();
-      break;
+    extension->repeated_int32_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_INT64:
-      extension->repeated_int64_value->RemoveLast();
-      break;
+    extension->repeated_int64_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_UINT32:
-      extension->repeated_uint32_value->RemoveLast();
-      break;
+    extension->repeated_uint32_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_UINT64:
-      extension->repeated_uint64_value->RemoveLast();
-      break;
+    extension->repeated_uint64_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_FLOAT:
-      extension->repeated_float_value->RemoveLast();
-      break;
+    extension->repeated_float_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_DOUBLE:
-      extension->repeated_double_value->RemoveLast();
-      break;
+    extension->repeated_double_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_BOOL:
-      extension->repeated_bool_value->RemoveLast();
-      break;
+    extension->repeated_bool_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_ENUM:
-      extension->repeated_enum_value->RemoveLast();
-      break;
+    extension->repeated_enum_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_STRING:
-      extension->repeated_string_value->RemoveLast();
-      break;
+    extension->repeated_string_value->RemoveLast();
+    break;
     case WireFormatLite::CPPTYPE_MESSAGE:
-      extension->repeated_message_value->RemoveLast();
-      break;
+    extension->repeated_message_value->RemoveLast();
+    break;
   }
 }
 
@@ -720,35 +720,35 @@ void ExtensionSet::SwapElements(int number, int index1, int index2) {
 
   switch(cpp_type(extension->type)) {
     case WireFormatLite::CPPTYPE_INT32:
-      extension->repeated_int32_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_int32_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_INT64:
-      extension->repeated_int64_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_int64_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_UINT32:
-      extension->repeated_uint32_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_uint32_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_UINT64:
-      extension->repeated_uint64_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_uint64_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_FLOAT:
-      extension->repeated_float_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_float_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_DOUBLE:
-      extension->repeated_double_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_double_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_BOOL:
-      extension->repeated_bool_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_bool_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_ENUM:
-      extension->repeated_enum_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_enum_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_STRING:
-      extension->repeated_string_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_string_value->SwapElements(index1, index2);
+    break;
     case WireFormatLite::CPPTYPE_MESSAGE:
-      extension->repeated_message_value->SwapElements(index1, index2);
-      break;
+    extension->repeated_message_value->SwapElements(index1, index2);
+    break;
   }
 }
 
@@ -756,41 +756,41 @@ void ExtensionSet::SwapElements(int number, int index1, int index2) {
 
 void ExtensionSet::Clear() {
   for (map<int, Extension>::iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
+        iter != extensions_.end(); ++iter) {
     iter->second.Clear();
   }
 }
 
 void ExtensionSet::MergeFrom(const ExtensionSet& other) {
   for (map<int, Extension>::const_iterator iter = other.extensions_.begin();
-       iter != other.extensions_.end(); ++iter) {
+        iter != other.extensions_.end(); ++iter) {
     const Extension& other_extension = iter->second;
 
     if (other_extension.is_repeated) {
-      Extension* extension;
-      bool is_new = MaybeNewExtension(iter->first, other_extension.descriptor,
-                                      &extension);
-      if (is_new) {
+    Extension* extension;
+    bool is_new = MaybeNewExtension(iter->first, other_extension.descriptor,
+                                    &extension);
+    if (is_new) {
         // Extension did not already exist in set.
         extension->type = other_extension.type;
         extension->is_packed = other_extension.is_packed;
         extension->is_repeated = true;
-      } else {
+    } else {
         GOOGLE_DCHECK_EQ(extension->type, other_extension.type);
         GOOGLE_DCHECK_EQ(extension->is_packed, other_extension.is_packed);
         GOOGLE_DCHECK(extension->is_repeated);
-      }
+    }
 
-      switch (cpp_type(other_extension.type)) {
+    switch (cpp_type(other_extension.type)) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE, REPEATED_TYPE)             \
         case WireFormatLite::CPPTYPE_##UPPERCASE:                    \
-          if (is_new) {                                              \
+        if (is_new) {                                              \
             extension->repeated_##LOWERCASE##_value =                \
-              new REPEATED_TYPE;                                     \
-          }                                                          \
-          extension->repeated_##LOWERCASE##_value->MergeFrom(        \
+            new REPEATED_TYPE;                                     \
+        }                                                          \
+        extension->repeated_##LOWERCASE##_value->MergeFrom(        \
             *other_extension.repeated_##LOWERCASE##_value);          \
-          break;
+        break;
 
         HANDLE_TYPE(  INT32,   int32, RepeatedField   <  int32>);
         HANDLE_TYPE(  INT64,   int64, RepeatedField   <  int64>);
@@ -804,101 +804,101 @@ void ExtensionSet::MergeFrom(const ExtensionSet& other) {
 #undef HANDLE_TYPE
 
         case WireFormatLite::CPPTYPE_MESSAGE:
-          if (is_new) {
+        if (is_new) {
             extension->repeated_message_value =
-              new RepeatedPtrField<MessageLite>();
-          }
-          // We can't call RepeatedPtrField<MessageLite>::MergeFrom() because
-          // it would attempt to allocate new objects.
-          RepeatedPtrField<MessageLite>* other_repeated_message =
-              other_extension.repeated_message_value;
-          for (int i = 0; i < other_repeated_message->size(); i++) {
+            new RepeatedPtrField<MessageLite>();
+        }
+        // We can't call RepeatedPtrField<MessageLite>::MergeFrom() because
+        // it would attempt to allocate new objects.
+        RepeatedPtrField<MessageLite>* other_repeated_message =
+            other_extension.repeated_message_value;
+        for (int i = 0; i < other_repeated_message->size(); i++) {
             const MessageLite& other_message = other_repeated_message->Get(i);
             MessageLite* target = extension->repeated_message_value
-                     ->AddFromCleared<GenericTypeHandler<MessageLite> >();
+                    ->AddFromCleared<GenericTypeHandler<MessageLite> >();
             if (target == NULL) {
-              target = other_message.New();
-              extension->repeated_message_value->AddAllocated(target);
+            target = other_message.New();
+            extension->repeated_message_value->AddAllocated(target);
             }
             target->CheckTypeAndMergeFrom(other_message);
-          }
-          break;
-      }
+        }
+        break;
+    }
     } else {
-      if (!other_extension.is_cleared) {
+    if (!other_extension.is_cleared) {
         switch (cpp_type(other_extension.type)) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE, CAMELCASE)                         \
-          case WireFormatLite::CPPTYPE_##UPPERCASE:                          \
+        case WireFormatLite::CPPTYPE_##UPPERCASE:                          \
             Set##CAMELCASE(iter->first, other_extension.type,                \
-                           other_extension.LOWERCASE##_value,                \
-                           other_extension.descriptor);                      \
+                            other_extension.LOWERCASE##_value,                \
+                            other_extension.descriptor);                      \
             break;
 
-          HANDLE_TYPE( INT32,  int32,  Int32);
-          HANDLE_TYPE( INT64,  int64,  Int64);
-          HANDLE_TYPE(UINT32, uint32, UInt32);
-          HANDLE_TYPE(UINT64, uint64, UInt64);
-          HANDLE_TYPE( FLOAT,  float,  Float);
-          HANDLE_TYPE(DOUBLE, double, Double);
-          HANDLE_TYPE(  BOOL,   bool,   Bool);
-          HANDLE_TYPE(  ENUM,   enum,   Enum);
+        HANDLE_TYPE( INT32,  int32,  Int32);
+        HANDLE_TYPE( INT64,  int64,  Int64);
+        HANDLE_TYPE(UINT32, uint32, UInt32);
+        HANDLE_TYPE(UINT64, uint64, UInt64);
+        HANDLE_TYPE( FLOAT,  float,  Float);
+        HANDLE_TYPE(DOUBLE, double, Double);
+        HANDLE_TYPE(  BOOL,   bool,   Bool);
+        HANDLE_TYPE(  ENUM,   enum,   Enum);
 #undef HANDLE_TYPE
-          case WireFormatLite::CPPTYPE_STRING:
+        case WireFormatLite::CPPTYPE_STRING:
             SetString(iter->first, other_extension.type,
-                      *other_extension.string_value,
-                      other_extension.descriptor);
+                    *other_extension.string_value,
+                    other_extension.descriptor);
             break;
-          case WireFormatLite::CPPTYPE_MESSAGE: {
+        case WireFormatLite::CPPTYPE_MESSAGE: {
             Extension* extension;
             bool is_new = MaybeNewExtension(iter->first,
                                             other_extension.descriptor,
                                             &extension);
             if (is_new) {
-              extension->type = other_extension.type;
-              extension->is_packed = other_extension.is_packed;
-              extension->is_repeated = false;
-              if (other_extension.is_lazy) {
+            extension->type = other_extension.type;
+            extension->is_packed = other_extension.is_packed;
+            extension->is_repeated = false;
+            if (other_extension.is_lazy) {
                 extension->is_lazy = true;
                 extension->lazymessage_value =
                     other_extension.lazymessage_value->New();
                 extension->lazymessage_value->MergeFrom(
                     *other_extension.lazymessage_value);
-              } else {
+            } else {
                 extension->is_lazy = false;
                 extension->message_value =
                     other_extension.message_value->New();
                 extension->message_value->CheckTypeAndMergeFrom(
                     *other_extension.message_value);
-              }
+            }
             } else {
-              GOOGLE_DCHECK_EQ(extension->type, other_extension.type);
-              GOOGLE_DCHECK_EQ(extension->is_packed,other_extension.is_packed);
-              GOOGLE_DCHECK(!extension->is_repeated);
-              if (other_extension.is_lazy) {
+            GOOGLE_DCHECK_EQ(extension->type, other_extension.type);
+            GOOGLE_DCHECK_EQ(extension->is_packed,other_extension.is_packed);
+            GOOGLE_DCHECK(!extension->is_repeated);
+            if (other_extension.is_lazy) {
                 if (extension->is_lazy) {
-                  extension->lazymessage_value->MergeFrom(
-                      *other_extension.lazymessage_value);
+                extension->lazymessage_value->MergeFrom(
+                    *other_extension.lazymessage_value);
                 } else {
-                  extension->message_value->CheckTypeAndMergeFrom(
-                      other_extension.lazymessage_value->GetMessage(
-                          *extension->message_value));
+                extension->message_value->CheckTypeAndMergeFrom(
+                    other_extension.lazymessage_value->GetMessage(
+                        *extension->message_value));
                 }
-              } else {
+            } else {
                 if (extension->is_lazy) {
-                  extension->lazymessage_value->MutableMessage(
-                      *other_extension.message_value)->CheckTypeAndMergeFrom(
-                          *other_extension.message_value);
+                extension->lazymessage_value->MutableMessage(
+                    *other_extension.message_value)->CheckTypeAndMergeFrom(
+                        *other_extension.message_value);
                 } else {
-                  extension->message_value->CheckTypeAndMergeFrom(
-                      *other_extension.message_value);
+                extension->message_value->CheckTypeAndMergeFrom(
+                    *other_extension.message_value);
                 }
-              }
+            }
             }
             extension->is_cleared = false;
             break;
-          }
         }
-      }
+        }
+    }
     }
   }
 }
@@ -908,18 +908,18 @@ void ExtensionSet::Swap(ExtensionSet* x) {
 }
 
 void ExtensionSet::SwapExtension(ExtensionSet* other,
-                                 int number) {
+                                int number) {
   if (this == other) return;
   map<int, Extension>::iterator this_iter = extensions_.find(number);
   map<int, Extension>::iterator other_iter = other->extensions_.find(number);
 
   if (this_iter == extensions_.end() &&
-      other_iter == other->extensions_.end()) {
+    other_iter == other->extensions_.end()) {
     return;
   }
 
   if (this_iter != extensions_.end() &&
-      other_iter != other->extensions_.end()) {
+    other_iter != other->extensions_.end()) {
     std::swap(this_iter->second, other_iter->second);
     return;
   }
@@ -941,24 +941,24 @@ bool ExtensionSet::IsInitialized() const {
   // Extensions are never required.  However, we need to check that all
   // embedded messages are initialized.
   for (map<int, Extension>::const_iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
+        iter != extensions_.end(); ++iter) {
     const Extension& extension = iter->second;
     if (cpp_type(extension.type) == WireFormatLite::CPPTYPE_MESSAGE) {
-      if (extension.is_repeated) {
+    if (extension.is_repeated) {
         for (int i = 0; i < extension.repeated_message_value->size(); i++) {
-          if (!extension.repeated_message_value->Get(i).IsInitialized()) {
+        if (!extension.repeated_message_value->Get(i).IsInitialized()) {
             return false;
-          }
         }
-      } else {
+        }
+    } else {
         if (!extension.is_cleared) {
-          if (extension.is_lazy) {
+        if (extension.is_lazy) {
             if (!extension.lazymessage_value->IsInitialized()) return false;
-          } else {
+        } else {
             if (!extension.message_value->IsInitialized()) return false;
-          }
         }
-      }
+        }
+    }
     }
   }
 
@@ -971,8 +971,8 @@ bool ExtensionSet::FindExtensionInfoFromTag(
   *field_number = WireFormatLite::GetTagFieldNumber(tag);
   WireFormatLite::WireType wire_type = WireFormatLite::GetTagWireType(tag);
   return FindExtensionInfoFromFieldNumber(wire_type, *field_number,
-                                          extension_finder, extension,
-                                          was_packed_on_wire);
+                                        extension_finder, extension,
+                                        was_packed_on_wire);
 }
 
 bool ExtensionSet::FindExtensionInfoFromFieldNumber(
@@ -983,13 +983,13 @@ bool ExtensionSet::FindExtensionInfoFromFieldNumber(
   }
 
   WireFormatLite::WireType expected_wire_type =
-      WireFormatLite::WireTypeForFieldType(real_type(extension->type));
+    WireFormatLite::WireTypeForFieldType(real_type(extension->type));
 
   // Check if this is a packed field.
   *was_packed_on_wire = false;
   if (extension->is_repeated &&
-      wire_type == WireFormatLite::WIRETYPE_LENGTH_DELIMITED &&
-      is_packable(expected_wire_type)) {
+    wire_type == WireFormatLite::WIRETYPE_LENGTH_DELIMITED &&
+    is_packable(expected_wire_type)) {
     *was_packed_on_wire = true;
     return true;
   }
@@ -998,13 +998,13 @@ bool ExtensionSet::FindExtensionInfoFromFieldNumber(
 }
 
 bool ExtensionSet::ParseField(uint32 tag, io::CodedInputStream* input,
-                              ExtensionFinder* extension_finder,
-                              FieldSkipper* field_skipper) {
+                            ExtensionFinder* extension_finder,
+                            FieldSkipper* field_skipper) {
   int number;
   bool was_packed_on_wire;
   ExtensionInfo extension;
   if (!FindExtensionInfoFromTag(
-      tag, extension_finder, &number, &extension, &was_packed_on_wire)) {
+    tag, extension_finder, &number, &extension, &was_packed_on_wire)) {
     return field_skipper->SkipField(input, tag);
   } else {
     return ParseFieldWithExtensionInfo(
@@ -1025,50 +1025,50 @@ bool ExtensionSet::ParseFieldWithExtensionInfo(
 
     switch (extension.type) {
 #define HANDLE_TYPE(UPPERCASE, CPP_CAMELCASE, CPP_LOWERCASE)        \
-      case WireFormatLite::TYPE_##UPPERCASE:                                   \
+    case WireFormatLite::TYPE_##UPPERCASE:                                   \
         while (input->BytesUntilLimit() > 0) {                                 \
-          CPP_LOWERCASE value;                                                 \
-          if (!WireFormatLite::ReadPrimitive<                                  \
-                  CPP_LOWERCASE, WireFormatLite::TYPE_##UPPERCASE>(            \
+        CPP_LOWERCASE value;                                                 \
+        if (!WireFormatLite::ReadPrimitive<                                  \
+                CPP_LOWERCASE, WireFormatLite::TYPE_##UPPERCASE>(            \
                 input, &value)) return false;                                  \
-          Add##CPP_CAMELCASE(number, WireFormatLite::TYPE_##UPPERCASE,         \
-                             extension.is_packed, value,                       \
-                             extension.descriptor);                            \
+        Add##CPP_CAMELCASE(number, WireFormatLite::TYPE_##UPPERCASE,         \
+                            extension.is_packed, value,                       \
+                            extension.descriptor);                            \
         }                                                                      \
         break
 
-      HANDLE_TYPE(   INT32,  Int32,   int32);
-      HANDLE_TYPE(   INT64,  Int64,   int64);
-      HANDLE_TYPE(  UINT32, UInt32,  uint32);
-      HANDLE_TYPE(  UINT64, UInt64,  uint64);
-      HANDLE_TYPE(  SINT32,  Int32,   int32);
-      HANDLE_TYPE(  SINT64,  Int64,   int64);
-      HANDLE_TYPE( FIXED32, UInt32,  uint32);
-      HANDLE_TYPE( FIXED64, UInt64,  uint64);
-      HANDLE_TYPE(SFIXED32,  Int32,   int32);
-      HANDLE_TYPE(SFIXED64,  Int64,   int64);
-      HANDLE_TYPE(   FLOAT,  Float,   float);
-      HANDLE_TYPE(  DOUBLE, Double,  double);
-      HANDLE_TYPE(    BOOL,   Bool,    bool);
+    HANDLE_TYPE(   INT32,  Int32,   int32);
+    HANDLE_TYPE(   INT64,  Int64,   int64);
+    HANDLE_TYPE(  UINT32, UInt32,  uint32);
+    HANDLE_TYPE(  UINT64, UInt64,  uint64);
+    HANDLE_TYPE(  SINT32,  Int32,   int32);
+    HANDLE_TYPE(  SINT64,  Int64,   int64);
+    HANDLE_TYPE( FIXED32, UInt32,  uint32);
+    HANDLE_TYPE( FIXED64, UInt64,  uint64);
+    HANDLE_TYPE(SFIXED32,  Int32,   int32);
+    HANDLE_TYPE(SFIXED64,  Int64,   int64);
+    HANDLE_TYPE(   FLOAT,  Float,   float);
+    HANDLE_TYPE(  DOUBLE, Double,  double);
+    HANDLE_TYPE(    BOOL,   Bool,    bool);
 #undef HANDLE_TYPE
 
-      case WireFormatLite::TYPE_ENUM:
+    case WireFormatLite::TYPE_ENUM:
         while (input->BytesUntilLimit() > 0) {
-          int value;
-          if (!WireFormatLite::ReadPrimitive<int, WireFormatLite::TYPE_ENUM>(
-                  input, &value)) return false;
-          if (extension.enum_validity_check.func(
-                  extension.enum_validity_check.arg, value)) {
+        int value;
+        if (!WireFormatLite::ReadPrimitive<int, WireFormatLite::TYPE_ENUM>(
+                input, &value)) return false;
+        if (extension.enum_validity_check.func(
+                extension.enum_validity_check.arg, value)) {
             AddEnum(number, WireFormatLite::TYPE_ENUM, extension.is_packed,
                     value, extension.descriptor);
-          }
+        }
         }
         break;
 
-      case WireFormatLite::TYPE_STRING:
-      case WireFormatLite::TYPE_BYTES:
-      case WireFormatLite::TYPE_GROUP:
-      case WireFormatLite::TYPE_MESSAGE:
+    case WireFormatLite::TYPE_STRING:
+    case WireFormatLite::TYPE_BYTES:
+    case WireFormatLite::TYPE_GROUP:
+    case WireFormatLite::TYPE_MESSAGE:
         GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
         break;
     }
@@ -1077,92 +1077,92 @@ bool ExtensionSet::ParseFieldWithExtensionInfo(
   } else {
     switch (extension.type) {
 #define HANDLE_TYPE(UPPERCASE, CPP_CAMELCASE, CPP_LOWERCASE)                   \
-      case WireFormatLite::TYPE_##UPPERCASE: {                                 \
+    case WireFormatLite::TYPE_##UPPERCASE: {                                 \
         CPP_LOWERCASE value;                                                   \
         if (!WireFormatLite::ReadPrimitive<                                    \
                 CPP_LOWERCASE, WireFormatLite::TYPE_##UPPERCASE>(              \
-               input, &value)) return false;                                   \
+                input, &value)) return false;                                   \
         if (extension.is_repeated) {                                           \
-          Add##CPP_CAMELCASE(number, WireFormatLite::TYPE_##UPPERCASE,         \
-                             extension.is_packed, value,                       \
-                             extension.descriptor);                            \
+        Add##CPP_CAMELCASE(number, WireFormatLite::TYPE_##UPPERCASE,         \
+                            extension.is_packed, value,                       \
+                            extension.descriptor);                            \
         } else {                                                               \
-          Set##CPP_CAMELCASE(number, WireFormatLite::TYPE_##UPPERCASE, value,  \
-                             extension.descriptor);                            \
+        Set##CPP_CAMELCASE(number, WireFormatLite::TYPE_##UPPERCASE, value,  \
+                            extension.descriptor);                            \
         }                                                                      \
-      } break
+    } break
 
-      HANDLE_TYPE(   INT32,  Int32,   int32);
-      HANDLE_TYPE(   INT64,  Int64,   int64);
-      HANDLE_TYPE(  UINT32, UInt32,  uint32);
-      HANDLE_TYPE(  UINT64, UInt64,  uint64);
-      HANDLE_TYPE(  SINT32,  Int32,   int32);
-      HANDLE_TYPE(  SINT64,  Int64,   int64);
-      HANDLE_TYPE( FIXED32, UInt32,  uint32);
-      HANDLE_TYPE( FIXED64, UInt64,  uint64);
-      HANDLE_TYPE(SFIXED32,  Int32,   int32);
-      HANDLE_TYPE(SFIXED64,  Int64,   int64);
-      HANDLE_TYPE(   FLOAT,  Float,   float);
-      HANDLE_TYPE(  DOUBLE, Double,  double);
-      HANDLE_TYPE(    BOOL,   Bool,    bool);
+    HANDLE_TYPE(   INT32,  Int32,   int32);
+    HANDLE_TYPE(   INT64,  Int64,   int64);
+    HANDLE_TYPE(  UINT32, UInt32,  uint32);
+    HANDLE_TYPE(  UINT64, UInt64,  uint64);
+    HANDLE_TYPE(  SINT32,  Int32,   int32);
+    HANDLE_TYPE(  SINT64,  Int64,   int64);
+    HANDLE_TYPE( FIXED32, UInt32,  uint32);
+    HANDLE_TYPE( FIXED64, UInt64,  uint64);
+    HANDLE_TYPE(SFIXED32,  Int32,   int32);
+    HANDLE_TYPE(SFIXED64,  Int64,   int64);
+    HANDLE_TYPE(   FLOAT,  Float,   float);
+    HANDLE_TYPE(  DOUBLE, Double,  double);
+    HANDLE_TYPE(    BOOL,   Bool,    bool);
 #undef HANDLE_TYPE
 
-      case WireFormatLite::TYPE_ENUM: {
+    case WireFormatLite::TYPE_ENUM: {
         int value;
         if (!WireFormatLite::ReadPrimitive<int, WireFormatLite::TYPE_ENUM>(
                 input, &value)) return false;
 
         if (!extension.enum_validity_check.func(
                 extension.enum_validity_check.arg, value)) {
-          // Invalid value.  Treat as unknown.
-          field_skipper->SkipUnknownEnum(number, value);
+        // Invalid value.  Treat as unknown.
+        field_skipper->SkipUnknownEnum(number, value);
         } else if (extension.is_repeated) {
-          AddEnum(number, WireFormatLite::TYPE_ENUM, extension.is_packed, value,
-                  extension.descriptor);
+        AddEnum(number, WireFormatLite::TYPE_ENUM, extension.is_packed, value,
+                extension.descriptor);
         } else {
-          SetEnum(number, WireFormatLite::TYPE_ENUM, value,
-                  extension.descriptor);
+        SetEnum(number, WireFormatLite::TYPE_ENUM, value,
+                extension.descriptor);
         }
         break;
-      }
+    }
 
-      case WireFormatLite::TYPE_STRING:  {
+    case WireFormatLite::TYPE_STRING:  {
         string* value = extension.is_repeated ?
-          AddString(number, WireFormatLite::TYPE_STRING, extension.descriptor) :
-          MutableString(number, WireFormatLite::TYPE_STRING,
+        AddString(number, WireFormatLite::TYPE_STRING, extension.descriptor) :
+        MutableString(number, WireFormatLite::TYPE_STRING,
                         extension.descriptor);
         if (!WireFormatLite::ReadString(input, value)) return false;
         break;
-      }
+    }
 
-      case WireFormatLite::TYPE_BYTES:  {
+    case WireFormatLite::TYPE_BYTES:  {
         string* value = extension.is_repeated ?
-          AddString(number, WireFormatLite::TYPE_BYTES, extension.descriptor) :
-          MutableString(number, WireFormatLite::TYPE_BYTES,
+        AddString(number, WireFormatLite::TYPE_BYTES, extension.descriptor) :
+        MutableString(number, WireFormatLite::TYPE_BYTES,
                         extension.descriptor);
         if (!WireFormatLite::ReadBytes(input, value)) return false;
         break;
-      }
+    }
 
-      case WireFormatLite::TYPE_GROUP: {
+    case WireFormatLite::TYPE_GROUP: {
         MessageLite* value = extension.is_repeated ?
             AddMessage(number, WireFormatLite::TYPE_GROUP,
-                       *extension.message_prototype, extension.descriptor) :
+                        *extension.message_prototype, extension.descriptor) :
             MutableMessage(number, WireFormatLite::TYPE_GROUP,
-                           *extension.message_prototype, extension.descriptor);
+                            *extension.message_prototype, extension.descriptor);
         if (!WireFormatLite::ReadGroup(number, input, value)) return false;
         break;
-      }
+    }
 
-      case WireFormatLite::TYPE_MESSAGE: {
+    case WireFormatLite::TYPE_MESSAGE: {
         MessageLite* value = extension.is_repeated ?
             AddMessage(number, WireFormatLite::TYPE_MESSAGE,
-                       *extension.message_prototype, extension.descriptor) :
+                        *extension.message_prototype, extension.descriptor) :
             MutableMessage(number, WireFormatLite::TYPE_MESSAGE,
-                           *extension.message_prototype, extension.descriptor);
+                            *extension.message_prototype, extension.descriptor);
         if (!WireFormatLite::ReadMessage(input, value)) return false;
         break;
-      }
+    }
     }
   }
 
@@ -1170,15 +1170,15 @@ bool ExtensionSet::ParseFieldWithExtensionInfo(
 }
 
 bool ExtensionSet::ParseField(uint32 tag, io::CodedInputStream* input,
-                              const MessageLite* containing_type) {
+                            const MessageLite* containing_type) {
   FieldSkipper skipper;
   GeneratedExtensionFinder finder(containing_type);
   return ParseField(tag, input, &finder, &skipper);
 }
 
 bool ExtensionSet::ParseField(uint32 tag, io::CodedInputStream* input,
-                              const MessageLite* containing_type,
-                              io::CodedOutputStream* unknown_fields) {
+                            const MessageLite* containing_type,
+                            io::CodedOutputStream* unknown_fields) {
   CodedOutputStreamFieldSkipper skipper(unknown_fields);
   GeneratedExtensionFinder finder(containing_type);
   return ParseField(tag, input, &finder, &skipper);
@@ -1199,8 +1199,8 @@ void ExtensionSet::SerializeWithCachedSizes(
     io::CodedOutputStream* output) const {
   map<int, Extension>::const_iterator iter;
   for (iter = extensions_.lower_bound(start_field_number);
-       iter != extensions_.end() && iter->first < end_field_number;
-       ++iter) {
+        iter != extensions_.end() && iter->first < end_field_number;
+        ++iter) {
     iter->second.SerializeFieldWithCachedSizes(iter->first, output);
   }
 }
@@ -1209,7 +1209,7 @@ int ExtensionSet::ByteSize() const {
   int total_size = 0;
 
   for (map<int, Extension>::const_iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
+        iter != extensions_.end(); ++iter) {
     total_size += iter->second.ByteSize(iter->first);
   }
 
@@ -1220,10 +1220,10 @@ int ExtensionSet::ByteSize() const {
 // int ExtensionSet::SpaceUsedExcludingSelf() const
 
 bool ExtensionSet::MaybeNewExtension(int number,
-                                     const FieldDescriptor* descriptor,
-                                     Extension** result) {
+                                    const FieldDescriptor* descriptor,
+                                    Extension** result) {
   pair<map<int, Extension>::iterator, bool> insert_result =
-      extensions_.insert(make_pair(number, Extension()));
+    extensions_.insert(make_pair(number, Extension()));
   *result = &insert_result.first->second;
   (*result)->descriptor = descriptor;
   return insert_result.second;
@@ -1236,43 +1236,43 @@ void ExtensionSet::Extension::Clear() {
   if (is_repeated) {
     switch (cpp_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE)                          \
-      case WireFormatLite::CPPTYPE_##UPPERCASE:                    \
+    case WireFormatLite::CPPTYPE_##UPPERCASE:                    \
         repeated_##LOWERCASE##_value->Clear();                     \
         break
 
-      HANDLE_TYPE(  INT32,   int32);
-      HANDLE_TYPE(  INT64,   int64);
-      HANDLE_TYPE( UINT32,  uint32);
-      HANDLE_TYPE( UINT64,  uint64);
-      HANDLE_TYPE(  FLOAT,   float);
-      HANDLE_TYPE( DOUBLE,  double);
-      HANDLE_TYPE(   BOOL,    bool);
-      HANDLE_TYPE(   ENUM,    enum);
-      HANDLE_TYPE( STRING,  string);
-      HANDLE_TYPE(MESSAGE, message);
+    HANDLE_TYPE(  INT32,   int32);
+    HANDLE_TYPE(  INT64,   int64);
+    HANDLE_TYPE( UINT32,  uint32);
+    HANDLE_TYPE( UINT64,  uint64);
+    HANDLE_TYPE(  FLOAT,   float);
+    HANDLE_TYPE( DOUBLE,  double);
+    HANDLE_TYPE(   BOOL,    bool);
+    HANDLE_TYPE(   ENUM,    enum);
+    HANDLE_TYPE( STRING,  string);
+    HANDLE_TYPE(MESSAGE, message);
 #undef HANDLE_TYPE
     }
   } else {
     if (!is_cleared) {
-      switch (cpp_type(type)) {
+    switch (cpp_type(type)) {
         case WireFormatLite::CPPTYPE_STRING:
-          string_value->clear();
-          break;
+        string_value->clear();
+        break;
         case WireFormatLite::CPPTYPE_MESSAGE:
-          if (is_lazy) {
+        if (is_lazy) {
             lazymessage_value->Clear();
-          } else {
+        } else {
             message_value->Clear();
-          }
-          break;
+        }
+        break;
         default:
-          // No need to do anything.  Get*() will return the default value
-          // as long as is_cleared is true and Set*() will overwrite the
-          // previous value.
-          break;
-      }
+        // No need to do anything.  Get*() will return the default value
+        // as long as is_cleared is true and Set*() will overwrite the
+        // previous value.
+        break;
+    }
 
-      is_cleared = true;
+    is_cleared = true;
     }
   }
 }
@@ -1282,20 +1282,20 @@ void ExtensionSet::Extension::SerializeFieldWithCachedSizes(
     io::CodedOutputStream* output) const {
   if (is_repeated) {
     if (is_packed) {
-      if (cached_size == 0) return;
+    if (cached_size == 0) return;
 
-      WireFormatLite::WriteTag(number,
-          WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-      output->WriteVarint32(cached_size);
+    WireFormatLite::WriteTag(number,
+        WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(cached_size);
 
-      switch (real_type(type)) {
+    switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case WireFormatLite::TYPE_##UPPERCASE:                              \
-          for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
+        for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
             WireFormatLite::Write##CAMELCASE##NoTag(                        \
-              repeated_##LOWERCASE##_value->Get(i), output);                \
-          }                                                                 \
-          break
+            repeated_##LOWERCASE##_value->Get(i), output);                \
+        }                                                                 \
+        break
 
         HANDLE_TYPE(   INT32,    Int32,   int32);
         HANDLE_TYPE(   INT64,    Int64,   int64);
@@ -1317,18 +1317,18 @@ void ExtensionSet::Extension::SerializeFieldWithCachedSizes(
         case WireFormatLite::TYPE_BYTES:
         case WireFormatLite::TYPE_GROUP:
         case WireFormatLite::TYPE_MESSAGE:
-          GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
-          break;
-      }
+        GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
+        break;
+    }
     } else {
-      switch (real_type(type)) {
+    switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case WireFormatLite::TYPE_##UPPERCASE:                              \
-          for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
+        for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
             WireFormatLite::Write##CAMELCASE(number,                        \
-              repeated_##LOWERCASE##_value->Get(i), output);                \
-          }                                                                 \
-          break
+            repeated_##LOWERCASE##_value->Get(i), output);                \
+        }                                                                 \
+        break
 
         HANDLE_TYPE(   INT32,    Int32,   int32);
         HANDLE_TYPE(   INT64,    Int64,   int64);
@@ -1349,38 +1349,38 @@ void ExtensionSet::Extension::SerializeFieldWithCachedSizes(
         HANDLE_TYPE(   GROUP,    Group, message);
         HANDLE_TYPE( MESSAGE,  Message, message);
 #undef HANDLE_TYPE
-      }
+    }
     }
   } else if (!is_cleared) {
     switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, VALUE)                 \
-      case WireFormatLite::TYPE_##UPPERCASE:                     \
+    case WireFormatLite::TYPE_##UPPERCASE:                     \
         WireFormatLite::Write##CAMELCASE(number, VALUE, output); \
         break
 
-      HANDLE_TYPE(   INT32,    Int32,    int32_value);
-      HANDLE_TYPE(   INT64,    Int64,    int64_value);
-      HANDLE_TYPE(  UINT32,   UInt32,   uint32_value);
-      HANDLE_TYPE(  UINT64,   UInt64,   uint64_value);
-      HANDLE_TYPE(  SINT32,   SInt32,    int32_value);
-      HANDLE_TYPE(  SINT64,   SInt64,    int64_value);
-      HANDLE_TYPE( FIXED32,  Fixed32,   uint32_value);
-      HANDLE_TYPE( FIXED64,  Fixed64,   uint64_value);
-      HANDLE_TYPE(SFIXED32, SFixed32,    int32_value);
-      HANDLE_TYPE(SFIXED64, SFixed64,    int64_value);
-      HANDLE_TYPE(   FLOAT,    Float,    float_value);
-      HANDLE_TYPE(  DOUBLE,   Double,   double_value);
-      HANDLE_TYPE(    BOOL,     Bool,     bool_value);
-      HANDLE_TYPE(  STRING,   String,  *string_value);
-      HANDLE_TYPE(   BYTES,    Bytes,  *string_value);
-      HANDLE_TYPE(    ENUM,     Enum,     enum_value);
-      HANDLE_TYPE(   GROUP,    Group, *message_value);
+    HANDLE_TYPE(   INT32,    Int32,    int32_value);
+    HANDLE_TYPE(   INT64,    Int64,    int64_value);
+    HANDLE_TYPE(  UINT32,   UInt32,   uint32_value);
+    HANDLE_TYPE(  UINT64,   UInt64,   uint64_value);
+    HANDLE_TYPE(  SINT32,   SInt32,    int32_value);
+    HANDLE_TYPE(  SINT64,   SInt64,    int64_value);
+    HANDLE_TYPE( FIXED32,  Fixed32,   uint32_value);
+    HANDLE_TYPE( FIXED64,  Fixed64,   uint64_value);
+    HANDLE_TYPE(SFIXED32, SFixed32,    int32_value);
+    HANDLE_TYPE(SFIXED64, SFixed64,    int64_value);
+    HANDLE_TYPE(   FLOAT,    Float,    float_value);
+    HANDLE_TYPE(  DOUBLE,   Double,   double_value);
+    HANDLE_TYPE(    BOOL,     Bool,     bool_value);
+    HANDLE_TYPE(  STRING,   String,  *string_value);
+    HANDLE_TYPE(   BYTES,    Bytes,  *string_value);
+    HANDLE_TYPE(    ENUM,     Enum,     enum_value);
+    HANDLE_TYPE(   GROUP,    Group, *message_value);
 #undef HANDLE_TYPE
-      case WireFormatLite::TYPE_MESSAGE:
+    case WireFormatLite::TYPE_MESSAGE:
         if (is_lazy) {
-          lazymessage_value->WriteMessage(number, output);
+        lazymessage_value->WriteMessage(number, output);
         } else {
-          WireFormatLite::WriteMessage(number, *message_value, output);
+        WireFormatLite::WriteMessage(number, *message_value, output);
         }
         break;
     }
@@ -1392,14 +1392,14 @@ int ExtensionSet::Extension::ByteSize(int number) const {
 
   if (is_repeated) {
     if (is_packed) {
-      switch (real_type(type)) {
+    switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case WireFormatLite::TYPE_##UPPERCASE:                              \
-          for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
+        for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
             result += WireFormatLite::CAMELCASE##Size(                      \
-              repeated_##LOWERCASE##_value->Get(i));                        \
-          }                                                                 \
-          break
+            repeated_##LOWERCASE##_value->Get(i));                        \
+        }                                                                 \
+        break
 
         HANDLE_TYPE(   INT32,    Int32,   int32);
         HANDLE_TYPE(   INT64,    Int64,   int64);
@@ -1413,9 +1413,9 @@ int ExtensionSet::Extension::ByteSize(int number) const {
         // Stuff with fixed size.
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case WireFormatLite::TYPE_##UPPERCASE:                              \
-          result += WireFormatLite::k##CAMELCASE##Size *                    \
+        result += WireFormatLite::k##CAMELCASE##Size *                    \
                     repeated_##LOWERCASE##_value->size();                   \
-          break
+        break
         HANDLE_TYPE( FIXED32,  Fixed32, uint32);
         HANDLE_TYPE( FIXED64,  Fixed64, uint64);
         HANDLE_TYPE(SFIXED32, SFixed32,  int32);
@@ -1429,29 +1429,29 @@ int ExtensionSet::Extension::ByteSize(int number) const {
         case WireFormatLite::TYPE_BYTES:
         case WireFormatLite::TYPE_GROUP:
         case WireFormatLite::TYPE_MESSAGE:
-          GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
-          break;
-      }
+        GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
+        break;
+    }
 
-      cached_size = result;
-      if (result > 0) {
+    cached_size = result;
+    if (result > 0) {
         result += io::CodedOutputStream::VarintSize32(result);
         result += io::CodedOutputStream::VarintSize32(
             WireFormatLite::MakeTag(number,
                 WireFormatLite::WIRETYPE_LENGTH_DELIMITED));
-      }
+    }
     } else {
-      int tag_size = WireFormatLite::TagSize(number, real_type(type));
+    int tag_size = WireFormatLite::TagSize(number, real_type(type));
 
-      switch (real_type(type)) {
+    switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case WireFormatLite::TYPE_##UPPERCASE:                              \
-          result += tag_size * repeated_##LOWERCASE##_value->size();        \
-          for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
+        result += tag_size * repeated_##LOWERCASE##_value->size();        \
+        for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
             result += WireFormatLite::CAMELCASE##Size(                      \
-              repeated_##LOWERCASE##_value->Get(i));                        \
-          }                                                                 \
-          break
+            repeated_##LOWERCASE##_value->Get(i));                        \
+        }                                                                 \
+        break
 
         HANDLE_TYPE(   INT32,    Int32,   int32);
         HANDLE_TYPE(   INT64,    Int64,   int64);
@@ -1469,9 +1469,9 @@ int ExtensionSet::Extension::ByteSize(int number) const {
         // Stuff with fixed size.
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case WireFormatLite::TYPE_##UPPERCASE:                              \
-          result += (tag_size + WireFormatLite::k##CAMELCASE##Size) *       \
+        result += (tag_size + WireFormatLite::k##CAMELCASE##Size) *       \
                     repeated_##LOWERCASE##_value->size();                   \
-          break
+        break
         HANDLE_TYPE( FIXED32,  Fixed32, uint32);
         HANDLE_TYPE( FIXED64,  Fixed64, uint64);
         HANDLE_TYPE(SFIXED32, SFixed32,  int32);
@@ -1480,49 +1480,49 @@ int ExtensionSet::Extension::ByteSize(int number) const {
         HANDLE_TYPE(  DOUBLE,   Double, double);
         HANDLE_TYPE(    BOOL,     Bool,   bool);
 #undef HANDLE_TYPE
-      }
+    }
     }
   } else if (!is_cleared) {
     result += WireFormatLite::TagSize(number, real_type(type));
     switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                      \
-      case WireFormatLite::TYPE_##UPPERCASE:                              \
+    case WireFormatLite::TYPE_##UPPERCASE:                              \
         result += WireFormatLite::CAMELCASE##Size(LOWERCASE);             \
         break
 
-      HANDLE_TYPE(   INT32,    Int32,    int32_value);
-      HANDLE_TYPE(   INT64,    Int64,    int64_value);
-      HANDLE_TYPE(  UINT32,   UInt32,   uint32_value);
-      HANDLE_TYPE(  UINT64,   UInt64,   uint64_value);
-      HANDLE_TYPE(  SINT32,   SInt32,    int32_value);
-      HANDLE_TYPE(  SINT64,   SInt64,    int64_value);
-      HANDLE_TYPE(  STRING,   String,  *string_value);
-      HANDLE_TYPE(   BYTES,    Bytes,  *string_value);
-      HANDLE_TYPE(    ENUM,     Enum,     enum_value);
-      HANDLE_TYPE(   GROUP,    Group, *message_value);
+    HANDLE_TYPE(   INT32,    Int32,    int32_value);
+    HANDLE_TYPE(   INT64,    Int64,    int64_value);
+    HANDLE_TYPE(  UINT32,   UInt32,   uint32_value);
+    HANDLE_TYPE(  UINT64,   UInt64,   uint64_value);
+    HANDLE_TYPE(  SINT32,   SInt32,    int32_value);
+    HANDLE_TYPE(  SINT64,   SInt64,    int64_value);
+    HANDLE_TYPE(  STRING,   String,  *string_value);
+    HANDLE_TYPE(   BYTES,    Bytes,  *string_value);
+    HANDLE_TYPE(    ENUM,     Enum,     enum_value);
+    HANDLE_TYPE(   GROUP,    Group, *message_value);
 #undef HANDLE_TYPE
-      case WireFormatLite::TYPE_MESSAGE: {
+    case WireFormatLite::TYPE_MESSAGE: {
         if (is_lazy) {
-          int size = lazymessage_value->ByteSize();
-          result += io::CodedOutputStream::VarintSize32(size) + size;
+        int size = lazymessage_value->ByteSize();
+        result += io::CodedOutputStream::VarintSize32(size) + size;
         } else {
-          result += WireFormatLite::MessageSize(*message_value);
+        result += WireFormatLite::MessageSize(*message_value);
         }
         break;
-      }
+    }
 
-      // Stuff with fixed size.
+    // Stuff with fixed size.
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE)                                 \
-      case WireFormatLite::TYPE_##UPPERCASE:                              \
+    case WireFormatLite::TYPE_##UPPERCASE:                              \
         result += WireFormatLite::k##CAMELCASE##Size;                     \
         break
-      HANDLE_TYPE( FIXED32,  Fixed32);
-      HANDLE_TYPE( FIXED64,  Fixed64);
-      HANDLE_TYPE(SFIXED32, SFixed32);
-      HANDLE_TYPE(SFIXED64, SFixed64);
-      HANDLE_TYPE(   FLOAT,    Float);
-      HANDLE_TYPE(  DOUBLE,   Double);
-      HANDLE_TYPE(    BOOL,     Bool);
+    HANDLE_TYPE( FIXED32,  Fixed32);
+    HANDLE_TYPE( FIXED64,  Fixed64);
+    HANDLE_TYPE(SFIXED32, SFixed32);
+    HANDLE_TYPE(SFIXED64, SFixed64);
+    HANDLE_TYPE(   FLOAT,    Float);
+    HANDLE_TYPE(  DOUBLE,   Double);
+    HANDLE_TYPE(    BOOL,     Bool);
 #undef HANDLE_TYPE
     }
   }
@@ -1535,7 +1535,7 @@ int ExtensionSet::Extension::GetSize() const {
   switch (cpp_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE)                        \
     case WireFormatLite::CPPTYPE_##UPPERCASE:                    \
-      return repeated_##LOWERCASE##_value->size()
+    return repeated_##LOWERCASE##_value->size()
 
     HANDLE_TYPE(  INT32,   int32);
     HANDLE_TYPE(  INT64,   int64);
@@ -1558,35 +1558,35 @@ void ExtensionSet::Extension::Free() {
   if (is_repeated) {
     switch (cpp_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE)                          \
-      case WireFormatLite::CPPTYPE_##UPPERCASE:                    \
+    case WireFormatLite::CPPTYPE_##UPPERCASE:                    \
         delete repeated_##LOWERCASE##_value;                       \
         break
 
-      HANDLE_TYPE(  INT32,   int32);
-      HANDLE_TYPE(  INT64,   int64);
-      HANDLE_TYPE( UINT32,  uint32);
-      HANDLE_TYPE( UINT64,  uint64);
-      HANDLE_TYPE(  FLOAT,   float);
-      HANDLE_TYPE( DOUBLE,  double);
-      HANDLE_TYPE(   BOOL,    bool);
-      HANDLE_TYPE(   ENUM,    enum);
-      HANDLE_TYPE( STRING,  string);
-      HANDLE_TYPE(MESSAGE, message);
+    HANDLE_TYPE(  INT32,   int32);
+    HANDLE_TYPE(  INT64,   int64);
+    HANDLE_TYPE( UINT32,  uint32);
+    HANDLE_TYPE( UINT64,  uint64);
+    HANDLE_TYPE(  FLOAT,   float);
+    HANDLE_TYPE( DOUBLE,  double);
+    HANDLE_TYPE(   BOOL,    bool);
+    HANDLE_TYPE(   ENUM,    enum);
+    HANDLE_TYPE( STRING,  string);
+    HANDLE_TYPE(MESSAGE, message);
 #undef HANDLE_TYPE
     }
   } else {
     switch (cpp_type(type)) {
-      case WireFormatLite::CPPTYPE_STRING:
+    case WireFormatLite::CPPTYPE_STRING:
         delete string_value;
         break;
-      case WireFormatLite::CPPTYPE_MESSAGE:
+    case WireFormatLite::CPPTYPE_MESSAGE:
         if (is_lazy) {
-          delete lazymessage_value;
+        delete lazymessage_value;
         } else {
-          delete message_value;
+        delete message_value;
         }
         break;
-      default:
+    default:
         break;
     }
   }
@@ -1627,23 +1627,23 @@ struct StaticDefaultRepeatedFieldsInitializer {
 
 void InitializeDefaultRepeatedFields() {
   RepeatedStringTypeTraits::default_repeated_field_ =
-      new RepeatedStringTypeTraits::RepeatedFieldType;
+    new RepeatedStringTypeTraits::RepeatedFieldType;
   RepeatedMessageGenericTypeTraits::default_repeated_field_ =
-      new RepeatedMessageGenericTypeTraits::RepeatedFieldType;
+    new RepeatedMessageGenericTypeTraits::RepeatedFieldType;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_int32_ =
-      new RepeatedField<int32>;
+    new RepeatedField<int32>;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_int64_ =
-      new RepeatedField<int64>;
+    new RepeatedField<int64>;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_uint32_ =
-      new RepeatedField<uint32>;
+    new RepeatedField<uint32>;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_uint64_ =
-      new RepeatedField<uint64>;
+    new RepeatedField<uint64>;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_double_ =
-      new RepeatedField<double>;
+    new RepeatedField<double>;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_float_ =
-      new RepeatedField<float>;
+    new RepeatedField<float>;
   RepeatedPrimitiveGenericTypeTraits::default_repeated_field_bool_ =
-      new RepeatedField<bool>;
+    new RepeatedField<bool>;
 }
 
 void DestroyDefaultRepeatedFields() {

@@ -121,7 +121,7 @@ void CFlashlightEffect::TurnOff()
 // the time.
 class CTraceFilterSkipPlayerAndViewModel : public CTraceFilter
 {
-   public:
+    public:
     virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         // Test against the vehicle too?
@@ -131,9 +131,9 @@ class CTraceFilterSkipPlayerAndViewModel : public CTraceFilter
             return true;
 
         if ( ( dynamic_cast< C_BaseViewModel * >( pEntity ) != NULL ) ||
-             ( dynamic_cast< C_BasePlayer * >( pEntity ) != NULL ) ||
-             pEntity->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
-             pEntity->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS )
+            ( dynamic_cast< C_BasePlayer * >( pEntity ) != NULL ) ||
+            pEntity->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
+            pEntity->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS )
         {
             return false;
         }

@@ -55,7 +55,7 @@ class CWeaponProto1 : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponProto1, CBaseHLCombatWeapon );
 
-   public:
+    public:
     CWeaponProto1( void );
 
     void Precache( void );
@@ -464,22 +464,22 @@ void CWeaponProto1::DoPingEffect()
     CBroadcastRecipientFilter filter;
 
     te->BeamRingPoint( filter, 0, GetAbsOrigin(),                    // origin
-                       8.0f,                                         // start radius
-                       weapon_proto1_ping_radius.GetFloat() * 2.0f,  // end radius
-                       m_iPingSpriteTexture,                         // texture
-                       0,                                            // halo index
-                       0,                                            // start frame
-                       2,                                            // framerate
-                       0.5f,                                         // life
-                       64,                                           // width
-                       0,                                            // spread
-                       0,                                            // amplitude
-                       255,                                          // r
-                       255,                                          // g
-                       225,                                          // b
-                       128,                                          // a
-                       0,                                            // speed
-                       FBEAM_FADEOUT );
+                        8.0f,                                         // start radius
+                        weapon_proto1_ping_radius.GetFloat() * 2.0f,  // end radius
+                        m_iPingSpriteTexture,                         // texture
+                        0,                                            // halo index
+                        0,                                            // start frame
+                        2,                                            // framerate
+                        0.5f,                                         // life
+                        64,                                           // width
+                        0,                                            // spread
+                        0,                                            // amplitude
+                        255,                                          // r
+                        255,                                          // g
+                        225,                                          // b
+                        128,                                          // a
+                        0,                                            // speed
+                        FBEAM_FADEOUT );
 }
 
 //-----------------------------------------------------------------------------

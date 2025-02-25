@@ -13,7 +13,7 @@
 #include "ShatteredGlass_vs20.inc"
 
 BEGIN_VS_SHADER( ShatteredGlass,
-                 "Help for ShatteredGlass" )
+                "Help for ShatteredGlass" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "Glass/glasswindowbreak070b", "unused", SHADER_PARAM_NOT_EDITABLE )

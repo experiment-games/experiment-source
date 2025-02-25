@@ -169,7 +169,7 @@ struct EventDesiredResult : public IActionResult< Actor >
 template < typename Actor >
 class Behavior : public INextBotEventResponder, public IContextualQuery
 {
-   public:
+    public:
     DECLARE_CLASS( Behavior, INextBotEventResponder );
 
     Behavior( Action< Actor > *initialAction, const char *name = "" )
@@ -206,10 +206,10 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * Reset this Behavior with the given Action. If this Behavior
-     * was already running, this will delete all current Actions and
-     * restart the Behavior with the new one.
-     */
+    * Reset this Behavior with the given Action. If this Behavior
+    * was already running, this will delete all current Actions and
+    * restart the Behavior with the new one.
+    */
     void Reset( Action< Actor > *action )
     {
         if ( m_me && m_action )
@@ -236,16 +236,16 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * Return true if this Behavior contains no actions
-     */
+    * Return true if this Behavior contains no actions
+    */
     bool IsEmpty( void ) const
     {
         return m_action == NULL;
     }
 
     /**
-     * Execute this Behavior
-     */
+    * Execute this Behavior
+    */
     void Update( Actor *me, float interval )
     {
         if ( me == NULL || IsEmpty() )
@@ -268,10 +268,10 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * If this Behavior has not been Update'd in a long time,
-     * call Resume() to let the system know its internal state may
-     * be out of date.
-     */
+    * If this Behavior has not been Update'd in a long time,
+    * call Resume() to let the system know its internal state may
+    * be out of date.
+    */
     void Resume( Actor *me )
     {
         if ( me == NULL || IsEmpty() )
@@ -289,13 +289,13 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * Use this method to destroy Actions used by this Behavior.
-     * We cannot delete Actions in-line since Action updates can potentially
-     * invoke event responders which will then use potentially deleted
-     * Action pointers, causing memory corruption.
-     * Instead, we will collect the dead Actions and delete them at the
-     * end of Update().
-     */
+    * Use this method to destroy Actions used by this Behavior.
+    * We cannot delete Actions in-line since Action updates can potentially
+    * invoke event responders which will then use potentially deleted
+    * Action pointers, causing memory corruption.
+    * Instead, we will collect the dead Actions and delete them at the
+    * end of Update().
+    */
     void DestroyAction( Action< Actor > *dead )
     {
         m_deadActionVector.AddToTail( dead );
@@ -499,10 +499,10 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * Allow bot to approve of positions game movement tries to put him into.
-     * This is most useful for bots derived from CBasePlayer that go through
-     * the player movement system.
-     */
+    * Allow bot to approve of positions game movement tries to put him into.
+    * This is most useful for bots derived from CBasePlayer that go through
+    * the player movement system.
+    */
     virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const
     {
         QueryResultType result = ANSWER_UNDEFINED;
@@ -563,7 +563,7 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
         return result;
     }
 
-   private:
+    private:
     Action< Actor > *m_action;
 
 #define MAX_NAME_LENGTH 32
@@ -584,7 +584,7 @@ class Behavior : public INextBotEventResponder, public IContextualQuery
 template < typename Actor >
 class Action : public INextBotEventResponder, public IContextualQuery
 {
-   public:
+    public:
     DECLARE_CLASS( Action, INextBotEventResponder );
 
     Action( void );
@@ -597,19 +597,19 @@ class Action : public INextBotEventResponder, public IContextualQuery
 
     //-----------------------------------------------------------------------------------------
     /**
-     * Try to start the Action. Result is immediately processed,
-     * which can cause an immediate transition, another OnStart(), etc.
-     * An Action can count on each OnStart() being followed (eventually) with an OnEnd().
-     */
+    * Try to start the Action. Result is immediately processed,
+    * which can cause an immediate transition, another OnStart(), etc.
+    * An Action can count on each OnStart() being followed (eventually) with an OnEnd().
+    */
     virtual ActionResult< Actor > OnStart( Actor *me, Action< Actor > *priorAction )
     {
         return Continue();
     }
 
     /**
-     * Do the work of the Action. It is possible for Update to not be
-     * called between a given OnStart/OnEnd pair due to immediate transitions.
-     */
+    * Do the work of the Action. It is possible for Update to not be
+    * called between a given OnStart/OnEnd pair due to immediate transitions.
+    */
     virtual ActionResult< Actor > Update( Actor *me, float interval )
     {
         return Continue();
@@ -619,10 +619,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     virtual void OnEnd( Actor *me, Action< Actor > *nextAction ) {}
 
     /*
-     * When an Action is suspended by a new action.
-     * Note that only CONTINUE and DONE are valid results.  All other results will
-     * be considered as a CONTINUE.
-     */
+    * When an Action is suspended by a new action.
+    * Note that only CONTINUE and DONE are valid results.  All other results will
+    * be considered as a CONTINUE.
+    */
     virtual ActionResult< Actor > OnSuspend( Actor *me, Action< Actor > *interruptingAction )
     {
         return Continue();
@@ -635,9 +635,9 @@ class Action : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * To cause a state change, use these methods to create an ActionResult to
-     * return from OnStart, Update, or OnResume.
-     */
+    * To cause a state change, use these methods to create an ActionResult to
+    * return from OnStart, Update, or OnResume.
+    */
     ActionResult< Actor > Continue( void ) const;
     ActionResult< Actor > ChangeTo( Action< Actor > *action, const char *reason = NULL ) const;
     ActionResult< Actor > SuspendFor( Action< Actor > *action, const char *reason = NULL ) const;
@@ -651,11 +651,11 @@ class Action : public INextBotEventResponder, public IContextualQuery
 
     //-----------------------------------------------------------------------------------------
     /**
-     * Override the event handler methods below to respond to events that occur during this Action
-     * NOTE: These are identical to the events in INextBotEventResponder with the addition
-     * of an actor argument and a return result. Their translators are located in the private area
-     * below.
-     */
+    * Override the event handler methods below to respond to events that occur during this Action
+    * NOTE: These are identical to the events in INextBotEventResponder with the addition
+    * of an actor argument and a return result. Their translators are located in the private area
+    * below.
+    */
     virtual EventDesiredResult< Actor > OnLeaveGround( Actor *me, CBaseEntity *ground )
     {
         return TryContinue();
@@ -875,8 +875,8 @@ class Action : public INextBotEventResponder, public IContextualQuery
 #endif
 
     /**
-     * Event handlers must return one of these.
-     */
+    * Event handlers must return one of these.
+    */
     EventDesiredResult< Actor > TryContinue( EventResultPriorityType priority = RESULT_TRY ) const;
     EventDesiredResult< Actor > TryChangeTo( Action< Actor > *action, EventResultPriorityType priority = RESULT_TRY, const char *reason = NULL ) const;
     EventDesiredResult< Actor > TrySuspendFor( Action< Actor > *action, EventResultPriorityType priority = RESULT_TRY, const char *reason = NULL ) const;
@@ -892,10 +892,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     const char *DebugString( void ) const;  // return a temporary string describing the current action stack for debugging
 
     /**
-     * Sometimes we want to pass through other NextBots. OnContact() will always
-     * be invoked, but collision resolution can be skipped if this
-     * method returns false.
-     */
+    * Sometimes we want to pass through other NextBots. OnContact() will always
+    * be invoked, but collision resolution can be skipped if this
+    * method returns false.
+    */
     virtual bool IsAbleToBlockMovementOf( const INextBot *botInMotion ) const
     {
         return true;
@@ -905,7 +905,7 @@ class Action : public INextBotEventResponder, public IContextualQuery
     virtual INextBotEventResponder *FirstContainedResponder( void ) const;
     virtual INextBotEventResponder *NextContainedResponder( INextBotEventResponder *current ) const;
 
-   private:
+    private:
 /**
  * These macros are used below to translate INextBotEventResponder event methods
  * into Action event handler methods
@@ -914,10 +914,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     {                                                                                                                                                                                                                                        \
         if ( !m_isStarted )                                                                                                                                                                                                                  \
             return;                                                                                                                                                                                                                          \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         Action< Actor > *_action = this;                                                                                                                                                                                                     \
         EventDesiredResult< Actor > _result;                                                                                                                                                                                                 \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         while ( _action )                                                                                                                                                                                                                    \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_EVENTS ) || NextBotDebugHistory.GetBool() ) )                                                                                                                                    \
@@ -929,7 +929,7 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 break;                                                                                                                                                                                                                       \
             _action = _action->GetActionBuriedUnderMe();                                                                                                                                                                                     \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         if ( _action )                                                                                                                                                                                                                       \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && _result.IsRequestingChange() && ( m_actor->IsDebugging( NEXTBOT_BEHAVIOR ) || NextBotDebugHistory.GetBool() ) )                                                                                                  \
@@ -940,10 +940,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 0, 0, 255 ), "%s %s ", _result.GetTypeName(), _result.m_action ? _result.m_action->GetName() : "" );                                                                \
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 0, 255, 0, 255 ), "%s\n", _result.m_reason ? _result.m_reason : "" );                                                                                                    \
             }                                                                                                                                                                                                                                \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
             _action->StorePendingEventResult( _result, #METHOD );                                                                                                                                                                            \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         INextBotEventResponder::METHOD();                                                                                                                                                                                                    \
     }
 
@@ -951,10 +951,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     {                                                                                                                                                                                                                                        \
         if ( !m_isStarted )                                                                                                                                                                                                                  \
             return;                                                                                                                                                                                                                          \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         Action< Actor > *_action = this;                                                                                                                                                                                                     \
         EventDesiredResult< Actor > _result;                                                                                                                                                                                                 \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         while ( _action )                                                                                                                                                                                                                    \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_EVENTS ) || NextBotDebugHistory.GetBool() ) )                                                                                                                                    \
@@ -966,7 +966,7 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 break;                                                                                                                                                                                                                       \
             _action = _action->GetActionBuriedUnderMe();                                                                                                                                                                                     \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         if ( _action )                                                                                                                                                                                                                       \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_BEHAVIOR ) || NextBotDebugHistory.GetBool() ) && _result.IsRequestingChange() && _action )                                                                                       \
@@ -977,10 +977,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 0, 0, 255 ), "%s %s ", _result.GetTypeName(), _result.m_action ? _result.m_action->GetName() : "" );                                                                \
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 0, 255, 0, 255 ), "%s\n", _result.m_reason ? _result.m_reason : "" );                                                                                                    \
             }                                                                                                                                                                                                                                \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
             _action->StorePendingEventResult( _result, #METHOD );                                                                                                                                                                            \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         INextBotEventResponder::METHOD( ARG1 );                                                                                                                                                                                              \
     }
 
@@ -988,10 +988,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     {                                                                                                                                                                                                                                        \
         if ( !m_isStarted )                                                                                                                                                                                                                  \
             return;                                                                                                                                                                                                                          \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         Action< Actor > *_action = this;                                                                                                                                                                                                     \
         EventDesiredResult< Actor > _result;                                                                                                                                                                                                 \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         while ( _action )                                                                                                                                                                                                                    \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_EVENTS ) || NextBotDebugHistory.GetBool() ) )                                                                                                                                    \
@@ -1003,7 +1003,7 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 break;                                                                                                                                                                                                                       \
             _action = _action->GetActionBuriedUnderMe();                                                                                                                                                                                     \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         if ( _action )                                                                                                                                                                                                                       \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_BEHAVIOR ) || NextBotDebugHistory.GetBool() ) && _result.IsRequestingChange() && _action )                                                                                       \
@@ -1014,10 +1014,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 0, 0, 255 ), "%s %s ", _result.GetTypeName(), _result.m_action ? _result.m_action->GetName() : "" );                                                                \
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 0, 255, 0, 255 ), "%s\n", _result.m_reason ? _result.m_reason : "" );                                                                                                    \
             }                                                                                                                                                                                                                                \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
             _action->StorePendingEventResult( _result, #METHOD );                                                                                                                                                                            \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         INextBotEventResponder::METHOD( ARG1, ARG2 );                                                                                                                                                                                        \
     }
 
@@ -1025,10 +1025,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     {                                                                                                                                                                                                                                        \
         if ( !m_isStarted )                                                                                                                                                                                                                  \
             return;                                                                                                                                                                                                                          \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         Action< Actor > *_action = this;                                                                                                                                                                                                     \
         EventDesiredResult< Actor > _result;                                                                                                                                                                                                 \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         while ( _action )                                                                                                                                                                                                                    \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_EVENTS ) || NextBotDebugHistory.GetBool() ) )                                                                                                                                    \
@@ -1040,7 +1040,7 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 break;                                                                                                                                                                                                                       \
             _action = _action->GetActionBuriedUnderMe();                                                                                                                                                                                     \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         if ( _action )                                                                                                                                                                                                                       \
         {                                                                                                                                                                                                                                    \
             if ( m_actor && ( m_actor->IsDebugging( NEXTBOT_BEHAVIOR ) || NextBotDebugHistory.GetBool() ) && _result.IsRequestingChange() && _action )                                                                                       \
@@ -1051,17 +1051,17 @@ class Action : public INextBotEventResponder, public IContextualQuery
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 0, 0, 255 ), "%s %s ", _result.GetTypeName(), _result.m_action ? _result.m_action->GetName() : "" );                                                                \
                 m_actor->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 0, 255, 0, 255 ), "%s\n", _result.m_reason ? _result.m_reason : "" );                                                                                                    \
             }                                                                                                                                                                                                                                \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
             _action->StorePendingEventResult( _result, #METHOD );                                                                                                                                                                            \
         }                                                                                                                                                                                                                                    \
-                                                                                                                                                                                                                                             \
+                                                                                                                                                                                                                                            \
         INextBotEventResponder::METHOD( ARG1, ARG2, ARG3 );                                                                                                                                                                                  \
     }
 
     /**
-     * Translate incoming events into Action events
-     * DO NOT OVERRIDE THESE METHODS
-     */
+    * Translate incoming events into Action events
+    * DO NOT OVERRIDE THESE METHODS
+    */
     virtual void OnLeaveGround( CBaseEntity *ground )
     {
         PROCESS_EVENT_WITH_1_ARG( OnLeaveGround, ground );
@@ -1305,15 +1305,15 @@ class Action : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * If any Action buried underneath me has either exited
-     * or is changing to a different Action, we're "out of scope"
-     */
+    * If any Action buried underneath me has either exited
+    * or is changing to a different Action, we're "out of scope"
+    */
     bool IsOutOfScope( void ) const
     {
         for ( Action< Actor > *under = GetActionBuriedUnderMe(); under; under = under->GetActionBuriedUnderMe() )
         {
             if ( under->m_eventResult.m_type == CHANGE_TO ||
-                 under->m_eventResult.m_type == DONE )
+                under->m_eventResult.m_type == DONE )
             {
                 return true;
             }
@@ -1322,10 +1322,10 @@ class Action : public INextBotEventResponder, public IContextualQuery
     }
 
     /**
-     * Process any pending events with the stack. This is called
-     * by the active Action on the top of the stack, and walks
-     * through any buried Actions checking for pending event results.
-     */
+    * Process any pending events with the stack. This is called
+    * by the active Action on the top of the stack, and walks
+    * through any buried Actions checking for pending event results.
+    */
     ActionResult< Actor > ProcessPendingEvents( void ) const
     {
         // if an event has requested a change, honor it
@@ -1364,9 +1364,9 @@ class Action : public INextBotEventResponder, public IContextualQuery
     Action< Actor > *ApplyResult( Actor *me, Behavior< Actor > *behavior, ActionResult< Actor > result );
 
     /**
-     * The methods below do the bookkeeping of each event, propagate the activity through the hierarchy,
-     * and invoke the virtual event for each.
-     */
+    * The methods below do the bookkeeping of each event, propagate the activity through the hierarchy,
+    * and invoke the virtual event for each.
+    */
     ActionResult< Actor > InvokeOnStart( Actor *me, Behavior< Actor > *behavior, Action< Actor > *priorAction, Action< Actor > *buriedUnderMeAction );
     ActionResult< Actor > InvokeUpdate( Actor *me, Behavior< Actor > *behavior, float interval );
     void InvokeOnEnd( Actor *me, Behavior< Actor > *behavior, Action< Actor > *nextAction );
@@ -1374,8 +1374,8 @@ class Action : public INextBotEventResponder, public IContextualQuery
     ActionResult< Actor > InvokeOnResume( Actor *me, Behavior< Actor > *behavior, Action< Actor > *interruptingAction );
 
     /**
-     * Store the given event result, attending to priorities
-     */
+    * Store the given event result, attending to priorities
+    */
     void StorePendingEventResult( const EventDesiredResult< Actor > &result, const char *eventName )
     {
         if ( result.IsContinue() )
@@ -2097,8 +2097,8 @@ const char *Action< Actor >::GetFullName( void ) const
     int stackIndex = 0;
 
     for ( const Action< Actor > *action = this;
-          stackIndex < maxStack && action;
-          action = action->m_parent )
+        stackIndex < maxStack && action;
+        action = action->m_parent )
     {
         nameStack[stackIndex++] = action->GetName();
     }
@@ -2115,7 +2115,7 @@ const char *Action< Actor >::GetFullName( void ) const
     /*
     for( int i = 0; i < stackIndex-1; ++i )
     {
-      Q_strcat( str, " )", fudge );
+    Q_strcat( str, " )", fudge );
     }
     */
 

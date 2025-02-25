@@ -1340,9 +1340,9 @@ static void AddOcclusionLump()
     int nOccluderVertexIndices = g_OccluderVertexIndices.Count();
 
     int nLumpLength = nOccluderCount * sizeof( doccluderdata_t ) +
-                      nOccluderPolyDataCount * sizeof( doccluderpolydata_t ) +
-                      nOccluderVertexIndices * sizeof( int ) +
-                      3 * sizeof( int );
+                    nOccluderPolyDataCount * sizeof( doccluderpolydata_t ) +
+                    nOccluderVertexIndices * sizeof( int ) +
+                    3 * sizeof( int );
 
     lump_t *lump = &g_pBSPHeader->lumps[LUMP_OCCLUSION];
 
@@ -2283,10 +2283,10 @@ void LoadBSPFile( const char *filename )
     int junk;
     for( junk = 0; junk < g_nBSPStringTable; junk++ )
     {
-      Msg( "stringtable %d", ( int )junk );
-      Msg( " %d:",  ( int )g_BSPStringTable[junk] );
-      puts( &g_BSPStringData[g_BSPStringTable[junk]] );
-      puts( "\n" );
+    Msg( "stringtable %d", ( int )junk );
+    Msg( " %d:",  ( int )g_BSPStringTable[junk] );
+    puts( &g_BSPStringData[g_BSPStringTable[junk]] );
+    puts( "\n" );
     }
     */
 
@@ -2682,11 +2682,11 @@ void WriteBSPFile( const char *filename, char *pUnused )
 
     // NOTE: This is just for debugging, so it is disabled in release maps
 #if 0
-	// add the vis portals to the BSP for visualization
-	AddLump( LUMP_PORTALS, dportals, numportals );
-	AddLump( LUMP_CLUSTERS, dclusters, numclusters );
-	AddLump( LUMP_PORTALVERTS, dportalverts, numportalverts );
-	AddLump( LUMP_CLUSTERPORTALS, dclusterportals, numclusterportals );
+    // add the vis portals to the BSP for visualization
+    AddLump( LUMP_PORTALS, dportals, numportals );
+    AddLump( LUMP_CLUSTERS, dclusters, numclusters );
+    AddLump( LUMP_PORTALVERTS, dportalverts, numportalverts );
+    AddLump( LUMP_CLUSTERPORTALS, dclusterportals, numclusterportals );
 #endif
 
     AddLump( LUMP_CLIPPORTALVERTS, ( float * )g_ClipPortalVerts, g_nClipPortalVerts * 3 );
@@ -2817,12 +2817,12 @@ int ArrayUsage( const char *szItem, int items, int maxitems, int itemsize )
     float percentage = maxitems ? items * 100.0 / maxitems : 0.0;
 
     Msg( "%-17.17s %8i/%-8i %8i/%-8i (%4.1f%%) ",
-         szItem,
-         items,
-         maxitems,
-         items * itemsize,
-         maxitems * itemsize,
-         percentage );
+        szItem,
+        items,
+        maxitems,
+        items * itemsize,
+        maxitems * itemsize,
+        percentage );
     if ( percentage > 80.0 )
         Msg( "VERY FULL!\n" );
     else if ( percentage > 95.0 )
@@ -2838,10 +2838,10 @@ int GlobUsage( const char *szItem, int itemstorage, int maxstorage )
 {
     float percentage = maxstorage ? itemstorage * 100.0 / maxstorage : 0.0;
     Msg( "%-17.17s     [variable]    %8i/%-8i (%4.1f%%) ",
-         szItem,
-         itemstorage,
-         maxstorage,
-         percentage );
+        szItem,
+        itemstorage,
+        maxstorage,
+        percentage );
     if ( percentage > 80.0 )
         Msg( "VERY FULL!\n" );
     else if ( percentage > 95.0 )
@@ -3241,8 +3241,8 @@ void TriStripToTriList(
     for ( int i = 0; i < nTriStripIndices - 2; i++ )
     {
         if ( pTriStripIndices[i] == pTriStripIndices[i + 1] ||
-             pTriStripIndices[i] == pTriStripIndices[i + 2] ||
-             pTriStripIndices[i + 1] == pTriStripIndices[i + 2] )
+            pTriStripIndices[i] == pTriStripIndices[i + 2] ||
+            pTriStripIndices[i + 1] == pTriStripIndices[i + 2] )
         {
         }
         else
@@ -3317,9 +3317,9 @@ void CalcFaceExtents( dface_t *s, int lightmapTextureMinsInLuxels[2], int lightm
         for ( j = 0; j < 2; j++ )
         {
             val = v->point[0] * tex->lightmapVecsLuxelsPerWorldUnits[j][0] +
-                  v->point[1] * tex->lightmapVecsLuxelsPerWorldUnits[j][1] +
-                  v->point[2] * tex->lightmapVecsLuxelsPerWorldUnits[j][2] +
-                  tex->lightmapVecsLuxelsPerWorldUnits[j][3];
+                v->point[1] * tex->lightmapVecsLuxelsPerWorldUnits[j][1] +
+                v->point[2] * tex->lightmapVecsLuxelsPerWorldUnits[j][2] +
+                tex->lightmapVecsLuxelsPerWorldUnits[j][3];
             if ( val < mins[j] )
                 mins[j] = val;
             if ( val > maxs[j] )
@@ -3347,13 +3347,13 @@ void CalcFaceExtents( dface_t *s, int lightmapTextureMinsInLuxels[2], int lightm
             }
             point *= 1.0f / s->numedges;
             Error( "Bad surface extents - surface is too big to have a lightmap\n\tmaterial %s around point (%.1f %.1f %.1f)\n\t(dimension: %d, %d>%d)\n",
-                   TexDataStringTable_GetString( dtexdata[texinfo[s->texinfo].texdata].nameStringTableID ),
-                   point.x,
-                   point.y,
-                   point.z,
-                   ( int )i,
-                   ( int )lightmapTextureSizeInLuxels[i],
-                   ( int )( nMaxLightmapDim + 1 ) );
+                    TexDataStringTable_GetString( dtexdata[texinfo[s->texinfo].texdata].nameStringTableID ),
+                    point.x,
+                    point.y,
+                    point.z,
+                    ( int )i,
+                    ( int )lightmapTextureSizeInLuxels[i],
+                    ( int )( nMaxLightmapDim + 1 ) );
         }
     }
 }
@@ -3381,7 +3381,7 @@ void UpdateAllFaceLightmapExtents()
 
 class CToolBSPTree : public ISpatialQuery
 {
-   public:
+    public:
     // Returns the number of leaves
     int LeafCount() const;
 
@@ -3406,8 +3406,8 @@ int CToolBSPTree::LeafCount() const
 //-----------------------------------------------------------------------------
 
 bool CToolBSPTree::EnumerateLeavesAtPoint( Vector const &pt,
-                                           ISpatialLeafEnumerator *pEnum,
-                                           intp context )
+                                            ISpatialLeafEnumerator *pEnum,
+                                            intp context )
 {
     int node = 0;
     while ( node >= 0 )
@@ -3505,19 +3505,19 @@ static bool EnumerateLeavesInSphere_R( int node, Vector const &origin, float rad
         else
         {
             if ( !EnumerateLeavesInSphere_R( pNode->children[0],
-                                             origin,
-                                             radius,
-                                             pEnum,
-                                             context ) )
+                                            origin,
+                                            radius,
+                                            pEnum,
+                                            context ) )
             {
                 return false;
             }
 
             return EnumerateLeavesInSphere_R( pNode->children[1],
-                                              origin,
-                                              radius,
-                                              pEnum,
-                                              context );
+                                            origin,
+                                            radius,
+                                            pEnum,
+                                            context );
         }
     }
 
@@ -4483,8 +4483,8 @@ bool CompressGameLump( dheader_t *pInBSPHeader, dheader_t *pOutBSPHeader, CUtlBu
             else
             {
                 inputBuffer.SetExternalBuffer( ( ( byte * )pInBSPHeader ) + pInGameLump[i].fileofs,
-                                               pInGameLump[i].filelen,
-                                               pInGameLump[i].filelen );
+                                                pInGameLump[i].filelen,
+                                                pInGameLump[i].filelen );
             }
 
             bool bCompressed = pCompressFunc ? pCompressFunc( inputBuffer, compressedBuffer ) : false;
@@ -4545,8 +4545,8 @@ bool RepackBSPCallback_LZMA( CUtlBuffer &inputBuffer, CUtlBuffer &outputBuffer )
     unsigned int originalSize = inputBuffer.TellPut() - inputBuffer.TellGet();
     unsigned int compressedSize = 0;
     unsigned char *pCompressedOutput = LZMA_Compress( ( unsigned char * )inputBuffer.Base() + inputBuffer.TellGet(),
-                                                      originalSize,
-                                                      &compressedSize );
+                                                    originalSize,
+                                                    &compressedSize );
     if ( pCompressedOutput )
     {
         outputBuffer.Put( pCompressedOutput, compressedSize );
@@ -4639,8 +4639,8 @@ bool RepackBSP( CUtlBuffer &inputBuffer, CUtlBuffer &outputBuffer, CompressFunc_
             {
                 // Just use input
                 inputBuffer.SetExternalBuffer( ( ( byte * )pInBSPHeader ) + pSortedLump->pLump->fileofs,
-                                               pSortedLump->pLump->filelen,
-                                               pSortedLump->pLump->filelen );
+                                                pSortedLump->pLump->filelen,
+                                                pSortedLump->pLump->filelen );
             }
 
             if ( lumpNum == LUMP_GAME_LUMP )

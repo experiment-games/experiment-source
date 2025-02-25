@@ -26,7 +26,7 @@ void UtlVector_InitializeAllocatedElements( T *pBase, int count )
 template < class T, class A >
 class UtlVectorTemplate
 {
-   public:
+    public:
     static void ResizeUtlVector( void *pStruct, int offsetToUtlVector, int len )
     {
         CUtlVector< T, A > *pVec = ( CUtlVector< T, A > * )( ( char * )pStruct + offsetToUtlVector );

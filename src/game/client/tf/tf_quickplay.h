@@ -41,7 +41,7 @@ class CQuickplayPanelBase : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQuickplayPanelBase, vgui::EditablePanel );
 
-   public:
+    public:
     CQuickplayPanelBase( vgui::Panel *parent, const char *name );
     virtual ~CQuickplayPanelBase();
 
@@ -58,7 +58,7 @@ class CQuickplayPanelBase : public vgui::EditablePanel
 
     void SetPageScrollButtonsVisible( bool bFlag );
 
-   protected:
+    protected:
     void SetupActionTarget( const char *pPanelName );
     void AddItem( EGameCategory gameType, const char *pTitle, const char *pDescription, const char *pMoreInfo, const char *pComplexity, const char *pImage, const char *pBetaImage );
     virtual void UpdateSelectableItems();
@@ -74,7 +74,7 @@ class CQuickplayPanelBase : public vgui::EditablePanel
 
     virtual void UserSelectItemByIndex( int iNewItem );
 
-   protected:
+    protected:
     vgui::EditablePanel *m_pContainer;
     vgui::EditablePanel *m_pSimplifiedOptionsContainer;
     vgui::EditablePanel *m_pAdvOptionsContainer;

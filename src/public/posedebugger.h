@@ -16,7 +16,7 @@ class IClientNetworkable;
 
 abstract_class IPoseDebugger
 {
-   public:
+    public:
     virtual void StartBlending( IClientNetworkable * pEntity, const CStudioHdr *pStudioHdr ) = 0;
 
     virtual void AccumulatePose(

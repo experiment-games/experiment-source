@@ -118,10 +118,10 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
     const char *pEventName = event->GetName();
 
     if ( FStrEq( "teamplay_round_start", pEventName ) ||
-         FStrEq( "teamplay_game_over", pEventName ) ||
-         FStrEq( "tf_game_over", pEventName ) ||
-         FStrEq( "training_complete", pEventName ) ||
-         FStrEq( "show_match_summary", pEventName ) )
+        FStrEq( "teamplay_game_over", pEventName ) ||
+        FStrEq( "tf_game_over", pEventName ) ||
+        FStrEq( "training_complete", pEventName ) ||
+        FStrEq( "show_match_summary", pEventName ) )
     {
         m_bShouldBeVisible = false;
     }
@@ -197,7 +197,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
         if ( TFGameRules() )
         {
             if ( ( TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY ) && CTFMinigameLogic::GetMinigameLogic() && CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame() ) ||
-                 ( TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) ) )
+                ( TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) ) )
             {
                 iWinReason = WINREASON_NONE;
             }
@@ -257,9 +257,9 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
                     {
                         bool bBlueAttackers = ( pBlueTeam->GetRole() == TEAM_ROLE_ATTACKERS );
                         g_pVGuiLocalize->ConstructString_safe( wzTeamWin,
-                                                               g_pVGuiLocalize->Find( "#WinPanel_StopWatch_Round_Complete" ),
-                                                               1,
-                                                               bBlueAttackers ? pBlueTeamName : pRedTeamName );
+                                                                g_pVGuiLocalize->Find( "#WinPanel_StopWatch_Round_Complete" ),
+                                                                1,
+                                                                bBlueAttackers ? pBlueTeamName : pRedTeamName );
 
                         pTeamLabel = wzTeamWin;
                     }
@@ -385,10 +385,10 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
                 {
                     bool bBlueAttackers = ( pBlueTeam->GetRole() == TEAM_ROLE_ATTACKERS );
                     g_pVGuiLocalize->ConstructString_safe( wzWinReason,
-                                                           g_pVGuiLocalize->Find( "#Winreason_Stopwatch_Watching_Rounds" ),
-                                                           2,
-                                                           bBlueAttackers ? pBlueTeamName : pRedTeamName,
-                                                           bBlueAttackers ? pRedTeamName : pBlueTeamName );
+                                                            g_pVGuiLocalize->Find( "#Winreason_Stopwatch_Watching_Rounds" ),
+                                                            2,
+                                                            bBlueAttackers ? pBlueTeamName : pRedTeamName,
+                                                            bBlueAttackers ? pRedTeamName : pBlueTeamName );
                 }
                 break;
             case WINREASON_STOPWATCH_WATCHING_FINAL_ROUND:
@@ -396,10 +396,10 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
                 {
                     bool bBlueAttackers = ( pBlueTeam->GetRole() == TEAM_ROLE_ATTACKERS );
                     g_pVGuiLocalize->ConstructString_safe( wzWinReason,
-                                                           g_pVGuiLocalize->Find( "#Winreason_Stopwatch_SwitchSides" ),
-                                                           2,
-                                                           bBlueAttackers ? pRedTeamName : pBlueTeamName,
-                                                           bBlueAttackers ? pBlueTeamName : pRedTeamName );
+                                                            g_pVGuiLocalize->Find( "#Winreason_Stopwatch_SwitchSides" ),
+                                                            2,
+                                                            bBlueAttackers ? pRedTeamName : pBlueTeamName,
+                                                            bBlueAttackers ? pBlueTeamName : pRedTeamName );
                 }
                 break;
             case WINREASON_STOPWATCH_PLAYING_ROUNDS:
@@ -407,10 +407,10 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
                 {
                     bool bBlueAttackers = ( pBlueTeam->GetRole() == TEAM_ROLE_ATTACKERS );
                     g_pVGuiLocalize->ConstructString_safe( wzWinReason,
-                                                           g_pVGuiLocalize->Find( "#Winreason_Stopwatch_Playing_Rounds" ),
-                                                           2,
-                                                           bBlueAttackers ? pBlueTeamName : pRedTeamName,
-                                                           bBlueAttackers ? pRedTeamName : pBlueTeamName );
+                                                            g_pVGuiLocalize->Find( "#Winreason_Stopwatch_Playing_Rounds" ),
+                                                            2,
+                                                            bBlueAttackers ? pBlueTeamName : pRedTeamName,
+                                                            bBlueAttackers ? pRedTeamName : pBlueTeamName );
                 }
                 break;
             default:
@@ -427,9 +427,9 @@ void CTFWinPanel::FireGameEvent( IGameEvent *event )
             wchar_t wzCapturesRemainingMsg[256] = L"";
             _snwprintf( wzNumCapturesRemaining, ARRAYSIZE( wzNumCapturesRemaining ), L"%i", iRoundsRemaining );
             g_pVGuiLocalize->ConstructString_safe( wzCapturesRemainingMsg,
-                                                   g_pVGuiLocalize->Find( 1 == iRoundsRemaining ? "#Winpanel_CapturePointRemaining" : "Winpanel_CapturePointsRemaining" ),
-                                                   1,
-                                                   wzNumCapturesRemaining );
+                                                    g_pVGuiLocalize->Find( 1 == iRoundsRemaining ? "#Winpanel_CapturePointRemaining" : "Winpanel_CapturePointsRemaining" ),
+                                                    1,
+                                                    wzNumCapturesRemaining );
             SetDialogVariable( "DetailsLabel", wzCapturesRemainingMsg );
         }
         else if ( ( WINREASON_ALL_POINTS_CAPTURED == iWinReason ) || ( WINREASON_FLAG_CAPTURE_LIMIT == iWinReason ) )

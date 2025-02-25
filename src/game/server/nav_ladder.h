@@ -22,7 +22,7 @@ class CNavArea;
  */
 class CNavLadder
 {
-   public:
+    public:
     CNavLadder( void )
     {
         m_topForwardArea = NULL;
@@ -95,7 +95,7 @@ class CNavLadder
     bool IsUsableByTeam( int teamNumber ) const;
     CBaseEntity *GetLadderEntity( void ) const;
 
-   private:
+    private:
     void FindLadderEntity( void );
 
     EHANDLE m_ladderEntity;

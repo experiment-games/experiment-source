@@ -71,7 +71,7 @@ void DBG_AssertFunction( bool fExpr, const char *szExpr, const char *szFile, int
 //-----------------------------------------------------------------------------
 class CEntityFactoryDictionary : public IEntityFactoryDictionary
 {
-   public:
+    public:
     CEntityFactoryDictionary();
 
     virtual void InstallFactory( IEntityFactory *pFactory, const char *pClassName );
@@ -84,10 +84,10 @@ class CEntityFactoryDictionary : public IEntityFactoryDictionary
     virtual const char *GetCannonicalName( const char *pClassName );
     void ReportEntitySizes();
 
-   private:
+    private:
     IEntityFactory *FindFactory( const char *pClassName );
 
-   public:
+    public:
     CUtlDict< IEntityFactory *, unsigned short > m_Factories;
 };
 
@@ -161,7 +161,7 @@ void CEntityFactoryDictionary::InstallFactory( IEntityFactory *pFactory, const c
 // Remove an existing factory
 //-----------------------------------------------------------------------------
 void CEntityFactoryDictionary::RemoveFactory( IEntityFactory *pFactory,
-                                              const char *pClassName )
+                                            const char *pClassName )
 {
     m_Factories.Remove( pClassName );
 }
@@ -372,7 +372,7 @@ CBaseEntity *CEntitySphereQuery::GetCurrentEntity()
 //-----------------------------------------------------------------------------
 class CTracePassFilter : public CTraceFilter
 {
-   public:
+    public:
     CTracePassFilter( IHandleEntity *pPassEnt )
         : m_pPassEnt( pPassEnt ) {}
 
@@ -387,7 +387,7 @@ class CTracePassFilter : public CTraceFilter
         return true;
     }
 
-   private:
+    private:
     IHandleEntity *m_pPassEnt;
 };
 
@@ -531,8 +531,8 @@ void UTIL_Remove( IServerNetworkable *oldObj )
     if ( pBaseEnt )
     {
 #if 0
-		if ( g_pScriptVM )
-			g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityRemove", ToHScript( pBaseEnt ) );
+        if ( g_pScriptVM )
+            g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityRemove", ToHScript( pBaseEnt ) );
 #endif
 
 #ifdef PORTAL  // make sure entities are in the primary physics environment for the portal mod, this code should be safe even if the entity is in neither extra environment
@@ -1508,7 +1508,7 @@ void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &c
 //-----------------------------------------------------------------------------
 class CWaterTraceFilter : public CTraceFilter
 {
-   public:
+    public:
     bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
     {
         CBaseEntity *pCollide = EntityFromEntityHandle( pHandleEntity );
@@ -1638,7 +1638,7 @@ bool UTIL_IsValidEntity( CBaseEntity *pEnt )
 #include "utlsymbol.h"
 class CPrecacheOtherList : public CAutoGameSystem
 {
-   public:
+    public:
     CPrecacheOtherList( char const *name )
         : CAutoGameSystem( name )
     {
@@ -1648,7 +1648,7 @@ class CPrecacheOtherList : public CAutoGameSystem
 
     bool AddOrMarkPrecached( const char *pClassname );
 
-   private:
+    private:
     CUtlSymbolTable m_list;
 };
 
@@ -1796,8 +1796,8 @@ int DispatchSpawn( CBaseEntity *pEntity, bool bRunVScripts )
         MDLCACHE_CRITICAL_SECTION();
 
 #if 0
-		if ( g_pScriptVM )
-			g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityPreSpawn", ToHScript( pEntity ) );
+        if ( g_pScriptVM )
+            g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityPreSpawn", ToHScript( pEntity ) );
 #endif
 
         // keep a smart pointer that will now if the object gets deleted
@@ -1889,8 +1889,8 @@ int DispatchSpawn( CBaseEntity *pEntity, bool bRunVScripts )
         }
 
 #if 0
-		if ( g_pScriptVM )
-			g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityPostSpawn", ToHScript( pEntity ) );
+        if ( g_pScriptVM )
+            g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityPostSpawn", ToHScript( pEntity ) );
 #endif
     }
 
@@ -1967,8 +1967,8 @@ void EntityMatrix::InitFromEntityLocal( CBaseEntity *entity )
 void UTIL_ValidateSoundName( string_t &name, const char *defaultStr )
 {
     if ( ( !name ||
-           strlen( ( char * )STRING( name ) ) < 1 ) ||
-         !Q_stricmp( ( char * )STRING( name ), "0" ) )
+            strlen( ( char * )STRING( name ) ) < 1 ) ||
+        !Q_stricmp( ( char * )STRING( name ), "0" ) )
     {
         name = AllocPooledString( defaultStr );
     }
@@ -1982,7 +1982,7 @@ void UTIL_ValidateSoundName( string_t &name, const char *defaultStr )
 // FIXME:  include bspfile.h here?
 class CCheckClient : public CAutoGameSystem
 {
-   public:
+    public:
     CCheckClient( char const *name )
         : CAutoGameSystem( name )
     {

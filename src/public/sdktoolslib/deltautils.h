@@ -15,7 +15,7 @@
 //=============================================================================
 class CDeltaUtils
 {
-   public:
+    public:
     enum Corrector_t
     {
         CT_NO_CORRECTORS,

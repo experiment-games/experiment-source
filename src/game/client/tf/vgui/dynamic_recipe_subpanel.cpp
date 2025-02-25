@@ -671,7 +671,7 @@ void CDynamicRecipePanel::OnCommand( const char* command )
         return;
     }
     else if ( !Q_strnicmp( command, "deleteitem", 10 ) ||
-              !Q_strnicmp( command, "useitem", 7 ) )
+            !Q_strnicmp( command, "useitem", 7 ) )
     {
         // Gobble up these commands
         return;
@@ -806,8 +806,8 @@ bool CDynamicRecipePanel::CheckForUntradableItems( void )
         locchar_t wszWarning[kWarningLength] = LOCCHAR( "" );
 
         loc_scpy_safe( wszWarning,
-                       CConstructLocalizedString( GLocalizationProvider()->Find( "Dynamic_Recipe_Untradable_Text" ),
-                                                  m_pDynamicRecipeItem->GetItemName() ) );
+                        CConstructLocalizedString( GLocalizationProvider()->Find( "Dynamic_Recipe_Untradable_Text" ),
+                                                m_pDynamicRecipeItem->GetItemName() ) );
 
         CTFGenericConfirmDialog* pDialog = new CTFGenericConfirmDialog( "#Craft_Untradable_Title", wszWarning, "#GameUI_OK", "#Cancel", &ConfirmUntradableCraft, NULL );
 
@@ -838,8 +838,8 @@ bool CDynamicRecipePanel::WarnAboutPartialCompletion( void )
         locchar_t wszWarning[kWarningLength] = LOCCHAR( "" );
 
         loc_scpy_safe( wszWarning,
-                       CConstructLocalizedString( GLocalizationProvider()->Find( "Dynamic_Recipe_Partial_Completion_Warning" ),
-                                                  m_pDynamicRecipeItem->GetItemName() ) );
+                        CConstructLocalizedString( GLocalizationProvider()->Find( "Dynamic_Recipe_Partial_Completion_Warning" ),
+                                                m_pDynamicRecipeItem->GetItemName() ) );
 
         CTFGenericConfirmDialog* pDialog = new CTFGenericConfirmDialog( "#Craft_Untradable_Title", wszWarning, "#GameUI_OK", "#Cancel", &ConfirmDestroyItems, NULL );
         if ( pDialog )
@@ -1625,8 +1625,8 @@ bool CDynamicRecipePanel::CanDragTo( CItemModelPanel* pItemPanel, int iPanelInde
         return true;
 
     itemid_t itemID = m_pMouseDragItemPanel->GetItem()
-                          ? m_pMouseDragItemPanel->GetItem()->GetItemID()
-                          : 0;
+                        ? m_pMouseDragItemPanel->GetItem()->GetItemID()
+                        : 0;
 
     // From backpack to input panel that can accept the item
     if ( IsBackpackPanel( iDraggedFromPos ) && IsInputPanel( iPanelIndex ) && InputPanelCanAcceptItem( pItemPanel, itemID ) )
@@ -1715,7 +1715,7 @@ void CDynamicRecipePanel::HandleDragTo( CItemModelPanel* /*pItemPanel*/, int iPa
             if ( nSrcRecipeIndex != 0 && nDstRecipeIndex != 0 )
             {
                 if ( pSrcPanel->MatchesAttribCriteria( nDstRecipeIndex ) &&
-                     pDstPanel->MatchesAttribCriteria( nSrcRecipeIndex ) )
+                    pDstPanel->MatchesAttribCriteria( nSrcRecipeIndex ) )
                 {
                     SetRecipeComponentIntoPanel( nDstRecipeIndex, pSrcPanel, 0, pDstPanel, 0 );
                 }
@@ -1777,13 +1777,13 @@ void CDynamicRecipePanel::SetNewRecipe( CEconItemView* pNewRecipeItem )
 
 class CWaitForConsumeDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitForConsumeDialog( vgui::Panel* pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         // Play an exciting sound!
@@ -1865,7 +1865,7 @@ void CDynamicRecipePanel::OnCraftResponse( itemid_t nNewToolID, EGCMsgResponse e
 //-----------------------------------------------------------------------------
 class CGCCompleteDynamicRecipeResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCompleteDynamicRecipeResponse( GCSDK::CGCClient* pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

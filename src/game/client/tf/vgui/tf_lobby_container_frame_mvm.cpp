@@ -58,7 +58,7 @@ void CLobbyContainerFrame_MvM::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
     // All we know about
     return ( eMatchGroup == k_eTFMatchGroup_MvM_MannUp ||
-             eMatchGroup == k_eTFMatchGroup_MvM_Practice );
+            eMatchGroup == k_eTFMatchGroup_MvM_Practice );
 }
 
 //-----------------------------------------------------------------------------
@@ -338,7 +338,7 @@ void CLobbyContainerFrame_MvM::WriteControls()
 
     // Set appropriate page title
     if ( BIsCurrentCriteriaMannUp() ||
-         eLeaderState == k_eTFMatchmakingSyncedUIState_Configuring_Mode )
+        eLeaderState == k_eTFMatchmakingSyncedUIState_Configuring_Mode )
     {
         GetPropertySheet()->SetTabTitle( 0, "#TF_MvM_HeaderCoop" );
     }

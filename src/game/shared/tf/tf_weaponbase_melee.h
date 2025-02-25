@@ -24,7 +24,7 @@ extern ConVar cl_crosshair_file;
 //
 class CTFWeaponBaseMelee : public CTFWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponBaseMelee, CTFWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -92,14 +92,14 @@ class CTFWeaponBaseMelee : public CTFWeaponBase
 
     virtual char const *GetShootSound( int iIndex ) const;
 
-   public:
+    public:
     CTFWeaponInfo *m_pWeaponInfo;
 
-   protected:
+    protected:
     virtual void Swing( CTFPlayer *pPlayer );
     virtual void PlaySwingSound( void );
 
-   protected:
+    protected:
     float m_flSmackTime;
     bool m_bConnected;
     bool m_bMiniCrit;
@@ -108,7 +108,7 @@ class CTFWeaponBaseMelee : public CTFWeaponBase
     CUtlVector< CHandle< CTFPlayer > > m_potentialVictimVector;
 #endif
 
-   private:
+    private:
     bool DoSwingTraceInternal( trace_t &trace, bool bCleave, CUtlVector< trace_t > *pTargetTraceVector );
     bool OnSwingHit( trace_t &trace );
 

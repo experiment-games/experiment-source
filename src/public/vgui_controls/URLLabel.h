@@ -22,14 +22,14 @@ class URLLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( URLLabel, Label );
 
-   public:
+    public:
     URLLabel( Panel *parent, const char *panelName, const char *text, const char *pszURL );
     URLLabel( Panel *parent, const char *panelName, const wchar_t *wszText, const char *pszURL );
     ~URLLabel();
 
     void SetURL( const char *pszURL );
 
-   protected:
+    protected:
     virtual void OnMousePressed( MouseCode code );
     virtual void ApplySettings( KeyValues *inResourceData );
     virtual void GetSettings( KeyValues *outResourceData );
@@ -42,7 +42,7 @@ class URLLabel : public Label
         return m_pszURL;
     }
 
-   private:
+    private:
     char *m_pszURL;
     int m_iURLSize;
     bool m_bUnderline;

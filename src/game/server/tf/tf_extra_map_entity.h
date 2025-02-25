@@ -22,7 +22,7 @@ class CExtraMapEntity : public CBaseAnimating, public IExtraMapEntityAutoList
 {
     DECLARE_CLASS( CExtraMapEntity, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Spawn( void ) OVERRIDE;
@@ -38,10 +38,10 @@ class CExtraMapEntity : public CBaseAnimating, public IExtraMapEntityAutoList
     }
     void AnimThink( void );
 
-   protected:
+    protected:
     virtual void Precache_Internal( void );
 
-   private:
+    private:
     static const char *ValidateKeyName( const char *pszEntName );
 };
 
@@ -49,14 +49,14 @@ class CExtraMapEntity_Rocket : public CExtraMapEntity
 {
     DECLARE_CLASS( CExtraMapEntity_Rocket, CExtraMapEntity );
 
-   public:
+    public:
     virtual void Spawn( void ) OVERRIDE;
     virtual const char *GetDefaultModel( void ) OVERRIDE
     {
         return ENTITYROCKET_DEFAULT_MODEL;
     }
 
-   protected:
+    protected:
     virtual void Precache_Internal( void ) OVERRIDE;
 };
 
@@ -64,7 +64,7 @@ class CExtraMapEntity_Carrier : public CExtraMapEntity
 {
     DECLARE_CLASS( CExtraMapEntity_Carrier, CExtraMapEntity );
 
-   public:
+    public:
     virtual void Spawn( void ) OVERRIDE;
     virtual const char *GetDefaultModel( void ) OVERRIDE
     {
@@ -76,7 +76,7 @@ class CExtraMapEntity_Sign : public CExtraMapEntity
 {
     DECLARE_CLASS( CExtraMapEntity_Sign, CExtraMapEntity );
 
-   public:
+    public:
     virtual void Spawn( void ) OVERRIDE;
     virtual const char *GetDefaultModel( void ) OVERRIDE
     {
@@ -88,7 +88,7 @@ class CExtraMapEntity_Saucer : public CExtraMapEntity
 {
     DECLARE_CLASS( CExtraMapEntity_Saucer, CExtraMapEntity );
 
-   public:
+    public:
     virtual void Spawn( void ) OVERRIDE;
     virtual const char *GetDefaultModel( void ) OVERRIDE
     {

@@ -54,22 +54,22 @@ unsigned int S3TCgetEncodeSize( DDSURFACEDESC *lpDesc,     // [in]
 
 // encode (compress) given source image to given destination surface
 void S3TCencode( DDSURFACEDESC *lpSrc,       // [in]
-                 PALETTEENTRY *lpPal,        // [in], may be NULL
-                 DDSURFACEDESC *lpDest,      // [out]
-                 void *lpDestBuf,            // [in]
-                 unsigned int dwEncodeType,  // [in]
-                 float *weight               // [in]
+                PALETTEENTRY *lpPal,        // [in], may be NULL
+                DDSURFACEDESC *lpDest,      // [out]
+                void *lpDestBuf,            // [in]
+                unsigned int dwEncodeType,  // [in]
+                float *weight               // [in]
 );
 
 int S3TCencodeEx( DDSURFACEDESC *lpSrc,                          // [in]
-                  PALETTEENTRY *lpPal,                           // [in], may be NULL
-                  DDSURFACEDESC *lpDest,                         // [out]
-                  void *lpDestBuf,                               // [in]
-                  unsigned int dwEncodeType,                     // [in]
-                  float *weight,                                 // [in]
-                  LP_S3TC_PROGRESS_CALLBACK lpS3TCProgressProc,  // [in], may be NULL
-                  LPVOID lpArg1,                                 // in
-                  LPVOID lpArg2                                  // in
+                PALETTEENTRY *lpPal,                           // [in], may be NULL
+                DDSURFACEDESC *lpDest,                         // [out]
+                void *lpDestBuf,                               // [in]
+                unsigned int dwEncodeType,                     // [in]
+                float *weight,                                 // [in]
+                LP_S3TC_PROGRESS_CALLBACK lpS3TCProgressProc,  // [in], may be NULL
+                LPVOID lpArg1,                                 // in
+                LPVOID lpArg2                                  // in
 );
 
 // determine number of bytes needed do decompress given compressed image
@@ -77,8 +77,8 @@ unsigned int S3TCgetDecodeSize( DDSURFACEDESC *lpDesc );
 
 // decode (decompress) to ARGB8888
 void S3TCdecode( DDSURFACEDESC *lpSrc,   // [in]
-                 DDSURFACEDESC *lpDest,  // [out]
-                 void *lpDestBuf         // [in]
+                DDSURFACEDESC *lpDest,  // [out]
+                void *lpDestBuf         // [in]
 );
 
 #endif  // _WIN32

@@ -15,7 +15,7 @@
 
 class CTFProjectile_EnergyBall : public CTFBaseRocket  //, public IScorer
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_EnergyBall, CTFBaseRocket );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -83,7 +83,7 @@ class CTFProjectile_EnergyBall : public CTFBaseRocket  //, public IScorer
     }
     const char *GetExplosionParticleName( void );
 
-   private:
+    private:
     CBaseHandle m_Scorer;
 
     CNetworkVar( bool, m_bChargedShot );
@@ -91,7 +91,7 @@ class CTFProjectile_EnergyBall : public CTFBaseRocket  //, public IScorer
     CNetworkVector( m_vColor1 );
     CNetworkVector( m_vColor2 );
 
-   protected:
+    protected:
     float m_flInitTime;
 };
 

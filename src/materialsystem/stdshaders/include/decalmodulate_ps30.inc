@@ -18,23 +18,23 @@
 #include "shaderlib/cshader.h"
 class decalmodulate_ps30_Static_Index
 {
-	unsigned int m_nCONVERT_TO_SRGB : 2;
+    unsigned int m_nCONVERT_TO_SRGB : 2;
 public:
-	void SetCONVERT_TO_SRGB( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nCONVERT_TO_SRGB = i;
-	}
+    void SetCONVERT_TO_SRGB( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nCONVERT_TO_SRGB = i;
+    }
 
-	decalmodulate_ps30_Static_Index(  )
-	{
-		m_nCONVERT_TO_SRGB = g_pHardwareConfig->NeedsShaderSRGBConversion();
-	}
+    decalmodulate_ps30_Static_Index(  )
+    {
+        m_nCONVERT_TO_SRGB = g_pHardwareConfig->NeedsShaderSRGBConversion();
+    }
 
-	int GetIndex() const
-	{
-		return ( 3 * m_nCONVERT_TO_SRGB ) + 0;
-	}
+    int GetIndex() const
+    {
+        return ( 3 * m_nCONVERT_TO_SRGB ) + 0;
+    }
 };
 
 #define shaderStaticTest_decalmodulate_ps30 1
@@ -42,34 +42,33 @@ public:
 
 class decalmodulate_ps30_Dynamic_Index
 {
-	unsigned int m_nPIXELFOGTYPE : 2;
+    unsigned int m_nPIXELFOGTYPE : 2;
 #ifdef _DEBUG
-	bool m_bPIXELFOGTYPE : 1;
+    bool m_bPIXELFOGTYPE : 1;
 #endif	// _DEBUG
 public:
-	void SetPIXELFOGTYPE( int i )
-	{
-		Assert( i >= 0 && i <= 2 );
-		m_nPIXELFOGTYPE = i;
+    void SetPIXELFOGTYPE( int i )
+    {
+        Assert( i >= 0 && i <= 2 );
+        m_nPIXELFOGTYPE = i;
 #ifdef _DEBUG
-		m_bPIXELFOGTYPE = true;
+        m_bPIXELFOGTYPE = true;
 #endif	// _DEBUG
-	}
+    }
 
-	decalmodulate_ps30_Dynamic_Index(  )
-	{
-		m_nPIXELFOGTYPE = 0;
+    decalmodulate_ps30_Dynamic_Index(  )
+    {
+        m_nPIXELFOGTYPE = 0;
 #ifdef _DEBUG
-		m_bPIXELFOGTYPE = false;
+        m_bPIXELFOGTYPE = false;
 #endif	// _DEBUG
-	}
+    }
 
-	int GetIndex() const
-	{
-		Assert( m_bPIXELFOGTYPE );
-		return ( 1 * m_nPIXELFOGTYPE ) + 0;
-	}
+    int GetIndex() const
+    {
+        Assert( m_bPIXELFOGTYPE );
+        return ( 1 * m_nPIXELFOGTYPE ) + 0;
+    }
 };
 
 #define shaderDynamicTest_decalmodulate_ps30 psh_forgot_to_set_dynamic_PIXELFOGTYPE
-

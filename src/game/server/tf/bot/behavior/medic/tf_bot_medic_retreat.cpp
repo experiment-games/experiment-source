@@ -36,7 +36,7 @@ ActionResult< CTFBot > CTFBotMedicRetreat::OnStart( CTFBot *me, Action< CTFBot >
 //---------------------------------------------------------------------------------------------
 class CUsefulHealTargetFilter : public INextBotEntityFilter
 {
-   public:
+    public:
     CUsefulHealTargetFilter( int team )
     {
         m_team = team;

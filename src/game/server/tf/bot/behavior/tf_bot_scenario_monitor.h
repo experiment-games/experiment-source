@@ -8,7 +8,7 @@
 
 class CTFBotScenarioMonitor : public Action< CTFBot >
 {
-   public:
+    public:
     virtual Action< CTFBot > *InitialContainedAction( CTFBot *me );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -19,7 +19,7 @@ class CTFBotScenarioMonitor : public Action< CTFBot >
         return "ScenarioMonitor";
     }
 
-   private:
+    private:
     CountdownTimer m_ignoreLostFlagTimer;
     CountdownTimer m_lostFlagTimer;
 

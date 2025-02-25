@@ -21,7 +21,7 @@ class CBaseEntity;
 
 class CTakeDamageInfo
 {
-   public:
+    public:
     enum ECritType
     {
         CRIT_NONE = 0,
@@ -137,7 +137,7 @@ class CTakeDamageInfo
     // private:
     void CopyDamageToBaseDamage();
 
-   protected:
+    protected:
     void Init( CBaseEntity *pInflictor, CBaseEntity *pAttacker, CBaseEntity *pWeapon, const Vector &damageForce, const Vector &damagePosition, const Vector &reportedPosition, float flDamage, int bitsDamageType, int iKillType );
 
     Vector m_vecDamageForce;
@@ -173,7 +173,7 @@ class CMultiDamage : public CTakeDamageInfo
 {
     DECLARE_CLASS( CMultiDamage, CTakeDamageInfo );
 
-   public:
+    public:
     CMultiDamage();
 
     bool IsClear( void )
@@ -185,7 +185,7 @@ class CMultiDamage : public CTakeDamageInfo
 
     void Init( CBaseEntity *pTarget, CBaseEntity *pInflictor, CBaseEntity *pAttacker, CBaseEntity *pWeapon, const Vector &damageForce, const Vector &damagePosition, const Vector &reportedPosition, float flDamage, int bitsDamageType, int iKillType );
 
-   protected:
+    protected:
     EHANDLE m_hTarget;
 
     DECLARE_SIMPLE_DATADESC();

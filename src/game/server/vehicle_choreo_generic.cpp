@@ -66,10 +66,10 @@ static const char *pChoreoGenericFollowerBoneNames[] =
 //-----------------------------------------------------------------------------
 class CVehicleChoreoViewParser : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     CVehicleChoreoViewParser( void );
 
-   private:
+    private:
     virtual void ParseKeyValue( void *pData, const char *pKey, const char *pValue );
     virtual void SetDefaults( void *pData );
 };
@@ -82,11 +82,11 @@ class CChoreoGenericServerVehicle : public CBaseServerVehicle
     typedef CBaseServerVehicle BaseClass;
 
     // IServerVehicle
-   public:
+    public:
     void GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV = NULL );
     virtual void ItemPostFrame( CBasePlayer *pPlayer );
 
-   protected:
+    protected:
     CPropVehicleChoreoGeneric *GetVehicle( void );
 };
 
@@ -97,7 +97,7 @@ class CPropVehicleChoreoGeneric : public CDynamicProp, public IDrivableVehicle
 {
     DECLARE_CLASS( CPropVehicleChoreoGeneric, CDynamicProp );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -183,11 +183,11 @@ class CPropVehicleChoreoGeneric : public CDynamicProp, public IDrivableVehicle
 
     CNetworkVarEmbedded( vehicleview_t, m_vehicleView );
 
-   private:
+    private:
     vehicleview_t m_savedVehicleView;  // gets saved out for viewlock/unlock input
 
     // IDrivableVehicle
-   public:
+    public:
     virtual CBaseEntity *GetDriver( void );
     virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
     {
@@ -235,11 +235,11 @@ class CPropVehicleChoreoGeneric : public CDynamicProp, public IDrivableVehicle
 
     bool m_bForcePlayerEyePoint;  // Uses player's eyepoint instead of 'vehicle_driver_eyes' attachment
 
-   protected:
+    protected:
     // Contained IServerVehicle
     CChoreoGenericServerVehicle m_ServerVehicle;
 
-   private:
+    private:
     // Entering / Exiting
     bool m_bLocked;
     CNetworkVar( bool, m_bEnterAnimOn );

@@ -50,7 +50,7 @@ class CItemSelectionPanel : public CBaseLoadoutPanel
 {
     DECLARE_CLASS_SIMPLE( CItemSelectionPanel, CBaseLoadoutPanel );
 
-   public:
+    public:
     CItemSelectionPanel( Panel *parent );
     virtual ~CItemSelectionPanel();
 
@@ -134,7 +134,7 @@ class CItemSelectionPanel : public CBaseLoadoutPanel
         return false;
     }
 
-   protected:
+    protected:
     void PostMessageSelectionReturned( itemid_t ulItemID );
 
     bool m_bShowingEntireBackpack;
@@ -172,10 +172,10 @@ class CItemSelectionPanel : public CBaseLoadoutPanel
 //-----------------------------------------------------------------------------
 class CEquipSlotItemSelectionPanel : public CItemSelectionPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CEquipSlotItemSelectionPanel, CItemSelectionPanel );
 
-   public:
+    public:
     CEquipSlotItemSelectionPanel( Panel *parent, int iClass, int iSlot );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -196,7 +196,7 @@ class CEquipSlotItemSelectionPanel : public CItemSelectionPanel
 
     void OnBackPressed();
 
-   protected:
+    protected:
     int m_iClass;  // Class of the player we're selecting an item for
     int m_iSlot;   // Slot on the player that we're selecting an item for
 
@@ -212,7 +212,7 @@ class CItemCriteriaSelectionPanel : public CItemSelectionPanel
 {
     DECLARE_CLASS_SIMPLE( CItemCriteriaSelectionPanel, CItemSelectionPanel );
 
-   public:
+    public:
     CItemCriteriaSelectionPanel( Panel *parent, const CItemSelectionCriteria *pCriteria, itemid_t pExceptions[] = NULL, int iNumExceptions = 0 );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -226,7 +226,7 @@ class CItemCriteriaSelectionPanel : public CItemSelectionPanel
     virtual void UpdateModelPanelsForSelection( void );
     virtual const char *GetItemNotSelectableReason( const CEconItemView *pItem ) const;
 
-   protected:
+    protected:
     const CItemSelectionCriteria *m_pCriteria;
     CUtlVector< itemid_t > m_Exceptions;
 };
@@ -238,7 +238,7 @@ class CCraftingItemSelectionPanel : public CItemCriteriaSelectionPanel
 {
     DECLARE_CLASS_SIMPLE( CCraftingItemSelectionPanel, CItemCriteriaSelectionPanel );
 
-   public:
+    public:
     CCraftingItemSelectionPanel( Panel *parent );
 
     virtual const char *GetItemNotSelectableReason( const CEconItemView *pItem ) const;
@@ -262,14 +262,14 @@ class CAccountSlotItemSelectionPanel : public CEquipSlotItemSelectionPanel
 {
     DECLARE_CLASS_SIMPLE( CAccountSlotItemSelectionPanel, CEquipSlotItemSelectionPanel );
 
-   public:
+    public:
     CAccountSlotItemSelectionPanel( Panel *pParent, int iSlot, const char *pszTitleToken );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
 
     virtual const char *GetItemNotSelectableReason( const CEconItemView *pItem ) const OVERRIDE;
 
-   protected:
+    protected:
     const char *m_pszTitleToken;
 };
 

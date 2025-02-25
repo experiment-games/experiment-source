@@ -97,16 +97,16 @@ ConVar tf_mm_custom_ping_enabled( "tf_mm_custom_ping_enabled", "0", FCVAR_ARCHIV
 ConVar tf_mm_custom_ping( "tf_mm_custom_ping", "100", FCVAR_ARCHIVE, "Custom ping tolerance in the matchmaking system.  See also tf_custom_ping_enabled.", true, ( float )CUSTOM_PING_TOLERANCE_MIN, true, ( float )CUSTOM_PING_TOLERANCE_MAX, OnPartyClientPrefConVarChanged );
 
 ConVar tf_party_join_request_mode( "tf_party_join_request_mode", "-1", FCVAR_ARCHIVE,
-                                   "The current mode for incoming party join requests:\n"
-                                   "  -1 - Use default (currently 0), \n"
-                                   "   0 - Open to friends, \n"
-                                   "   1 - Friends can request to join, \n"
-                                   "   2 - Invite only\n",
-                                   true,
-                                   -1.f,  // Default placeholder
-                                   true,
-                                   ( float )CTFPartyClient::k_ePartyJoinRequestMode_Max,
-                                   OnPartyClientPrefConVarChanged );
+                                    "The current mode for incoming party join requests:\n"
+                                    "  -1 - Use default (currently 0), \n"
+                                    "   0 - Open to friends, \n"
+                                    "   1 - Friends can request to join, \n"
+                                    "   2 - Invite only\n",
+                                    true,
+                                    -1.f,  // Default placeholder
+                                    true,
+                                    ( float )CTFPartyClient::k_ePartyJoinRequestMode_Max,
+                                    OnPartyClientPrefConVarChanged );
 ConVar tf_party_ignore_invites( "tf_party_ignore_invites", "0", FCVAR_ARCHIVE, "If set, ignore incoming party invites", OnPartyClientPrefConVarChanged );
 
 // TODO(Universal Parties): Hook up and enable in UI
@@ -119,7 +119,7 @@ class CTFMMIssueDialog : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFMMIssueDialog, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFMMIssueDialog()
         : CTFMessageBoxDialog( "", "", NULL, NULL, NULL )
     {
@@ -167,7 +167,7 @@ class CTFMMIssueDialog : public CTFMessageBoxDialog
         return m_wszText;
     }
 
-   private:
+    private:
     wchar_t m_wszText[256] = { 0 };
 };
 
@@ -189,12 +189,12 @@ CTFMMIssueDialog *TFMMIssueDialog()
 // Redundant header for messages following the CMsgPartyFoo/EMsgGCParty_Foo/GTFPartyClient()->OnFooReply pattern
 #define RELIABLE_PARTY_MSG( name, ... )                                                             \
     class ReliableMsgParty##name : public CJobReliableMessageBase< ReliableMsgParty##name,          \
-                                                                   CMsgParty##name,                 \
-                                                                   k_EMsgGCParty_##name,            \
-                                                                   CMsgParty##name##Response,       \
-                                                                   k_EMsgGCParty_##name##Response > \
+                                                                    CMsgParty##name,                 \
+                                                                    k_EMsgGCParty_##name,            \
+                                                                    CMsgParty##name##Response,       \
+                                                                    k_EMsgGCParty_##name##Response > \
     {                                                                                               \
-       public:                                                                                      \
+        public:                                                                                      \
         const char *MsgName()                                                                       \
         {                                                                                           \
             return "Party" #name;                                                                   \
@@ -267,7 +267,7 @@ CTFPerPlayerMatchCriteria &CTFPartyClient::MutLocalPlayerCriteria()
 CTFGroupMatchCriteria &CTFPartyClient::MutLocalGroupCriteria()
 {
     AssertMsg( BControllingPartyActions(),
-               "Getting mutable group criteria when we're not in control of our group criteria" );
+                "Getting mutable group criteria when we're not in control of our group criteria" );
 
     m_bGroupCriteriaChanged = true;
     // If this is also our effective criteria, queue an event for next frame (after it presumably changes)
@@ -417,7 +417,7 @@ bool CTFPartyClient::BInvitePlayerToParty( CSteamID steamID, bool bExpectingExis
     if ( !BCanInvitePlayer( steamID ) )
     {
         PartyWarn( "Attempting to invite user %s to party who is not in an invitable state\n",
-                   steamID.Render() );
+                    steamID.Render() );
         return false;
     }
 
@@ -467,7 +467,7 @@ bool CTFPartyClient::BRequestJoinPlayer( CSteamID steamID, bool bExpectingExisti
     if ( !BCanRequestToJoinPlayer( steamID ) )
     {
         PartyWarn( "Cannot request to join user %s to party who is not in an invitable state\n",
-                   steamID.Render() );
+                    steamID.Render() );
         return false;
     }
 
@@ -510,8 +510,8 @@ void CTFPartyClient::CancelOutgoingInviteOrIncomingJoinRequest( CSteamID steamID
     }
 
     PartyMsg( "Sending request to cancel outgoing invite/incoming join request for %s (current party %llu)\n",
-              steamIDTarget.Render(),
-              m_unActivePartyID );
+            steamIDTarget.Render(),
+            m_unActivePartyID );
     CProtoBufMsg< CMsgPartyClearPendingPlayer > msg( k_EMsgGCParty_ClearPendingPlayer );
     if ( m_unActivePartyID )
     {
@@ -526,15 +526,15 @@ void CTFPartyClient::CancelOutgoingJoinRequestOrIncomingInvite( CSteamID steamID
 {
     // TODO(Universal Parties): Add local state prediction in getters
     PartyMsg( "Sending request to cancel outgoing invite/incoming join request for %s (current party %llu)\n",
-              steamIDTarget.Render(),
-              m_unActivePartyID );
+            steamIDTarget.Render(),
+            m_unActivePartyID );
     CProtoBufMsg< CMsgPartyClearOtherPartyRequest > msg( k_EMsgGCParty_ClearOtherPartyRequest );
 
     // Note that our local lists are the lists the user should see and include prediction -- we want to check the raw
     // object for an invite that can be rejected.
     GCSDK::PlayerGroupID_t nOtherParty = 0u;
     CSharedObjectTypeCache *pTypeCache = ( m_pSOCache ? m_pSOCache->FindBaseTypeCache( CTFPartyInvite::k_nTypeID )
-                                                      : nullptr );
+                                                    : nullptr );
     if ( pTypeCache )
     {
         int nCount = pTypeCache->GetCount();
@@ -641,7 +641,7 @@ bool CTFPartyClient::BAllowedToPartyWith( CSteamID steamID ) const
 
     // Only friends for now
     return ( pFriends &&
-             pFriends->GetFriendRelationship( steamID ) == k_EFriendRelationshipFriend );
+            pFriends->GetFriendRelationship( steamID ) == k_EFriendRelationshipFriend );
 
     // Not checking this -- friend may be invisible but still invitable (user won't know if their invite succeeded
     // though)
@@ -840,9 +840,9 @@ bool CTFPartyClient::BCanQueueForMatch( ETFMatchGroup eGroup, CUtlVector< QueueE
             Assert( vecBannedSteamIDs.Count() );
 
             BlameNames_t bannedNames( vecBannedSteamIDs,
-                                      "#TF_Matchmaking_CantQueue_BanParty",
-                                      "#TF_Matchmaking_CantQueue_VerbSingle",
-                                      "#TF_Matchmaking_CantQueue_VerbPlural" );
+                                    "#TF_Matchmaking_CantQueue_BanParty",
+                                    "#TF_Matchmaking_CantQueue_VerbSingle",
+                                    "#TF_Matchmaking_CantQueue_VerbPlural" );
             lambdaCopyWReason( bannedNames.Get(), k_eDisabledType_Banned );
         }
 
@@ -869,16 +869,16 @@ bool CTFPartyClient::BCanQueueForMatch( ETFMatchGroup eGroup, CUtlVector< QueueE
                 }
 
                 BlameNames_t restrictedNames( vecBlameSteamIDs,
-                                              "#TF_Competitive_Requirements_Party",
-                                              "#TF_PartyMemberState_Singular",
-                                              "#TF_PartyMemberState_Plural" );
+                                            "#TF_Competitive_Requirements_Party",
+                                            "#TF_PartyMemberState_Singular",
+                                            "#TF_PartyMemberState_Plural" );
                 lambdaCopyWReason( restrictedNames.Get(), k_eDisabledType_Locked );
             }
         }
     }
 
     vecReasons.SortPredicate( []( const QueueEligibilityData_t &left, const QueueEligibilityData_t &right )
-                              { return left.m_eReason > right.m_eReason; } );
+                            { return left.m_eReason > right.m_eReason; } );
 
     return vecReasons.IsEmpty();
 }
@@ -1109,8 +1109,8 @@ void CTFPartyClient::ReadConVarPreferences()
     else
     {
         SetPartyJoinRequestMode( ( EPartyJoinRequestMode )Clamp( nRawJoinRequestMode,
-                                                                 ( int )k_ePartyJoinRequestMode_Min,
-                                                                 ( int )k_ePartyJoinRequestMode_Max ) );
+                                                                ( int )k_ePartyJoinRequestMode_Min,
+                                                                ( int )k_ePartyJoinRequestMode_Max ) );
     }
 
     // Ignore incoming invites
@@ -1277,12 +1277,12 @@ void CTFPartyClient::CheckSendUpdates()
     auto &cvMinDelay = tf_mm_party_send_criteria_delay_minimum;
     auto &flLastUpdate = m_flLastCriteriaUpdate;
     bool bSendNow = ( m_flPendingChangesTime != -1.f &&
-                      // Not if there's still reliable criteria in queue
-                      !m_bPendingReliableCriteriaMsg &&
-                      // Wait for the nominal delay unless its urgent
-                      ( bSyncUrgent || m_flPendingChangesTime + cvDelay.GetFloat() < Plat_FloatTime() ) &&
-                      // But always wait for the minimum delay (if the user is e.g. spamming a checkbox)
-                      ( flLastUpdate == -1.f || ( flLastUpdate + cvMinDelay.GetFloat() < Plat_FloatTime() ) ) );
+                    // Not if there's still reliable criteria in queue
+                    !m_bPendingReliableCriteriaMsg &&
+                    // Wait for the nominal delay unless its urgent
+                    ( bSyncUrgent || m_flPendingChangesTime + cvDelay.GetFloat() < Plat_FloatTime() ) &&
+                    // But always wait for the minimum delay (if the user is e.g. spamming a checkbox)
+                    ( flLastUpdate == -1.f || ( flLastUpdate + cvMinDelay.GetFloat() < Plat_FloatTime() ) ) );
 
     if ( !bSendNow )
     {
@@ -1506,14 +1506,14 @@ void CTFPartyClient::ReceivedPartyChatMsg( CMsgPartyChatMsg &msg )
     auto &strMsg = msg.msg();
 
     if ( msg.has_actor_id() && ( !steamIDActor.IsValid() ||
-                                 !steamIDActor.BIndividualAccount() ||
-                                 steamIDActor.GetEUniverse() != GetUniverse() ) )
+                                !steamIDActor.BIndividualAccount() ||
+                                steamIDActor.GetEUniverse() != GetUniverse() ) )
     {
         Assert( !"Bogus party chat actor (corrupt?)" );
         PartyWarn( "Received party chat message with invalid actor, type %d, actor %s: \"%s\"\n",
-                   eType,
-                   steamIDActor.Render(),
-                   strMsg.c_str() );
+                    eType,
+                    steamIDActor.Render(),
+                    strMsg.c_str() );
         return;
     }
 
@@ -1521,9 +1521,9 @@ void CTFPartyClient::ReceivedPartyChatMsg( CMsgPartyChatMsg &msg )
     {
         Assert( !"Unhandled party chat message type" );
         PartyWarn( "Received party chat message with unknown type %d, actor %s: \"%s\"\n",
-                   eType,
-                   steamIDActor.Render(),
-                   strMsg.c_str() );
+                    eType,
+                    steamIDActor.Render(),
+                    strMsg.c_str() );
         return;
     }
 
@@ -1546,10 +1546,10 @@ void CTFPartyClient::PostChatGameEvent( const CSteamID &steamIDPoster,
     gameeventmanager->FireEventClientSide( pEvent );
 
     PartyDbg( "[Chat] %s [%s (%d)]: %s\n",
-              steamIDPoster.Render(),
-              ETFPartyChatType_Name( eType ).c_str(),
-              eType,
-              pszText );
+            steamIDPoster.Render(),
+            ETFPartyChatType_Name( eType ).c_str(),
+            eType,
+            pszText );
 }
 
 //-----------------------------------------------------------------------------
@@ -1567,7 +1567,7 @@ void CTFPartyClient::OnSetOptionsReply( const CProtoBufMsg< CMsgPartySetOptions 
 
 //-----------------------------------------------------------------------------
 void CTFPartyClient::OnQueueForMatchReply( const CProtoBufMsg< CMsgPartyQueueForMatch > &msg,
-                                           const CProtoBufMsg< CMsgPartyQueueForMatchResponse > &reply )
+                                            const CProtoBufMsg< CMsgPartyQueueForMatchResponse > &reply )
 {
     ETFMatchGroup eMatchGroup = msg.Body().match_group();
     Assert( BHavePendingQueueMsg( eMatchGroup ) );
@@ -1580,7 +1580,7 @@ void CTFPartyClient::OnQueueForMatchReply( const CProtoBufMsg< CMsgPartyQueueFor
 
 //-----------------------------------------------------------------------------
 void CTFPartyClient::OnQueueForStandbyReply( const CProtoBufMsg< CMsgPartyQueueForStandby > &msg,
-                                             const CProtoBufMsg< CMsgPartyQueueForStandbyResponse > &reply )
+                                            const CProtoBufMsg< CMsgPartyQueueForStandbyResponse > &reply )
 {
     NoteUnused( msg );
     NoteUnused( reply );
@@ -1593,7 +1593,7 @@ void CTFPartyClient::OnQueueForStandbyReply( const CProtoBufMsg< CMsgPartyQueueF
 
 //-----------------------------------------------------------------------------
 void CTFPartyClient::OnRemoveFromQueueReply( const CProtoBufMsg< CMsgPartyRemoveFromQueue > &msg,
-                                             const CProtoBufMsg< CMsgPartyRemoveFromQueueResponse > &reply )
+                                            const CProtoBufMsg< CMsgPartyRemoveFromQueueResponse > &reply )
 {
     NoteUnused( reply );
     ETFMatchGroup eMatchGroup = msg.Body().match_group();
@@ -1832,9 +1832,9 @@ void CTFPartyClient::UpdateIncomingInvitesOrOutgoingJoinRequests()
     FOR_EACH_VEC( vecIgnoredInvites, idxIgnored )
     {
         PartyDbg( "Auto-rejecting invite from %s - ignore party invites [%d], allowed to party with [%d]\n",
-                  vecIgnoredInvites[idxIgnored].Render(),
-                  bIgnoreInvites,
-                  BAllowedToPartyWith( vecIgnoredInvites[idxIgnored] ) );
+                vecIgnoredInvites[idxIgnored].Render(),
+                bIgnoreInvites,
+                BAllowedToPartyWith( vecIgnoredInvites[idxIgnored] ) );
         CancelOutgoingJoinRequestOrIncomingInvite( vecIgnoredInvites[idxIgnored] );
     }
 
@@ -1922,9 +1922,9 @@ bool CTFPartyClient::UpdateActiveParty()
     // Compare criteria
     bool bWasUsingActiveCriteria = BEffectiveGroupCriteriaFromParty();
     auto &newCriteria = pActiveParty ? pActiveParty->Obj().group_criteria()
-                                     : CTFGroupMatchCriteriaProto::default_instance();
+                                    : CTFGroupMatchCriteriaProto::default_instance();
     bool bActiveCriteriaChanged = CTFGroupMatchCriteria().MakeDelta( m_activePartyCriteria,
-                                                                     ConstRefTFGroupMatchCriteria( newCriteria ) );
+                                                                    ConstRefTFGroupMatchCriteria( newCriteria ) );
 
     // Compare party members
     CUtlVectorFixed< Member_t, MAX_PARTY_SIZE > vecNewMembers;
@@ -1939,7 +1939,7 @@ bool CTFPartyClient::UpdateActiveParty()
             vecNewMembers.AddToTail( Member_t{ pActiveParty->GetMember( idx ), bOnline } );
         }
         vecNewMembers.SortPredicate( []( const Member_t &a, const Member_t &b )
-                                     { return a.steamID.GetAccountID() < b.steamID.GetAccountID(); } );
+                                    { return a.steamID.GetAccountID() < b.steamID.GetAccountID(); } );
     }
     else
     {
@@ -2108,9 +2108,9 @@ bool CTFPartyClient::UpdateActiveParty()
     {
         CSteamID steamID = vecAutoAcceptJoinRequests[idx];
         PartyMsg( "Auto-accepting join request from %s - autoaccept [%d], can party with [%d]\n",
-                  steamID.Render(),
-                  bAutoAccept,
-                  BAllowedToPartyWith( steamID ) );
+                steamID.Render(),
+                bAutoAccept,
+                BAllowedToPartyWith( steamID ) );
         // Bypass the explicit invite path and just auto-accept.  The normal path will be confused that it doesn't see
         // the expected join request, because we bypassed creating one.  We already checked that we're allowed to party
         // with this player above when considering if it was a valid auto-accept candidate.
@@ -2125,9 +2125,9 @@ bool CTFPartyClient::UpdateActiveParty()
     {
         CSteamID steamID = vecAutoRejectJoinRequests[idx];
         PartyMsg( "Auto-rejecting join request from %s - autoreject [%d], can party with [%d]\n",
-                  steamID.Render(),
-                  bAutoReject,
-                  BAllowedToPartyWith( steamID ) );
+                steamID.Render(),
+                bAutoReject,
+                BAllowedToPartyWith( steamID ) );
         CancelOutgoingInviteOrIncomingJoinRequest( steamID );
     }
 
@@ -2207,7 +2207,7 @@ bool CTFPartyClient::UpdateActiveParty()
     // - Party ID
     // - Num *online* party members
     if ( bPartyChanged || bQueueStandbyChanged || mapChangedQueues.Count() ||
-         vecAddedMembers.Count() || vecRemovedMembers.Count() || vecMembersChangedOnlineState.Count() )
+        vecAddedMembers.Count() || vecRemovedMembers.Count() || vecMembersChangedOnlineState.Count() )
     {
         GetClientModeTFNormal()->UpdateSteamRichPresence();
     }
@@ -2226,7 +2226,7 @@ void CTFPartyClient::CheckResetSentOptions()
 
     auto *pParty = GetActiveParty();
     if ( pParty && !BHaveAnyPendingQueueMsg() &&
-         ( !m_bPendingReliableCriteriaMsg || m_unActivePartyID != m_unPendingReliableCriteriaMsgParty ) )
+        ( !m_bPendingReliableCriteriaMsg || m_unActivePartyID != m_unPendingReliableCriteriaMsgParty ) )
     {
         // If we have a party and don't have pending messages that adjust options, we can safely guess at what our 'last
         // sent' values should be.
@@ -2293,8 +2293,8 @@ void CTFPartyClient::OnPartyMemberOnlineStateChanged( const Member_t &member )
 {
     PartyMsg( "Member %s now %s\n", member.steamID.Render(), member.bOnline ? "online" : "offline" );
     ETFPartyChatType eChatType = ( member.bOnline
-                                       ? k_eTFPartyChatType_Synthetic_MemberOnline
-                                       : k_eTFPartyChatType_Synthetic_MemberOffline );
+                                        ? k_eTFPartyChatType_Synthetic_MemberOnline
+                                        : k_eTFPartyChatType_Synthetic_MemberOffline );
 
     PostChatGameEvent( member.steamID, eChatType, nullptr );
 }
@@ -2477,8 +2477,8 @@ void CTFPartyClient::SOCreated( const CSteamID &steamIDOwner,
     }
 
     PartyDbg( "Party object received for %llu, current party %llu\n",
-              ToParty( pObject )->GetGroupID(),
-              GetActivePartyID() );
+            ToParty( pObject )->GetGroupID(),
+            GetActivePartyID() );
 
     // We can get double-creates that overwrite items with SOCache magic, ensure we actually changed
     bool bNewParty = UpdateActiveParty();
@@ -2507,8 +2507,8 @@ void CTFPartyClient::SOUpdated( const CSteamID &steamIDOwner,
     if ( pActiveParty && pParty != pActiveParty )
     {
         PartyWarn( "Party update received for party %llu, but our current party is %llu, forcing update\n",
-                   pParty->GetGroupID(),
-                   GetActivePartyID() );
+                    pParty->GetGroupID(),
+                    GetActivePartyID() );
         Assert( !"SOUpdated for a party we don't think we are in" );
     }
 
@@ -2517,8 +2517,8 @@ void CTFPartyClient::SOUpdated( const CSteamID &steamIDOwner,
 
 //-----------------------------------------------------------------------------
 void CTFPartyClient::SODestroyed( const CSteamID &steamIDOwner,
-                                  const GCSDK::CSharedObject *pObject,
-                                  GCSDK::ESOCacheEvent eEvent )
+                                const GCSDK::CSharedObject *pObject,
+                                GCSDK::ESOCacheEvent eEvent )
 {
     if ( pObject->GetTypeID() == CTFPartyInvite::k_nTypeID )
     {
@@ -2549,7 +2549,7 @@ void CTFPartyClient::SODestroyed( const CSteamID &steamIDOwner,
 //-----------------------------------------------------------------------------
 class CGCClientJobPartyChatMsg : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobPartyChatMsg( GCSDK::CGCClient *pGCServer )
         : GCSDK::CGCClientJob( pGCServer ) {}
 
@@ -2565,7 +2565,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCClientJobPartyChatMsg, "CGCClientJobPartyChatMs
 //-----------------------------------------------------------------------------
 class CGCClientJobPartyMMError : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobPartyMMError( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

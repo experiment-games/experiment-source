@@ -25,7 +25,7 @@ class CHudMenuSpyDisguise : public CHudBaseBuildMenu
 {
     DECLARE_CLASS_SIMPLE( CHudMenuSpyDisguise, EditablePanel );
 
-   public:
+    public:
     CHudMenuSpyDisguise( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -48,13 +48,13 @@ class CHudMenuSpyDisguise : public CHudBaseBuildMenu
         return IsActive() ? GAME_ACTION_SET_IN_GAME_HUD : GAME_ACTION_SET_NONE;
     }
 
-   private:
+    private:
     void SetSelectedItem( int iSlot );
     void ToggleDisguiseTeam( void );
     void ToggleSelectionIcons( bool bGroup );
     void FindToggleBinding( void );
 
-   private:
+    private:
     EditablePanel *m_pClassItems_Red[9];
     CIconPanel *m_pKeyIcons_Red[9];
     CExLabel *m_pKeyLabels_Red[9];

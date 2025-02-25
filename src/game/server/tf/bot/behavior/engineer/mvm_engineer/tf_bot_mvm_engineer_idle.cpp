@@ -181,7 +181,7 @@ void CTFBotMvMEngineerIdle::TryToDetonateStaleNest()
 
     // wait until the engy finish building his nest
     if ( ( m_sentryHint && !m_sentryHint->OwnerObjectFinishBuilding() ) ||
-         ( m_teleporterHint && !m_teleporterHint->OwnerObjectFinishBuilding() ) )
+        ( m_teleporterHint && !m_teleporterHint->OwnerObjectFinishBuilding() ) )
         return;
 
     // collect all existing and active teleporter hints

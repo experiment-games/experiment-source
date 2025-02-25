@@ -127,7 +127,7 @@ TYPED_TEST_P(FooTest, HasPropertyA) { ... }
 // test case name; the rest are the names of the tests in this test
 // case.
 REGISTER_TYPED_TEST_CASE_P(FooTest,
-                           DoesBlah, HasPropertyA);
+                            DoesBlah, HasPropertyA);
 
 // Finally, you are free to instantiate the pattern with the types you
 // want.  If you put the above code in a header file, you can #include
@@ -171,7 +171,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
     class GTEST_TEST_CLASS_NAME_( CaseName, TestName )                                 \
         : public CaseName< gtest_TypeParam_ >                                          \
     {                                                                                  \
-       private:                                                                        \
+        private:                                                                        \
         typedef CaseName< gtest_TypeParam_ > TestFixture;                              \
         typedef gtest_TypeParam_ TypeParam;                                            \
         virtual void TestBody();                                                       \
@@ -226,7 +226,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
     template < typename gtest_TypeParam_ >                                                                  \
     class TestName : public CaseName< gtest_TypeParam_ >                                                    \
     {                                                                                                       \
-       private:                                                                                             \
+        private:                                                                                             \
         typedef CaseName< gtest_TypeParam_ > TestFixture;                                                   \
         typedef gtest_TypeParam_ TypeParam;                                                                 \
         virtual void TestBody();                                                                            \

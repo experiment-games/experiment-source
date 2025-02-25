@@ -509,7 +509,7 @@ class CustomTextureStencilGradientMapWidget : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CustomTextureStencilGradientMapWidget, vgui::Panel );
 
-   public:
+    public:
     CustomTextureStencilGradientMapWidget( vgui::Panel *parent, const char *panelName );
 
     // Slam range count, forcing nobs to be spaced evenly
@@ -552,7 +552,7 @@ class CustomTextureStencilGradientMapWidget : public vgui::Panel
 
     Color m_colorGradient[256];
 
-   protected:
+    protected:
     virtual void Paint();
     virtual void PaintBackground();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -1141,7 +1141,7 @@ class CConfirmCustomizeTextureDialog : public CBaseToolUsageDialog, private ITex
 {
     DECLARE_CLASS_SIMPLE( CConfirmCustomizeTextureDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmCustomizeTextureDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject );
     virtual ~CConfirmCustomizeTextureDialog( void );
 
@@ -1223,7 +1223,7 @@ class CConfirmCustomizeTextureDialog : public CBaseToolUsageDialog, private ITex
 
     void CloseWithGenericError();
 
-   private:
+    private:
     struct CroppedImagePanel : public CBitmapPanel
     {
         CroppedImagePanel( CConfirmCustomizeTextureDialog *pDlg, vgui::Panel *parent )
@@ -1474,47 +1474,47 @@ CConfirmCustomizeTextureDialog::CConfirmCustomizeTextureDialog( vgui::Panel *par
 
 // !TEST! Import the palettes from an image
 #if 0
-	{
-		m_vecStencilPalettes.RemoveAll();
-		Bitmap_t imgPal;
-		Assert( ImgUtl_LoadBitmap( "d:/decal_tool_palettes_bay.png", imgPal ) == CE_SUCCESS );
-		const int kSwatchSz = 10;
-		for (int y = kSwatchSz/2 ; y < imgPal.Height() ; y += kSwatchSz )
-		{
-			CUtlVector<Color> palette;
-			for (int x = kSwatchSz/2 ; x < imgPal.Width() ; x += kSwatchSz )
-			{
-				palette.AddToTail( imgPal.GetColor( x, y ) );
-			}
+    {
+        m_vecStencilPalettes.RemoveAll();
+        Bitmap_t imgPal;
+        Assert( ImgUtl_LoadBitmap( "d:/decal_tool_palettes_bay.png", imgPal ) == CE_SUCCESS );
+        const int kSwatchSz = 10;
+        for (int y = kSwatchSz/2 ; y < imgPal.Height() ; y += kSwatchSz )
+        {
+            CUtlVector<Color> palette;
+            for (int x = kSwatchSz/2 ; x < imgPal.Width() ; x += kSwatchSz )
+            {
+                palette.AddToTail( imgPal.GetColor( x, y ) );
+            }
 
-			// Strip off solid white entries from the end.  (If these are in the palette,
-			// they have to come first!)
-			while ( palette.Count() > 0 && ApproxColorDistSq( palette[palette.Count()-1], Color(255,255,255,255) ) < 12 )
-			{
-				palette.Remove( palette.Count()-1 );
-			}
-			Assert( palette.Count() != 1 ); // only a single entry in the palette?  Should be 0, or at least 2
-			if ( palette.Count() > 1 )
-			{
-				// Reverse the palette, so it is ordered dark -> light.
-				for ( int l = 0, r = palette.Count()-1 ; l < r ; ++l, --r )
-				{
-					Color t = palette[l];
-					palette[l] = palette[r];
-					palette[r] = t;
-				}
+            // Strip off solid white entries from the end.  (If these are in the palette,
+            // they have to come first!)
+            while ( palette.Count() > 0 && ApproxColorDistSq( palette[palette.Count()-1], Color(255,255,255,255) ) < 12 )
+            {
+                palette.Remove( palette.Count()-1 );
+            }
+            Assert( palette.Count() != 1 ); // only a single entry in the palette?  Should be 0, or at least 2
+            if ( palette.Count() > 1 )
+            {
+                // Reverse the palette, so it is ordered dark -> light.
+                for ( int l = 0, r = palette.Count()-1 ; l < r ; ++l, --r )
+                {
+                    Color t = palette[l];
+                    palette[l] = palette[r];
+                    palette[r] = t;
+                }
 
-				CUtlVector<Color> *pPalette = &m_vecStencilPalettes[ m_vecStencilPalettes.AddToTail() ];
-				Msg( "pPalette = &m_vecStencilPalettes[ m_vecStencilPalettes.AddToTail() ];\n" );
-				for (int j = 0 ; j < palette.Count() ; ++j )
-				{
-					pPalette->AddToTail( palette[j] );
-					Msg( "pPalette->AddToTail( Color( %d, %d, %d, 255 ) );\n", palette[j].r(), palette[j].g(), palette[j].b() );
-				}
-				Msg( "\n" );
-			}
-		}
-	}
+                CUtlVector<Color> *pPalette = &m_vecStencilPalettes[ m_vecStencilPalettes.AddToTail() ];
+                Msg( "pPalette = &m_vecStencilPalettes[ m_vecStencilPalettes.AddToTail() ];\n" );
+                for (int j = 0 ; j < palette.Count() ; ++j )
+                {
+                    pPalette->AddToTail( palette[j] );
+                    Msg( "pPalette->AddToTail( Color( %d, %d, %d, 255 ) );\n", palette[j].r(), palette[j].g(), palette[j].b() );
+                }
+                Msg( "\n" );
+            }
+        }
+    }
 #endif
 }
 
@@ -2232,14 +2232,14 @@ void CConfirmCustomizeTextureDialog::PerformPainterlyFilter()
 // Shape correction V2:
 //
 #if 0
-		// Perform symmetric nearest neighbor
-		float snnFilterStrength = .7f;
-		SymmetricNearestNeighborFilter( imageTemp1, imageTemp2, 4, snnFilterStrength );
+        // Perform symmetric nearest neighbor
+        float snnFilterStrength = .7f;
+        SymmetricNearestNeighborFilter( imageTemp1, imageTemp2, 4, snnFilterStrength );
 
-		// And some bilateral filtering to smooth it
-		BilateralFilter( imageTemp2, imageTemp1, 2, .75, .5 );
-		BilateralFilter( imageTemp1, imageTemp2, 3, .7, .3 );
-		BilateralFilter( imageTemp2, imageTemp1, 4, .6, .2 );
+        // And some bilateral filtering to smooth it
+        BilateralFilter( imageTemp2, imageTemp1, 2, .75, .5 );
+        BilateralFilter( imageTemp1, imageTemp2, 3, .7, .3 );
+        BilateralFilter( imageTemp2, imageTemp1, 4, .6, .2 );
 #endif
 
     //	// Load up brush strokes
@@ -2278,12 +2278,12 @@ void CConfirmCustomizeTextureDialog::PerformPainterlyFilter()
 // Color correction V1
 //
 #if 0
-				// Shift towards red, away from blue
-				//rgb.x += rgb.z * .2f;
-				//rgb.z *= 0.7f;
-				// Desaturate
-				float satMult = .65; // desaturate
-				hsv.y *= satMult;
+                // Shift towards red, away from blue
+                //rgb.x += rgb.z * .2f;
+                //rgb.z *= 0.7f;
+                // Desaturate
+                float satMult = .65; // desaturate
+                hsv.y *= satMult;
 #endif
 
             //
@@ -2506,13 +2506,13 @@ void CConfirmCustomizeTextureDialog::Release()
 
 class CCustomizeTextureJobDialog : public CApplyCustomTextureJob
 {
-   public:
+    public:
     CCustomizeTextureJobDialog( const void *pPNGData, int nPNGDataBytes, CConfirmCustomizeTextureDialog *pDlg )
         : CApplyCustomTextureJob( pDlg->GetToolItem()->GetItemID(), pDlg->GetSubjectItem()->GetItemID(), pPNGData, nPNGDataBytes ), m_pDlg( pDlg )
     {
     }
 
-   protected:
+    protected:
     virtual EResult YieldingRunJob()
     {
         // Base class do the work

@@ -21,28 +21,28 @@
 //-----------------------------------------------------------------------------
 class CPaintKitVariables : public CTypedProtoBufScriptObjectDefinition< CMsgPaintKit_Variables, DEF_TYPE_PAINTKIT_VARIABLES >
 {
-   public:
+    public:
     CPaintKitVariables( void ) {}
     virtual ~CPaintKitVariables( void ) {}
 };
 
 class CPaintKitOperation : public CTypedProtoBufScriptObjectDefinition< CMsgPaintKit_Operation, DEF_TYPE_PAINTKIT_OPERATION >
 {
-   public:
+    public:
     CPaintKitOperation( void ) {}
     virtual ~CPaintKitOperation( void ) {}
 };
 
 class CPaintKitItemDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgPaintKit_ItemDefinition, DEF_TYPE_PAINTKIT_ITEM_DEFINITION >
 {
-   public:
+    public:
     CPaintKitItemDefinition( void ) {}
     virtual ~CPaintKitItemDefinition( void ) {}
 };
 
 class CPaintKitDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgPaintKit_Definition, DEF_TYPE_PAINTKIT_DEFINITION >
 {
-   public:
+    public:
     CPaintKitDefinition( void )
 #ifdef CLIENT_DLL
         : m_mapCacheKV( DefLessFunc( PaintKitMapKey_t ) )
@@ -80,7 +80,7 @@ class CPaintKitDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgPai
 #ifdef CLIENT_DLL
     KeyValues *GetItemPaintKitDefinitionKV( item_definition_index_t iDefIndex, int iPaintKitIndex ) const;
 #endif  // CLIENT_DLL
-   private:
+    private:
     void GenerateSupportedItems() const;
 
 #ifdef CLIENT_DLL

@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CMerasmusStaffAttack : public Action< CMerasmus >
 {
-   public:
+    public:
     CMerasmusStaffAttack( CTFPlayer *pTarget );
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
@@ -20,7 +20,7 @@ class CMerasmusStaffAttack : public Action< CMerasmus >
         return "Staff Attack";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_staffSwingTimer;
     CountdownTimer m_hitTimer;
     CHandle< CTFPlayer > m_hTarget;

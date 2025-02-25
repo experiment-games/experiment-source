@@ -20,7 +20,7 @@
 
 class CPlasma : public CBaseFire
 {
-   public:
+    public:
     DECLARE_CLASS( CPlasma, CBaseFire );
 
     CPlasma( void );
@@ -32,7 +32,7 @@ class CPlasma : public CBaseFire
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     // Client-side
     CNetworkVar( int, m_nPlasmaModelIndex );
     CNetworkVar( int, m_nPlasmaModelIndex2 );

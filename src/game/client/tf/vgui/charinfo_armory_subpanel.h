@@ -54,7 +54,7 @@ class CArmoryPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CArmoryPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CArmoryPanel( Panel *parent, const char *panelName );
     virtual ~CArmoryPanel();
 
@@ -91,7 +91,7 @@ class CArmoryPanel : public vgui::EditablePanel
 
     MESSAGE_FUNC( OnClosing, "Closing" );
 
-   private:
+    private:
     void OnShowPanel( void );
     void MoveItem( int iDelta );
     void UpdateDataBlock( void );
@@ -106,7 +106,7 @@ class CArmoryPanel : public vgui::EditablePanel
     void SetSelectedItem( CEconItemView *newItem );
     void SetSelectedItem( int newIndex );
 
-   private:
+    private:
     float m_flStartExplanationsAt;
 
     CEconItemView m_SelectedItem;

@@ -5,7 +5,7 @@ EXAMPLES = 3dtest basstest contest custloop devlist dsptest fxtest livefx livesp
 all: $(EXAMPLES)
 
 clean:
-	@$(foreach x,$(EXAMPLES),$(MAKE) -C $(x) clean;)
+    @$(foreach x,$(EXAMPLES),$(MAKE) -C $(x) clean;)
 
 $(EXAMPLES):
-	$(MAKE) -C $@
+    $(MAKE) -C $@

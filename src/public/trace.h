@@ -34,7 +34,7 @@
 
 class CBaseTrace
 {
-   public:
+    public:
     // Displacement flags tests.
     bool IsDispSurface( void )
     {
@@ -57,7 +57,7 @@ class CBaseTrace
         return ( ( dispFlags & DISPSURF_FLAG_SURFPROP2 ) != 0 );
     }
 
-   public:
+    public:
     // these members are aligned!!
     Vector startpos;  // start position
     Vector endpos;    // final position
@@ -77,7 +77,7 @@ class CBaseTrace
     // HACKHACK: We only do this for Lua, but Lua classes which use traces
     // will throw errors when we compile, so define this outside of the Lua
     // SDK.
-   private:
+    private:
     // No copy constructors allowed
     CBaseTrace( const CBaseTrace& vOther );
 #endif

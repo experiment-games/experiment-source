@@ -11,7 +11,7 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaGuardSpot : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
     virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
     virtual EventDesiredResult< CBossAlpha > OnInjured( CBossAlpha *me, const CTakeDamageInfo &info );
@@ -21,7 +21,7 @@ class CBossAlphaGuardSpot : public Action< CBossAlpha >
         return "GuardSpot";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     CountdownTimer m_lookTimer;
     Vector m_lookAtSpot;

@@ -386,9 +386,9 @@ inline bool V_isvalidhex( char const *in, int inputchars )
     {
         char c = in[i];
         if ( !(
-                 ( c >= '0' && c <= '9' ) ||
-                 ( c >= 'a' && c <= 'f' ) ||
-                 ( c >= 'A' && c <= 'F' ) ) )
+                ( c >= '0' && c <= '9' ) ||
+                ( c >= 'a' && c <= 'f' ) ||
+                ( c >= 'A' && c <= 'F' ) ) )
         {
             return false;
         }
@@ -1115,7 +1115,7 @@ bool V_GenerateUniqueName( OUT_Z_CAP( memsize ) char *name, int memsize, const c
 //
 class CStrAutoEncode
 {
-   public:
+    public:
     // ctor
     explicit CStrAutoEncode( const char *pch )
     {
@@ -1211,7 +1211,7 @@ class CStrAutoEncode
 #endif
     }
 
-   private:
+    private:
     // ensure we have done any conversion work required to farm out a
     // UTF-8 encoded string.
     //

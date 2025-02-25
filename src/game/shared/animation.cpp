@@ -320,9 +320,9 @@ int CStudioHdr::CActivityToSequenceMapping::SelectWeightedSequence( CStudioHdr *
     SequenceTuple *__restrict sequenceInfo = m_pSequenceTuples + actData->startingIdx;
 
     const SequenceTuple *const stopHere = sequenceInfo + actData->count;  // this is a backup
-                                                                          // in case the weights are somehow miscalculated -- we don't read or write through
-                                                                          // it (because it aliases the restricted pointer above); it's only here for
-                                                                          // the comparison.
+                                                                        // in case the weights are somehow miscalculated -- we don't read or write through
+                                                                        // it (because it aliases the restricted pointer above); it's only here for
+                                                                        // the comparison.
 
     while ( randomValue >= sequenceInfo->weight && sequenceInfo < stopHere )
     {
@@ -567,9 +567,9 @@ const char *GetSequenceActivityName( CStudioHdr *pstudiohdr, int iSequence )
 int GetSequenceFlags( CStudioHdr *pstudiohdr, int sequence )
 {
     if ( !pstudiohdr ||
-         !pstudiohdr->SequencesAvailable() ||
-         sequence < 0 ||
-         sequence >= pstudiohdr->GetNumSeq() )
+        !pstudiohdr->SequencesAvailable() ||
+        sequence < 0 ||
+        sequence >= pstudiohdr->GetNumSeq() )
     {
         return 0;
     }

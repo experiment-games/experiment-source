@@ -49,7 +49,7 @@ $$ This meta comment fixes auto-indentation in Emacs. }}
 #else
 # define GTEST_DECLARE_TUPLE_AS_FRIEND_ \
     template <GTEST_$(n)_TYPENAMES_(U)> friend class tuple; \
-   private:
+    private:
 #endif
 
 
@@ -230,7 +230,7 @@ struct tuple_size<GTEST_$(j)_TUPLE_(T) > {
 template <int k, class Tuple>
 struct tuple_element {
   typedef typename gtest_internal::TupleElement<
-      k < (tuple_size<Tuple>::value), k, Tuple>::type type;
+    k < (tuple_size<Tuple>::value), k, Tuple>::type type;
 };
 
 #define GTEST_TUPLE_ELEMENT_(k, Tuple) typename tuple_element<k, Tuple >::type
@@ -303,15 +303,15 @@ struct SameSizeTuplePrefixComparator<k, k> {
 
 template <GTEST_$(n)_TYPENAMES_(T), GTEST_$(n)_TYPENAMES_(U)>
 inline bool operator==(const GTEST_$(n)_TUPLE_(T)& t,
-                       const GTEST_$(n)_TUPLE_(U)& u) {
+                        const GTEST_$(n)_TUPLE_(U)& u) {
   return gtest_internal::SameSizeTuplePrefixComparator<
-      tuple_size<GTEST_$(n)_TUPLE_(T) >::value,
-      tuple_size<GTEST_$(n)_TUPLE_(U) >::value>::Eq(t, u);
+    tuple_size<GTEST_$(n)_TUPLE_(T) >::value,
+    tuple_size<GTEST_$(n)_TUPLE_(U) >::value>::Eq(t, u);
 }
 
 template <GTEST_$(n)_TYPENAMES_(T), GTEST_$(n)_TYPENAMES_(U)>
 inline bool operator!=(const GTEST_$(n)_TUPLE_(T)& t,
-                       const GTEST_$(n)_TUPLE_(U)& u) { return !(t == u); }
+                        const GTEST_$(n)_TUPLE_(U)& u) { return !(t == u); }
 
 // 6.1.4 Pairs.
 // Unimplemented.

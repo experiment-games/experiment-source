@@ -17,7 +17,7 @@
 // when restarting the round. The main trick it tries to do is recreate all
 abstract_class IMapEntityFilter
 {
-   public:
+    public:
     virtual bool ShouldCreateEntity( const char *pClassname ) = 0;
     virtual CBaseEntity *CreateNextEntity( const char *pClassname ) = 0;
 };

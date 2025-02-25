@@ -13,7 +13,7 @@
 
 class CSocketInfo
 {
-   public:
+    public:
     bool IsValid()
     {
         return m_pSocket != 0;
@@ -23,7 +23,7 @@ class CSocketInfo
 
     void ThreadFn();
 
-   public:
+    public:
     ITCPSocket *m_pSocket;
     int m_iListenPort;
 

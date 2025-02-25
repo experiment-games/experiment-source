@@ -25,7 +25,7 @@ class CAlyxEmpEffect : public CBaseEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     void InputStartCharge( inputdata_t &inputdata );
     void InputStartDischarge( inputdata_t &inputdata );
     void InputStop( inputdata_t &inputdata );
@@ -43,7 +43,7 @@ class CAlyxEmpEffect : public CBaseEntity
     void Precache( void );
     void Activate( void );
 
-   private:
+    private:
     void SetTargetEntity( const char *szEntityName );
     CHandle< CBeam > m_hBeam;
     CHandle< CBaseEntity > m_hTargetEnt;

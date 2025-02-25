@@ -858,11 +858,11 @@ void CRagdollProp::SetupBones( matrix3x4_t *pBoneToWorld, int boneMask )
 bool CRagdollProp::TestCollision( const Ray_t &ray, unsigned int mask, trace_t &trace )
 {
 #if 0
-	// PERFORMANCE: Use hitboxes for rays instead of vcollides if this is a performance problem
-	if ( ray.m_IsRay )
-	{
-		return BaseClass::TestCollision( ray, mask, trace );
-	}
+    // PERFORMANCE: Use hitboxes for rays instead of vcollides if this is a performance problem
+    if ( ray.m_IsRay )
+    {
+        return BaseClass::TestCollision( ray, mask, trace );
+    }
 #endif
 
     CStudioHdr *pStudioHdr = GetModelPtr();
@@ -1192,7 +1192,7 @@ class CRagdollPropAttached : public CRagdollProp
 {
     DECLARE_CLASS( CRagdollPropAttached, CRagdollProp );
 
-   public:
+    public:
     CRagdollPropAttached()
     {
         m_bShouldDetach = false;
@@ -1211,7 +1211,7 @@ class CRagdollPropAttached : public CRagdollProp
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     void Detach();
     CNetworkVar( int, m_boneIndexAttached );
     CNetworkVar( int, m_ragdollAttachedObjectIndex );
@@ -1339,12 +1339,12 @@ CBaseEntity *CreateServerRagdoll( CBaseAnimating *pAnimating, int forceBone, con
             Vector deltaPos;
             QAngle deltaAngles;
             if ( Studio_SeqMovement( pstudiohdr,
-                                     pAnimating->GetSequence(),
-                                     fPreviousCycle,
-                                     pAnimating->GetCycle(),
-                                     pAnimating->GetPoseParameterArray(),
-                                     deltaPos,
-                                     deltaAngles ) )
+                                    pAnimating->GetSequence(),
+                                    fPreviousCycle,
+                                    pAnimating->GetCycle(),
+                                    pAnimating->GetPoseParameterArray(),
+                                    deltaPos,
+                                    deltaAngles ) )
             {
                 VectorRotate( deltaPos, pAnimating->EntityToWorldTransform(), vel );
                 vel /= dt;

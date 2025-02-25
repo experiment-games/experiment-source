@@ -22,7 +22,7 @@
 class CPatchTimeout : public CDialog
 {
     // Construction
-   public:
+    public:
     CPatchTimeout( CWnd* pParent = NULL );  // standard constructor
 
     // Dialog Data
@@ -38,12 +38,12 @@ class CPatchTimeout : public CDialog
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CPatchTimeout)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
                                                         //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     // Generated message map functions
     //{{AFX_MSG(CPatchTimeout)
     // NOTE: the ClassWizard will add member functions here

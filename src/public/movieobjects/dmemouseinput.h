@@ -19,7 +19,7 @@ class CDmeMouseInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeMouseInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
@@ -33,7 +33,7 @@ class CDmeMouseInput : public CDmeInput
     }
     void ResetOrigin( float dx, float dy );
 
-   protected:
+    protected:
     void GetNormalizedCursorPos( float &flX, float &flY );
 
     float m_xOrigin;

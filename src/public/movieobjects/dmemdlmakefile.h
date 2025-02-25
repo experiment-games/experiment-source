@@ -25,7 +25,7 @@ class CDmeSourceSkin : public CDmeSource
 {
     DEFINE_ELEMENT( CDmeSourceSkin, CDmeSource );
 
-   public:
+    public:
     // These can be built from DCC makefiles
     virtual const char **GetSourceMakefileTypes();
 
@@ -41,11 +41,11 @@ class CDmeSourceCollisionModel : public CDmeSource
 {
     DEFINE_ELEMENT( CDmeSourceCollisionModel, CDmeSource );
 
-   public:
+    public:
     // These can be built from DCC makefiles
     virtual const char **GetSourceMakefileTypes();
 
-   private:
+    private:
 };
 
 //-----------------------------------------------------------------------------
@@ -55,14 +55,14 @@ class CDmeSourceAnimation : public CDmeSource
 {
     DEFINE_ELEMENT( CDmeSourceAnimation, CDmeSource );
 
-   public:
+    public:
     // These can be built from DCC makefiles
     virtual const char **GetSourceMakefileTypes();
 
     CDmaString m_AnimationName;
     CDmaString m_SourceAnimationName;  // Name in the source file
 
-   private:
+    private:
 };
 
 //-----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ class CDmeMDLMakefile : public CDmeMakefile
 {
     DEFINE_ELEMENT( CDmeMDLMakefile, CDmeMakefile );
 
-   public:
+    public:
     void SetSkin( const char *pFullPath );
     void AddAnimation( const char *pFullPath );
     void RemoveAnimation( const char *pFullPath );
@@ -82,7 +82,7 @@ class CDmeMDLMakefile : public CDmeMakefile
     virtual DmeMakefileType_t *GetSourceTypes();
     virtual void GetOutputs( CUtlVector< CUtlString > &fullPaths );
 
-   private:
+    private:
     // Inherited classes should re-implement these methods
     virtual CDmElement *CreateOutputElement();
     virtual void DestroyOutputElement( CDmElement *pOutput );

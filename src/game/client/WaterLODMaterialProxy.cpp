@@ -20,7 +20,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 // no inputs, assumes that the results go into $CHEAPWATERSTARTDISTANCE and $CHEAPWATERENDDISTANCE
 class CWaterLODMaterialProxy : public IMaterialProxy
 {
-   public:
+    public:
     CWaterLODMaterialProxy();
     virtual ~CWaterLODMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -31,7 +31,7 @@ class CWaterLODMaterialProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pCheapWaterStartDistanceVar;
     IMaterialVar *m_pCheapWaterEndDistanceVar;
 };

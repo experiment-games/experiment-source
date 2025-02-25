@@ -22,7 +22,7 @@ class CPointSpotlight : public CServerOnlyPointEntity
 {
     DECLARE_CLASS( CPointSpotlight, CServerOnlyPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CPointSpotlight();
@@ -35,7 +35,7 @@ class CPointSpotlight : public CServerOnlyPointEntity
 
     virtual void SetParent( CBaseEntity *pNewParent, int iAttachment = -1 );
 
-   private:
+    private:
     int UpdateTransmitState();
     void SpotlightThink( void );
     void SpotlightUpdate( void );
@@ -57,7 +57,7 @@ class CPointSpotlight : public CServerOnlyPointEntity
 
     void PassParentToChildren( CBaseEntity *pParent );
 
-   private:
+    private:
     bool m_bSpotlightOn;
     bool m_bEfficientSpotlight;
     bool m_bIgnoreSolid;
@@ -74,7 +74,7 @@ class CPointSpotlight : public CServerOnlyPointEntity
     float m_flHDRColorScale;
     int m_nMinDXLevel;
 
-   public:
+    public:
     COutputEvent m_OnOn, m_OnOff;  ///< output fires when turned on, off
 };
 

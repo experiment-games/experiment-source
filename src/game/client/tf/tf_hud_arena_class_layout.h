@@ -26,7 +26,7 @@ class CHudArenaClassLayout : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudArenaClassLayout, EditablePanel );
 
-   public:
+    public:
     CHudArenaClassLayout( const char *pElementName );
 
     virtual void Init( void );
@@ -43,7 +43,7 @@ class CHudArenaClassLayout : public CHudElement, public EditablePanel
 
     virtual void SetVisible( bool state );
 
-   private:
+    private:
     CTFImagePanel *m_pBackground;
     CTFImagePanel *m_pLocalPlayerBG;
     CExLabel *m_pTitle;

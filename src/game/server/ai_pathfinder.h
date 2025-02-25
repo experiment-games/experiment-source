@@ -46,11 +46,11 @@ enum RouteBuildFlags_e
 
 class CAI_Pathfinder : public CAI_Component
 {
-   public:
+    public:
     CAI_Pathfinder( CAI_BaseNPC *pOuter )
         : CAI_Component( pOuter ),
-          m_flLastStaleLinkCheckTime( 0 ),
-          m_pNetwork( NULL )
+        m_flLastStaleLinkCheckTime( 0 ),
+        m_pNetwork( NULL )
     {
     }
 
@@ -105,13 +105,13 @@ class CAI_Pathfinder : public CAI_Component
 
     void DrawDebugGeometryOverlays( int m_debugOverlays );
 
-   protected:
+    protected:
     virtual bool CanUseLocalNavigation()
     {
         return true;
     }
 
-   private:
+    private:
     friend class CPathfindNearestNodeFilter;
 
     //---------------------------------
@@ -168,7 +168,7 @@ class CAI_Pathfinder : public CAI_Component
 
     class CTriDebugOverlay
     {
-       public:
+        public:
         CTriDebugOverlay()
             : m_debugTriOverlayLine( NULL )
         {
@@ -179,7 +179,7 @@ class CAI_Pathfinder : public CAI_Component
 
         void Draw( int npcDebugOverlays );
 
-       private:
+        private:
         void AddTriOverlayLine( const Vector &origin, const Vector &dest, int r, int g, int b, bool noDepthTest );
 
         OverlayLine_t **m_debugTriOverlayLine;
@@ -205,7 +205,7 @@ class CAI_Pathfinder : public CAI_Component
 
     CAI_Network *m_pNetwork;
 
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 };
 

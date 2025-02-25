@@ -31,7 +31,7 @@ static ConVar sk_suitcharger_citadel_maxarmor( "sk_suitcharger_citadel_maxarmor"
 
 class CRecharge : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CRecharge, CBaseToggle );
 
     void Spawn();
@@ -46,7 +46,7 @@ class CRecharge : public CBaseToggle
         return ( BaseClass::ObjectCaps() | FCAP_CONTINUOUS_USE );
     }
 
-   private:
+    private:
     void InputRecharge( inputdata_t &inputdata );
 
     float MaxJuice() const;
@@ -97,10 +97,10 @@ DEFINE_FIELD( m_flNextCharge, FIELD_TIME ),
 bool CRecharge::KeyValue( const char *szKeyName, const char *szValue )
 {
     if ( FStrEq( szKeyName, "style" ) ||
-         FStrEq( szKeyName, "height" ) ||
-         FStrEq( szKeyName, "value1" ) ||
-         FStrEq( szKeyName, "value2" ) ||
-         FStrEq( szKeyName, "value3" ) )
+        FStrEq( szKeyName, "height" ) ||
+        FStrEq( szKeyName, "value1" ) ||
+        FStrEq( szKeyName, "value2" ) ||
+        FStrEq( szKeyName, "value3" ) )
     {
     }
     else if ( FStrEq( szKeyName, "dmdelay" ) )
@@ -186,7 +186,7 @@ void CRecharge::UpdateJuice( int newJuice )
         }
     }
     else if ( newJuice != m_iJuice &&
-              newJuice == ( int )MaxJuice() )
+            newJuice == ( int )MaxJuice() )
     {
         m_OnFull.FireOutput( this, this );
     }
@@ -331,7 +331,7 @@ void CRecharge::Off( void )
 // NEW
 class CNewRecharge : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CNewRecharge, CBaseAnimating );
 
     void Spawn();
@@ -348,7 +348,7 @@ class CNewRecharge : public CBaseAnimating
 
     void SetInitialCharge( void );
 
-   private:
+    private:
     void InputRecharge( inputdata_t &inputdata );
     void InputSetCharge( inputdata_t &inputdata );
     float MaxJuice() const;
@@ -415,10 +415,10 @@ DEFINE_FIELD( m_flNextCharge, FIELD_TIME ),
 bool CNewRecharge::KeyValue( const char *szKeyName, const char *szValue )
 {
     if ( FStrEq( szKeyName, "style" ) ||
-         FStrEq( szKeyName, "height" ) ||
-         FStrEq( szKeyName, "value1" ) ||
-         FStrEq( szKeyName, "value2" ) ||
-         FStrEq( szKeyName, "value3" ) )
+        FStrEq( szKeyName, "height" ) ||
+        FStrEq( szKeyName, "value1" ) ||
+        FStrEq( szKeyName, "value2" ) ||
+        FStrEq( szKeyName, "value3" ) )
     {
     }
     else if ( FStrEq( szKeyName, "dmdelay" ) )
@@ -560,7 +560,7 @@ void CNewRecharge::UpdateJuice( int newJuice )
         }
     }
     else if ( newJuice != m_iJuice &&
-              newJuice == ( int )MaxJuice() )
+            newJuice == ( int )MaxJuice() )
     {
         m_OnFull.FireOutput( this, this );
     }

@@ -63,7 +63,7 @@ set_dir_from ()
 {
   case $1 in
     */*) dir=`echo "$1" | sed -e 's|/[^/]*$|/|'`;;
-      *) dir=;;
+    *) dir=;;
   esac
 }
 
@@ -96,7 +96,7 @@ aix_post_process_depfile ()
     #   dependency.h:
     # which is needed to avoid the deleted-header problem.
     { sed -e "s,^.*\.[$lower]*:,$object:," < "$tmpdepfile"
-      sed -e "s,^.*\.[$lower]*:[$tab ]*,," -e 's,$,:,' < "$tmpdepfile"
+    sed -e "s,^.*\.[$lower]*:[$tab ]*,," -e 's,$,:,' < "$tmpdepfile"
     } > "$depfile"
     rm -f "$tmpdepfile"
   else
@@ -225,7 +225,7 @@ gcc)
   # The second -e expression handles DOS-style file names with drive
   # letters.
   sed -e 's/^[^:]*: / /' \
-      -e 's/^['$alpha']:\/[^:]*: / /' < "$tmpdepfile" >> "$depfile"
+    -e 's/^['$alpha']:\/[^:]*: / /' < "$tmpdepfile" >> "$depfile"
 ## This next piece of magic avoids the "deleted header file" problem.
 ## The problem is that when a header file which appears in a .P file
 ## is deleted, the dependency causes make to die (because there is
@@ -273,13 +273,13 @@ sgi)
     # the IRIX cc adds comments like '#:fec' to the end of the
     # dependency line.
     tr ' ' "$nl" < "$tmpdepfile" \
-      | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' \
-      | tr "$nl" ' ' >> "$depfile"
+    | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' \
+    | tr "$nl" ' ' >> "$depfile"
     echo >> "$depfile"
     # The second pass generates a dummy entry for each header file.
     tr ' ' "$nl" < "$tmpdepfile" \
-      | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' -e 's/$/:/' \
-      >> "$depfile"
+    | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' -e 's/$/:/' \
+    >> "$depfile"
   else
     make_dummy_depfile
   fi
@@ -392,19 +392,19 @@ pgcc)
   while test $i -gt 0; do
     # mkdir is a portable test-and-set.
     if mkdir "$lockdir" 2>/dev/null; then
-      # This process acquired the lock.
-      "$@" -MD
-      stat=$?
-      # Release the lock.
-      rmdir "$lockdir"
-      break
+    # This process acquired the lock.
+    "$@" -MD
+    stat=$?
+    # Release the lock.
+    rmdir "$lockdir"
+    break
     else
-      # If the lock is being held by a different process, wait
-      # until the winning process is done or we timeout.
-      while test -d "$lockdir" && test $i -gt 0; do
+    # If the lock is being held by a different process, wait
+    # until the winning process is done or we timeout.
+    while test -d "$lockdir" && test $i -gt 0; do
         sleep 1
         i=`expr $i - 1`
-      done
+    done
     fi
     i=`expr $i - 1`
   done
@@ -452,8 +452,8 @@ hp2)
   fi
   stat=$?
   if test $stat -ne 0; then
-     rm -f "$tmpdepfile1" "$tmpdepfile2"
-     exit $stat
+    rm -f "$tmpdepfile1" "$tmpdepfile2"
+    exit $stat
   fi
 
   for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2"
@@ -464,11 +464,11 @@ hp2)
     sed -e "s,^.*\.[$lower]*:,$object:," "$tmpdepfile" > "$depfile"
     # Add 'dependent.h:' lines.
     sed -ne '2,${
-               s/^ *//
-               s/ \\*$//
-               s/$/:/
-               p
-             }' "$tmpdepfile" >> "$depfile"
+                s/^ *//
+                s/ \\*$//
+                s/$/:/
+                p
+            }' "$tmpdepfile" >> "$depfile"
   else
     make_dummy_depfile
   fi
@@ -575,7 +575,7 @@ dashmstdout)
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
     while test "X$1" != 'X--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -586,16 +586,16 @@ dashmstdout)
   do
     case $arg in
     -o)
-      shift
-      ;;
+    shift
+    ;;
     $object)
-      shift
-      ;;
+    shift
+    ;;
     *)
-      set fnord "$@" "$arg"
-      shift # fnord
-      shift # $arg
-      ;;
+    set fnord "$@" "$arg"
+    shift # fnord
+    shift # $arg
+    ;;
     esac
   done
 
@@ -626,7 +626,7 @@ makedepend)
   # Remove any Libtool call
   if test "$libtool" = yes; then
     while test "X$1" != 'X--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -637,24 +637,24 @@ makedepend)
   do
     case $cleared in
     no)
-      set ""; shift
-      cleared=yes ;;
+    set ""; shift
+    cleared=yes ;;
     esac
     if test $eat = yes; then
-      eat=no
-      continue
+    eat=no
+    continue
     fi
     case "$arg" in
     -D*|-I*)
-      set fnord "$@" "$arg"; shift ;;
+    set fnord "$@" "$arg"; shift ;;
     # Strip any option that makedepend may not understand.  Remove
     # the object too, otherwise makedepend will parse it as a source file.
     -arch)
-      eat=yes ;;
+    eat=yes ;;
     -*|$object)
-      ;;
+    ;;
     *)
-      set fnord "$@" "$arg"; shift ;;
+    set fnord "$@" "$arg"; shift ;;
     esac
   done
   obj_suffix=`echo "$object" | sed 's/^.*\././'`
@@ -681,7 +681,7 @@ cpp)
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
     while test "X$1" != 'X--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -692,22 +692,22 @@ cpp)
   do
     case $arg in
     -o)
-      shift
-      ;;
+    shift
+    ;;
     $object)
-      shift
-      ;;
+    shift
+    ;;
     *)
-      set fnord "$@" "$arg"
-      shift # fnord
-      shift # $arg
-      ;;
+    set fnord "$@" "$arg"
+    shift # fnord
+    shift # $arg
+    ;;
     esac
   done
 
   "$@" -E \
     | sed -n -e '/^# [0-9][0-9]* "\([^"]*\)".*/ s:: \1 \\:p' \
-             -e '/^#line [0-9][0-9]* "\([^"]*\)".*/ s:: \1 \\:p' \
+            -e '/^#line [0-9][0-9]* "\([^"]*\)".*/ s:: \1 \\:p' \
     | sed '$ s: \\$::' > "$tmpdepfile"
   rm -f "$depfile"
   echo "$object : \\" > "$depfile"
@@ -724,7 +724,7 @@ msvisualcpp)
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
     while test "X$1" != 'X--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -734,11 +734,11 @@ msvisualcpp)
   do
     case "$arg" in
     -o)
-      shift
-      ;;
+    shift
+    ;;
     $object)
-      shift
-      ;;
+    shift
+    ;;
     "-Gm"|"/Gm"|"-Gi"|"/Gi"|"-ZI"|"/ZI")
         set fnord "$@"
         shift

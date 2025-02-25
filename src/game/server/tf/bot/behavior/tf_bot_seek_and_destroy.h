@@ -13,7 +13,7 @@
 //
 class CTFBotSeekAndDestroy : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotSeekAndDestroy( float duration = -1.0f );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -37,7 +37,7 @@ class CTFBotSeekAndDestroy : public Action< CTFBot >
         return "SeekAndDestroy";
     };
 
-   private:
+    private:
     CTFNavArea *m_goalArea;
     CTFNavArea *ChooseGoalArea( CTFBot *me );
     bool m_isPointLocked;

@@ -68,7 +68,7 @@ class CAI_BattleLine : public CBaseEntity
 {
     DECLARE_CLASS( CAI_BattleLine, CBaseEntity );
 
-   public:
+    public:
     string_t m_iszActor;
     bool m_fActive;
     bool m_fStrict;
@@ -122,8 +122,8 @@ class CAI_BattleLine : public CBaseEntity
         const char *pszNamedActor = STRING( m_iszActor );
 
         if ( pNpc->NameMatches( pszNamedActor ) ||
-             pNpc->ClassMatches( pszNamedActor ) ||
-             ( pNpc->GetSquad() && stricmp( pNpc->GetSquad()->GetName(), pszNamedActor ) == 0 ) )
+            pNpc->ClassMatches( pszNamedActor ) ||
+            ( pNpc->GetSquad() && stricmp( pNpc->GetSquad()->GetName(), pszNamedActor ) == 0 ) )
         {
             return true;
         }
@@ -140,7 +140,7 @@ class CAI_BattleLine : public CBaseEntity
         SetNextThink( gpGlobals->curtime + AIBL_THINK_INTERVAL );
     }
 
-   private:
+    private:
     void NotifyChangeTacticalConstraints()
     {
         for ( int i = 0; i < g_AI_Manager.NumAIs(); i++ )
@@ -404,11 +404,11 @@ void CAI_StandoffBehavior::GatherConditions()
     {
         AI_EnemyInfo_t *pEnemyInfo = GetOuter()->GetEnemies()->Find( GetEnemy() );
         if ( pEnemyInfo &&
-             m_params.flAbandonTimeLimit > 0 &&
-             ( ( pEnemyInfo->timeAtFirstHand != AI_INVALID_TIME &&
-                 gpGlobals->curtime - pEnemyInfo->timeLastSeen > m_params.flAbandonTimeLimit ) ||
-               ( pEnemyInfo->timeAtFirstHand == AI_INVALID_TIME &&
-                 gpGlobals->curtime - pEnemyInfo->timeFirstSeen > m_params.flAbandonTimeLimit * 2 ) ) )
+            m_params.flAbandonTimeLimit > 0 &&
+            ( ( pEnemyInfo->timeAtFirstHand != AI_INVALID_TIME &&
+                gpGlobals->curtime - pEnemyInfo->timeLastSeen > m_params.flAbandonTimeLimit ) ||
+                ( pEnemyInfo->timeAtFirstHand == AI_INVALID_TIME &&
+                gpGlobals->curtime - pEnemyInfo->timeFirstSeen > m_params.flAbandonTimeLimit * 2 ) ) )
         {
             SetCondition( COND_ABANDON_TIME_EXPIRED );
 
@@ -423,8 +423,8 @@ void CAI_StandoffBehavior::GatherConditions()
                         CAI_StandoffBehavior *pSquadmateStandoff;
                         pSquadMate->GetBehavior( &pSquadmateStandoff );
                         if ( pSquadmateStandoff && pSquadmateStandoff->IsActive() &&
-                             pSquadmateStandoff->m_hStandoffGoal == m_hStandoffGoal &&
-                             !pSquadmateStandoff->HasCondition( COND_ABANDON_TIME_EXPIRED ) )
+                            pSquadmateStandoff->m_hStandoffGoal == m_hStandoffGoal &&
+                            !pSquadmateStandoff->HasCondition( COND_ABANDON_TIME_EXPIRED ) )
                         {
                             bAbandonStandoff = false;
                             break;
@@ -558,10 +558,10 @@ int CAI_StandoffBehavior::SelectScheduleEstablishAim( void )
             }
         }
 #if 0
-		else
-		{
-			return SCHED_ESTABLISH_LINE_OF_FIRE;
-		}
+        else
+        {
+            return SCHED_ESTABLISH_LINE_OF_FIRE;
+        }
 #endif
     }
 
@@ -575,8 +575,8 @@ int CAI_StandoffBehavior::SelectScheduleAttack( void )
     if ( GetPosture() == AIP_PEEKING || GetPosture() == AIP_STANDING )
     {
         if ( !HasCondition( COND_CAN_RANGE_ATTACK1 ) &&
-             !HasCondition( COND_CAN_MELEE_ATTACK1 ) &&
-             HasCondition( COND_TOO_FAR_TO_ATTACK ) )
+            !HasCondition( COND_CAN_MELEE_ATTACK1 ) &&
+            HasCondition( COND_TOO_FAR_TO_ATTACK ) )
         {
             if ( GetOuter()->GetActiveWeapon() && ( GetOuter()->GetActiveWeapon()->CapabilitiesGet() & bits_CAP_WEAPON_RANGE_ATTACK1 ) )
             {
@@ -1256,7 +1256,7 @@ class CAI_StandoffGoal : public CAI_GoalEntity
 {
     DECLARE_CLASS( CAI_StandoffGoal, CAI_GoalEntity );
 
-   public:
+    public:
     CAI_StandoffGoal()
     {
         m_aggressiveness = AGGR_MEDIUM;
@@ -1358,7 +1358,7 @@ class CAI_StandoffGoal : public CAI_GoalEntity
         }
     }
 
-   private:
+    private:
     //---------------------------------
 
     DECLARE_DATADESC();

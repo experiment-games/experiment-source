@@ -56,7 +56,7 @@ inline void SafeRelease( T **ppInoutPtr )
 
 class IRefCounted
 {
-   public:
+    public:
     virtual int AddRef() = 0;
     virtual int Release() = 0;
 };
@@ -86,7 +86,7 @@ inline int SafeRelease( REFCOUNTED_ITEM_PTR &pRef )
 template < class T = IRefCounted >
 class CAutoRef
 {
-   public:
+    public:
     CAutoRef( T *pRef )
         : m_pRef( pRef )
     {
@@ -100,7 +100,7 @@ class CAutoRef
             m_pRef->Release();
     }
 
-   private:
+    private:
     T *m_pRef;
 };
 
@@ -120,7 +120,7 @@ class CAutoRef
 template < class T >
 class CBaseAutoPtr
 {
-   public:
+    public:
     CBaseAutoPtr()
         : m_pObject( 0 ) {}
     CBaseAutoPtr( T *pFrom )
@@ -220,7 +220,7 @@ class CBaseAutoPtr
         return &m_pObject;
     }
 
-   protected:
+    protected:
     CBaseAutoPtr( const CBaseAutoPtr< T > &from )
         : m_pObject( from.m_pObject ) {}
     void operator=( const CBaseAutoPtr< T > &from )
@@ -238,7 +238,7 @@ class CRefPtr : public CBaseAutoPtr< T >
 {
     typedef CBaseAutoPtr< T > BaseClass;
 
-   public:
+    public:
     CRefPtr() {}
     CRefPtr( T *pInit )
         : BaseClass( pInit ) {}
@@ -297,7 +297,7 @@ class CRefPtr : public CBaseAutoPtr< T >
 
 class CRefMT
 {
-   public:
+    public:
     static int Increment( int *p )
     {
         return ThreadInterlockedIncrement( ( int32 * )p );
@@ -310,7 +310,7 @@ class CRefMT
 
 class CRefST
 {
-   public:
+    public:
     static int Increment( int *p )
     {
         return ++( *p );
@@ -329,7 +329,7 @@ class CRefST
 template < const bool bSelfDelete, typename CRefThreading = CRefMT >
 class NO_VTABLE CRefCountServiceBase
 {
-   protected:
+    protected:
     CRefCountServiceBase()
         : m_iRefs( 1 )
     {
@@ -364,13 +364,13 @@ class NO_VTABLE CRefCountServiceBase
         return 0;
     }
 
-   private:
+    private:
     int m_iRefs;
 };
 
 class CRefCountServiceNull
 {
-   protected:
+    protected:
     static int DoAddRef()
     {
         return 1;
@@ -384,7 +384,7 @@ class CRefCountServiceNull
 template < typename CRefThreading = CRefMT >
 class NO_VTABLE CRefCountServiceDestruct
 {
-   protected:
+    protected:
     CRefCountServiceDestruct()
         : m_iRefs( 1 )
     {
@@ -413,7 +413,7 @@ class NO_VTABLE CRefCountServiceDestruct
         return 0;
     }
 
-   private:
+    private:
     int m_iRefs;
 };
 
@@ -434,7 +434,7 @@ typedef CRefCountServiceMT CRefCountService;
 template < class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted : public REFCOUNT_SERVICE
 {
-   public:
+    public:
     virtual ~CRefCounted() {}
     int AddRef()
     {
@@ -450,9 +450,9 @@ class NO_VTABLE CRefCounted : public REFCOUNT_SERVICE
 
 template < class BASE1, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted1 : public BASE1,
-                               public REFCOUNT_SERVICE
+                                public REFCOUNT_SERVICE
 {
-   public:
+    public:
     virtual ~CRefCounted1() {}
     int AddRef()
     {
@@ -469,7 +469,7 @@ class NO_VTABLE CRefCounted1 : public BASE1,
 template < class BASE1, class BASE2, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted2 : public BASE1, public BASE2, public REFCOUNT_SERVICE
 {
-   public:
+    public:
     virtual ~CRefCounted2() {}
     int AddRef()
     {
@@ -502,7 +502,7 @@ class NO_VTABLE CRefCounted3 : public BASE1, public BASE2, public BASE3, public 
 template < class BASE1, class BASE2, class BASE3, class BASE4, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted4 : public BASE1, public BASE2, public BASE3, public BASE4, public REFCOUNT_SERVICE
 {
-   public:
+    public:
     virtual ~CRefCounted4() {}
     int AddRef()
     {
@@ -519,7 +519,7 @@ class NO_VTABLE CRefCounted4 : public BASE1, public BASE2, public BASE3, public 
 template < class BASE1, class BASE2, class BASE3, class BASE4, class BASE5, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted5 : public BASE1, public BASE2, public BASE3, public BASE4, public BASE5, public REFCOUNT_SERVICE
 {
-   public:
+    public:
     virtual ~CRefCounted5() {}
     int AddRef()
     {
@@ -539,7 +539,7 @@ class NO_VTABLE CRefCounted5 : public BASE1, public BASE2, public BASE3, public 
 template < class BASE_REFCOUNTED, int FINAL_REFS, const char *pszName >
 class CRefDebug : public BASE_REFCOUNTED
 {
-   public:
+    public:
 #ifdef _DEBUG
     CRefDebug()
     {

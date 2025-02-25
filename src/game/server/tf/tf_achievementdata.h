@@ -18,7 +18,7 @@
 template < class T, class LessFunc, int maxSize >
 class CHistoryVector : public CUtlSortVector< T, LessFunc >
 {
-   public:
+    public:
     CHistoryVector()
     {
     }
@@ -63,7 +63,7 @@ struct EntityDamageHistory_t : public EntityHistory_t
 
 class CEntityHistoryLess
 {
-   public:
+    public:
     bool Less( const EntityHistory_t &dmg1, const EntityHistory_t &dmg2, void *pCtx )
     {
         return ( dmg1.flTimeDamage > dmg2.flTimeDamage );
@@ -77,7 +77,7 @@ class CEntityHistoryLess
 // Allow duplicate (source) entries with this type; HistoryMatch always returns false
 class CEntityDamageHistoryLess
 {
-   public:
+    public:
     bool Less( const EntityDamageHistory_t &dmg1, const EntityDamageHistory_t &dmg2, void *pCtx )
     {
         return ( dmg2.flTimeDamage < dmg1.flTimeDamage );
@@ -91,7 +91,7 @@ class CEntityDamageHistoryLess
 // Achievement Tracking container
 class CAchievementData
 {
-   public:
+    public:
     void ClearHistories( void )
     {
         aDamagers.RemoveAll();
@@ -141,7 +141,7 @@ class CAchievementData
     void AddPusherToHistory( EHANDLE hPlayer );
     bool IsPusherInHistory( CBaseEntity *pPlayer, float flTimeWindow );
 
-   private:
+    private:
     CHistoryVector< EntityHistory_t, CEntityHistoryLess, MAX_ACHIEVEMENT_HISTORY_SLOTS > aDamagers;
     CHistoryVector< EntityDamageHistory_t, CEntityDamageHistoryLess, MAX_ACHIEVEMENT_DAMAGE_HISTORY_SLOTS > aDamageEvents;  // Duplicates allowed
     CHistoryVector< EntityHistory_t, CEntityHistoryLess, MAX_ACHIEVEMENT_HISTORY_SLOTS > aTargets;

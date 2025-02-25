@@ -609,20 +609,20 @@ void CParticleEffectBinding::DetectChanges()
 
     // if nothing changed, return
     if ( m_Min.x < m_LastMin.x ||
-         m_Min.y < m_LastMin.y ||
-         m_Min.z < m_LastMin.z ||
+        m_Min.y < m_LastMin.y ||
+        m_Min.z < m_LastMin.z ||
 
-         m_Min.x > ( m_LastMin.x + flExtraBuffer ) ||
-         m_Min.y > ( m_LastMin.y + flExtraBuffer ) ||
-         m_Min.z > ( m_LastMin.z + flExtraBuffer ) ||
+        m_Min.x > ( m_LastMin.x + flExtraBuffer ) ||
+        m_Min.y > ( m_LastMin.y + flExtraBuffer ) ||
+        m_Min.z > ( m_LastMin.z + flExtraBuffer ) ||
 
-         m_Max.x > m_LastMax.x ||
-         m_Max.y > m_LastMax.y ||
-         m_Max.z > m_LastMax.z ||
+        m_Max.x > m_LastMax.x ||
+        m_Max.y > m_LastMax.y ||
+        m_Max.z > m_LastMax.z ||
 
-         m_Max.x < ( m_LastMax.x - flExtraBuffer ) ||
-         m_Max.y < ( m_LastMax.y - flExtraBuffer ) ||
-         m_Max.z < ( m_LastMax.z - flExtraBuffer ) )
+        m_Max.x < ( m_LastMax.x - flExtraBuffer ) ||
+        m_Max.y < ( m_LastMax.y - flExtraBuffer ) ||
+        m_Max.z < ( m_LastMax.z - flExtraBuffer ) )
     {
         // call leafsystem to updated this guy
         ClientLeafSystem()->RenderableChanged( m_hRenderHandle );
@@ -675,7 +675,7 @@ void CParticleEffectBinding::SimulateParticles( float flTimeDelta )
         bool bFullBBoxUpdate = false;
         ++m_UpdateBBoxCounter;
         if ( ( m_UpdateBBoxCounter >= BBOX_UPDATE_EVERY_N && random->RandomInt( 0, BBOX_UPDATE_EVERY_N ) == 0 ) ||
-             ( m_UpdateBBoxCounter >= 2 * BBOX_UPDATE_EVERY_N ) )
+            ( m_UpdateBBoxCounter >= 2 * BBOX_UPDATE_EVERY_N ) )
         {
             bFullBBoxUpdate = true;
 
@@ -1614,10 +1614,10 @@ int CParticleMgr::RetireSort( const void *p1, const void *p2 )
 }
 
 bool CParticleMgr::RetireParticleCollections( CParticleSystemDefinition *pDef,
-                                              int nCount,
-                                              RetireInfo_t *pInfo,
-                                              float flScreenArea,
-                                              float flMaxTotalArea )
+                                            int nCount,
+                                            RetireInfo_t *pInfo,
+                                            float flScreenArea,
+                                            float flMaxTotalArea )
 {
     bool bRetirementOccurred = false;
 
@@ -1730,7 +1730,7 @@ void CParticleMgr::BuildParticleSimList( CUtlVector< ParticleSimListEntry_t > &l
 {
     float flNow = g_pParticleSystemMgr->GetLastSimulationTime();
     for ( CNewParticleEffect *pNewEffect = m_NewEffects.m_pHead; pNewEffect;
-          pNewEffect = pNewEffect->m_pNext )
+        pNewEffect = pNewEffect->m_pNext )
     {
         bool bSkip = false;
         bool bNeedsBboxUpdate = false;
@@ -1804,7 +1804,7 @@ void CParticleMgr::UpdateNewEffects( float flTimeDelta )
     // This is done on all particles, because it updates control point locations which we need to determine whether or not we should
     // do full simulation later.
     for ( CNewParticleEffect *pNewEffect = m_NewEffects.m_pHead; pNewEffect;
-          pNewEffect = pNewEffect->m_pNext )
+        pNewEffect = pNewEffect->m_pNext )
     {
         // this one can call into random entity code which may not be thread-safe
         pNewEffect->Update( s_flThreadedPSystemTimeStep );

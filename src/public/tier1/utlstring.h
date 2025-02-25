@@ -1,4 +1,4 @@
-﻿//====== Copyright Valve Corporation, All rights reserved. =======
+//====== Copyright Valve Corporation, All rights reserved. =======
 
 #ifndef UTLSTRING_H
 #define UTLSTRING_H
@@ -50,14 +50,14 @@ inline size_t strnlen( const char *s, size_t n )
 //-----------------------------------------------------------------------------
 class CUtlString
 {
-   public:
+    public:
     typedef enum
     {
         PATTERN_NONE = 0x00000000,
         PATTERN_DIRECTORY = 0x00000001
     } TUtlStringPattern;
 
-   public:
+    public:
     CUtlString();
     CUtlString( const char *pString );
     CUtlString( const char *pString, int length );
@@ -269,7 +269,7 @@ class CUtlString
     // const CUtlString& and cannot just return "".
     static const CUtlString &GetEmptyString();
 
-   private:
+    private:
     // INTERNALS
     // AllocMemory allocates enough space for length characters plus a terminating zero.
     // Previous characters are preserved, the buffer is null-terminated, but new characters
@@ -389,7 +389,7 @@ inline CUtlString::operator const char *() const
 template < typename T >
 class StringFuncs
 {
-   public:
+    public:
     static T *Duplicate( const T *pValue );
     // Note that this function takes a character count, and does not guarantee null-termination.
     static void Copy( T *out_pOut, const T *pIn, int iLengthInChars );
@@ -404,7 +404,7 @@ class StringFuncs
 template <>
 class StringFuncs< char >
 {
-   public:
+    public:
     static char *Duplicate( const char *pValue )
     {
         return strdup( pValue );
@@ -443,7 +443,7 @@ class StringFuncs< char >
 template <>
 class StringFuncs< wchar_t >
 {
-   public:
+    public:
     static wchar_t *Duplicate( const wchar_t *pValue )
     {
         return wcsdup( pValue );
@@ -486,7 +486,7 @@ class StringFuncs< wchar_t >
 template < typename T = char >
 class CUtlConstStringBase
 {
-   public:
+    public:
     CUtlConstStringBase()
         : m_pString( NULL ) {}
     explicit CUtlConstStringBase( const T *pString )
@@ -582,7 +582,7 @@ class CUtlConstStringBase
     // implement Find/Insert/Remove functions that take const char* params.
     typedef const T *AltArgumentType_t;
 
-   protected:
+    protected:
     const T *m_pString;
 };
 
@@ -654,7 +654,7 @@ inline bool UtlStringCaseInsensitiveLessFunc( const CUtlString &lhs, const CUtlS
 //-----------------------------------------------------------------------------
 class CUtlStringBuilder
 {
-   public:
+    public:
     CUtlStringBuilder();
     CUtlStringBuilder( const char *pchString );
     CUtlStringBuilder( CUtlStringBuilder const &string );
@@ -842,7 +842,7 @@ class CUtlStringBuilder
         m_data.SetError( false );
     }
 
-   private:
+    private:
     size_t ReplaceInternal( const char *pstrTarget, const char *pstrReplacement, const char *pfnCompare( const char *, const char * ) );
     operator bool() const
     {
@@ -904,28 +904,28 @@ class CUtlStringBuilder
     {
         struct _Heap
         {  // 16 on 32 bit, sentinel == 0xff if Heap is the active union item
-           private:
+            private:
             char *m_pchString;
             uint32 m_nLength;
             uint32 m_nCapacity;  // without trailing null; ie: m_pchString[m_nCapacity] = '\0' is not out of bounds
             uint8 scrap[3];
             uint8 sentinel;
 
-           public:
+            public:
             friend union Data;
             friend char *CUtlStringBuilder::InternalPrepareBuffer( size_t, bool, size_t );
         } Heap;
 
         struct _Stack
         {
-           private:
+            private:
             // last byte is doing a hack double duty.  It holds how many bytes
             // are left in the string; so when the string is 'full' it will be
             // '0' and thus suffice as the terminating null.  This is why
             // we hold remaining chars instead of 'string length'
             char m_szString[MAX_STACK_STRLEN + 1];
 
-           public:
+            public:
             uint8 BytesLeft() const
             {
                 return ( uint8 )( m_szString[MAX_STACK_STRLEN] );
@@ -1038,7 +1038,7 @@ class CUtlStringBuilder
         // successfully on the heap (or already was)
         bool MoveToHeap();
 
-       private:
+        private:
         //-----------------------------------------------------------------------------
         // Purpose: Needed facts for string class to work
         //-----------------------------------------------------------------------------
@@ -1061,7 +1061,7 @@ class CUtlStringBuilder
         }
     };
 
-   private:  // data
+    private:  // data
     Data m_data;
 };
 

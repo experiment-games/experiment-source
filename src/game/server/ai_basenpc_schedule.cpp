@@ -173,10 +173,10 @@ void CAI_BaseNPC::SetSchedule( CAI_Schedule *pNewSchedule )
 
     /*
     #if _DEBUG
-      if ( !ScheduleFromName( pNewSchedule->GetName() ) )
-      {
+    if ( !ScheduleFromName( pNewSchedule->GetName() ) )
+    {
         DevMsg( "Schedule %s not in table!!!\n", pNewSchedule->GetName() );
-      }
+    }
     #endif
     */
     // this is very useful code if you can isolate a test case in a level with a single NPC. It will notify
@@ -351,7 +351,7 @@ bool CAI_BaseNPC::IsScheduleValid()
     }
 
     if ( HasCondition( COND_SCHEDULE_DONE ) ||
-         HasCondition( COND_TASK_FAILED ) )
+        HasCondition( COND_TASK_FAILED ) )
     {
 #ifdef DEBUG
         if ( HasCondition( COND_TASK_FAILED ) && m_failSchedule == SCHED_NONE )
@@ -387,18 +387,18 @@ bool CAI_BaseNPC::ShouldSelectIdealState( void )
 {
     /*
 
-      HERE's the old Half-Life code that used to control this.
+    HERE's the old Half-Life code that used to control this.
 
-      if ( m_IdealNPCState != NPC_STATE_DEAD &&
-         (m_IdealNPCState != NPC_STATE_SCRIPT || m_IdealNPCState == m_NPCState) )
-      {
+    if ( m_IdealNPCState != NPC_STATE_DEAD &&
+        (m_IdealNPCState != NPC_STATE_SCRIPT || m_IdealNPCState == m_NPCState) )
+    {
         if (	(m_afConditions && !HasConditions(bits_COND_SCHEDULE_DONE)) ||
             (GetCurSchedule() && (GetCurSchedule()->iInterruptMask & bits_COND_SCHEDULE_DONE)) ||
             ((m_NPCState == NPC_STATE_COMBAT) && (GetEnemy() == NULL))	)
         {
-          GetIdealState();
+        GetIdealState();
         }
-      }
+    }
     */
 
     // Don't get ideal state if you are supposed to be dead.
@@ -537,8 +537,8 @@ static bool ShouldStopProcessingTasks( CAI_BaseNPC *pNPC, int taskTime, int time
     if ( taskTime > timeLimit )
     {
         if ( ShouldUseEfficiency() ||
-             pNPC->IsMoving() ||
-             ( pNPC->GetIdealActivity() != ACT_RUN && pNPC->GetIdealActivity() != ACT_WALK ) )
+            pNPC->IsMoving() ||
+            ( pNPC->GetIdealActivity() != ACT_RUN && pNPC->GetIdealActivity() != ACT_WALK ) )
         {
             return true;
         }
@@ -814,7 +814,7 @@ void CAI_BaseNPC::MaintainSchedule( void )
     if ( CAI_BaseNPC::m_nDebugBits & bits_debugStepAI )
     {
         if ( !GetNavigator()->IsGoalActive() &&
-             m_nDebugCurIndex >= CAI_BaseNPC::m_nDebugPauseIndex )
+            m_nDebugCurIndex >= CAI_BaseNPC::m_nDebugPauseIndex )
         {
             m_flPlaybackRate = 0;
         }
@@ -855,8 +855,8 @@ bool CAI_BaseNPC::FindCoverPosInRadius( CBaseEntity *pEntity, const Vector &goal
     Vector enemyEyePos = pEntity->EyePosition();
 
     if ( ( !GetSquad() || GetSquad()->GetFirstMember() == this ) &&
-         IsCoverPosition( enemyEyePos, goalPos + GetViewOffset() ) &&
-         IsValidCover( goalPos, NULL ) )
+        IsCoverPosition( enemyEyePos, goalPos + GetViewOffset() ) &&
+        IsValidCover( goalPos, NULL ) )
     {
         coverPos = goalPos;
     }
@@ -882,10 +882,10 @@ bool CAI_BaseNPC::FindCoverPosInRadius( CBaseEntity *pEntity, const Vector &goal
 bool CAI_BaseNPC::FindCoverPos( CSound *pSound, Vector *pResult )
 {
     if ( !GetTacticalServices()->FindCoverPos( pSound->GetSoundReactOrigin(),
-                                               pSound->GetSoundReactOrigin(),
-                                               MIN( pSound->Volume(), 120.0 ),
-                                               CoverRadius(),
-                                               pResult ) )
+                                                pSound->GetSoundReactOrigin(),
+                                                MIN( pSound->Volume(), 120.0 ),
+                                                CoverRadius(),
+                                                pResult ) )
     {
         return GetTacticalServices()->FindLateralCover( pSound->GetSoundReactOrigin(), MIN( pSound->Volume(), 60.0 ), pResult );
     }
@@ -1128,8 +1128,8 @@ void CAI_BaseNPC::StartScriptMoveToTargetTask( int task )
                 AI_NavGoal_t goal( GOALTYPE_TARGETENT, newActivity );
 
                 if ( GetState() == NPC_STATE_SCRIPT &&
-                     ( m_ScriptArrivalActivity != AIN_DEF_ACTIVITY ||
-                       m_strScriptArrivalSequence != NULL_STRING ) )
+                    ( m_ScriptArrivalActivity != AIN_DEF_ACTIVITY ||
+                        m_strScriptArrivalSequence != NULL_STRING ) )
                 {
                     if ( m_ScriptArrivalActivity != AIN_DEF_ACTIVITY )
                     {
@@ -2031,10 +2031,10 @@ void CAI_BaseNPC::StartTask( const Task_t *pTask )
         case TASK_GET_PATH_TO_GOAL:
         {
             AI_NavGoal_t goal( m_nStoredPathType,
-                               AIN_DEF_ACTIVITY,
-                               AIN_HULL_TOLERANCE,
-                               AIN_DEF_FLAGS,
-                               m_hStoredPathTarget );
+                                AIN_DEF_ACTIVITY,
+                                AIN_HULL_TOLERANCE,
+                                AIN_DEF_FLAGS,
+                                m_hStoredPathTarget );
 
             bool foundPath = false;
 
@@ -2847,17 +2847,17 @@ void CAI_BaseNPC::StartTask( const Task_t *pTask )
                 // dvs: Check current activity rather than ideal activity. Since scripted NPCs early out in MaintainActivity,
                 //      they'll never reach their ideal activity if it's different from their current activity.
                 if ( GetActivity() == ACT_WALK ||
-                     GetActivity() == ACT_RUN ||
-                     GetActivity() == ACT_WALK_AIM ||
-                     GetActivity() == ACT_RUN_AIM )
+                    GetActivity() == ACT_RUN ||
+                    GetActivity() == ACT_WALK_AIM ||
+                    GetActivity() == ACT_RUN_AIM )
                 {
                     SetActivity( ACT_IDLE );
                 }
 #else
                 if ( GetIdealActivity() == ACT_WALK ||
-                     GetIdealActivity() == ACT_RUN ||
-                     GetIdealActivity() == ACT_WALK_AIM ||
-                     GetIdealActivity() == ACT_RUN_AIM )
+                    GetIdealActivity() == ACT_RUN ||
+                    GetIdealActivity() == ACT_WALK_AIM ||
+                    GetIdealActivity() == ACT_RUN_AIM )
                 {
                     SetActivity( ACT_IDLE );
                 }
@@ -3133,8 +3133,8 @@ void CAI_BaseNPC::RunAttackTask( int task )
     if ( vecEnemyLKP != vec3_origin )
     {
         if ( ( task == TASK_RANGE_ATTACK1 || task == TASK_RELOAD ) &&
-             ( CapabilitiesGet() & bits_CAP_AIM_GUN ) &&
-             FInAimCone( vecEnemyLKP ) )
+            ( CapabilitiesGet() & bits_CAP_AIM_GUN ) &&
+            FInAimCone( vecEnemyLKP ) )
         {
             // Arms will aim, so leave body yaw as is
             GetMotor()->SetIdealYawAndUpdate( GetMotor()->GetIdealYaw(), AI_KEEP_YAW_SPEED );
@@ -3423,8 +3423,8 @@ void CAI_BaseNPC::RunTask( const Task_t *pTask )
         case TASK_WAIT_PVS:
         {
             if ( ShouldAlwaysThink() ||
-                 UTIL_FindClientInPVS( edict() ) ||
-                 ( GetState() == NPC_STATE_COMBAT && GetEnemy() && gpGlobals->curtime - GetEnemies()->LastTimeSeen( GetEnemy() ) < 15 ) )
+                UTIL_FindClientInPVS( edict() ) ||
+                ( GetState() == NPC_STATE_COMBAT && GetEnemy() && gpGlobals->curtime - GetEnemies()->LastTimeSeen( GetEnemy() ) < 15 ) )
             {
                 TaskComplete();
             }
@@ -3909,10 +3909,10 @@ void CAI_BaseNPC::RunTask( const Task_t *pTask )
                     // drop to ground if this guy is only marked "fly" because of the auto movement
                     /*if ( !(m_hCine->m_savedFlags & FL_FLY) )
                     {
-                      if ( ( GetFlags() & FL_FLY ) && !m_hCine->m_bIgnoreGravity )
-                      {
+                    if ( ( GetFlags() & FL_FLY ) && !m_hCine->m_bIgnoreGravity )
+                    {
                         RemoveFlag( FL_FLY );
-                      }
+                    }
                     }*/
 
                     if ( m_hCine )
@@ -3988,7 +3988,7 @@ void CAI_BaseNPC::RunTask( const Task_t *pTask )
 
             // Walk path until far enough away
             if ( distance > pTask->flTaskData ||
-                 GetNavigator()->GetGoalType() == GOALTYPE_NONE )
+                GetNavigator()->GetGoalType() == GOALTYPE_NONE )
             {
                 TaskComplete();
             }
@@ -4025,7 +4025,7 @@ void CAI_BaseNPC::RunTask( const Task_t *pTask )
         case TASK_RUN_PATH_TIMED:
         {
             if ( IsWaitFinished() ||
-                 GetNavigator()->GetGoalType() == GOALTYPE_NONE )
+                GetNavigator()->GetGoalType() == GOALTYPE_NONE )
             {
                 TaskComplete();
             }
@@ -4149,9 +4149,9 @@ void CAI_BaseNPC::SetTurnActivity( void )
     /*
     if (GetMotor()->AddTurnGesture( flYD ))
     {
-      SetIdealActivity( ACT_IDLE );
-      Remember( bits_MEMORY_TURNING );
-      return;
+    SetIdealActivity( ACT_IDLE );
+    Remember( bits_MEMORY_TURNING );
+    return;
     }
     */
 
@@ -4360,10 +4360,10 @@ int CAI_BaseNPC::SelectIdleSchedule()
         return nSched;
 
     if ( HasCondition( COND_HEAR_DANGER ) ||
-         HasCondition( COND_HEAR_COMBAT ) ||
-         HasCondition( COND_HEAR_WORLD ) ||
-         HasCondition( COND_HEAR_BULLET_IMPACT ) ||
-         HasCondition( COND_HEAR_PLAYER ) )
+        HasCondition( COND_HEAR_COMBAT ) ||
+        HasCondition( COND_HEAR_WORLD ) ||
+        HasCondition( COND_HEAR_BULLET_IMPACT ) ||
+        HasCondition( COND_HEAR_PLAYER ) )
     {
         return SCHED_ALERT_FACE_BESTSOUND;
     }
@@ -4398,10 +4398,10 @@ int CAI_BaseNPC::SelectAlertSchedule()
     }
 
     if ( HasCondition( COND_HEAR_DANGER ) ||
-         HasCondition( COND_HEAR_PLAYER ) ||
-         HasCondition( COND_HEAR_WORLD ) ||
-         HasCondition( COND_HEAR_BULLET_IMPACT ) ||
-         HasCondition( COND_HEAR_COMBAT ) )
+        HasCondition( COND_HEAR_PLAYER ) ||
+        HasCondition( COND_HEAR_WORLD ) ||
+        HasCondition( COND_HEAR_BULLET_IMPACT ) ||
+        HasCondition( COND_HEAR_COMBAT ) )
     {
         return SCHED_ALERT_FACE_BESTSOUND;
     }
@@ -4448,8 +4448,8 @@ int CAI_BaseNPC::SelectCombatSchedule()
     if ( IRelationType( GetEnemy() ) == D_FR )
     {
         if ( HasCondition( COND_SEE_ENEMY ) ||
-             HasCondition( COND_LIGHT_DAMAGE ) ||
-             HasCondition( COND_HEAVY_DAMAGE ) )
+            HasCondition( COND_LIGHT_DAMAGE ) ||
+            HasCondition( COND_HEAVY_DAMAGE ) )
         {
             FearSound();
             // ClearCommandGoal();
@@ -4495,8 +4495,8 @@ int CAI_BaseNPC::SelectCombatSchedule()
         return SCHED_BACK_AWAY_FROM_ENEMY;
 
     if ( HasCondition( COND_WEAPON_PLAYER_IN_SPREAD ) ||
-         HasCondition( COND_WEAPON_BLOCKED_BY_FRIEND ) ||
-         HasCondition( COND_WEAPON_SIGHT_OCCLUDED ) )
+        HasCondition( COND_WEAPON_BLOCKED_BY_FRIEND ) ||
+        HasCondition( COND_WEAPON_SIGHT_OCCLUDED ) )
     {
         return SCHED_ESTABLISH_LINE_OF_FIRE;
     }
@@ -4661,7 +4661,7 @@ int CAI_BaseNPC::SelectFlinchSchedule()
     //
     iFlinchActivity = GetFlinchActivity( false, false );
     if ( HaveSequenceForActivity( iFlinchActivity ) )
-      return SCHED_SMALL_FLINCH;
+    return SCHED_SMALL_FLINCH;
     */
 
     return SCHED_NONE;

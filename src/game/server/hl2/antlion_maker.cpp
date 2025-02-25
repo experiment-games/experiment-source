@@ -1026,7 +1026,7 @@ bool CAntlionTemplateMaker::FindHintSpawnPosition( const Vector &origin, float r
         if ( AllHintsFromClusterBlocked( pChosenHint, bChosenHintBlocked ) )
         {
             if ( ( GetIndexForThinkContext( s_pBlockedCheckContext ) == NO_THINK_CONTEXT ) ||
-                 ( GetNextThinkTick( s_pBlockedCheckContext ) == TICK_NEVER_THINK ) )
+                ( GetNextThinkTick( s_pBlockedCheckContext ) == TICK_NEVER_THINK ) )
             {
                 SetContextThink( &CAntlionTemplateMaker::BlockedCheckFunc, gpGlobals->curtime + 2.0f, s_pBlockedCheckContext );
             }

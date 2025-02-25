@@ -67,7 +67,7 @@ struct washentity_t
 
 class CBaseHelicopter : public CAI_TrackPather
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseHelicopter, CAI_TrackPather );
 
     DECLARE_DATADESC();
@@ -166,7 +166,7 @@ class CBaseHelicopter : public CAI_TrackPather
         return;
     }
 
-   protected:
+    protected:
     void HelicopterMove();
 
     // Updates the enemy
@@ -204,7 +204,7 @@ class CBaseHelicopter : public CAI_TrackPather
     void InputEnableRotorSound( inputdata_t &inputdata );
     void InputDisableRotorSound( inputdata_t &inputdata );
 
-   protected:
+    protected:
     CSoundPatch *m_pRotorSound;  // Rotor loop played when the player can see the helicopter
     CSoundPatch *m_pRotorBlast;  // Sound played when the helicopter's pushing around physics objects
 
@@ -247,7 +247,7 @@ class CBaseHelicopter : public CAI_TrackPather
     void InputMoveSpecifiedSpeed( inputdata_t &inputdata );
     void InputSetAngles( inputdata_t &inputdata );  // Sets the angles of the helicopter
 
-   protected:
+    protected:
     // Custom conservative collision volumes
     Vector m_cullBoxMins;
     Vector m_cullBoxMaxs;
@@ -260,7 +260,7 @@ class CBaseHelicopter : public CAI_TrackPather
         m_flStartupTime = time;
     }
 
-   private:
+    private:
     CNetworkVar( float, m_flStartupTime );
 };
 
@@ -272,7 +272,7 @@ class CAvoidSphere : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CAvoidSphere, CBaseEntity );
 
     void Init( float flRadius );
@@ -281,7 +281,7 @@ class CAvoidSphere : public CBaseEntity
 
     static void ComputeAvoidanceForces( CBaseEntity *pEntity, float flEntityRadius, float flAvoidTime, Vector *pVecAvoidForce );
 
-   private:
+    private:
     typedef CHandle< CAvoidSphere > AvoidSphereHandle_t;
 
     float m_flRadius;
@@ -297,7 +297,7 @@ class CAvoidBox : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CAvoidBox, CBaseEntity );
 
     virtual void Spawn();
@@ -306,7 +306,7 @@ class CAvoidBox : public CBaseEntity
 
     static void ComputeAvoidanceForces( CBaseEntity *pEntity, float flEntityRadius, float flAvoidTime, Vector *pVecAvoidForce );
 
-   private:
+    private:
     typedef CHandle< CAvoidBox > AvoidBoxHandle_t;
     static CUtlVector< AvoidBoxHandle_t > s_AvoidBoxes;
 };

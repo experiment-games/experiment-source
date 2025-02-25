@@ -12,7 +12,7 @@ class CTFBotHintTeleporterExit : public CBaseTFBotHintEntity
 {
     DECLARE_CLASS( CTFBotHintTeleporterExit, CBaseTFBotHintEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTFBotHintTeleporterExit( void );

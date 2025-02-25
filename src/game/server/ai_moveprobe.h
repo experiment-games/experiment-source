@@ -40,7 +40,7 @@ enum AI_MoveLimitFlags_t
 
 class CAI_MoveProbe : public CAI_Component
 {
-   public:
+    public:
     CAI_MoveProbe( CAI_BaseNPC *pOuter );
     ~CAI_MoveProbe();
 
@@ -81,7 +81,7 @@ class CAI_MoveProbe : public CAI_Component
         return m_hLastBlockingEnt;
     }
 
-   private:
+    private:
     struct CheckStepArgs_t
     {
         Vector vecStart;
@@ -121,10 +121,10 @@ class CAI_MoveProbe : public CAI_Component
     bool IterativeFloorPoint( const Vector &vecStart, unsigned int collisionMask, float flAddedStep, Vector *pVecResult ) const;
     bool IsJumpLegal( const Vector &startPos, const Vector &apex, const Vector &endPos ) const;
 
-   public:
+    public:
     Vector CalcJumpLaunchVelocity( const Vector &startPos, const Vector &endPos, float gravity, float *pminHeight, float maxHorzVelocity, Vector *vecApex ) const;
 
-   private:
+    private:
     // Common services provided by CAI_BaseNPC, Convenience methods to simplify code
     float StepHeight() const;
     bool CanStandOn( CBaseEntity *pSurface ) const;

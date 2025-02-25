@@ -22,14 +22,14 @@
 //
 class CTFDecoy : public CTFJar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFDecoy, CTFJar );
     DECLARE_NETWORKCLASS();
 
     /*
     // Server specific.
     #ifdef GAME_DLL
-      DECLARE_DATADESC();
+    DECLARE_DATADESC();
     #endif
     */
 
@@ -56,7 +56,7 @@ class CTFDecoy : public CTFJar
         return true;
     }
 
-   private:
+    private:
     CTFDecoy( const CTFDecoy& ) {}
 };
 

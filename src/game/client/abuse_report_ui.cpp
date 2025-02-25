@@ -121,7 +121,7 @@ void CAbuseReportDlg::PerformLayout()
 
 class CCustomTextureImagePanel : public vgui::Panel
 {
-   public:
+    public:
     CCustomTextureImagePanel( Panel *parent, const char *panelName )
         : vgui::Panel( parent, panelName )
     {
@@ -160,7 +160,7 @@ class CCustomTextureImagePanel : public vgui::Panel
 
 class CAbuseReportScreenShotPanel : public CBitmapPanel
 {
-   public:
+    public:
     CAbuseReportScreenShotPanel( CAbuseReportDlg *pDlg, const char *panelName )
         : CBitmapPanel( pDlg, panelName ), m_pDlg( pDlg )
     {
@@ -737,7 +737,7 @@ void CAbuseReportDlg::OnTextChanged( vgui::Panel *panel )
 //-----------------------------------------------------------------------------
 class CSubmitAbuseReportJob : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     bool m_bGameServer;
 
     CSubmitAbuseReportJob()
@@ -826,10 +826,10 @@ class CSubmitAbuseReportJob : public GCSDK::CGCClientJob
             bool bFailed;
             RemoteStorageFileShareResult_t result;
             while ( !steamapicontext->SteamUtils()->GetAPICallResult( hFileShareApiCall,
-                                                                      &result,
-                                                                      sizeof( result ),
-                                                                      RemoteStorageFileShareResult_t::k_iCallback,
-                                                                      &bFailed ) )
+                                                                    &result,
+                                                                    sizeof( result ),
+                                                                    RemoteStorageFileShareResult_t::k_iCallback,
+                                                                    &bFailed ) )
             {
                 BYield();
             }

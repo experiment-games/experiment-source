@@ -62,7 +62,7 @@ class CDmeBaseTexture : public CDmElement
 {
     DEFINE_ELEMENT( CDmeBaseTexture, CDmElement );
 
-   public:
+    public:
     ITexture *GetCachedTexture();
 
     // Compression type
@@ -77,7 +77,7 @@ class CDmeBaseTexture : public CDmElement
     void SetMipmapType( DmeTextureMipmap_t type );
     DmeTextureMipmap_t GetMipmapType() const;
 
-   public:
+    public:
     CDmAttributeVar< bool > m_bClampS;
     CDmAttributeVar< bool > m_bClampT;
     CDmAttributeVar< bool > m_bClampU;
@@ -87,7 +87,7 @@ class CDmeBaseTexture : public CDmElement
     CDmAttributeVar< bool > m_bNormalMap;
     CDmAttributeVar< float > m_flBumpScale;
 
-   protected:
+    protected:
     // Computes texture flags
     int CalcTextureFlags( int nDepth ) const;
 
@@ -144,10 +144,10 @@ class CDmeTexture : public CDmeBaseTexture
 {
     DEFINE_ELEMENT( CDmeTexture, CDmeBaseTexture );
 
-   public:
+    public:
     virtual void Resolve();
 
-   private:
+    private:
     // Array of images in an animated texture
     CDmAttributeVarElementArray< CDmeImage > m_Images;
 };
@@ -159,10 +159,10 @@ class CDmeCubeTexture : public CDmeBaseTexture
 {
     DEFINE_ELEMENT( CDmeCubeTexture, CDmeBaseTexture );
 
-   public:
+    public:
     virtual void Resolve();
 
-   private:
+    private:
     // Array of images in an animated texture
     CDmAttributeVarElementArray< CDmeImage > m_ImagesPosX;
     CDmAttributeVarElementArray< CDmeImage > m_ImagesNegX;

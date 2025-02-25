@@ -9,7 +9,7 @@
 
 class CBossAlphaNukeAttack : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
     virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
     virtual void OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
@@ -27,7 +27,7 @@ class CBossAlphaNukeAttack : public Action< CBossAlpha >
         return "NukeAttack";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_shakeTimer;
     CountdownTimer m_chargeUpTimer;
 };

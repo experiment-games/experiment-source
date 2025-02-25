@@ -32,7 +32,7 @@ static ConVar r_studio_stats_mode( "r_studio_stats_mode", "0", FCVAR_CHEAT, "Set
 //-----------------------------------------------------------------------------
 class CStudioStatsEnumerator : public IPartitionEnumerator
 {
-   public:
+    public:
     CStudioStatsEnumerator( Ray_t &shot )
     {
         m_rayShot = shot;
@@ -68,7 +68,7 @@ class CStudioStatsEnumerator : public IPartitionEnumerator
         return m_bHit;
     }
 
-   private:
+    private:
     Ray_t m_rayShot;
     bool m_bHit;
 };

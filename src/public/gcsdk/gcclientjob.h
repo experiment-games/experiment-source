@@ -19,7 +19,7 @@ class CGCClient;
 //-----------------------------------------------------------------------------
 class CGCClientJob : public CJob
 {
-   public:
+    public:
     CGCClientJob( CGCClient *pGCClient )
         : CJob( pGCClient->GetJobMgr() ), m_pGCClient( pGCClient ), m_cHeartbeatsBeforeTimeout( k_cJobHeartbeatsBeforeTimeoutDefault ) {}
 
@@ -38,7 +38,7 @@ class CGCClientJob : public CJob
         return k_EServerTypeGCClient;
     }
 
-   protected:
+    protected:
     CGCClient *m_pGCClient;
 
     bool BYldSendMessageAndGetReply( CGCMsgBase &msgOut, uint nTimeoutSec, CGCMsgBase *pMsgIn, MsgType_t eMsg )
@@ -122,7 +122,7 @@ class CGCClientJob : public CJob
         m_cHeartbeatsBeforeTimeout = 1 + ( ( nTimeoutSec * k_nMillion ) / k_cMicroSecJobHeartbeat );
     }
 
-   private:
+    private:
     virtual bool BYieldingRunJobFromMsg( IMsgNetPacket *pNetPacket )
     {
         // Protection against a NULL GCClient. Yields so the job is not deleted instantly

@@ -27,16 +27,16 @@ class C_PropJeepEpisodic : public C_PropJeep
 {
     DECLARE_CLASS( C_PropJeepEpisodic, C_PropJeep );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_PropJeepEpisodic();
 
     void OnEnteredVehicle( C_BasePlayer *pPlayer );
     void Simulate( void );
 
-   public:
+    public:
     int m_iNumRadarContacts;
     Vector m_vecRadarContactPos[RADAR_MAX_CONTACTS];
     int m_iRadarContactType[RADAR_MAX_CONTACTS];

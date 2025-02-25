@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2004, Valve Corporation, All rights reserved. =======
 //
 // Purpose:
 //
@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CUtlBinaryBlock
 {
-   public:
+    public:
     CUtlBinaryBlock( int growSize = 0, int initSize = 0 );
 
     // NOTE: nInitialLength indicates how much of the buffer starts full
@@ -48,7 +48,7 @@ class CUtlBinaryBlock
     // Test for equality
     bool operator==( const CUtlBinaryBlock &src ) const;
 
-   private:
+    private:
     CUtlMemory< unsigned char > m_Memory;
     int m_nActualLength;
 };

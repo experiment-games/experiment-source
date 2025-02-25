@@ -185,7 +185,7 @@ QueryResultType CHL2MPBotSeekAndDestroy::ShouldHurry( const INextBot *me ) const
 
 class CNextSpawnFilter : public IEntityFindFilter
 {
-   public:
+    public:
     CNextSpawnFilter( EHANDLE hPlayer, float flRange )
         : m_hPlayer{ hPlayer }, m_flRange{ flRange }
     {
@@ -213,7 +213,7 @@ class CNextSpawnFilter : public IEntityFindFilter
         return m_hEntityFound;
     }
 
-   private:
+    private:
     EHANDLE m_hPlayer;
 
     float m_flRange;
@@ -225,7 +225,7 @@ class CNextSpawnFilter : public IEntityFindFilter
 
 class CNotOwnedWeaponFilter : public IEntityFindFilter
 {
-   public:
+    public:
     CNotOwnedWeaponFilter( CBasePlayer *pPlayer )
         : m_hPlayer{ pPlayer }
     {
@@ -262,7 +262,7 @@ class CNotOwnedWeaponFilter : public IEntityFindFilter
         return m_hEntityFound;
     }
 
-   private:
+    private:
     CHandle< CBasePlayer > m_hPlayer;
 
     // To maintain backwards compatability, store off the first mark

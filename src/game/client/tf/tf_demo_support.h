@@ -32,7 +32,7 @@ struct DemoEvent_t
 //-----------------------------------------------------------------------------
 class CTFDemoSupport : public CAutoGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
     CTFDemoSupport();
 
     virtual bool Init() OVERRIDE;
@@ -53,7 +53,7 @@ class CTFDemoSupport : public CAutoGameSystemPerFrame, public CGameEventListener
     void BookMarkCurrentTick( const char *pszValue = NULL );
     void Status( void );
 
-   private:
+    private:
     bool IsValidPath( const char *pszFolder );
     void LogEvent( EDemoEventType eType, int nValue = 0, const char *pszValue = NULL );
     void Notify( char *pszMessage );

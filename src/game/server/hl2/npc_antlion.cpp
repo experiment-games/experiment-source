@@ -1384,7 +1384,7 @@ bool NPC_Antlion_IsAntlion( CBaseEntity *pEntity )
 
 class CTraceFilterAntlion : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     CTraceFilterAntlion( const CBaseEntity *pEntity )
     {
         m_pIgnore = pEntity;
@@ -1406,7 +1406,7 @@ class CTraceFilterAntlion : public CTraceFilterEntitiesOnly
         return false;
     }
 
-   private:
+    private:
     const CBaseEntity *m_pIgnore;
 };
 
@@ -1893,10 +1893,10 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 bool CNPC_Antlion::AllowedToBePushed( void )
 {
     if ( IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) ||
-         IsCurSchedule( SCHED_ANTLION_BURROW_IN ) ||
-         IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) ||
-         IsCurSchedule( SCHED_ANTLION_BURROW_AWAY ) ||
-         IsCurSchedule( SCHED_ANTLION_RUN_TO_FIGHT_GOAL ) )
+        IsCurSchedule( SCHED_ANTLION_BURROW_IN ) ||
+        IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) ||
+        IsCurSchedule( SCHED_ANTLION_BURROW_AWAY ) ||
+        IsCurSchedule( SCHED_ANTLION_RUN_TO_FIGHT_GOAL ) )
         return false;
 
     if ( IsRunningDynamicInteraction() )
@@ -2664,7 +2664,7 @@ void CNPC_Antlion::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDi
         newInfo.ScaleDamage( 4.0f );
     }
     else if ( newInfo.GetDamageType() & ( DMG_PHYSGUN ) ||
-              ( newInfo.GetDamageType() & ( DMG_BLAST | DMG_CRUSH ) && newInfo.GetDamage() >= 25.0f ) )
+            ( newInfo.GetDamageType() & ( DMG_BLAST | DMG_CRUSH ) && newInfo.GetDamage() >= 25.0f ) )
     {
         // Don't do this if we're in an interaction
         if ( !IsRunningDynamicInteraction() )
@@ -3122,7 +3122,7 @@ bool NPC_CheckBrushExclude( CBaseEntity *pEntity, CBaseEntity *pBrush );
 //-----------------------------------------------------------------------------
 class CTraceFilterSimpleNPCExclude : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterSimpleNPCExclude, CTraceFilterSimple );
 
     CTraceFilterSimpleNPCExclude( const IHandleEntity *passentity, int collisionGroup )
@@ -3482,8 +3482,8 @@ void CNPC_Antlion::CreateDust( bool placeDecal )
         const surfacedata_t *pdata = physprops->GetSurfaceData( tr.surface.surfaceProps );
 
         if ( hl2_episodic.GetBool() == true || ( pdata->game.material == CHAR_TEX_CONCRETE ) ||
-             ( pdata->game.material == CHAR_TEX_DIRT ) ||
-             ( pdata->game.material == CHAR_TEX_SAND ) )
+            ( pdata->game.material == CHAR_TEX_DIRT ) ||
+            ( pdata->game.material == CHAR_TEX_SAND ) )
         {
             if ( !m_bSuppressUnburrowEffects )
             {
@@ -3565,24 +3565,24 @@ void CNPC_Antlion::BuildScheduleTestBits( void )
     /*
     if ( GetActivity() == ACT_JUMP || GetActivity() == ACT_GLIDE || GetActivity() == ACT_LAND )
     {
-      ClearCustomInterruptCondition( COND_NEW_ENEMY );
+    ClearCustomInterruptCondition( COND_NEW_ENEMY );
     }
     */
 
     // Interrupt any schedule unless already fleeing, burrowing, burrowed, or unburrowing.
     if ( !IsCurSchedule( SCHED_ANTLION_FLEE_THUMPER ) &&
-         !IsCurSchedule( SCHED_ANTLION_FLEE_PHYSICS_DANGER ) &&
-         !IsCurSchedule( SCHED_ANTLION_BURROW_IN ) &&
-         !IsCurSchedule( SCHED_ANTLION_WAIT_UNBORROW ) &&
-         !IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) &&
-         !IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) &&
-         !IsCurSchedule( SCHED_ANTLION_WAIT_FOR_UNBORROW_TRIGGER ) &&
-         !IsCurSchedule( SCHED_ANTLION_WAIT_FOR_CLEAR_UNBORROW ) &&
-         !IsCurSchedule( SCHED_ANTLION_WAIT_UNBORROW ) &&
-         !IsCurSchedule( SCHED_ANTLION_JUMP ) &&
-         !IsCurSchedule( SCHED_ANTLION_FLIP ) &&
-         !IsCurSchedule( SCHED_ANTLION_DISMOUNT_NPC ) &&
-         ( GetFlags() & FL_ONGROUND ) )
+        !IsCurSchedule( SCHED_ANTLION_FLEE_PHYSICS_DANGER ) &&
+        !IsCurSchedule( SCHED_ANTLION_BURROW_IN ) &&
+        !IsCurSchedule( SCHED_ANTLION_WAIT_UNBORROW ) &&
+        !IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) &&
+        !IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) &&
+        !IsCurSchedule( SCHED_ANTLION_WAIT_FOR_UNBORROW_TRIGGER ) &&
+        !IsCurSchedule( SCHED_ANTLION_WAIT_FOR_CLEAR_UNBORROW ) &&
+        !IsCurSchedule( SCHED_ANTLION_WAIT_UNBORROW ) &&
+        !IsCurSchedule( SCHED_ANTLION_JUMP ) &&
+        !IsCurSchedule( SCHED_ANTLION_FLIP ) &&
+        !IsCurSchedule( SCHED_ANTLION_DISMOUNT_NPC ) &&
+        ( GetFlags() & FL_ONGROUND ) )
     {
         // Only do these if not jumping as well
         if ( !IsCurSchedule( SCHED_ANTLION_JUMP ) )
@@ -3670,24 +3670,24 @@ void CNPC_Antlion::GatherConditions( void )
 
     // See if our follow target is too far off
     /*	if ( m_hFollowTarget != NULL )
-      {
+    {
         float targetDist = UTIL_DistApprox( WorldSpaceCenter(), m_hFollowTarget->GetAbsOrigin() );
 
         if ( targetDist > 400 )
         {
-          SetCondition( COND_ANTLION_FOLLOW_TARGET_TOO_FAR );
+        SetCondition( COND_ANTLION_FOLLOW_TARGET_TOO_FAR );
         }
         else
         {
-          ClearCondition( COND_ANTLION_FOLLOW_TARGET_TOO_FAR );
+        ClearCondition( COND_ANTLION_FOLLOW_TARGET_TOO_FAR );
         }
-      }*/
+    }*/
 
     if ( IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) == false &&
-         IsCurSchedule( SCHED_ANTLION_BURROW_IN ) == false &&
-         IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) == false &&
-         IsCurSchedule( SCHED_FALL_TO_GROUND ) == false &&
-         IsEffectActive( EF_NODRAW ) == false )
+        IsCurSchedule( SCHED_ANTLION_BURROW_IN ) == false &&
+        IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) == false &&
+        IsCurSchedule( SCHED_FALL_TO_GROUND ) == false &&
+        IsEffectActive( EF_NODRAW ) == false )
     {
         if ( m_lifeState == LIFE_ALIVE && GetWaterLevel() > 1 )
         {
@@ -3729,20 +3729,20 @@ void CNPC_Antlion::PrescheduleThink( void )
 
     // See if our wings got interrupted from being turned off
     if ( ( m_bWingsOpen ) &&
-         ( eActivity != ACT_ANTLION_JUMP_START ) &&
-         ( eActivity != ACT_JUMP ) &&
-         ( eActivity != ACT_GLIDE ) &&
-         ( eActivity != ACT_ANTLION_LAND ) &&
-         ( eActivity != ACT_ANTLION_DISTRACT ) )
+        ( eActivity != ACT_ANTLION_JUMP_START ) &&
+        ( eActivity != ACT_JUMP ) &&
+        ( eActivity != ACT_GLIDE ) &&
+        ( eActivity != ACT_ANTLION_LAND ) &&
+        ( eActivity != ACT_ANTLION_DISTRACT ) )
     {
         SetWings( false );
     }
 
     // Make sure we've turned off our burrow state if we're not in it
     if ( IsEffectActive( EF_NODRAW ) &&
-         ( eActivity != ACT_ANTLION_BURROW_IDLE ) &&
-         ( eActivity != ACT_ANTLION_BURROW_OUT ) &&
-         ( eActivity != ACT_ANTLION_BURROW_IN ) )
+        ( eActivity != ACT_ANTLION_BURROW_IDLE ) &&
+        ( eActivity != ACT_ANTLION_BURROW_OUT ) &&
+        ( eActivity != ACT_ANTLION_BURROW_IN ) )
     {
         DevMsg( "Antlion failed to unburrow properly!\n" );
         Assert( 0 );
@@ -4998,9 +4998,9 @@ bool IsAntlionWorker( CBaseEntity *pEntity )
 {
     // Must at least be valid and an antlion
     return ( pEntity != NULL &&
-             pEntity->Classify() == CLASS_ANTLION &&
-             pEntity->HasSpawnFlags( SF_ANTLION_WORKER ) &&
-             dynamic_cast< CNPC_Antlion * >( pEntity ) != NULL );  // Save this as the last step
+            pEntity->Classify() == CLASS_ANTLION &&
+            pEntity->HasSpawnFlags( SF_ANTLION_WORKER ) &&
+            dynamic_cast< CNPC_Antlion * >( pEntity ) != NULL );  // Save this as the last step
 }
 
 //-----------------------------------------------------------------------------
@@ -5011,8 +5011,8 @@ bool IsAntlion( CBaseEntity *pEntity )
 {
     // Must at least be valid and an antlion
     return ( pEntity != NULL &&
-             pEntity->Classify() == CLASS_ANTLION &&
-             dynamic_cast< CNPC_Antlion * >( pEntity ) != NULL );  // Save this as the last step
+            pEntity->Classify() == CLASS_ANTLION &&
+            dynamic_cast< CNPC_Antlion * >( pEntity ) != NULL );  // Save this as the last step
 }
 
 #ifdef HL2_EPISODIC

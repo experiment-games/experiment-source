@@ -31,7 +31,7 @@ struct virtualmeshtrianglelist_t
 
 class IVirtualMeshEvent
 {
-   public:
+    public:
     virtual void GetVirtualMesh( void *userData, virtualmeshlist_t *pList ) = 0;
     virtual void GetWorldspaceBounds( void *userData, Vector *pMins, Vector *pMaxs ) = 0;
     virtual void GetTrianglesInSphere( void *userData, const Vector &center, float radius, virtualmeshtrianglelist_t *pList ) = 0;

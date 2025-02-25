@@ -80,7 +80,7 @@ class CNPC_Zombine : public CAI_BlendingHost< CNPC_BaseZombie >, public CDefault
     DECLARE_DATADESC();
     DECLARE_CLASS( CNPC_Zombine, CAI_BlendingHost< CNPC_BaseZombie > );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
@@ -161,10 +161,10 @@ class CNPC_Zombine : public CAI_BlendingHost< CNPC_BaseZombie >, public CDefault
         SCHED_ZOMBINE_PULL_GRENADE = LAST_BASE_ZOMBIE_SCHEDULE,
     };
 
-   public:
+    public:
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
     float m_flSprintTime;
     float m_flSprintRestTime;
 
@@ -175,7 +175,7 @@ class CNPC_Zombine : public CAI_BlendingHost< CNPC_BaseZombie >, public CDefault
 
     EHANDLE m_hGrenade;
 
-   protected:
+    protected:
     static const char *pMoanSounds[];
 };
 

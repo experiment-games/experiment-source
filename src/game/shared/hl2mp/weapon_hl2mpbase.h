@@ -31,7 +31,7 @@ bool IsAmmoType( int iAmmoType, const char *pAmmoName );
 
 class CWeaponHL2MPBase : public CBaseCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponHL2MPBase, CBaseCombatWeapon );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -60,7 +60,7 @@ class CWeaponHL2MPBase : public CBaseCombatWeapon
     virtual void FireBullets( const FireBulletsInfo_t &info );
     virtual void FallInit( void );
 
-   public:
+    public:
 #if defined( CLIENT_DLL )
 
     virtual bool ShouldPredict();
@@ -86,7 +86,7 @@ class CWeaponHL2MPBase : public CBaseCombatWeapon
         return m_vOriginalSpawnAngles;
     }
 
-   private:
+    private:
     CWeaponHL2MPBase( const CWeaponHL2MPBase & );
 
     Vector m_vOriginalSpawnOrigin;

@@ -30,7 +30,7 @@ extern IUniformRandomStream *random;
 extern CGaussianRandomStream *randomgaussian;
 extern IEngineSound *enginesound;
 extern IMapData *g_pMapData;  // TODO: current implementations of the
-                              // interface are in TF2, should probably move
-                              // to TF2/HL2 neutral territory
+                            // interface are in TF2, should probably move
+                            // to TF2/HL2 neutral territory
 
 #endif  // SHAREDINTERFACE_H

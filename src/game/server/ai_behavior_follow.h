@@ -57,7 +57,7 @@ class CAI_FollowGoal : public CAI_GoalEntity
 {
     DECLARE_CLASS( CAI_FollowGoal, CAI_GoalEntity );
 
-   public:
+    public:
     virtual void EnableGoal( CAI_BaseNPC *pAI );
     virtual void DisableGoal( CAI_BaseNPC *pAI );
 #ifdef HL2_EPISODIC
@@ -107,7 +107,7 @@ struct AI_FollowParams_t
 {
     AI_FollowParams_t( AI_Formations_t formation = AIF_SIMPLE, bool bNormalMemoryDiscard = false )
         : formation( formation ),
-          bNormalMemoryDiscard( bNormalMemoryDiscard )
+        bNormalMemoryDiscard( bNormalMemoryDiscard )
     {
     }
 
@@ -123,7 +123,7 @@ class CAI_FollowBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_FollowBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_FollowBehavior( const AI_FollowParams_t &params = AIF_SIMPLE );
     ~CAI_FollowBehavior();
 
@@ -193,7 +193,7 @@ class CAI_FollowBehavior : public CAI_SimpleBehavior
     virtual void TaskComplete( bool fIgnoreSetFailedCondition = false );
     virtual void GatherConditions();
 
-   protected:
+    protected:
     const Vector &GetGoalPosition();
 
     virtual bool ShouldFollow();
@@ -265,7 +265,7 @@ class CAI_FollowBehavior : public CAI_SimpleBehavior
 
     //----------------------------
 
-   protected:
+    protected:
     enum
     {
         SCHED_FOLLOWER_MOVE_AWAY_FAIL = BaseClass::NEXT_SCHEDULE,  // Turn back toward player
@@ -306,7 +306,7 @@ class CAI_FollowBehavior : public CAI_SimpleBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   protected:
+    protected:
     //----------------------------
 
     EHANDLE m_hFollowTarget;

@@ -104,20 +104,20 @@ template <typename T1, typename T2, typename T3>
 ::std::string PrintValue(const tuple<T1, T2, T3>& value) {
   ::std::stringstream stream;
   stream << "(" << get<0>(value) << ", " << get<1>(value)
-         << ", "<< get<2>(value) << ")";
+        << ", "<< get<2>(value) << ")";
   return stream.str();
 }
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5,
-          typename T6, typename T7, typename T8, typename T9, typename T10>
+        typename T6, typename T7, typename T8, typename T9, typename T10>
 ::std::string PrintValue(
     const tuple<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>& value) {
   ::std::stringstream stream;
   stream << "(" << get<0>(value) << ", " << get<1>(value)
-         << ", "<< get<2>(value) << ", " << get<3>(value)
-         << ", "<< get<4>(value) << ", " << get<5>(value)
-         << ", "<< get<6>(value) << ", " << get<7>(value)
-         << ", "<< get<8>(value) << ", " << get<9>(value) << ")";
+        << ", "<< get<2>(value) << ", " << get<3>(value)
+        << ", "<< get<4>(value) << ", " << get<5>(value)
+        << ", "<< get<6>(value) << ", " << get<7>(value)
+        << ", "<< get<8>(value) << ", " << get<9>(value) << ")";
   return stream.str();
 }
 
@@ -128,7 +128,7 @@ template <typename T1, typename T2, typename T3, typename T4, typename T5,
 // assertions.
 template <typename T, size_t N>
 void VerifyGenerator(const ParamGenerator<T>& generator,
-                     const T (&expected_values)[N]) {
+                    const T (&expected_values)[N]) {
   typename ParamGenerator<T>::iterator it = generator.begin();
   for (size_t i = 0; i < N; ++i) {
     ASSERT_FALSE(it == generator.end())
@@ -193,23 +193,23 @@ TEST(IteratorTest, ParamIteratorConformsToForwardIteratorConcept) {
   // Verifies that iterator initialization works as expected.
   ParamGenerator<int>::iterator it2 = it;
   EXPECT_TRUE(*it == *it2) << "Initialized iterators must point to the "
-                           << "element same as its source points to";
+                            << "element same as its source points to";
 
   // Verifies that iterator assignment works as expected.
   it++;
   EXPECT_FALSE(*it == *it2);
   it2 = it;
   EXPECT_TRUE(*it == *it2) << "Assigned iterators must point to the "
-                           << "element same as its source points to";
+                            << "element same as its source points to";
 
   // Verifies that prefix operator++() returns *this.
   EXPECT_EQ(&it, &(++it)) << "Result of the prefix operator++ must be "
-                          << "refer to the original object";
+                        << "refer to the original object";
 
   // Verifies that the result of the postfix operator++ points to the value
   // pointed to by the original iterator.
   int original_value = *it;  // Have to compute it outside of macro call to be
-                             // unaffected by the parameter evaluation order.
+                            // unaffected by the parameter evaluation order.
   EXPECT_EQ(original_value, *(it++));
 
   // Verifies that prefix and postfix operator++() advance an iterator
@@ -269,7 +269,7 @@ class DogAdder {
 
   DogAdder operator=(const DogAdder& other) {
     if (this != &other)
-      value_ = other.value_;
+    value_ = other.value_;
     return *this;
   }
   DogAdder operator+(const DogAdder& other) const {
@@ -288,7 +288,7 @@ class DogAdder {
 
 TEST(RangeTest, WorksWithACustomType) {
   const ParamGenerator<DogAdder> gen =
-      Range(DogAdder("cat"), DogAdder("catdogdog"), DogAdder("dog"));
+    Range(DogAdder("cat"), DogAdder("catdogdog"), DogAdder("dog"));
   ParamGenerator<DogAdder>::iterator it = gen.begin();
 
   ASSERT_FALSE(it == gen.end());
@@ -425,18 +425,18 @@ TEST(ValuesTest, ValuesWorksForValuesOfCompatibleTypes) {
 
 TEST(ValuesTest, ValuesWorksForMaxLengthList) {
   const ParamGenerator<int> gen = Values(
-      10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
-      110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
-      210, 220, 230, 240, 250, 260, 270, 280, 290, 300,
-      310, 320, 330, 340, 350, 360, 370, 380, 390, 400,
-      410, 420, 430, 440, 450, 460, 470, 480, 490, 500);
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+    110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
+    210, 220, 230, 240, 250, 260, 270, 280, 290, 300,
+    310, 320, 330, 340, 350, 360, 370, 380, 390, 400,
+    410, 420, 430, 440, 450, 460, 470, 480, 490, 500);
 
   const int expected_values[] = {
-      10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
-      110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
-      210, 220, 230, 240, 250, 260, 270, 280, 290, 300,
-      310, 320, 330, 340, 350, 360, 370, 380, 390, 400,
-      410, 420, 430, 440, 450, 460, 470, 480, 490, 500};
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+    110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
+    210, 220, 230, 240, 250, 260, 270, 280, 290, 300,
+    310, 320, 330, 340, 350, 360, 370, 380, 390, 400,
+    410, 420, 430, 440, 450, 460, 470, 480, 490, 500};
   VerifyGenerator(gen, expected_values);
 }
 
@@ -464,7 +464,7 @@ TEST(CombineTest, CombineWithTwoParameters) {
   const char* foo = "foo";
   const char* bar = "bar";
   const ParamGenerator<tuple<const char*, int> > gen =
-      Combine(Values(foo, bar), Values(3, 4));
+    Combine(Values(foo, bar), Values(3, 4));
 
   tuple<const char*, int> expected_values[] = {
     make_tuple(foo, 3), make_tuple(foo, 4),
@@ -490,7 +490,7 @@ TEST(CombineTest, CombineWithThreeParameters) {
 // number of elements in the sequence generated by the second parameter.
 TEST(CombineTest, CombineWithFirstParameterSingleValue) {
   const ParamGenerator<tuple<int, int> > gen = Combine(Values(42),
-                                                       Values(0, 1));
+                                                        Values(0, 1));
 
   tuple<int, int> expected_values[] = {make_tuple(42, 0), make_tuple(42, 1)};
   VerifyGenerator(gen, expected_values);
@@ -501,7 +501,7 @@ TEST(CombineTest, CombineWithFirstParameterSingleValue) {
 // number of elements in the sequence generated by the first parameter.
 TEST(CombineTest, CombineWithSecondParameterSingleValue) {
   const ParamGenerator<tuple<int, int> > gen = Combine(Values(0, 1),
-                                                       Values(42));
+                                                        Values(42));
 
   tuple<int, int> expected_values[] = {make_tuple(0, 42), make_tuple(1, 42)};
   VerifyGenerator(gen, expected_values);
@@ -511,7 +511,7 @@ TEST(CombineTest, CombineWithSecondParameterSingleValue) {
 // Combine() produces an empty sequence, too.
 TEST(CombineTest, CombineWithFirstParameterEmptyRange) {
   const ParamGenerator<tuple<int, int> > gen = Combine(Range(0, 0),
-                                                       Values(0, 1));
+                                                        Values(0, 1));
   VerifyGeneratorIsEmpty(gen);
 }
 
@@ -519,7 +519,7 @@ TEST(CombineTest, CombineWithFirstParameterEmptyRange) {
 // Combine() produces an empty sequence, too.
 TEST(CombineTest, CombineWithSecondParameterEmptyRange) {
   const ParamGenerator<tuple<int, int> > gen = Combine(Values(0, 1),
-                                                       Range(1, 1));
+                                                        Range(1, 1));
   VerifyGeneratorIsEmpty(gen);
 }
 
@@ -529,16 +529,16 @@ TEST(CombineTest, CombineWithMaxNumberOfParameters) {
   const char* foo = "foo";
   const char* bar = "bar";
   const ParamGenerator<tuple<const char*, int, int, int, int, int, int, int,
-                             int, int> > gen = Combine(Values(foo, bar),
-                                                       Values(1), Values(2),
-                                                       Values(3), Values(4),
-                                                       Values(5), Values(6),
-                                                       Values(7), Values(8),
-                                                       Values(9));
+                            int, int> > gen = Combine(Values(foo, bar),
+                                                        Values(1), Values(2),
+                                                        Values(3), Values(4),
+                                                        Values(5), Values(6),
+                                                        Values(7), Values(8),
+                                                        Values(9));
 
   tuple<const char*, int, int, int, int, int, int, int, int, int>
-      expected_values[] = {make_tuple(foo, 1, 2, 3, 4, 5, 6, 7, 8, 9),
-                           make_tuple(bar, 1, 2, 3, 4, 5, 6, 7, 8, 9)};
+    expected_values[] = {make_tuple(foo, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+                            make_tuple(bar, 1, 2, 3, 4, 5, 6, 7, 8, 9)};
   VerifyGenerator(gen, expected_values);
 }
 
@@ -583,27 +583,27 @@ class TestGenerationEnvironment : public ::testing::Environment {
     bool perform_check = false;
 
     for (int i = 0; i < kExpectedCalls; ++i) {
-      Message msg;
-      msg << "TestsExpandedAndRun/" << i;
-      if (UnitTestOptions::FilterMatchesTest(
-             "TestExpansionModule/MultipleTestGenerationTest",
-              msg.GetString().c_str())) {
+    Message msg;
+    msg << "TestsExpandedAndRun/" << i;
+    if (UnitTestOptions::FilterMatchesTest(
+            "TestExpansionModule/MultipleTestGenerationTest",
+            msg.GetString().c_str())) {
         perform_check = true;
-      }
+    }
     }
     if (perform_check) {
-      EXPECT_EQ(kExpectedCalls, fixture_constructor_count_)
-          << "Fixture constructor of ParamTestGenerationTest test case "
-          << "has not been run as expected.";
-      EXPECT_EQ(kExpectedCalls, set_up_count_)
-          << "Fixture SetUp method of ParamTestGenerationTest test case "
-          << "has not been run as expected.";
-      EXPECT_EQ(kExpectedCalls, tear_down_count_)
-          << "Fixture TearDown method of ParamTestGenerationTest test case "
-          << "has not been run as expected.";
-      EXPECT_EQ(kExpectedCalls, test_body_count_)
-          << "Test in ParamTestGenerationTest test case "
-          << "has not been run as expected.";
+    EXPECT_EQ(kExpectedCalls, fixture_constructor_count_)
+        << "Fixture constructor of ParamTestGenerationTest test case "
+        << "has not been run as expected.";
+    EXPECT_EQ(kExpectedCalls, set_up_count_)
+        << "Fixture SetUp method of ParamTestGenerationTest test case "
+        << "has not been run as expected.";
+    EXPECT_EQ(kExpectedCalls, tear_down_count_)
+        << "Fixture TearDown method of ParamTestGenerationTest test case "
+        << "has not been run as expected.";
+    EXPECT_EQ(kExpectedCalls, test_body_count_)
+        << "Test in ParamTestGenerationTest test case "
+        << "has not been run as expected.";
     }
   }
 
@@ -647,13 +647,13 @@ class TestGenerationTest : public TestWithParam<int> {
     bool all_tests_in_test_case_selected = true;
 
     for (int i = 0; i < PARAMETER_COUNT; ++i) {
-      Message test_name;
-      test_name << "TestsExpandedAndRun/" << i;
-      if ( !UnitTestOptions::FilterMatchesTest(
+    Message test_name;
+    test_name << "TestsExpandedAndRun/" << i;
+    if ( !UnitTestOptions::FilterMatchesTest(
                 "TestExpansionModule/MultipleTestGenerationTest",
                 test_name.GetString())) {
         all_tests_in_test_case_selected = false;
-      }
+    }
     }
     EXPECT_TRUE(all_tests_in_test_case_selected)
         << "When running the TestGenerationTest test case all of its tests\n"
@@ -796,7 +796,7 @@ class NamingTest : public TestWithParam<int> {};
 
 TEST_P(NamingTest, TestsReportCorrectNamesAndParameters) {
   const ::testing::TestInfo* const test_info =
-     ::testing::UnitTest::GetInstance()->current_test_info();
+    ::testing::UnitTest::GetInstance()->current_test_info();
 
   EXPECT_STREQ("ZeroToFiveSequence/NamingTest", test_info->test_case_name());
 
@@ -825,7 +825,7 @@ class CommentTest : public TestWithParam<Unstreamable> {};
 
 TEST_P(CommentTest, TestsCorrectlyReportUnstreamableParams) {
   const ::testing::TestInfo* const test_info =
-     ::testing::UnitTest::GetInstance()->current_test_info();
+    ::testing::UnitTest::GetInstance()->current_test_info();
 
   EXPECT_EQ(::testing::PrintToString(GetParam()), test_info->value_param());
 }
@@ -846,7 +846,7 @@ class NonParameterizedBaseTest : public ::testing::Test {
 };
 
 class ParameterizedDerivedTest : public NonParameterizedBaseTest,
-                                 public ::testing::WithParamInterface<int> {
+                                public ::testing::WithParamInterface<int> {
  protected:
   ParameterizedDerivedTest() : count_(0) { }
   int count_;

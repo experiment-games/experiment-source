@@ -32,13 +32,13 @@ class C_PlasmaSprite : public C_Sprite
 {
     DECLARE_CLASS( C_PlasmaSprite, C_Sprite );
 
-   public:
+    public:
     Vector m_vecMoveDir;
 };
 
 class C_Plasma : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_Plasma, C_BaseEntity );
 
@@ -47,7 +47,7 @@ class C_Plasma : public C_BaseEntity
 
     void AddEntity( void );
 
-   protected:
+    protected:
     void Update( void );
     void UpdateAnimation( void );
     void UpdateScale( void );
@@ -58,12 +58,12 @@ class C_Plasma : public C_BaseEntity
     float GetFlickerScale( void );
 
     // C_BaseEntity
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual bool ShouldDraw();
 
     // From the server
-   public:
+    public:
     float m_flStartScale;
     float m_flScale;
     float m_flScaleTime;
@@ -73,7 +73,7 @@ class C_Plasma : public C_BaseEntity
     int m_nGlowModelIndex;
 
     // Client-side only
-   public:
+    public:
     float m_flScaleRegister;
     float m_flScaleStart;
     float m_flScaleEnd;
@@ -83,7 +83,7 @@ class C_Plasma : public C_BaseEntity
     VPlane m_planeClip;
     bool m_bClipTested;
 
-   protected:
+    protected:
     C_PlasmaSprite m_entFlames[NUM_CHILD_FLAMES];
     float m_entFlameScales[NUM_CHILD_FLAMES];
 
@@ -93,7 +93,7 @@ class C_Plasma : public C_BaseEntity
     TimedEvent m_tParticleSpawn;
     TimedEvent m_tDecalSpawn;
 
-   private:
+    private:
     C_Plasma( const C_Plasma & );
 };
 

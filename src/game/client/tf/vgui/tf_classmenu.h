@@ -40,14 +40,14 @@ class CTFClassTipsItemPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFClassTipsItemPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFClassTipsItemPanel( Panel *parent, const char *pszName, int iListItemID );
     ~CTFClassTipsItemPanel();
 
     void SetClassTip( const wchar_t *pwszText, const char *pszIcon );
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
-   private:
+    private:
     vgui::ImagePanel *m_pTipIcon;
     CExLabel *m_pTipLabel;
 };
@@ -57,10 +57,10 @@ class CTFClassTipsItemPanel : public vgui::EditablePanel
 //-----------------------------------------------------------------------------
 class CTFClassMenu : public CClassMenu, public CGameEventListener
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFClassMenu, CClassMenu );
 
-   public:
+    public:
     CTFClassMenu( IViewPort *pViewPort );
 
     virtual void Update( void );
@@ -91,7 +91,7 @@ class CTFClassMenu : public CClassMenu, public CGameEventListener
         return GAME_ACTION_SET_IN_GAME_HUD;
     }
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void OnKeyCodePressed( KeyCode code );
     CExImageButton *GetCurrentClassButton();
@@ -105,7 +105,7 @@ class CTFClassMenu : public CClassMenu, public CGameEventListener
     void LoadItems();
     void Go();
 
-   protected:
+    protected:
     CExImageButton *m_pClassButtons[TF_CLASS_MENU_BUTTONS];
     vgui::ImagePanel *m_pMvmUpgradeImages[TF_CLASS_MENU_BUTTONS];
     CSCHintIcon *m_pClassHintIcons[TF_CLASS_MENU_BUTTONS];
@@ -118,7 +118,7 @@ class CTFClassMenu : public CClassMenu, public CGameEventListener
     CSCHintIcon *m_pEditLoadoutHintIcon;
     CSCHintIcon *m_pCancelHintIcon;
 
-   private:
+    private:
     void CheckMvMUpgrades();
 
 #ifdef _X360
@@ -146,10 +146,10 @@ class CTFClassMenu : public CClassMenu, public CGameEventListener
 
 class CTFClassMenu_Blue : public CTFClassMenu
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFClassMenu_Blue, CTFClassMenu );
 
-   public:
+    public:
     CTFClassMenu_Blue( IViewPort *pViewPort )
         : BaseClass( pViewPort ) {}
 
@@ -173,10 +173,10 @@ class CTFClassMenu_Blue : public CTFClassMenu
 
 class CTFClassMenu_Red : public CTFClassMenu
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFClassMenu_Red, CTFClassMenu );
 
-   public:
+    public:
     CTFClassMenu_Red( IViewPort *pViewPort )
         : BaseClass( pViewPort ) {}
 

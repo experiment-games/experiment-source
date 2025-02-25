@@ -36,7 +36,7 @@ static ConVar cl_showcrit( "cl_showcrit", "0", FCVAR_DEVELOPMENTONLY, "Debug! Dr
 //-----------------------------------------------------------------------------
 class CCriticalPanel : public CHudElement, public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CCriticalPanel, vgui::EditablePanel );
 
     CCriticalPanel( const char *pElementName );
@@ -46,10 +46,10 @@ class CCriticalPanel : public CHudElement, public vgui::EditablePanel
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual bool ShouldDraw( void );
 
-   protected:
+    protected:
     virtual void OnThink();
 
-   private:
+    private:
     void InitCritData( void );
 
     // vgui
@@ -148,7 +148,7 @@ bool CCriticalPanel::ShouldDraw( void )
     return false;
 
     if ( ( !cl_showcrit.GetInt() || ( gpGlobals->absoluteframetime <= 0 ) ) &&
-         ( !cl_showcrit.GetInt() ) )
+        ( !cl_showcrit.GetInt() ) )
     {
         m_bInitData = false;
         return false;
@@ -239,18 +239,18 @@ void CCriticalPanel::OnThink()
 
 #if 0
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 //-----------------------------------------------------------------------------
-void CCriticalPanel::Paint() 
+void CCriticalPanel::Paint()
 {
-	if ( cl_showcrit.GetInt() )
-	{
-		unsigned char ucColor[3];
-		GetCritColor( m_CritData.m_flCurrent, ucColor );
-		g_pMatSystemSurface->DrawColoredText( m_hFont, 0, 2, ucColor[0], ucColor[1], ucColor[2], 255, 
-			"%2.2f (Avg:%2.2f, Low:%2.2f, High:%2.2f)", 
-			m_CritData.m_flCurrent, m_CritData.m_flAverage, m_CritData.m_flLow, m_CritData.m_flHigh );
-	}
+    if ( cl_showcrit.GetInt() )
+    {
+        unsigned char ucColor[3];
+        GetCritColor( m_CritData.m_flCurrent, ucColor );
+        g_pMatSystemSurface->DrawColoredText( m_hFont, 0, 2, ucColor[0], ucColor[1], ucColor[2], 255,
+            "%2.2f (Avg:%2.2f, Low:%2.2f, High:%2.2f)",
+            m_CritData.m_flCurrent, m_CritData.m_flAverage, m_CritData.m_flLow, m_CritData.m_flHigh );
+    }
 }
 #endif

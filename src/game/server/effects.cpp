@@ -42,7 +42,7 @@
 // UNDONE: This should be client-side and not use TempEnts
 class CBubbling : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBubbling, CBaseEntity );
 
     virtual void Spawn( void );
@@ -61,7 +61,7 @@ class CBubbling : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     void TurnOn();
     void TurnOff();
     void Toggle();
@@ -235,7 +235,7 @@ void CBubbling::FizzThink( void )
 // Fakes a tracer
 class CEnvTracer : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvTracer, CPointEntity );
 
     void Spawn( void );
@@ -313,7 +313,7 @@ enum GibSimulation_t
 
 class CGibShooter : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGibShooter, CBaseEntity );
 
     void Spawn( void );
@@ -322,17 +322,17 @@ class CGibShooter : public CBaseEntity
 
     virtual CGib *CreateGib( void );
 
-   protected:
+    protected:
     // Purpose:
     CBaseEntity *SpawnGib( const Vector &vecShootDir, float flSpeed );
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     void InitPointGib( CGib *pGib, const Vector &vecShootDir, float flSpeed );
     void ShootThink( void );
 
-   protected:
+    protected:
     int m_iGibs;
     int m_iGibCapacity;
     int m_iGibMaterial;
@@ -623,7 +623,7 @@ void CGibShooter::ShootThink( void )
 
 class CEnvShooter : public CGibShooter
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvShooter, CGibShooter );
 
     CEnvShooter()
@@ -637,7 +637,7 @@ class CEnvShooter : public CGibShooter
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     int m_nSkin;
     float m_flGibScale;
     float m_flGibGravityScale;
@@ -789,17 +789,17 @@ CGib *CEnvShooter::CreateGib( void )
 //-----------------------------------------------------------------------------
 class CRotorWashShooter : public CEnvShooter, public IRotorWashShooter
 {
-   public:
+    public:
     DECLARE_CLASS( CRotorWashShooter, CEnvShooter );
     DECLARE_DATADESC();
 
     virtual void Spawn();
 
-   public:
+    public:
     // Inherited from IRotorWashShooter
     virtual CBaseEntity *DoWashPush( float flTimeSincePushStarted, const Vector &vecForce );
 
-   private:
+    private:
     // Amount of time we need to spend under the rotor before we shoot
     float m_flTimeUnderRotor;
     float m_flTimeUnderRotorVariance;
@@ -893,7 +893,7 @@ CBaseEntity *CRotorWashShooter::DoWashPush( float flWashStartTime, const Vector 
 //-----------------------------------------------------------------------------
 class CTestEffect : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTestEffect, CBaseEntity );
 
     void Spawn( void );
@@ -948,10 +948,10 @@ void CTestEffect::Think( void )
         m_iBeam++;
 
 #if 0
-		Vector vecMid = (vecSrc + tr.endpos) * 0.5;
-		CBroadcastRecipientFilter filter;
-		TE_DynamicLight( filter, 0.0,
-			vecMid, 255, 180, 100, 3, 2.0, 0.0 );
+        Vector vecMid = (vecSrc + tr.endpos) * 0.5;
+        CBroadcastRecipientFilter filter;
+        TE_DynamicLight( filter, 0.0,
+            vecMid, 255, 180, 100, 3, 2.0, 0.0 );
 #endif
     }
 
@@ -986,7 +986,7 @@ void CTestEffect::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 // Blood effects
 class CBlood : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBlood, CPointEntity );
 
     void Spawn( void );
@@ -1018,7 +1018,7 @@ class CBlood : public CPointEntity
     float m_flAmount;
     int m_Color;
 
-   private:
+    private:
 };
 
 LINK_ENTITY_TO_CLASS( env_blood, CBlood );
@@ -1209,7 +1209,7 @@ class CEnvFunnel : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CEnvFunnel, CBaseEntity );
 
     void Spawn( void );
@@ -1257,7 +1257,7 @@ void CEnvFunnel::Spawn( void )
 //=========================================================
 class CEnvBeverage : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvBeverage, CBaseEntity );
 
     void Spawn( void );
@@ -1270,7 +1270,7 @@ class CEnvBeverage : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     bool m_CanInDispenser;
     int m_nBeverageType;
 };
@@ -1353,7 +1353,7 @@ void CEnvBeverage::Spawn( void )
 //=========================================================
 class CItemSoda : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CItemSoda, CBaseAnimating );
 
     void Spawn( void );
@@ -1440,7 +1440,7 @@ void CItemSoda::CanTouch( CBaseEntity *pOther )
 
 class CPrecipitation : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPrecipitation, CBaseEntity );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -1492,7 +1492,7 @@ void CPrecipitation::Spawn( void )
 //-----------------------------------------------------------------------------
 class CEnvWind : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvWind, CBaseEntity );
 
     void Spawn( void );
@@ -1503,7 +1503,7 @@ class CEnvWind : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   private:
+    private:
 #ifdef POSIX
     CEnvWindShared m_EnvWindShared;  // FIXME - fails to compile as networked var due to operator= problem
 #else
@@ -1605,7 +1605,7 @@ void CEnvWind::WindThink( void )
 // UNDONE: This is a brush effect-in-volume entity, move client side.
 class CEmbers : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEmbers, CBaseEntity );
 
     void Spawn( void );
@@ -1714,7 +1714,7 @@ void CEmbers::EmberUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 //-----------------------------------------------------------------------------
 class CPhysicsWire : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysicsWire, CBaseEntity );
 
     void Spawn( void );
@@ -1722,7 +1722,7 @@ class CPhysicsWire : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     bool SetupPhysics( void );
 
     int m_nDensity;
@@ -1771,22 +1771,22 @@ class CPhysBallSocket;
 bool CPhysicsWire::SetupPhysics( void )
 {
     /*
-      CPointEntity	*anchorEnt, *freeEnt;
-      CPhysBallSocket *socket;
+    CPointEntity	*anchorEnt, *freeEnt;
+    CPhysBallSocket *socket;
 
-      char	anchorName[256];
-      char	freeName[256];
+    char	anchorName[256];
+    char	freeName[256];
 
-      int		iAnchorName, iFreeName;
+    int		iAnchorName, iFreeName;
 
-      anchorEnt = (CPointEntity *) CreateEntityByName( "info_target" );
+    anchorEnt = (CPointEntity *) CreateEntityByName( "info_target" );
 
-      if ( anchorEnt == NULL )
+    if ( anchorEnt == NULL )
         return false;
 
-      //Create and connect all segments
-      for ( int i = 0; i < m_nDensity; i++ )
-      {
+    //Create and connect all segments
+    for ( int i = 0; i < m_nDensity; i++ )
+    {
         // Create other end of our link
         freeEnt = (CPointEntity *) CreateEntityByName( "info_target" );
 
@@ -1807,7 +1807,7 @@ bool CPhysicsWire::SetupPhysics( void )
 
         //The free ent is now the anchor for the next link
         anchorEnt = freeEnt;
-      }
+    }
     */
 
     return true;
@@ -1821,7 +1821,7 @@ class CEnvMuzzleFlash : public CPointEntity
 {
     DECLARE_CLASS( CEnvMuzzleFlash, CPointEntity );
 
-   public:
+    public:
     virtual void Spawn();
 
     // Input handlers
@@ -1880,11 +1880,11 @@ class CEnvSplash : public CPointEntity
 {
     DECLARE_CLASS( CEnvSplash, CPointEntity );
 
-   public:
+    public:
     // Input handlers
     void InputSplash( inputdata_t &inputdata );
 
-   protected:
+    protected:
     float m_flScale;
 
     DECLARE_DATADESC();
@@ -1966,7 +1966,7 @@ void CEnvSplash::InputSplash( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 class CEnvGunfire : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvGunfire, CPointEntity );
 
     CEnvGunfire()
@@ -2271,7 +2271,7 @@ PRECACHE_REGISTER_FN( EffectsPrecache );
 
 class CEnvViewPunch : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvViewPunch, CPointEntity );
 
     virtual void Spawn();
@@ -2279,7 +2279,7 @@ class CEnvViewPunch : public CPointEntity
     // Input handlers
     void InputViewPunch( inputdata_t &inputdata );
 
-   private:
+    private:
     float m_flRadius;
     QAngle m_angViewPunch;
 

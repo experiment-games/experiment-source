@@ -47,7 +47,7 @@ class CWheelOfDoomSpiral;
 //
 class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CWheelOfDoom, CBaseAnimating );
     DECLARE_DATADESC();
 
@@ -76,7 +76,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     void DBG_ApplyEffectByName( const char* pszEffectName );
 
-   private:
+    private:
     enum eEffectProperty
     {
         PROPERTY_WHAMMY,
@@ -92,7 +92,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
     struct EffectManager;
     class WOD_BaseEffect
     {
-       public:
+        public:
         WOD_BaseEffect();
         virtual ~WOD_BaseEffect() {}
 
@@ -116,7 +116,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
             return m_nSkin;
         }
 
-       protected:
+        protected:
         eWheelOfDoomEffectSkinIndex m_nSkin;
         float m_flExpireTime;
         const char* m_pszEffectAnnouncementSound;
@@ -129,7 +129,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     struct EffectManager
     {
-       public:
+        public:
         explicit EffectManager( CWheelOfDoom* pWheel )
         {
             m_pWheel = pWheel;
@@ -142,7 +142,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
         bool UpdateAndClearExpiredEffects();
         void Precache();
 
-       private:
+        private:
         CWheelOfDoom* m_pWheel;
         CUtlVector< WOD_BaseEffect* > m_vecActiveEffects;
     } m_EffectManager;
@@ -189,7 +189,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_CritsEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_CritsEffect()
         {
             m_pszName = "Crits";
@@ -202,7 +202,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_UberEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_UberEffect()
         {
             m_pszName = "Uber";
@@ -216,7 +216,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_SuperSpeedEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_SuperSpeedEffect()
         {
             m_pszName = "Super Speed";
@@ -230,7 +230,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_SuperJumpEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_SuperJumpEffect()
         {
             m_pszName = "Super Jump";
@@ -244,7 +244,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_BigHeadEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_BigHeadEffect()
         {
             m_pszName = "Big Head";
@@ -258,7 +258,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_SmallHeadEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_SmallHeadEffect()
         {
             m_pszName = "Small Head";
@@ -272,7 +272,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_LowGravityEffect : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_LowGravityEffect()
         {
             m_pszName = "Low Gravity";
@@ -286,7 +286,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_Pee : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_Pee()
         {
             m_pszName = "Pee";
@@ -297,14 +297,14 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
         void ActivateEffect( EffectData_t& data );
         void UpdateEffect( EffectData_t& data );
 
-       private:
+        private:
         float m_flNextPeeTime;
         CUtlVector< CBaseEntity* > m_vecClouds;
     };
 
     class WOD_Burn : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_Burn()
         {
             m_pszName = "Burn";
@@ -318,7 +318,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_Ghosts : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_Ghosts()
         {
             m_pszName = "Ghosts";
@@ -332,7 +332,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 
     class WOD_Dance : public WOD_BaseEffect
     {
-       public:
+        public:
         WOD_Dance()
         {
             m_pszName = "Dance";
@@ -346,7 +346,7 @@ class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
         void UpdateEffect( EffectData_t& data );
         void DeactivateEffect( EffectData_t& data );
 
-       private:
+        private:
         int GetNumOFTeamDancing( int nTeam ) const;
         void SlamPosAndAngles( CTFPlayer* pPlayer, const Vector& vPos, const QAngle& vAng );
 

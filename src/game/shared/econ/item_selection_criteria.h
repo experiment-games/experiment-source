@@ -55,18 +55,18 @@ class CSOItemCriteriaCondition;
 //-----------------------------------------------------------------------------
 class CItemSelectionCriteria
 {
-   public:
+    public:
     // Constructors and destructor
     CItemSelectionCriteria()
         : m_bItemLevelSet( false ),
-          m_unItemLevel( 0 ),
-          m_bQualitySet( false ),
-          m_nItemQuality( k_unItemQuality_Any ),
-          m_unInitialInventory( 0 ),
-          m_bInitialQuantitySet( false ),
-          m_unInitialQuantity( 1 ),
-          m_bIgnoreEnabledFlag( false ),
-          m_unEquipRegionMask( 0 )
+        m_unItemLevel( 0 ),
+        m_bQualitySet( false ),
+        m_nItemQuality( k_unItemQuality_Any ),
+        m_unInitialInventory( 0 ),
+        m_bInitialQuantitySet( false ),
+        m_unInitialQuantity( 1 ),
+        m_bIgnoreEnabledFlag( false ),
+        m_unEquipRegionMask( 0 )
     {
     }
 
@@ -139,7 +139,7 @@ class CItemSelectionCriteria
     // Add conditions to the criteria
     class ICondition
     {
-       public:
+        public:
         virtual ~ICondition() {}
 
         virtual bool BItemDefinitionPassesCriteria( const CEconItemDefinition *pItemDef ) const = 0;
@@ -190,14 +190,14 @@ class CItemSelectionCriteria
     void Validate( CValidator &validator, const char *pchName );
 #endif
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // CItemSelectionCriteria::CCondition
     // Represents one condition of the criteria
     //-----------------------------------------------------------------------------
     class CCondition : public ICondition
     {
-       public:
+        public:
         CCondition( const char *pszField, EItemCriteriaOperator eOp, bool bRequired )
             : m_sField( pszField ), m_EOp( eOp ), m_bRequired( bRequired )
         {
@@ -228,12 +228,12 @@ class CItemSelectionCriteria
             return NULL;
         }
 
-       private:
+        private:
         // Returns if the given KeyValues block passes this condition
         // Performs common checks and calls BInternalEvaluate
         bool BEvaluate( KeyValues *pKVItem ) const;
 
-       protected:
+        protected:
         // Returns true if applying the element's operator on m_sField of
         // pKVItem returns true. This is only called if m_pszField exists in pKVItem
         virtual bool BInternalEvaluate( KeyValues *pKVItem ) const = 0;
@@ -252,7 +252,7 @@ class CItemSelectionCriteria
     //-----------------------------------------------------------------------------
     class CStringCondition : public CCondition
     {
-       public:
+        public:
         CStringCondition( const char *pszField, EItemCriteriaOperator eOp, const char *pszValue, bool bRequired )
             : CCondition( pszField, eOp, bRequired ), m_sValue( pszValue )
         {
@@ -270,7 +270,7 @@ class CItemSelectionCriteria
         virtual void Validate( CValidator &validator, const char *pchName );
 #endif
 
-       protected:
+        protected:
         virtual bool BInternalEvaluate( KeyValues *pKVItem ) const;
         virtual bool BSerializeToMsg( CSOItemCriteriaCondition &msg ) const;
 
@@ -284,7 +284,7 @@ class CItemSelectionCriteria
     //-----------------------------------------------------------------------------
     class CFloatCondition : public CCondition
     {
-       public:
+        public:
         CFloatCondition( const char *pszField, EItemCriteriaOperator eOp, float flValue, bool bRequired )
             : CCondition( pszField, eOp, bRequired ), m_flValue( flValue )
         {
@@ -292,7 +292,7 @@ class CItemSelectionCriteria
 
         virtual ~CFloatCondition() {}
 
-       protected:
+        protected:
         virtual bool BInternalEvaluate( KeyValues *pKVItem ) const;
         virtual bool BSerializeToMsg( CSOItemCriteriaCondition &msg ) const;
 
@@ -306,7 +306,7 @@ class CItemSelectionCriteria
     //-----------------------------------------------------------------------------
     class CSetCondition : public CCondition
     {
-       public:
+        public:
         CSetCondition( const char *pszField, EItemCriteriaOperator eOp, const char *pszValue, bool bRequired )
             : CCondition( pszField, eOp, bRequired ), m_sValue( pszValue )
         {
@@ -319,7 +319,7 @@ class CItemSelectionCriteria
         virtual void Validate( CValidator &validator, const char *pchName );
 #endif
 
-       protected:
+        protected:
         virtual bool BInternalEvaluate( KeyValues *pKVItem ) const;
 
         virtual bool BSerializeToMsg( CSOItemCriteriaCondition &msg ) const;

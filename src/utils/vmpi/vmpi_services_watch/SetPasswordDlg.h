@@ -22,7 +22,7 @@
 class CSetPasswordDlg : public CDialog
 {
     // Construction
-   public:
+    public:
     CSetPasswordDlg( int dlgID, CWnd* pParent = NULL );  // standard constructor
 
     // Dialog Data
@@ -33,12 +33,12 @@ class CSetPasswordDlg : public CDialog
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CSetPasswordDlg)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
                                                         //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     // Generated message map functions
     //{{AFX_MSG(CSetPasswordDlg)
     // NOTE: the ClassWizard will add member functions here

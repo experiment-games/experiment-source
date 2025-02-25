@@ -129,7 +129,7 @@ DECLARE_POINTER_HANDLE( PixelShaderHandle_t );
 //-----------------------------------------------------------------------------
 abstract_class IShaderBuffer
 {
-   public:
+    public:
     virtual size_t GetSize() const = 0;
     virtual const void *GetBits() const = 0;
     virtual void Release() = 0;
@@ -146,7 +146,7 @@ typedef void ( *ShaderModeChangeCallbackFunc_t )( void );
 #define SHADER_DEVICE_MGR_INTERFACE_VERSION "ShaderDeviceMgr001"
 abstract_class IShaderDeviceMgr : public IAppSystem
 {
-   public:
+    public:
     // Gets the number of adapters...
     virtual int GetAdapterCount() const = 0;
 
@@ -185,7 +185,7 @@ abstract_class IShaderDeviceMgr : public IAppSystem
 #define SHADER_DEVICE_INTERFACE_VERSION "ShaderDevice001"
 abstract_class IShaderDevice
 {
-   public:
+    public:
     // Releases/reloads resources when other apps want some memory
     virtual void ReleaseResources() = 0;
     virtual void ReacquireResources() = 0;
@@ -279,7 +279,7 @@ abstract_class IShaderDevice
 //-----------------------------------------------------------------------------
 class CUtlShaderBuffer : public IShaderBuffer
 {
-   public:
+    public:
     CUtlShaderBuffer( CUtlBuffer &buf )
         : m_pBuf( &buf ) {}
 
@@ -298,7 +298,7 @@ class CUtlShaderBuffer : public IShaderBuffer
         Assert( 0 );
     }
 
-   private:
+    private:
     CUtlBuffer *m_pBuf;
 };
 

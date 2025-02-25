@@ -8,7 +8,7 @@
 //----------------------------------------------------------------------------
 class CHL2MPBotBody : public PlayerBody
 {
-   public:
+    public:
     CHL2MPBotBody( INextBot* bot )
         : PlayerBody( bot )
     {

@@ -30,7 +30,7 @@
 
 class CTFWeaponPDA : public CTFWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponPDA, CTFWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -89,10 +89,10 @@ class CTFWeaponPDA : public CTFWeaponBase
         return false;
     }
 
-   public:
+    public:
     CTFWeaponInfo *m_pWeaponInfo;
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     void HideBuildMenu() const;
 #endif
@@ -102,7 +102,7 @@ class CTFWeaponPDA : public CTFWeaponBase
 
 class CTFWeaponPDA_Engineer_Build : public CTFWeaponPDA
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponPDA_Engineer_Build, CTFWeaponPDA );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -127,7 +127,7 @@ extern ConVar tf_build_menu_controller_mode;
 #endif
 class CTFWeaponPDA_Engineer_Destroy : public CTFWeaponPDA
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponPDA_Engineer_Destroy, CTFWeaponPDA );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -149,7 +149,7 @@ class CTFWeaponPDA_Engineer_Destroy : public CTFWeaponPDA
 
 class CTFWeaponPDA_Spy : public CTFWeaponPDA
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponPDA_Spy, CTFWeaponPDA );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -184,7 +184,7 @@ class CTFWeaponPDAExpansion_Dispenser : public CTFWearable
 {
     DECLARE_CLASS( CTFWeaponPDAExpansion_Dispenser, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -196,7 +196,7 @@ class CTFWeaponPDAExpansion_Teleporter : public CTFWearable
 {
     DECLARE_CLASS( CTFWeaponPDAExpansion_Teleporter, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 

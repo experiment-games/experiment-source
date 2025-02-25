@@ -343,7 +343,7 @@ static void SaveBrowsePath( ConVar &conVar, const char *pszFilePath )
 //-----------------------------------------------------------------------------
 class CBuildLog : public CItemLog
 {
-   public:
+    public:
     CBuildLog()
         : CItemLog(), m_log( 0, 0, CUtlBuffer::TEXT_BUFFER ) {}
 
@@ -379,7 +379,7 @@ class CBuildLog : public CItemLog
         return ( char * )m_log.Base();
     }
 
-   protected:
+    protected:
     mutable CUtlBuffer m_log;
 };
 
@@ -390,7 +390,7 @@ class CTFFileImportTextEditDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CTFFileImportTextEditDialog, Frame );
 
-   public:
+    public:
     CTFFileImportTextEditDialog( vgui::Panel *parent, const char *pszTitle, const char *pszCommand = NULL );
 
     virtual ~CTFFileImportTextEditDialog() {}
@@ -407,7 +407,7 @@ class CTFFileImportTextEditDialog : public vgui::Frame
     void SetText( const char *pszText );
     bool GetText( char *pszText, int nMaxSize );
 
-   protected:
+    protected:
     bool m_bShowCancelButton;
     CUtlString m_sTitle;
     CUtlString m_sText;
@@ -519,7 +519,7 @@ class CTFImportMaterialEditDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CTFImportMaterialEditDialog, Frame );
 
-   public:
+    public:
     CTFImportMaterialEditDialog( vgui::Panel *parent, int nSkinIndex, int nMaterialIndex, KeyValues *pItemValues );
 
     virtual ~CTFImportMaterialEditDialog() {}
@@ -551,7 +551,7 @@ class CTFImportMaterialEditDialog : public vgui::Frame
         return m_bSelfIllumEnabled ? m_strSelfIllumTextureFile.String() : "";
     }
 
-   private:
+    private:
     void OnCommandEditSkin( int nSkinIndex );
     void OnCommandBrowseMaterial( MATERIAL_FILE_TYPE fileType );
 
@@ -1267,8 +1267,8 @@ void CTFImportMaterialEditDialog::OnTextChanged( KeyValues *data )
             m_VMTKeyValues->SetFloat( "$blendtintcoloroverbase", flClampedValue );
         }
         else if ( pTextEntry == m_pColorTintBaseRedTextEntry ||
-                  pTextEntry == m_pColorTintBaseGreenTextEntry ||
-                  pTextEntry == m_pColorTintBaseBlueTextEntry )
+                pTextEntry == m_pColorTintBaseGreenTextEntry ||
+                pTextEntry == m_pColorTintBaseBlueTextEntry )
         {
             const char *pszColor = CFmtStr( "{ %d %d %d }",
                                             clamp( m_pColorTintBaseRedTextEntry->GetValueAsInt(), 0, 255 ),
@@ -1277,8 +1277,8 @@ void CTFImportMaterialEditDialog::OnTextChanged( KeyValues *data )
             SetColorTintBase( m_nSkinIndex, pszColor );
         }
         else if ( pTextEntry == m_pCubemapTintRedTextEntry ||
-                  pTextEntry == m_pCubemapTintGreenTextEntry ||
-                  pTextEntry == m_pCubemapTintBlueTextEntry )
+                pTextEntry == m_pCubemapTintGreenTextEntry ||
+                pTextEntry == m_pCubemapTintBlueTextEntry )
         {
             float flR = ( float )clamp( m_pCubemapTintRedTextEntry->GetValueAsInt(), 0, 255 ) / 255.f;
             float flG = ( float )clamp( m_pCubemapTintGreenTextEntry->GetValueAsInt(), 0, 255 ) / 255.f;
@@ -1287,8 +1287,8 @@ void CTFImportMaterialEditDialog::OnTextChanged( KeyValues *data )
             m_VMTKeyValues->SetString( "$envmaptint", pszColor );
         }
         else if ( pTextEntry == m_pSelfIllumTintRedTextEntry ||
-                  pTextEntry == m_pSelfIllumTintGreenTextEntry ||
-                  pTextEntry == m_pSelfIllumTintBlueTextEntry )
+                pTextEntry == m_pSelfIllumTintGreenTextEntry ||
+                pTextEntry == m_pSelfIllumTintBlueTextEntry )
         {
             float flR = m_pSelfIllumTintRedTextEntry->GetValueAsFloat() / 255.f;
             float flG = m_pSelfIllumTintGreenTextEntry->GetValueAsFloat() / 255.f;
@@ -1913,13 +1913,13 @@ class CImportPreviewItemPanel : public CTFStorePreviewItemPanel2
 {
     DECLARE_CLASS_SIMPLE( CImportPreviewItemPanel, CTFStorePreviewItemPanel2 );
 
-   public:
+    public:
     CImportPreviewItemPanel( vgui::Panel *parent, KeyValues *pItemValues, int nSelectedClass );
     virtual ~CImportPreviewItemPanel();
 
     virtual void PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t *pEntry = NULL ) OVERRIDE;
 
-   protected:
+    protected:
     void ResetHandles();
 
     virtual void OnThink();
@@ -2253,9 +2253,9 @@ void CImportPreviewItemPanel::OnCommand( const char *command )
         StartAction();
     }
     else if ( V_strcasecmp( command, "BuildPreview" ) == 0 ||
-              V_strcasecmp( command, "EditQC" ) == 0 ||
-              V_strcasecmp( command, "EditQCI" ) == 0 ||
-              V_strncasecmp( command, "EditMaterial", V_strlen( "EditMaterial" ) ) == 0 )
+            V_strcasecmp( command, "EditQC" ) == 0 ||
+            V_strcasecmp( command, "EditQCI" ) == 0 ||
+            V_strncasecmp( command, "EditMaterial", V_strlen( "EditMaterial" ) ) == 0 )
     {
         // Dispatch directly to our parent because the base class tries to run the command through the console interpreter
         GetParent()->OnCommand( command );
@@ -2741,7 +2741,7 @@ void CImportPreviewItemPanel::OnClassIconSelected( KeyValues *data )
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::CTFFileImportDialog( vgui::Panel *parent )
     : Frame( parent, "ImportFileDialog" ),
-      m_tempQC( 0, 0, CUtlBuffer::TEXT_BUFFER )
+    m_tempQC( 0, 0, CUtlBuffer::TEXT_BUFFER )
 {
     vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme" );
     SetScheme( scheme );
@@ -4005,7 +4005,7 @@ void CTFFileImportDialog::SetItemPrefab( const char *pszPrefab )
         }
 
         if ( ( nOldPrefab != PREFAB_TAUNT && m_nPrefab == PREFAB_TAUNT ) ||
-             ( nOldPrefab == PREFAB_TAUNT && m_nPrefab != PREFAB_TAUNT ) )
+            ( nOldPrefab == PREFAB_TAUNT && m_nPrefab != PREFAB_TAUNT ) )
         {
             ClearLODs();
         }
@@ -6045,7 +6045,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddMaterialsToAsset( CAss
                 KeyValuesAD pKV( "VMT" );
                 CUtlBuffer sMaterialText;
                 if ( !GetMaterialText( nSkinIndex, nValidVMTIndex, sMaterialText ) ||
-                     !pKV->LoadFromBuffer( pVMT->GetMaterialId(), sMaterialText ) )
+                    !pKV->LoadFromBuffer( pVMT->GetMaterialId(), sMaterialText ) )
                 {
                     if ( !strMaterialName.IsEmpty() )
                     {

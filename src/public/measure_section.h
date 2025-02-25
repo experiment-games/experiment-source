@@ -42,7 +42,7 @@ void ResetTimeMeasurements( void );
 //-----------------------------------------------------------------------------
 class CMeasureSection
 {
-   public:
+    public:
     // Allows for measuring named section
     CMeasureSection( const char *name );
     virtual ~CMeasureSection( void );
@@ -74,11 +74,11 @@ class CMeasureSection
     // Sort all sections by most time consuming
     static void SortSections( void );
 
-   public:
+    public:
     // Time when list should be sorted again
     static double m_dNextResort;
 
-   private:
+    private:
     // Accumulated time for section
     CCycleCount m_dAccumulatedTime;
 
@@ -104,13 +104,13 @@ class CMeasureSection
 //-----------------------------------------------------------------------------
 class CMeasureSectionInstance
 {
-   public:
+    public:
     // Constructor:  Points to object to accumulate time into
     CMeasureSectionInstance( CMeasureSection *ms );
     // Destructor:  Latches accumulated time
     virtual ~CMeasureSectionInstance( void );
 
-   private:
+    private:
     // Time of construction
     CFastTimer m_Timer;
 

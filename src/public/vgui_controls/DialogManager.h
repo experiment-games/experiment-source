@@ -26,7 +26,7 @@ namespace vgui
 template < class TDialog, class I = int >
 class DialogManager
 {
-   public:
+    public:
     // new dialog factory function
     typedef TDialog *( *CreateNewDialogFunc_t )( I dialogID );
 
@@ -51,7 +51,7 @@ class DialogManager
     // sets parent to use
     void SetParent( vgui::VPANEL parent );
 
-   private:
+    private:
     // checks if an index in the dialog list is valid; if it has been deleted, removes the entry
     bool ValidateIndex( int index );
 

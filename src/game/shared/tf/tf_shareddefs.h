@@ -1275,25 +1275,25 @@ ETFDmgCustom GetCustomDamageFromName( const char *pszCustomDmgName );
 inline bool IsTauntDmg( int iType )
 {
     return ( iType == TF_DMG_CUSTOM_TAUNTATK_HADOUKEN ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_HIGH_NOON ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_GRAND_SLAM ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_FENCING ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_ARROW_STAB ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_GRENADE ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_UBERSLICE ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_ARMAGEDDON ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_ARM_KILL ||
-             iType == TF_DMG_CUSTOM_TAUNTATK_GASBLAST );
+            iType == TF_DMG_CUSTOM_TAUNTATK_HIGH_NOON ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_GRAND_SLAM ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_FENCING ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_ARROW_STAB ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_GRENADE ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_UBERSLICE ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_ARMAGEDDON ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_ARM_KILL ||
+            iType == TF_DMG_CUSTOM_TAUNTATK_GASBLAST );
 }
 inline bool IsDOTDmg( int iType )
 {
     if ( iType == TF_DMG_CUSTOM_BURNING ||
-         iType == TF_DMG_CUSTOM_BURNING_FLARE ||
-         iType == TF_DMG_CUSTOM_BURNING_ARROW ||
-         iType == TF_DMG_CUSTOM_BLEEDING )
+        iType == TF_DMG_CUSTOM_BURNING_FLARE ||
+        iType == TF_DMG_CUSTOM_BURNING_ARROW ||
+        iType == TF_DMG_CUSTOM_BLEEDING )
     {
         return true;
     }
@@ -1633,7 +1633,7 @@ class CHudTexture;
 // This should be moved into its own header.
 class CObjectInfo
 {
-   public:
+    public:
     CObjectInfo( const char *pObjectName );
     ~CObjectInfo();
 

@@ -21,7 +21,7 @@
 
 class CLightGlow : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLightGlow, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -34,7 +34,7 @@ class CLightGlow : public CBaseEntity
 
     void InputColor( inputdata_t &data );
 
-   public:
+    public:
     CNetworkVar( int, m_nHorizontalSize );
     CNetworkVar( int, m_nVerticalSize );
     CNetworkVar( int, m_nMinDist );

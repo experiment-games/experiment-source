@@ -33,7 +33,7 @@ enum QueryResultType
  */
 class IContextualQuery
 {
-   public:
+    public:
     virtual ~IContextualQuery() {}
 
     virtual QueryResultType ShouldPickUp( const INextBot *me, CBaseEntity *item ) const;         // if the desired item was available right now, should we pick it up?
@@ -45,16 +45,16 @@ class IContextualQuery
     virtual Vector SelectTargetPoint( const INextBot *me, const CBaseCombatCharacter *subject ) const;  // given a subject, return the world space position we should aim at
 
     /**
-     * Allow bot to approve of positions game movement tries to put him into.
-     * This is most useful for bots derived from CBasePlayer that go through
-     * the player movement system.
-     */
+    * Allow bot to approve of positions game movement tries to put him into.
+    * This is most useful for bots derived from CBasePlayer that go through
+    * the player movement system.
+    */
     virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const;
 
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 };
 
 inline QueryResultType IContextualQuery::ShouldPickUp( const INextBot *me, CBaseEntity *item ) const

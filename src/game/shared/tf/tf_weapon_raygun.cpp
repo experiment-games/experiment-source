@@ -105,7 +105,7 @@ void CTFRaygun::ModifyProjectile( CBaseEntity *pProj )
     /*
     CTFProjectile_EnergyRing* pEnergyBall = dynamic_cast<CTFProjectile_EnergyRing*>( pProj );
     if ( pEnergyBall == NULL )
-      return;
+    return;
 
     pEnergyBall->SetColor( 1, GetParticleColor( 1 ) );
     pEnergyBall->SetColor( 2, GetParticleColor( 2 ) );

@@ -74,7 +74,7 @@ struct vehicleparams_t;
 
 class IPhysicsVehicleController
 {
-   public:
+    public:
     virtual ~IPhysicsVehicleController() {}
     // call this from the game code with the control parameters
     virtual void Update( float dt, vehicle_controlparams_t &controls ) = 0;
@@ -155,7 +155,7 @@ struct vehicle_axleparams_t
     vehicle_wheelparams_t wheels;
     vehicle_suspensionparams_t suspension;
     float torqueFactor;  // normalized to 1 across all axles
-                         // e.g. 0,1 for rear wheel drive - 0.5,0.5 for 4 wheel drive
+                        // e.g. 0,1 for rear wheel drive - 0.5,0.5 for 4 wheel drive
     float brakeFactor;   // normalized to 1 across all axles
 };
 

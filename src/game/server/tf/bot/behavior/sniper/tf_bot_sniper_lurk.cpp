@@ -121,8 +121,8 @@ ActionResult< CTFBot > CTFBotSniperLurk::Update( CTFBot *me, float interval )
     bool isSightingRifle = false;
 
     if ( threat &&
-         threat->GetTimeSinceLastSeen() < tf_bot_sniper_target_linger_duration.GetFloat() &&
-         me->IsLineOfFireClear( threat->GetEntity() ) )
+        threat->GetTimeSinceLastSeen() < tf_bot_sniper_target_linger_duration.GetFloat() &&
+        me->IsLineOfFireClear( threat->GetEntity() ) )
     {
         // we see something...
         if ( m_isOpportunistic )
@@ -519,9 +519,9 @@ QueryResultType CTFBotSniperLurk::ShouldRetreat( const INextBot *me ) const
 //---------------------------------------------------------------------------------------------
 // Return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 const CKnownEntity *CTFBotSniperLurk::SelectMoreDangerousThreat( const INextBot *meBot,
-                                                                 const CBaseCombatCharacter *subject,
-                                                                 const CKnownEntity *threat1,
-                                                                 const CKnownEntity *threat2 ) const
+                                                                const CBaseCombatCharacter *subject,
+                                                                const CKnownEntity *threat1,
+                                                                const CKnownEntity *threat2 ) const
 {
     if ( TFGameRules()->IsMannVsMachineMode() && tf_mvm_bot_sniper_target_by_dps.GetBool() )
     {

@@ -113,7 +113,7 @@
 
 class P4P4Event_TC_deliver_mode : public P4BaseEvent
 {
-   public:
+    public:
     EVENT_MASK( TC_deliver_mode ) * eventMask;
 
     P4P4Event_TC_deliver_mode()
@@ -149,7 +149,7 @@ class P4P4Event_TC_deliver_mode : public P4BaseEvent
 class P4P4Event_BPU_fetch_request : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( BPU_fetch_request ) * eventMask;
 
     P4P4Event_BPU_fetch_request()
@@ -182,7 +182,7 @@ class P4P4Event_BPU_fetch_request : public P4BaseEvent
 class P4P4Event_ITLB_reference : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( ITLB_reference ) * eventMask;
 
     P4P4Event_ITLB_reference()
@@ -215,7 +215,7 @@ class P4P4Event_ITLB_reference : public P4BaseEvent
 class P4Event_memory_cancel : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( memory_cancel ) * eventMask;
 
     P4Event_memory_cancel()
@@ -249,7 +249,7 @@ class P4Event_memory_cancel : public P4BaseEvent
 class P4Event_memory_complete : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( memory_complete ) * eventMask;
 
     P4Event_memory_complete()
@@ -282,7 +282,7 @@ class P4Event_memory_complete : public P4BaseEvent
 class P4Event_load_port_replay : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( load_port_replay ) * eventMask;
 
     P4Event_load_port_replay()
@@ -315,7 +315,7 @@ class P4Event_load_port_replay : public P4BaseEvent
 class P4Event_store_port_replay : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( store_port_replay ) * eventMask;
 
     P4Event_store_port_replay()
@@ -348,7 +348,7 @@ class P4Event_store_port_replay : public P4BaseEvent
 class P4Event_MOB_load_replay : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( MOB_load_replay ) * eventMask;
 
     P4Event_MOB_load_replay()
@@ -381,7 +381,7 @@ class P4Event_MOB_load_replay : public P4BaseEvent
 class P4Event_page_walk_type : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( page_walk_type ) * eventMask;
 
     P4Event_page_walk_type()
@@ -414,7 +414,7 @@ class P4Event_page_walk_type : public P4BaseEvent
 class P4Event_BSQ_cache_reference : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( BSQ_cache_reference ) * eventMask;
 
     P4Event_BSQ_cache_reference()
@@ -447,7 +447,7 @@ class P4Event_BSQ_cache_reference : public P4BaseEvent
 class P4Event_IOQ_allocation : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( IOQ ) * eventMask;
 
     P4Event_IOQ_allocation()
@@ -480,7 +480,7 @@ class P4Event_IOQ_allocation : public P4BaseEvent
 class P4Event_IOQ_active_entries : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( IOQ ) * eventMask;
 
     P4Event_IOQ_active_entries()
@@ -505,7 +505,7 @@ class P4Event_IOQ_active_entries : public P4BaseEvent
 class P4Event_FSB_data_activity : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( FSB_data_activity ) * eventMask;
 
     P4Event_FSB_data_activity()
@@ -538,7 +538,7 @@ class P4Event_FSB_data_activity : public P4BaseEvent
 class P4Event_BSQ_allocation : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( BSQ ) * eventMask;
 
     P4Event_BSQ_allocation()
@@ -564,7 +564,7 @@ class P4Event_BSQ_allocation : public P4BaseEvent
 class P4Event_BSQ_active_entries : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( BSQ ) * eventMask;
 
     P4Event_BSQ_active_entries()
@@ -589,7 +589,7 @@ class P4Event_BSQ_active_entries : public P4BaseEvent
 class P4Event_SSE_input_assist : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_SSE_input_assist()
@@ -622,7 +622,7 @@ class P4Event_SSE_input_assist : public P4BaseEvent
 class P4Event_packed_SP_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_packed_SP_uop()
@@ -655,7 +655,7 @@ class P4Event_packed_SP_uop : public P4BaseEvent
 class P4Event_packed_DP_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_packed_DP_uop()
@@ -688,7 +688,7 @@ class P4Event_packed_DP_uop : public P4BaseEvent
 class P4Event_scalar_SP_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_scalar_SP_uop()
@@ -721,7 +721,7 @@ class P4Event_scalar_SP_uop : public P4BaseEvent
 class P4Event_scalar_DP_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_scalar_DP_uop()
@@ -754,7 +754,7 @@ class P4Event_scalar_DP_uop : public P4BaseEvent
 class P4Event_64bit_MMX_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_64bit_MMX_uop()
@@ -787,7 +787,7 @@ class P4Event_64bit_MMX_uop : public P4BaseEvent
 class P4Event_128bit_MMX_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_128bit_MMX_uop()
@@ -820,7 +820,7 @@ class P4Event_128bit_MMX_uop : public P4BaseEvent
 class P4Event_x87_FP_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( firm_uop ) * eventMask;
 
     P4Event_x87_FP_uop()
@@ -853,7 +853,7 @@ class P4Event_x87_FP_uop : public P4BaseEvent
 class P4Event_x87_SIMD_moves_uop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( x87_SIMD_moves_uop ) * eventMask;
 
     P4Event_x87_SIMD_moves_uop()
@@ -886,7 +886,7 @@ class P4Event_x87_SIMD_moves_uop : public P4BaseEvent
 class P4Event_TC_misc : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( TC_misc ) * eventMask;
 
     P4Event_TC_misc()
@@ -921,7 +921,7 @@ class P4Event_TC_misc : public P4BaseEvent
 class P4Event_global_power_events : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( global_power_events ) * eventMask;
 
     P4Event_global_power_events()
@@ -955,7 +955,7 @@ class P4Event_global_power_events : public P4BaseEvent
 class P4Event_tc_ms_xfer : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( tc_ms_xfer ) * eventMask;
 
     P4Event_tc_ms_xfer()
@@ -990,7 +990,7 @@ class P4Event_tc_ms_xfer : public P4BaseEvent
 class P4Event_uop_queue_writes : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( uop_queue_writes ) * eventMask;
 
     P4Event_uop_queue_writes()
@@ -1025,7 +1025,7 @@ class P4Event_uop_queue_writes : public P4BaseEvent
 class P4Event_retired_mispred_branch_type : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( branch_type ) * eventMask;
 
     P4Event_retired_mispred_branch_type()
@@ -1060,7 +1060,7 @@ class P4Event_retired_mispred_branch_type : public P4BaseEvent
 class P4Event_retired_branch_type : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( branch_type ) * eventMask;
 
     P4Event_retired_branch_type()
@@ -1095,7 +1095,7 @@ class P4Event_retired_branch_type : public P4BaseEvent
 class P4Event_resource_stall : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( resource_stall ) * eventMask;
 
     P4Event_resource_stall()
@@ -1138,7 +1138,7 @@ class P4Event_resource_stall : public P4BaseEvent
 class P4Event_WC_Buffer : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( WC_Buffer ) * eventMask;
 
     P4Event_WC_Buffer()
@@ -1171,7 +1171,7 @@ class P4Event_WC_Buffer : public P4BaseEvent
 class P4Event_b2b_cycles : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( b2b_cycles ) * eventMask;
 
     P4Event_b2b_cycles()
@@ -1204,7 +1204,7 @@ class P4Event_b2b_cycles : public P4BaseEvent
 class P4Event_bnr : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( bnr ) * eventMask;
 
     P4Event_bnr()
@@ -1237,7 +1237,7 @@ class P4Event_bnr : public P4BaseEvent
 class P4Event_snoop : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( snoop ) * eventMask;
 
     P4Event_snoop()
@@ -1270,7 +1270,7 @@ class P4Event_snoop : public P4BaseEvent
 class P4Event_response : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( response ) * eventMask;
 
     P4Event_response()
@@ -1303,7 +1303,7 @@ class P4Event_response : public P4BaseEvent
 class P4Event_front_end_event : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( nbogus_bogus ) * eventMask;
 
     P4Event_front_end_event()
@@ -1347,7 +1347,7 @@ class P4Event_front_end_event : public P4BaseEvent
 class P4Event_execution_event : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( execution_event ) * eventMask;
 
     P4Event_execution_event()
@@ -1390,7 +1390,7 @@ class P4Event_execution_event : public P4BaseEvent
 class P4Event_replay_event : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( nbogus_bogus ) * eventMask;
 
     P4Event_replay_event()
@@ -1433,7 +1433,7 @@ class P4Event_replay_event : public P4BaseEvent
 class P4Event_instr_retired : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( instr_retired ) * eventMask;
 
     P4Event_instr_retired()
@@ -1477,7 +1477,7 @@ class P4Event_instr_retired : public P4BaseEvent
 class P4Event_uops_retired : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( nbogus_bogus ) * eventMask;
 
     P4Event_uops_retired()
@@ -1520,7 +1520,7 @@ class P4Event_uops_retired : public P4BaseEvent
 class P4Event_uop_type : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( uop_type ) * eventMask;
 
     P4Event_uop_type()
@@ -1563,7 +1563,7 @@ class P4Event_uop_type : public P4BaseEvent
 class P4Event_branch_retired : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( branch_retired ) * eventMask;
 
     P4Event_branch_retired()
@@ -1606,7 +1606,7 @@ class P4Event_branch_retired : public P4BaseEvent
 class P4Event_mispred_branch_retired : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( mispred_branch_retired ) * eventMask;
 
     P4Event_mispred_branch_retired()
@@ -1649,7 +1649,7 @@ class P4Event_mispred_branch_retired : public P4BaseEvent
 class P4Event_x87_assist : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( x87_assist ) * eventMask;
 
     P4Event_x87_assist()
@@ -1692,7 +1692,7 @@ class P4Event_x87_assist : public P4BaseEvent
 class P4Event_machine_clear : public P4BaseEvent
 
 {
-   public:
+    public:
     EVENT_MASK( machine_clear ) * eventMask;
 
     P4Event_machine_clear()

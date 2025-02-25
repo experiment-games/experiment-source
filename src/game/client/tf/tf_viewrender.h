@@ -21,7 +21,7 @@ class CTFViewRender : public CViewRender
 {
     DECLARE_CLASS( CTFViewRender, CViewRender );
 
-   public:
+    public:
     CTFViewRender();
 
     virtual void Init( void );

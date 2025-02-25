@@ -55,9 +55,9 @@ JavaGenerator::JavaGenerator() {}
 JavaGenerator::~JavaGenerator() {}
 
 bool JavaGenerator::Generate(const FileDescriptor* file,
-                             const string& parameter,
-                             GeneratorContext* context,
-                             string* error) const {
+                            const string& parameter,
+                            GeneratorContext* context,
+                            string* error) const {
   // -----------------------------------------------------------------
   // parse generator options
 
@@ -74,22 +74,22 @@ bool JavaGenerator::Generate(const FileDescriptor* file,
   bool generate_shared_code = false;
   for (int i = 0; i < options.size(); i++) {
     if (options[i].first == "output_list_file") {
-      output_list_file = options[i].second;
+    output_list_file = options[i].second;
     } else if (options[i].first == "immutable") {
-      generate_immutable_code = true;
+    generate_immutable_code = true;
     } else if (options[i].first == "mutable") {
-      generate_mutable_code = true;
+    generate_mutable_code = true;
     } else if (options[i].first == "shared") {
-      generate_shared_code = true;
+    generate_shared_code = true;
     } else {
-      *error = "Unknown generator option: " + options[i].first;
-      return false;
+    *error = "Unknown generator option: " + options[i].first;
+    return false;
     }
   }
 
   // By default we generate immutable code and shared code for immutable API.
   if (!generate_immutable_code && !generate_mutable_code &&
-      !generate_shared_code) {
+    !generate_shared_code) {
     generate_immutable_code = true;
     generate_shared_code = true;
   }
@@ -105,10 +105,10 @@ bool JavaGenerator::Generate(const FileDescriptor* file,
   }
   for (int i = 0; i < file_generators.size(); ++i) {
     if (!file_generators[i]->Validate(error)) {
-      for (int j = 0; j < file_generators.size(); ++j) {
+    for (int j = 0; j < file_generators.size(); ++j) {
         delete file_generators[j];
-      }
-      return false;
+    }
+    return false;
     }
   }
 
@@ -145,7 +145,7 @@ bool JavaGenerator::Generate(const FileDescriptor* file,
         context->Open(output_list_file));
     io::Printer srclist_printer(srclist_raw_output.get(), '$');
     for (int i = 0; i < all_files.size(); i++) {
-      srclist_printer.Print("$filename$\n", "filename", all_files[i]);
+    srclist_printer.Print("$filename$\n", "filename", all_files[i]);
     }
   }
 

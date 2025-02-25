@@ -227,7 +227,7 @@ extern bool g_fGameOver;
 #if !( defined( HL2MP ) || defined( PORTAL_MP ) || defined( EXPERIMENT_SOURCE ) )
 class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
 {
-   public:
+    public:
     virtual bool CanPlayerHearPlayer( CBasePlayer *pListener, CBasePlayer *pTalker, bool &bProximity )
     {
         return true;
@@ -281,7 +281,7 @@ void CHalfLife2::PlayerSpawn( CBasePlayer *pPlayer )
 //-----------------------------------------------------------------------------
 class CCorpse : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CCorpse, CBaseAnimating );
     DECLARE_SERVERCLASS();
 
@@ -290,7 +290,7 @@ class CCorpse : public CBaseAnimating
         return FCAP_DONT_SAVE;
     }
 
-   public:
+    public:
     CNetworkVar( int, m_nReferencePlayer );
 };
 
@@ -1562,8 +1562,8 @@ bool CHalfLife2::ShouldCollide( int collisionGroup0, int collisionGroup1 )
         return false;
 
     if ( ( collisionGroup0 == COLLISION_GROUP_WEAPON ) ||
-         ( collisionGroup0 == COLLISION_GROUP_PLAYER ) ||
-         ( collisionGroup0 == COLLISION_GROUP_PROJECTILE ) )
+        ( collisionGroup0 == COLLISION_GROUP_PLAYER ) ||
+        ( collisionGroup0 == COLLISION_GROUP_PROJECTILE ) )
     {
         if ( collisionGroup1 == HL2COLLISION_GROUP_COMBINE_BALL )
             return false;
@@ -1584,7 +1584,7 @@ bool CHalfLife2::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     if ( collisionGroup1 == HL2COLLISION_GROUP_CROW )
     {
         if ( collisionGroup0 == COLLISION_GROUP_PLAYER || collisionGroup0 == COLLISION_GROUP_NPC ||
-             collisionGroup0 == HL2COLLISION_GROUP_CROW )
+            collisionGroup0 == HL2COLLISION_GROUP_CROW )
             return false;
     }
 

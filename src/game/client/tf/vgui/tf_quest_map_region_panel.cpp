@@ -138,7 +138,7 @@ void CQuestMapPathsPanel::Paint()
         auto lambdaBrightenIfSelected = [&]( CQuestMapNodePanel* pStartNodepanel, Color& colorToModify )
         {
             if ( pStartNodepanel->GetState() == CQuestMapNodePanel::SELECTED ||
-                 pStartNodepanel->GetState() == CQuestMapNodePanel::MOUSE_OVER )
+                pStartNodepanel->GetState() == CQuestMapNodePanel::MOUSE_OVER )
             {
                 BrigthenColor( colorToModify, 100 );
             }
@@ -151,14 +151,14 @@ void CQuestMapPathsPanel::Paint()
         {
             const Color& colorTurnIn = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "CreditsGreen", Color( 255, 255, 255, 255 ) );
             DrawAmbientActiveCirlce( pNodePanel->GetXPos() + pNodePanel->GetWide() * 0.5f,
-                                     pNodePanel->GetYPos() + pNodePanel->GetTall() * 0.5f,
-                                     colorTurnIn );
+                                    pNodePanel->GetYPos() + pNodePanel->GetTall() * 0.5f,
+                                    colorTurnIn );
         }
         else if ( pQuest && pQuest->Obj().active() )
         {
             DrawAmbientActiveCirlce( pNodePanel->GetXPos() + pNodePanel->GetWide() * 0.5f,
-                                     pNodePanel->GetYPos() + pNodePanel->GetTall() * 0.5f,
-                                     colorActive );
+                                    pNodePanel->GetYPos() + pNodePanel->GetTall() * 0.5f,
+                                    colorActive );
         }
 
         const EdgeVec_t& vecEdges = pNodeDef->GetLinkedNodes();
@@ -295,9 +295,9 @@ void CQuestMapPathsPanel::Paint()
 
                     // Now we want to draw a direction indicator
                     PaintDirectionArrow( vecStart, vecDir, flLength, [&]( float flPercent )
-                                         { 
-						colorDashLine.SetColor( colorDashLine.r(), colorDashLine.g(), colorDashLine.b(), RemapValClamped( flPercent, 0.5, 1, 255, 0 ) );
-						vgui::surface()->DrawSetColor( colorDashLine ); } );
+                                        {
+                        colorDashLine.SetColor( colorDashLine.r(), colorDashLine.g(), colorDashLine.b(), RemapValClamped( flPercent, 0.5, 1, 255, 0 ) );
+                        vgui::surface()->DrawSetColor( colorDashLine ); } );
                 }
 
                 bool bContinue = true;
@@ -591,7 +591,7 @@ void CQuestMapRegionPanel::FireGameEvent( IGameEvent* event )
 
     bool bReload = false;
     if ( FStrEq( "proto_def_changed", event->GetName() ) &&
-         ( event->GetInt( "type" ) == DEF_TYPE_QUEST_MAP_NODE || event->GetInt( "type" ) == DEF_TYPE_QUEST_MAP_REGION ) )
+        ( event->GetInt( "type" ) == DEF_TYPE_QUEST_MAP_NODE || event->GetInt( "type" ) == DEF_TYPE_QUEST_MAP_REGION ) )
     {
         bReload = true;
     }
@@ -740,10 +740,10 @@ void CQuestMapRegionPanel::OnMouseDoublePressed( MouseCode code )
 }
 
 bool BRecursiveGetRegionNodeState( const CQuestMapRegion* pRegion,
-                                   int& nNumNodesAvailable,
-                                   int& nNumTotalNodes,
-                                   int& nNumNodesCompleted,
-                                   bool& bHasActiveNode )
+                                    int& nNumNodesAvailable,
+                                    int& nNumTotalNodes,
+                                    int& nNumNodesCompleted,
+                                    bool& bHasActiveNode )
 {
     bool bHasAnyActiveNodes = false;
     const DefinitionMap_t& mapNodeDefs = GetProtoScriptObjDefManager()->GetDefinitionMapForType( DEF_TYPE_QUEST_MAP_NODE );
@@ -792,8 +792,8 @@ bool BRecursiveGetRegionNodeState( const CQuestMapRegion* pRegion,
 }
 
 void ConcatRegionName( const CQuestMapRegion* pRegion,
-                       wchar_t* pwszRegionPathName,
-                       size_t nStrLen )
+                        wchar_t* pwszRegionPathName,
+                        size_t nStrLen )
 {
     V_wcsncat( pwszRegionPathName, L"\\", nStrLen );
     wchar_t* wpszRegionName = g_pVGuiLocalize->Find( pRegion->GetRegionNameLocToken() );
@@ -809,8 +809,8 @@ void ConcatRegionName( const CQuestMapRegion* pRegion,
 }
 
 void RecursiveGenerateRegionPathName( const CQuestMapRegion* pRegion,
-                                      wchar_t* pwszRegionPathName,
-                                      size_t nStrLen )
+                                    wchar_t* pwszRegionPathName,
+                                    size_t nStrLen )
 {
     const DefinitionMap_t& mapRegions = GetProtoScriptObjDefManager()->GetDefinitionMapForType( DEF_TYPE_QUEST_MAP_REGION );
     FOR_EACH_MAP_FAST( mapRegions, nRegionIdx )

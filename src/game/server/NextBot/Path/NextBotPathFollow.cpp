@@ -53,7 +53,7 @@ PathFollower::PathFollower( void )
 //--------------------------------------------------------------------------------------------------------------
 class CDetachPath
 {
-   public:
+    public:
     CDetachPath( PathFollower *path )
     {
         m_path = path;
@@ -196,14 +196,14 @@ bool PathFollower::IsAtGoal( INextBot *bot ) const
         /* This breaks infected climbing up holes in the ceiling - they can get within 2D range of m_goal before finding a ledge to climb up to
         else if ( mover->IsOnGround() )
         {
-          // proximity check
-          // Z delta can be anything, since we may be climbing over a tall fence, a physics prop, etc.
-          const float rangeTolerance = 10.0f;
-          if ( toGoal.AsVector2D().IsLengthLessThan( rangeTolerance ) )
-          {
+        // proximity check
+        // Z delta can be anything, since we may be climbing over a tall fence, a physics prop, etc.
+        const float rangeTolerance = 10.0f;
+        if ( toGoal.AsVector2D().IsLengthLessThan( rangeTolerance ) )
+        {
             // reached goal
             return true;
-          }
+        }
         }
         */
     }
@@ -227,7 +227,7 @@ bool PathFollower::IsAtGoal( INextBot *bot ) const
             }
 
             if ( DotProduct2D( toGoal.AsVector2D(), dividingPlane ) < 0.0001f &&
-                 abs( toGoal.z ) < body->GetStandHullHeight() )
+                abs( toGoal.z ) < body->GetStandHullHeight() )
             {
                 // only skip higher Z goal if next goal is directly reachable
                 // can't use this for positions below us because we need to be able
@@ -335,10 +335,10 @@ bool PathFollower::LadderUpdate( INextBot *bot )
         Vector2D to = ( m_goal->ladder->m_bottom - mover->GetFeet() ).AsVector2D();
 
         body->AimHeadTowards( m_goal->ladder->m_top - 50.0f * m_goal->ladder->GetNormal() + Vector( 0, 0, body->GetCrouchHullHeight() ),
-                              IBody::CRITICAL,
-                              2.0f,
-                              NULL,
-                              "Mounting upward ladder" );
+                            IBody::CRITICAL,
+                            2.0f,
+                            NULL,
+                            "Mounting upward ladder" );
 
         float range = to.NormalizeInPlace();
         if ( range < NextBotLadderAlignRange.GetFloat() )
@@ -418,10 +418,10 @@ bool PathFollower::LadderUpdate( INextBot *bot )
             }
 
             body->AimHeadTowards( m_goal->ladder->m_bottom + 50.0f * m_goal->ladder->GetNormal() + Vector( 0, 0, body->GetCrouchHullHeight() ),
-                                  IBody::CRITICAL,
-                                  1.0f,
-                                  NULL,
-                                  "Mounting downward ladder" );
+                                IBody::CRITICAL,
+                                1.0f,
+                                NULL,
+                                "Mounting downward ladder" );
 
             float range = to.NormalizeInPlace();
 
@@ -1102,12 +1102,12 @@ bool PathFollower::FindClimbLedge( INextBot *bot, Vector startTracePos, Vector l
     {
         // volume is clear, trace straight down to find ledge and keep lowest one we've found
         mover->TraceHull( startTracePos,
-                          startTracePos + Vector( 0, 0, -100.0f ),
-                          ledgeRegionMins,
-                          ledgeRegionMaxs,
-                          bot->GetBodyInterface()->GetSolidMask(),
-                          &filter,
-                          &result );
+                        startTracePos + Vector( 0, 0, -100.0f ),
+                        ledgeRegionMins,
+                        ledgeRegionMaxs,
+                        bot->GetBodyInterface()->GetSolidMask(),
+                        &filter,
+                        &result );
     }
 }
 #endif  // _DEBUG
@@ -1227,27 +1227,27 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
     toGoal.NormalizeInPlace();
 
     if ( toGoal.z < mover->GetTraversableSlopeLimit() &&
-         !mover->IsStuck() && m_goal->type != CLIMB_UP &&
-         mover->IsPotentiallyTraversable( mover->GetFeet(), mover->GetFeet() + 2.0f * ledgeLookAheadRange * toGoal, ILocomotion::IMMEDIATELY ) )
+        !mover->IsStuck() && m_goal->type != CLIMB_UP &&
+        mover->IsPotentiallyTraversable( mover->GetFeet(), mover->GetFeet() + 2.0f * ledgeLookAheadRange * toGoal, ILocomotion::IMMEDIATELY ) )
     {
         return false;
     }
 
     // can't do this - we have to find the ledge to deal with breakable railings
 #if 0
-	// If our path requires a climb, do the climb.
-	// This solves some issues where there are several possible climbable ledges at a given
-	// location, and we need to know which ledge to climb - just use the preplanned path's choice.
-	const Segment *ledge = NextSegment( m_goal );
-	if ( m_goal->type == CLIMB_UP && ledge )
-	{
-		const float startClimbRange = body->GetHullWidth();
-		if ( ( m_goal->pos - mover->GetFeet() ).IsLengthLessThan( startClimbRange ) )
-		{
-			mover->ClimbUpToLedge( ledge->pos, climbDirection );
-			return true;
-		}
-	}
+    // If our path requires a climb, do the climb.
+    // This solves some issues where there are several possible climbable ledges at a given
+    // location, and we need to know which ledge to climb - just use the preplanned path's choice.
+    const Segment *ledge = NextSegment( m_goal );
+    if ( m_goal->type == CLIMB_UP && ledge )
+    {
+        const float startClimbRange = body->GetHullWidth();
+        if ( ( m_goal->pos - mover->GetFeet() ).IsLengthLessThan( startClimbRange ) )
+        {
+            mover->ClimbUpToLedge( ledge->pos, climbDirection );
+            return true;
+        }
+    }
 #endif
 
     // Determine if we're approaching a planned climb.
@@ -1342,26 +1342,26 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
     Vector ledgePos = feet;  // to be computed below
 
     mover->TraceHull( feet,
-                      feet + climbDirection * ledgeLookAheadRange,
-                      skipStepHeightHullMin,
-                      climbHullMax,
-                      mask,
-                      &filter,
-                      &result );
+                    feet + climbDirection * ledgeLookAheadRange,
+                    skipStepHeightHullMin,
+                    climbHullMax,
+                    mask,
+                    &filter,
+                    &result );
 
     if ( bot->IsDebugging( NEXTBOT_PATH ) && NextBotDebugClimbing.GetBool() )
     {
         // show ledge-finding hull as we move
         NDebugOverlay::SweptBox( feet,
-                                 feet + climbDirection * ledgeLookAheadRange,
-                                 skipStepHeightHullMin,
-                                 climbHullMax,
-                                 vec3_angle,
-                                 255,
-                                 100,
-                                 0,
-                                 255,
-                                 0.1f );
+                                feet + climbDirection * ledgeLookAheadRange,
+                                skipStepHeightHullMin,
+                                climbHullMax,
+                                vec3_angle,
+                                255,
+                                100,
+                                0,
+                                255,
+                                0.1f );
     }
 
     bool wasPotentialLedgeFound = result.DidHit() && !result.startsolid;
@@ -1375,15 +1375,15 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
         {
             // show ledge-finding hull that found a ledge candidate
             NDebugOverlay::SweptBox( feet,
-                                     feet + climbDirection * ledgeLookAheadRange,
-                                     skipStepHeightHullMin,
-                                     climbHullMax,
-                                     vec3_angle,
-                                     255,
-                                     100,
-                                     0,
-                                     100,
-                                     999.9f );
+                                    feet + climbDirection * ledgeLookAheadRange,
+                                    skipStepHeightHullMin,
+                                    climbHullMax,
+                                    vec3_angle,
+                                    255,
+                                    100,
+                                    0,
+                                    100,
+                                    999.9f );
 
             // show primary climb direction
             NDebugOverlay::HorzArrow( feet, feet + 50.0f * climbDirection, 2.0f, 0, 255, 0, 255, true, 9999.9f );
@@ -1458,12 +1458,12 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
             {
                 // trace forward to find the wall in front of us, or the empty space of the ledge above us
                 mover->TraceHull( feet + Vector( 0, 0, ledgeHeight ),
-                                  feet + Vector( 0, 0, ledgeHeight ) + climbDirection * ledgeTopLookAheadRange,
-                                  climbHullMin,
-                                  climbHullMax,
-                                  mask,
-                                  &filter,
-                                  &result );
+                                feet + Vector( 0, 0, ledgeHeight ) + climbDirection * ledgeTopLookAheadRange,
+                                climbHullMin,
+                                climbHullMax,
+                                mask,
+                                &filter,
+                                &result );
 
                 float traceDepth = ledgeTopLookAheadRange * result.fraction;
 
@@ -1484,12 +1484,12 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
                             // Only trace back down to the previous ledge height trace.
                             // The ledge can be no lower, or we would've found it in the last iteration.
                             mover->TraceHull( ledgePos,
-                                              ledgePos + Vector( 0, 0, -ledgeHeightIncrement ),
-                                              climbHullMin,
-                                              climbHullMax,
-                                              mask,
-                                              &filter,
-                                              &result );
+                                            ledgePos + Vector( 0, 0, -ledgeHeightIncrement ),
+                                            climbHullMin,
+                                            climbHullMax,
+                                            mask,
+                                            &filter,
+                                            &result );
 
                             ledgePos = result.endpos;
 
@@ -1537,26 +1537,26 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
                                     backUpSoFar += edgeTolerance;
 
                                     mover->TraceHull( testPos,
-                                                      testPos + Vector( 0, 0, -ledgeHeightIncrement ),
-                                                      climbHullMin,
-                                                      climbHullMax,
-                                                      mask,
-                                                      &filter,
-                                                      &result );
+                                                    testPos + Vector( 0, 0, -ledgeHeightIncrement ),
+                                                    climbHullMin,
+                                                    climbHullMax,
+                                                    mask,
+                                                    &filter,
+                                                    &result );
 
                                     if ( bot->IsDebugging( NEXTBOT_PATH ) && NextBotDebugClimbing.GetBool() )
                                     {
                                         // show edge-finder hulls
                                         NDebugOverlay::SweptBox( testPos,
-                                                                 testPos + Vector( 0, 0, -mover->GetStepHeight() ),
-                                                                 climbHullMin,
-                                                                 climbHullMax,
-                                                                 vec3_angle,
-                                                                 255,
-                                                                 0,
-                                                                 0,
-                                                                 255,
-                                                                 999.9f );
+                                                                testPos + Vector( 0, 0, -mover->GetStepHeight() ),
+                                                                climbHullMin,
+                                                                climbHullMax,
+                                                                vec3_angle,
+                                                                255,
+                                                                0,
+                                                                0,
+                                                                255,
+                                                                999.9f );
                                     }
 
                                     if ( result.DidHit() && result.plane.normal.z >= MinGroundNormal )
@@ -1579,23 +1579,23 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
                                 // have backed up less than halfSize.
                                 Vector climbHullMinStep( climbHullMin );  // skip StepHeight for sloped ledges
                                 mover->TraceHull( validLedgePos,
-                                                  ledgePos,
-                                                  climbHullMinStep,
-                                                  climbHullMax,
-                                                  mask,
-                                                  &filter,
-                                                  &result );
+                                                ledgePos,
+                                                climbHullMinStep,
+                                                climbHullMax,
+                                                mask,
+                                                &filter,
+                                                &result );
 
                                 ledgePos = result.endpos;
 
                                 // Now since ledgePos + StepHeight is valid, trace down to find ground on sloped ledges.
                                 mover->TraceHull( ledgePos + Vector( 0, 0, StepHeight ),
-                                                  ledgePos,
-                                                  climbHullMin,
-                                                  climbHullMax,
-                                                  mask,
-                                                  &filter,
-                                                  &result );
+                                                ledgePos,
+                                                climbHullMin,
+                                                climbHullMax,
+                                                mask,
+                                                &filter,
+                                                &result );
                                 if ( !result.startsolid )
                                 {
                                     ledgePos = result.endpos;
@@ -1603,19 +1603,19 @@ bool PathFollower::Climbing( INextBot *bot, const Path::Segment *goal, const Vec
                             }
 
                             /*** NOTE: While this saves us from climbing into a window below the window we want to get in,
-                             *** it also causes us to climb in midair high over crates sitting against walls we need to climb over.
-                                          if ( isUsable && m_goal->type == CLIMB_UP )
-                                          {
+                            *** it also causes us to climb in midair high over crates sitting against walls we need to climb over.
+                                        if ( isUsable && m_goal->type == CLIMB_UP )
+                                        {
                                             // we can only accept ledges at least as high as our current CLIMB_UP destination
                                             // NOTE: Can't use plannedClimbZ here, since that could be 2 or 3 short climbs ahead
                                             const Segment *ledge = NextSegment( m_goal );
 
                                             if ( !ledge || ledgeHeight < ledge->pos.z - feet.z - mover->GetStepHeight() )
                                             {
-                                              // this ledge is below the CLIMB_UP destination - can't use it
-                                              isUsable = false;
+                                            // this ledge is below the CLIMB_UP destination - can't use it
+                                            isUsable = false;
                                             }
-                                          }
+                                        }
                             */
 
                             if ( isUsable )

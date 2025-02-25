@@ -145,9 +145,9 @@ ActionResult< CTFBot > CTFBotMainAction::Update( CTFBot *me, float interval )
 
     // should I try to change class?
     if ( tf_bot_reevaluate_class_in_spawnroom.GetBool() &&
-         !TFGameRules()->IsMannVsMachineMode() &&
-         !TFGameRules()->IsInTraining() &&
-         myArea && myArea->HasAttributeTF( spawnRoomFlag ) )
+        !TFGameRules()->IsMannVsMachineMode() &&
+        !TFGameRules()->IsInTraining() &&
+        myArea && myArea->HasAttributeTF( spawnRoomFlag ) )
     {
         if ( !m_reevaluateClassTimer.HasStarted() )
         {
@@ -426,7 +426,7 @@ EventDesiredResult< CTFBot > CTFBotMainAction::OnContact( CTFBot *me, CBaseEntit
 //---------------------------------------------------------------------------------------------
 class BlockOverlappingAreaScan
 {
-   public:
+    public:
     BlockOverlappingAreaScan( int teamID, CBaseEntity *blocker )
     {
         m_teamID = teamID;
@@ -450,19 +450,19 @@ class BlockOverlappingAreaScan
 EventDesiredResult< CTFBot > CTFBotMainAction::OnStuck( CTFBot *me )
 {
     /*
-      // if we are touching a func_door while stuck, assume the door is locked and block
-      // the nav areas underneath it until the next stage of the scenario
-      if ( m_lastTouch != NULL && gpGlobals->curtime - m_lastTouchTime < 2.0f )
-      {
+    // if we are touching a func_door while stuck, assume the door is locked and block
+    // the nav areas underneath it until the next stage of the scenario
+    if ( m_lastTouch != NULL && gpGlobals->curtime - m_lastTouchTime < 2.0f )
+    {
         if ( FClassnameIs( m_lastTouch, "func_door*" ) || FClassnameIs( m_lastTouch, "prop_door*" ) || FClassnameIs( m_lastTouch, "func_brush" ) )
         {
-          Extent extent;
-          extent.Init( m_lastTouch );
+        Extent extent;
+        extent.Init( m_lastTouch );
 
-          BlockOverlappingAreaScan block( me->GetTeamNumber(), m_lastTouch );
-          TheNavMesh->ForAllAreasOverlappingExtent( block, extent );
+        BlockOverlappingAreaScan block( me->GetTeamNumber(), m_lastTouch );
+        TheNavMesh->ForAllAreasOverlappingExtent( block, extent );
         }
-      }
+    }
     */
 
     if ( TFGameRules()->IsMannVsMachineMode() )
@@ -524,17 +524,17 @@ EventDesiredResult< CTFBot > CTFBotMainAction::OnStuck( CTFBot *me )
     }
 
     /*
-      if ( me->GetLocomotionInterface()->GetStuckDuration() > 3.0f )
-      {
+    if ( me->GetLocomotionInterface()->GetStuckDuration() > 3.0f )
+    {
         // stuck for too long, do something drastic
         // warp to the our next path goal
         if ( me->GetCurrentPath() && me->GetCurrentPath()->GetCurrentGoal() )
         {
-          me->SetAbsOrigin( me->GetCurrentPath()->GetCurrentGoal()->pos + Vector( 0, 0, StepHeight ) );
+        me->SetAbsOrigin( me->GetCurrentPath()->GetCurrentGoal()->pos + Vector( 0, 0, StepHeight ) );
 
-          UTIL_LogPrintf( "%3.2f: TFBot '%s' stuck for too long - slammed to goal position. Entindex = %d.\n", gpGlobals->curtime, me->GetPlayerName(), me->entindex() );
+        UTIL_LogPrintf( "%3.2f: TFBot '%s' stuck for too long - slammed to goal position. Entindex = %d.\n", gpGlobals->curtime, me->GetPlayerName(), me->entindex() );
         }
-      }
+    }
     */
 
     return TryContinue();
@@ -761,7 +761,7 @@ Vector CTFBotMainAction::SelectTargetPoint( const INextBot *meBot, const CBaseCo
             }
 
             if ( myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) ||
-                 myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) )
+                myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) )
             {
                 Vector toThreat = subject->GetAbsOrigin() - me->GetAbsOrigin();
                 float threatRange = toThreat.NormalizeInPlace();
@@ -803,23 +803,23 @@ QueryResultType CTFBotMainAction::IsPositionAllowed( const INextBot *me, const V
     /*
     if ( me->GetLocomotionInterface()->IsScrambling() )
     {
-      // anything goes when we're in the air/etc
-      return ANSWER_YES;
+    // anything goes when we're in the air/etc
+    return ANSWER_YES;
     }
 
     // if we are at a DROP_DOWN segment of our path, allow us to drop
     const PathFollower *path = me->GetCurrentPath();
     if ( path && path->IsValid() )
     {
-      const Path::Segment *goal = path->GetCurrentGoal();
-      if ( goal )
-      {
+    const Path::Segment *goal = path->GetCurrentGoal();
+    if ( goal )
+    {
         if ( goal->type == Path::DROP_DOWN || me->GetLocomotionInterface()->GetFeet().z - goal->pos.z >= me->GetLocomotionInterface()->GetMaxJumpHeight() )
         {
-          // our goal requires us to drop down
-          return ANSWER_YES;
+        // our goal requires us to drop down
+        return ANSWER_YES;
         }
-      }
+    }
     }
 
     // do not fall off someplace we can't get back up from!
@@ -832,17 +832,17 @@ QueryResultType CTFBotMainAction::IsPositionAllowed( const INextBot *me, const V
     float halfWidth = 0.4f * body->GetHullWidth();
 
     mover->TraceHull( pos + Vector( 0, 0, mover->GetStepHeight() ),	// start up a bit to handle rough terrain
-              pos + Vector( 0, 0, -mover->GetMaxJumpHeight() ),
-              Vector( -halfWidth, -halfWidth, 0 ),
-              Vector( halfWidth, halfWidth, body->GetHullHeight() ),
-              body->GetSolidMask(),
-              &filter,
-              &result );
+            pos + Vector( 0, 0, -mover->GetMaxJumpHeight() ),
+            Vector( -halfWidth, -halfWidth, 0 ),
+            Vector( halfWidth, halfWidth, body->GetHullHeight() ),
+            body->GetSolidMask(),
+            &filter,
+            &result );
 
     if ( result.DidHit() )
     {
-      // there is ground safe beneath us
-      return ANSWER_YES;
+    // there is ground safe beneath us
+    return ANSWER_YES;
     }
 
     return ANSWER_NO;
@@ -990,9 +990,9 @@ const CKnownEntity *CTFBotMainAction::GetHealerOfThreat( const CKnownEntity *thr
 //---------------------------------------------------------------------------------------------
 // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreat( const INextBot *meBot,
-                                                                 const CBaseCombatCharacter *subject,
-                                                                 const CKnownEntity *threat1,
-                                                                 const CKnownEntity *threat2 ) const
+                                                                const CBaseCombatCharacter *subject,
+                                                                const CKnownEntity *threat1,
+                                                                const CKnownEntity *threat2 ) const
 {
     CTFBot *me = ToTFBot( meBot->GetEntity() );
 
@@ -1043,9 +1043,9 @@ const CKnownEntity *SelectClosestSpyToMe( CTFBot *me, const CKnownEntity *threat
 //---------------------------------------------------------------------------------------------
 // Return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreatInternal( const INextBot *meBot,
-                                                                         const CBaseCombatCharacter *subject,
-                                                                         const CKnownEntity *threat1,
-                                                                         const CKnownEntity *threat2 ) const
+                                                                        const CBaseCombatCharacter *subject,
+                                                                        const CKnownEntity *threat1,
+                                                                        const CKnownEntity *threat2 ) const
 {
     CTFBot *me = ToTFBot( meBot->GetEntity() );
     const CKnownEntity *closerThreat = SelectCloserThreat( me, threat1, threat2 );
@@ -1294,9 +1294,9 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
         if ( playerThreat && playerThreat->m_Shared.IsInvulnerable() )
         {
             if ( !myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) &&
-                 !myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) &&
-                 !myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) &
-                     !myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
+                !myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) &&
+                !myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) &
+                    !myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
             {
                 // firing would just waste ammo, so don't
                 return;
@@ -1341,7 +1341,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
             me->PressAltFireButton();
         }
         else if ( threat->GetTimeSinceLastSeen() < 1.0f &&
-                  me->IsDistanceBetweenLessThan( threat->GetEntity(), me->GetMaxAttackRange() ) )
+                me->IsDistanceBetweenLessThan( threat->GetEntity(), me->GetMaxAttackRange() ) )
         {
             me->PressFireButton( tf_bot_fire_weapon_min_time.GetFloat() );
         }
@@ -1434,7 +1434,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
  */
 class CCompareFriendFoeInfluence : public IVision::IForEachKnownEntity
 {
-   public:
+    public:
     CCompareFriendFoeInfluence( CTFBot *me )
     {
         m_me = me;
@@ -1508,8 +1508,8 @@ QueryResultType CTFBotMainAction::ShouldRetreat( const INextBot *bot ) const
     if ( me->IsPlayerClass( TF_CLASS_SPY ) )
     {
         if ( me->m_Shared.InCond( TF_COND_DISGUISED ) ||
-             me->m_Shared.InCond( TF_COND_DISGUISING ) ||
-             me->m_Shared.IsStealthed() )
+            me->m_Shared.InCond( TF_COND_DISGUISING ) ||
+            me->m_Shared.IsStealthed() )
         {
             return ANSWER_NO;
         }
@@ -1563,8 +1563,8 @@ void CTFBotMainAction::Dodge( CTFBot *me )
 
     // disguised/cloaked spies don't dodge
     if ( me->m_Shared.InCond( TF_COND_DISGUISED ) ||
-         me->m_Shared.InCond( TF_COND_DISGUISING ) ||
-         me->m_Shared.IsStealthed() )
+        me->m_Shared.InCond( TF_COND_DISGUISING ) ||
+        me->m_Shared.IsStealthed() )
     {
         return;
     }

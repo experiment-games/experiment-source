@@ -24,7 +24,7 @@ class C_Func_Dust;
 
 class CFuncDustParticle : public Particle
 {
-   public:
+    public:
     Vector m_vVelocity;
     float m_flLifetime;
     float m_flDieTime;
@@ -34,7 +34,7 @@ class CFuncDustParticle : public Particle
 
 class CDustEffect : public CParticleEffect
 {
-   public:
+    public:
     CDustEffect( const char *pDebugName )
         : CParticleEffect( pDebugName ) {}
 
@@ -43,7 +43,7 @@ class CDustEffect : public CParticleEffect
 
     C_Func_Dust *m_pDust;
 
-   private:
+    private:
     CDustEffect( const CDustEffect & );  // not defined, not accessible
 };
 
@@ -53,7 +53,7 @@ class CDustEffect : public CParticleEffect
 
 class C_Func_Dust : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_Func_Dust, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -63,11 +63,11 @@ class C_Func_Dust : public C_BaseEntity
     virtual void ClientThink();
     virtual bool ShouldDraw();
 
-   private:
+    private:
     void AttemptSpawnNewParticle();
 
     // Vars from server.
-   public:
+    public:
     color32 m_Color;
     int m_SpawnRate;
 
@@ -83,15 +83,15 @@ class C_Func_Dust : public C_BaseEntity
 
     float m_FallSpeed;  // extra 'gravity'
 
-   public:
+    public:
     int m_DustFlags;  // Combination of DUSTFLAGS_
 
-   public:
+    public:
     CDustEffect m_Effect;
     PMaterialHandle m_hMaterial;
     TimedEvent m_Spawner;
 
-   private:
+    private:
     C_Func_Dust( const C_Func_Dust & );  // not defined, not accessible
 };
 

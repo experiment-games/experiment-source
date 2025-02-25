@@ -11,7 +11,7 @@ class CHudBossHealthMeter : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudBossHealthMeter, vgui::EditablePanel );
 
-   public:
+    public:
     CHudBossHealthMeter( const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -22,7 +22,7 @@ class CHudBossHealthMeter : public CHudElement, public vgui::EditablePanel
 
     void Update( void );  // update HUD due to data changes
 
-   private:
+    private:
     vgui::ContinuousProgressBar *m_pStunMeter;
 
     vgui::EditablePanel *m_pHealthBarPanel;

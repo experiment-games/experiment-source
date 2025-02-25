@@ -17,7 +17,7 @@
 
 class CTFForceRespawn : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFForceRespawn, CPointEntity );
 
     CTFForceRespawn();
@@ -30,7 +30,7 @@ class CTFForceRespawn : public CPointEntity
     void InputForceRespawnSwitchTeams( inputdata_t &inputdata );
     void InputForceTeamRespawn( inputdata_t &inputdata );
 
-   private:
+    private:
     COutputEvent m_outputOnForceRespawn;  // Fired when the entity is done respawning the players.
 
     DECLARE_DATADESC();

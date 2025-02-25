@@ -37,7 +37,7 @@ inline T2 ModPowerOf2( T1 a, T2 b )
 template < typename T >
 class CDefEquals
 {
-   public:
+    public:
     CDefEquals() {}
     CDefEquals( int i ) {}
     inline bool operator()( const T &lhs, const T &rhs ) const
@@ -54,7 +54,7 @@ class CDefEquals
 template < typename T >
 class CDefEquals< T * >
 {
-   public:
+    public:
     CDefEquals() {}
     CDefEquals( int i ) {}
     inline bool operator()( const T *lhs, const T *rhs ) const
@@ -111,7 +111,7 @@ struct CaseSensitiveStrEquals
 template < typename K, typename T, typename L = CDefEquals< K >, typename H = MurmurHash3Functor< K > >
 class CUtlHashMapLarge
 {
-   public:
+    public:
     // This enum exists so that FOR_EACH_MAP and FOR_EACH_MAP_FAST cannot accidentally
     // be used on a type that is not a CUtlMap. If the code compiles then all is well.
     // The check for IsUtlMap being true should be free.
@@ -264,7 +264,7 @@ class CUtlHashMapLarge
         V_swap( m_HashFunc, rhs.m_HashFunc );
     }
 
-   private:
+    private:
     enum EInsertPolicy
     {
         eInsert_UpdateExisting,

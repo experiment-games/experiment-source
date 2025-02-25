@@ -96,19 +96,19 @@ struct StaticPropRenderInfo_t
 // UNDONE: Move this to hud export code, subsume previous functions
 abstract_class IVModelRender
 {
-   public:
+    public:
     virtual int DrawModel( int flags,
-                           IClientRenderable *pRenderable,
-                           ModelInstanceHandle_t instance,
-                           int entity_index,
-                           const model_t *model,
-                           Vector const &origin,
-                           QAngle const &angles,
-                           int skin,
-                           int body,
-                           int hitboxset,
-                           const matrix3x4_t *modelToWorld = NULL,
-                           const matrix3x4_t *pLightingOffset = NULL ) = 0;
+                            IClientRenderable *pRenderable,
+                            ModelInstanceHandle_t instance,
+                            int entity_index,
+                            const model_t *model,
+                            Vector const &origin,
+                            QAngle const &angles,
+                            int skin,
+                            int body,
+                            int hitboxset,
+                            const matrix3x4_t *modelToWorld = NULL,
+                            const matrix3x4_t *pLightingOffset = NULL ) = 0;
 
     // This causes a material to be used when rendering the model instead
     // of the materials the model was compiled with

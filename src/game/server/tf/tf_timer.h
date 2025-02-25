@@ -17,12 +17,12 @@ class CTFPlayer;
 
 class CTimer
 {
-   public:
+    public:
     CTimer();
 
     int GetTeamNumber() const;
 
-   public:
+    public:
     EHANDLE m_hOwner;
     EHANDLE m_hEnemy;
     TFTimer_t m_Type;  // One of the TF_TIMER_ defines.

@@ -17,7 +17,7 @@ class CBaseAchievement;
 
 abstract_class IAchievement
 {
-   public:
+    public:
     virtual int GetAchievementID() = 0;
     virtual const char *GetName() = 0;
     virtual int GetFlags() = 0;
@@ -33,7 +33,7 @@ abstract_class IAchievement
 
 abstract_class IAchievementMgr
 {
-   public:
+    public:
     virtual IAchievement *GetAchievementByIndex( int index ) = 0;
     virtual CBaseAchievement *GetAchievementByID( int id ) = 0;
     virtual int GetAchievementCount() = 0;

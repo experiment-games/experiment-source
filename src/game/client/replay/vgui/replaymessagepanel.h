@@ -32,7 +32,7 @@ class CReplayMessageDlg : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayMessageDlg, EditablePanel );
 
-   public:
+    public:
     CReplayMessageDlg( const char *pText );
     ~CReplayMessageDlg();
 
@@ -42,7 +42,7 @@ class CReplayMessageDlg : public EditablePanel
     virtual void OnKeyCodeTyped( KeyCode nCode );
     virtual void OnCommand( const char *pCommand );
 
-   private:
+    private:
     void Close();
 
     Panel *m_pDlg;
@@ -57,7 +57,7 @@ class CReplayMessagePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayMessagePanel, EditablePanel );
 
-   public:
+    public:
     CReplayMessagePanel( const char *pLocalizeName, float flDuration, bool bUrgent );
     virtual ~CReplayMessagePanel();
 
@@ -67,7 +67,7 @@ class CReplayMessagePanel : public EditablePanel
     static int InstanceCount();
     static void RemoveAll();
 
-   private:
+    private:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 

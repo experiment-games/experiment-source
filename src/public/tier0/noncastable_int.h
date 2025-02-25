@@ -49,12 +49,12 @@ enum NoncastableCheckFlag_t
 };
 
 #define MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue )     \
-   public:                                                                         \
+    public:                                                                         \
     enum                                                                           \
     {                                                                              \
         IS_BOXED_INTEGER_TYPE = 1                                                  \
     };                                                                             \
-                                                                                   \
+                                                                                    \
     className( InternalIntType_t val = defaultValue ) : m_nBoxedTypeSafeInt( val ) \
     {                                                                              \
     }                                                                              \
@@ -129,15 +129,15 @@ enum NoncastableCheckFlag_t
         --( *this );                                                               \
         return copy;                                                               \
     }                                                                              \
-                                                                                   \
-   private:                                                                        \
+                                                                                    \
+    private:                                                                        \
     inttype m_nBoxedTypeSafeInt;                                                   \
     className &operator=( InternalIntType_t other );
 
 #define MAKE_NONCASTABLE_INTEGER_TYPE( className, inttype, defaultValue )       \
     class className                                                             \
     {                                                                           \
-       public:                                                                  \
+        public:                                                                  \
         using InternalIntType_t = inttype;                                      \
         MAKE_NONCASTABLE_INTEGER_TYPE_BODY( className, inttype, defaultValue ); \
     };                                                                          \
@@ -146,7 +146,7 @@ enum NoncastableCheckFlag_t
 #define MAKE_SCHEMATIZED_NONCASTABLE_INTEGER_TYPE( className, inttype, defaultValue ) \
     schema class className                                                            \
     {                                                                                 \
-       public:                                                                        \
+        public:                                                                        \
         DECLARE_SCHEMA_DATA_CLASS( className );                                       \
         TYPEMETA( MIsBoxedIntegerType );                                              \
         typedef inttype InternalIntType_t;                                            \
@@ -159,7 +159,7 @@ enum NoncastableCheckFlag_t
     {                                                                                     \
         IS_BOXED_INTEGER_TYPE = 1                                                         \
     };                                                                                    \
-                                                                                          \
+                                                                                        \
     className() : m_nBoxedTypeSafeInt( defaultValue ) {}                                  \
     explicit constexpr className( InternalIntType_t val ) : m_nBoxedTypeSafeInt( val ) {} \
     template < typename _ArgT >                                                           \
@@ -233,15 +233,15 @@ enum NoncastableCheckFlag_t
         --( *this );                                                                      \
         return copy;                                                                      \
     }                                                                                     \
-                                                                                          \
-   private:                                                                               \
+                                                                                        \
+    private:                                                                               \
     inttype m_nBoxedTypeSafeInt;                                                          \
     className &operator=( InternalIntType_t other );
 
 #define MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE( className, inttype, defaultValue )       \
     class className                                                                  \
     {                                                                                \
-       public:                                                                       \
+        public:                                                                       \
         using InternalIntType_t = inttype;                                           \
         MAKE_NONAUTOCONSTRUCT_INTEGER_TYPE_BODY( className, inttype, defaultValue ); \
     };                                                                               \
@@ -250,7 +250,7 @@ enum NoncastableCheckFlag_t
 #define MAKE_SCHEMATIZED_NONAUTOCONSTRUCT_INTEGER_TYPE( className, inttype, defaultValue ) \
     schema class className                                                                 \
     {                                                                                      \
-       public:                                                                             \
+        public:                                                                             \
         DECLARE_SCHEMA_DATA_CLASS( className );                                            \
         TYPEMETA( MIsBoxedIntegerType );                                                   \
         typedef inttype InternalIntType_t;                                                 \
@@ -263,7 +263,7 @@ enum NoncastableCheckFlag_t
     {                                                                                  \
         IS_BOXED_INTEGER_TYPE = 1                                                      \
     };                                                                                 \
-                                                                                       \
+                                                                                        \
     className( InternalIntType_t val = defaultValue ) : m_nBoxedTypeSafeInt( val )     \
     {                                                                                  \
     }                                                                                  \
@@ -316,15 +316,15 @@ enum NoncastableCheckFlag_t
     {                                                                                  \
         return m_nBoxedTypeSafeInt >= other.m_nBoxedTypeSafeInt;                       \
     }                                                                                  \
-                                                                                       \
-   private:                                                                            \
+                                                                                        \
+    private:                                                                            \
     inttype m_nBoxedTypeSafeInt;                                                       \
     className &operator=( InternalIntType_t other );
 
 #define MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH( className, inttype, defaultValue )      \
     class className                                                                    \
     {                                                                                  \
-       public:                                                                         \
+        public:                                                                         \
         using InternalIntType_t = inttype;                                             \
         MAKE_NONCASTABLE_INTEGER_TYPE_NO_MATH_BODY( className, inttype, defaultValue ) \
     };                                                                                 \
@@ -333,7 +333,7 @@ enum NoncastableCheckFlag_t
 #define MAKE_SCHEMATIZED_NONCASTABLE_INTEGER_TYPE_NO_MATH( className, inttype, defaultValue ) \
     schema class className                                                                    \
     {                                                                                         \
-       public:                                                                                \
+        public:                                                                                \
         DECLARE_SCHEMA_DATA_CLASS( className );                                               \
         TYPEMETA( MIsBoxedIntegerType );                                                      \
         typedef inttype InternalIntType_t;                                                    \

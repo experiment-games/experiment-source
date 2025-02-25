@@ -60,8 +60,8 @@ void CReplayBrowserBasePage::OnTick()
     input()->GetCursorPos( nCursorX, nCursorY );
 
     if ( input()->IsMouseDown( MOUSE_LEFT ) &&
-         !m_pSearchTextEntry->IsWithin( nCursorX, nCursorY ) &&
-         m_pSearchTextEntry->HasFocus() )
+        !m_pSearchTextEntry->IsWithin( nCursorX, nCursorY ) &&
+        m_pSearchTextEntry->HasFocus() )
     {
         RequestFocus();
     }

@@ -605,7 +605,7 @@ skipspace:
 
     // strip single line comments
     if ( *script->script_p == ';' || *script->script_p == '#' ||                 // semicolon and # is comment field
-         ( *script->script_p == '/' && *( ( script->script_p ) + 1 ) == '/' ) )  // also make // a comment field
+        ( *script->script_p == '/' && *( ( script->script_p ) + 1 ) == '/' ) )  // also make // a comment field
     {
         if ( !crossline )
             Error( "Line %i is incomplete\n", scriptline );
@@ -778,7 +778,7 @@ skipspace:
         return EndOfScript( crossline );
 
     if ( *script->script_p == ';' || *script->script_p == '#' ||                 // semicolon and # is comment field
-         ( *script->script_p == '/' && *( ( script->script_p ) + 1 ) == '/' ) )  // also make // a comment field
+        ( *script->script_p == '/' && *( ( script->script_p ) + 1 ) == '/' ) )  // also make // a comment field
     {
         if ( !crossline )
             Error( "Line %i is incomplete\n", scriptline );
@@ -883,7 +883,7 @@ qboolean TokenAvailable( void )
     }
 
     if ( *search_p == ';' || *search_p == '#' ||                 // semicolon and # is comment field
-         ( *search_p == '/' && *( ( search_p ) + 1 ) == '/' ) )  // also make // a comment field
+        ( *search_p == '/' && *( ( search_p ) + 1 ) == '/' ) )  // also make // a comment field
         return false;
 
     return true;
@@ -924,7 +924,7 @@ qboolean GetTokenizerStatus( char **pFilename, int *pLine )
 
 class CScriptLib : public IScriptLib
 {
-   public:
+    public:
     virtual bool ReadFileToBuffer( const char *pSourceName, CUtlBuffer &buffer, bool bText = false, bool bNoOpenFailureWarning = false );
     virtual bool WriteBufferToFile( const char *pTargetName, CUtlBuffer &buffer, DiskWriteMode_t writeMode );
     virtual int FindFiles( char *pFileMask, bool bRecurse, CUtlVector< fileList_t > &fileList );
@@ -933,7 +933,7 @@ class CScriptLib : public IScriptLib
     virtual int CompareFileTime( const char *pFilenameA, const char *pFilenameB );
     virtual bool DoesFileExist( const char *pFilename );
 
-   private:
+    private:
     int GetFileList( const char *pDirPath, const char *pPattern, CUtlVector< fileList_t > &fileList );
     void RecurseFileTree_r( const char *pDirPath, int depth, CUtlVector< CUtlString > &dirList );
 };
@@ -1062,20 +1062,20 @@ int CScriptLib::CompareFileTime( const char *pFilenameA, const char *pFilenameB 
 char *CScriptLib::MakeTemporaryFilename( char const *pchModPath, char *pPath, int pathSize )
 {
 #if 0
-	char *pBuffer = _tempnam( pchModPath, "mgd_" );
-	if ( pBuffer[0] == '\\' )
-	{
-		pBuffer++;
-	}
-	if ( pBuffer[strlen( pBuffer )-1] == '.' )
-	{
-		pBuffer[strlen( pBuffer )-1] = '\0';
-	}
-	V_snprintf( pPath, pathSize, "%s.tmp", pBuffer );
+    char *pBuffer = _tempnam( pchModPath, "mgd_" );
+    if ( pBuffer[0] == '\\' )
+    {
+        pBuffer++;
+    }
+    if ( pBuffer[strlen( pBuffer )-1] == '.' )
+    {
+        pBuffer[strlen( pBuffer )-1] = '\0';
+    }
+    V_snprintf( pPath, pathSize, "%s.tmp", pBuffer );
 
-	free( pBuffer );
+    free( pBuffer );
 
-	return pPath;
+    return pPath;
 #else
     // misyl: Deprecated!
 

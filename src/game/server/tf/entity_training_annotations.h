@@ -13,7 +13,7 @@ class CTrainingAnnotation : public CPointEntity
 {
     DECLARE_CLASS( CTrainingAnnotation, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTrainingAnnotation();

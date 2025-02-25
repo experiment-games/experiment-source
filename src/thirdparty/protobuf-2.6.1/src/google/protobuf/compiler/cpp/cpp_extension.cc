@@ -57,7 +57,7 @@ string ExtendeeClassName(const FieldDescriptor* descriptor) {
 }  // anonymous namespace
 
 ExtensionGenerator::ExtensionGenerator(const FieldDescriptor* descriptor,
-                                       const Options& options)
+                                        const Options& options)
   : descriptor_(descriptor),
     options_(options) {
   // Construct type_traits_.
@@ -67,25 +67,25 @@ ExtensionGenerator::ExtensionGenerator(const FieldDescriptor* descriptor,
 
   switch (descriptor_->cpp_type()) {
     case FieldDescriptor::CPPTYPE_ENUM:
-      type_traits_.append("EnumTypeTraits< ");
-      type_traits_.append(ClassName(descriptor_->enum_type(), true));
-      type_traits_.append(", ");
-      type_traits_.append(ClassName(descriptor_->enum_type(), true));
-      type_traits_.append("_IsValid>");
-      break;
+    type_traits_.append("EnumTypeTraits< ");
+    type_traits_.append(ClassName(descriptor_->enum_type(), true));
+    type_traits_.append(", ");
+    type_traits_.append(ClassName(descriptor_->enum_type(), true));
+    type_traits_.append("_IsValid>");
+    break;
     case FieldDescriptor::CPPTYPE_STRING:
-      type_traits_.append("StringTypeTraits");
-      break;
+    type_traits_.append("StringTypeTraits");
+    break;
     case FieldDescriptor::CPPTYPE_MESSAGE:
-      type_traits_.append("MessageTypeTraits< ");
-      type_traits_.append(ClassName(descriptor_->message_type(), true));
-      type_traits_.append(" >");
-      break;
+    type_traits_.append("MessageTypeTraits< ");
+    type_traits_.append(ClassName(descriptor_->message_type(), true));
+    type_traits_.append(" >");
+    break;
     default:
-      type_traits_.append("PrimitiveTypeTraits< ");
-      type_traits_.append(PrimitiveTypeName(descriptor_->cpp_type()));
-      type_traits_.append(" >");
-      break;
+    type_traits_.append("PrimitiveTypeTraits< ");
+    type_traits_.append(PrimitiveTypeName(descriptor_->cpp_type()));
+    type_traits_.append(" >");
+    break;
   }
 }
 
@@ -107,7 +107,7 @@ void ExtensionGenerator::GenerateDeclaration(io::Printer* printer) {
   if (descriptor_->extension_scope() == NULL) {
     vars["qualifier"] = "extern";
     if (!options_.dllexport_decl.empty()) {
-      vars["qualifier"] = options_.dllexport_decl + " " + vars["qualifier"];
+    vars["qualifier"] = options_.dllexport_decl + " " + vars["qualifier"];
     }
   } else {
     vars["qualifier"] = "static";
@@ -146,7 +146,7 @@ void ExtensionGenerator::GenerateDefinition(io::Printer* printer) {
     string global_name = StringReplace(name, "::", "_", true);
     vars["global_name"] = global_name;
     printer->Print(vars,
-      "const ::std::string $global_name$_default($default$);\n");
+    "const ::std::string $global_name$_default($default$);\n");
 
     // Update the default to refer to the string global.
     vars["default"] = global_name + "_default";
@@ -155,9 +155,9 @@ void ExtensionGenerator::GenerateDefinition(io::Printer* printer) {
   // Likewise, class members need to declare the field constant variable.
   if (descriptor_->extension_scope() != NULL) {
     printer->Print(vars,
-      "#ifndef _MSC_VER\n"
-      "const int $scope$$constant_name$;\n"
-      "#endif\n");
+    "#ifndef _MSC_VER\n"
+    "const int $scope$$constant_name$;\n"
+    "#endif\n");
   }
 
   printer->Print(vars,
@@ -173,34 +173,34 @@ void ExtensionGenerator::GenerateRegistration(io::Printer* printer) {
   vars["field_type" ] = SimpleItoa(static_cast<int>(descriptor_->type()));
   vars["is_repeated"] = descriptor_->is_repeated() ? "true" : "false";
   vars["is_packed"  ] = (descriptor_->is_repeated() &&
-                         descriptor_->options().packed())
+                        descriptor_->options().packed())
                         ? "true" : "false";
 
   switch (descriptor_->cpp_type()) {
     case FieldDescriptor::CPPTYPE_ENUM:
-      printer->Print(vars,
+    printer->Print(vars,
         "::google::protobuf::internal::ExtensionSet::RegisterEnumExtension(\n"
         "  &$extendee$::default_instance(),\n"
         "  $number$, $field_type$, $is_repeated$, $is_packed$,\n");
-      printer->Print(
+    printer->Print(
         "  &$type$_IsValid);\n",
         "type", ClassName(descriptor_->enum_type(), true));
-      break;
+    break;
     case FieldDescriptor::CPPTYPE_MESSAGE:
-      printer->Print(vars,
+    printer->Print(vars,
         "::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(\n"
         "  &$extendee$::default_instance(),\n"
         "  $number$, $field_type$, $is_repeated$, $is_packed$,\n");
-      printer->Print(
+    printer->Print(
         "  &$type$::default_instance());\n",
         "type", ClassName(descriptor_->message_type(), true));
-      break;
+    break;
     default:
-      printer->Print(vars,
+    printer->Print(vars,
         "::google::protobuf::internal::ExtensionSet::RegisterExtension(\n"
         "  &$extendee$::default_instance(),\n"
         "  $number$, $field_type$, $is_repeated$, $is_packed$);\n");
-      break;
+    break;
   }
 }
 

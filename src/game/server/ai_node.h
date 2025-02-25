@@ -98,7 +98,7 @@ enum NodeInfoBits_e
 
 class CAI_Node
 {
-   public:
+    public:
     CAI_Node( int id, const Vector &origin, float yaw );
 
     CAI_Hint *GetHint()

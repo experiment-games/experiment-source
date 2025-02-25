@@ -31,7 +31,7 @@ class CQuestMapHelper
     : public CLocalSteamSharedObjectListener
 #endif
 {
-   public:
+    public:
     CQuestMapHelper( CSteamID steamID );
 #ifdef CLIENT_DLL
     CQuestMapHelper();
@@ -98,7 +98,7 @@ class CQuestMapHelper
         return m_vecQuests;
     }
 
-   private:
+    private:
 #ifndef CLIENT_DLL
     // You gotta construct with a steamID on the GC
     CQuestMapHelper() {}

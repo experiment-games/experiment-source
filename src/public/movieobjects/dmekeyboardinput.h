@@ -19,14 +19,14 @@ class CDmeKeyboardInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeKeyboardInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
     virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
     virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-   protected:
+    protected:
     CDmaVar< bool > *m_keys;
 
     bool GetKeyStatus( uint ki );

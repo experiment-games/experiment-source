@@ -26,7 +26,7 @@ class CCompetitiveAccessInfoPanel : public EditablePanel, public CLocalSteamShar
 {
     DECLARE_CLASS_SIMPLE( CCompetitiveAccessInfoPanel, EditablePanel );
 
-   public:
+    public:
     CCompetitiveAccessInfoPanel( Panel *pParent, const char *pszName )
         : EditablePanel( pParent, pszName )
     {
@@ -182,7 +182,7 @@ class CCompetitiveAccessInfoPanel : public EditablePanel, public CLocalSteamShar
         }
     }
 
-   private:
+    private:
     CExImageButton *m_pPhoneButton;
     CExImageButton *m_pPremiumButton;
     CTFBadgePanel *m_pRankImage;

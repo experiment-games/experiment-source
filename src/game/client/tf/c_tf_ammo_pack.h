@@ -23,7 +23,7 @@ class C_TFAmmoPack : public C_BaseAnimating, public ITargetIDProvidesHint
 {
     DECLARE_CLASS( C_TFAmmoPack, C_BaseAnimating );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TFAmmoPack( void );
@@ -36,10 +36,10 @@ class C_TFAmmoPack : public C_BaseAnimating, public ITargetIDProvidesHint
     virtual bool Interpolate( float currentTime );
 
     // ITargetIDProvidesHint
-   public:
+    public:
     virtual void DisplayHintTo( C_BasePlayer *pPlayer );
 
-   private:
+    private:
     Vector m_vecInitialVelocity;
     short m_nWorldModelIndex;
 };

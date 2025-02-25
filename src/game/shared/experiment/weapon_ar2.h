@@ -23,7 +23,7 @@
 
 class CWeaponAR2 : public CExperimentMachineGun
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponAR2, CExperimentMachineGun );
 
     CWeaponAR2();
@@ -77,10 +77,10 @@ class CWeaponAR2 : public CExperimentMachineGun
 
     const WeaponProficiencyInfo_t *GetProficiencyValues();
 
-   private:
+    private:
     CWeaponAR2( const CWeaponAR2 & );
 
-   protected:
+    protected:
     float m_flDelayedFire;
     bool m_bShotDelayed;
     int m_nVentPose;

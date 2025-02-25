@@ -36,7 +36,7 @@
 
 class CMulticastFileInfo
 {
-   public:
+    public:
     unsigned long m_CompressedSize;
     unsigned long m_UncompressedSize;
     unsigned short m_FileID;
@@ -45,7 +45,7 @@ class CMulticastFileInfo
 
 class CBaseVMPIFileSystem : public CFileSystemPassThru
 {
-   public:
+    public:
     virtual ~CBaseVMPIFileSystem();
     virtual void Release();
 
@@ -68,13 +68,13 @@ class CBaseVMPIFileSystem : public CFileSystemPassThru
     // All the IFileSystem-specific ones pass the calls through.
     // The worker opens its own filesystem_stdio fthrough.
 
-   protected:
+    protected:
     CIPAddr m_MulticastIP;
 };
 
 class IVMPIFile
 {
-   public:
+    public:
     virtual void Close() = 0;
     virtual void Seek( int pos, FileSystemSeek_t seekType ) = 0;
     virtual unsigned int Tell() = 0;
@@ -87,7 +87,7 @@ class IVMPIFile
 // Both the workers and masters use this to hand out the file data.
 class CVMPIFile_Memory : public IVMPIFile
 {
-   public:
+    public:
     void Init( const char *pData, long len, char chMode = 'b' );
     virtual void Close();
     virtual void Seek( int pos, FileSystemSeek_t seekType );
@@ -97,7 +97,7 @@ class CVMPIFile_Memory : public IVMPIFile
     virtual int Read( void *pOutput, int size );
     virtual int Write( void const *pInput, int size );
 
-   private:
+    private:
     const char *m_pData;
     long m_DataLen;
     int m_iCurPos;

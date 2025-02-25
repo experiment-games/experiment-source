@@ -854,10 +854,10 @@ void CNPC_Strider::CalculateIKLocks( float currentTime )
             m_vecIKTarget.Set( i, target.est.pos );
 
 #if 0
-		// yellow box at target pos - helps debugging
-		//if (i == 0)
-			NDebugOverlay::Line( GetAbsOrigin(), m_vecIKTarget[i], 255, 255, 0, 0, 0.1 );
-			NDebugOverlay::Box( m_vecIKTarget[i], Vector(-8,-8,-8), Vector(8,8,8), 255, 255, 0, 0, 4.0 );
+        // yellow box at target pos - helps debugging
+        //if (i == 0)
+            NDebugOverlay::Line( GetAbsOrigin(), m_vecIKTarget[i], 255, 255, 0, 0, 0.1 );
+            NDebugOverlay::Box( m_vecIKTarget[i], Vector(-8,-8,-8), Vector(8,8,8), 255, 255, 0, 0, 4.0 );
 #endif
         }
     }
@@ -930,10 +930,10 @@ void CNPC_Strider::PrescheduleThink()
     }
 
 #if 0
-	NDebugOverlay::Cross3D( GetAdjustedOrigin(), 16, 128, 128, 128, false, .1 );
-	Vector vIdealOrigin = GetAbsOrigin();
-	vIdealOrigin.z -= GetMaxHeightModel() - GetIdealHeight();
-	NDebugOverlay::Cross3D( vIdealOrigin, 16, 255, 255, 255, false, .1 );
+    NDebugOverlay::Cross3D( GetAdjustedOrigin(), 16, 128, 128, 128, false, .1 );
+    Vector vIdealOrigin = GetAbsOrigin();
+    vIdealOrigin.z -= GetMaxHeightModel() - GetIdealHeight();
+    NDebugOverlay::Cross3D( vIdealOrigin, 16, 255, 255, 255, false, .1 );
 #endif
 
     if ( strider_eyepositions.GetBool() )
@@ -1122,12 +1122,12 @@ void CNPC_Strider::GatherConditions()
             if ( GetEnemy() )  // Can go null above
             {
                 if ( !IsStriderCrouching() && !IsStriderStanding() &&
-                     ( !HasCondition( COND_SEE_ENEMY ) ||
-                       !WeaponLOSCondition( GetAdjustedOrigin(), GetEnemy()->BodyTarget( GetAdjustedOrigin() ), false ) ) )
+                    ( !HasCondition( COND_SEE_ENEMY ) ||
+                        !WeaponLOSCondition( GetAdjustedOrigin(), GetEnemy()->BodyTarget( GetAdjustedOrigin() ), false ) ) )
                 {
 #if 0
-					if ( !HasCondition( COND_STRIDER_SHOULD_CROUCH ) )
-						SetIdealHeight( MIN( GetMaxHeight(), GetHeight() + 75.0 * 0.1 ) ); // default to rising up
+                    if ( !HasCondition( COND_STRIDER_SHOULD_CROUCH ) )
+                        SetIdealHeight( MIN( GetMaxHeight(), GetHeight() + 75.0 * 0.1 ) ); // default to rising up
 #endif
                     GatherHeightConditions( GetAdjustedOrigin(), GetEnemy() );
                 }
@@ -1300,12 +1300,12 @@ void CNPC_Strider::BuildScheduleTestBits()
 int CNPC_Strider::SelectSchedule()
 {
     /*
-      if( GetMoveType() != MOVETYPE_FLY )
-      {
+    if( GetMoveType() != MOVETYPE_FLY )
+    {
         // Dropship just released me.
         SetMoveType( MOVETYPE_FLY );
         return SCHED_STRIDER_FALL_TO_GROUND;
-      }
+    }
     */
     if ( strider_idle_test.GetBool() )
     {
@@ -1330,15 +1330,15 @@ int CNPC_Strider::SelectSchedule()
     if ( HasPendingTargetPath() )
     {
 #if 0
-		if( IsInCrouchedPosture() && !m_bCrouchLocked )
-		{
-			// Make the strider stand!
-			return SCHED_STRIDER_STAND;
-		}
-		else
-		{
-			SetTargetPath();
-		}
+        if( IsInCrouchedPosture() && !m_bCrouchLocked )
+        {
+            // Make the strider stand!
+            return SCHED_STRIDER_STAND;
+        }
+        else
+        {
+            SetTargetPath();
+        }
 #else
         SetTargetPath();
 #endif
@@ -2106,29 +2106,29 @@ void CNPC_Strider::InputFlickRagdoll( inputdata_t &inputdata )
 
     if ( !pPhysics0 )
     {
-      pPhysics0 = g_PhysWorldObject;
+    pPhysics0 = g_PhysWorldObject;
     }
     if ( !pPhysics1 )
     {
-      pPhysics1 = g_PhysWorldObject;
+    pPhysics1 = g_PhysWorldObject;
     }
 
     if ( pPhysics0 != pPhysics1 )
     {
-      m_disabled = !bEnable;
-      m_succeeded = true;
-      if ( bEnable )
-      {
+    m_disabled = !bEnable;
+    m_succeeded = true;
+    if ( bEnable )
+    {
         PhysEnableEntityCollisions( pPhysics0, pPhysics1 );
-      }
-      else
-      {
-        PhysDisableEntityCollisions( pPhysics0, pPhysics1 );
-      }
     }
     else
     {
-      m_succeeded = false;
+        PhysDisableEntityCollisions( pPhysics0, pPhysics1 );
+    }
+    }
+    else
+    {
+    m_succeeded = false;
     }
 */
 /*
@@ -2743,23 +2743,23 @@ void CNPC_Strider::DoImpactEffect( trace_t &tr, int nDamageType )
     // Add a halo
     CBroadcastRecipientFilter filter;
     te->BeamRingPoint( filter, 0.0,
-                       tr.endpos,               // origin
-                       0,                       // start radius
-                       64,                      // end radius
-                       s_iImpactEffectTexture,  // texture
-                       0,                       // halo index
-                       0,                       // start frame
-                       0,                       // framerate
-                       0.2,                     // life
-                       10,                      // width
-                       0,                       // spread
-                       0,                       // amplitude
-                       255,                     // r
-                       255,                     // g
-                       255,                     // b
-                       50,                      // a
-                       0,                       // speed
-                       FBEAM_FADEOUT );
+                        tr.endpos,               // origin
+                        0,                       // start radius
+                        64,                      // end radius
+                        s_iImpactEffectTexture,  // texture
+                        0,                       // halo index
+                        0,                       // start frame
+                        0,                       // framerate
+                        0.2,                     // life
+                        10,                      // width
+                        0,                       // spread
+                        0,                       // amplitude
+                        255,                     // r
+                        255,                     // g
+                        255,                     // b
+                        50,                      // a
+                        0,                       // speed
+                        FBEAM_FADEOUT );
 
     g_pEffects->EnergySplash( tr.endpos, tr.plane.normal );
 
@@ -3146,19 +3146,19 @@ int CNPC_Strider::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 // NOTE: Currently radius damage doesn't even call this because it uses the origin, not the box for distance
 #if 0
-		NDebugOverlay::Box( headPos, WorldAlignMins(), WorldAlignMaxs(), 255, 0, 0, 0, 5.0 );
-		NDebugOverlay::Cross3D( inf
-			o.GetDamagePosition(), 24, 0, 255, 0, false, 5.0 );
-		// too far from head, apply damage to nearest leg?
+        NDebugOverlay::Box( headPos, WorldAlignMins(), WorldAlignMaxs(), 255, 0, 0, 0, 5.0 );
+        NDebugOverlay::Cross3D( inf
+            o.GetDamagePosition(), 24, 0, 255, 0, false, 5.0 );
+        // too far from head, apply damage to nearest leg?
 #endif
     }
 
 #if 0
-	if ( (info.GetDamageType() & DMG_BULLET) && info.GetDamage() > 1  && m_iHealth > 1 )
-	{
-		m_iHealth -= 1;
-		return 1;
-	}
+    if ( (info.GetDamageType() & DMG_BULLET) && info.GetDamage() > 1  && m_iHealth > 1 )
+    {
+        m_iHealth -= 1;
+        return 1;
+    }
 #endif
 
     return 0;
@@ -3507,7 +3507,7 @@ bool CNPC_Strider::OverrideMove( float flInterval )
         bool bPlayer = GetEnemy()->IsPlayer();
         float timeSinceSeenEnemy = gpGlobals->curtime - GetEnemyLastTimeSeen();
         if ( ( !bPlayer && timeSinceSeenEnemy < STRIDER_TIME_STOP_FACING_ENEMY ) ||
-             ( bPlayer && !m_PlayerFreePass.HasPass() ) )
+            ( bPlayer && !m_PlayerFreePass.HasPass() ) )
         {
             AddFacingTarget( GetEnemy(), GetEnemies()->LastKnownPosition( GetEnemy() ), 1.0, 0.5 );
         }
@@ -3720,10 +3720,10 @@ float CNPC_Strider::GetDefaultNavGoalTolerance()
 void CNPC_Strider::OnMovementComplete()
 {
     if ( GetGoalEnt() &&
-         ( IsCurSchedule( SCHED_IDLE_WALK ) ||
-           IsCurSchedule( SCHED_ALERT_WALK ) ||
-           IsCurSchedule( SCHED_COMBAT_WALK ) ||
-           IsCurSchedule( SCHED_STRIDER_HUNT ) ) )
+        ( IsCurSchedule( SCHED_IDLE_WALK ) ||
+            IsCurSchedule( SCHED_ALERT_WALK ) ||
+            IsCurSchedule( SCHED_COMBAT_WALK ) ||
+            IsCurSchedule( SCHED_STRIDER_HUNT ) ) )
     {
         m_strTrackName = MAKE_STRING( STRIDER_NO_TRACK_NAME );
         SetGoalEnt( NULL );
@@ -4552,17 +4552,17 @@ bool CNPC_Strider::CNavigator::DoFindPathToPos()
         AI_Waypoint_t *pLast = waypoints.GetLast();
 
         if ( pFirstWaypoint->IsReducible() &&
-             pFirstWaypoint->GetNext() &&
-             pFirstWaypoint->GetNext()->iNodeID != NO_NODE &&
-             pFirstWaypoint->GetNext()->NavType() == GetNavType() )
+            pFirstWaypoint->GetNext() &&
+            pFirstWaypoint->GetNext()->iNodeID != NO_NODE &&
+            pFirstWaypoint->GetNext()->NavType() == GetNavType() )
         {
             // Find nearest point on the line segment of our path
             Vector vOrigin = GetOuter()->GetAbsOrigin();
             Vector vClosest;
             CalcClosestPointOnLineSegment( vOrigin,
-                                           pFirstWaypoint->GetPos(),
-                                           pFirstWaypoint->GetNext()->GetPos(),
-                                           vClosest );
+                                            pFirstWaypoint->GetPos(),
+                                            pFirstWaypoint->GetNext()->GetPos(),
+                                            vClosest );
 
             // Find both these positions as offset from the ground
             TranslateNavGoal( GetPath()->GetTarget(), vClosest );
@@ -4615,9 +4615,9 @@ bool CNPC_Strider::CNavigator::DoFindPathToPos()
                             {
                                 Vector vClosest;
                                 CalcClosestPointOnLineSegment( pLast->vecLocation,
-                                                               pLastNodeWaypoint->vecLocation,
-                                                               pTestNode->GetPosition( GetHullType() ),
-                                                               vClosest );
+                                                                pLastNodeWaypoint->vecLocation,
+                                                                pTestNode->GetPosition( GetHullType() ),
+                                                                vClosest );
                                 float distTestSq = ( pLast->vecLocation - vClosest ).LengthSqr();
                                 if ( distTestSq < bestDistSq )
                                 {
@@ -4692,7 +4692,7 @@ bool CNPC_Strider::IsLegBoneFollower( CBoneFollower *pFollower )
 
     // See if we're a leg
     if ( nFollowerIndex >= STRIDER_LEFT_LEG_FOLLOWER_INDEX &&
-         nFollowerIndex <= STRIDER_BACK_UPPERLEG_FOLLOWER_INDEX )
+        nFollowerIndex <= STRIDER_BACK_UPPERLEG_FOLLOWER_INDEX )
         return true;
 
     // We're something else

@@ -31,7 +31,7 @@ class CPointTemplate : public CLogicalEntity
 {
     DECLARE_CLASS( CPointTemplate, CLogicalEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Spawn( void );
@@ -61,7 +61,7 @@ class CPointTemplate : public CLogicalEntity
 
     virtual void PerformPrecache();
 
-   private:
+    private:
     string_t m_iszTemplateEntityNames[MAX_NUM_TEMPLATES];
 
     // List of map entities this template targets. Built inside our Spawn().
@@ -91,7 +91,7 @@ class CPointScriptTemplate : public CPointTemplate
 {
     DECLARE_CLASS( CPointScriptTemplate, CLogicalEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_ENT_SCRIPTDESC();
 
@@ -106,7 +106,7 @@ class CPointScriptTemplate : public CPointTemplate
     // Inputs
     void InputForceSpawn( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_iszTemplateEntityNames[MAX_NUM_TEMPLATES];
 
     // List of templates, generated from our template entities.

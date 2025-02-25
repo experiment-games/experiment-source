@@ -21,15 +21,15 @@ class CEnergyWave : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CEnergyWave, CBaseEntity );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
-   public:
+    public:
     static CEnergyWave* Create( CBaseEntity* pentOwner );
 };
 

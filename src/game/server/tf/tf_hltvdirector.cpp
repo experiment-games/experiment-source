@@ -29,7 +29,7 @@ CBaseEntity *GetCapturePointByIndex( int iCaptureIndex )
 
 class CTFHLTVDirector : public CHLTVDirector
 {
-   public:
+    public:
     DECLARE_CLASS( CTFHLTVDirector, CHLTVDirector );
 
     const char **GetModEvents();
@@ -65,8 +65,8 @@ void CTFHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
     int thera = RandomFloat() > 0.5 ? 20 : -20;
 
     if ( !Q_strcmp( "teamplay_point_startcapture", name ) ||
-         !Q_strcmp( "teamplay_point_captured", name ) ||
-         !Q_strcmp( "teamplay_capture_blocked", name ) )
+        !Q_strcmp( "teamplay_point_captured", name ) ||
+        !Q_strcmp( "teamplay_capture_blocked", name ) )
     {
         CBaseEntity *pCapturePoint = GetCapturePointByIndex( event->m_Event->GetInt( "cp" ) );
 

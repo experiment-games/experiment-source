@@ -16,7 +16,7 @@ class C_PhysMagnet : public C_BaseAnimating
 {
     DECLARE_CLASS( C_PhysMagnet, C_BaseAnimating );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_PhysMagnet();
@@ -25,7 +25,7 @@ class C_PhysMagnet : public C_BaseAnimating
     void PostDataUpdate( DataUpdateType_t updateType );
     bool GetShadowCastDirection( Vector *pDirection, ShadowType_t shadowType ) const;
 
-   public:
+    public:
     // Data received from the server
     CUtlVector< int > m_aAttachedObjectsFromServer;
 
@@ -92,30 +92,30 @@ void C_PhysMagnet::PostDataUpdate( DataUpdateType_t updateType )
     int iServerCount = m_aAttachedObjectsFromServer.Count();
     for ( int i = 0; i < iCount; i++ )
     {
-      int iEntIndex = m_aAttachedObjects[i]->entindex();
-      for ( int j = 0; j < iServerCount; j++ )
-      {
+    int iEntIndex = m_aAttachedObjects[i]->entindex();
+    for ( int j = 0; j < iServerCount; j++ )
+    {
         if ( iEntIndex == m_aAttachedObjectsFromServer[j] )
-          break;
-      }
+        break;
+    }
 
-      if ( j == iServerCount )
-      {
+    if ( j == iServerCount )
+    {
         // Ok, a previously attached object is no longer attached
         m_aAttachedObjects[i]->SetShadowUseOtherEntity( NULL );
         m_aAttachedObjects.Remove(i);
-      }
+    }
     }
 
     // Make sure newly attached entities have vertical shadows too
     for ( i = 0; i < iServerCount; i++ )
     {
-      C_BaseEntity *pEntity = cl_entitylist->GetEnt( m_aAttachedObjectsFromServer[i] );
-      if ( m_aAttachedObjects.Find( pEntity ) == m_aAttachedObjects.InvalidIndex() )
-      {
+    C_BaseEntity *pEntity = cl_entitylist->GetEnt( m_aAttachedObjectsFromServer[i] );
+    if ( m_aAttachedObjects.Find( pEntity ) == m_aAttachedObjects.InvalidIndex() )
+    {
         pEntity->SetShadowUseOtherEntity( this );
         m_aAttachedObjects.AddToTail( pEntity );
-      }
+    }
     }
     */
 }

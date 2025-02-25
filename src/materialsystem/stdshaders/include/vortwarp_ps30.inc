@@ -2,361 +2,361 @@
 class vortwarp_ps30_Static_Index
 {
 private:
-	int m_nCONVERT_TO_SRGB;
+    int m_nCONVERT_TO_SRGB;
 #ifdef _DEBUG
-	bool m_bCONVERT_TO_SRGB;
+    bool m_bCONVERT_TO_SRGB;
 #endif
 public:
-	void SetCONVERT_TO_SRGB( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nCONVERT_TO_SRGB = i;
+    void SetCONVERT_TO_SRGB( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nCONVERT_TO_SRGB = i;
 #ifdef _DEBUG
-		m_bCONVERT_TO_SRGB = true;
+        m_bCONVERT_TO_SRGB = true;
 #endif
-	}
-	void SetCONVERT_TO_SRGB( bool i )
-	{
-		m_nCONVERT_TO_SRGB = i ? 1 : 0;
+    }
+    void SetCONVERT_TO_SRGB( bool i )
+    {
+        m_nCONVERT_TO_SRGB = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bCONVERT_TO_SRGB = true;
+        m_bCONVERT_TO_SRGB = true;
 #endif
-	}
+    }
 private:
-	int m_nBASETEXTURE;
+    int m_nBASETEXTURE;
 #ifdef _DEBUG
-	bool m_bBASETEXTURE;
+    bool m_bBASETEXTURE;
 #endif
 public:
-	void SetBASETEXTURE( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nBASETEXTURE = i;
+    void SetBASETEXTURE( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nBASETEXTURE = i;
 #ifdef _DEBUG
-		m_bBASETEXTURE = true;
+        m_bBASETEXTURE = true;
 #endif
-	}
-	void SetBASETEXTURE( bool i )
-	{
-		m_nBASETEXTURE = i ? 1 : 0;
+    }
+    void SetBASETEXTURE( bool i )
+    {
+        m_nBASETEXTURE = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bBASETEXTURE = true;
+        m_bBASETEXTURE = true;
 #endif
-	}
+    }
 private:
-	int m_nCUBEMAP;
+    int m_nCUBEMAP;
 #ifdef _DEBUG
-	bool m_bCUBEMAP;
+    bool m_bCUBEMAP;
 #endif
 public:
-	void SetCUBEMAP( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nCUBEMAP = i;
+    void SetCUBEMAP( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nCUBEMAP = i;
 #ifdef _DEBUG
-		m_bCUBEMAP = true;
+        m_bCUBEMAP = true;
 #endif
-	}
-	void SetCUBEMAP( bool i )
-	{
-		m_nCUBEMAP = i ? 1 : 0;
+    }
+    void SetCUBEMAP( bool i )
+    {
+        m_nCUBEMAP = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bCUBEMAP = true;
+        m_bCUBEMAP = true;
 #endif
-	}
+    }
 private:
-	int m_nDIFFUSELIGHTING;
+    int m_nDIFFUSELIGHTING;
 #ifdef _DEBUG
-	bool m_bDIFFUSELIGHTING;
+    bool m_bDIFFUSELIGHTING;
 #endif
 public:
-	void SetDIFFUSELIGHTING( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nDIFFUSELIGHTING = i;
+    void SetDIFFUSELIGHTING( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nDIFFUSELIGHTING = i;
 #ifdef _DEBUG
-		m_bDIFFUSELIGHTING = true;
+        m_bDIFFUSELIGHTING = true;
 #endif
-	}
-	void SetDIFFUSELIGHTING( bool i )
-	{
-		m_nDIFFUSELIGHTING = i ? 1 : 0;
+    }
+    void SetDIFFUSELIGHTING( bool i )
+    {
+        m_nDIFFUSELIGHTING = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bDIFFUSELIGHTING = true;
+        m_bDIFFUSELIGHTING = true;
 #endif
-	}
+    }
 private:
-	int m_nNORMALMAPALPHAENVMAPMASK;
+    int m_nNORMALMAPALPHAENVMAPMASK;
 #ifdef _DEBUG
-	bool m_bNORMALMAPALPHAENVMAPMASK;
+    bool m_bNORMALMAPALPHAENVMAPMASK;
 #endif
 public:
-	void SetNORMALMAPALPHAENVMAPMASK( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nNORMALMAPALPHAENVMAPMASK = i;
+    void SetNORMALMAPALPHAENVMAPMASK( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nNORMALMAPALPHAENVMAPMASK = i;
 #ifdef _DEBUG
-		m_bNORMALMAPALPHAENVMAPMASK = true;
+        m_bNORMALMAPALPHAENVMAPMASK = true;
 #endif
-	}
-	void SetNORMALMAPALPHAENVMAPMASK( bool i )
-	{
-		m_nNORMALMAPALPHAENVMAPMASK = i ? 1 : 0;
+    }
+    void SetNORMALMAPALPHAENVMAPMASK( bool i )
+    {
+        m_nNORMALMAPALPHAENVMAPMASK = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bNORMALMAPALPHAENVMAPMASK = true;
+        m_bNORMALMAPALPHAENVMAPMASK = true;
 #endif
-	}
+    }
 private:
-	int m_nHALFLAMBERT;
+    int m_nHALFLAMBERT;
 #ifdef _DEBUG
-	bool m_bHALFLAMBERT;
+    bool m_bHALFLAMBERT;
 #endif
 public:
-	void SetHALFLAMBERT( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nHALFLAMBERT = i;
+    void SetHALFLAMBERT( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nHALFLAMBERT = i;
 #ifdef _DEBUG
-		m_bHALFLAMBERT = true;
+        m_bHALFLAMBERT = true;
 #endif
-	}
-	void SetHALFLAMBERT( bool i )
-	{
-		m_nHALFLAMBERT = i ? 1 : 0;
+    }
+    void SetHALFLAMBERT( bool i )
+    {
+        m_nHALFLAMBERT = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bHALFLAMBERT = true;
+        m_bHALFLAMBERT = true;
 #endif
-	}
+    }
 private:
-	int m_nFLASHLIGHT;
+    int m_nFLASHLIGHT;
 #ifdef _DEBUG
-	bool m_bFLASHLIGHT;
+    bool m_bFLASHLIGHT;
 #endif
 public:
-	void SetFLASHLIGHT( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nFLASHLIGHT = i;
+    void SetFLASHLIGHT( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nFLASHLIGHT = i;
 #ifdef _DEBUG
-		m_bFLASHLIGHT = true;
+        m_bFLASHLIGHT = true;
 #endif
-	}
-	void SetFLASHLIGHT( bool i )
-	{
-		m_nFLASHLIGHT = i ? 1 : 0;
+    }
+    void SetFLASHLIGHT( bool i )
+    {
+        m_nFLASHLIGHT = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bFLASHLIGHT = true;
+        m_bFLASHLIGHT = true;
 #endif
-	}
+    }
 private:
-	int m_nTRANSLUCENT;
+    int m_nTRANSLUCENT;
 #ifdef _DEBUG
-	bool m_bTRANSLUCENT;
+    bool m_bTRANSLUCENT;
 #endif
 public:
-	void SetTRANSLUCENT( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nTRANSLUCENT = i;
+    void SetTRANSLUCENT( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nTRANSLUCENT = i;
 #ifdef _DEBUG
-		m_bTRANSLUCENT = true;
+        m_bTRANSLUCENT = true;
 #endif
-	}
-	void SetTRANSLUCENT( bool i )
-	{
-		m_nTRANSLUCENT = i ? 1 : 0;
+    }
+    void SetTRANSLUCENT( bool i )
+    {
+        m_nTRANSLUCENT = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bTRANSLUCENT = true;
+        m_bTRANSLUCENT = true;
 #endif
-	}
+    }
 public:
-	vortwarp_ps30_Static_Index( )
-	{
+    vortwarp_ps30_Static_Index( )
+    {
 #ifdef _DEBUG
-		m_bCONVERT_TO_SRGB = true;
+        m_bCONVERT_TO_SRGB = true;
 #endif // _DEBUG
-		m_nCONVERT_TO_SRGB =  g_pHardwareConfig->NeedsShaderSRGBConversion();
+        m_nCONVERT_TO_SRGB =  g_pHardwareConfig->NeedsShaderSRGBConversion();
 #ifdef _DEBUG
-		m_bBASETEXTURE = false;
+        m_bBASETEXTURE = false;
 #endif // _DEBUG
-		m_nBASETEXTURE = 0;
+        m_nBASETEXTURE = 0;
 #ifdef _DEBUG
-		m_bCUBEMAP = false;
+        m_bCUBEMAP = false;
 #endif // _DEBUG
-		m_nCUBEMAP = 0;
+        m_nCUBEMAP = 0;
 #ifdef _DEBUG
-		m_bDIFFUSELIGHTING = false;
+        m_bDIFFUSELIGHTING = false;
 #endif // _DEBUG
-		m_nDIFFUSELIGHTING = 0;
+        m_nDIFFUSELIGHTING = 0;
 #ifdef _DEBUG
-		m_bNORMALMAPALPHAENVMAPMASK = false;
+        m_bNORMALMAPALPHAENVMAPMASK = false;
 #endif // _DEBUG
-		m_nNORMALMAPALPHAENVMAPMASK = 0;
+        m_nNORMALMAPALPHAENVMAPMASK = 0;
 #ifdef _DEBUG
-		m_bHALFLAMBERT = false;
+        m_bHALFLAMBERT = false;
 #endif // _DEBUG
-		m_nHALFLAMBERT = 0;
+        m_nHALFLAMBERT = 0;
 #ifdef _DEBUG
-		m_bFLASHLIGHT = false;
+        m_bFLASHLIGHT = false;
 #endif // _DEBUG
-		m_nFLASHLIGHT = 0;
+        m_nFLASHLIGHT = 0;
 #ifdef _DEBUG
-		m_bTRANSLUCENT = false;
+        m_bTRANSLUCENT = false;
 #endif // _DEBUG
-		m_nTRANSLUCENT = 0;
-	}
-	int GetIndex()
-	{
-		// Asserts to make sure that we aren't using any skipped combinations.
-		// Asserts to make sure that we are setting all of the combination vars.
+        m_nTRANSLUCENT = 0;
+    }
+    int GetIndex()
+    {
+        // Asserts to make sure that we aren't using any skipped combinations.
+        // Asserts to make sure that we are setting all of the combination vars.
 #ifdef _DEBUG
-		bool bAllStaticVarsDefined = m_bCONVERT_TO_SRGB && m_bBASETEXTURE && m_bCUBEMAP && m_bDIFFUSELIGHTING && m_bNORMALMAPALPHAENVMAPMASK && m_bHALFLAMBERT && m_bFLASHLIGHT && m_bTRANSLUCENT;
-		Assert( bAllStaticVarsDefined );
+        bool bAllStaticVarsDefined = m_bCONVERT_TO_SRGB && m_bBASETEXTURE && m_bCUBEMAP && m_bDIFFUSELIGHTING && m_bNORMALMAPALPHAENVMAPMASK && m_bHALFLAMBERT && m_bFLASHLIGHT && m_bTRANSLUCENT;
+        Assert( bAllStaticVarsDefined );
 #endif // _DEBUG
-		return ( 80 * m_nCONVERT_TO_SRGB ) + ( 160 * m_nBASETEXTURE ) + ( 320 * m_nCUBEMAP ) + ( 640 * m_nDIFFUSELIGHTING ) + ( 1280 * m_nNORMALMAPALPHAENVMAPMASK ) + ( 2560 * m_nHALFLAMBERT ) + ( 5120 * m_nFLASHLIGHT ) + ( 10240 * m_nTRANSLUCENT ) + 0;
-	}
+        return ( 80 * m_nCONVERT_TO_SRGB ) + ( 160 * m_nBASETEXTURE ) + ( 320 * m_nCUBEMAP ) + ( 640 * m_nDIFFUSELIGHTING ) + ( 1280 * m_nNORMALMAPALPHAENVMAPMASK ) + ( 2560 * m_nHALFLAMBERT ) + ( 5120 * m_nFLASHLIGHT ) + ( 10240 * m_nTRANSLUCENT ) + 0;
+    }
 };
 #define shaderStaticTest_vortwarp_ps30 psh_forgot_to_set_static_BASETEXTURE + psh_forgot_to_set_static_CUBEMAP + psh_forgot_to_set_static_DIFFUSELIGHTING + psh_forgot_to_set_static_NORMALMAPALPHAENVMAPMASK + psh_forgot_to_set_static_HALFLAMBERT + psh_forgot_to_set_static_FLASHLIGHT + psh_forgot_to_set_static_TRANSLUCENT + 0
 class vortwarp_ps30_Dynamic_Index
 {
 private:
-	int m_nWRITEWATERFOGTODESTALPHA;
+    int m_nWRITEWATERFOGTODESTALPHA;
 #ifdef _DEBUG
-	bool m_bWRITEWATERFOGTODESTALPHA;
+    bool m_bWRITEWATERFOGTODESTALPHA;
 #endif
 public:
-	void SetWRITEWATERFOGTODESTALPHA( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nWRITEWATERFOGTODESTALPHA = i;
+    void SetWRITEWATERFOGTODESTALPHA( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nWRITEWATERFOGTODESTALPHA = i;
 #ifdef _DEBUG
-		m_bWRITEWATERFOGTODESTALPHA = true;
+        m_bWRITEWATERFOGTODESTALPHA = true;
 #endif
-	}
-	void SetWRITEWATERFOGTODESTALPHA( bool i )
-	{
-		m_nWRITEWATERFOGTODESTALPHA = i ? 1 : 0;
+    }
+    void SetWRITEWATERFOGTODESTALPHA( bool i )
+    {
+        m_nWRITEWATERFOGTODESTALPHA = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bWRITEWATERFOGTODESTALPHA = true;
+        m_bWRITEWATERFOGTODESTALPHA = true;
 #endif
-	}
+    }
 private:
-	int m_nPIXELFOGTYPE;
+    int m_nPIXELFOGTYPE;
 #ifdef _DEBUG
-	bool m_bPIXELFOGTYPE;
+    bool m_bPIXELFOGTYPE;
 #endif
 public:
-	void SetPIXELFOGTYPE( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nPIXELFOGTYPE = i;
+    void SetPIXELFOGTYPE( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nPIXELFOGTYPE = i;
 #ifdef _DEBUG
-		m_bPIXELFOGTYPE = true;
+        m_bPIXELFOGTYPE = true;
 #endif
-	}
-	void SetPIXELFOGTYPE( bool i )
-	{
-		m_nPIXELFOGTYPE = i ? 1 : 0;
+    }
+    void SetPIXELFOGTYPE( bool i )
+    {
+        m_nPIXELFOGTYPE = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bPIXELFOGTYPE = true;
+        m_bPIXELFOGTYPE = true;
 #endif
-	}
+    }
 private:
-	int m_nWARPINGIN;
+    int m_nWARPINGIN;
 #ifdef _DEBUG
-	bool m_bWARPINGIN;
+    bool m_bWARPINGIN;
 #endif
 public:
-	void SetWARPINGIN( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nWARPINGIN = i;
+    void SetWARPINGIN( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nWARPINGIN = i;
 #ifdef _DEBUG
-		m_bWARPINGIN = true;
+        m_bWARPINGIN = true;
 #endif
-	}
-	void SetWARPINGIN( bool i )
-	{
-		m_nWARPINGIN = i ? 1 : 0;
+    }
+    void SetWARPINGIN( bool i )
+    {
+        m_nWARPINGIN = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bWARPINGIN = true;
+        m_bWARPINGIN = true;
 #endif
-	}
+    }
 private:
-	int m_nAMBIENT_LIGHT;
+    int m_nAMBIENT_LIGHT;
 #ifdef _DEBUG
-	bool m_bAMBIENT_LIGHT;
+    bool m_bAMBIENT_LIGHT;
 #endif
 public:
-	void SetAMBIENT_LIGHT( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nAMBIENT_LIGHT = i;
+    void SetAMBIENT_LIGHT( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nAMBIENT_LIGHT = i;
 #ifdef _DEBUG
-		m_bAMBIENT_LIGHT = true;
+        m_bAMBIENT_LIGHT = true;
 #endif
-	}
-	void SetAMBIENT_LIGHT( bool i )
-	{
-		m_nAMBIENT_LIGHT = i ? 1 : 0;
+    }
+    void SetAMBIENT_LIGHT( bool i )
+    {
+        m_nAMBIENT_LIGHT = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bAMBIENT_LIGHT = true;
+        m_bAMBIENT_LIGHT = true;
 #endif
-	}
+    }
 private:
-	int m_nNUM_LIGHTS;
+    int m_nNUM_LIGHTS;
 #ifdef _DEBUG
-	bool m_bNUM_LIGHTS;
+    bool m_bNUM_LIGHTS;
 #endif
 public:
-	void SetNUM_LIGHTS( int i )
-	{
-		Assert( i >= 0 && i <= 4 );
-		m_nNUM_LIGHTS = i;
+    void SetNUM_LIGHTS( int i )
+    {
+        Assert( i >= 0 && i <= 4 );
+        m_nNUM_LIGHTS = i;
 #ifdef _DEBUG
-		m_bNUM_LIGHTS = true;
+        m_bNUM_LIGHTS = true;
 #endif
-	}
-	void SetNUM_LIGHTS( bool i )
-	{
-		m_nNUM_LIGHTS = i ? 1 : 0;
+    }
+    void SetNUM_LIGHTS( bool i )
+    {
+        m_nNUM_LIGHTS = i ? 1 : 0;
 #ifdef _DEBUG
-		m_bNUM_LIGHTS = true;
+        m_bNUM_LIGHTS = true;
 #endif
-	}
+    }
 public:
-	vortwarp_ps30_Dynamic_Index()
-	{
+    vortwarp_ps30_Dynamic_Index()
+    {
 #ifdef _DEBUG
-		m_bWRITEWATERFOGTODESTALPHA = false;
+        m_bWRITEWATERFOGTODESTALPHA = false;
 #endif // _DEBUG
-		m_nWRITEWATERFOGTODESTALPHA = 0;
+        m_nWRITEWATERFOGTODESTALPHA = 0;
 #ifdef _DEBUG
-		m_bPIXELFOGTYPE = false;
+        m_bPIXELFOGTYPE = false;
 #endif // _DEBUG
-		m_nPIXELFOGTYPE = 0;
+        m_nPIXELFOGTYPE = 0;
 #ifdef _DEBUG
-		m_bWARPINGIN = false;
+        m_bWARPINGIN = false;
 #endif // _DEBUG
-		m_nWARPINGIN = 0;
+        m_nWARPINGIN = 0;
 #ifdef _DEBUG
-		m_bAMBIENT_LIGHT = false;
+        m_bAMBIENT_LIGHT = false;
 #endif // _DEBUG
-		m_nAMBIENT_LIGHT = 0;
+        m_nAMBIENT_LIGHT = 0;
 #ifdef _DEBUG
-		m_bNUM_LIGHTS = false;
+        m_bNUM_LIGHTS = false;
 #endif // _DEBUG
-		m_nNUM_LIGHTS = 0;
-	}
-	int GetIndex()
-	{
-		// Asserts to make sure that we aren't using any skipped combinations.
-		// Asserts to make sure that we are setting all of the combination vars.
+        m_nNUM_LIGHTS = 0;
+    }
+    int GetIndex()
+    {
+        // Asserts to make sure that we aren't using any skipped combinations.
+        // Asserts to make sure that we are setting all of the combination vars.
 #ifdef _DEBUG
-		bool bAllDynamicVarsDefined = m_bWRITEWATERFOGTODESTALPHA && m_bPIXELFOGTYPE && m_bWARPINGIN && m_bAMBIENT_LIGHT && m_bNUM_LIGHTS;
-		Assert( bAllDynamicVarsDefined );
+        bool bAllDynamicVarsDefined = m_bWRITEWATERFOGTODESTALPHA && m_bPIXELFOGTYPE && m_bWARPINGIN && m_bAMBIENT_LIGHT && m_bNUM_LIGHTS;
+        Assert( bAllDynamicVarsDefined );
 #endif // _DEBUG
-		return ( 1 * m_nWRITEWATERFOGTODESTALPHA ) + ( 2 * m_nPIXELFOGTYPE ) + ( 4 * m_nWARPINGIN ) + ( 8 * m_nAMBIENT_LIGHT ) + ( 16 * m_nNUM_LIGHTS ) + 0;
-	}
+        return ( 1 * m_nWRITEWATERFOGTODESTALPHA ) + ( 2 * m_nPIXELFOGTYPE ) + ( 4 * m_nWARPINGIN ) + ( 8 * m_nAMBIENT_LIGHT ) + ( 16 * m_nNUM_LIGHTS ) + 0;
+    }
 };
 #define shaderDynamicTest_vortwarp_ps30 psh_forgot_to_set_dynamic_WRITEWATERFOGTODESTALPHA + psh_forgot_to_set_dynamic_PIXELFOGTYPE + psh_forgot_to_set_dynamic_WARPINGIN + psh_forgot_to_set_dynamic_AMBIENT_LIGHT + psh_forgot_to_set_dynamic_NUM_LIGHTS + 0

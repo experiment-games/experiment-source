@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CTriggerStun : public CBaseTrigger
 {
-   public:
+    public:
     CTriggerStun()
     {
     }
@@ -53,7 +53,7 @@ class CTriggerStun : public CBaseTrigger
 DECLARE_AUTO_LIST( ITriggerPlayerRespawnOverride );
 class CTriggerPlayerRespawnOverride : public CTriggerMultiple, public ITriggerPlayerRespawnOverride
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerPlayerRespawnOverride, CTriggerMultiple );
     DECLARE_AUTO_LIST( ITriggerPlayerRespawnOverride );
@@ -75,7 +75,7 @@ class CTriggerPlayerRespawnOverride : public CTriggerMultiple, public ITriggerPl
         return m_strRespawnEnt;
     }
 
-   private:
+    private:
     float m_flRespawnTime;
     string_t m_strRespawnEnt;
 };

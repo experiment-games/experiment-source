@@ -230,7 +230,7 @@ void CDucksLeaderboardManager::ApplySettings( KeyValues *inResourceData )
                         pNewEntry->SetTooltip( m_pToolTip, CFmtStr( "#%s_Desc", g_szDuckLeaderboardNames[i] ) );
                         pNewEntry->SetVisible( true );
                         pNewEntry->SetPos( 0, m_iScoreStep * i );  // This is off by 1, but that's what we want.  It starts at 1, but we want it to start lower
-                                                                   // so it matches the leaderboard entries
+                                                                    // so it matches the leaderboard entries
 
                         CUtlVector< LeaderboardEntry_t * > scores;
                         Leaderboards_GetDuckLeaderboard( scores, g_szDuckLeaderboardNames[i] );

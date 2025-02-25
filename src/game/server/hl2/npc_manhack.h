@@ -56,7 +56,7 @@ class CNPC_Manhack : public CNPCBaseInteractive< CAI_BasePhysicsFlyingBot >, pub
     DECLARE_CLASS( CNPC_Manhack, CNPCBaseInteractive< CAI_BasePhysicsFlyingBot > );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNPC_Manhack();
     ~CNPC_Manhack();
 
@@ -189,7 +189,7 @@ class CNPC_Manhack : public CNPCBaseInteractive< CAI_BasePhysicsFlyingBot >, pub
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool IsInEffectiveTargetZone( CBaseEntity *pTarget );
     void MaintainGroundHeight( void );
 

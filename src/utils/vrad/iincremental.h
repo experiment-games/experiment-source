@@ -20,7 +20,7 @@ typedef unsigned short IncrementalLightID;
 class IIncremental
 {
     // IIncremental overrides.
-   public:
+    public:
     virtual ~IIncremental() {}
 
     // Sets up for incremental mode. The BSP file (in bsplib) should be loaded

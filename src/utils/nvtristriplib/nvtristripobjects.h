@@ -30,7 +30,7 @@ struct MyFace
 
 class NvFaceInfo
 {
-   public:
+    public:
     // vertex indices
     NvFaceInfo( int v0, int v1, int v2 )
     {
@@ -54,7 +54,7 @@ class NvFaceInfo
 // the lesser of the indices
 class NvEdgeInfo
 {
-   public:
+    public:
     // constructor puts 1 ref on us
     NvEdgeInfo( int v0, int v1 )
     {
@@ -90,7 +90,7 @@ class NvEdgeInfo
 // pulled out into a class
 class NvStripStartInfo
 {
-   public:
+    public:
     NvStripStartInfo( NvFaceInfo *startFace, NvEdgeInfo *startEdge, bool toV1 )
     {
         m_startFace = startFace;
@@ -123,7 +123,7 @@ inline void SWAP( T &first, T &second )
 // This is a summary of a strip that has been built
 class NvStripInfo
 {
-   public:
+    public:
     // A little information about the creation of the triangle strips
     NvStripInfo( const NvStripStartInfo &startInfo, int stripId, int experimentId = -1 )
         : m_startInfo( startInfo )
@@ -179,7 +179,7 @@ typedef std::vector< NvStripInfo * > NvStripInfoVec;
 // The actual stripifier
 class NvStripifier
 {
-   public:
+    public:
     // Constructor
     NvStripifier();
     ~NvStripifier();
@@ -194,7 +194,7 @@ class NvStripifier
 
     static bool IsDegenerate( const NvFaceInfo *face );
 
-   protected:
+    protected:
     WordVec indices;
     int cacheSize;
     int minStripLength;

@@ -42,7 +42,7 @@ class CBasePlayer;
 
 class CGameMovement : public IGameMovement
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CGameMovement );
 
     CGameMovement( void );
@@ -71,7 +71,7 @@ class CGameMovement : public IGameMovement
         return mv;
     }
 
-   protected:
+    protected:
     // Input/Output for this movement
     CMoveData *mv;
 
@@ -275,7 +275,7 @@ class CGameMovement : public IGameMovement
     // when we step on ground that's too steep, search to see if there's any ground nearby that isn't too steep
     void TryTouchGroundInQuadrants( const Vector &start, const Vector &end, unsigned int fMask, int collisionGroup, trace_t &pm );
 
-   protected:
+    protected:
     // Performs the collision resolution for fliers.
     void PerformFlyCollisionResolution( trace_t &pm, Vector &move );
 
@@ -305,7 +305,7 @@ class CGameMovement : public IGameMovement
 
     // special function for teleport-with-duck for episodic
 #ifdef HL2_EPISODIC
-   public:
+    public:
     void ForceDuck( void );
 
 #endif

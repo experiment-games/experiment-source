@@ -57,8 +57,8 @@ void CAI_MoveAndShootOverlay::NoShootWhileMove()
 bool CAI_MoveAndShootOverlay::HasAvailableRangeAttack()
 {
     return ( ( GetOuter()->GetActiveWeapon() != NULL ) ||
-             ( GetOuter()->CapabilitiesGet() & bits_CAP_INNATE_RANGE_ATTACK1 ) ||
-             ( GetOuter()->CapabilitiesGet() & bits_CAP_INNATE_RANGE_ATTACK2 ) );
+            ( GetOuter()->CapabilitiesGet() & bits_CAP_INNATE_RANGE_ATTACK1 ) ||
+            ( GetOuter()->CapabilitiesGet() & bits_CAP_INNATE_RANGE_ATTACK2 ) );
 }
 
 //-------------------------------------
@@ -66,9 +66,9 @@ bool CAI_MoveAndShootOverlay::HasAvailableRangeAttack()
 void CAI_MoveAndShootOverlay::StartShootWhileMove()
 {
     if ( GetOuter()->GetState() == NPC_STATE_SCRIPT ||
-         !HasAvailableRangeAttack() ||
-         !GetOuter()->HaveSequenceForActivity( GetOuter()->TranslateActivity( ACT_WALK_AIM ) ) ||
-         !GetOuter()->HaveSequenceForActivity( GetOuter()->TranslateActivity( ACT_RUN_AIM ) ) )
+        !HasAvailableRangeAttack() ||
+        !GetOuter()->HaveSequenceForActivity( GetOuter()->TranslateActivity( ACT_WALK_AIM ) ) ||
+        !GetOuter()->HaveSequenceForActivity( GetOuter()->TranslateActivity( ACT_RUN_AIM ) ) )
     {
         NoShootWhileMove();
         return;
@@ -98,9 +98,9 @@ bool CAI_MoveAndShootOverlay::CanAimAtEnemy()
         result = true;
     }
     else if ( !pOuter->HasCondition( COND_ENEMY_DEAD ) &&
-              !pOuter->HasCondition( COND_TOO_FAR_TO_ATTACK ) &&
-              !pOuter->HasCondition( COND_ENEMY_TOO_FAR ) &&
-              !pOuter->HasCondition( COND_ENEMY_OCCLUDED ) )
+            !pOuter->HasCondition( COND_TOO_FAR_TO_ATTACK ) &&
+            !pOuter->HasCondition( COND_ENEMY_TOO_FAR ) &&
+            !pOuter->HasCondition( COND_ENEMY_OCCLUDED ) )
     {
         result = true;
     }

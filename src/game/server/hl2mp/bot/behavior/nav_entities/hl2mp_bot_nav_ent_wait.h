@@ -7,7 +7,7 @@
 
 class CHL2MPBotNavEntWait : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotNavEntWait( const CFuncNavPrerequisite *prereq );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -18,7 +18,7 @@ class CHL2MPBotNavEntWait : public Action< CHL2MPBot >
         return "NavEntWait";
     };
 
-   private:
+    private:
     CHandle< CFuncNavPrerequisite > m_prereq;
     CountdownTimer m_timer;
 };

@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotMissionDestroySentries : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMissionDestroySentries( CObjectSentrygun *goalSentry = NULL );
     virtual ~CTFBotMissionDestroySentries() {}
 
@@ -22,7 +22,7 @@ class CTFBotMissionDestroySentries : public Action< CTFBot >
         return "MissionDestroySentries";
     };
 
-   private:
+    private:
     CHandle< CObjectSentrygun > m_goalSentry;
 
     CObjectSentrygun *SelectSentryTarget( CTFBot *me );

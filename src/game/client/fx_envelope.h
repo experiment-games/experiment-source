@@ -18,7 +18,7 @@
 
 class C_EnvelopeFX : public CDefaultClientRenderable
 {
-   public:
+    public:
     typedef CDefaultClientRenderable BaseClass;
 
     C_EnvelopeFX();
@@ -73,7 +73,7 @@ class C_EnvelopeFX : public CDefaultClientRenderable
     virtual void EffectInit( int entityIndex, int attachment );
     virtual void EffectShutdown( void );
 
-   protected:
+    protected:
     void RemoveRenderable();
 
     int m_entityIndex;

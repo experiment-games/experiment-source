@@ -18,7 +18,7 @@ class CBaseAnimatingOverlay;
 
 class CAnimationLayer
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CAnimationLayer );
 
     CAnimationLayer( void );
@@ -35,7 +35,7 @@ class CAnimationLayer
     void NetworkStateChanged();
     void NetworkStateChanged( void *pVar );
 
-   public:
+    public:
 #define ANIM_LAYER_ACTIVE 0x0001
 #define ANIM_LAYER_AUTOKILL 0x0002
 #define ANIM_LAYER_KILLME 0x0004
@@ -147,18 +147,18 @@ class CBaseAnimatingOverlay : public CBaseAnimating
 {
     DECLARE_CLASS( CBaseAnimatingOverlay, CBaseAnimating );
 
-   public:
+    public:
     enum
     {
         MAX_OVERLAYS = 15,
     };
 
-   private:
+    private:
     CUtlVector< CAnimationLayer > m_AnimOverlay;
     // int				m_nActiveLayers;
     // int				m_nActiveBaseLayers;
 
-   public:
+    public:
     virtual void OnRestore();
 
     virtual void StudioFrameAdvance();
@@ -213,7 +213,7 @@ class CBaseAnimatingOverlay : public CBaseAnimating
 
     bool HasActiveLayer( void );
 
-   private:
+    private:
     int AllocateLayer( int iPriority = 0 );  // lower priorities are processed first
 
     DECLARE_SERVERCLASS();

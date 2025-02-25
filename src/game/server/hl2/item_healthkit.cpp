@@ -25,7 +25,7 @@ ConVar sk_healthcharger( "sk_healthcharger", "0" );
 //-----------------------------------------------------------------------------
 class CHealthKit : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CHealthKit, CItem );
 
     void Spawn( void );
@@ -97,7 +97,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 
 class CHealthVial : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CHealthVial, CItem );
 
     void Spawn( void )
@@ -176,10 +176,10 @@ DEFINE_FIELD( m_flNextCharge, FIELD_TIME ),
     bool CWallHealth::KeyValue( const char *szKeyName, const char *szValue )
 {
     if ( FStrEq( szKeyName, "style" ) ||
-         FStrEq( szKeyName, "height" ) ||
-         FStrEq( szKeyName, "value1" ) ||
-         FStrEq( szKeyName, "value2" ) ||
-         FStrEq( szKeyName, "value3" ) )
+        FStrEq( szKeyName, "height" ) ||
+        FStrEq( szKeyName, "value1" ) ||
+        FStrEq( szKeyName, "value2" ) ||
+        FStrEq( szKeyName, "value3" ) )
     {
         return ( true );
     }
@@ -405,10 +405,10 @@ DEFINE_FIELD( m_flNextCharge, FIELD_TIME ),
     bool CNewWallHealth::KeyValue( const char *szKeyName, const char *szValue )
 {
     if ( FStrEq( szKeyName, "style" ) ||
-         FStrEq( szKeyName, "height" ) ||
-         FStrEq( szKeyName, "value1" ) ||
-         FStrEq( szKeyName, "value2" ) ||
-         FStrEq( szKeyName, "value3" ) )
+        FStrEq( szKeyName, "height" ) ||
+        FStrEq( szKeyName, "value1" ) ||
+        FStrEq( szKeyName, "value2" ) ||
+        FStrEq( szKeyName, "value3" ) )
     {
         return ( true );
     }

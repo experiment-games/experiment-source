@@ -53,45 +53,45 @@ string EscapeJavadoc(const string& input) {
   for (string::size_type i = 0; i < input.size(); i++) {
     char c = input[i];
     switch (c) {
-      case '*':
+    case '*':
         // Avoid "/*".
         if (prev == '/') {
-          result.append("&#42;");
+        result.append("&#42;");
         } else {
-          result.push_back(c);
+        result.push_back(c);
         }
         break;
-      case '/':
+    case '/':
         // Avoid "*/".
         if (prev == '*') {
-          result.append("&#47;");
+        result.append("&#47;");
         } else {
-          result.push_back(c);
+        result.push_back(c);
         }
         break;
-      case '@':
+    case '@':
         // '@' starts javadoc tags including the @deprecated tag, which will
         // cause a compile-time error if inserted before a declaration that
         // does not have a corresponding @Deprecated annotation.
         result.append("&#64;");
         break;
-      case '<':
+    case '<':
         // Avoid interpretation as HTML.
         result.append("&lt;");
         break;
-      case '>':
+    case '>':
         // Avoid interpretation as HTML.
         result.append("&gt;");
         break;
-      case '&':
+    case '&':
         // Avoid interpretation as HTML.
         result.append("&amp;");
         break;
-      case '\\':
+    case '\\':
         // Java interprets Unicode escape sequences anywhere!
         result.append("&#92;");
         break;
-      default:
+    default:
         result.push_back(c);
         break;
     }
@@ -105,7 +105,7 @@ string EscapeJavadoc(const string& input) {
 static void WriteDocCommentBodyForLocation(
     io::Printer* printer, const SourceLocation& location) {
   string comments = location.leading_comments.empty() ?
-      location.trailing_comments : location.leading_comments;
+    location.trailing_comments : location.leading_comments;
   if (!comments.empty()) {
     // TODO(kenton):  Ideally we should parse the comment text as Markdown and
     //   write it back as HTML, but this requires a Markdown parser.  For now
@@ -117,21 +117,21 @@ static void WriteDocCommentBodyForLocation(
 
     vector<string> lines = Split(comments, "\n");
     while (!lines.empty() && lines.back().empty()) {
-      lines.pop_back();
+    lines.pop_back();
     }
 
     printer->Print(
         " *\n"
         " * <pre>\n");
     for (int i = 0; i < lines.size(); i++) {
-      // Most lines should start with a space.  Watch out for lines that start
-      // with a /, since putting that right after the leading asterisk will
-      // close the comment.
-      if (!lines[i].empty() && lines[i][0] == '/') {
+    // Most lines should start with a space.  Watch out for lines that start
+    // with a /, since putting that right after the leading asterisk will
+    // close the comment.
+    if (!lines[i].empty() && lines[i][0] == '/') {
         printer->Print(" * $line$\n", "line", lines[i]);
-      } else {
+    } else {
         printer->Print(" *$line$\n", "line", lines[i]);
-      }
+    }
     }
     printer->Print(" * </pre>\n");
   }
@@ -198,7 +198,7 @@ void WriteEnumDocComment(io::Printer* printer, const EnumDescriptor* enum_) {
 }
 
 void WriteEnumValueDocComment(io::Printer* printer,
-                              const EnumValueDescriptor* value) {
+                            const EnumValueDescriptor* value) {
   printer->Print(
     "/**\n"
     " * <code>$def$</code>\n",
@@ -218,7 +218,7 @@ void WriteServiceDocComment(io::Printer* printer,
 }
 
 void WriteMethodDocComment(io::Printer* printer,
-                           const MethodDescriptor* method) {
+                            const MethodDescriptor* method) {
   printer->Print(
     "/**\n"
     " * <code>$def$</code>\n",

@@ -173,8 +173,8 @@ void CAI_Path::SetGoalDirection( const Vector &goalDirection )
     AI_Waypoint_t *pLast = m_Waypoints.GetLast();
     if ( pLast )
     {
-      NDebugOverlay::Box( pLast->vecLocation, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0,0,255, 0, 2.0 );
-      NDebugOverlay::Line( pLast->vecLocation, pLast->vecLocation + m_goalDirection * 32, 0,0,255, true, 2.0 );
+    NDebugOverlay::Box( pLast->vecLocation, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0,0,255, 0, 2.0 );
+    NDebugOverlay::Line( pLast->vecLocation, pLast->vecLocation + m_goalDirection * 32, 0,0,255, true, 2.0 );
     }
     */
 }

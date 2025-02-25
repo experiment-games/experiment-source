@@ -73,7 +73,7 @@ struct EdgeTexture_t
 
 class C_BreakableSurface : public C_BaseEntity, public IBrushRenderer
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_BreakableSurface, C_BaseEntity );
     DECLARE_DATADESC();
@@ -96,7 +96,7 @@ class C_BreakableSurface : public C_BaseEntity, public IBrushRenderer
     C_BreakableSurface();
     ~C_BreakableSurface();
 
-   public:
+    public:
     void InitMaterial( WinEdge_t nEdgeType, int nEdgeStyle, char const* pMaterialName );
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void OnPreDataChanged( DataUpdateType_t updateType );
@@ -111,7 +111,7 @@ class C_BreakableSurface : public C_BaseEntity, public IBrushRenderer
 
     virtual bool ShouldReceiveProjectedTextures( int flags );
 
-   private:
+    private:
     // One bit per pane
     CNetworkArray( bool, m_RawPanelBitVec, MAX_NUM_PANELS* MAX_NUM_PANELS );
     bool m_PrevRawPanelBitVec[MAX_NUM_PANELS * MAX_NUM_PANELS];
@@ -190,7 +190,7 @@ DEFINE_ARRAY( m_nPanelBits, FIELD_CHARACTER, MAX_NUM_PANELS* MAX_NUM_PANELS ),
         bool C_BreakableSurface::InLegalRange( int nWidth, int nHeight )
 {
     return ( nWidth < m_nNumWide && nHeight < m_nNumHigh &&
-             nWidth >= 0 && nHeight >= 0 );
+            nWidth >= 0 && nHeight >= 0 );
 }
 
 bool C_BreakableSurface::IsPanelSolid( int nWidth, int nHeight )
@@ -547,7 +547,7 @@ void C_BreakableSurface::DrawRenderList( IBrushSurface* pBrushSurface )
     for ( unsigned short i = m_RenderList.Head(); i != m_RenderList.InvalidIndex(); i = m_RenderList.Next( i ) )
     {
         if ( nCurStyle != m_RenderList[i].m_nStyle ||
-             nCurEdgeType != m_RenderList[i].m_nEdgeType )
+            nCurEdgeType != m_RenderList[i].m_nEdgeType )
         {
             nCurStyle = m_RenderList[i].m_nStyle;
             nCurEdgeType = m_RenderList[i].m_nEdgeType;
@@ -589,7 +589,7 @@ void C_BreakableSurface::DrawRenderListHighlights( IBrushSurface* pBrushSurface 
     for ( unsigned short i = m_RenderList.Head(); i != m_RenderList.InvalidIndex(); i = m_RenderList.Next( i ) )
     {
         if ( nCurStyle != m_RenderList[i].m_nStyle ||
-             nCurEdgeType != m_RenderList[i].m_nEdgeType )
+            nCurEdgeType != m_RenderList[i].m_nEdgeType )
         {
             nCurStyle = m_RenderList[i].m_nStyle;
             nCurEdgeType = m_RenderList[i].m_nEdgeType;
@@ -791,8 +791,8 @@ int C_BreakableSurface::FindRenderPanel( int nWidth, int nHeight, WinSide_t nWin
     for ( unsigned short i = m_RenderList.Head(); i != m_RenderList.InvalidIndex(); i = m_RenderList.Next( i ) )
     {
         if ( m_RenderList[i].m_nSide == nWinSide &&
-             m_RenderList[i].m_nWidth == nWidth &&
-             m_RenderList[i].m_nHeight == nHeight )
+            m_RenderList[i].m_nWidth == nWidth &&
+            m_RenderList[i].m_nHeight == nHeight )
         {
             return i;
         }
@@ -810,7 +810,7 @@ int C_BreakableSurface::FindFirstRenderTexture( WinEdge_t nEdgeType, int nStyle 
     for ( unsigned short i = m_RenderList.Head(); i != m_RenderList.InvalidIndex(); i = m_RenderList.Next( i ) )
     {
         if ( m_RenderList[i].m_nStyle == nStyle &&
-             m_RenderList[i].m_nEdgeType == nEdgeType )
+            m_RenderList[i].m_nEdgeType == nEdgeType )
         {
             return i;
         }
@@ -1249,14 +1249,14 @@ bool C_BreakableSurface::ShouldReceiveProjectedTextures( int flags )
 //------------------------------------------------------------------------------
 class CBreakableSurfaceProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CBreakableSurfaceProxy();
     virtual ~CBreakableSurfaceProxy();
     virtual bool Init( IMaterial* pMaterial, KeyValues* pKeyValues );
     virtual void OnBind( C_BaseEntity* pC_BaseEntity );
     virtual IMaterial* GetMaterial();
 
-   private:
+    private:
     // get at the material whose texture we're going to steal
     void AcquireSourceMaterial( C_BaseEntity* pEnt );
 

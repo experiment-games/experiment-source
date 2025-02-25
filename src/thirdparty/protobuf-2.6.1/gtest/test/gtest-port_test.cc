@@ -168,7 +168,7 @@ TEST(ImplicitCastTest, CanUseConstCastOperatorOnConstValues) {
 class ConstAndNonConstCastable {
  public:
   ConstAndNonConstCastable(bool* converted, bool* const_converted)
-      : converted_(converted), const_converted_(const_converted) {}
+    : converted_(converted), const_converted_(const_converted) {}
   operator Base() {
     *converted_ = true;
     return Base();
@@ -213,9 +213,9 @@ TEST(ImplicitCastTest, CanUseImplicitConstructor) {
 
 TEST(IteratorTraitsTest, WorksForSTLContainerIterators) {
   StaticAssertTypeEq<int,
-      IteratorTraits< ::std::vector<int>::const_iterator>::value_type>();
+    IteratorTraits< ::std::vector<int>::const_iterator>::value_type>();
   StaticAssertTypeEq<bool,
-      IteratorTraits< ::std::list<bool>::iterator>::value_type>();
+    IteratorTraits< ::std::list<bool>::iterator>::value_type>();
 }
 
 TEST(IteratorTraitsTest, WorksForPointerToNonConst) {
@@ -226,7 +226,7 @@ TEST(IteratorTraitsTest, WorksForPointerToNonConst) {
 TEST(IteratorTraitsTest, WorksForPointerToConst) {
   StaticAssertTypeEq<char, IteratorTraits<const char*>::value_type>();
   StaticAssertTypeEq<const void*,
-      IteratorTraits<const void* const*>::value_type>();
+    IteratorTraits<const void* const*>::value_type>();
 }
 
 // Tests that the element_type typedef is available in scoped_ptr and refers
@@ -240,7 +240,7 @@ TEST(ScopedPtrTest, DefinesElementType) {
 TEST(GtestCheckSyntaxTest, BehavesLikeASingleStatement) {
   if (AlwaysFalse())
     GTEST_CHECK_(false) << "This should never be executed; "
-                           "It's a compilation test only.";
+                            "It's a compilation test only.";
 
   if (AlwaysTrue())
     GTEST_CHECK_(true);
@@ -256,14 +256,14 @@ TEST(GtestCheckSyntaxTest, BehavesLikeASingleStatement) {
 TEST(GtestCheckSyntaxTest, WorksWithSwitch) {
   switch (0) {
     case 1:
-      break;
+    break;
     default:
-      GTEST_CHECK_(true);
+    GTEST_CHECK_(true);
   }
 
   switch (0)
     case 0:
-      GTEST_CHECK_(true) << "Check failed in switch case";
+    GTEST_CHECK_(true) << "Check failed in switch case";
 }
 
 // Verifies behavior of FormatFileLocation.
@@ -274,7 +274,7 @@ TEST(FormatFileLocationTest, FormatsFileLocation) {
 
 TEST(FormatFileLocationTest, FormatsUnknownFile) {
   EXPECT_PRED_FORMAT2(
-      IsSubstring, "unknown file", FormatFileLocation(NULL, 42));
+    IsSubstring, "unknown file", FormatFileLocation(NULL, 42));
   EXPECT_PRED_FORMAT2(IsSubstring, "42", FormatFileLocation(NULL, 42));
 }
 
@@ -341,7 +341,7 @@ TEST(GetThreadCountTest, ReturnsCorrectValue) {
   // wait for up to .5 seconds for the OS to report the correct value.
   for (int i = 0; i < 5; ++i) {
     if (GetThreadCount() == 1)
-      break;
+    break;
 
     SleepMilliseconds(100);
   }
@@ -361,13 +361,13 @@ TEST(GtestCheckDeathTest, DiesWithCorrectOutputOnFailure) {
   const bool a_false_condition = false;
   const char regex[] =
 #ifdef _MSC_VER
-     "gtest-port_test\\.cc\\(\\d+\\):"
+    "gtest-port_test\\.cc\\(\\d+\\):"
 #elif GTEST_USES_POSIX_RE
-     "gtest-port_test\\.cc:[0-9]+"
+    "gtest-port_test\\.cc:[0-9]+"
 #else
-     "gtest-port_test\\.cc:\\d+"
+    "gtest-port_test\\.cc:\\d+"
 #endif  // _MSC_VER
-     ".*a_false_condition.*Extra info.*";
+    ".*a_false_condition.*Extra info.*";
 
   EXPECT_DEATH_IF_SUPPORTED(GTEST_CHECK_(a_false_condition) << "Extra info",
                             regex);
@@ -377,10 +377,10 @@ TEST(GtestCheckDeathTest, DiesWithCorrectOutputOnFailure) {
 
 TEST(GtestCheckDeathTest, LivesSilentlyOnSuccess) {
   EXPECT_EXIT({
-      GTEST_CHECK_(true) << "Extra info";
-      ::std::cerr << "Success\n";
-      exit(0); },
-      ::testing::ExitedWithCode(0), "Success");
+    GTEST_CHECK_(true) << "Extra info";
+    ::std::cerr << "Success\n";
+    exit(0); },
+    ::testing::ExitedWithCode(0), "Success");
 }
 
 #endif  // GTEST_HAS_DEATH_TEST
@@ -722,38 +722,38 @@ TEST(AtomMatchesCharTest, UnescapedChar) {
 
 TEST(ValidateRegexTest, GeneratesFailureAndReturnsFalseForInvalid) {
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex(NULL)),
-                          "NULL is not a valid simple regular expression");
+                        "NULL is not a valid simple regular expression");
   EXPECT_NONFATAL_FAILURE(
-      ASSERT_FALSE(ValidateRegex("a\\")),
-      "Syntax error at index 1 in simple regular expression \"a\\\": ");
+    ASSERT_FALSE(ValidateRegex("a\\")),
+    "Syntax error at index 1 in simple regular expression \"a\\\": ");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("a\\")),
-                          "'\\' cannot appear at the end");
+                        "'\\' cannot appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("\\n\\")),
-                          "'\\' cannot appear at the end");
+                        "'\\' cannot appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("\\s\\hb")),
-                          "invalid escape sequence \"\\h\"");
+                        "invalid escape sequence \"\\h\"");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("^^")),
-                          "'^' can only appear at the beginning");
+                        "'^' can only appear at the beginning");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex(".*^b")),
-                          "'^' can only appear at the beginning");
+                        "'^' can only appear at the beginning");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("$$")),
-                          "'$' can only appear at the end");
+                        "'$' can only appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("^$a")),
-                          "'$' can only appear at the end");
+                        "'$' can only appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("a(b")),
-                          "'(' is unsupported");
+                        "'(' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("ab)")),
-                          "')' is unsupported");
+                        "')' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("[ab")),
-                          "'[' is unsupported");
+                        "'[' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("a{2")),
-                          "'{' is unsupported");
+                        "'{' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("?")),
-                          "'?' can only follow a repeatable token");
+                        "'?' can only follow a repeatable token");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("^*")),
-                          "'*' can only follow a repeatable token");
+                        "'*' can only follow a repeatable token");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("5*+")),
-                          "'+' can only follow a repeatable token");
+                        "'+' can only follow a repeatable token");
 }
 
 TEST(ValidateRegexTest, ReturnsTrueForValid) {
@@ -831,7 +831,7 @@ TEST(MatchRegexAtHeadTest, WorksWhenRegexStartsWithRepetition) {
 }
 
 TEST(MatchRegexAtHeadTest,
-     WorksWhenRegexStartsWithRepetionOfEscapeSequence) {
+    WorksWhenRegexStartsWithRepetionOfEscapeSequence) {
   EXPECT_FALSE(MatchRegexAtHead("\\.+a", "abc"));
   EXPECT_FALSE(MatchRegexAtHead("\\s?b", "  b"));
 
@@ -1017,7 +1017,7 @@ TEST(ThreadLocalTest, GetAndPointerReturnSameValue) {
 TEST(ThreadLocalTest, PointerAndConstPointerReturnSameValue) {
   ThreadLocal<std::string> thread_local_string;
   const ThreadLocal<std::string>& const_thread_local_string =
-      thread_local_string;
+    thread_local_string;
 
   EXPECT_EQ(thread_local_string.pointer(), const_thread_local_string.pointer());
 
@@ -1062,20 +1062,20 @@ class AtomicCounterWithMutex {
     MutexLock lock(mutex_);
     int temp = value_;
     {
-      // Locking a mutex puts up a memory barrier, preventing reads and
-      // writes to value_ rearranged when observed from other threads.
-      //
-      // We cannot use Mutex and MutexLock here or rely on their memory
-      // barrier functionality as we are testing them here.
-      pthread_mutex_t memory_barrier_mutex;
-      GTEST_CHECK_POSIX_SUCCESS_(
-          pthread_mutex_init(&memory_barrier_mutex, NULL));
-      GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_lock(&memory_barrier_mutex));
+    // Locking a mutex puts up a memory barrier, preventing reads and
+    // writes to value_ rearranged when observed from other threads.
+    //
+    // We cannot use Mutex and MutexLock here or rely on their memory
+    // barrier functionality as we are testing them here.
+    pthread_mutex_t memory_barrier_mutex;
+    GTEST_CHECK_POSIX_SUCCESS_(
+        pthread_mutex_init(&memory_barrier_mutex, NULL));
+    GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_lock(&memory_barrier_mutex));
 
-      SleepMilliseconds(random_.Generate(30));
+    SleepMilliseconds(random_.Generate(30));
 
-      GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_unlock(&memory_barrier_mutex));
-      GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_destroy(&memory_barrier_mutex));
+    GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_unlock(&memory_barrier_mutex));
+    GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_destroy(&memory_barrier_mutex));
     }
     value_ = temp + 1;
   }
@@ -1089,7 +1089,7 @@ class AtomicCounterWithMutex {
 
 void CountingThreadFunc(pair<AtomicCounterWithMutex*, int> param) {
   for (int i = 0; i < param.second; ++i)
-      param.first->Increment();
+    param.first->Increment();
 }
 
 // Tests that the mutex only lets one thread at a time to lock it.
@@ -1106,9 +1106,9 @@ TEST(MutexTest, OnlyOneThreadCanLockAtATime) {
   // kCycleCount times each.
   for (int i = 0; i < kThreadCount; ++i) {
     counting_threads[i].reset(new ThreadType(&CountingThreadFunc,
-                                             make_pair(&locked_counter,
-                                                       kCycleCount),
-                                             &threads_can_start));
+                                            make_pair(&locked_counter,
+                                                        kCycleCount),
+                                            &threads_can_start));
   }
   threads_can_start.Notify();
   for (int i = 0; i < kThreadCount; ++i)
@@ -1153,7 +1153,7 @@ class DestructorTracker {
  public:
   DestructorTracker() : index_(GetNewIndex()) {}
   DestructorTracker(const DestructorTracker& /* rhs */)
-      : index_(GetNewIndex()) {}
+    : index_(GetNewIndex()) {}
   ~DestructorTracker() {
     // We never access g_destroyed concurrently, so we don't need to
     // protect the write operation under a mutex.

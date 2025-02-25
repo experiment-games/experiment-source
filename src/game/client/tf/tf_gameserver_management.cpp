@@ -71,7 +71,7 @@ CON_COMMAND_F( cl_gameserver_reset_identity, "Resets the identity token for a gi
 
 class CGC_GameServer_CreateIdentityResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_GameServer_CreateIdentityResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -110,7 +110,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGC_GameServer_CreateIdentityResponse, "CGC_GameSe
 
 class CGC_GameServer_ListResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_GameServer_ListResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -133,7 +133,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGC_GameServer_ListResponse, "CGC_GameServer_ListR
 
 class CGC_GameServer_ResetIdentityResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_GameServer_ResetIdentityResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

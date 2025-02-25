@@ -55,9 +55,9 @@ CQuestMapHelper::CQuestMapHelper()
 void CQuestMapHelper::SOEvent( const GCSDK::CSharedObject* pObject )
 {
     if ( pObject->GetTypeID() == CQuestMapNode::k_nTypeID ||
-         pObject->GetTypeID() == CEconGameAccountClient::k_nTypeID ||
-         pObject->GetTypeID() == CQuest::k_nTypeID ||
-         pObject->GetTypeID() == CQuestMapRewardPurchase::k_nTypeID )
+        pObject->GetTypeID() == CEconGameAccountClient::k_nTypeID ||
+        pObject->GetTypeID() == CQuest::k_nTypeID ||
+        pObject->GetTypeID() == CQuestMapRewardPurchase::k_nTypeID )
     {
         Refresh();
     }
@@ -156,8 +156,8 @@ bool CQuestMapHelper::BCanNodeBeTurnedIn( uint32 nNodeDefindex ) const
     {
         EQuestPoints eType = ( EQuestPoints )i;
         if ( pNode->BIsMedalOffered( eType ) &&
-             !pNode->BIsMedalEarned( eType ) &&
-             pQuest->BEarnedAllPointsForCategory( eType ) )
+            !pNode->BIsMedalEarned( eType ) &&
+            pQuest->BEarnedAllPointsForCategory( eType ) )
             return true;
     }
 

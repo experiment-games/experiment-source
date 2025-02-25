@@ -30,12 +30,12 @@ class CBrowseButton : public vgui::Button
 {
     DECLARE_CLASS_SIMPLE( CBrowseButton, vgui::Button );
 
-   public:
+    public:
     CBrowseButton( vgui::Panel *pParent );
     ~CBrowseButton();
     void InitBrowseInfo( int x, int y, const char *pszName, const char *pszDir, const char *pszFilter, const char *pszField );
 
-   private:
+    private:
     char *pszStartingDirectory;
     char *pszFileFilter;
     char *pszTargetField;
@@ -113,7 +113,7 @@ class CQCGenerator : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQCGenerator, vgui::EditablePanel );
 
-   public:
+    public:
     CQCGenerator( vgui::Panel *pParent, const char *pszPath, const char *pszScene );
     ~CQCGenerator();
 
@@ -139,12 +139,12 @@ class CQCGenerator : public vgui::EditablePanel
     virtual void OnKeyCodeTyped( vgui::KeyCode code );
     void InitializeSMDPaths( const char *pszPath, const char *pszScene );
 
-   protected:
+    protected:
     // Creates standard controls. Allows the derived class to
     // add these controls to various splitter windows
     void CreateStandardControls( vgui::Panel *pParent );
 
-   private:
+    private:
     CBrowseButton *m_pCollisionBrowseButton;
     char m_szTargetField[MAX_PATH];
     vgui::ListPanel *m_pLODPanel;

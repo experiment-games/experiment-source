@@ -38,7 +38,7 @@
 // *************************************************************************************************************************
 class CTFJarGas : public CTFJar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFJarGas, CTFJar );
     DECLARE_NETWORKCLASS();
 
@@ -73,14 +73,14 @@ class CTFJarGas : public CTFJar
         return 0.f;
     }
 
-   private:
+    private:
     void RemoveJarGas( CBaseCombatCharacter *pOwner );
 };
 
 // *************************************************************************************************************************
 class CTFProjectile_JarGas : public CTFProjectile_Jar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_JarGas, CTFProjectile_Jar );
     DECLARE_NETWORKCLASS();
 
@@ -130,7 +130,7 @@ class CTFGasManager : public CTFPointManager
 {
     DECLARE_CLASS( CTFGasManager, CTFPointManager );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -147,7 +147,7 @@ class CTFGasManager : public CTFPointManager
 
     virtual void Update() OVERRIDE;
 
-   protected:
+    protected:
     virtual Vector GetInitialPosition() const OVERRIDE;
 
     virtual float GetLifeTime() const OVERRIDE
@@ -176,7 +176,7 @@ class CTFGasManager : public CTFPointManager
     virtual bool ShouldCollide( CBaseEntity *pEnt ) const OVERRIDE;
 #endif  // GAME_DLL
 
-   private:
+    private:
 #ifdef GAME_DLL
     CUtlVector< EHANDLE > m_Touched;
 #else

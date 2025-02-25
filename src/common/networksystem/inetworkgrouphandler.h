@@ -17,7 +17,7 @@ class INetMessage;
 
 abstract_class INetworkGroupHandler
 {
-   public:
+    public:
     virtual void HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client ) = 0;
 };
 

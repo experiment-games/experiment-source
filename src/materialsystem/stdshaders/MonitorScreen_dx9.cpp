@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( MonitorScreen, MonitorScreen_DX9 )
 
 BEGIN_VS_SHADER( MonitorScreen_DX9,
-                 "This is a shader that does a contrast/saturation version of base times lightmap." )
+                "This is a shader that does a contrast/saturation version of base times lightmap." )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( CONTRAST, SHADER_PARAM_TYPE_FLOAT, "0.0", "contrast 0 == normal 1 == color*color" )
@@ -64,7 +64,7 @@ SHADER_FALLBACK
     }
 
     if ( !( g_pHardwareConfig->SupportsPixelShaders_2_0() && g_pHardwareConfig->SupportsVertexShaders_2_0() ) ||
-         ( g_pHardwareConfig->GetDXSupportLevel() < 90 ) )
+        ( g_pHardwareConfig->GetDXSupportLevel() < 90 ) )
     {
         return "MonitorScreen_DX8";
     }

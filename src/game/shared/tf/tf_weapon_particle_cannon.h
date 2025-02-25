@@ -27,7 +27,7 @@
 
 class CTFParticleCannon : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFParticleCannon, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -136,7 +136,7 @@ class CTFParticleCannon : public CTFRocketLauncher
     }
 #endif  // GAME_DLL
 
-   private:
+    private:
     CNetworkVar( float, m_flChargeBeginTime );
     CNetworkVar( int, m_iChargeEffect );
     bool m_bChargedShot;

@@ -86,7 +86,7 @@ bool StatsTrackingIsFullyEnabled( void );
 
 class CGamestatsData
 {
-   public:
+    public:
     CGamestatsData()
     {
         m_pKVData = NULL;
@@ -126,23 +126,23 @@ void UpdatePerfStats( void )
 
 CBaseGameStats_Driver::CBaseGameStats_Driver( void )
     : BaseClass( "CGameStats" ),
-      m_iLoadedVersion( -1 ),
-      m_bEnabled( false ),
-      m_bShuttingDown( false ),
-      m_bInLevel( false ),
-      m_bFirstLevel( true ),
-      m_flLevelStartTime( 0.0f ),
-      m_bStationary( false ),
-      m_flLastMovementTime( 0.0f ),
-      m_bGamePaused( false ),
-      m_pGamestatsData( NULL ),
-      m_bBufferFull( false ),
-      m_nWriteIndex( 0 ),
-      m_flLastRealTime( -1 ),
-      m_flLastSampleTime( -1 ),
-      m_flTotalTimeInLevels( 0 ),
-      m_iNumLevels( 0 ),
-      m_bDidVoiceChat( false )
+    m_iLoadedVersion( -1 ),
+    m_bEnabled( false ),
+    m_bShuttingDown( false ),
+    m_bInLevel( false ),
+    m_bFirstLevel( true ),
+    m_flLevelStartTime( 0.0f ),
+    m_bStationary( false ),
+    m_flLastMovementTime( 0.0f ),
+    m_bGamePaused( false ),
+    m_pGamestatsData( NULL ),
+    m_bBufferFull( false ),
+    m_nWriteIndex( 0 ),
+    m_flLastRealTime( -1 ),
+    m_flLastSampleTime( -1 ),
+    m_flTotalTimeInLevels( 0 ),
+    m_iNumLevels( 0 ),
+    m_bDidVoiceChat( false )
 
 {
     m_szLoadedUserID[0] = 0;
@@ -154,7 +154,7 @@ static FileHandle_t g_LogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
 CBaseGameStats::CBaseGameStats()
     : m_bLogging( false ),
-      m_bLoggingToFile( false )
+    m_bLoggingToFile( false )
 {
 }
 
@@ -560,9 +560,9 @@ bool CBaseGameStats::UploadStatsFileNOW( void )
     if ( gamestatsuploader )
     {
         return gamestatsuploader->UploadGameStats( "",
-                                                   1,
-                                                   uBlobSize,
-                                                   pvBlobData );
+                                                    1,
+                                                    uBlobSize,
+                                                    pvBlobData );
     }
 
     return false;
@@ -1485,20 +1485,20 @@ static ConCommand resetGameStats( "_resetgamestats", CC_ResetGameStats, "Erases 
 
 class CPointGamestatsCounter : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPointGamestatsCounter, CPointEntity );
     DECLARE_DATADESC();
 
     CPointGamestatsCounter();
 
-   protected:
+    protected:
     void InputSetName( inputdata_t &inputdata );
     void InputIncrement( inputdata_t &inputdata );
 
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_strStatisticName;
     bool m_bDisabled;
 };
@@ -1521,7 +1521,7 @@ DEFINE_KEYFIELD( m_strStatisticName, FIELD_STRING, "Name" ),
 
             CPointGamestatsCounter::CPointGamestatsCounter()
     : m_strStatisticName( NULL_STRING ),
-      m_bDisabled( false )
+    m_bDisabled( false )
 {
 }
 

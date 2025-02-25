@@ -13,7 +13,7 @@
 
 class IAudioStreamEvent
 {
-   public:
+    public:
     // called by the stream to request more data
     // seek the source to position "offset"
     // -1 indicates previous position
@@ -25,7 +25,7 @@ class IAudioStreamEvent
 
 class IAudioStream
 {
-   public:
+    public:
     virtual ~IAudioStream() {}
 
     // Decode another bufferSize output bytes from the stream
@@ -51,7 +51,7 @@ class IAudioStream
 #define VAUDIO_INTERFACE_VERSION "VAudio002"
 class IVAudio
 {
-   public:
+    public:
     virtual ~IVAudio() {}
 
     virtual IAudioStream *CreateMP3StreamDecoder( IAudioStreamEvent *pEventHandler ) = 0;

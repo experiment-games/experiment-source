@@ -22,7 +22,7 @@ struct CPatch;
 
 class CVRADDispColl : public CDispCollTree
 {
-   public:
+    public:
     // Creation/Destruction Functions
     CVRADDispColl();
     ~CVRADDispColl();
@@ -79,7 +79,7 @@ class CVRADDispColl : public CDispCollTree
     // Raytracing
     void AddPolysForRayTrace( void );
 
-   protected:
+    protected:
     void CalcSampleRadius2AndBox( dface_t *pFace );
 
     // Utility.
@@ -88,7 +88,7 @@ class CVRADDispColl : public CDispCollTree
     void GetSurfaceMinMax( Vector &boxMin, Vector &boxMax );
     void GetMinorAxes( Vector const &vecNormal, int &nAxis0, int &nAxis1 );
 
-   protected:
+    protected:
     int m_iParent;                 // Parent index
     float m_flSampleRadius2;       // Sampling radius
     float m_flPatchSampleRadius2;  // Patch sampling radius (max bound)

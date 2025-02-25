@@ -69,7 +69,7 @@ namespace java
 
 class ImmutableFieldGenerator
 {
-   public:
+    public:
     ImmutableFieldGenerator() {}
     virtual ~ImmutableFieldGenerator();
 
@@ -95,7 +95,7 @@ class ImmutableFieldGenerator
 
     virtual string GetBoxedType() const = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutableFieldGenerator );
 };
 
@@ -103,14 +103,14 @@ class ImmutableFieldGenerator
 template < typename FieldGeneratorType >
 class FieldGeneratorMap
 {
-   public:
+    public:
     explicit FieldGeneratorMap( const Descriptor* descriptor,
                                 Context* context );
     ~FieldGeneratorMap();
 
     const FieldGeneratorType& get( const FieldDescriptor* field ) const;
 
-   private:
+    private:
     const Descriptor* descriptor_;
     Context* context_;
     ClassNameResolver* name_resolver_;
@@ -131,7 +131,7 @@ FieldGeneratorMap< FieldGeneratorType >::get( const FieldDescriptor* field ) con
 template <>
 FieldGeneratorMap< ImmutableFieldGenerator >::
     FieldGeneratorMap( const Descriptor* descriptor,
-                       Context* context );
+                        Context* context );
 
 template <>
 FieldGeneratorMap< ImmutableFieldGenerator >::~FieldGeneratorMap();
@@ -153,17 +153,17 @@ struct OneofGeneratorInfo
 
 // Set some common variables used in variable FieldGenerators.
 void SetCommonFieldVariables( const FieldDescriptor* descriptor,
-                              const FieldGeneratorInfo* info,
-                              map< string, string >* variables );
+                            const FieldGeneratorInfo* info,
+                            map< string, string >* variables );
 
 // Set some common oneof variables used in OneofFieldGenerators.
 void SetCommonOneofVariables( const FieldDescriptor* descriptor,
-                              const OneofGeneratorInfo* info,
-                              map< string, string >* variables );
+                            const OneofGeneratorInfo* info,
+                            map< string, string >* variables );
 
 // Print useful comments before a field's accessors.
 void PrintExtraFieldInfo( const map< string, string >& variables,
-                          io::Printer* printer );
+                        io::Printer* printer );
 
 }  // namespace java
 }  // namespace compiler

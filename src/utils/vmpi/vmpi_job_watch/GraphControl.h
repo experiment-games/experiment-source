@@ -18,11 +18,11 @@
 
 class CGraphEntry
 {
-   public:
+    public:
     CGraphEntry()
         : m_msTime( 0 ),
-          m_nBytesSent( 0 ),
-          m_nBytesReceived( 0 )
+        m_nBytesSent( 0 ),
+        m_nBytesReceived( 0 )
     {
     }
 
@@ -37,13 +37,13 @@ class CGraphEntry
 class CGraphControl : public CWnd
 {
     // Construction
-   public:
+    public:
     CGraphControl();
 
     // Attributes
-   public:
+    public:
     // Operations
-   public:
+    public:
     void Clear();
 
     // This function assumes you've already run the query and the graph_entry's are selected in.
@@ -55,16 +55,16 @@ class CGraphControl : public CWnd
     //}}AFX_VIRTUAL
 
     // Implementation
-   public:
+    public:
     virtual ~CGraphControl();
 
-   protected:
+    protected:
     void Render( CDC *pDC );
 
     CUtlVector< CGraphEntry > m_Entries;
 
     // Generated message map functions
-   protected:
+    protected:
     //{{AFX_MSG(CGraphControl)
     afx_msg void OnPaint();
     //}}AFX_MSG

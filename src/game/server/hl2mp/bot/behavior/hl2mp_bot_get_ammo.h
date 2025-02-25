@@ -5,7 +5,7 @@
 
 class CHL2MPBotGetAmmo : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotGetAmmo( void );
 
     static bool IsPossible( CHL2MPBot *me );  // return true if this Action has what it needs to perform right now
@@ -26,7 +26,7 @@ class CHL2MPBotGetAmmo : public Action< CHL2MPBot >
         return "GetAmmo";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CHandle< CBaseEntity > m_ammo;
 };

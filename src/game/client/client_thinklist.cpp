@@ -218,7 +218,7 @@ void CClientThinkList::AddEntityToFrameThinkList( ThinkEntry_t *pEntry, bool bAl
 
     // If we're not thinking this frame, we don't have to worry about thinking after our parents
     bool bThinkThisInterval = ( pEntry->m_flNextClientThink == CLIENT_THINK_ALWAYS ) ||
-                              ( pEntry->m_flNextClientThink <= gpGlobals->curtime );
+                            ( pEntry->m_flNextClientThink <= gpGlobals->curtime );
 
     // This logic makes it so that if a child thinks,
     // *all* hierarchical parents + grandparents will think first, even if some

@@ -39,8 +39,8 @@ mov		oPos, $projPos
 alloc $worldPos
 if( $DOWATERFOG == 1 )
 {
-	; Get the worldpos z component only since that's all we need for height fog
-	dp4 $worldPos.z, $vPos, $cModel2
+    ; Get the worldpos z component only since that's all we need for height fog
+    dp4 $worldPos.z, $vPos, $cModel2
 }
 &CalcFog( $worldPos, $projPos );
 free $worldPos
@@ -101,7 +101,7 @@ dp3		$lightDirection.z, $r, $SHADER_SPECIFIC_CONST_0
 &FreeRegister( \$t );
 
 ; Scale into 0-1 range (we're assuming light direction was normalized prior to here)
-add		oT2, $lightDirection, $cHalf	; + 0.5 
+add		oT2, $lightDirection, $cHalf	; + 0.5
 &FreeRegister( \$lightDirection );
 
 ;------------------------------------------------------------------------------
@@ -113,5 +113,3 @@ mov		oT1, $vTexCoord1
 
 ; Pass the dirlight color through
 mov		oD0.xyzw, $vColor
-
-

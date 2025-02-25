@@ -136,7 +136,7 @@ int SmdExportClass::DoExport( const TCHAR *name, ExpInterface *ei, Interface *i,
 
     /*
     if (m_fReferenceFrame)
-      sprintf(szFile,  "%s\\%s_model.%s",  (char*)strPath, (char*)strFile, DEFAULT_EXT);
+    sprintf(szFile,  "%s\\%s_model.%s",  (char*)strPath, (char*)strFile, DEFAULT_EXT);
     */
 
     FILE *pFile;
@@ -407,14 +407,14 @@ int DumpFrameRotationsTEP::callback( INode *pnode )
 
     // Print rotations
     fprintf( m_pfile, "%3d %f %f %f %f %f %f\n",
-             // Node:%-15s Rotation (x,y,z)\n",
-             iNode,
-             rowTrans.x,
-             rowTrans.y,
-             rowTrans.z,
-             xRot,
-             yRot,
-             zRot );
+            // Node:%-15s Rotation (x,y,z)\n",
+            iNode,
+            rowTrans.x,
+            rowTrans.y,
+            rowTrans.z,
+            xRot,
+            yRot,
+            zRot );
 
     return TREE_CONTINUE;
 }
@@ -672,19 +672,19 @@ int DumpModelTEP::callback( INode *pnode )
                 /*
                 if ((pmtlFace->ClassID() == Class_ID(MULTI_CLASS_ID, 0) && pmtlFace->IsMultiMtl()))
                 {
-                  // it's a sub-sub material.  Gads.
-                  pmtlFace = pmtlFace->GetSubMtl(mtlidFace);
-                  ASSERT_AND_ABORT(pmtlFace != NULL, "NULL Sub-material returned");
+                // it's a sub-sub material.  Gads.
+                pmtlFace = pmtlFace->GetSubMtl(mtlidFace);
+                ASSERT_AND_ABORT(pmtlFace != NULL, "NULL Sub-material returned");
                 }
                 */
 
                 if ( !( pmtlFace->ClassID() == Class_ID( DMTL_CLASS_ID, 0 ) ) )
                 {
                     sprintf( st_szDBG,
-                             "ERROR--Sub-material with index %d (used in node %s) isn't a 'default/standard' material [%x].",
-                             mtlidFace,
-                             ( char * )strNodeName,
-                             pmtlFace->ClassID() );
+                            "ERROR--Sub-material with index %d (used in node %s) isn't a 'default/standard' material [%x].",
+                            mtlidFace,
+                            ( char * )strNodeName,
+                            pmtlFace->ClassID() );
                     ASSERT_AND_ABORT( FALSE, st_szDBG );
                 }
                 StdMat *pstdmtlFace = ( StdMat * )pmtlFace;
@@ -701,9 +701,9 @@ int DumpModelTEP::callback( INode *pnode )
                 if ( !( ptexmap->ClassID() == Class_ID( BMTEX_CLASS_ID, 0 ) ) )
                 {
                     sprintf( st_szDBG,
-                             "ERROR--Sub-material with index %d (used in node %s) doesn't have a bitmap as its diffuse texture.",
-                             mtlidFace,
-                             ( char * )strNodeName );
+                            "ERROR--Sub-material with index %d (used in node %s) doesn't have a bitmap as its diffuse texture.",
+                            mtlidFace,
+                            ( char * )strNodeName );
                     ASSERT_AND_ABORT( FALSE, st_szDBG );
                 }
                 BitmapTex *pbmptex = ( BitmapTex * )ptexmap;
@@ -744,10 +744,10 @@ int DumpModelTEP::callback( INode *pnode )
         /*
         const char *szExpectedExtension = ".bmp";
         if (stricmp(szBitmapName+strlen(szBitmapName)-strlen(szExpectedExtension), szExpectedExtension) != 0)
-          {
-          sprintf(st_szDBG, "Node %s uses %s, which is not a %s file", (char*)strNodeName, szBitmapName, szExpectedExtension);
-          ASSERT_AND_ABORT(FALSE, st_szDBG);
-          }
+        {
+        sprintf(st_szDBG, "Node %s uses %s, which is not a %s file", (char*)strNodeName, szBitmapName, szExpectedExtension);
+        ASSERT_AND_ABORT(FALSE, st_szDBG);
+        }
         */
 
         // Determine owning bones for the vertices.
@@ -906,8 +906,8 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal( RVertex *prvertex, DWORD smGroupFace )
     int cNormals = prvertex->rFlags & NORCT_MASK;
 
     ASSERT_MBOX( ( cNormals == 1 && prvertex->ern == NULL ) ||
-                     ( cNormals > 1 && prvertex->ern != NULL ),
-                 "BOGUS RVERTEX" );
+                    ( cNormals > 1 && prvertex->ern != NULL ),
+                "BOGUS RVERTEX" );
 
     if ( cNormals == 1 )
         return prvertex->rn.getNormal();

@@ -9,9 +9,9 @@ ps.1.1
 ;
 ; The texture coordinates need to be defined as follows:
 ; tc0 - Normalmap and lightmap texture coordinates
-; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space 
+; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space
 ; c3 = a
-; c4 = b 
+; c4 = b
 ; c5 = c in a quadratic approx to pow( 1/2.2 )
 ;------------------------------------------------------------------------------
 
@@ -19,9 +19,9 @@ ps.1.1
 tex t0
 
 ; Sample the lightmaps
-tex t1 
-tex t2 
-tex t3 
+tex t1
+tex t2
+tex t3
 
 ; Compute the dot product of axis 1 and the normal
 dp3_sat r1, t0_bx2, c0
@@ -38,6 +38,3 @@ mad r0, r1, t3, r0
 ; Do quadratic approximation to pow( x, 1 / 2.2 )
 ;mad r1, c3, r0, c4		; r1 = a*x + b
 ;mad_x2_sat r0, r1, r0, c5		; r0 = r1*x + c = a*x*x + b*x + c
-
-
-

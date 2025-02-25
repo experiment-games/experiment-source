@@ -41,4 +41,3 @@ To decode untrusted files safely it is required to at least:
 * Set a chunk size and chunk cache limit with `spng_set_chunks_limits()`
   to avoid running out of memory. Note that exceeding either limit is
   handled as an out-of-memory error since v0.6.0.
-

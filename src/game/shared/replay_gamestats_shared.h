@@ -15,7 +15,7 @@ struct RenderMovieParams_t;
 
 class CReplayGameStatsHelper
 {
-   public:
+    public:
     CReplayGameStatsHelper();
 
     // Adding "Time" before uploading.
@@ -25,7 +25,7 @@ class CReplayGameStatsHelper
     void SW_ReplayStats_WriteRenderDataStart( const RenderMovieParams_t &RenderParams, const CReplayRenderDialog *pDlg );
     void SW_ReplayStats_WriteRenderDataEnd( const RenderMovieParams_t &RenderParams, const char *pEndReason );
 
-   private:
+    private:
     void SW_ReplayStats_WriteRenderData( bool bStarting, const RenderMovieParams_t &RenderParams, const CReplayRenderDialog *pDlg, const char *pEndReason = NULL );
 #endif
 };

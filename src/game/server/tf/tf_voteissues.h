@@ -23,7 +23,7 @@ class CTFPlayer;
 class CBaseTFIssue : public CBaseIssue
 {
     // Overrides to BaseIssue standard to this mod.
-   public:
+    public:
     CBaseTFIssue( const char *typeString, CVoteController *pVoteController )
         : CBaseIssue( typeString, pVoteController )
     {
@@ -35,7 +35,7 @@ class CBaseTFIssue : public CBaseIssue
 //-----------------------------------------------------------------------------
 class CRestartGameIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CRestartGameIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "RestartGame", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_RestartGame")
 
@@ -52,7 +52,7 @@ class CRestartGameIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CKickIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CKickIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "Kick", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_Kick")
 
@@ -79,7 +79,7 @@ class CKickIssue : public CBaseTFIssue
 
     virtual void OnPlayerDisconnected( CBasePlayer *pPlayer ) OVERRIDE;
 
-   private:
+    private:
     void Init( void );
     bool CreateVoteDataFromDetails( const char *pszDetails );
     void NotifyGCAdHocKick( bool bKickedSuccessfully );
@@ -97,7 +97,7 @@ class CKickIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CChangeLevelIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CChangeLevelIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "ChangeLevel", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ChangeLevel")
 
@@ -117,7 +117,7 @@ class CChangeLevelIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CNextLevelIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CNextLevelIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "NextLevel", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_NextLevel")
 
@@ -134,7 +134,7 @@ class CNextLevelIssue : public CBaseTFIssue
     virtual bool GetVoteOptions( CUtlVector< const char * > &vecNames ) OVERRIDE;
     virtual float GetQuorumRatio( void ) OVERRIDE;
 
-   private:
+    private:
     CUtlVector< const char * > m_IssueOptions;
 };
 
@@ -143,7 +143,7 @@ class CNextLevelIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CExtendLevelIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CExtendLevelIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "ExtendLevel", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ExtendLevel")
 
@@ -161,7 +161,7 @@ class CExtendLevelIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CScrambleTeams : public CBaseTFIssue
 {
-   public:
+    public:
     CScrambleTeams( CVoteController *pVoteController )
         : CBaseTFIssue( "ScrambleTeams", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ScrambleTeams")
 
@@ -178,7 +178,7 @@ class CScrambleTeams : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CMannVsMachineChangeChallengeIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CMannVsMachineChangeChallengeIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "ChangeMission", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ChangeMission")
 
@@ -193,7 +193,7 @@ class CMannVsMachineChangeChallengeIssue : public CBaseTFIssue
     virtual bool IsYesNoVote( void ) OVERRIDE;
     virtual int GetNumberVoteOptions( void ) OVERRIDE;
 
-   private:
+    private:
     CUtlVector< const char * > m_IssueOptions;
 };
 
@@ -202,7 +202,7 @@ class CMannVsMachineChangeChallengeIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CEnableTemporaryHalloweenIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CEnableTemporaryHalloweenIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "Eternaween", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_Eternaween")
 
@@ -240,7 +240,7 @@ class CEnableTemporaryHalloweenIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CTeamAutoBalanceIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CTeamAutoBalanceIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "TeamAutoBalance", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_TeamAutoBalance")
 
@@ -259,7 +259,7 @@ class CTeamAutoBalanceIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CClassLimitsIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CClassLimitsIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "ClassLimits", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ClassLimits")
 
@@ -272,7 +272,7 @@ class CClassLimitsIssue : public CBaseTFIssue
     virtual const char *GetVotePassedString( void ) OVERRIDE;
     virtual const char *GetDetailsString( void ) OVERRIDE;
 
-   private:
+    private:
     CUtlString m_sRetString;
 };
 
@@ -281,7 +281,7 @@ class CClassLimitsIssue : public CBaseTFIssue
 //-----------------------------------------------------------------------------
 class CPauseGameIssue : public CBaseTFIssue
 {
-   public:
+    public:
     CPauseGameIssue( CVoteController *pVoteController )
         : CBaseTFIssue( "PauseGame", pVoteController ) {}  // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_PauseGame")
 
@@ -293,7 +293,7 @@ class CPauseGameIssue : public CBaseTFIssue
     virtual const char *GetVotePassedString( void ) OVERRIDE;
     virtual const char *GetDetailsString( void ) OVERRIDE;
 
-   private:
+    private:
     CUtlString m_sRetString;
 };
 

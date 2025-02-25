@@ -23,7 +23,7 @@ extern CThirdPersonManager g_ThirdPersonManager;
 //-----------------------------------------------------------------------------
 class CTFInput : public CInput
 {
-   public:
+    public:
     CTFInput()
         : m_angThirdPersonOffset( 0.f, 0.f, 0.f )
     {
@@ -34,7 +34,7 @@ class CTFInput : public CInput
     virtual float JoyStickAdjustYaw( float flSpeed ) OVERRIDE;
     virtual void ApplyMouse( QAngle &viewangles, CUserCmd *cmd, float mouse_x, float mouse_y ) OVERRIDE;
 
-   private:
+    private:
     QAngle m_angThirdPersonOffset;
 };
 

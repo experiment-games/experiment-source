@@ -242,5 +242,5 @@ bool C_TFPasstimeLogic::GetBallReticleTarget( C_BaseEntity **ppEnt, bool *bHomin
 bool C_TFPasstimeLogic::BCanPlayerPickUpBall( C_TFPlayer *pPlayer ) const
 {
     return pPlayer && pPlayer->IsAllowedToPickUpFlag() && pPlayer->IsAlive()  // NOTE: it's possible to be alive and dead at the same time
-           && !pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) && !pPlayer->m_Shared.InCond( TF_COND_PHASE ) && !pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) && !pPlayer->m_Shared.InCond( TF_COND_SELECTED_TO_TELEPORT ) && !pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) && !pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) && !pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) && !pPlayer->m_Shared.IsControlStunned() && !pPlayer->m_Shared.IsStealthed() && !pPlayer->m_Shared.IsCarryingObject();
+            && !pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) && !pPlayer->m_Shared.InCond( TF_COND_PHASE ) && !pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) && !pPlayer->m_Shared.InCond( TF_COND_SELECTED_TO_TELEPORT ) && !pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) && !pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) && !pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) && !pPlayer->m_Shared.IsControlStunned() && !pPlayer->m_Shared.IsStealthed() && !pPlayer->m_Shared.IsCarryingObject();
 }

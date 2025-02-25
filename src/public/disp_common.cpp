@@ -14,7 +14,7 @@
 
 class CNodeVert
 {
-   public:
+    public:
     CNodeVert() {}
     CNodeVert( int ix, int iy )
     {
@@ -309,8 +309,8 @@ int GetSubNeighborIndex(
     if ( !pSide->m_SubNeighbors[iSub].IsValid() )
     {
         if ( iSub == 1 &&
-             pSide->m_SubNeighbors[0].IsValid() &&
-             pSide->m_SubNeighbors[0].m_Span == CORNER_TO_CORNER )
+            pSide->m_SubNeighbors[0].IsValid() &&
+            pSide->m_SubNeighbors[0].m_Span == CORNER_TO_CORNER )
         {
             iSub = 0;
         }
@@ -403,25 +403,25 @@ CDispUtilsHelper *TransformIntoNeighbor(
     CDispUtilsHelper *pRet = TransformIntoSubNeighbor( pDisp, iEdge, iSub, nodeIndex, out );
 
 #if 0
-	// Debug check.. make sure it comes back to the same point from the other side.
+    // Debug check.. make sure it comes back to the same point from the other side.
 #if defined( _DEBUG )
-		static bool bTesting = false;
-		if ( pRet && !bTesting )
-		{
-			bTesting = true;
+        static bool bTesting = false;
+        if ( pRet && !bTesting )
+        {
+            bTesting = true;
 
-			// We could let TransformIntoNeighbor figure out the index but if this is a corner vert, then
-			// it may pick the wrong edge and we'd get a benign assert.
-			int nbOrientation = pDisp->GetEdgeNeighbor( iEdge )->m_SubNeighbors[iSub].GetNeighborOrientation();
-			int iNeighborEdge = (iEdge + 2 + nbOrientation) & 3;
+            // We could let TransformIntoNeighbor figure out the index but if this is a corner vert, then
+            // it may pick the wrong edge and we'd get a benign assert.
+            int nbOrientation = pDisp->GetEdgeNeighbor( iEdge )->m_SubNeighbors[iSub].GetNeighborOrientation();
+            int iNeighborEdge = (iEdge + 2 + nbOrientation) & 3;
 
-			CVertIndex testIndex;
-			CDispUtilsHelper *pTest = TransformIntoNeighbor( pRet, iNeighborEdge, out, testIndex );
-			Assert( pTest == pDisp );
-			Assert( testIndex == nodeIndex );
-		
-			bTesting = false;
-		}
+            CVertIndex testIndex;
+            CDispUtilsHelper *pTest = TransformIntoNeighbor( pRet, iNeighborEdge, out, testIndex );
+            Assert( pTest == pDisp );
+            Assert( testIndex == nodeIndex );
+
+            bTesting = false;
+        }
 #endif
 #endif
 
@@ -806,7 +806,7 @@ bool FindEdge( CCoreDispInfo *pInfo, Vector const &vPoint1, Vector const &vPoint
     for ( iEdge = 0; iEdge < 4; iEdge++ )
     {
         if ( VectorsAreEqual( vPoint1, pSurface->GetPoint( iEdge ), 0.01f ) &&
-             VectorsAreEqual( vPoint2, pSurface->GetPoint( ( iEdge + 1 ) & 3 ), 0.01f ) )
+            VectorsAreEqual( vPoint2, pSurface->GetPoint( ( iEdge + 1 ) & 3 ), 0.01f ) )
         {
             return true;
         }
@@ -828,12 +828,12 @@ NeighborSpan NeighborSpanFlip( int iEdge, NeighborSpan span )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void AddNeighbor( CCoreDispInfo *pMain,
-                  int iEdge,          // Which of pMain's sides this is on.
-                  int iSub,           // Which sub neighbor this takes up in pSide.
-                  NeighborSpan span,  // What span this fills in pMain.
-                  CCoreDispInfo *pOther,
-                  int iNeighborEdge,
-                  NeighborSpan nbSpan )
+                int iEdge,          // Which of pMain's sides this is on.
+                int iSub,           // Which sub neighbor this takes up in pSide.
+                NeighborSpan span,  // What span this fills in pMain.
+                CCoreDispInfo *pOther,
+                int iNeighborEdge,
+                NeighborSpan nbSpan )
 {
     // The edge iteration before coming in here goes 0-1, 1-2, 2-3, 3-4.
     // This flips the sense of CORNER_TO_MIDPOINT/MIDPOINT_TO_CORNER on the right and
@@ -948,7 +948,7 @@ bool HasEdgeNeighbor( const CCoreDispInfo *pMain, int iNeighbor )
 
         const CDispNeighbor *pEdge = pMain->GetEdgeNeighbor( i );
         if ( pEdge->m_SubNeighbors[0].GetNeighborIndex() == iNeighbor ||
-             pEdge->m_SubNeighbors[1].GetNeighborIndex() == iNeighbor )
+            pEdge->m_SubNeighbors[1].GetNeighborIndex() == iNeighbor )
         {
             return true;
         }
@@ -991,7 +991,7 @@ void SetupCornerNeighbors( CCoreDispInfo *pMain, CCoreDispInfo *pOther, int *nOv
         CDispCornerNeighbors *pOtherCorner = pOther->GetCornerNeighbors( iOtherSharedCorner );
 
         if ( pMainCorner->m_nNeighbors < MAX_DISP_CORNER_NEIGHBORS &&
-             pOtherCorner->m_nNeighbors < MAX_DISP_CORNER_NEIGHBORS )
+            pOtherCorner->m_nNeighbors < MAX_DISP_CORNER_NEIGHBORS )
         {
             pMainCorner->m_Neighbors[pMainCorner->m_nNeighbors++] = pOther->GetListIndex();
             pOtherCorner->m_Neighbors[pOtherCorner->m_nNeighbors++] = pMain->GetListIndex();
@@ -1222,16 +1222,16 @@ void DisableUnallowedVerts_R( CDispUtilsHelper *pDisp, CVertIndex const &nodeInd
     }
 
 #if 0
-	// Test dependencies.
-	for( int iDep=0; iDep < 2; iDep++ )
-	{
-		CVertDependency const &dep = pDisp->GetPowerInfo()->m_pVertInfo[iNodeIndex].m_Dependencies[iDep];
+    // Test dependencies.
+    for( int iDep=0; iDep < 2; iDep++ )
+    {
+        CVertDependency const &dep = pDisp->GetPowerInfo()->m_pVertInfo[iNodeIndex].m_Dependencies[iDep];
 
-		if( dep.m_iNeighbor == -1 && !IsVertAllowed( pDisp, dep.m_iVert, iLevel ) )
-		{
-			UnallowVerts_R( pDisp, nodeIndex, nUnallowed );
-		}
-	}
+        if( dep.m_iNeighbor == -1 && !IsVertAllowed( pDisp, dep.m_iVert, iLevel ) )
+        {
+            UnallowVerts_R( pDisp, nodeIndex, nUnallowed );
+        }
+    }
 #endif
 
     // Recurse.

@@ -33,7 +33,7 @@ static Vector s_FadePlaneDirections[] =
 // ------------------------------------------------------------------------- //
 class C_FuncSmokeVolume : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncSmokeVolume, C_BaseParticleEntity );
     DECLARE_CLIENTCLASS();
 
@@ -45,10 +45,10 @@ class C_FuncSmokeVolume : public C_BaseParticleEntity, public IPrototypeAppEffec
         return ( m_spawnflags & SF_EMISSIVE );
     }
 
-   private:
+    private:
     class SmokeGrenadeParticle : public Particle
     {
-       public:
+        public:
         float m_RotationFactor;
         float m_CurRotation;
         float m_FadeAlpha;            // Set as it moves around.
@@ -57,25 +57,25 @@ class C_FuncSmokeVolume : public C_BaseParticleEntity, public IPrototypeAppEffec
     };
 
     // C_BaseEntity.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     // IPrototypeAppEffect.
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
 
     // IParticleEffect.
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
     virtual void NotifyRemove();
 
-   private:
+    private:
     // The SmokeEmitter represents a grid in 3D space.
     class SmokeParticleInfo
     {
-       public:
+        public:
         SmokeGrenadeParticle *m_pParticle;
         int m_TradeIndex;       // -1 if not exchanging yet.
         float m_TradeClock;     // How long since they started trading.
@@ -115,9 +115,9 @@ class C_FuncSmokeVolume : public C_BaseParticleEntity, public IPrototypeAppEffec
     inline Vector GetSmokeParticlePos( int x, int y, int z )
     {
         return WorldAlignMins() +
-               Vector( x * m_SpacingRadius * 2 + m_SpacingRadius,
-                       y * m_SpacingRadius * 2 + m_SpacingRadius,
-                       z * m_SpacingRadius * 2 + m_SpacingRadius );
+                Vector( x * m_SpacingRadius * 2 + m_SpacingRadius,
+                        y * m_SpacingRadius * 2 + m_SpacingRadius,
+                        z * m_SpacingRadius * 2 + m_SpacingRadius );
     }
 
     inline Vector GetSmokeParticlePosIndex( int index_ )
@@ -130,7 +130,7 @@ class C_FuncSmokeVolume : public C_BaseParticleEntity, public IPrototypeAppEffec
     // Start filling the smoke volume
     void FillVolume();
 
-   private:
+    private:
     // State variables from server.
     color32 m_Color1;
     color32 m_Color2;
@@ -143,7 +143,7 @@ class C_FuncSmokeVolume : public C_BaseParticleEntity, public IPrototypeAppEffec
     float m_Density;
     int m_spawnflags;
 
-   private:
+    private:
     C_FuncSmokeVolume( const C_FuncSmokeVolume & );
 
     float m_CurrentDensity;
@@ -326,10 +326,10 @@ void C_FuncSmokeVolume::Update( float fTimeDelta )
     const Vector &curOrigin = GetAbsOrigin();
     const QAngle &curAngles = GetAbsAngles();
     if ( !VectorsAreEqual( curOrigin, m_vLastOrigin, 0.1 ) ||
-         fabs( curAngles.x - m_vLastAngles.x ) > 0.1 ||
-         fabs( curAngles.y - m_vLastAngles.y ) > 0.1 ||
-         fabs( curAngles.z - m_vLastAngles.z ) > 0.1 ||
-         m_bFirstUpdate )
+        fabs( curAngles.x - m_vLastAngles.x ) > 0.1 ||
+        fabs( curAngles.y - m_vLastAngles.y ) > 0.1 ||
+        fabs( curAngles.z - m_vLastAngles.z ) > 0.1 ||
+        m_bFirstUpdate )
     {
         m_bFirstUpdate = false;
         m_vLastAngles = curAngles;

@@ -27,7 +27,7 @@ class C_EnvScreenOverlay : public C_BaseEntity
 {
     DECLARE_CLASS( C_EnvScreenOverlay, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     void PreDataUpdate( DataUpdateType_t updateType );
@@ -39,7 +39,7 @@ class C_EnvScreenOverlay : public C_BaseEntity
     void StartCurrentOverlay( void );
     void ClientThink( void );
 
-   protected:
+    protected:
     char m_iszOverlayNames[MAX_SCREEN_OVERLAYS][255];
     float m_flOverlayTimes[MAX_SCREEN_OVERLAYS];
     float m_flStartTime;
@@ -91,7 +91,7 @@ void C_EnvScreenOverlay::PostDataUpdate( DataUpdateType_t updateType )
     HandleOverlaySwitch();
 
     if ( updateType == DATA_UPDATE_CREATED &&
-         CommandLine()->FindParm( "-makereslists" ) )
+        CommandLine()->FindParm( "-makereslists" ) )
     {
         for ( int i = 0; i < MAX_SCREEN_OVERLAYS; ++i )
         {
@@ -202,12 +202,12 @@ class C_EnvScreenEffect : public C_BaseEntity
 {
     DECLARE_CLASS( C_EnvScreenEffect, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     virtual void ReceiveMessage( int classID, bf_read &msg );
 
-   private:
+    private:
     float m_flDuration;
     int m_nType;
 };

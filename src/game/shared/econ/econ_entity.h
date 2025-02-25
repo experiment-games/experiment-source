@@ -35,7 +35,7 @@ class CEconEntity : public CBaseAnimating, public IHasAttributes
 {
     DECLARE_CLASS( CEconEntity, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 #ifdef GAME_DLL
@@ -157,7 +157,7 @@ class CEconEntity : public CBaseAnimating, public IHasAttributes
 
 #endif
 
-   public:
+    public:
     // IHasAttributes
     CAttributeManager *GetAttributeManager( void )
     {
@@ -204,13 +204,13 @@ class CEconEntity : public CBaseAnimating, public IHasAttributes
 
     virtual bool UpdateBodygroups( CBaseCombatCharacter *pOwner, int iState );
 
-   protected:
+    protected:
     virtual Activity TranslateViewmodelHandActivityInternal( Activity actBase )
     {
         return actBase;
     }
 
-   protected:
+    protected:
     CNetworkVarEmbedded( CAttributeContainer, m_AttributeManager );
 
 #if defined( TF_DLL ) || defined( TF_CLIENT_DLL )
@@ -235,10 +235,10 @@ class CEconEntity : public CBaseAnimating, public IHasAttributes
     int m_iOldOwnerClass;  // Used to detect class changes on items that have per-class models
 #endif
 
-   protected:
+    protected:
 #ifdef CLIENT_DLL
 
-   public:
+    public:
     CUtlVector< AttachedModelData_t > m_vecAttachedModels;
 
 #endif  // CLIENT_DLL
@@ -253,7 +253,7 @@ class CBaseAttributableItem : public CEconEntity
 {
     DECLARE_CLASS( CBaseAttributableItem, CEconEntity );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -269,7 +269,7 @@ class C_ViewmodelAttachmentModel : public C_BaseAnimating, public IHasOwner
 {
     DECLARE_CLASS( C_ViewmodelAttachmentModel, C_BaseAnimating );
 
-   public:
+    public:
     void SetOuter( CEconEntity *pOuter );
     CHandle< CEconEntity > GetOuter( void )
     {
@@ -289,7 +289,7 @@ class C_ViewmodelAttachmentModel : public C_BaseAnimating, public IHasOwner
 
     virtual int GetSkin( void );
 
-   private:
+    private:
     CHandle< CEconEntity > m_hOuter;
     bool m_bAlwaysFlip;
 };

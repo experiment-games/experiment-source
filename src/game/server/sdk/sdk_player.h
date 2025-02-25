@@ -19,7 +19,7 @@
 //=============================================================================
 class CSDKPlayer : public CBasePlayer, public ISDKPlayerAnimStateHelpers
 {
-   public:
+    public:
     DECLARE_CLASS( CSDKPlayer, CBasePlayer );
     DECLARE_SERVERCLASS();
     DECLARE_PREDICTABLE();
@@ -59,7 +59,7 @@ class CSDKPlayer : public CBasePlayer, public ISDKPlayerAnimStateHelpers
     CNetworkHandle( CBaseEntity, m_hRagdoll );  // networked entity handle
 
     // In shared code.
-   public:
+    public:
     // ISDKPlayerAnimState overrides.
     virtual CWeaponSDKBase *SDKAnim_GetActiveWeapon();
     virtual bool SDKAnim_CanMove();
@@ -75,7 +75,7 @@ class CSDKPlayer : public CBasePlayer, public ISDKPlayerAnimStateHelpers
         float x,
         float y );
 
-   private:
+    private:
     void CreateRagdollEntity();
 
     ISDKPlayerAnimState *m_PlayerAnimState;

@@ -21,7 +21,7 @@ class CPropVehicleViewController : public CPropVehicleDriveable
 {
     DECLARE_CLASS( CPropVehicleViewController, CPropVehicleDriveable );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     // CBaseEntity

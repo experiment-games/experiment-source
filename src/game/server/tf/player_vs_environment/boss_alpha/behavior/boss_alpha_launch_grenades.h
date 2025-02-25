@@ -11,7 +11,7 @@
 
 class CBossAlphaLaunchGrenades : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
     virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
     virtual void OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
@@ -27,7 +27,7 @@ class CBossAlphaLaunchGrenades : public Action< CBossAlpha >
         return "LaunchGrenades";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     CountdownTimer m_detonateTimer;
     CUtlVector< CHandle< CTFGrenadePipebombProjectile > > m_grenadeVector;

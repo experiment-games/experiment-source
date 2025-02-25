@@ -10,14 +10,14 @@
  */
 class C_BossAlpha : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_BossAlpha, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
     C_BossAlpha();
     virtual ~C_BossAlpha();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual bool IsNextBot()
     {
@@ -30,7 +30,7 @@ class C_BossAlpha : public C_NextBotCombatCharacter
 
     virtual void ClientThink();
 
-   private:
+    private:
     C_BossAlpha( const C_BossAlpha& );  // not defined, not accessible
 
     CNetworkVar( bool, m_isNuking );

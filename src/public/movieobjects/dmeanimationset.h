@@ -26,7 +26,7 @@ class CDmePreset : public CDmElement
 {
     DEFINE_ELEMENT( CDmePreset, CDmElement );
 
-   public:
+    public:
     CDmaElementArray< CDmElement > &GetControlValues();
     const CDmaElementArray< CDmElement > &GetControlValues() const;
 
@@ -41,7 +41,7 @@ class CDmePreset : public CDmElement
     bool IsProcedural() const;
     int GetProceduralPresetType() const;
 
-   private:
+    private:
     int FindControlValueIndex( const char *pControlName );
 
     CDmaElementArray< CDmElement > m_ControlValues;
@@ -52,7 +52,7 @@ class CDmeProceduralPresetSettings : public CDmElement
 {
     DEFINE_ELEMENT( CDmeProceduralPresetSettings, CDmElement );
 
-   public:
+    public:
     CDmaVar< float > m_flJitterScale;
     CDmaVar< float > m_flSmoothScale;
     CDmaVar< float > m_flSharpenScale;
@@ -73,7 +73,7 @@ class CDmePresetRemap : public CDmElement
 {
     DEFINE_ELEMENT( CDmePresetRemap, CDmElement );
 
-   public:
+    public:
     CDmaString m_SourcePresetGroup;
 
     const char *FindSourcePreset( const char *pDestPresetName );
@@ -83,7 +83,7 @@ class CDmePresetRemap : public CDmElement
     void AddRemap( const char *pSourcePresetName, const char *pDestPresetName );
     void RemoveAll();
 
-   private:
+    private:
     CDmaStringArray m_SrcPresets;
     CDmaStringArray m_DestPresets;
 };
@@ -98,7 +98,7 @@ class CDmePresetGroup : public CDmElement
 {
     DEFINE_ELEMENT( CDmePresetGroup, CDmElement );
 
-   public:
+    public:
     CDmaElementArray< CDmePreset > &GetPresets();  // raw access to the array
     const CDmaElementArray< CDmePreset > &GetPresets() const;
     CDmePreset *FindPreset( const char *pPresetName );
@@ -119,7 +119,7 @@ class CDmePresetGroup : public CDmElement
     // Exports this preset group to a faceposer .vfe expression file
     bool ExportToVFE( const char *pFilename, CDmeAnimationSet *pAnimationSet = NULL, CDmeCombinationOperator *pComboOp = NULL ) const;
 
-   private:
+    private:
     int FindPresetIndex( CDmePreset *pGroupName );
 
     CDmaElementArray< CDmePreset > m_Presets;  // "presets"
@@ -132,7 +132,7 @@ class CDmeAnimationSet : public CDmElement
 {
     DEFINE_ELEMENT( CDmeAnimationSet, CDmElement );
 
-   public:
+    public:
     CDmaElementArray< CDmElement > &GetControls();            // raw access to the array
     CDmaElementArray< CDmElement > &GetSelectionGroups();     // raw access to the array
     CDmaElementArray< CDmePresetGroup > &GetPresetGroups();   // raw access to the array
@@ -170,7 +170,7 @@ class CDmeAnimationSet : public CDmElement
 
     void EnsureProceduralPresets();
 
-   private:
+    private:
     int FindPresetGroupIndex( CDmePresetGroup *pGroup );
     int FindPresetGroupIndex( const char *pGroupName );
 
@@ -220,7 +220,7 @@ inline void LeftRightToValueBalance( float *pValue, float *pBalance, float flLef
 //-----------------------------------------------------------------------------
 abstract_class IModelPresetGroupManager
 {
-   public:
+    public:
     virtual void AssociatePresetsWithFile( DmFileId_t fileId ) = 0;
     virtual void ApplyModelPresets( const char *pModelName, CDmeAnimationSet *pAnimationSet ) = 0;
 };

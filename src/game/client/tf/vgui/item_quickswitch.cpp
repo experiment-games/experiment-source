@@ -266,7 +266,7 @@ CItemQuickSwitchPanel::~CItemQuickSwitchPanel()
 bool CItemQuickSwitchPanel::IsValid( void )
 {
     return ( m_iClass >= TF_FIRST_NORMAL_CLASS && m_iClass < TF_LAST_NORMAL_CLASS ) &&
-           ( m_iSlot > LOADOUT_POSITION_INVALID && m_iSlot < CLASS_LOADOUT_POSITION_COUNT );
+            ( m_iSlot > LOADOUT_POSITION_INVALID && m_iSlot < CLASS_LOADOUT_POSITION_COUNT );
 }
 
 //-----------------------------------------------------------------------------

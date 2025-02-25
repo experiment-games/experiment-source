@@ -16,7 +16,7 @@
 // -------------------------------------------------------------------------------- //
 class C_TestTraceline : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TestTraceline, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -24,14 +24,14 @@ class C_TestTraceline : public C_BaseEntity
     virtual ~C_TestTraceline();
 
     // IClientEntity overrides.
-   public:
+    public:
     virtual int DrawModel( int flags );
     virtual bool ShouldDraw()
     {
         return true;
     }
 
-   private:
+    private:
     void DrawCube( Vector& center, unsigned char* pColor );
     IMaterial* m_pWireframe;
 };

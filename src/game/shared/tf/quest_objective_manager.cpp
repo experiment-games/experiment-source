@@ -174,7 +174,7 @@ CON_COMMAND( tf_quests_spew_unacknowledged_commits, "Spews info on all unacknowl
 //-----------------------------------------------------------------------------
 class CGCQuestObjective_PointsChangeResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCQuestObjective_PointsChangeResponse( GCSDK::CGCClient* pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

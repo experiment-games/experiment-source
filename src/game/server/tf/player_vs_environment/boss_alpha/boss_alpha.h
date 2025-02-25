@@ -21,7 +21,7 @@ class CBossAlpha;
 //----------------------------------------------------------------------------
 class CBossAlphaLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CBossAlphaLocomotion( INextBot *bot );
     virtual ~CBossAlphaLocomotion() {}
 
@@ -39,14 +39,14 @@ class CBossAlphaLocomotion : public NextBotGroundLocomotion
         return 50.0f;
     }
 
-   private:
+    private:
     float m_runSpeed;
 };
 
 //----------------------------------------------------------------------------
 class CBossAlphaIntention : public IIntention
 {
-   public:
+    public:
     CBossAlphaIntention( CBossAlpha *me );
     virtual ~CBossAlphaIntention();
 
@@ -64,14 +64,14 @@ class CBossAlphaIntention : public IIntention
         return NULL;
     }
 
-   private:
+    private:
     Behavior< CBossAlpha > *m_behavior;
 };
 
 //----------------------------------------------------------------------------
 class CBossAlphaVision : public IVision
 {
-   public:
+    public:
     CBossAlphaVision( INextBot *bot )
         : IVision( bot )
     {
@@ -86,7 +86,7 @@ class CBossAlphaVision : public IVision
 //----------------------------------------------------------------------------
 class CBossAlpha : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CBossAlpha, NextBotCombatCharacter );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -272,10 +272,10 @@ class CBossAlpha : public NextBotCombatCharacter
 
     COutputEvent m_outputOnKilled;
 
-   protected:
+    protected:
     virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 
-   private:
+    private:
     CBossAlphaIntention *m_intention;
     CBossAlphaLocomotion *m_locomotor;
     CBotNPCBody *m_body;
@@ -476,7 +476,7 @@ inline const CUtlVector< CBossAlpha::AttackerInfo > &CBossAlpha::GetAttackerVect
 //--------------------------------------------------------------------------------------------------------------
 class CBossAlphaPathCost : public IPathCost
 {
-   public:
+    public:
     CBossAlphaPathCost( CBossAlpha *me )
     {
         m_me = me;

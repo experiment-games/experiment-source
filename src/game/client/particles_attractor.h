@@ -14,7 +14,7 @@
 
 class CParticleAttractor : public CSimpleEmitter
 {
-   public:
+    public:
     CParticleAttractor( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -26,7 +26,7 @@ class CParticleAttractor : public CSimpleEmitter
     float UpdateAlpha( const SimpleParticle *pParticle );
     void SetAttractorOrigin( const Vector &origin );
 
-   private:
+    private:
     CParticleAttractor( const CParticleAttractor & );  // not defined, not accessible
 
     Vector m_vecAttractorOrigin;

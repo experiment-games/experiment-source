@@ -20,7 +20,7 @@ class CTFMapStampsInfoDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFMapStampsInfoDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CTFMapStampsInfoDialog( vgui::Panel *pParent, const char *pName = "" );
 
     void DoClose();

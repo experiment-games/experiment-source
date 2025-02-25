@@ -18,7 +18,7 @@ class CUtlBuffer;
 /// JSON parser.  Use this class when you need to customize the parsing.
 class KeyValuesJSONParser
 {
-   public:
+    public:
     KeyValuesJSONParser( const CUtlBuffer &buf );
     KeyValuesJSONParser( const char *pszText, int cbSize = -1 );
     ~KeyValuesJSONParser();
@@ -32,7 +32,7 @@ class KeyValuesJSONParser
     /// Line number of current token during parsing, or of the error, of pasring fails
     int m_nLine;
 
-   private:
+    private:
     bool ParseObject( KeyValues *pObject );
     bool ParseArray( KeyValues *pArray );
     bool ParseValue( KeyValues *pValue );

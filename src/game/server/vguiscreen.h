@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CVGuiScreen : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CVGuiScreen, CBaseEntity );
 
     DECLARE_SERVERCLASS();
@@ -58,7 +58,7 @@ class CVGuiScreen : public CBaseEntity
 
     void SetPlayerOwner( CBasePlayer *pPlayer, bool bOwnerOnlyInput = false );
 
-   private:
+    private:
     void SetAttachmentIndex( int nIndex );
     void SetPanelName( const char *pPanelName );
     void InputSetActive( inputdata_t &inputdata );

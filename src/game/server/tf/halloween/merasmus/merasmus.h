@@ -39,7 +39,7 @@ class CMonsterResource;
 //----------------------------------------------------------------------------
 class CMerasmusSWStats
 {
-   public:
+    public:
     void ResetStats()
     {
         V_memset( m_arrClassDamage, 0, sizeof( m_arrClassDamage ) );
@@ -63,7 +63,7 @@ class CMerasmusSWStats
 //----------------------------------------------------------------------------
 class CMerasmusLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CMerasmusLocomotion( INextBot *bot )
         : NextBotGroundLocomotion( bot ) {}
     virtual ~CMerasmusLocomotion() {}
@@ -75,18 +75,18 @@ class CMerasmusLocomotion : public NextBotGroundLocomotion
     virtual float GetMaxJumpHeight( void ) const;  // return maximum height of a jump
 
     /**
-     * Should we collide with this entity?
-     */
+    * Should we collide with this entity?
+    */
     virtual bool ShouldCollideWith( const CBaseEntity *object ) const;
 
-   private:
+    private:
     virtual float GetMaxYawRate( void ) const;  // return max rate of yaw rotation
 };
 
 //----------------------------------------------------------------------------
 class CMerasmusFlyingLocomotion : public ILocomotion
 {
-   public:
+    public:
     CMerasmusFlyingLocomotion( INextBot *bot );
     virtual ~CMerasmusFlyingLocomotion();
 
@@ -109,7 +109,7 @@ class CMerasmusFlyingLocomotion : public ILocomotion
 
     virtual void FaceTowards( const Vector &target );  // rotate body to face towards "target"
 
-   protected:
+    protected:
     float m_currentSpeed;
     Vector m_forward;
 
@@ -140,7 +140,7 @@ inline void CMerasmusFlyingLocomotion::SetVelocity( const Vector &velocity )
 //----------------------------------------------------------------------------
 class CMerasmusIntention : public IIntention
 {
-   public:
+    public:
     CMerasmusIntention( CMerasmus *me );
     virtual ~CMerasmusIntention();
 
@@ -158,7 +158,7 @@ class CMerasmusIntention : public IIntention
         return NULL;
     }
 
-   private:
+    private:
     Behavior< CMerasmus > *m_behavior;
 };
 
@@ -167,7 +167,7 @@ DECLARE_AUTO_LIST( IMerasmusAutoList );
 //----------------------------------------------------------------------------
 class CMerasmus : public CHalloweenBaseBoss, public CGameEventListener, public IMerasmusAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CMerasmus, CHalloweenBaseBoss );
     DECLARE_SERVERCLASS();
 
@@ -313,7 +313,7 @@ class CMerasmus : public CHalloweenBaseBoss, public CGameEventListener, public I
     void RecordDisguiseTime();
     void SW_ReportMerasmusStats( void );
 
-   private:
+    private:
     CMerasmusIntention *m_intention;
     CMerasmusLocomotion *m_locomotor;
     CMerasmusFlyingLocomotion *m_flyingLocomotor;
@@ -396,7 +396,7 @@ inline const CUtlVector< CHandle< CTFPlayer > > &CMerasmus::GetStartingAttackers
 //--------------------------------------------------------------------------------------------------------------
 class CMerasmusPathCost : public IPathCost
 {
-   public:
+    public:
     CMerasmusPathCost( CMerasmus *me )
     {
         m_me = me;

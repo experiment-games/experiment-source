@@ -30,7 +30,7 @@ class CBaseLobbyPanel : public vgui::PropertySheet, public CGameEventListener
 
     friend class CBaseLobbyContainerFrame;
 
-   public:
+    public:
     CBaseLobbyPanel( vgui::Panel *pParent, CBaseLobbyContainerFrame *pLobbyContainer );
 
     virtual ~CBaseLobbyPanel();
@@ -69,7 +69,7 @@ class CBaseLobbyPanel : public vgui::PropertySheet, public CGameEventListener
 
     virtual ETFMatchGroup GetMatchGroup( void ) const = 0;
 
-   protected:
+    protected:
     virtual void WriteGameSettingsControls();
 
     MESSAGE_FUNC_PTR( OnItemLeftClick, "ItemLeftClick", panel );
@@ -140,7 +140,7 @@ class CBaseLobbyPanel : public vgui::PropertySheet, public CGameEventListener
         }
     }
 
-   private:
+    private:
     void SetMatchmakingModeBackground();
     virtual const char *GetResFile() const = 0;
     virtual void ApplyChatUserSettings( const LobbyPlayerInfo &player, KeyValues *pSettings ) const = 0;
@@ -148,7 +148,7 @@ class CBaseLobbyPanel : public vgui::PropertySheet, public CGameEventListener
 
     class ChatTextEntry : public vgui::TextEntry
     {
-       public:
+        public:
         ChatTextEntry( vgui::Panel *parent, const char *name )
             : vgui::TextEntry( parent, name )
         {
@@ -191,7 +191,7 @@ class CBaseLobbyPanel : public vgui::PropertySheet, public CGameEventListener
 
     class ChatLog : public vgui::RichText
     {
-       public:
+        public:
         ChatLog( vgui::Panel *parent, const char *name )
             : vgui::RichText( parent, name )
         {

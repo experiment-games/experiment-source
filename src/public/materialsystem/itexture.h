@@ -28,7 +28,7 @@ struct Rect_t;
 //-----------------------------------------------------------------------------
 abstract_class ITextureRegenerator
 {
-   public:
+    public:
     // This will be called when the texture bits need to be regenerated.
     // Use the VTFTexture interface, which has been set up with the
     // appropriate texture size + format
@@ -47,7 +47,7 @@ abstract_class ITextureRegenerator
 
 abstract_class ITexture
 {
-   public:
+    public:
     // Various texture polling methods
     virtual const char *GetName( void ) const = 0;
     virtual int GetMappingWidth() const = 0;

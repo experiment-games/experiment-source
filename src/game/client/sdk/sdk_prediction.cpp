@@ -16,7 +16,7 @@ class CSDKPrediction : public CPrediction
 {
     DECLARE_CLASS( CSDKPrediction, CPrediction );
 
-   public:
+    public:
     virtual void SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move );
 };

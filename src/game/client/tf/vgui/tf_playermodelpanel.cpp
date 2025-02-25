@@ -107,7 +107,7 @@ static bool IsTauntItem( GameItemDefinition_t *pItemDef, const int iTeam, const 
 //-----------------------------------------------------------------------------
 CTFPlayerModelPanel::CTFPlayerModelPanel( vgui::Panel *pParent, const char *pName )
     : BaseClass( pParent, pName ),
-      m_LocalToGlobal( 0, 0, FlexSettingLessFunc )
+    m_LocalToGlobal( 0, 0, FlexSettingLessFunc )
 {
     m_iCurrentClassIndex = TF_CLASS_UNDEFINED;
     m_iCurrentSlotIndex = -1;
@@ -1411,7 +1411,7 @@ CEconItemView *CTFPlayerModelPanel::GetLoadoutItemFromMDLHandle( loadout_positio
         CEconItemView *pItem = m_ItemsToCarry[i];
         int iLoadoutSlot = pItem->GetStaticData()->GetLoadoutSlot( m_iCurrentClassIndex );
         if ( ( IsMiscSlot( iLoadoutSlot ) && IsMiscSlot( iPosition ) ) ||
-             ( IsValidPickupWeaponSlot( iLoadoutSlot ) && iLoadoutSlot == iPosition ) )
+            ( IsValidPickupWeaponSlot( iLoadoutSlot ) && iLoadoutSlot == iPosition ) )
         {
             const char *pDisplayModel = pItem->GetPlayerDisplayModel( m_iCurrentClassIndex, m_iTeam );
             if ( pDisplayModel )
@@ -2594,7 +2594,7 @@ void CTFPlayerModelPanel::ProcessVisemes( Emphasized_Phoneme *classes )
         bool streaming = engine->IsStreaming( vd->m_pAudioSource );
         if ( streaming )
         {
-          t -= g_CV_PhonemeDelayStreaming.GetFloat();
+        t -= g_CV_PhonemeDelayStreaming.GetFloat();
         }
         */
 

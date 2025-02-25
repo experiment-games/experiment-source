@@ -91,7 +91,7 @@ public class RepeatedFieldBuilderTest extends TestCase {
     list = builder.build();
     assertEquals(2, list.size());
     assertEquals(0, list.get(0).getOptionalInt32());
-      assertEquals("foo", list.get(0).getOptionalString());
+    assertEquals("foo", list.get(0).getOptionalString());
     assertEquals(1, list.get(1).getOptionalInt32());
     assertIsUnmodifiable(list);
     assertEquals(1, mockParent.getInvalidationCount());
@@ -169,20 +169,20 @@ public class RepeatedFieldBuilderTest extends TestCase {
 
   private void assertIsUnmodifiable(List<?> list) {
     if (list == Collections.emptyList()) {
-      // OKAY -- Need to check this b/c EmptyList allows you to call clear.
+    // OKAY -- Need to check this b/c EmptyList allows you to call clear.
     } else {
-      try {
+    try {
         list.clear();
         fail("List wasn't immutable");
-      } catch (UnsupportedOperationException e) {
+    } catch (UnsupportedOperationException e) {
         // good
-      }
+    }
     }
   }
 
   private RepeatedFieldBuilder<TestAllTypes, TestAllTypes.Builder,
-      TestAllTypesOrBuilder>
-      newRepeatedFieldBuilder(GeneratedMessage.BuilderParent parent) {
+    TestAllTypesOrBuilder>
+    newRepeatedFieldBuilder(GeneratedMessage.BuilderParent parent) {
     return new RepeatedFieldBuilder<TestAllTypes, TestAllTypes.Builder,
         TestAllTypesOrBuilder>(Collections.<TestAllTypes>emptyList(), false,
         parent, false);

@@ -129,9 +129,9 @@ static const char *GetTimelineObjectImage( int nObjType, int nObjMode, int nTeam
         case OBJ_TELEPORTER:
         {
             pszReturnImage = ( nTeam == TF_TEAM_BLUE ) ? ( bDestroyed ? "teleporter_blu_destroyed" : ( nObjMode == MODE_TELEPORTER_ENTRANCE ) ? "teleporter_blu_in"
-                                                                                                                                              : "teleporter_blu_out" )
-                                                       : ( bDestroyed ? "teleporter_red_destroyed" : ( nObjMode == MODE_TELEPORTER_ENTRANCE ) ? "teleporter_red_in"
-                                                                                                                                              : "teleporter_red_out" );
+                                                                                                                                            : "teleporter_blu_out" )
+                                                        : ( bDestroyed ? "teleporter_red_destroyed" : ( nObjMode == MODE_TELEPORTER_ENTRANCE ) ? "teleporter_red_in"
+                                                                                                                                            : "teleporter_red_out" );
             break;
         }
         case OBJ_SENTRYGUN:
@@ -390,7 +390,7 @@ void CSteamShareSystem::FireGameEvent( IGameEvent *event )
             else if ( nEventType == TF_FLAGEVENT_PICKUP )
             {
                 pszIcon = ( nFlagTeam == TEAM_UNASSIGNED ) ? "briefcase" : ( nFlagTeam == TF_TEAM_BLUE ) ? "briefcase_blu"
-                                                                                                         : "briefcase_red";
+                                                                                                        : "briefcase_red";
                 pszTempTitle = "#TF_Timeline_IntelPickedUp";
             }
             else if ( nEventType == TF_FLAGEVENT_DEFEND )
@@ -481,13 +481,13 @@ void CSteamShareSystem::FireGameEvent( IGameEvent *event )
         {
             const char *pszTitle = GetLocalizedTitleString( "#TF_Timeline_JackPickedUp" );
             SteamTimeline()->AddTimelineEvent( ( nTeam == TEAM_UNASSIGNED ) ? "passtime" : ( nTeam == TF_TEAM_BLUE ) ? "passtime_blu"
-                                                                                                                     : "passtime_red",
-                                               pszTitle,
-                                               "",
-                                               TIMELINE_LOW_PRIORITY,
-                                               0.f,
-                                               0.f,
-                                               k_ETimelineEventClipPriority_Standard );
+                                                                                                                    : "passtime_red",
+                                                pszTitle,
+                                                "",
+                                                TIMELINE_LOW_PRIORITY,
+                                                0.f,
+                                                0.f,
+                                                k_ETimelineEventClipPriority_Standard );
         }
     }
     else if ( FStrEq( PasstimeGameEvents::PassCaught::s_eventName, event->GetName() ) )

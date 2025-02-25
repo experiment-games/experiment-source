@@ -14,7 +14,7 @@
 
 class CBlockingUDPSocket
 {
-   public:
+    public:
     explicit CBlockingUDPSocket();
     virtual ~CBlockingUDPSocket();
 
@@ -27,7 +27,7 @@ class CBlockingUDPSocket
         return m_Socket != 0;
     }
 
-   protected:
+    protected:
     bool CreateSocket( void );
 
     class CImpl;

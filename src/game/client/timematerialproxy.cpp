@@ -12,7 +12,7 @@
 
 class CTimeMaterialProxy : public CResultProxy
 {
-   public:
+    public:
     virtual void OnBind( void *pC_BaseEntity );
 };
 

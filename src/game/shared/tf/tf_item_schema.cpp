@@ -923,10 +923,10 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector< CUtlString 
         m_eEquipType = dictEquipType[idx];
     }
     SCHEMA_INIT_CHECK( m_eEquipType != EQUIP_TYPE_INVALID,
-                       "Item definition %i \"%s\" used uknown equip type: %s!",
-                       GetDefinitionIndex(),
-                       GetItemBaseName(),
-                       pszEquipType );
+                        "Item definition %i \"%s\" used uknown equip type: %s!",
+                        GetDefinitionIndex(),
+                        GetItemBaseName(),
+                        pszEquipType );
 
     // Get the default loadout slot
     const char *pszLoadoutSlot = pKVInitValues->GetString( "item_slot", "" );
@@ -987,7 +987,7 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector< CUtlString 
     // non-wearable slot other times. "Is this in a wearable slot?" is used to determine whether
     // or not content can be allowed to stream, so we don't allow an item to overlap.
     bool bHasAnyWearableSlots = false,
-         bHasAnyNonwearableSlots = false;
+        bHasAnyNonwearableSlots = false;
 
     for ( int i = 0; i < LOADOUT_COUNT; i++ )
     {
@@ -1852,8 +1852,8 @@ bool SchemaGameCategory_t::PassesRestrictions() const
                 if ( GetItemSchema() )
                 {
                     for ( int iOperation = GetItemSchema()->GetOperationDefinitions().First();
-                          GetItemSchema()->GetOperationDefinitions().IsValidIndex( iOperation );
-                          iOperation = GetItemSchema()->GetOperationDefinitions().Next( iOperation ) )
+                        GetItemSchema()->GetOperationDefinitions().IsValidIndex( iOperation );
+                        iOperation = GetItemSchema()->GetOperationDefinitions().Next( iOperation ) )
                     {
                         CEconOperationDefinition *pOperation = GetItemSchema()->GetOperationDefinitions()[iOperation];
                         if ( pOperation && pOperation->IsActive() )
@@ -1886,8 +1886,8 @@ bool CTFItemSchema::BInitGameModes( KeyValues *pKVMaps, CUtlVector< CUtlString >
     {
         int iGameType = StringFieldToInt( pKVGameMode->GetName(), s_pszGameModes, ARRAYSIZE( s_pszGameModes ) );
         SCHEMA_INIT_CHECK( iGameType != -1,
-                           "BInitMaps(): unknown game type '%s'",
-                           pKVGameMode->GetName() );
+                            "BInitMaps(): unknown game type '%s'",
+                            pKVGameMode->GetName() );
 
         EGameCategory eGameType = ( EGameCategory )iGameType;
 
@@ -1973,16 +1973,16 @@ bool CTFItemSchema::BInitMaps( KeyValues *pKVMaps, CUtlVector< CUtlString > *pVe
 
         pMap->pszMapName = pKVMap->GetString( "name", NULL );
         SCHEMA_INIT_CHECK( pMap->pszMapName != NULL,
-                           "BInitMaps(): missing map name for master map entry %s.",
-                           pKVMap->GetName() );
+                            "BInitMaps(): missing map name for master map entry %s.",
+                            pKVMap->GetName() );
 
         pMap->m_nDefIndex = V_atoi( pKVMap->GetName() );
         pMap->pszMapNameLocKey = pKVMap->GetString( "localizedname", NULL );
 
         SCHEMA_INIT_CHECK( ( pMap->mapStampDef == NULL ) == ( pszMapStampname[0] == '\0' ),
-                           "BInitGameModes(): unable to find map stamp definition '%s' for map '%s'.",
-                           pszMapStampname,
-                           pMap->pszMapName );
+                            "BInitGameModes(): unable to find map stamp definition '%s' for map '%s'.",
+                            pszMapStampname,
+                            pMap->pszMapName );
 
         pMap->pszMapNameLocKey = pKVMap->GetString( "localizedname", NULL );
         pMap->pszAuthorsLocKey = pKVMap->GetString( "authors", NULL );
@@ -2249,8 +2249,8 @@ bool CTFItemSchema::BInitMvmMissions( KeyValues *pKVMvmMaps, CUtlVector< CUtlStr
             }
         }
         SCHEMA_INIT_CHECK( map.m_vecMissions.Count() > 0,
-                           "MvM map %s doesn't have any associated missions",
-                           map.m_sMap.Get() );
+                            "MvM map %s doesn't have any associated missions",
+                            map.m_sMap.Get() );
     }
 
     return bResult;
@@ -2274,34 +2274,34 @@ bool CTFItemSchema::BInitMvmTours( KeyValues *pKVMvmTours, CUtlVector< CUtlStrin
         MvMTour_t tour;
         tour.m_sTourInternalName = pKVTour->GetName();
         SCHEMA_INIT_CHECK( FindMvmMissionByName( tour.m_sTourInternalName.Get() ) < 0,
-                           "Duplicate MvM tour \"%s\"",
-                           tour.m_sTourInternalName.Get() );
+                            "Duplicate MvM tour \"%s\"",
+                            tour.m_sTourInternalName.Get() );
 
         tour.m_sTourNameLocalizationToken = pKVTour->GetString( "tour_name" );
         SCHEMA_INIT_CHECK( tour.m_sTourNameLocalizationToken.Get() && tour.m_sTourNameLocalizationToken.Get()[0] == '#',
-                           "MvM tour \"%s\" didn't specify valid localization token for 'tour_name'",
-                           tour.m_sTourInternalName.Get() );
+                            "MvM tour \"%s\" didn't specify valid localization token for 'tour_name'",
+                            tour.m_sTourInternalName.Get() );
 
         const char *pszBadgeItemDefName = pKVTour->GetString( "badge_item_def" );
         tour.m_pBadgeItemDef = pszBadgeItemDefName ? GetItemSchema()->GetItemDefinitionByName( pszBadgeItemDefName ) : NULL;
         SCHEMA_INIT_CHECK( ( pszBadgeItemDefName == NULL ) == ( tour.m_pBadgeItemDef == NULL ),
-                           "MvM tour \"%s\" specified invalid badge definition name '%s'",
-                           tour.m_sTourInternalName.Get(),
-                           pszBadgeItemDefName );
+                            "MvM tour \"%s\" specified invalid badge definition name '%s'",
+                            tour.m_sTourInternalName.Get(),
+                            pszBadgeItemDefName );
 
         const char *pszDiff = pKVTour->GetString( "difficulty", "" );
         tour.m_eDifficulty = GetMvMChallengeDifficultyByInternalName( pszDiff );
         SCHEMA_INIT_CHECK( tour.m_eDifficulty != k_EMvMChallengeDifficulty_Invalid,
-                           "MvM tour \"%s\" specified invalid difficulty '%s'",
-                           tour.m_sTourInternalName.Get(),
-                           pszDiff );
+                            "MvM tour \"%s\" specified invalid difficulty '%s'",
+                            tour.m_sTourInternalName.Get(),
+                            pszDiff );
 
         tour.m_bIsNew = pKVTour->GetBool( "is_new", false );
 
         tour.m_sLootImageName = pKVTour->GetString( "loot_image" );
         SCHEMA_INIT_CHECK( tour.m_sTourNameLocalizationToken.Get() && tour.m_sTourNameLocalizationToken.Get()[0] == '#',
-                           "MvM tour \"%s\" didn't specify valid localization token for 'tour_name'",
-                           tour.m_sTourInternalName.Get() );
+                            "MvM tour \"%s\" didn't specify valid localization token for 'tour_name'",
+                            tour.m_sTourInternalName.Get() );
 
         // Locate missions
         tour.m_nAllChallengesBits = 0;
@@ -2320,17 +2320,17 @@ bool CTFItemSchema::BInitMvmTours( KeyValues *pKVMvmTours, CUtlVector< CUtlStrin
 
                 // Bounds check our bits. -1 is valid because it means "don't track".
                 SCHEMA_INIT_CHECK( iMissionBit >= -1 && iMissionBit <= 31,
-                                   "MvM tour \"%s\" mission \"%s\" specifies invalid tour completion bit %i",
-                                   tour.m_sTourInternalName.Get(),
-                                   pszMissionName,
-                                   iMissionBit );
+                                    "MvM tour \"%s\" mission \"%s\" specifies invalid tour completion bit %i",
+                                    tour.m_sTourInternalName.Get(),
+                                    pszMissionName,
+                                    iMissionBit );
 
                 // Find our mission information to link to.
                 int iMissionIndex = FindMvmMissionByName( pszMissionName );
                 SCHEMA_INIT_CHECK( m_vecMvMMissions.IsValidIndex( iMissionIndex ),
-                                   "MvM tour \"%s\" unable to locate mission \"%s\"",
-                                   tour.m_sTourInternalName.Get(),
-                                   pszMissionName );
+                                    "MvM tour \"%s\" unable to locate mission \"%s\"",
+                                    tour.m_sTourInternalName.Get(),
+                                    pszMissionName );
 
                 // Make sure the same tour doesn't contain both badge-adjusting missions and non-adjusting
                 // missions.
@@ -2338,19 +2338,19 @@ bool CTFItemSchema::BInitMvmTours( KeyValues *pKVMvmTours, CUtlVector< CUtlStrin
                 bContainsBitMissions |= ( iMissionBit != -1 );
 
                 SCHEMA_INIT_CHECK( !bContainsNonBitMissions || !bContainsBitMissions,
-                                   "MvM tour \"%s\" mission \"%s\" contains both practice (-1 bit) and non-practice missions",
-                                   tour.m_sTourInternalName.Get(),
-                                   pszMissionName );
+                                    "MvM tour \"%s\" mission \"%s\" contains both practice (-1 bit) and non-practice missions",
+                                    tour.m_sTourInternalName.Get(),
+                                    pszMissionName );
 
                 // Make sure we haven't already used this bit for this tour.
                 if ( iMissionBit >= 0 )
                 {
                     uint32 unMask = 1U << ( unsigned int )iMissionBit;
                     SCHEMA_INIT_CHECK( ( tour.m_nAllChallengesBits & unMask ) == 0,
-                                       "MvM tour \"%s\" mission \"%s\" re-uses bit %i",
-                                       tour.m_sTourInternalName.Get(),
-                                       pszMissionName,
-                                       iMissionBit );
+                                        "MvM tour \"%s\" mission \"%s\" re-uses bit %i",
+                                        tour.m_sTourInternalName.Get(),
+                                        pszMissionName,
+                                        iMissionBit );
 
                     tour.m_nAllChallengesBits |= unMask;
                 }
@@ -2365,8 +2365,8 @@ bool CTFItemSchema::BInitMvmTours( KeyValues *pKVMvmTours, CUtlVector< CUtlStrin
         }
 
         SCHEMA_INIT_CHECK( tour.m_vecMissions.Count() > 0,
-                           "MvM tour \"%s\" has no missions specified",
-                           tour.m_sTourInternalName.Get() );
+                            "MvM tour \"%s\" has no missions specified",
+                            tour.m_sTourInternalName.Get() );
 
         m_vecMvMTours.AddToTail( tour );
     }

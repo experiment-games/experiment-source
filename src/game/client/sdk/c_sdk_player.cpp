@@ -19,7 +19,7 @@
 
 class C_TEPlayerAnimEvent : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEPlayerAnimEvent, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -33,7 +33,7 @@ class C_TEPlayerAnimEvent : public C_BaseTempEntity
         }
     }
 
-   public:
+    public:
     CNetworkHandle( CBasePlayer, m_hPlayer );
     CNetworkVar( int, m_iEvent );
     CNetworkVar( int, m_nData );
@@ -66,7 +66,7 @@ RecvPropEHandle( RECVINFO( m_hPlayer ) ),
 
         class C_SDKRagdoll : public C_BaseAnimatingOverlay
 {
-   public:
+    public:
     DECLARE_CLASS( C_SDKRagdoll, C_BaseAnimatingOverlay );
     DECLARE_CLIENTCLASS();
 
@@ -80,14 +80,14 @@ RecvPropEHandle( RECVINFO( m_hPlayer ) ),
 
     void ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName );
 
-   private:
+    private:
     C_SDKRagdoll( const C_SDKRagdoll & ) {}
 
     void Interp_Copy( C_BaseAnimatingOverlay *pSourceEntity );
 
     void CreateRagdoll();
 
-   private:
+    private:
     EHANDLE m_hPlayer;
     CNetworkVector( m_vecRagdollVelocity );
     CNetworkVector( m_vecRagdollOrigin );

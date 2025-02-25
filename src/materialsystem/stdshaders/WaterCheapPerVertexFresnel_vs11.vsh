@@ -39,7 +39,7 @@ mov oPos, $projPos
 ; Transform tangent space basis vectors to env map space (world space)
 ; This will produce a set of vectors mapping from tangent space to env space
 ; We'll use this to transform normals from the normal map from tangent space
-; to environment map space. 
+; to environment map space.
 ; NOTE: use dp3 here since the basis vectors are vectors, not points
 
 dp3 oT1.x, $vTangentS, $cModel0
@@ -53,7 +53,7 @@ dp3 oT3.y, $vTangentT, $cModel2
 dp3 oT1.z, $vNormal, $cModel0
 dp3 oT2.z, $vNormal, $cModel1
 dp3 oT3.z, $vNormal, $cModel2
- 
+
 ; Compute the vector from vertex to camera
 &AllocateRegister( \$worldEyeVect );
 sub $worldEyeVect.xyz, $cEyePos, $worldPos
@@ -95,6 +95,3 @@ mul oD0.w, $worldEyeVect.w, $SHADER_SPECIFIC_CONST_2.y
 ;------------------------------------------------------------------------------
 dp4 oT0.x, $vTexCoord0, $SHADER_SPECIFIC_CONST_0
 dp4 oT0.y, $vTexCoord0, $SHADER_SPECIFIC_CONST_1
-
-
-

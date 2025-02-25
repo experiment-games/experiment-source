@@ -471,8 +471,8 @@ float CAttributeManager::ApplyAttributeFloat( float flValue, CBaseEntity *pIniti
 
         // Don't allow weapons to provide to other weapons being carried by the same person
         if ( pInitiatorAttribInterface &&
-             pAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON &&
-             pInitiatorAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON )
+            pAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON &&
+            pInitiatorAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON )
         {
             continue;
         }
@@ -527,8 +527,8 @@ string_t CAttributeManager::ApplyAttributeString( string_t iszValue, CBaseEntity
 
         // Don't allow weapons to provide to other weapons being carried by the same person
         if ( pInitiatorAttribInterface &&
-             pAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON &&
-             pInitiatorAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON )
+            pAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON &&
+            pInitiatorAttribInterface->GetAttributeManager()->GetProviderType() == PROVIDER_WEAPON )
         {
             continue;
         }
@@ -570,7 +570,7 @@ void CAttributeContainer::InitializeAttributes( CBaseEntity *pEntity )
     /*
     if ( !m_Item.IsValid() )
     {
-      Warning("Item '%s' not setup correctly. Attempting to create attributes on an unitialized item.\n", m_hOuter.Get()->GetDebugName() );
+    Warning("Item '%s' not setup correctly. Attempting to create attributes on an unitialized item.\n", m_hOuter.Get()->GetDebugName() );
     }
     */
 #endif
@@ -684,7 +684,7 @@ float CollateAttributeValues( const CEconItemAttributeDefinition *pAttrDef1, con
 //-----------------------------------------------------------------------------
 class CEconItemAttributeIterator_ApplyAttributeFloat : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     CEconItemAttributeIterator_ApplyAttributeFloat( CBaseEntity *pOuter, float flInitialValue, string_t iszAttribHook, CUtlVector< CBaseEntity * > *pItemList )
         : m_pOuter( pOuter ), m_flValue( flInitialValue ), m_iszAttribHook( iszAttribHook ), m_pItemList( pItemList )
     {
@@ -717,7 +717,7 @@ class CEconItemAttributeIterator_ApplyAttributeFloat : public CEconItemSpecificA
         return m_flValue;
     }
 
-   private:
+    private:
     CBaseEntity *m_pOuter;
     float m_flValue;
     string_t m_iszAttribHook;
@@ -775,7 +775,7 @@ float CAttributeContainerPlayer::ApplyAttributeFloat( float flValue, CBaseEntity
 //-----------------------------------------------------------------------------
 class CEconItemAttributeIterator_ApplyAttributeString : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     CEconItemAttributeIterator_ApplyAttributeString( CBaseEntity *pOuter, string_t iszInitialValue, string_t iszAttribHook, CUtlVector< CBaseEntity * > *pItemList )
         : m_pOuter( pOuter ), m_iszValue( iszInitialValue ), m_iszAttribHook( iszAttribHook ), m_pItemList( pItemList ), m_bFoundString( false )
     {
@@ -816,7 +816,7 @@ class CEconItemAttributeIterator_ApplyAttributeString : public CEconItemSpecific
         return m_iszValue;
     }
 
-   private:
+    private:
     bool FoundString()
     {
         // Implement something for the case where there's more than one of the same attribute

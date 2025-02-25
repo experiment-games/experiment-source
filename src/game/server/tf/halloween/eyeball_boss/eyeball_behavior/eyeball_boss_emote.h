@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossEmote : public Action< CEyeballBoss >
 {
-   public:
+    public:
     CEyeballBossEmote( int animationSequence, const char *soundName, Action< CEyeballBoss > *nextAction = NULL );
     virtual ~CEyeballBossEmote() {}
 
@@ -22,7 +22,7 @@ class CEyeballBossEmote : public Action< CEyeballBoss >
         return "Emote";
     }  // return name of this action
 
-   private:
+    private:
     int m_animationSequence;
     const char *m_soundName;
     Action< CEyeballBoss > *m_nextAction;

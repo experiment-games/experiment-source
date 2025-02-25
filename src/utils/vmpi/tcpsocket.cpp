@@ -36,7 +36,7 @@ static bool g_bEnableTCPTimeout = true;
 
 class CRecvData
 {
-   public:
+    public:
     int m_Count;
     unsigned char m_Data[1];
 };
@@ -80,7 +80,7 @@ enum
 // We use this for all OVERLAPPED structures.
 class COverlappedPlus : public WSAOVERLAPPED
 {
-   public:
+    public:
     COverlappedPlus()
     {
         memset( this, 0, sizeof( WSAOVERLAPPED ) );
@@ -111,7 +111,7 @@ class CTCPSocket : public ITCPSocket
 {
     friend class CTCPListenSocket;
 
-   public:
+    public:
     CTCPSocket()
     {
         m_Socket = INVALID_SOCKET;
@@ -825,12 +825,12 @@ class CTCPSocket : public ITCPSocket
             LPOVERLAPPED pOverlapped;
 
             if ( GetQueuedCompletionStatus(
-                     m_hIOCP,           // the port we're listening on
-                     &dwNumBytes,       // # bytes received on the port
-                     &pInputTCPSocket,  // "completion key" = CTCPSocket*
-                     &pOverlapped,      // the overlapped info that was passed into AcceptEx, WSARecv, or WSASend.
-                     100                // listen for 100ms at a time so we can exit gracefully when the socket is deleted.
-                     ) )
+                    m_hIOCP,           // the port we're listening on
+                    &dwNumBytes,       // # bytes received on the port
+                    &pInputTCPSocket,  // "completion key" = CTCPSocket*
+                    &pOverlapped,      // the overlapped info that was passed into AcceptEx, WSARecv, or WSASend.
+                    100                // listen for 100ms at a time so we can exit gracefully when the socket is deleted.
+                    ) )
             {
                 COverlappedPlus *pInfo = ( COverlappedPlus * )pOverlapped;
                 ParanoidMemoryCheck( pInfo );
@@ -859,7 +859,7 @@ class CTCPSocket : public ITCPSocket
         return ( ( CTCPSocket * )pParameter )->ThreadFn();
     }
 
-   private:
+    private:
     SOCKET m_Socket;
     bool m_bConnected;
 
@@ -868,9 +868,9 @@ class CTCPSocket : public ITCPSocket
     HANDLE m_hRecvSignal;  // Tells Recv() when we have data.
     COverlappedPlus m_RecvOverlapped;
     int m_RecvStage;  // -1 = not initialized
-                      //  0 = waiting for size
-                      //  1 = waiting for data
-                      //  2 = waiting for app to pickup the data
+                    //  0 = waiting for size
+                    //  1 = waiting for data
+                    //  2 = waiting for app to pickup the data
 
     CUtlLinkedList< CRecvData *, int > m_RecvDatas;  // The head element is the next one to be picked up.
     CRecvData *m_pIncomingData;                      // The packet we're currently receiving.
@@ -914,7 +914,7 @@ class CTCPSocket : public ITCPSocket
 
 class CTCPListenSocket : public ITCPListenSocket
 {
-   public:
+    public:
     CTCPListenSocket()
     {
         m_Socket = INVALID_SOCKET;
@@ -939,7 +939,7 @@ class CTCPListenSocket : public ITCPListenSocket
         CIPAddr addr( 0, 0, 0, 0, port );  // INADDR_ANY
         pRet->m_Socket = TCPBind( &addr );
         if ( pRet->m_Socket == INVALID_SOCKET ||
-             listen( pRet->m_Socket, nQueueLength == -1 ? SOMAXCONN : nQueueLength ) != 0 )
+            listen( pRet->m_Socket, nQueueLength == -1 ? SOMAXCONN : nQueueLength ) != 0 )
         {
             pRet->Release();
             return false;
@@ -997,7 +997,7 @@ class CTCPListenSocket : public ITCPListenSocket
         return NULL;
     }
 
-   private:
+    private:
     SOCKET m_Socket;
 };
 

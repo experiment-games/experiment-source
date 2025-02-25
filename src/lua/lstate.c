@@ -146,10 +146,10 @@ void luaE_shrinkCI (lua_State *L) {
     L->nci--;
     luaM_free(L, next);  /* free next */
     if (next2 == NULL)
-      break;  /* no more elements */
+    break;  /* no more elements */
     else {
-      next2->previous = ci;
-      ci = next2;  /* continue */
+    next2->previous = ci;
+    ci = next2;  /* continue */
     }
   }
 }
@@ -302,7 +302,7 @@ LUA_API lua_State *lua_newthread (lua_State *L) {
   resethookcount(L1);
   /* initialize L1 extra space */
   memcpy(lua_getextraspace(L1), lua_getextraspace(g->mainthread),
-         LUA_EXTRASPACE);
+        LUA_EXTRASPACE);
   luai_userstatethread(L, L1);
   stack_init(L1, L);  /* init stack */
   lua_unlock(L);
@@ -433,8 +433,8 @@ void luaE_warning (lua_State *L, const char *msg, int tocont) {
 void luaE_warnerror (lua_State *L, const char *where) {
   TValue *errobj = s2v(L->top.p - 1);  /* error object */
   const char *msg = (ttisstring(errobj))
-                  ? svalue(errobj)
-                  : "error object is not a string";
+                ? svalue(errobj)
+                : "error object is not a string";
   /* produce warning "error in %s (%s)" (where, msg) */
   luaE_warning(L, "error in ", 1);
   luaE_warning(L, where, 1);
@@ -442,4 +442,3 @@ void luaE_warnerror (lua_State *L, const char *where) {
   luaE_warning(L, msg, 1);
   luaE_warning(L, ")", 0);
 }
-

@@ -7,7 +7,7 @@ vs.1.1
 ;------------------------------------------------------------------------------
 ;	 $SHADER_SPECIFIC_CONST_0-$SHADER_SPECIFIC_CONST_1 = Base texture transform
 ;    $SHADER_SPECIFIC_CONST_2-$SHADER_SPECIFIC_CONST_3 = Mask texture transform
-;	 $SHADER_SPECIFIC_CONST_4	 = Modulation color 
+;	 $SHADER_SPECIFIC_CONST_4	 = Modulation color
 ;------------------------------------------------------------------------------
 
 &AllocateRegister( \$projPos );
@@ -19,4 +19,3 @@ dp4 $projPos.w, $vPos, $cModelViewProj3
 mov oPos, $projPos
 
 &FreeRegister( \$projPos );
-

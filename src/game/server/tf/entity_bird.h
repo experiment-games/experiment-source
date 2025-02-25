@@ -21,7 +21,7 @@ class CEntityBird : public CBaseAnimating
 {
     DECLARE_CLASS( CEntityBird, CBaseAnimating );
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void Precache( void );
     virtual void Touch( CBaseEntity *pOther );
@@ -30,7 +30,7 @@ class CEntityBird : public CBaseAnimating
     // Spawn random birds at locations on certain maps.
     static void SpawnRandomBirds( void );
 
-   private:
+    private:
     void Explode( void );
 };
 

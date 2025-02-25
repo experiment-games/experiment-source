@@ -23,7 +23,7 @@
 //
 class CTFGrenadeSmokeBomb : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeSmokeBomb, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

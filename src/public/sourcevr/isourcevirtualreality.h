@@ -46,7 +46,7 @@ struct VRRect_t
 
 abstract_class ISourceVirtualReality : public IAppSystem
 {
-   public:
+    public:
     virtual ~ISourceVirtualReality() {}
 
     // Placeholder for API revision

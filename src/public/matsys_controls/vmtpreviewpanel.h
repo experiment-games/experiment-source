@@ -29,7 +29,7 @@ class CVMTPreviewPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CVMTPreviewPanel, vgui::Panel );
 
-   public:
+    public:
     // constructor
     CVMTPreviewPanel( vgui::Panel *pParent, const char *pName );
     void SetVMT( const char *pMaterialName );
@@ -41,7 +41,7 @@ class CVMTPreviewPanel : public vgui::Panel
     // View it in 3D or 2D mode
     void DrawIn3DMode( bool b3DMode );
 
-   private:
+    private:
     // Two different preview methods
     void DrawSphere( void );
     void DrawRectangle( void );

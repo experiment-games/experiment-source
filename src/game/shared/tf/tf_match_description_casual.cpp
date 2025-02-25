@@ -16,11 +16,11 @@
 
 class CCasualMatchGroupDescription : public IMatchGroupDescription
 {
-   public:
+    public:
     CCasualMatchGroupDescription( ETFMatchGroup eMatchGroup,
-                                  ConVar* pmm_match_group_size,
-                                  ConVar* pmm_match_group_size_minimum,
-                                  EProgressionDesc eProgression )
+                                ConVar* pmm_match_group_size,
+                                ConVar* pmm_match_group_size_minimum,
+                                EProgressionDesc eProgression )
         : IMatchGroupDescription( eMatchGroup )
     {
         m_pProgressionDesc = GetProgressionDesc( eProgression );

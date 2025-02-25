@@ -36,7 +36,7 @@ class PerforceFileList : public vgui::ListPanel
 {
     DECLARE_CLASS_SIMPLE( PerforceFileList, ListPanel );
 
-   public:
+    public:
     // The context keyvalues are added to all messages sent by this dialog if they are specified
     PerforceFileList( Panel *parent, const char *pPanelName );
     ~PerforceFileList();
@@ -79,11 +79,11 @@ class PerforceFileList : public vgui::ListPanel
     virtual void OnMouseDoublePressed( MouseCode code );
 
     /*
-      messages sent:
+    messages sent:
         "ItemDoubleClicked"	// Called when an item is double-clicked
     */
 
-   protected:
+    protected:
     struct DirectoryInfo_t
     {
         CUtlString m_ClientSpec;

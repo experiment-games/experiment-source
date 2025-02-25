@@ -28,7 +28,7 @@ ConVar NextBotStop( "nb_stop", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "Stop all Ne
 //--------------------------------------------------------------------------------------------------------
 class CSendBotCommand
 {
-   public:
+    public:
     CSendBotCommand( const char *command )
     {
         m_command = command;
@@ -148,7 +148,7 @@ CON_COMMAND_F( nb_delete_all, "Delete all non-player NextBot entities.", FCVAR_C
 //-----------------------------------------------------------------------------------------------------
 class NextBotApproacher
 {
-   public:
+    public:
     NextBotApproacher( void )
     {
         CBasePlayer *player = UTIL_GetListenServerHost();
@@ -406,8 +406,8 @@ void NextBotCombatCharacter::Event_Killed( const CTakeDamageInfo &info )
 
 #ifdef TERROR
     /*
-     * TODO: Make this game-generic
-     */
+    * TODO: Make this game-generic
+    */
     // Create the death event just like players do.
     TerrorGameRules()->DeathNoticeForEntity( this, info );
 

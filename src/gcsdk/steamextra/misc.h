@@ -55,7 +55,7 @@ bool BRejectDueToBacklog( int nBacklogCur, int nBacklogThreshold, int nBacklogLi
 // Type for our memory output debugging.
 class IDisplayMemPoolStats
 {
-   public:
+    public:
     virtual void Display( const char *pszClassName, uint64 ulClassSize, uint32 unPoolInstanceCount, uint64 ulPoolMemoryUsage, uint32 unPoolPeakInstanceCount, uint64 ulPoolPeakMemoryUsage ) = 0;
 };
 
@@ -63,12 +63,12 @@ class IDisplayMemPoolStats
 typedef void ( *DumpMemFn_t )( IDisplayMemPoolStats * );
 class CDumpMemFnReg
 {
-   public:
+    public:
     static CDumpMemFnReg *sm_Head;
 
     CDumpMemFnReg( DumpMemFn_t fn )
         : m_fn( fn ),
-          m_pNext( sm_Head )
+        m_pNext( sm_Head )
     {
         sm_Head = this;
     }
@@ -79,10 +79,10 @@ class CDumpMemFnReg
 
 // Helper macros for creating and using CClassMemoryPool on our frequently allocated objects
 #define DECLARE_CLASS_MEMPOOL( className )                                                      \
-   private:                                                                                     \
+    private:                                                                                     \
     static CUtlMemoryPool sm_classMemPool;                                                      \
                                                                                                 \
-   public:                                                                                      \
+    public:                                                                                      \
     static void *operator new( size_t nSize );                                                  \
     static void *operator new( size_t nSize, int nBlockUse, const char *pFileName, int nLine ); \
     static void operator delete( void *pMem );                                                  \
@@ -90,7 +90,7 @@ class CDumpMemFnReg
 
 #define IMPLEMENT_CLASS_MEMPOOL( className, initSize, growMode )                                                                                                      \
     CUtlMemoryPool className::sm_classMemPool( sizeof( className ), ( initSize ), ( growMode ), MEM_ALLOC_CLASSNAME( className ) );                                   \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     void *className::operator new( size_t nSize )                                                                                                                     \
     {                                                                                                                                                                 \
         if ( nSize != sizeof( className ) )                                                                                                                           \
@@ -98,10 +98,10 @@ class CDumpMemFnReg
             EmitError( SPEW_CONSOLE, #className "::operator new() called on wrong size! Expected %llu, Got %llu\n", ( uint64 )sizeof( className ), ( uint64 )nSize ); \
             return NULL;                                                                                                                                              \
         }                                                                                                                                                             \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
         return sm_classMemPool.Alloc();                                                                                                                               \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     void *className::operator new( size_t nSize, int nBlockUse, const char *pFileName, int nLine )                                                                    \
     {                                                                                                                                                                 \
         if ( nSize != sizeof( className ) )                                                                                                                           \
@@ -109,15 +109,15 @@ class CDumpMemFnReg
             EmitError( SPEW_CONSOLE, #className "::operator new() called on wrong size! Expected %llu, Got %llu\n", ( uint64 )sizeof( className ), ( uint64 )nSize ); \
             return NULL;                                                                                                                                              \
         }                                                                                                                                                             \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
         return sm_classMemPool.Alloc();                                                                                                                               \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     void className::operator delete( void *pMem )                                                                                                                     \
     {                                                                                                                                                                 \
         sm_classMemPool.Free( ( className * )pMem );                                                                                                                  \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     void className::DumpMemStats( IDisplayMemPoolStats *pDisplayer )                                                                                                  \
     {                                                                                                                                                                 \
         Assert( pDisplayer );                                                                                                                                         \
@@ -129,7 +129,7 @@ class CDumpMemFnReg
             ( ( sm_classMemPool.PeakCount() + ( initSize ) ) / ( initSize ) ) * ( initSize ),                                                                         \
             ( ( sm_classMemPool.PeakCount() + ( initSize ) ) / ( initSize ) ) * ( initSize ) * sizeof( className ) );                                                 \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     static CDumpMemFnReg s_##className##RegDumpMemory( &className::DumpMemStats );
 
 // useful macro for rendering an IP

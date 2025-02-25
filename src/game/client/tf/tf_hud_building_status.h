@@ -28,14 +28,14 @@ class CBuildingHealthBar : public vgui::ProgressBar
 {
     DECLARE_CLASS_SIMPLE( CBuildingHealthBar, vgui::ProgressBar );
 
-   public:
+    public:
     CBuildingHealthBar( Panel *parent, const char *panelName );
 
     virtual void Paint();
     virtual void PaintBackground();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     Color m_cHealthColor;
     Color m_cLowHealthColor;
 };
@@ -47,7 +47,7 @@ class CBuildingStatusAlertTray : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusAlertTray, vgui::Panel );
 
-   public:
+    public:
     CBuildingStatusAlertTray( Panel *parent, const char *panelName );
 
     void ApplySettings( KeyValues *inResourceData );
@@ -76,7 +76,7 @@ class CBuildingStatusAlertTray : public vgui::Panel
         return m_lastAlertType;
     }
 
-   private:
+    private:
     bool m_bIsTrayOut;
     bool m_bUseTallImage;
 
@@ -95,7 +95,7 @@ class CBuildingStatusItem : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem, vgui::EditablePanel );
 
-   public:
+    public:
     // actual panel constructor
     CBuildingStatusItem( Panel *parent, const char *szLayout, int iObjectType, int iObjectMode );
 
@@ -156,7 +156,7 @@ class CBuildingStatusItem : public vgui::EditablePanel
         return m_bActive;
     }
 
-   private:
+    private:
     bool bPositioned;  // false if we have not yet faded in and been positioned
 
     char m_szLayout[128];
@@ -201,7 +201,7 @@ class CBuildingStatusItem_SentryGun : public CBuildingStatusItem
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem_SentryGun, CBuildingStatusItem );
 
-   public:
+    public:
     CBuildingStatusItem_SentryGun( Panel *parent );
 
     virtual void OnTick( void );
@@ -211,7 +211,7 @@ class CBuildingStatusItem_SentryGun : public CBuildingStatusItem
     virtual const char *GetBackgroundImage( void );
     virtual const char *GetInactiveBackgroundImage( void );
 
-   private:
+    private:
     CIconPanel *m_pSentryIcons[3];
 
     vgui::ImagePanel *m_pRocketIcon;
@@ -235,7 +235,7 @@ class CBuildingStatusItem_SentryGun_Disposable : public CBuildingStatusItem
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem_SentryGun_Disposable, CBuildingStatusItem );
 
-   public:
+    public:
     CBuildingStatusItem_SentryGun_Disposable( Panel *parent );
 
     virtual void OnTick( void );
@@ -245,7 +245,7 @@ class CBuildingStatusItem_SentryGun_Disposable : public CBuildingStatusItem
     virtual const char *GetBackgroundImage( void );
     virtual const char *GetInactiveBackgroundImage( void );
 
-   private:
+    private:
     CIconPanel *m_pSentryIcons[3];
     CIconPanel *m_pUpgradeIcon;
 
@@ -265,12 +265,12 @@ class CBuildingStatusItem_Dispenser : public CBuildingStatusItem
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem_Dispenser, CBuildingStatusItem );
 
-   public:
+    public:
     CBuildingStatusItem_Dispenser( Panel *parent );
 
     virtual void PerformLayout( void );
 
-   private:
+    private:
     CIconPanel *m_pUpgradeIcon;
 
     vgui::ContinuousProgressBar *m_pAmmoProgress;
@@ -284,12 +284,12 @@ class CBuildingStatusItem_TeleporterEntrance : public CBuildingStatusItem
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem_TeleporterEntrance, CBuildingStatusItem );
 
-   public:
+    public:
     CBuildingStatusItem_TeleporterEntrance( Panel *parent );
     virtual void OnTick( void );
     virtual void PerformLayout( void );
 
-   private:
+    private:
     // 2 subpanels
     vgui::EditablePanel *m_pChargingPanel;
     vgui::EditablePanel *m_pFullyChargedPanel;
@@ -313,11 +313,11 @@ class CBuildingStatusItem_TeleporterExit : public CBuildingStatusItem
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem_TeleporterExit, CBuildingStatusItem );
 
-   public:
+    public:
     CBuildingStatusItem_TeleporterExit( Panel *parent );
     virtual void PerformLayout( void );
 
-   private:
+    private:
     CIconPanel *m_pUpgradeIcon;
     vgui::ContinuousProgressBar *m_pUpgradeProgress;
 };
@@ -329,12 +329,12 @@ class CBuildingStatusItem_Sapper : public CBuildingStatusItem
 {
     DECLARE_CLASS_SIMPLE( CBuildingStatusItem_Sapper, CBuildingStatusItem );
 
-   public:
+    public:
     CBuildingStatusItem_Sapper( Panel *parent );
 
     virtual void PerformLayout( void );
 
-   private:
+    private:
     // Health of target building
     vgui::ContinuousProgressBar *m_pTargetHealthBar;
 
@@ -351,7 +351,7 @@ class CHudBuildingStatusContainer : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudBuildingStatusContainer, vgui::Panel );
 
-   public:
+    public:
     CHudBuildingStatusContainer( const char *pElementName );
 
     virtual bool ShouldDraw( void );
@@ -372,11 +372,11 @@ class CHudBuildingStatusContainer : public CHudElement, public vgui::Panel
 
     void RecalculateAlertState( void );
 
-   protected:
+    protected:
     // a list of CBuildingStatusItems that we're showing
     CUtlPriorityQueue< CBuildingStatusItem * > m_BuildingPanels;
 
-   private:
+    private:
     BuildingHudAlert_t m_AlertLevel;
     float m_flNextBeep;
     int m_iNumBeepsToBeep;
@@ -389,7 +389,7 @@ class CHudBuildingStatusContainer_Spy : public CHudBuildingStatusContainer
 {
     DECLARE_CLASS_SIMPLE( CHudBuildingStatusContainer_Spy, CHudBuildingStatusContainer );
 
-   public:
+    public:
     CHudBuildingStatusContainer_Spy( const char *pElementName );
 
     virtual bool ShouldDraw( void );
@@ -402,7 +402,7 @@ class CHudBuildingStatusContainer_Engineer : public CHudBuildingStatusContainer
 {
     DECLARE_CLASS_SIMPLE( CHudBuildingStatusContainer_Engineer, CHudBuildingStatusContainer );
 
-   public:
+    public:
     CHudBuildingStatusContainer_Engineer( const char *pElementName );
 
     virtual bool ShouldDraw( void );

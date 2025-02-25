@@ -31,7 +31,7 @@ class CHudHealth : public CHudElement, public CHudNumericDisplay
 {
     DECLARE_CLASS_SIMPLE( CHudHealth, CHudNumericDisplay );
 
-   public:
+    public:
     CHudHealth( const char *pElementName );
     virtual void Init( void );
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -42,7 +42,7 @@ class CHudHealth : public CHudElement, public CHudNumericDisplay
     virtual bool ShouldDraw();
     virtual void Paint( void );
 
-   private:
+    private:
     int m_nHealth;
 
     CHudTexture *m_pHealthIcon;
@@ -194,7 +194,7 @@ void CHudHealth::Paint( void )
 //
 class CHudArmor : public CHudElement, public CHudNumericDisplay
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudArmor, CHudNumericDisplay );
 
     CHudArmor( const char *pName );
@@ -206,7 +206,7 @@ class CHudArmor : public CHudElement, public CHudNumericDisplay
     virtual bool ShouldDraw();
     virtual void Paint();
 
-   private:
+    private:
     int m_nArmor;
 
     CHudTexture *m_pArmorIcon;

@@ -23,7 +23,7 @@ class CLobbyPanel_Casual : public CBaseLobbyPanel
 {
     DECLARE_CLASS_SIMPLE( CLobbyPanel_Casual, CBaseLobbyPanel );
 
-   public:
+    public:
     CLobbyPanel_Casual( vgui::Panel *pParent, CBaseLobbyContainerFrame *pLobbyContainer );
     virtual ~CLobbyPanel_Casual();
 
@@ -42,7 +42,7 @@ class CLobbyPanel_Casual : public CBaseLobbyPanel
 
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
 
     CPanelAnimationVarAliasType( int, m_iCategorySpacer, "category_spacer", "4", "proportional_int" );

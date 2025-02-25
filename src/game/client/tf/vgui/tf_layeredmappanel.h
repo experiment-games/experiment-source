@@ -26,7 +26,7 @@ class CLayeredMapToolTip : public vgui::BaseTooltip
 {
     DECLARE_CLASS_SIMPLE( CLayeredMapToolTip, vgui::BaseTooltip );
 
-   public:
+    public:
     CLayeredMapToolTip( vgui::Panel *parent, const char *text = NULL );
 
     void SetText( const char *text )
@@ -44,7 +44,7 @@ class CLayeredMapToolTip : public vgui::BaseTooltip
 
     void SetupPanels( CTFLayeredMapPanel *pParentPanel, vgui::EditablePanel *pControlledPanel );
 
-   private:
+    private:
     void GetPosition( itempanel_tooltippos_t iTooltipPosition, CTFLayeredMapItemPanel *pMapItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
     bool ValidatePosition( CTFLayeredMapItemPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
 
@@ -59,7 +59,7 @@ class CTFLayeredMapItemPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFLayeredMapItemPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFLayeredMapItemPanel( Panel *parent, const char *pName );
 
     virtual void ApplySettings( KeyValues *inResourceData );
@@ -77,7 +77,7 @@ class CTFLayeredMapItemPanel : public vgui::EditablePanel
         return m_kvData;
     }
 
-   private:
+    private:
     vgui::ScalableImagePanel *m_pIsCompleted;
     vgui::ScalableImagePanel *m_pIsCompletedHighlight;
 
@@ -95,7 +95,7 @@ class CTFLayeredMapPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFLayeredMapPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFLayeredMapPanel( Panel *parent, const char *pName );
 
     virtual void ApplySettings( KeyValues *inResourceData );
@@ -103,7 +103,7 @@ class CTFLayeredMapPanel : public vgui::EditablePanel
 
     // CUtlVector<vgui::ImagePanel*> m_pImages;
 
-   private:
+    private:
     EditablePanel *m_pToolTipPanel;
     CLayeredMapToolTip *m_pToolTip;
 

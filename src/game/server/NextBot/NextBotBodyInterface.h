@@ -18,7 +18,7 @@ struct animevent_t;
  */
 class IBody : public INextBotComponent
 {
-   public:
+    public:
     IBody( INextBot *bot )
         : INextBotComponent( bot ) {}
     virtual ~IBody() {}
@@ -30,11 +30,11 @@ class IBody : public INextBotComponent
     virtual void Update( void ) {}  // update internal state
 
     /**
-     * Move the bot to a new position.
-     * If the body is not currently movable or if it
-     * is in a motion-controlled animation activity
-     * the position will not be changed and false will be returned.
-     */
+    * Move the bot to a new position.
+    * If the body is not currently movable or if it
+    * is in a motion-controlled animation activity
+    * the position will not be changed and false will be returned.
+    */
     virtual bool SetPosition( const Vector &pos );
 
     virtual const Vector &GetEyePosition( void ) const;  // return the eye position of the bot in world coordinates
@@ -49,15 +49,15 @@ class IBody : public INextBotComponent
         MANDATORY     // nothing can interrupt this look at - two simultaneous look ats with this priority is an error
     };
     virtual void AimHeadTowards( const Vector &lookAtPos,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // aim the bot's head towards the given goal
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // aim the bot's head towards the given goal
     virtual void AimHeadTowards( CBaseEntity *subject,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // continually aim the bot's head towards the given subject
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // continually aim the bot's head towards the given subject
 
     virtual bool IsHeadAimingOnTarget( void ) const;         // return true if the bot's head has achieved its most recent lookat target
     virtual bool IsHeadSteady( void ) const;                 // return true if head is not rapidly turning to look somewhere else
@@ -78,8 +78,8 @@ class IBody : public INextBotComponent
     };
 
     /**
-     * Begin an animation activity, return false if we cant do that right now.
-     */
+    * Begin an animation activity, return false if we cant do that right now.
+    */
     virtual bool StartActivity( Activity act, unsigned int flags = 0 );
     virtual int SelectAnimationSequence( Activity act ) const;  // given an Activity, select and return a specific animation sequence within it
 
@@ -107,9 +107,9 @@ class IBody : public INextBotComponent
     virtual bool IsPostureChanging( void ) const;  // return true if body's posture is in the process of changing to new posture
 
     /**
-     * "Arousal" is the level of excitedness/arousal/anxiety of the body.
-     * Is changes instantaneously to avoid complex interactions with posture transitions.
-     */
+    * "Arousal" is the level of excitedness/arousal/anxiety of the body.
+    * Is changes instantaneously to avoid complex interactions with posture transitions.
+    */
     enum ArousalType
     {
         NEUTRAL,

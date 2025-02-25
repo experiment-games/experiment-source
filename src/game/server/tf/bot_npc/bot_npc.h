@@ -21,7 +21,7 @@ class CBotNPC;
 //----------------------------------------------------------------------------
 class CBotNPCLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CBotNPCLocomotion( INextBot *bot );
     virtual ~CBotNPCLocomotion() {}
 
@@ -34,14 +34,14 @@ class CBotNPCLocomotion : public NextBotGroundLocomotion
         return 2500.0f;
     }
 
-   private:
+    private:
     float m_runSpeed;
 };
 
 //----------------------------------------------------------------------------
 class CBotNPCIntention : public IIntention
 {
-   public:
+    public:
     CBotNPCIntention( CBotNPC *me );
     virtual ~CBotNPCIntention();
 
@@ -59,14 +59,14 @@ class CBotNPCIntention : public IIntention
         return NULL;
     }
 
-   private:
+    private:
     Behavior< CBotNPC > *m_behavior;
 };
 
 //----------------------------------------------------------------------------
 class CBotNPCVision : public IVision
 {
-   public:
+    public:
     CBotNPCVision( INextBot *bot )
         : IVision( bot )
     {
@@ -80,7 +80,7 @@ class CBotNPCVision : public IVision
 //----------------------------------------------------------------------------
 class CBotNPCWeapon : public CBaseAnimating
 {
-   public:
+    public:
     CBotNPCWeapon( CBotNPC *owner )
     {
         m_owner = owner;
@@ -91,14 +91,14 @@ class CBotNPCWeapon : public CBaseAnimating
     virtual void StartAttack( void ) {}
     virtual void Update( void ) {}
 
-   private:
+    private:
     CHandle< CBotNPC > m_owner;
 };
 
 //----------------------------------------------------------------------------
 class CBotNPCWeapon_Axe : public CBotNPCWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCWeapon_Axe, CBotNPCWeapon );
 
     CBotNPCWeapon_Axe( CBotNPC *owner );
@@ -112,7 +112,7 @@ class CBotNPCWeapon_Axe : public CBotNPCWeapon
 //----------------------------------------------------------------------------
 class CBotNPCGetOffMe : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -122,7 +122,7 @@ class CBotNPCGetOffMe : public Action< CBotNPC >
         return "GetOffMe";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 
@@ -130,7 +130,7 @@ class CBotNPCGetOffMe : public Action< CBotNPC >
 //----------------------------------------------------------------------------
 class CBotNPC : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPC, NextBotCombatCharacter );
     DECLARE_SERVERCLASS();
 
@@ -305,7 +305,7 @@ class CBotNPC : public NextBotCombatCharacter
     void InputSpawn( inputdata_t &inputdata );
     COutputEvent m_outputOnStunned;  // fired the boss becomes stunned
 
-   private:
+    private:
     CBotNPCIntention *m_intention;
     CBotNPCLocomotion *m_locomotor;
     CBotNPCBody *m_body;
@@ -504,7 +504,7 @@ inline const CUtlVector< CBotNPC::AttackerInfo > &CBotNPC::GetAttackerVector( vo
 //--------------------------------------------------------------------------------------------------------------
 class CBotNPCPathCost : public IPathCost
 {
-   public:
+    public:
     CBotNPCPathCost( CBotNPC *me )
     {
         m_me = me;

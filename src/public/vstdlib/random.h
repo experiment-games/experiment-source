@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class VSTDLIB_CLASS IUniformRandomStream
 {
-   public:
+    public:
     // virtual ~IUniformRandomStream() { }
 
     // Sets the seed of the random number generator
@@ -41,7 +41,7 @@ class VSTDLIB_CLASS IUniformRandomStream
 //-----------------------------------------------------------------------------
 class VSTDLIB_CLASS CUniformRandomStream : public IUniformRandomStream
 {
-   public:
+    public:
     CUniformRandomStream();
 
     // Sets the seed of the random number generator
@@ -52,7 +52,7 @@ class VSTDLIB_CLASS CUniformRandomStream : public IUniformRandomStream
     virtual int RandomInt( int iMinVal, int iMaxVal );
     virtual float RandomFloatExp( float flMinVal = 0.0f, float flMaxVal = 1.0f, float flExponent = 1.0f );
 
-   private:
+    private:
     int GenerateRandomNumber();
 
     int m_idum;
@@ -67,7 +67,7 @@ class VSTDLIB_CLASS CUniformRandomStream : public IUniformRandomStream
 //-----------------------------------------------------------------------------
 class VSTDLIB_CLASS CGaussianRandomStream
 {
-   public:
+    public:
     // Passing in NULL will cause the gaussian stream to use the
     // installed global random number generator
     CGaussianRandomStream( IUniformRandomStream *pUniformStream = NULL );
@@ -78,7 +78,7 @@ class VSTDLIB_CLASS CGaussianRandomStream
     // Generates random numbers
     float RandomFloat( float flMean = 0.0f, float flStdDev = 1.0f );
 
-   private:
+    private:
     IUniformRandomStream *m_pUniformStream;
     bool m_bHaveValue;
     float m_flRandomValue;
@@ -100,7 +100,7 @@ VSTDLIB_INTERFACE float RandomGaussianFloat( float flMean = 0.0f, float flStdDev
 //-----------------------------------------------------------------------------
 class VSTDLIB_CLASS CDefaultUniformRandomStream : public IUniformRandomStream
 {
-   public:
+    public:
     virtual void SetSeed( int iSeed ) OVERRIDE
     {
         RandomSeed( iSeed );

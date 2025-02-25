@@ -193,7 +193,7 @@ const char *CHeadlessHatman::GetWeaponModel() const
 //---------------------------------------------------------------------------------------------
 class CHeadlessHatmanBehavior : public Action< CHeadlessHatman >
 {
-   public:
+    public:
     virtual Action< CHeadlessHatman > *InitialContainedAction( CHeadlessHatman *me )
     {
         return new CHeadlessHatmanEmerge;
@@ -211,7 +211,7 @@ class CHeadlessHatmanBehavior : public Action< CHeadlessHatman >
                 for ( int i = 0; i < attackerVector.Count(); ++i )
                 {
                     if ( attackerVector[i].m_attacker != NULL &&
-                         gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
+                        gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
                     {
                         CReliableBroadcastRecipientFilter filter;
                         UTIL_SayText2Filter( filter, attackerVector[i].m_attacker, false, "#TF_Halloween_Boss_Killers", attackerVector[i].m_attacker->GetPlayerName() );

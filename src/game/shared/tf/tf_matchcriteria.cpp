@@ -229,7 +229,7 @@ void ITFGroupMatchCriteria::LoadCasualCriteriaFromFile( const char *pszFileName 
     CUtlBuffer buffer;
     buffer.SetBufferType( true, true );
     if ( g_pFullFileSystem->ReadFile( pszFileName, NULL, buffer ) &&
-         buffer.TellPut() > buffer.TellGet() )
+        buffer.TellPut() > buffer.TellGet() )
     {
         // Null terminate. Why is buffer this pseudo-text class but has AddNullTerminator private?
         const char zero = '\0';
@@ -287,13 +287,13 @@ void ITFGroupMatchCriteria::SetCasualCriteriaFromHelper( const CCasualCriteriaHe
 
 //-----------------------------------------------------------------------------
 bool ITFGroupMatchCriteria::MakeDelta( const ITFGroupMatchCriteriaReader &msgBase,
-                                       const ITFGroupMatchCriteriaReader &msgFinal )
+                                        const ITFGroupMatchCriteriaReader &msgFinal )
 {
     // Note: These functions are potentially called a lot, and should avoid instantiating e.g. casual criteria helpers,
     //       mvm mission sets, and just look at the two proto objects.  If you need to assume something about the guts
     //       of a proto object add an assert like ---v
     AssertMsgOnce( ValveProtoUtils::MessageHasExactFields( Proto(), { 5, 13, 10, 15, 16, 12 } ),
-                   "Audit this if you change the message thx" );
+                    "Audit this if you change the message thx" );
 
     bool bChanged = false;
 
@@ -323,7 +323,7 @@ bool ITFGroupMatchCriteria::MakeDelta( const ITFGroupMatchCriteriaReader &msgBas
     {                                                                                                             \
         int nFinalMissions = msgFinal.Proto().field##_size();                                                     \
         bool bMissionsChanged = ( msgBase.Proto().field##_size() != nFinalMissions );                             \
-                                                                                                                  \
+                                                                                                                \
         if ( !bMissionsChanged && nFinalMissions )                                                                \
         {                                                                                                         \
             /* Deep compare */                                                                                    \
@@ -336,7 +336,7 @@ bool ITFGroupMatchCriteria::MakeDelta( const ITFGroupMatchCriteriaReader &msgBas
                 }                                                                                                 \
             }                                                                                                     \
         }                                                                                                         \
-                                                                                                                  \
+                                                                                                                \
         if ( bMissionsChanged )                                                                                   \
         {                                                                                                         \
             /* Always just re-send them	*/                                                                        \
@@ -359,7 +359,7 @@ bool ITFGroupMatchCriteria::MakeDelta( const ITFGroupMatchCriteriaReader &msgBas
     // ---
     // Just cheat and copy innerds, but assert they're what we expect
     AssertMsgOnce( ValveProtoUtils::MessageHasExactFields( *CTFCasualMatchCriteria::descriptor(), { 3 } ),
-                   "Audit this if you change the message thx" );
+                    "Audit this if you change the message thx" );
     auto &finalCriteriaProto = msgFinal.Proto().casual_criteria();
     auto &baseCriteriaProto = msgBase.Proto().casual_criteria();
     int nFinalCasualBitsSize = finalCriteriaProto.selected_maps_bits_size();
@@ -394,7 +394,7 @@ bool ITFGroupMatchCriteria::ApplyDelta( const ITFGroupMatchCriteriaReader &msgDe
     //       mvm mission sets, and just look at the two proto objects.  If you need to assume something about the guts
     //       of a proto object add an assert like ---v
     AssertMsgOnce( ValveProtoUtils::MessageHasExactFields( Proto(), { 5, 13, 10, 15, 16, 12 } ),
-                   "Audit this if you change the message thx" );
+                    "Audit this if you change the message thx" );
 
     bool bChanged = false;
 
@@ -423,7 +423,7 @@ bool ITFGroupMatchCriteria::ApplyDelta( const ITFGroupMatchCriteriaReader &msgDe
     {                                                                                                                   \
         MutProto().mutable_##field()->CopyFrom( msgDelta.Proto().field() );                                             \
         /* See corresponding terrible hack in MakeDelta -- we send a single empty field to indicate that this field did \
-           change, and changed to nothing. */                                                                           \
+            change, and changed to nothing. */                                                                           \
         if ( Proto().field##_size() == 1 && Proto().field( 0 ) == "" )                                                  \
         {                                                                                                               \
             MutProto().mutable_##field()->Clear();                                                                      \
@@ -439,7 +439,7 @@ bool ITFGroupMatchCriteria::ApplyDelta( const ITFGroupMatchCriteriaReader &msgDe
     // ---
     // Just cheat and copy innerds, but assert they're what we expect
     AssertMsgOnce( ValveProtoUtils::MessageHasExactFields( *CTFCasualMatchCriteria::descriptor(), { 3 } ),
-                   "Audit this if you change the message thx" );
+                    "Audit this if you change the message thx" );
     if ( msgDelta.Proto().has_casual_criteria() )
     {
         auto &otherBits = msgDelta.Proto().casual_criteria().selected_maps_bits();
@@ -470,10 +470,10 @@ void ITFPerPlayerMatchCriteria::SetSquadSurplus( bool bSquadSurplus )
 
 //-----------------------------------------------------------------------------
 bool ITFPerPlayerMatchCriteria::MakeDelta( const ITFPerPlayerMatchCriteriaReader &msgBase,
-                                           const ITFPerPlayerMatchCriteriaReader &msgFinal )
+                                            const ITFPerPlayerMatchCriteriaReader &msgFinal )
 {
     AssertMsgOnce( ValveProtoUtils::MessageHasExactFields( Proto(), { 1 } ),
-                   "Audit this if you change the message thx" );
+                    "Audit this if you change the message thx" );
 
     bool bChanged = false;
 
@@ -502,7 +502,7 @@ bool ITFPerPlayerMatchCriteria::MakeDelta( const ITFPerPlayerMatchCriteriaReader
 bool ITFPerPlayerMatchCriteria::ApplyDelta( const ITFPerPlayerMatchCriteriaReader &msgDelta )
 {
     AssertMsgOnce( ValveProtoUtils::MessageHasExactFields( Proto(), { 1 } ),
-                   "Audit this if you change the message thx" );
+                    "Audit this if you change the message thx" );
 
     bool bChanged = false;
 

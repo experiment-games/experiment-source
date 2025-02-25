@@ -38,7 +38,7 @@ Use the PVS to accelerate if available
 
 class CTransferMaker
 {
-   public:
+    public:
     CTransferMaker( transfer_t *all_transfers );
     ~CTransferMaker();
 
@@ -52,7 +52,7 @@ class CTransferMaker
 
     void Finish();
 
-   private:
+    private:
     int m_nTests;
     RayTracingSingleResult *m_pResults;
     int *m_pShooterPatches;
@@ -227,7 +227,7 @@ void TestPatchToFace( unsigned patchnum, int facenum, int head, transfer_t *tran
             // skip patches too far away
             VectorSubtract( patch->origin, patch2->origin, tmp );
             if (DotProduct( tmp, tmp ) > 512 * 512)
-              continue;
+            continue;
             */
 
             int ndxPatch2 = patch2 - g_Patches.Base();

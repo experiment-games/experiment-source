@@ -40,19 +40,19 @@ import com.google.protobuf.Descriptors.EnumValueDescriptor;
 public interface ProtocolMessageEnum extends Internal.EnumLite {
 
   /**
-   * Return the value's numeric value as defined in the .proto file.
-   */
+    * Return the value's numeric value as defined in the .proto file.
+    */
   int getNumber();
 
   /**
-   * Return the value's descriptor, which contains information such as
-   * value name, number, and type.
-   */
+    * Return the value's descriptor, which contains information such as
+    * value name, number, and type.
+    */
   EnumValueDescriptor getValueDescriptor();
 
   /**
-   * Return the enum type's descriptor, which contains information
-   * about each defined value, etc.
-   */
+    * Return the enum type's descriptor, which contains information
+    * about each defined value, etc.
+    */
   EnumDescriptor getDescriptorForType();
 }

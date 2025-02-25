@@ -25,7 +25,7 @@
 
 class IUnicodeWindows : public IBaseInterface
 {
-   public:
+    public:
     virtual LRESULT DefWindowProcW(
         HWND hWnd,
         UINT Msg,

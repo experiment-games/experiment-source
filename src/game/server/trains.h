@@ -57,7 +57,7 @@ class CFuncTrackTrain : public CBaseEntity
     DECLARE_SERVERCLASS();
     DECLARE_ENT_SCRIPTDESC();
 
-   public:
+    public:
     CFuncTrackTrain();
 
     void Spawn( void );
@@ -159,11 +159,11 @@ class CFuncTrackTrain : public CBaseEntity
         m_bDamageChild = bDamageChild;
     }
 
-   private:
+    private:
     void ArriveAtNode( CPathTrack *pNode );
     void FirePassInputs( CPathTrack *pStart, CPathTrack *pEnd, bool forward );
 
-   public:
+    public:
     // UNDONE: Add accessors?
     CPathTrack *m_ppath;
     float m_length;
@@ -173,7 +173,7 @@ class CFuncTrackTrain : public CBaseEntity
                             // riding on a func_trackchange
 #endif
 
-   private:
+    private:
     TrainVelocityType_t GetTrainVelocityType();
     void UpdateTrainVelocity( CPathTrack *pnext, CPathTrack *pNextNext, const Vector &nextPos, float flInterval );
 

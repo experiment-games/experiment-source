@@ -47,7 +47,7 @@ class CAttributeList
 
     DECLARE_CLASS_NOBASE( CAttributeList );
 
-   public:
+    public:
     DECLARE_EMBEDDED_NETWORKVAR();
     DECLARE_DATADESC();
 
@@ -68,7 +68,7 @@ class CAttributeList
     void RemoveAttribute( const CEconItemAttributeDefinition *pAttrDef );
     void RemoveAttributeByIndex( int iIndex );
 
-   public:
+    public:
     // Returns the attribute that matches the attribute defname
     const CEconItemAttribute *GetAttributeByName( const char *pszAttribDefName ) const;
 
@@ -88,7 +88,7 @@ class CAttributeList
     }
 #endif  // ENABLE_ATTRIBUTE_CURRENCY_TRACKING
 
-   private:
+    private:
     void NotifyManagerOfAttributeValueChanges();
 
     // Attribute accessing
@@ -123,7 +123,7 @@ class CEconItemAttribute
 {
     DECLARE_CLASS_NOBASE( CEconItemAttribute );
 
-   public:
+    public:
     DECLARE_EMBEDDED_NETWORKVAR();
 
     CEconItemAttribute();
@@ -155,7 +155,7 @@ class CEconItemAttribute
     }
 #endif  // ENABLE_ATTRIBUTE_CURRENCY_TRACKING
 
-   private:
+    private:
     // The only way to set the value of an attribute after its creation is through the attribute list
     // that contains it. This way the matching attribute manager is told one of its attributes has changed.
 
@@ -173,7 +173,7 @@ class CEconItemAttribute
     void Init( void );
 
     //--------------------------------------------------------
-   private:
+    private:
     // This is the index of the attribute into the attributes read from the data files
     CNetworkVar( attrib_definition_index_t, m_iAttributeDefinitionIndex );
 
@@ -201,11 +201,11 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
 {
     DECLARE_CLASS_NOBASE( CEconItemView );
 
-   public:
+    public:
     DECLARE_EMBEDDED_NETWORKVAR();
     DECLARE_DATADESC();
 
-   public:
+    public:
     CEconItemView();
     CEconItemView( const CEconItemView &src );
     ~CEconItemView();
@@ -221,7 +221,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
         return GetStaticData();
     }
 
-   public:
+    public:
     // IEconItemInterface implementation.
     virtual itemid_t GetID() const
     {
@@ -293,11 +293,11 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
         MarkDescriptionDirty();
     }
 
-   private:
+    private:
     void EnsureDescriptionIsBuilt( void ) const;
     void MarkDescriptionDirty( void );
 
-   public:
+    public:
     void SetGrayedOutReason( const char *pszGrayedOutReason );
 
     // Set & Get the index of this item's definition inside the script file
@@ -444,7 +444,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
 
     int GetSkin( int iTeam, bool bViewmodel = false ) const;
 
-   public:
+    public:
     // ...
     CAttributeList *GetAttributeList()
     {
@@ -455,7 +455,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
         return &m_AttributeList;
     }
 
-   public:
+    public:
 #ifdef CLIENT_DLL
     void SetWeaponSkinBase( ITexture *pBaseTex );
     void SetWeaponSkinBaseCompositor( ITextureCompositor *pTexCompositor );
@@ -522,7 +522,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
         m_iTeamNumber = iTeamNumber;
     }
 
-   protected:
+    protected:
     // Index of the item definition in the item script file.
     CNetworkVar( item_definition_index_t, m_iItemDefinitionIndex );
 
@@ -581,7 +581,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
     CNetworkVar( bool, m_bInitialized );
 
 #ifdef CLIENT_DLL  // we avoid using "BUILD_ITEM_NAME_AND_DESC" to prevent everything depending on the CEconItemDescription
-   public:
+    public:
     // Return the single-line name of this item.
     const wchar_t *GetItemName( void ) const;
 
@@ -593,7 +593,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
         return m_pDescription;
     }
 
-   private:
+    private:
     mutable class CEconItemDescription *m_pDescription;
     mutable char *m_pszGrayedOutReason;
     mutable bool m_bIsToolTip = false;
@@ -624,7 +624,7 @@ class CEconItemView : public CMaterialOverrideContainer< IEconItemInterface >
     virtual void GetRenderBounds( Vector &mins, Vector &maxs );
 #endif
 
-   private:
+    private:
     CNetworkVarEmbedded( CAttributeList, m_AttributeList );
     CNetworkVarEmbedded( CAttributeList, m_NetworkedDynamicAttributesForDemos );
 

@@ -35,7 +35,7 @@ class CHudArenaCapPointCountdown : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudArenaCapPointCountdown, EditablePanel );
 
-   public:
+    public:
     CHudArenaCapPointCountdown( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -43,7 +43,7 @@ class CHudArenaCapPointCountdown : public CHudElement, public EditablePanel
     virtual bool ShouldDraw( void );
     virtual bool IsVisible( void );
 
-   private:
+    private:
     bool m_bFire5SecRemain;
     bool m_bFire4SecRemain;
     bool m_bFire3SecRemain;

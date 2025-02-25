@@ -321,16 +321,16 @@ int main(int argc, char* argv[]) {
     protobuf_unittest::TestAllTypesLite message;
     string buffer;
     {
-      google::protobuf::io::StringOutputStream output_stream(&buffer);
-      google::protobuf::io::CodedOutputStream coded_output(&output_stream);
-      google::protobuf::internal::WireFormatLite::WriteTag(
-          protobuf_unittest::TestAllTypesLite::kOptionalNestedEnumFieldNumber,
-          google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT, &coded_output);
-      coded_output.WriteVarint32(10);
-      google::protobuf::internal::WireFormatLite::WriteTag(
-          protobuf_unittest::TestAllTypesLite::kRepeatedNestedEnumFieldNumber,
-          google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT, &coded_output);
-      coded_output.WriteVarint32(20);
+    google::protobuf::io::StringOutputStream output_stream(&buffer);
+    google::protobuf::io::CodedOutputStream coded_output(&output_stream);
+    google::protobuf::internal::WireFormatLite::WriteTag(
+        protobuf_unittest::TestAllTypesLite::kOptionalNestedEnumFieldNumber,
+        google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT, &coded_output);
+    coded_output.WriteVarint32(10);
+    google::protobuf::internal::WireFormatLite::WriteTag(
+        protobuf_unittest::TestAllTypesLite::kRepeatedNestedEnumFieldNumber,
+        google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT, &coded_output);
+    coded_output.WriteVarint32(20);
     }
     message.ParseFromString(buffer);
     data = message.SerializeAsString();

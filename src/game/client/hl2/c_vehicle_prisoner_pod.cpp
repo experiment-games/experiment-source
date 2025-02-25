@@ -22,7 +22,7 @@ extern float RemapAngleRange( float startInterval, float endInterval, float valu
 
 #define PITCH_CURVE_ZERO 10    // pitch less than this is clamped to zero
 #define PITCH_CURVE_LINEAR 45  // pitch greater than this is copied out
-                               // spline in between
+                                // spline in between
 
 #define POD_VIEW_FOV 90
 #define POD_VIEW_YAW_MIN -60
@@ -37,7 +37,7 @@ class C_PropVehiclePrisonerPod : public C_PhysicsProp, public IClientVehicle
 {
     DECLARE_CLASS( C_PropVehiclePrisonerPod, C_PhysicsProp );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_DATADESC();
 
@@ -46,7 +46,7 @@ class C_PropVehiclePrisonerPod : public C_PhysicsProp, public IClientVehicle
     void PreDataUpdate( DataUpdateType_t updateType );
     void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     // IClientVehicle overrides.
     virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
     virtual void GetVehicleFOV( float &flFOV )
@@ -83,7 +83,7 @@ class C_PropVehiclePrisonerPod : public C_PhysicsProp, public IClientVehicle
         return 0;
     }
 
-   public:
+    public:
     // C_BaseEntity overrides.
     virtual IClientVehicle *GetClientVehicle()
     {
@@ -106,7 +106,7 @@ class C_PropVehiclePrisonerPod : public C_PhysicsProp, public IClientVehicle
         return false;
     };
 
-   private:
+    private:
     CHandle< C_BasePlayer > m_hPlayer;
     CHandle< C_BasePlayer > m_hPrevPlayer;
 

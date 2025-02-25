@@ -22,7 +22,7 @@ dp4 $projPos.z, $worldPos, $cViewProj2
 dp4 $projPos.w, $worldPos, $cViewProj3
 
 ;------------------------------------------------------------------------------
-; Normal is based on vertex position 
+; Normal is based on vertex position
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldNormal );
 &AllocateRegister( \$normalDotUp );

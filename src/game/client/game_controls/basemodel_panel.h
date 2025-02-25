@@ -151,7 +151,7 @@ class CBaseModelPanel : public CMDLPanel
 {
     DECLARE_CLASS_SIMPLE( CBaseModelPanel, CMDLPanel );
 
-   public:
+    public:
     // Constructor, Destructor.
     CBaseModelPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CBaseModelPanel();
@@ -215,7 +215,7 @@ class CBaseModelPanel : public CMDLPanel
 
     int FindSequenceFromActivity( CStudioHdr *pStudioHdr, const char *pszActivity );
 
-   protected:
+    protected:
     // Resource file data.
     void ParseModelResInfo( KeyValues *inResourceData );
     void ParseModelAnimInfo( KeyValues *inResourceData );
@@ -224,12 +224,12 @@ class CBaseModelPanel : public CMDLPanel
     void SetupModelDefaults( void );
     void SetupModelAnimDefaults( void );
 
-   public:
+    public:
     BMPResData_t m_BMPResData;  // Base model panel data set in the .res file.
     QAngle m_angPlayer;
     Vector m_vecPlayerPos;
 
-   protected:
+    protected:
     bool m_bForcePos;
     bool m_bMousePressed;
     bool m_bAllowRotation;

@@ -29,7 +29,7 @@ extern ConVar ai_debug_avoidancebounds;
 
 class CNPC_Dog : public CAI_BaseActor
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CNPC_Dog, CAI_BaseActor );
     Class_T Classify( void );
@@ -86,7 +86,7 @@ class CNPC_Dog : public CAI_BaseActor
     void MantainBoneFollowerCollisionGroups( int CollisionGroup );
     virtual void SetPlayerAvoidState( void );
 
-   protected:
+    protected:
     enum
     {
         COND_DOG_LOST_PHYSICS_ENTITY = BaseClass::NEXT_CONDITION,
@@ -94,7 +94,7 @@ class CNPC_Dog : public CAI_BaseActor
         NEXT_CONDITION,
     };
 
-   protected:
+    protected:
     float m_flNextSwat;
     float m_flTimeToCatch;
     float m_flTimeToPull;
@@ -137,7 +137,7 @@ class CNPC_Dog : public CAI_BaseActor
 
     bool m_bBoneFollowersActive;
 
-   protected:
+    protected:
     DEFINE_CUSTOM_AI;
 };
 
@@ -1121,7 +1121,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
             continue;
 
         if ( pEnt->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
-             pEnt->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS )
+            pEnt->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS )
             continue;
 
         if ( center.z > EyePosition().z )

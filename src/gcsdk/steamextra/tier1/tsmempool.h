@@ -30,7 +30,7 @@
 //-----------------------------------------------------------------------------
 class CThreadSafeMemoryPool
 {
-   public:
+    public:
     enum
     {
         GROW_NONE = 0,         // Don't allow new blobs.
@@ -60,8 +60,8 @@ class CThreadSafeMemoryPool
     {
         CThreadSafeMemoryPool *pNode = ( CThreadSafeMemoryPool * )MemAlloc_AllocAligned( size, 8, __FILE__, __LINE__
 #ifdef STEAM
-                                                                                         ,
-                                                                                         true  // new operator
+                                                                                        ,
+                                                                                        true  // new operator
 #endif
         );
         return pNode;
@@ -71,8 +71,8 @@ class CThreadSafeMemoryPool
     {
         CThreadSafeMemoryPool *pNode = ( CThreadSafeMemoryPool * )MemAlloc_AllocAligned( size, 8, pFileName, nLine
 #ifdef STEAM
-                                                                                         ,
-                                                                                         true  // new operator
+                                                                                        ,
+                                                                                        true  // new operator
 #endif
         );
         return pNode;
@@ -82,8 +82,8 @@ class CThreadSafeMemoryPool
     {
         MemAlloc_FreeAligned( p
 #ifdef STEAM
-                              ,
-                              true  // new operator
+                            ,
+                            true  // new operator
 #endif
         );
     }
@@ -92,8 +92,8 @@ class CThreadSafeMemoryPool
     {
         MemAlloc_FreeAligned( p
 #ifdef STEAM
-                              ,
-                              true  // new operator
+                            ,
+                            true  // new operator
 #endif
         );
     }
@@ -102,7 +102,7 @@ class CThreadSafeMemoryPool
     void Validate( CValidator &validator, const char *pchName );  // Validate our internal structures
 #endif                                                            // DBGFLAG_VALIDATE
 
-   private:
+    private:
     // These ain't gonna work
     static void *operator new[]( size_t size );
     static void operator delete[]( void *p );
@@ -137,7 +137,7 @@ class CThreadSafeMemoryPool
 template < class T >
 class CThreadSafeClassMemoryPool : public CThreadSafeMemoryPool
 {
-   public:
+    public:
     CThreadSafeClassMemoryPool( int numElements, int growMode = GROW_FAST )
         : CThreadSafeMemoryPool( sizeof( T ), numElements, growMode ) {}
 

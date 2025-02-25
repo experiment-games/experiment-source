@@ -206,9 +206,9 @@ bool ExtractKeyvalue( void *pObject, typedescription_t *pFields, int iNumFields,
                     /*
                     SaveRestoreFieldInfo_t fieldInfo =
                     {
-                      (char *)pObject + fieldOffset,
-                      pObject,
-                      pField
+                    (char *)pObject + fieldOffset,
+                    pObject,
+                    pField
                     };
                     pField->pSaveRestoreOps->Parse( fieldInfo, szValue );
                     */

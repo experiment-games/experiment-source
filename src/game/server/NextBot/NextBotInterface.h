@@ -23,14 +23,14 @@ class PathFollower;
  */
 class INextBotFilter
 {
-   public:
+    public:
     virtual bool IsSelected( const CBaseEntity *candidate ) const = 0;  // return true if this entity passes the filter
 };
 
 //----------------------------------------------------------------------------------------------------------------
 class INextBot : public INextBotEventResponder
 {
-   public:
+    public:
     INextBot( void );
     virtual ~INextBot();
 
@@ -89,14 +89,14 @@ class INextBot : public INextBotEventResponder
     }
 
     /**
-     * Attempt to change the bot's position. Return true if successful.
-     */
+    * Attempt to change the bot's position. Return true if successful.
+    */
     virtual bool SetPosition( const Vector &pos );
     virtual const Vector &GetPosition( void ) const;  // get the global position of the bot
 
     /**
-     * Friend/enemy/neutral queries
-     */
+    * Friend/enemy/neutral queries
+    */
     virtual bool IsEnemy( const CBaseEntity *them ) const;   // return true if given entity is our enemy
     virtual bool IsFriend( const CBaseEntity *them ) const;  // return true if given entity is our friend
     virtual bool IsSelf( const CBaseEntity *them ) const;    // return true if 'them' is actually me
@@ -114,47 +114,47 @@ class INextBot : public INextBotEventResponder
     }
 
     /**
-     * Can we climb onto this entity?
-     */
+    * Can we climb onto this entity?
+    */
     virtual bool IsAbleToClimbOnto( const CBaseEntity *object ) const;
 
     /**
-     * Can we break this entity?
-     */
+    * Can we break this entity?
+    */
     virtual bool IsAbleToBreak( const CBaseEntity *object ) const;
 
     /**
-     * Sometimes we want to pass through other NextBots. OnContact() will always
-     * be invoked, but collision resolution can be skipped if this
-     * method returns false.
-     */
+    * Sometimes we want to pass through other NextBots. OnContact() will always
+    * be invoked, but collision resolution can be skipped if this
+    * method returns false.
+    */
     virtual bool IsAbleToBlockMovementOf( const INextBot *botInMotion ) const
     {
         return true;
     }
 
     /**
-     * Should we ever care about noticing physical contact with this entity?
-     */
+    * Should we ever care about noticing physical contact with this entity?
+    */
     virtual bool ShouldTouch( const CBaseEntity *object ) const
     {
         return true;
     }
 
     /**
-     * This immobile system is used to track the global state of "am I actually moving or not".
-     * The OnStuck() event is only emitted when following a path, and paths can be recomputed, etc.
-     */
+    * This immobile system is used to track the global state of "am I actually moving or not".
+    * The OnStuck() event is only emitted when following a path, and paths can be recomputed, etc.
+    */
     virtual bool IsImmobile( void ) const;            // return true if we haven't moved in awhile
     virtual float GetImmobileDuration( void ) const;  // how long have we been immobile
     virtual void ClearImmobileStatus( void );
     virtual float GetImmobileSpeedThreshold( void ) const;  // return units/second below which this actor is considered "immobile"
 
     /**
-     * Get the last PathFollower we followed. This method gives other interfaces a
-     * single accessor to the most recent Path being followed by the myriad of
-     * different PathFollowers used in the various behaviors the bot may be doing.
-     */
+    * Get the last PathFollower we followed. This method gives other interfaces a
+    * single accessor to the most recent Path being followed by the myriad of
+    * different PathFollowers used in the various behaviors the bot may be doing.
+    */
     virtual const PathFollower *GetCurrentPath( void ) const;
     virtual void SetCurrentPath( const PathFollower *path );
     virtual void NotifyPathDestruction( const PathFollower *path );  // this PathFollower is going away, which may or may not be ours
@@ -190,9 +190,9 @@ class INextBot : public INextBotEventResponder
         char data[MAX_NEXTBOT_DEBUG_LINE_LENGTH];
     };
     void GetDebugHistory( unsigned int type, CUtlVector< const NextBotDebugLineType * > *lines ) const;  // build a vector of debug history of the given types
-                                                                                                         //------------------------------------------------------------------------------
+                                                                                                        //------------------------------------------------------------------------------
 
-   private:
+    private:
     friend class INextBotComponent;
     void RegisterComponent( INextBotComponent *comp );  // components call this to register themselves with the bot that contains them
     INextBotComponent *m_componentList;                 // the first component

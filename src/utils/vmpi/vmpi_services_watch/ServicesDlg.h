@@ -30,7 +30,7 @@
 class CServicesDlg : public CIdleDialog
 {
     // Construction
-   public:
+    public:
     CServicesDlg( CWnd* pParent = NULL );  // standard constructor
     ~CServicesDlg();
 
@@ -52,13 +52,13 @@ class CServicesDlg : public CIdleDialog
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CServicesDlg)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
     virtual BOOL OnNotify( WPARAM wParam, LPARAM lParam, LRESULT* pResult );
     //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     void BuildVMPIPingPacket( CUtlVector< char >& out, char cPacketID, unsigned char cProtocolVersion = VMPI_PROTOCOL_VERSION, bool bIgnorePassword = false );
 
     virtual void OnIdle();
@@ -101,7 +101,7 @@ class CServicesDlg : public CIdleDialog
     afx_msg void OnSize( UINT nType, int cx, int cy );
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
-   public:
+    public:
     afx_msg void OnBnClickedEnableMachines();
     afx_msg void OnBnClickedRequestLog();
 };

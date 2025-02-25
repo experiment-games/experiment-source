@@ -36,7 +36,7 @@ class CDmxAttribute
 {
     DECLARE_DMX_ALLOCATOR();
 
-   public:
+    public:
     // Returns attribute name and type
     DmAttributeType_t GetType() const;
     const char *GetTypeString() const;
@@ -89,7 +89,7 @@ class CDmxAttribute
     // Returns the size of the variables storing the various attribute types
     static int AttributeDataSize( DmAttributeType_t type );
 
-   private:
+    private:
     CDmxAttribute( const char *pAttributeName );
     CDmxAttribute( CUtlSymbol attributeName );
     ~CDmxAttribute();

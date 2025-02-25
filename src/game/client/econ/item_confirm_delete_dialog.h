@@ -25,7 +25,7 @@ class CConfirmDeleteItemDialog : public CConfirmDeleteDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmDeleteItemDialog, CConfirmDeleteDialog );
 
-   public:
+    public:
     CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem = false );
 
     void SetMultiItem( bool bMultiItem )
@@ -34,7 +34,7 @@ class CConfirmDeleteItemDialog : public CConfirmDeleteDialog
     }
     virtual const wchar_t *GetText();
 
-   private:
+    private:
     bool m_bMultiItem;
 };
 

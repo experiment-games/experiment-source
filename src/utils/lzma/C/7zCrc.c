@@ -46,7 +46,7 @@ void MY_FAST_CALL CrcGenerateTable()
     UInt32 r = i;
     unsigned j;
     for (j = 0; j < 8; j++)
-      r = (r >> 1) ^ (kCrcPoly & ~((r & 1) - 1));
+    r = (r >> 1) ^ (kCrcPoly & ~((r & 1) - 1));
     g_CrcTable[i] = r;
   }
   for (; i < 256 * CRC_NUM_TABLES; i++)
@@ -54,11 +54,11 @@ void MY_FAST_CALL CrcGenerateTable()
     UInt32 r = g_CrcTable[i - 256];
     g_CrcTable[i] = g_CrcTable[r & 0xFF] ^ (r >> 8);
   }
-  
+
   #ifdef MY_CPU_LE
 
   g_CrcUpdate = CrcUpdateT4;
-  
+
   #if CRC_NUM_TABLES == 8
   if (!CPU_Is_InOrder())
     g_CrcUpdate = CrcUpdateT8;
@@ -69,16 +69,16 @@ void MY_FAST_CALL CrcGenerateTable()
     #ifndef MY_CPU_BE
     UInt32 k = 1;
     if (*(const Byte *)&k == 1)
-      g_CrcUpdate = CrcUpdateT4;
+    g_CrcUpdate = CrcUpdateT4;
     else
     #endif
     {
-      for (i = 256 * CRC_NUM_TABLES - 1; i >= 256; i--)
-      {
+    for (i = 256 * CRC_NUM_TABLES - 1; i >= 256; i--)
+    {
         UInt32 x = g_CrcTable[i - 256];
         g_CrcTable[i] = CRC_UINT32_SWAP(x);
-      }
-      g_CrcUpdate = CrcUpdateT1_BeT4;
+    }
+    g_CrcUpdate = CrcUpdateT1_BeT4;
     }
   }
   #endif

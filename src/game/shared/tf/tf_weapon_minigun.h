@@ -46,7 +46,7 @@ enum minigun_weapontypes_t
 //
 class CTFMinigun : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFMinigun, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -151,7 +151,7 @@ class CTFMinigun : public CTFWeaponBaseGun
     float GetBarrelRotation();
 #endif
 
-   private:
+    private:
     CTFMinigun( const CTFMinigun & ) {}
 
     void WindUp( void );
@@ -189,7 +189,7 @@ class CTFMinigun : public CTFWeaponBaseGun
         return false;
     }
 
-   private:
+    private:
     virtual void PlayWeaponShootSound( void ) {}  // override base class call to play shoot sound; we handle that ourselves separately
 
     void SetWeaponState( MinigunState_t nState );

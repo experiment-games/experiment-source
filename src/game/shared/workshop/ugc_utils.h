@@ -64,7 +64,7 @@ enum
 //               remaining users of this are migrated it should be nuked.
 class CUGCFileRequest
 {
-   public:
+    public:
     CUGCFileRequest( void );
     ~CUGCFileRequest( void );
 
@@ -93,7 +93,7 @@ class CUGCFileRequest
     void GetLocalFileName( char *pDest, size_t strSize );
     void GetLocalDirectory( char *pDest, size_t strSize );
 
-   private:
+    private:
     CCallResult< CUGCFileRequest, RemoteStorageDownloadUGCResult_t > m_callbackUGCDownload;
     void Steam_OnUGCDownload( RemoteStorageDownloadUGCResult_t *pResult, bool bError );
 
@@ -124,7 +124,7 @@ class CUGCFileRequest
         return m_UGCStatus;
     }
 
-   private:
+    private:
     char m_szTargetDirectory[MAX_PATH];  // If specified, the directory the file will be placed in
     char m_szTargetFilename[MAX_PATH];   // If specified, this name overrides the UGC filename
     char m_szFileName[MAX_PATH];         // Filename of in the cloud structure

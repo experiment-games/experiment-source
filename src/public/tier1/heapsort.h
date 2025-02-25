@@ -108,10 +108,10 @@ inline void HeapSortUnitTest( )
     CUtlVector< int >arr;
     arr.SetCount( RandomInt( 0, 10000 ) );
     for ( int j = 0; j < arr.Count( ); ++j )
-      arr[ j ] = RandomInt( 0, INT_MAX );
+    arr[ j ] = RandomInt( 0, INT_MAX );
     HeapSort( arr, [=] ( int a, int b ) ->bool { return a < b; } );
     for ( int j = 1; j < arr.Count( ); ++j )
-      Assert( arr[ j - 1 ] <= arr[ j ] );
+    Assert( arr[ j - 1 ] <= arr[ j ] );
   }
 }
 */

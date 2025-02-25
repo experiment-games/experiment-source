@@ -252,7 +252,7 @@ bool CIncremental::IsIncrementalFileValid()
             for ( i = 0; i < numfaces; i++ )
             {
                 if ( hdr.m_FaceLightmapSizes[i].m_Width != g_pFaces[i].m_LightmapTextureSizeInLuxels[0] ||
-                     hdr.m_FaceLightmapSizes[i].m_Height != g_pFaces[i].m_LightmapTextureSizeInLuxels[1] )
+                    hdr.m_FaceLightmapSizes[i].m_Height != g_pFaces[i].m_LightmapTextureSizeInLuxels[1] )
                 {
                     break;
                 }
@@ -285,7 +285,7 @@ void CIncremental::AddLightToFace(
     // Check for the 99.99% case in which the face already exists.
     CLightFace *pFace;
     if ( pLight->m_pCachedFaces[iThread] &&
-         pLight->m_pCachedFaces[iThread]->m_FaceIndex == iFace )
+        pLight->m_pCachedFaces[iThread]->m_FaceIndex == iFace )
     {
         pFace = pLight->m_pCachedFaces[iThread];
     }
@@ -428,11 +428,11 @@ void CIncremental::FinishFace(
             &pFace->m_CompressedData );
 
 #if 0
-	// test decompression
-	CUtlVector<CLightValue> test;
-	test.SetSize( 2048 );
-	pFace->m_CompressedData.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
-	DecompressLightData( &pFace->m_CompressedData, &test );
+    // test decompression
+    CUtlVector<CLightValue> test;
+    test.SetSize( 2048 );
+    pFace->m_CompressedData.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
+    DecompressLightData( &pFace->m_CompressedData, &test );
 #endif
 
         if ( pFace->m_CompressedData.TellPut() == 0 )
@@ -581,7 +581,7 @@ bool CIncremental::LoadIncrementalFile()
         FileRead( fp, pLight->m_Light );
         pLight->m_flMaxIntensity =
             max( pLight->m_Light.intensity.x,
-                 max( pLight->m_Light.intensity.y, pLight->m_Light.intensity.z ) );
+                max( pLight->m_Light.intensity.y, pLight->m_Light.intensity.z ) );
 
         int nFaces;
         FileRead( fp, nFaces );

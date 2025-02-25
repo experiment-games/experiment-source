@@ -14,13 +14,13 @@ $Include "$SRCDIR\vpc_scripts\source_exe_win_win32_base.vpc"
 
 $Configuration
 {
-	$General
-	{
-		$TargetName		"$OUTBINNAME"
-	}
+    $General
+    {
+        $TargetName		"$OUTBINNAME"
+    }
 
-	$Linker
-	{
-		$SubSystem		"Console (/SUBSYSTEM:CONSOLE)"
-	}
+    $Linker
+    {
+        $SubSystem		"Console (/SUBSYSTEM:CONSOLE)"
+    }
 }

@@ -1,4 +1,4 @@
-//====== Copyright © Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to Steam Timeline
 //
@@ -55,7 +55,7 @@ const float k_flMaxTimelineEventDuration = 600.f;
 //-----------------------------------------------------------------------------
 class ISteamTimeline
 {
-   public:
+    public:
     // Sets a description for the current game state in the timeline. These help the user to find specific
     // moments in the timeline when saving clips. Setting a new state description replaces any previous
     // description.

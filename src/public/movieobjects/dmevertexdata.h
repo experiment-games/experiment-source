@@ -33,7 +33,7 @@ class CDmeVertexDataBase : public CDmElement
 {
     DEFINE_ELEMENT( CDmeVertexDataBase, CDmElement );
 
-   public:
+    public:
     // NOTE: If you add fields to this, add to g_pStandardFieldNames in dmevertexdata.cpp
     enum StandardFields_t
     {
@@ -153,7 +153,7 @@ class CDmeVertexDataBase : public CDmElement
 
     void CopyTo( CDmeVertexDataBase *pDst ) const;
 
-   protected:
+    protected:
     struct FieldInfo_t
     {
         CUtlString m_Name;
@@ -289,11 +289,11 @@ class CDmeVertexData : public CDmeVertexDataBase
 {
     DEFINE_ELEMENT( CDmeVertexData, CDmeVertexDataBase );
 
-   public:
+    public:
     // Adds a new vertex; creates a new entry in all vertex data fields
     int AddVertexIndices( int nCount );
 
-   private:
+    private:
     virtual bool IsVertexDeltaData() const
     {
         return false;
@@ -309,7 +309,7 @@ class CDmeVertexDeltaData : public CDmeVertexDataBase
 {
     DEFINE_ELEMENT( CDmeVertexDeltaData, CDmeVertexDataBase );
 
-   public:
+    public:
     // Computes wrinkle data from position deltas
     // NOTE: Pass in negative scales to get 'compression', positive to get 'expansion'
     void GenerateWrinkleDelta( CDmeVertexData *pBindState, float flScale, bool bOverwrite );
@@ -320,7 +320,7 @@ class CDmeVertexDeltaData : public CDmeVertexDataBase
 
     CDmaVar< bool > m_bCorrected;
 
-   private:
+    private:
     virtual bool IsVertexDeltaData() const
     {
         return true;

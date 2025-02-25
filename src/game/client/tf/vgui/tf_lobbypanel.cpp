@@ -922,7 +922,7 @@ void CBaseLobbyPanel::UpdatePlayerList()
 
             // Different dude in the slot or their level is different?  Update the medal model
             if ( m_vecChatBadges[iPanelCount].m_steamIDOwner != steamID ||
-                 m_vecChatBadges[iPanelCount].m_nShownLevel != unLevel )
+                m_vecChatBadges[iPanelCount].m_nShownLevel != unLevel )
             {
                 m_vecChatBadges[iPanelCount].m_steamIDOwner = steamID;
 
@@ -1030,18 +1030,18 @@ void CBaseLobbyPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
     // m_pChatPlayerList->SetClickable( true ); // enable context menu to trade / kick?
 
 #if 0  // TODO(Universal Parties): Is this totally dead code?
-	bool bPartyLeader = GTFPartyClient()->BIsPartyLeader() && GCClientSystem()->BConnectedtoGC();
-	if ( bPartyLeader )
-	{
-		extern bool TF_IsHolidayActive( int eHoliday );
-		bool bHalloween = TF_IsHolidayActive( kHoliday_Halloween );
-		static bool bForcedOnce = false;
-		if ( bHalloween && !bForcedOnce )
-		{
-			GTFGCClientSystem()->SetQuickplayGameType( kGameCategory_Event247 );
-			bForcedOnce = true;
-		}
-	}
+    bool bPartyLeader = GTFPartyClient()->BIsPartyLeader() && GCClientSystem()->BConnectedtoGC();
+    if ( bPartyLeader )
+    {
+        extern bool TF_IsHolidayActive( int eHoliday );
+        bool bHalloween = TF_IsHolidayActive( kHoliday_Halloween );
+        static bool bForcedOnce = false;
+        if ( bHalloween && !bForcedOnce )
+        {
+            GTFGCClientSystem()->SetQuickplayGameType( kGameCategory_Event247 );
+            bForcedOnce = true;
+        }
+    }
 #endif
 
     GTFPartyClient()->MutLocalGroupCriteria().SetLateJoin( tf_matchmaking_join_in_progress.GetBool() );

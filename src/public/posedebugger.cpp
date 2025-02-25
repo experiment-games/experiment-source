@@ -41,7 +41,7 @@ static ConVar ui_posedebug_fade_out_time( "ui_posedebug_fade_out_time", "0.8", F
 
 class CPoseDebuggerStub : public IPoseDebugger
 {
-   public:
+    public:
     virtual void StartBlending( IClientNetworkable *pEntity, const CStudioHdr *pStudioHdr ) {}
     virtual void AccumulatePose(
         const CStudioHdr *pStudioHdr,
@@ -69,11 +69,11 @@ IPoseDebugger *g_pPoseDebugger = &s_PoseDebuggerStub;
 
 class ModelPoseDebugInfo
 {
-   public:
+    public:
     ModelPoseDebugInfo()
         : m_iEntNum( 0 ), m_iCurrentText( 0 ) {}
 
-   public:
+    public:
     // Entity number
     int m_iEntNum;
 
@@ -115,7 +115,7 @@ class ModelPoseDebugInfo
 
     CCopyableUtlVector< InfoText > m_arrTxt;
 
-   public:
+    public:
     // Add an info text
     void AddInfoText( InfoText *x, ModelPoseDebugInfo *pOld );
 
@@ -147,9 +147,9 @@ void ModelPoseDebugInfo::AddInfoText( InfoText *x, ModelPoseDebugInfo *pOld )
             {
                 InfoText &txt = o.m_arrTxt[k];
                 if ( ( txt.m_uiFlags & F_SEEN_THIS_FRAME ) &&
-                     !stricmp( x->m_chActivity, txt.m_chActivity ) &&
-                     !stricmp( x->m_chLabel, txt.m_chLabel ) &&
-                     ( x->m_iActivity == txt.m_iActivity ) )
+                    !stricmp( x->m_chActivity, txt.m_chActivity ) &&
+                    !stricmp( x->m_chLabel, txt.m_chLabel ) &&
+                    ( x->m_iActivity == txt.m_iActivity ) )
                 {
                     x->m_flTimeAlive = txt.m_flTimeAlive;
                     break;
@@ -222,9 +222,9 @@ ModelPoseDebugInfo::InfoText *ModelPoseDebugInfo::LookupInfoText( InfoText *x )
         {
             InfoText &txt = m_arrTxt[k];
             if ( ( txt.m_uiFlags & F_SEEN_THIS_FRAME ) &&
-                 !stricmp( x->m_chActivity, txt.m_chActivity ) &&
-                 !stricmp( x->m_chLabel, txt.m_chLabel ) &&
-                 ( x->m_iActivity == txt.m_iActivity ) )
+                !stricmp( x->m_chActivity, txt.m_chActivity ) &&
+                !stricmp( x->m_chLabel, txt.m_chLabel ) &&
+                ( x->m_iActivity == txt.m_iActivity ) )
             {
                 return &txt;
             }
@@ -301,16 +301,16 @@ void ModelPoseDebugInfo::PrintPendingInfoText( int &rnPosPrint )
 
 class CPoseDebuggerImpl : public IPoseDebugger
 {
-   public:
+    public:
     CPoseDebuggerImpl();
     ~CPoseDebuggerImpl();
 
-   public:
+    public:
     void ShowAllModels( bool bShow );
     void ShowModel( int iEntNum, bool bShow );
     bool IsModelShown( int iEntNum ) const;
 
-   public:
+    public:
     virtual void StartBlending( IClientNetworkable *pEntity, const CStudioHdr *pStudioHdr );
     virtual void AccumulatePose(
         const CStudioHdr *pStudioHdr,
@@ -324,7 +324,7 @@ class CPoseDebuggerImpl : public IPoseDebugger
         float flWeight,
         float flTime );
 
-   protected:
+    protected:
     typedef CUtlMap< CStudioHdr const *, ModelPoseDebugInfo > MapModel;
     MapModel m_mapModel, m_mapModelOld;
     int m_nPosPrint;
@@ -345,9 +345,9 @@ static CPoseDebuggerImpl s_PoseDebuggerImpl;
 
 CPoseDebuggerImpl::CPoseDebuggerImpl()
     : m_mapModel( DefLessFunc( CStudioHdr const * ) ),
-      m_mapModelOld( DefLessFunc( CStudioHdr const * ) ),
-      m_nPosPrint( 0 ),
-      m_pLastModel( NULL )
+    m_mapModelOld( DefLessFunc( CStudioHdr const * ) ),
+    m_nPosPrint( 0 ),
+    m_pLastModel( NULL )
 {
     m_uiMaskShowModels.SetAll();
 }
@@ -406,7 +406,7 @@ void CPoseDebuggerImpl::StartBlending( IClientNetworkable *pEntity, const CStudi
     // Go ahead with the new model
     studiohdr_t const *pRMdl = pStudioHdr->GetRenderHdr();
     if ( !pRMdl ||
-         !pRMdl->numincludemodels )
+        !pRMdl->numincludemodels )
         return;
 
     // Entity number
@@ -426,8 +426,8 @@ void CPoseDebuggerImpl::StartBlending( IClientNetworkable *pEntity, const CStudi
 
         // Zero out the text on the old map
         for ( int k = m_mapModelOld.FirstInorder();
-              k != m_mapModelOld.InvalidIndex();
-              k = m_mapModelOld.NextInorder( k ) )
+            k != m_mapModelOld.InvalidIndex();
+            k = m_mapModelOld.NextInorder( k ) )
         {
             ModelPoseDebugInfo &mpi = m_mapModelOld[k];
             mpi.m_iCurrentText = 0;
@@ -461,7 +461,7 @@ void CPoseDebuggerImpl::AccumulatePose( const CStudioHdr *pStudioHdr, CIKContext
 
     studiohdr_t const *pRMdl = pStudioHdr->GetRenderHdr();
     if ( !pRMdl ||
-         !pRMdl->numincludemodels )
+        !pRMdl->numincludemodels )
         return;
 
     MapModel::IndexType_t idxMapModel = m_mapModel.Find( pStudioHdr );
@@ -515,7 +515,7 @@ void CPoseDebuggerImpl::AccumulatePose( const CStudioHdr *pStudioHdr, CIKContext
         {
             ModelPoseDebugInfo::InfoText &lastSeenTxt = mpi.m_arrTxt[iLast];
             if ( lastSeenTxt.m_uiFlags & ModelPoseDebugInfo::F_SEEN_THIS_FRAME &&
-                 lastSeenTxt.m_chActivity[0] )
+                lastSeenTxt.m_chActivity[0] )
             {
                 sprintf( txt.m_chActivity, "%s", lastSeenTxt.m_chActivity );
                 break;
@@ -526,26 +526,26 @@ void CPoseDebuggerImpl::AccumulatePose( const CStudioHdr *pStudioHdr, CIKContext
     // The layer information
     ModelPoseDebugInfo::InfoText *pOldTxt = pMpiOld ? pMpiOld->LookupInfoText( &txt ) : NULL;
     sprintf( txt.m_chTextLines[numLines],
-             "%-*s  %-*s  %*.2f  %*.1f/%-*d  %*.0f%% ",
-             widthActivity,
-             seqdesc.pszActivityName(),
-             widthLayer,
-             seqdesc.pszLabel(),
-             7,
-             pOldTxt ? pOldTxt->m_flTimeAlive : 0.f,
-             5,
-             cycle * ( ( ( CStudioHdr * )pStudioHdr )->pAnimdesc( seqdesc.anim( 0, 0 ) ).numframes - 1 ),
-             3,
-             ( ( CStudioHdr * )pStudioHdr )->pAnimdesc( seqdesc.anim( 0, 0 ) ).numframes,
-             widthPercent,
-             flWeight * 100.0f );
+            "%-*s  %-*s  %*.2f  %*.1f/%-*d  %*.0f%% ",
+            widthActivity,
+            seqdesc.pszActivityName(),
+            widthLayer,
+            seqdesc.pszLabel(),
+            7,
+            pOldTxt ? pOldTxt->m_flTimeAlive : 0.f,
+            5,
+            cycle * ( ( ( CStudioHdr * )pStudioHdr )->pAnimdesc( seqdesc.anim( 0, 0 ) ).numframes - 1 ),
+            3,
+            ( ( CStudioHdr * )pStudioHdr )->pAnimdesc( seqdesc.anim( 0, 0 ) ).numframes,
+            widthPercent,
+            flWeight * 100.0f );
     ++numLines;
 
     if ( seqdesc.numiklocks )
     {
         sprintf( chBuffer,
-                 "iklocks : %-2d : ",
-                 seqdesc.numiklocks );
+                "iklocks : %-2d : ",
+                seqdesc.numiklocks );
 
         for ( int k = 0; k < seqdesc.numiklocks; ++k )
         {
@@ -558,9 +558,9 @@ void CPoseDebuggerImpl::AccumulatePose( const CStudioHdr *pStudioHdr, CIKContext
         }
 
         sprintf( txt.m_chTextLines[numLines],
-                 "%-*s",
-                 widthIks,
-                 chBuffer );
+                "%-*s",
+                widthIks,
+                chBuffer );
         ++numLines;
     }
 
@@ -569,9 +569,9 @@ void CPoseDebuggerImpl::AccumulatePose( const CStudioHdr *pStudioHdr, CIKContext
         sprintf( chBuffer, "ikrules : %-2d", seqdesc.numikrules );
 
         sprintf( txt.m_chTextLines[numLines],
-                 "%-*s",
-                 widthIks,
-                 chBuffer );
+                "%-*s",
+                widthIks,
+                chBuffer );
         ++numLines;
     }
 

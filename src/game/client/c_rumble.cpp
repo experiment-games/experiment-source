@@ -247,7 +247,7 @@ void GenerateSineWaveEffect( RumbleWaveform_t *pWaveform, const WaveGenParams_t 
 //=========================================================
 class CRumbleEffects
 {
-   public:
+    public:
     CRumbleEffects()
     {
         Init();
@@ -265,7 +265,7 @@ class CRumbleEffects
     RumbleChannel_t *FindExistingChannel( int index );
     RumbleChannel_t *FindAvailableChannel( int priority );
 
-   public:
+    public:
     RumbleChannel_t m_Channels[MAX_RUMBLE_CHANNELS];
 
     RumbleWaveform_t m_Waveforms[NUM_RUMBLE_EFFECTS];

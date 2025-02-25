@@ -14,7 +14,7 @@
 template < typename Actor >
 class BehaviorBackUp : public Action< Actor >
 {
-   public:
+    public:
     BehaviorBackUp( const Vector &avoidPos );
 
     virtual ActionResult< Actor > OnStart( Actor *me, Action< Actor > *priorAction );
@@ -27,7 +27,7 @@ class BehaviorBackUp : public Action< Actor >
         return "BehaviorBackUp";
     }
 
-   private:
+    private:
     CountdownTimer m_giveUpTimer;
     CountdownTimer m_backupTimer;
     CountdownTimer m_jumpTimer;

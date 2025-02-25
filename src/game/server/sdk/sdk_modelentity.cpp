@@ -9,7 +9,7 @@
 
 class CMyModelEntity : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CMyModelEntity, CBaseAnimating );
     DECLARE_DATADESC();
 
@@ -21,7 +21,7 @@ class CMyModelEntity : public CBaseAnimating
     // Input function
     void InputToggle( inputdata_t &inputData );
 
-   private:
+    private:
     bool m_bActive;
     float m_flNextChangeTime;
 };

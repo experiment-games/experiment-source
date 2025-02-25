@@ -411,21 +411,21 @@ void TextEntry::CursorToPixelSpace( int cursorPos, int &cx, int &cy )
             // so don't push the cursor down a line here...
             /*if (!_putCursorAtEnd)
             {
-              // if we've passed a line break go to that
-              if (m_LineBreaks[lineBreakIndexIndex] == i)
-              {
+            // if we've passed a line break go to that
+            if (m_LineBreaks[lineBreakIndexIndex] == i)
+            {
                 // add another line
                 AddAnotherLine(x,y);
                 lineBreakIndexIndex++;
-              }
+            }
             }*/
             break;
         }
 
         // if we've passed a line break go to that
         if ( m_LineBreaks.Count() &&
-             lineBreakIndexIndex < m_LineBreaks.Count() &&
-             m_LineBreaks[lineBreakIndexIndex] == i )
+            lineBreakIndexIndex < m_LineBreaks.Count() &&
+            m_LineBreaks[lineBreakIndexIndex] == i )
         {
             // add another line
             AddAnotherLine( x, y );
@@ -677,7 +677,7 @@ void TextEntry::PaintText( Color foregroundColor, Color highlightColor, Color cu
         input()->GetIMELanguageShortCode( shortcode, sizeof( shortcode ) );
 
         if ( shortcode[0] != L'\0' &&
-             wcsicmp( shortcode, L"EN" ) )
+            wcsicmp( shortcode, L"EN" ) )
         {
             m_nLangInset = 0;
             langlen = V_wcslen( shortcode );
@@ -756,9 +756,9 @@ void TextEntry::PaintText( Color foregroundColor, Color highlightColor, Color cu
             // loop through all the characters and sum their widths
             bool addEllipses = NeedsEllipses( useFont, &i );
             if ( addEllipses &&
-                 !IsEditable() &&
-                 m_bUseFallbackFont &&
-                 INVALID_FONT != m_hFallbackFont )
+                !IsEditable() &&
+                m_bUseFallbackFont &&
+                INVALID_FONT != m_hFallbackFont )
             {
                 // Switch to small font!!!
                 useFont = m_hFallbackFont;
@@ -1641,7 +1641,7 @@ void TextEntry::OnKeyCodePressed( KeyCode code )
 
     // Pass on the joystick and mouse codes
     if ( IsMouseCode( code ) || IsNovintButtonCode( code ) || IsJoystickCode( code ) || IsJoystickButtonCode( code ) ||
-         IsJoystickPOVCode( code ) || IsJoystickAxisCode( code ) )
+        IsJoystickPOVCode( code ) || IsJoystickAxisCode( code ) )
     {
         Panel::OnKeyCodePressed( code );
         return;
@@ -2141,7 +2141,7 @@ bool TextEntry::SelectCheck( bool fromMouse /*=false*/ )
         bool deselect = true;
         int cx0, cx1;
         if ( fromMouse &&
-             GetDragPanel() != NULL )
+            GetDragPanel() != NULL )
         {
             // move the cursor to where the mouse was pressed
             int x, y;
@@ -3247,7 +3247,7 @@ void TextEntry::OpenEditMenu()
     Panel *panel = this;
     while ( panel->GetParent() != NULL)
     {
-      panel = panel->GetParent();
+    panel = panel->GetParent();
     }
     panel->ScreenToLocal(cursorX, cursorY);
     int x, y;
@@ -4210,7 +4210,7 @@ void TextEntry::OnPanelDropped( CUtlVector< KeyValues * > &msglist )
 
     char const *cmd = data->GetString( "command" );
     if ( !Q_stricmp( cmd, "replace" ) ||
-         !Q_stricmp( cmd, "default" ) )
+        !Q_stricmp( cmd, "default" ) )
     {
         SetText( newText );
         _dataChanged = true;

@@ -10,7 +10,7 @@
 
 class CTFBotGetAmmo : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotGetAmmo( void );
 
     static bool IsPossible( CTFBot *me );  // return true if this Action has what it needs to perform right now
@@ -31,7 +31,7 @@ class CTFBotGetAmmo : public Action< CTFBot >
         return "GetAmmo";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CHandle< CBaseEntity > m_ammo;
     bool m_isGoalDispenser;

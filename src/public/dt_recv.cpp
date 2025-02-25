@@ -157,29 +157,29 @@ RecvProp RecvPropVectorXY(
 #if 0  // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 
 RecvProp RecvPropQuaternion(
-	const char *pVarName, 
-	int offset, 
-	int sizeofVar,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags, 
-	RecvVarProxyFn varProxy
-	)
+    const char *pVarName,
+    int offset,
+    int sizeofVar,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
+    int flags,
+    RecvVarProxyFn varProxy
+    )
 {
-	RecvProp ret;
+    RecvProp ret;
 
 #ifdef _DEBUG
-	if ( varProxy == RecvProxy_QuaternionToQuaternion )
-	{
-		Assert( sizeofVar == sizeof( Quaternion ) );
-	}
+    if ( varProxy == RecvProxy_QuaternionToQuaternion )
+    {
+        Assert( sizeofVar == sizeof( Quaternion ) );
+    }
 #endif
 
-	ret.m_pVarName = pVarName;
-	ret.SetOffset( offset );
-	ret.m_RecvType = DPT_Quaternion;
-	ret.m_Flags = flags;
-	ret.SetProxyFn( varProxy );
+    ret.m_pVarName = pVarName;
+    ret.SetOffset( offset );
+    ret.m_RecvType = DPT_Quaternion;
+    ret.m_Flags = flags;
+    ret.SetProxyFn( varProxy );
 
-	return ret;
+    return ret;
 }
 #endif
 

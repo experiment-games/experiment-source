@@ -540,8 +540,8 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( CBaseAnimating, PushAllowBoneAccess, "class|static", "Push allow bone access." )
 {
     C_BaseAnimating::PushAllowBoneAccess( LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "allowForNormalModels" ),
-                                          LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "allowForViewModels" ),
-                                          LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "tagPush" ) );
+                                        LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "allowForViewModels" ),
+                                        LUA_BINDING_ARGUMENT( luaL_checkstring, 3, "tagPush" ) );
 
     return 0;
 }

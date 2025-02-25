@@ -43,7 +43,7 @@ struct LightDesc_t
     float m_Attenuation1;  //< linear term of falloff
     float m_Attenuation2;  //< quadatic term of falloff
     float m_Theta;         //< inner cone angle. no angular falloff
-                           //< within this cone
+                            //< within this cone
     float m_Phi;           //< outer cone angle
 
     // the values below are derived from the above settings for optimizations
@@ -52,11 +52,11 @@ struct LightDesc_t
     float m_PhiDot;
     unsigned int m_Flags;
 
-   protected:
+    protected:
     float OneOver_ThetaDot_Minus_PhiDot;
     float m_RangeSquared;
 
-   public:
+    public:
     void RecalculateDerivedValues( void );  // calculate m_xxDot, m_Type for changed parms
 
     LightDesc_t() = default;
@@ -84,9 +84,9 @@ struct LightDesc_t
     void ComputeLightAtPoints( const FourVectors &pos, const FourVectors &normal, FourVectors &color, bool DoHalfLambert = false ) const;
     void ComputeNonincidenceLightAtPoints( const FourVectors &pos, FourVectors &color ) const;
     void ComputeLightAtPointsForDirectional( const FourVectors &pos,
-                                             const FourVectors &normal,
-                                             FourVectors &color,
-                                             bool DoHalfLambert = false ) const;
+                                            const FourVectors &normal,
+                                            FourVectors &color,
+                                            bool DoHalfLambert = false ) const;
 
     // warning - modifies color!!! set color first!!
     void SetupOldStyleAttenuation( float fQuadatricAttn, float fLinearAttn, float fConstantAttn );

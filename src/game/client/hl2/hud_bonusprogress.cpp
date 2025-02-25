@@ -43,17 +43,17 @@ class CHudBonusProgress : public CHudElement, public CHudNumericDisplay
 {
     DECLARE_CLASS_SIMPLE( CHudBonusProgress, CHudNumericDisplay );
 
-   public:
+    public:
     CHudBonusProgress( const char *pElementName );
     virtual void Init( void );
     virtual void VidInit( void );
     virtual void Reset( void );
     virtual void OnThink();
 
-   private:
+    private:
     void SetChallengeLabel( void );
 
-   private:
+    private:
     // old variables
     int m_iBonusProgress;
 

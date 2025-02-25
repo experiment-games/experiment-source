@@ -16,7 +16,7 @@
 //
 class CTFBotCompanion : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -27,7 +27,7 @@ class CTFBotCompanion : public Action< CTFBot >
         return "Companion";
     };
 
-   private:
+    private:
     ChasePath m_path;
     CTFPlayer *GetLeader( void );
 };
@@ -37,7 +37,7 @@ class CTFBotCompanion : public Action< CTFBot >
 //
 class CTFBotGuardian : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -52,7 +52,7 @@ class CTFBotGuardian : public Action< CTFBot >
         return "Guardian";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
 };

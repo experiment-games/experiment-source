@@ -1075,8 +1075,8 @@ void CTFHudEscort::UpdateCPImages( void )
         bool bValid = true;
 
         if ( !ObjectiveResource()->IsInMiniRound( i ) ||
-             !ObjectiveResource()->IsCPVisible( i ) ||
-             ( m_bMultipleTrains && ( ObjectiveResource()->GetCPGroup( i ) != ( m_nTeam - 2 ) ) ) )  // -2 to offset the team numbers to 0
+            !ObjectiveResource()->IsCPVisible( i ) ||
+            ( m_bMultipleTrains && ( ObjectiveResource()->GetCPGroup( i ) != ( m_nTeam - 2 ) ) ) )  // -2 to offset the team numbers to 0
         {
             bValid = false;
         }

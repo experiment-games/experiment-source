@@ -21,7 +21,7 @@
 
 class CReplayAchievement : public CBaseTFAchievement
 {
-   public:
+    public:
     virtual bool AlwaysListen()
     {
         return true;
@@ -39,7 +39,7 @@ class CReplayAchievement : public CBaseTFAchievement
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFReplay_SaveReplay : public CReplayAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -112,7 +112,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFReplay_EditTime, ACHIEVEMENT_TF_REPLAY_EDIT_T
 
 class CAchievementTFReplay_YouTube_Views_Tier : public CReplayAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -144,7 +144,7 @@ class CAchievementTFReplay_YouTube_Views_Tier1 : public CAchievementTFReplay_You
 {
     DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 
-   public:
+    public:
     void Init()
     {
         BaseClass::Init();
@@ -158,7 +158,7 @@ class CAchievementTFReplay_YouTube_Views_Tier2 : public CAchievementTFReplay_You
 {
     DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 
-   public:
+    public:
     void Init()
     {
         BaseClass::Init();
@@ -171,7 +171,7 @@ class CAchievementTFReplay_YouTube_Views_Tier3 : public CAchievementTFReplay_You
 {
     DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 
-   public:
+    public:
     void Init()
     {
         BaseClass::Init();
@@ -184,7 +184,7 @@ class CAchievementTFReplay_YouTube_Views_Highest : public CAchievementTFReplay_Y
 {
     DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 
-   public:
+    public:
     void Init()
     {
         BaseClass::Init();

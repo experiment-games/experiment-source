@@ -35,7 +35,7 @@ DECLARE_AUTO_LIST( ITFTeamSpawnAutoList );
 
 class CTFTeamSpawn : public CServerOnlyPointEntity, public ITFTeamSpawnAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CTFTeamSpawn, CServerOnlyPointEntity );
 
     CTFTeamSpawn();
@@ -89,7 +89,7 @@ class CTFTeamSpawn : public CServerOnlyPointEntity, public ITFTeamSpawnAutoList
         m_bAlreadyUsedForMatchSummary = true;
     }
 
-   private:
+    private:
     bool m_bDisabled;                    // Enabled/Disabled?
     PlayerTeamSpawnMode_t m_nSpawnMode;  // How are players allowed to spawn here?
 

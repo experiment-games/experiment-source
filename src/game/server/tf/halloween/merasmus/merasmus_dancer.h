@@ -21,7 +21,7 @@ class CMerasmusDancer : public CBaseAnimating
     DECLARE_CLASS( CMerasmusDancer, CBaseAnimating );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CMerasmusDancer();
     virtual ~CMerasmusDancer();
 
@@ -29,7 +29,7 @@ class CMerasmusDancer : public CBaseAnimating
     void Vanish();
     void BlastOff();
 
-   private:
+    private:
     virtual void Spawn();
     virtual void Precache();
 

@@ -137,20 +137,20 @@ float GetFloorZ( const Vector &origin, float fMaxDrop )
     //
     trace_t tr;
     AI_TraceLine( origin,
-                  origin - Vector( 0, 0, fMaxDrop ),
-                  MASK_NPCSOLID_BRUSHONLY,
-                  NULL,
-                  COLLISION_GROUP_NONE,
-                  &tr );
+                origin - Vector( 0, 0, fMaxDrop ),
+                MASK_NPCSOLID_BRUSHONLY,
+                NULL,
+                COLLISION_GROUP_NONE,
+                &tr );
 
     // This trace is ONLY used if we hit an entity flagged with FL_WORLDBRUSH
     trace_t trEnt;
     AI_TraceLine( origin,
-                  origin - Vector( 0, 0, fMaxDrop ),
-                  MASK_NPCSOLID,
-                  NULL,
-                  COLLISION_GROUP_NONE,
-                  &trEnt );
+                origin - Vector( 0, 0, fMaxDrop ),
+                MASK_NPCSOLID,
+                NULL,
+                COLLISION_GROUP_NONE,
+                &trEnt );
 
     // Did we hit something closer than the floor?
     if ( trEnt.fraction < tr.fraction )

@@ -9,18 +9,18 @@ ps.1.1
 ;
 ; The texture coordinates need to be defined as follows:
 ; tc0 - Normalmap and lightmap texture coordinates
-; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space 
+; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space
 ;------------------------------------------------------------------------------
 
 ; Get the 3-vector from the normal map
 tex t0
 
 ; Sample the lightmaps
-tex t1 
-tex t2 
-tex t3 
+tex t1
+tex t2
+tex t3
 
-; output = lightmapColor[0] * ( ( N dot basis[0] )^2 ) + 
+; output = lightmapColor[0] * ( ( N dot basis[0] )^2 ) +
 ;	       lightmapColor[1] * ( ( N dot basis[1] )^2 ) +
 ;	       lightmapColor[2] * ( ( N dot basis[2] )^2 ) +
 
@@ -73,7 +73,7 @@ mad t1.rgb, r1.a, t2, t1
 mad r0.rgba, r0.a, t3, t1
 
 ;----
-; r0.rgb = lightmapColor[0] * ( N dot basis[0] )^2 + 
+; r0.rgb = lightmapColor[0] * ( N dot basis[0] )^2 +
 ;          lightmapColor[1] * ( N dot basis[1] )^2 +
 ;          lightmapColor[2] * ( N dot basis[2] )^2
 ;----

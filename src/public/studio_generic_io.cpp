@@ -76,7 +76,7 @@ byte *studiohdr_t::GetAnimBlock( int i ) const
 //-----------------------------------------------------------------------------
 struct AutoPlayGeneric_t
 {
-   public:
+    public:
     AutoPlayGeneric_t()
         : hdr( 0 )
     {
@@ -95,7 +95,7 @@ struct AutoPlayGeneric_t
         return lhs.hdr < rhs.hdr;
     }
 
-   public:
+    public:
     // Data
     const studiohdr_t *hdr;
     CUtlVector< unsigned short > autoplaylist;

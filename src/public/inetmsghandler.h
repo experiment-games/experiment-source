@@ -21,7 +21,7 @@ typedef struct netpacket_s netpacket_t;
 
 class INetChannelHandler
 {
-   public:
+    public:
     virtual ~INetChannelHandler( void ){};
 
     virtual void ConnectionStart( INetChannel *chan ) = 0;  // called first time network channel is established
@@ -82,7 +82,7 @@ class NET_SignonState;
 
 class INetMessageHandler
 {
-   public:
+    public:
     virtual ~INetMessageHandler( void ){};
 
     PROCESS_NET_MESSAGE( Tick ) = 0;
@@ -104,7 +104,7 @@ class CLC_CmdKeyValues;
 
 class IClientMessageHandler : public INetMessageHandler
 {
-   public:
+    public:
     virtual ~IClientMessageHandler( void ){};
 
     PROCESS_CLC_MESSAGE( ClientInfo ) = 0;
@@ -149,7 +149,7 @@ class SVC_SetPauseTimed;
 
 class IServerMessageHandler : public INetMessageHandler
 {
-   public:
+    public:
     virtual ~IServerMessageHandler( void ){};
 
     // Returns dem file protocol version, or, if not playing a demo, just returns PROTOCOL_VERSION
@@ -192,7 +192,7 @@ class MM_Checkpoint;
 
 class IMatchmakingMessageHandler : public INetMessageHandler
 {
-   public:
+    public:
     virtual ~IMatchmakingMessageHandler( void ){};
 
     PROCESS_MM_MESSAGE( Heartbeat ) = 0;
@@ -206,7 +206,7 @@ class IMatchmakingMessageHandler : public INetMessageHandler
 
 class IConnectionlessPacketHandler
 {
-   public:
+    public:
     virtual ~IConnectionlessPacketHandler( void ){};
 
     virtual bool ProcessConnectionlessPacket( netpacket_t *packet ) = 0;  // process a connectionless packet

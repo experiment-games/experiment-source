@@ -19,7 +19,7 @@
 DEFINE_FALLBACK_SHADER( Modulate, Modulate_DX9 )
 
 BEGIN_VS_SHADER( Modulate_DX9,
-                 "Help for Modulate" )
+                "Help for Modulate" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( WRITEZ, SHADER_PARAM_TYPE_BOOL, "0", "Forces z to be written if set" )
@@ -35,7 +35,7 @@ END_SHADER_PARAMS
 SHADER_FALLBACK
 {
     if ( !( g_pHardwareConfig->SupportsPixelShaders_2_0() && g_pHardwareConfig->SupportsVertexShaders_2_0() ) ||
-         ( g_pHardwareConfig->GetDXSupportLevel() < 90 ) )
+        ( g_pHardwareConfig->GetDXSupportLevel() < 90 ) )
     {
         return "Modulate_DX8";
     }

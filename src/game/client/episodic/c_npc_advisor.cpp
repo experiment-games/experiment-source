@@ -42,12 +42,12 @@ class C_NPC_Advisor : public C_AI_BaseNPC
     DECLARE_CLASS( C_NPC_Advisor, C_AI_BaseNPC );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     // Server to client message received
     virtual void ReceiveMessage( int classID, bf_read &msg );
     virtual void ClientThink( void );
 
-   private:
+    private:
     /*
     // broken into its own function so I can move it if necesasry
     void Initialize();

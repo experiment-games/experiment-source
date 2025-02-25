@@ -79,7 +79,7 @@ class ZeroCopyOutputStream;
 // runtime itself is the biggest problem.
 class LIBPROTOBUF_EXPORT MessageLite
 {
-   public:
+    public:
     inline MessageLite() {}
     virtual ~MessageLite();
 
@@ -239,7 +239,7 @@ class LIBPROTOBUF_EXPORT MessageLite
     // method.)
     virtual int GetCachedSize() const = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MessageLite );
 };
 

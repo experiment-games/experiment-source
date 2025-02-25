@@ -22,7 +22,7 @@ class CDmeComponent : public CDmElement
 {
     DEFINE_ELEMENT( CDmeComponent, CDmElement );
 
-   public:
+    public:
     enum Component_t
     {
         COMP_INVALID = -1,
@@ -54,7 +54,7 @@ class CDmeComponent : public CDmElement
     // Reset to an empty selection
     virtual void Clear();
 
-   protected:
+    protected:
     CDmaVar< int > m_Type;
     CDmaVar< bool > m_bComplete;
 };
@@ -121,7 +121,7 @@ class CDmeSingleIndexedComponent : public CDmeComponent
 {
     DEFINE_ELEMENT( CDmeSingleIndexedComponent, CDmeComponent );
 
-   public:
+    public:
     // resolve internal data from changed attributes
     virtual void Resolve();
 
@@ -212,7 +212,7 @@ class CDmeSingleIndexedComponent : public CDmeComponent
         Intersection( *pRhs );
     }
 
-   protected:
+    protected:
     int BinarySearch( int component ) const;
 
     CDmaVar< int > m_CompleteCount;

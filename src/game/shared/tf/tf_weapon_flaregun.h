@@ -34,7 +34,7 @@ enum FlareGunTypes_t
 //
 class CTFFlareGun : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFFlareGun, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -89,14 +89,14 @@ class CTFFlareGun : public CTFWeaponBaseGun
         return m_flChargeBeginTime;
     }
 
-   protected:
+    protected:
 #ifdef GAME_DLL
     typedef CHandle< CTFProjectile_Flare > FlareHandle;
     CUtlVector< FlareHandle > m_Flares;
     int m_iFlareCount;
 #endif
 
-   protected:
+    protected:
     void StartChargeStartTime()
     {
         m_flChargeBeginTime = gpGlobals->curtime;
@@ -113,7 +113,7 @@ class CTFFlareGun : public CTFWeaponBaseGun
     }
 #endif
 
-   private:
+    private:
     CNetworkVar( float, m_flChargeBeginTime );
 
     bool m_bEffectsThinking;
@@ -130,7 +130,7 @@ class CTFFlareGun : public CTFWeaponBaseGun
 //---------------------------------------------------------
 class CTFFlareGun_Revenge : public CTFFlareGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFFlareGun_Revenge, CTFFlareGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -189,7 +189,7 @@ class CTFFlareGun_Revenge : public CTFFlareGun
     void DoAbsorbEffect( void );
 #endif
 
-   private:
+    private:
     bool ExtinguishPlayerInternal( CTFPlayer* pTarget, CTFPlayer* pOwner );
 
     CNetworkVar( float, m_fLastExtinguishTime );

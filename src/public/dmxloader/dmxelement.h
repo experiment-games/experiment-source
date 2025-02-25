@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class CDmxAttributeLess
 {
-   public:
+    public:
     bool Less( const CDmxAttribute *pAttribute1, const CDmxAttribute *pAttribute2, void *pContext )
     {
         return pAttribute1->GetNameSymbol() < pAttribute2->GetNameSymbol();
@@ -58,7 +58,7 @@ struct DmxElementUnpackStructure_t
     {                                                                                                  \
         static DmxElementUnpackStructure_t *s_pUnpack = DmxElementUnpackInit( ( _structName * )NULL ); \
     }                                                                                                  \
-                                                                                                       \
+                                                                                                        \
     template <>                                                                                        \
     DmxElementUnpackStructure_t *DmxElementUnpackInit< _structName >( _structName * )                  \
     {                                                                                                  \
@@ -105,7 +105,7 @@ class CDmxElement
 {
     DECLARE_DMX_ALLOCATOR();
 
-   public:
+    public:
     bool HasAttribute( const char *pAttributeName ) const;
     CDmxAttribute *GetAttribute( const char *pAttributeName );
     const CDmxAttribute *GetAttribute( const char *pAttributeName ) const;
@@ -155,7 +155,7 @@ class CDmxElement
         AddAttributesFromStructure_Internal( pData, sizeof( T ), pUnpack );
     }
 
-   private:
+    private:
     void AddAttributesFromStructure_Internal( const void *pData, size_t byteCount, const DmxElementUnpackStructure_t *pUnpack );
     typedef CUtlSortVector< CDmxAttribute *, CDmxAttributeLess > AttributeList_t;
 
@@ -265,7 +265,7 @@ CDmxElement *CreateDmxElement( const char *pType );
 //-----------------------------------------------------------------------------
 class CDmxElementModifyScope
 {
-   public:
+    public:
     CDmxElementModifyScope( CDmxElement *pElement )
         : m_pElement( pElement )
     {
@@ -284,7 +284,7 @@ class CDmxElementModifyScope
         }
     }
 
-   private:
+    private:
     CDmxElement *m_pElement;
 };
 

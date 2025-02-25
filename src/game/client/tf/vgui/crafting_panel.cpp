@@ -549,9 +549,9 @@ void CCraftingPanel::UpdateRecipeItems( bool bClearInputItems )
 
     for ( int i = 1; i <= TFInventoryManager()->GetLocalTFInventory()->GetMaxItemCount(); i++ )
     {
-      CEconItemView *pItemData = TFInventoryManager()->GetItemByBackpackPosition(i);
-      if ( pItemData && pItemData->IsValid() )
-      {
+    CEconItemView *pItemData = TFInventoryManager()->GetItemByBackpackPosition(i);
+    if ( pItemData && pItemData->IsValid() )
+    {
         CEconItem *pSOCData = pItemData->GetSOCData();
         vecAllItems.AddToTail( pSOCData );
 
@@ -560,25 +560,25 @@ void CCraftingPanel::UpdateRecipeItems( bool bClearInputItems )
         // Put it in class lists for any class that can use it. Use the zeroth list as all-class items.
         if ( pItemDef->CanBeUsedByAllClasses() )
         {
-          vecItemsByClass[0].AddToTail( pSOCData );
+        vecItemsByClass[0].AddToTail( pSOCData );
         }
         for (int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
         {
-          if ( pItemDef->CanBeUsedByClass(iClass) )
-          {
+        if ( pItemDef->CanBeUsedByClass(iClass) )
+        {
             vecItemsByClass[iClass].AddToTail( pSOCData );
-          }
+        }
         }
 
         // Put it in the slot lists for any slot that it can be equipped in
         for (int iSlot = 0; iSlot < LOADOUT_POSITION_COUNT; iSlot++ )
         {
-          if ( pItemDef->CanBePlacedInSlot( iSlot ) )
-          {
+        if ( pItemDef->CanBePlacedInSlot( iSlot ) )
+        {
             vecItemsBySlot[iSlot].AddToTail( pSOCData );
-          }
         }
-      }
+        }
+    }
     }
     */
 
@@ -1456,7 +1456,7 @@ void CloseCraftingStatusDialog( void )
 //-----------------------------------------------------------------------------
 class CGCCraftResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCraftResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1492,7 +1492,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCraftResponse, "CGCCraftResponse", k_EMsgGCCraf
 //-----------------------------------------------------------------------------
 class CGCGoldenWrenchBroadcast : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCGoldenWrenchBroadcast( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1511,10 +1511,10 @@ class CGCGoldenWrenchBroadcast : public GCSDK::CGCClientJob
             _snwprintf( szWrenchNumber, ARRAYSIZE( szWrenchNumber ), L"%i", msg.Body().wrench_number() );
             wchar_t szNotification[1024] = L"";
             g_pVGuiLocalize->ConstructString_safe( szNotification,
-                                                   g_pVGuiLocalize->Find( bDeleted ? "#TF_HUD_Event_GoldenWrench_D" : "#TF_HUD_Event_GoldenWrench_C" ),
-                                                   2,
-                                                   szPlayerName,
-                                                   szWrenchNumber );
+                                                    g_pVGuiLocalize->Find( bDeleted ? "#TF_HUD_Event_GoldenWrench_D" : "#TF_HUD_Event_GoldenWrench_C" ),
+                                                    2,
+                                                    szPlayerName,
+                                                    szWrenchNumber );
             pNotifyPanel->SetupNotifyCustom( szNotification, HUD_NOTIFY_GOLDEN_WRENCH, 10.0f );
 
             // echo to chat
@@ -1543,7 +1543,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCGoldenWrenchBroadcast, "CGCGoldenWrenchBroadcas
 //-----------------------------------------------------------------------------
 class CGSaxxyBroadcast : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGSaxxyBroadcast( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1581,7 +1581,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGSaxxyBroadcast, "CGSaxxyBroadcast", k_EMsgGCSaxx
 //-----------------------------------------------------------------------------
 class CClientItemBroadcastNotificationJob : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CClientItemBroadcastNotificationJob( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1618,11 +1618,11 @@ GC_REG_JOB( GCSDK::CGCClient, CClientItemBroadcastNotificationJob, "CClientItemB
 //-----------------------------------------------------------------------------
 class CGSaxxyAwardedBroadcast : public GCSDK::CGCClientJob
 {
-   private:
+    private:
     // embedded notification for custom trigger
     class CSaxxyAwardedNotification : public CEconNotification
     {
-       public:
+        public:
         CSaxxyAwardedNotification()
         {
             SetSoundFilename( "vo/announcer_success.mp3" );
@@ -1643,7 +1643,7 @@ class CGSaxxyAwardedBroadcast : public GCSDK::CGCClientJob
         }
     };
 
-   public:
+    public:
     CGSaxxyAwardedBroadcast( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1700,7 +1700,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGSaxxyAwardedBroadcast, "CGSaxxyAwardedBroadcast"
 //-----------------------------------------------------------------------------
 class CGCSystemMessageBroadcast : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCSystemMessageBroadcast( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

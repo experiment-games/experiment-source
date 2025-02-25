@@ -23,7 +23,7 @@ class CGunTarget : public CBaseToggle
 {
     DECLARE_CLASS( CGunTarget, CBaseToggle );
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void Activate( void );
     bool CreateVPhysics( void );
@@ -62,13 +62,13 @@ class CGunTarget : public CBaseToggle
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     void Next( void );
     void Start( void );
     void Wait( void );
     void Stop( void );
 
-   private:
+    private:
     bool m_on;
     EHANDLE m_hTargetEnt;
 

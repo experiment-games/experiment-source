@@ -24,7 +24,7 @@ struct NameTranslationLookup_t
 };
 
 static bool NameTranslationLessFunc( NameTranslationLookup_t const &src1,
-                                     NameTranslationLookup_t const &src2 )
+                                    NameTranslationLookup_t const &src2 )
 {
     return src1.m_PatchFileName < src2.m_PatchFileName;
 }

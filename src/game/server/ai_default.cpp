@@ -253,14 +253,14 @@ int CAI_BaseNPC::TranslateSchedule( int scheduleType )
 {
     // FIXME: Where should this go now?
 #if 0
-	if (scheduleType >= LAST_SHARED_SCHEDULE)
-	{
-		char errMsg[256];
-		Q_snprintf(errMsg,sizeof(errMsg),"ERROR: Subclass Schedule (%s) Hitting Base Class!\n",ScheduleName(scheduleType));
-		DevMsg( errMsg );
-		AddTimedOverlay( errMsg, 5);
-		return SCHED_FAIL;
-	}
+    if (scheduleType >= LAST_SHARED_SCHEDULE)
+    {
+        char errMsg[256];
+        Q_snprintf(errMsg,sizeof(errMsg),"ERROR: Subclass Schedule (%s) Hitting Base Class!\n",ScheduleName(scheduleType));
+        DevMsg( errMsg );
+        AddTimedOverlay( errMsg, 5);
+        return SCHED_FAIL;
+    }
 #endif
 
     switch ( scheduleType )
@@ -440,7 +440,7 @@ const char *CAI_BaseNPC::TaskName( int taskID )
 // This hooks the main game systems callbacks to allow the AI system to manage memory
 class CAI_SystemHook : public CAutoGameSystem
 {
-   public:
+    public:
     CAI_SystemHook( char const *name )
         : CAutoGameSystem( name )
     {

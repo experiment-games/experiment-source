@@ -1198,7 +1198,7 @@ CBasePlayer *CBreakable::HasPhysicsAttacker( float dt )
 //-----------------------------------------------------------------------------
 class CPushable : public CBreakable
 {
-   public:
+    public:
     DECLARE_CLASS( CPushable, CBreakable );
 
     void Spawn( void );

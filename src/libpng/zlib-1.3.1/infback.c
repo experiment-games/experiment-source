@@ -4,10 +4,10 @@
  */
 
 /*
-   This code is largely copied from inflate.c.  Normally either infback.o or
-   inflate.o would be linked into an application--not both.  The interface
-   with inffast.c is retained so that optimized assembler-coded versions of
-   inflate_fast() can be used with either inflate.c or infback.c.
+    This code is largely copied from inflate.c.  Normally either infback.o or
+    inflate.o would be linked into an application--not both.  The interface
+    with inffast.c is retained so that optimized assembler-coded versions of
+    inflate_fast() can be used with either inflate.c or infback.c.
  */
 
 #include "zutil.h"
@@ -16,15 +16,15 @@
 #include "inffast.h"
 
 /*
-   strm provides memory allocation functions in zalloc and zfree, or
-   Z_NULL to use the library memory allocation functions.
+    strm provides memory allocation functions in zalloc and zfree, or
+    Z_NULL to use the library memory allocation functions.
 
-   windowBits is in the range 8..15, and window is a user-supplied
-   window and output buffer that is 2**windowBits bytes.
+    windowBits is in the range 8..15, and window is a user-supplied
+    window and output buffer that is 2**windowBits bytes.
  */
 int ZEXPORT inflateBackInit_(z_streamp strm, int windowBits,
-                             unsigned char FAR *window, const char *version,
-                             int stream_size) {
+                            unsigned char FAR *window, const char *version,
+                            int stream_size) {
     struct inflate_state FAR *state;
 
     if (version == Z_NULL || version[0] != ZLIB_VERSION[0] ||
@@ -49,7 +49,7 @@ int ZEXPORT inflateBackInit_(z_streamp strm, int windowBits,
     strm->zfree = zcfree;
 #endif
     state = (struct inflate_state FAR *)ZALLOC(strm, 1,
-                                               sizeof(struct inflate_state));
+                                                sizeof(struct inflate_state));
     if (state == Z_NULL) return Z_MEM_ERROR;
     Tracev((stderr, "inflate: allocated\n"));
     strm->state = (struct internal_state FAR *)state;
@@ -64,14 +64,14 @@ int ZEXPORT inflateBackInit_(z_streamp strm, int windowBits,
 }
 
 /*
-   Return state with length and distance decoding tables and index sizes set to
-   fixed code decoding.  Normally this returns fixed tables from inffixed.h.
-   If BUILDFIXED is defined, then instead this routine builds the tables the
-   first time it's called, and returns those tables the first time and
-   thereafter.  This reduces the size of the code by about 2K bytes, in
-   exchange for a little execution time.  However, BUILDFIXED should not be
-   used for threaded applications, since the rewriting of the tables and virgin
-   may not be thread-safe.
+    Return state with length and distance decoding tables and index sizes set to
+    fixed code decoding.  Normally this returns fixed tables from inffixed.h.
+    If BUILDFIXED is defined, then instead this routine builds the tables the
+    first time it's called, and returns those tables the first time and
+    thereafter.  This reduces the size of the code by about 2K bytes, in
+    exchange for a little execution time.  However, BUILDFIXED should not be
+    used for threaded applications, since the rewriting of the tables and virgin
+    may not be thread-safe.
  */
 local void fixedtables(struct inflate_state FAR *state) {
 #ifdef BUILDFIXED
@@ -146,7 +146,7 @@ local void fixedtables(struct inflate_state FAR *state) {
     } while (0)
 
 /* Assure that some input is available.  If input is requested, but denied,
-   then return a Z_BUF_ERROR from inflateBack(). */
+    then return a Z_BUF_ERROR from inflateBack(). */
 #define PULL() \
     do { \
         if (have == 0) { \
@@ -160,7 +160,7 @@ local void fixedtables(struct inflate_state FAR *state) {
     } while (0)
 
 /* Get a byte of input into the bit accumulator, or return from inflateBack()
-   with an error if there is no input available. */
+    with an error if there is no input available. */
 #define PULLBYTE() \
     do { \
         PULL(); \
@@ -170,8 +170,8 @@ local void fixedtables(struct inflate_state FAR *state) {
     } while (0)
 
 /* Assure that there are at least n bits in the bit accumulator.  If there is
-   not enough available input to do that, then return from inflateBack() with
-   an error. */
+    not enough available input to do that, then return from inflateBack() with
+    an error. */
 #define NEEDBITS(n) \
     do { \
         while (bits < (unsigned)(n)) \
@@ -197,8 +197,8 @@ local void fixedtables(struct inflate_state FAR *state) {
     } while (0)
 
 /* Assure that some output space is available, by writing out the window
-   if it's full.  If the write fails, return from inflateBack() with a
-   Z_BUF_ERROR. */
+    if it's full.  If the write fails, return from inflateBack() with a
+    Z_BUF_ERROR. */
 #define ROOM() \
     do { \
         if (left == 0) { \
@@ -213,31 +213,31 @@ local void fixedtables(struct inflate_state FAR *state) {
     } while (0)
 
 /*
-   strm provides the memory allocation functions and window buffer on input,
-   and provides information on the unused input on return.  For Z_DATA_ERROR
-   returns, strm will also provide an error message.
+    strm provides the memory allocation functions and window buffer on input,
+    and provides information on the unused input on return.  For Z_DATA_ERROR
+    returns, strm will also provide an error message.
 
-   in() and out() are the call-back input and output functions.  When
-   inflateBack() needs more input, it calls in().  When inflateBack() has
-   filled the window with output, or when it completes with data in the
-   window, it calls out() to write out the data.  The application must not
-   change the provided input until in() is called again or inflateBack()
-   returns.  The application must not change the window/output buffer until
-   inflateBack() returns.
+    in() and out() are the call-back input and output functions.  When
+    inflateBack() needs more input, it calls in().  When inflateBack() has
+    filled the window with output, or when it completes with data in the
+    window, it calls out() to write out the data.  The application must not
+    change the provided input until in() is called again or inflateBack()
+    returns.  The application must not change the window/output buffer until
+    inflateBack() returns.
 
-   in() and out() are called with a descriptor parameter provided in the
-   inflateBack() call.  This parameter can be a structure that provides the
-   information required to do the read or write, as well as accumulated
-   information on the input and output such as totals and check values.
+    in() and out() are called with a descriptor parameter provided in the
+    inflateBack() call.  This parameter can be a structure that provides the
+    information required to do the read or write, as well as accumulated
+    information on the input and output such as totals and check values.
 
-   in() should return zero on failure.  out() should return non-zero on
-   failure.  If either in() or out() fails, than inflateBack() returns a
-   Z_BUF_ERROR.  strm->next_in can be checked for Z_NULL to see whether it
-   was in() or out() that caused in the error.  Otherwise,  inflateBack()
-   returns Z_STREAM_END on success, Z_DATA_ERROR for an deflate format
-   error, or Z_MEM_ERROR if it could not allocate memory for the state.
-   inflateBack() can also return Z_STREAM_ERROR if the input parameters
-   are not correct, i.e. strm is Z_NULL or the state was not initialized.
+    in() should return zero on failure.  out() should return non-zero on
+    failure.  If either in() or out() fails, than inflateBack() returns a
+    Z_BUF_ERROR.  strm->next_in can be checked for Z_NULL to see whether it
+    was in() or out() that caused in the error.  Otherwise,  inflateBack()
+    returns Z_STREAM_END on success, Z_DATA_ERROR for an deflate format
+    error, or Z_MEM_ERROR if it could not allocate memory for the state.
+    inflateBack() can also return Z_STREAM_ERROR if the input parameters
+    are not correct, i.e. strm is Z_NULL or the state was not initialized.
  */
 int ZEXPORT inflateBack(z_streamp strm, in_func in, void FAR *in_desc,
                         out_func out, void FAR *out_desc) {
@@ -441,8 +441,8 @@ int ZEXPORT inflateBack(z_streamp strm, in_func in, void FAR *in_desc,
             }
 
             /* build code tables -- note: do not change the lenbits or distbits
-               values here (9 and 6) without reading the comments in inftrees.h
-               concerning the ENOUGH constants, which depend on those values */
+                values here (9 and 6) without reading the comments in inftrees.h
+                concerning the ENOUGH constants, which depend on those values */
             state->next = state->codes;
             state->lencode = (code const FAR *)(state->next);
             state->lenbits = 9;

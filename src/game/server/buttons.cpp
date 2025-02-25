@@ -264,7 +264,7 @@ void CBaseButton::Press( CBaseEntity *pActivator, BUTTON_CODE eCode )
     SetTouch( NULL );
 
     if ( ( ( eCode == BUTTON_PRESS ) && ( m_toggle_state == TS_AT_TOP ) ) ||
-         ( ( eCode == BUTTON_RETURN ) && ( m_toggle_state == TS_AT_TOP || m_toggle_state == TS_GOING_UP ) ) )
+        ( ( eCode == BUTTON_RETURN ) && ( m_toggle_state == TS_AT_TOP || m_toggle_state == TS_GOING_UP ) ) )
     {
         if ( m_sNoise != NULL_STRING )
         {
@@ -283,7 +283,7 @@ void CBaseButton::Press( CBaseEntity *pActivator, BUTTON_CODE eCode )
         ButtonReturn();
     }
     else if ( ( eCode == BUTTON_PRESS ) ||
-              ( ( eCode == BUTTON_ACTIVATE ) && ( m_toggle_state == TS_AT_BOTTOM || m_toggle_state == TS_GOING_DOWN ) ) )
+            ( ( eCode == BUTTON_ACTIVATE ) && ( m_toggle_state == TS_AT_BOTTOM || m_toggle_state == TS_GOING_DOWN ) ) )
     {
         m_OnPressed.FireOutput( pActivator, this );
         ButtonActivate();
@@ -591,8 +591,8 @@ CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch( void )
 {
     // Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
     if ( m_toggle_state == TS_GOING_UP ||
-         m_toggle_state == TS_GOING_DOWN ||
-         ( m_toggle_state == TS_AT_TOP && !m_fStayPushed && !HasSpawnFlags( SF_BUTTON_TOGGLE ) ) )
+        m_toggle_state == TS_GOING_DOWN ||
+        ( m_toggle_state == TS_AT_TOP && !m_fStayPushed && !HasSpawnFlags( SF_BUTTON_TOGGLE ) ) )
         return BUTTON_NOTHING;
 
     if ( m_toggle_state == TS_AT_TOP )
@@ -708,7 +708,7 @@ void CBaseButton::ButtonActivate( void )
 int CBaseButton::ObjectCaps( void )
 {
     return ( ( BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ) |
-             ( HasSpawnFlags( SF_BUTTON_USE_ACTIVATES ) ? ( FCAP_IMPULSE_USE | FCAP_USE_IN_RADIUS ) : 0 ) );
+            ( HasSpawnFlags( SF_BUTTON_USE_ACTIVATES ) ? ( FCAP_IMPULSE_USE | FCAP_USE_IN_RADIUS ) : 0 ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1262,7 +1262,7 @@ void CMomentaryRotButton::SetPositionMoveDone( void )
     float flCurPos = GetPos( GetLocalAngles() );
 
     if ( ( ( flCurPos >= m_IdealYaw ) && ( m_direction == 1 ) ) ||
-         ( ( flCurPos <= m_IdealYaw ) && ( m_direction == -1 ) ) )
+        ( ( flCurPos <= m_IdealYaw ) && ( m_direction == -1 ) ) )
     {
         //
         // We reached or surpassed our movement goal.

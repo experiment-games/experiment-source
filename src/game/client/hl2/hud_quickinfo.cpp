@@ -50,7 +50,7 @@ class CHUDQuickInfo : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHUDQuickInfo, vgui::Panel );
 
-   public:
+    public:
     CHUDQuickInfo( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -60,7 +60,7 @@ class CHUDQuickInfo : public CHudElement, public vgui::Panel
 
     virtual void ApplySchemeSettings( IScheme *scheme );
 
-   private:
+    private:
     void DrawWarning( int x, int y, CHudTexture *icon, float &time );
     void UpdateEventTime( void );
     bool EventTimeElapsed( void );

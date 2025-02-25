@@ -10,7 +10,7 @@ class CTFBotHintSentrygun;
 
 class CTFBotEngineerBuildSentryGun : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotEngineerBuildSentryGun( void );
     CTFBotEngineerBuildSentryGun( CTFBotHintSentrygun *sentryBuildHint );
 
@@ -24,7 +24,7 @@ class CTFBotEngineerBuildSentryGun : public Action< CTFBot >
         return "EngineerBuildSentryGun";
     };
 
-   private:
+    private:
     CountdownTimer m_searchTimer;
     CountdownTimer m_giveUpTimer;
     CountdownTimer m_getAmmoTimer;

@@ -61,7 +61,7 @@ class CStampUpsellDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CStampUpsellDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CStampUpsellDialog( const char *pTitle, const wchar_t *pTextText, const wchar_t *pTextText2, CSchemaItemDefHandle hMapToken, const char *pItemDefName2 )
         : CTFGenericConfirmDialog( pTitle, pTextText, NULL, NULL, NULL, NULL ), hItemDef( hMapToken ), hItemDef2( pItemDefName2 )
     {
@@ -187,7 +187,7 @@ class CStoreStatusDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CStoreStatusDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CStoreStatusDialog( vgui::Panel *pParent, const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -195,7 +195,7 @@ class CStoreStatusDialog : public vgui::EditablePanel
     void UpdateSchemeForVersion();
     void ShowStatusUpdate( bool bAllowed, bool bShowOnExit, bool bCancel );
 
-   private:
+    private:
     bool m_bShowOnExit;
     bool m_bNotifyOnCancel;
 };
@@ -903,10 +903,10 @@ void CStorePanel::UpsellStamps( void )
     g_pVGuiLocalize->ConstructString_safe( wchDonationDescription, g_pVGuiLocalize->Find( "#Store_ConfirmStampDonationAddText" ), 2, pwchMapName, wszMapHours );
 
     CStampUpsellDialog *pDialog = vgui::SETUP_PANEL( new CStampUpsellDialog( "#Store_ConfirmStampDonationAddTitle",
-                                                                             wchDonationDescription,
-                                                                             g_pVGuiLocalize->Find( "#Store_ConfirmStampDonationAddText2" ),
-                                                                             pUpsellMap->mapStampDef,
-                                                                             "World Traveler" ) );
+                                                                            wchDonationDescription,
+                                                                            g_pVGuiLocalize->Find( "#Store_ConfirmStampDonationAddText2" ),
+                                                                            pUpsellMap->mapStampDef,
+                                                                            "World Traveler" ) );
 
     if ( pDialog )
     {
@@ -929,13 +929,13 @@ void CStorePanel::InitiateCheckout( bool bSkipUpsell, bool bSkipDecoderWarning /
     // go straight to confirm.
     const char *pTxnCC = GCClientSystem()->GetTxnCountryCode();
     if ( !bSkipDecoderWarning && pTxnCC && !BEconCountryAllowDecodableContainers( pTxnCC ) &&
-         m_Cart.ContainsChanceRestrictedItems() )
+        m_Cart.ContainsChanceRestrictedItems() )
     {
         CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#Store_ConfirmHolidayRestrictionCheckoutTitle",
-                                                              "#Store_ConfirmDecoderRestrictionCheckoutText",
-                                                              "#Store_OK",
-                                                              "#TF_Back",
-                                                              &ProceedCheckout_DecoderWarning );
+                                                            "#Store_ConfirmDecoderRestrictionCheckoutText",
+                                                            "#Store_OK",
+                                                            "#TF_Back",
+                                                            &ProceedCheckout_DecoderWarning );
 
         if ( pDialog )
         {
@@ -1808,10 +1808,10 @@ int CStoreCart::GetTotalConcreteItems( void ) const
 item_price_t cart_item_t::GetDisplayPrice() const
 {
     const float flDiscount = eType == kCartItem_TryOutUpgrade
-                                 ? GetEconPriceSheet()->GetPreviewPeriodDiscount()
-                             : IsRentalCartItemType( eType )
-                                 ? pEntry->GetRentalPriceScale()
-                                 : 100.0f;
+                                ? GetEconPriceSheet()->GetPreviewPeriodDiscount()
+                            : IsRentalCartItemType( eType )
+                                ? pEntry->GetRentalPriceScale()
+                                : 100.0f;
 
     const ECurrency eCurrency = EconUI()->GetStorePanel()->GetCurrency();
     item_price_t unDisplayPrice = ( item_price_t )( pEntry->GetCurrentPrice( eCurrency ) );
@@ -1852,7 +1852,7 @@ bool CStoreCart::ContainsChanceRestrictedItems() const
 
         // All decoder ring items
         if ( pItemDef && pItemDef->GetEconTool() &&
-             ( Q_strcmp( pItemDef->GetEconTool()->GetTypeName(), "decoder_ring" ) == 0 ) )
+            ( Q_strcmp( pItemDef->GetEconTool()->GetTypeName(), "decoder_ring" ) == 0 ) )
         {
             return true;
         }
@@ -2109,7 +2109,7 @@ CON_COMMAND( store_getuserdata, "Gets the latest pricesheet from the GC" )
 //-----------------------------------------------------------------------------
 class CGCClientJobTESTInitPurchase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobTESTInitPurchase( GCSDK::CGCClient *pGCClient )
         : GCSDK::CGCClientJob( pGCClient ) {}
     virtual bool BYieldingRunJob( void *pvStartParam )
@@ -2165,7 +2165,7 @@ CON_COMMAND( store_initpurchase, "Simulates pressing the checkout button in the 
 //-----------------------------------------------------------------------------
 class CGCClientJobTESTCancelPurchase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobTESTCancelPurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID )
         : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
     virtual bool BYieldingRunJob( void *pvStartParam )
@@ -2185,7 +2185,7 @@ class CGCClientJobTESTCancelPurchase : public GCSDK::CGCClientJob
         return true;
     }
 
-   private:
+    private:
     uint64 m_ulTxnID;
 };
 
@@ -2208,7 +2208,7 @@ CON_COMMAND( store_cancelpurchase, "<TxnID> Simulates cancelling a purchase" )
 //-----------------------------------------------------------------------------
 class CGCClientJobTESTFinalizePurchase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobTESTFinalizePurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID )
         : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
     virtual bool BYieldingRunJob( void *pvStartParam )
@@ -2243,7 +2243,7 @@ class CGCClientJobTESTFinalizePurchase : public GCSDK::CGCClientJob
         return true;
     }
 
-   private:
+    private:
     uint64 m_ulTxnID;
 };
 

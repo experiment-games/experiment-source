@@ -13,9 +13,9 @@
 #include "dt_utlvector_common.h"
 
 #define SENDINFO_UTLVECTOR( varName ) #varName,                                            \
-                                      offsetof( currentSendDTClass, varName ),             \
-                                      sizeof( ( ( currentSendDTClass * )0 )->varName[0] ), \
-                                      GetEnsureCapacityTemplate( ( ( currentSendDTClass * )0 )->varName )
+                                    offsetof( currentSendDTClass, varName ),             \
+                                    sizeof( ( ( currentSendDTClass * )0 )->varName[0] ), \
+                                    GetEnsureCapacityTemplate( ( ( currentSendDTClass * )0 )->varName )
 
 #define SendPropUtlVectorDataTable( varName, nMaxElements, dataTableName ) \
     SendPropUtlVector(                                                     \

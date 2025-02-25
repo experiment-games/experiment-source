@@ -744,12 +744,12 @@ void CHL2MP_Player::SetAnimation( PLAYER_ANIM playerAnim )
 
     // Revisit!
     /*	if ( ( m_nButtons & ( IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT ) ) )
-      {
+    {
         if ( speed > 1.0f && speed < hl2_normspeed.GetFloat() - 20.0f )
         {
-          bRunning = false;
+        bRunning = false;
         }
-      }*/
+    }*/
 
     if ( GetFlags() & ( FL_FROZEN | FL_ATCONTROLS ) )
     {
@@ -774,10 +774,10 @@ void CHL2MP_Player::SetAnimation( PLAYER_ANIM playerAnim )
     else if ( playerAnim == PLAYER_ATTACK1 )
     {
         if ( GetActivity() == ACT_HOVER ||
-             GetActivity() == ACT_SWIM ||
-             GetActivity() == ACT_HOP ||
-             GetActivity() == ACT_LEAP ||
-             GetActivity() == ACT_DIESIMPLE )
+            GetActivity() == ACT_SWIM ||
+            GetActivity() == ACT_HOP ||
+            GetActivity() == ACT_LEAP ||
+            GetActivity() == ACT_DIESIMPLE )
         {
             idealActivity = GetActivity();
         }
@@ -799,9 +799,9 @@ void CHL2MP_Player::SetAnimation( PLAYER_ANIM playerAnim )
         /*
         else if ( GetWaterLevel() > 1 )
         {
-          if ( speed == 0 )
+        if ( speed == 0 )
             idealActivity = ACT_HOVER;
-          else
+        else
             idealActivity = ACT_SWIM;
         }
         */
@@ -825,7 +825,7 @@ void CHL2MP_Player::SetAnimation( PLAYER_ANIM playerAnim )
                     /*
                     if ( bRunning == false )
                     {
-                      idealActivity = ACT_WALK;
+                    idealActivity = ACT_WALK;
                     }
                     else
                     */
@@ -952,13 +952,13 @@ bool CHL2MP_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 void CHL2MP_Player::ChangeTeam( int iTeam )
 {
     /*	if ( GetNextTeamChangeTime() >= gpGlobals->curtime )
-      {
+    {
         char szReturnString[128];
         Q_snprintf( szReturnString, sizeof( szReturnString ), "Please wait %d more seconds before trying to switch teams again.\n", (int)(GetNextTeamChangeTime() - gpGlobals->curtime) );
 
         ClientPrint( this, HUD_PRINTTALK, szReturnString );
         return;
-      }*/
+    }*/
 
     bool bKill = false;
 
@@ -1146,7 +1146,7 @@ bool CHL2MP_Player::BecomeRagdollOnClient( const Vector &force )
 
 class CHL2MPRagdoll : public CBaseAnimatingOverlay
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPRagdoll, CBaseAnimatingOverlay );
     DECLARE_SERVERCLASS();
 
@@ -1156,7 +1156,7 @@ class CHL2MPRagdoll : public CBaseAnimatingOverlay
         return SetTransmitState( FL_EDICT_ALWAYS );
     }
 
-   public:
+    public:
     // In case the client has the player entity, we transmit the player index.
     // In case the client doesn't have it, we transmit the player's model index, origin, and angles
     // so they can create a ragdoll in the right place.

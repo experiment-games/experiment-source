@@ -122,7 +122,7 @@ static void WriteAchievementGlobalState( KeyValues *pKV, bool bPersistToSteamClo
         }
 
         ISteamRemoteStorage *pRemoteStorage = SteamClient() ? ( ISteamRemoteStorage * )SteamClient()->GetISteamGenericInterface(
-                                                                  SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
+                                                                SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
                                                             : NULL;
 
         if ( pRemoteStorage )
@@ -184,7 +184,7 @@ static void WriteAchievementGlobalState( KeyValues *pKV, bool bPersistToSteamClo
 //-----------------------------------------------------------------------------
 class CAchievementSaveThread : public CWorkerThread
 {
-   public:
+    public:
     CAchievementSaveThread()
         : m_pKV( NULL )
     {
@@ -228,7 +228,7 @@ class CAchievementSaveThread : public CWorkerThread
         return 0;
     }
 
-   private:
+    private:
     KeyValues *m_pKV;
 };
 
@@ -250,9 +250,9 @@ CAchievementMgr::CAchievementMgr( SteamCloudPersisting ePersistToSteamCloud )
 //=============================================================================
 
 #if !defined( NO_STEAM )
-      ,
-      m_CallbackUserStatsReceived( this, &CAchievementMgr::Steam_OnUserStatsReceived ),
-      m_CallbackUserStatsStored( this, &CAchievementMgr::Steam_OnUserStatsStored )
+    ,
+    m_CallbackUserStatsReceived( this, &CAchievementMgr::Steam_OnUserStatsReceived ),
+    m_CallbackUserStatsStored( this, &CAchievementMgr::Steam_OnUserStatsStored )
 #endif
 {
     SetDefLessFunc( m_mapAchievement );
@@ -758,7 +758,7 @@ void CAchievementMgr::LoadGlobalState()
     {
 #ifndef NO_STEAM
         ISteamRemoteStorage *pRemoteStorage = SteamClient() ? ( ISteamRemoteStorage * )SteamClient()->GetISteamGenericInterface(
-                                                                  SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
+                                                                SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
                                                             : NULL;
 
         if ( pRemoteStorage )

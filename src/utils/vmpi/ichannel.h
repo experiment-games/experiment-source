@@ -15,7 +15,7 @@
 
 class IChannel
 {
-   public:
+    public:
     // Note: this also releases any channels contained inside. So if you make a reliable
     // channel that contains an unreliable channel and release the reliable one,
     // it will automatically release the unreliable one it contains.

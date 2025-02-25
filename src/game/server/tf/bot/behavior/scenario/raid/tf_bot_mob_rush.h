@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotMobRush : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMobRush( CTFPlayer *victim, float reactionTime = 0.0f );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -31,7 +31,7 @@ class CTFBotMobRush : public Action< CTFBot >
         return "MobRush";
     };
 
-   private:
+    private:
     CHandle< CTFPlayer > m_victim;
     CountdownTimer m_reactionTimer;
     CountdownTimer m_tauntTimer;

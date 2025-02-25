@@ -20,7 +20,7 @@ class C_ObjectSapper : public C_BaseObjectUpgrade
 {
     DECLARE_CLASS( C_ObjectSapper, C_BaseObjectUpgrade );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ObjectSapper() {}
@@ -35,7 +35,7 @@ class C_ObjectSapper : public C_BaseObjectUpgrade
 
     float GetReversesBuildingConstructionSpeed( void );
 
-   private:
+    private:
     C_ObjectSapper( const C_ObjectSapper& );  // not defined, not accessible
 };
 

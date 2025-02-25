@@ -26,7 +26,7 @@ class IClientUnknown;
 //-----------------------------------------------------------------------------
 abstract_class IClientEntityList
 {
-   public:
+    public:
     // Get IClientNetworkable interface for specified entity
     virtual IClientNetworkable* GetClientNetworkable( int entnum ) = 0;
     virtual IClientNetworkable* GetClientNetworkableFromHandle( CBaseHandle hEnt ) = 0;

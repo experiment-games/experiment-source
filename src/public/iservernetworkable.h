@@ -31,7 +31,7 @@ class CBaseNetworkable;
 
 class CCheckTransmitInfo
 {
-   public:
+    public:
     edict_t *m_pClientEnt;  // pointer to receiver edict
     byte m_PVS[PAD_NUMBER( MAX_MAP_CLUSTERS, 8 ) / 8];
     int m_nPVSSize;  // PVS size in bytes
@@ -70,7 +70,7 @@ struct PVSInfo_t
     // current position
     float m_vCenter[3];
 
-   private:
+    private:
     unsigned short m_pClustersInline[MAX_FAST_ENT_CLUSTERS];
 
     friend class CVEngineServer;
@@ -80,7 +80,7 @@ struct PVSInfo_t
 class IServerNetworkable
 {
     // These functions are handled automatically by the server_class macros and CBaseNetworkable.
-   public:
+    public:
     // Gets at the entity handle associated with the collideable
     virtual IHandleEntity *GetEntityHandle() = 0;
 
@@ -99,7 +99,7 @@ class IServerNetworkable
     virtual CBaseEntity *GetBaseEntity() = 0;  // Only used by game code.
     virtual PVSInfo_t *GetPVSInfo() = 0;       // get current visibilty data
 
-   protected:
+    protected:
     // Should never call delete on this!
     virtual ~IServerNetworkable() {}
 };

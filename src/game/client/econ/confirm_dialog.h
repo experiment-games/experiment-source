@@ -30,7 +30,7 @@ class CConfirmDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CConfirmDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CConfirmDialog( vgui::Panel *parent );
 
     virtual const wchar_t *GetText() = 0;
@@ -43,7 +43,7 @@ class CConfirmDialog : public vgui::EditablePanel
         return GAME_ACTION_SET_MENUCONTROLS;
     }
 
-   protected:
+    protected:
     virtual void OnSizeChanged( int nNewWide, int nNewTall );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void PerformLayout() OVERRIDE;
@@ -82,7 +82,7 @@ class CTFGenericConfirmDialog : public CConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFGenericConfirmDialog, CConfirmDialog );
 
-   public:
+    public:
     CTFGenericConfirmDialog( const char *pTitle, const char *pTextKey, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent );
     CTFGenericConfirmDialog( const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent );
     virtual ~CTFGenericConfirmDialog();
@@ -97,7 +97,7 @@ class CTFGenericConfirmDialog : public CConfirmDialog
     void AddStringToken( const char *pToken, const wchar_t *pValue );
     void SetContext( void *pContext );
 
-   protected:
+    protected:
     void CommonInit( const char *pTitle, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent );
 
     const char *m_pTitle;
@@ -116,7 +116,7 @@ class CTFMessageBoxDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFMessageBoxDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CTFMessageBoxDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
         : CTFGenericConfirmDialog( pTitle, pText, pConfirmBtnText, NULL, callback, parent ) {}
 
@@ -131,12 +131,12 @@ class CTFMessageBoxDialogWithSound : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFMessageBoxDialogWithSound, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFMessageBoxDialogWithSound( const char *pTitle, const char *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent );
     CTFMessageBoxDialogWithSound( const char *pTitle, const wchar_t *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent );
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     char m_szSound[MAX_PATH];
     float m_flSoundTime;
     bool m_bPlayedSound;
@@ -147,7 +147,7 @@ class CTFUpgradeBoxDialog : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFUpgradeBoxDialog, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFUpgradeBoxDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
         : CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent ) {}
 
@@ -166,7 +166,7 @@ class CTFGenericConfirmOptOutDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFGenericConfirmOptOutDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CTFGenericConfirmOptOutDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, const char *pCancelBtnText, const char *pOptOutText, const char *pOptOutConVarName, GenericConfirmDialogCallback callback, vgui::Panel *parent );
     virtual ~CTFGenericConfirmOptOutDialog() {}
 
@@ -174,7 +174,7 @@ class CTFGenericConfirmOptOutDialog : public CTFGenericConfirmDialog
 
     MESSAGE_FUNC_PARAMS( OnButtonChecked, "CheckButtonChecked", pData );
 
-   protected:
+    protected:
     virtual const char *GetResFile();
 
     const char *m_optOutText;
@@ -189,7 +189,7 @@ class CTFReviveDialog : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFReviveDialog, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFReviveDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent );
     virtual ~CTFReviveDialog() {}
 
@@ -210,7 +210,7 @@ class CTFReviveDialog : public CTFMessageBoxDialog
     CHandle< C_BaseEntity > m_hEntity;
     float m_flPrevHealth;
 
-   protected:
+    protected:
     // Revive dialog occurs in game, so we expect to be in this action set
     virtual const char *GetActionSet() const
     {
@@ -219,19 +219,19 @@ class CTFReviveDialog : public CTFMessageBoxDialog
 };
 
 CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
-                                   const char *pTitle = "#TF_Prompt_Revive_Title",
-                                   const char *pText = "#TF_Prompt_Revive_Message",
-                                   const char *pConfirmBtnText = "#TF_Prompt_Revive_Cancel",
-                                   GenericConfirmDialogCallback callback = NULL,
-                                   vgui::Panel *parent = NULL,
-                                   void *pContext = NULL );
+                                    const char *pTitle = "#TF_Prompt_Revive_Title",
+                                    const char *pText = "#TF_Prompt_Revive_Message",
+                                    const char *pConfirmBtnText = "#TF_Prompt_Revive_Cancel",
+                                    GenericConfirmDialogCallback callback = NULL,
+                                    vgui::Panel *parent = NULL,
+                                    void *pContext = NULL );
 
 // A generic message dialog, which is just a generic confirm dialog w/o the cancel button
 class CEconRequirementDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CEconRequirementDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CEconRequirementDialog( const char *pTitle, const char *pTextKey, const char *pItemDefName );
 
     virtual const char *GetResFile() OVERRIDE;
@@ -240,7 +240,7 @@ class CEconRequirementDialog : public CTFGenericConfirmDialog
 
     CSchemaItemDefHandle m_hItemDef;
 
-   private:
+    private:
     class CCyclingAdContainerPanel *m_pItemAd;
 };
 

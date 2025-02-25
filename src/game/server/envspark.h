@@ -15,7 +15,7 @@ class CEnvSpark : public CPointEntity
 {
     DECLARE_CLASS( CEnvSpark, CPointEntity );
 
-   public:
+    public:
     CEnvSpark( void );
 
     void Spawn( void );

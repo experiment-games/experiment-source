@@ -24,7 +24,7 @@ class CMvMWaveLossPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMWaveLossPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMWaveLossPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -34,7 +34,7 @@ class CMvMWaveLossPanel : public vgui::EditablePanel
 
     void ShowPanel();
 
-   private:
+    private:
     void SetCaptainCanteenImage( vgui::ImagePanel *panel, const char *pchImage, int nNewX );
     void SetHintImage( vgui::ImagePanel *panel, int iClassUsed, bool bAllowCaptainCanteen );
 

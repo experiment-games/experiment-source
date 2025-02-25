@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaBehavior : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual Action< CBossAlpha > *InitialContainedAction( CBossAlpha *me );
 
     virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
@@ -23,7 +23,7 @@ class CBossAlphaBehavior : public Action< CBossAlpha >
         return "Behavior";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_vocalTimer;
 };
 

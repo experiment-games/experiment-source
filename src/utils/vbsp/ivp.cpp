@@ -216,13 +216,13 @@ void CPhysCollisionEntry::DumpCollideFileName( const char *pName, int modelIndex
 
 class CPhysCollisionEntrySolid : public CPhysCollisionEntry
 {
-   public:
+    public:
     CPhysCollisionEntrySolid( CPhysCollide *pCollide, const char *pMaterialName, float mass );
 
     virtual void WriteToTextBuffer( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
     virtual void DumpCollide( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
 
-   private:
+    private:
     float m_volume;
     float m_mass;
     const char *m_pMaterial;
@@ -259,13 +259,13 @@ void CPhysCollisionEntrySolid::WriteToTextBuffer( CTextBuffer *pTextBuffer, int 
 
 class CPhysCollisionEntryStaticSolid : public CPhysCollisionEntry
 {
-   public:
+    public:
     CPhysCollisionEntryStaticSolid( CPhysCollide *pCollide, int contentsMask );
 
     virtual void WriteToTextBuffer( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
     virtual void DumpCollide( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
 
-   private:
+    private:
     int m_contentsMask;
 };
 
@@ -311,14 +311,14 @@ void CPhysCollisionEntryStaticMesh::WriteToTextBuffer( CTextBuffer *pTextBuffer,
 
 class CPhysCollisionEntryFluid : public CPhysCollisionEntry
 {
-   public:
+    public:
     ~CPhysCollisionEntryFluid();
     CPhysCollisionEntryFluid( CPhysCollide *pCollide, const char *pSurfaceProp, float damping, const Vector &normal, float dist, int nContents );
 
     virtual void WriteToTextBuffer( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
     virtual void DumpCollide( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
 
-   private:
+    private:
     char *m_pSurfaceProp;
     float m_damping;
     Vector m_surfaceNormal;
@@ -405,7 +405,7 @@ static void AddListPlane( CUtlVector< listplane_t > *list, float x, float y, flo
 
 class CPlaneList
 {
-   public:
+    public:
     CPlaneList( float shrink, float merge );
     ~CPlaneList( void );
 
@@ -422,10 +422,10 @@ class CPlaneList
     bool IsLeafReferenced( int leafIndex );
     int GetFirstBrushSide();
 
-   private:
+    private:
     CPhysConvex *CPlaneList::BuildConvexForBrush( int brushnumber, float shrink, CPhysCollide *pCollideTest, float shrinkMinimum );
 
-   public:
+    public:
     CUtlVector< CPhysConvex * > m_convex;
 
     CUtlVector< int > m_leafList;
@@ -575,53 +575,53 @@ int CPlaneList::GetFirstBrushSide()
 #if 0
 void CPlaneList::AddBrushes( void )
 {
-	CUtlVector<listplane_t> temp;
-	for ( int brushnumber = 0; brushnumber < numbrushes; brushnumber++ )
-	{
-		if ( IsBrushReferenced(brushnumber) )
-		{
-			CUtlVector<winding_t *> windings;
+    CUtlVector<listplane_t> temp;
+    for ( int brushnumber = 0; brushnumber < numbrushes; brushnumber++ )
+    {
+        if ( IsBrushReferenced(brushnumber) )
+        {
+            CUtlVector<winding_t *> windings;
 
-			for ( int i = 0; i < dbrushes[brushnumber].numsides; i++ )
-			{
-				dbrushside_t *pside = dbrushsides + i + dbrushes[brushnumber].firstside;
-				if (pside->bevel)
-					continue;
-				dplane_t *pplane = dplanes + pside->planenum;
-				winding_t *w = BaseWindingForPlane( pplane->normal, pplane->dist - m_shrink );
-				for ( int j = 0; j < dbrushes[brushnumber].numsides && w; j++ )
-				{
-					if (i == j)
-						continue;
-					dbrushside_t *pClipSide = dbrushsides + j + dbrushes[brushnumber].firstside;
-					if (pClipSide->bevel)
-						continue;
-					dplane_t *pClipPlane = dplanes + pClipSide->planenum;
-					ChopWindingInPlace (&w, -pClipPlane->normal, -pClipPlane->dist+m_shrink, 0); //CLIP_EPSILON);
-				}
-				if ( w )
-				{
-					windings.AddToTail( w );
-				}
-			}
+            for ( int i = 0; i < dbrushes[brushnumber].numsides; i++ )
+            {
+                dbrushside_t *pside = dbrushsides + i + dbrushes[brushnumber].firstside;
+                if (pside->bevel)
+                    continue;
+                dplane_t *pplane = dplanes + pside->planenum;
+                winding_t *w = BaseWindingForPlane( pplane->normal, pplane->dist - m_shrink );
+                for ( int j = 0; j < dbrushes[brushnumber].numsides && w; j++ )
+                {
+                    if (i == j)
+                        continue;
+                    dbrushside_t *pClipSide = dbrushsides + j + dbrushes[brushnumber].firstside;
+                    if (pClipSide->bevel)
+                        continue;
+                    dplane_t *pClipPlane = dplanes + pClipSide->planenum;
+                    ChopWindingInPlace (&w, -pClipPlane->normal, -pClipPlane->dist+m_shrink, 0); //CLIP_EPSILON);
+                }
+                if ( w )
+                {
+                    windings.AddToTail( w );
+                }
+            }
 
-			CUtlVector<Vector *> vertList;
-			for ( int p = 0; p < windings.Count(); p++ )
-			{
-				for ( int v = 0; v < windings[p]->numpoints; v++ )
-				{
-					vertList.AddToTail( windings[p]->p + v );
-				}
-			}
-			CPhysConvex *pConvex = physcollision->ConvexFromVerts( vertList.Base(), vertList.Count() );
-			if ( pConvex )
-			{
-				physcollision->SetConvexGameData( pConvex, brushnumber );
-				AddConvex( pConvex );
-			}
-			temp.RemoveAll();
-		}
-	}
+            CUtlVector<Vector *> vertList;
+            for ( int p = 0; p < windings.Count(); p++ )
+            {
+                for ( int v = 0; v < windings[p]->numpoints; v++ )
+                {
+                    vertList.AddToTail( windings[p]->p + v );
+                }
+            }
+            CPhysConvex *pConvex = physcollision->ConvexFromVerts( vertList.Base(), vertList.Count() );
+            if ( pConvex )
+            {
+                physcollision->SetConvexGameData( pConvex, brushnumber );
+                AddConvex( pConvex );
+            }
+            temp.RemoveAll();
+        }
+    }
 }
 #endif
 
@@ -754,8 +754,8 @@ static CUtlRBTree< WaterTexInfo, int > g_WaterTexInfos( 0, 32, WaterLessFunc );
 #if 0
 float GetSubdivSizeForFogVolume( int fogVolumeID )
 {
-	Assert( fogVolumeID >= 0 && fogVolumeID < g_WaterTexInfos.Count() );
-	return g_WaterTexInfos[fogVolumeID].m_SubdivSize;
+    Assert( fogVolumeID >= 0 && fogVolumeID < g_WaterTexInfos.Count() );
+    return g_WaterTexInfos[fogVolumeID].m_SubdivSize;
 }
 #endif
 
@@ -909,8 +909,8 @@ static int FindOrCreateLeafWaterData( float surfaceZ, float minZ, int surfaceTex
     {
         dleafwaterdata_t *pLeafWaterData = &dleafwaterdata[i];
         if ( pLeafWaterData->surfaceZ == surfaceZ &&
-             pLeafWaterData->minZ == minZ &&
-             pLeafWaterData->surfaceTexInfoID == surfaceTexInfoID )
+            pLeafWaterData->minZ == minZ &&
+            pLeafWaterData->surfaceTexInfoID == surfaceTexInfoID )
         {
             return i;
         }
@@ -1201,11 +1201,11 @@ static void ConvertWaterModelToPhysCollide( CUtlVector< CPhysCollisionEntry * > 
                 waterModel.waterLeafData.surfaceDist = top.z;
             }
             CPhysCollisionEntryFluid *pCollisionEntryFuild = new CPhysCollisionEntryFluid( pCollide,
-                                                                                           pSurfaceProp,
-                                                                                           damping,
-                                                                                           waterModel.waterLeafData.surfaceNormal,
-                                                                                           waterModel.waterLeafData.surfaceDist,
-                                                                                           waterModel.contents );
+                                                                                            pSurfaceProp,
+                                                                                            damping,
+                                                                                            waterModel.waterLeafData.surfaceNormal,
+                                                                                            waterModel.waterLeafData.surfaceDist,
+                                                                                            waterModel.contents );
             collisionList.AddToTail( pCollisionEntryFuild );
         }
     }

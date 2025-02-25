@@ -25,7 +25,7 @@ class CRWLockAutoWrite
 {
     T &m_RWLock;
 
-   public:
+    public:
     CRWLockAutoWrite( T &RWLock )
         : m_RWLock( RWLock )
     {

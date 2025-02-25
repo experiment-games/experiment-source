@@ -17,7 +17,7 @@ typedef unsigned MemoryStackMark_t;
 
 class CMemoryStack
 {
-   public:
+    public:
     CMemoryStack();
     ~CMemoryStack();
 
@@ -47,7 +47,7 @@ class CMemoryStack
         return const_cast< CMemoryStack * >( this )->GetBase();
     }
 
-   private:
+    private:
     bool CommitTo( byte * ) RESTRICT;
 
     byte *m_pNextAlloc;
@@ -139,7 +139,7 @@ inline MemoryStackMark_t CMemoryStack::GetCurrentAllocPoint()
 template < typename T, typename I, size_t MAX_SIZE, size_t COMMIT_SIZE = 0, size_t INITIAL_COMMIT = 0 >
 class CUtlMemoryStack
 {
-   public:
+    public:
     // constructor, destructor
     CUtlMemoryStack( int nGrowSize = 0, int nInitSize = 0 )
     {
@@ -171,7 +171,7 @@ class CUtlMemoryStack
         I index;
         friend class CUtlMemoryStack< T, I, MAX_SIZE, COMMIT_SIZE, INITIAL_COMMIT >;
 
-       public:
+        public:
         bool operator==( const Iterator_t it ) const
         {
             return index == it.index;
@@ -285,7 +285,7 @@ class CUtlMemoryStack
     // Set the size by which the memory grows
     void SetGrowSize( int size ) {}
 
-   private:
+    private:
     CMemoryStack m_MemoryStack;
     int m_nAllocated;
 };

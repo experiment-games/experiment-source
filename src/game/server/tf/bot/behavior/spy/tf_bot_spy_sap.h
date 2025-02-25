@@ -10,7 +10,7 @@
 
 class CTFBotSpySap : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotSpySap( CBaseObject *sapTarget );
     virtual ~CTFBotSpySap() {}
 
@@ -32,7 +32,7 @@ class CTFBotSpySap : public Action< CTFBot >
         return "SpySap";
     };
 
-   private:
+    private:
     CHandle< CBaseObject > m_sapTarget;
 
     CountdownTimer m_repathTimer;

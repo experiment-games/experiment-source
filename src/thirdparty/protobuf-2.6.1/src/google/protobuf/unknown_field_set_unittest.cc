@@ -67,9 +67,9 @@ class UnknownFieldSetTest : public testing::Test {
     const FieldDescriptor* field = descriptor_->FindFieldByName(name);
     if (field == NULL) return NULL;
     for (int i = 0; i < unknown_fields_->field_count(); i++) {
-      if (unknown_fields_->field(i).number() == field->number()) {
+    if (unknown_fields_->field(i).number() == field->number()) {
         return &unknown_fields_->field(i);
-      }
+    }
     }
     return NULL;
   }
@@ -80,14 +80,14 @@ class UnknownFieldSetTest : public testing::Test {
   string GetBizarroData() {
     unittest::TestEmptyMessage bizarro_message;
     UnknownFieldSet* bizarro_unknown_fields =
-      bizarro_message.mutable_unknown_fields();
+    bizarro_message.mutable_unknown_fields();
     for (int i = 0; i < unknown_fields_->field_count(); i++) {
-      const UnknownField& unknown_field = unknown_fields_->field(i);
-      if (unknown_field.type() == UnknownField::TYPE_VARINT) {
+    const UnknownField& unknown_field = unknown_fields_->field(i);
+    if (unknown_field.type() == UnknownField::TYPE_VARINT) {
         bizarro_unknown_fields->AddFixed32(unknown_field.number(), 1);
-      } else {
+    } else {
         bizarro_unknown_fields->AddVarint(unknown_field.number(), 1);
-      }
+    }
     }
 
     string data;
@@ -117,18 +117,18 @@ TEST_F(UnknownFieldSetTest, AllFieldsPresent) {
   for (int i = 0; i < 1000; i++) {
     const FieldDescriptor* field = descriptor_->FindFieldByNumber(i);
     if (field != NULL) {
-      ASSERT_LT(pos, unknown_fields_->field_count());
-      // Do not check oneof field if it is not set.
-      if (field->containing_oneof() == NULL) {
+    ASSERT_LT(pos, unknown_fields_->field_count());
+    // Do not check oneof field if it is not set.
+    if (field->containing_oneof() == NULL) {
         EXPECT_EQ(i, unknown_fields_->field(pos++).number());
-      } else if (i == unknown_fields_->field(pos).number()) {
+    } else if (i == unknown_fields_->field(pos).number()) {
         pos++;
-      }
-      if (field->is_repeated()) {
+    }
+    if (field->is_repeated()) {
         // Should have a second instance.
         ASSERT_LT(pos, unknown_fields_->field_count());
         EXPECT_EQ(i, unknown_fields_->field(pos++).number());
-      }
+    }
     }
   }
   EXPECT_EQ(unknown_fields_->field_count(), pos);
@@ -185,7 +185,7 @@ TEST_F(UnknownFieldSetTest, Group) {
 
 TEST_F(UnknownFieldSetTest, SerializeFastAndSlowAreEquivalent) {
   int size = WireFormat::ComputeUnknownFieldsSize(
-      empty_message_.unknown_fields());
+    empty_message_.unknown_fields());
   string slow_buffer;
   string fast_buffer;
   slow_buffer.resize(size);
@@ -193,14 +193,14 @@ TEST_F(UnknownFieldSetTest, SerializeFastAndSlowAreEquivalent) {
 
   uint8* target = reinterpret_cast<uint8*>(string_as_array(&fast_buffer));
   uint8* result = WireFormat::SerializeUnknownFieldsToArray(
-          empty_message_.unknown_fields(), target);
+        empty_message_.unknown_fields(), target);
   EXPECT_EQ(size, result - target);
 
   {
     io::ArrayOutputStream raw_stream(string_as_array(&slow_buffer), size, 1);
     io::CodedOutputStream output_stream(&raw_stream);
     WireFormat::SerializeUnknownFields(empty_message_.unknown_fields(),
-                                       &output_stream);
+                                        &output_stream);
     ASSERT_FALSE(output_stream.HadError());
   }
   EXPECT_TRUE(fast_buffer == slow_buffer);
@@ -224,7 +224,7 @@ TEST_F(UnknownFieldSetTest, ParseViaReflection) {
 
   unittest::TestEmptyMessage message;
   io::ArrayInputStream raw_input(all_fields_data_.data(),
-                                 all_fields_data_.size());
+                                all_fields_data_.size());
   io::CodedInputStream input(&raw_input);
   ASSERT_TRUE(WireFormat::ParseAndMergePartial(&input, &message));
 
@@ -379,7 +379,7 @@ TEST_F(UnknownFieldSetTest, UnknownExtensionsReflection) {
 
   unittest::TestEmptyMessageWithExtensions message;
   io::ArrayInputStream raw_input(all_fields_data_.data(),
-                                 all_fields_data_.size());
+                                all_fields_data_.size());
   io::CodedInputStream input(&raw_input);
   ASSERT_TRUE(WireFormat::ParseAndMergePartial(&input, &message));
 
@@ -458,12 +458,12 @@ TEST_F(UnknownFieldSetTest, UnknownEnumValue) {
     TestAllExtensions message;
     ASSERT_TRUE(message.ParseFromString(data));
     EXPECT_EQ(TestAllTypes::BAR,
-              message.GetExtension(optional_nested_enum_extension));
+            message.GetExtension(optional_nested_enum_extension));
     ASSERT_EQ(2, message.ExtensionSize(repeated_nested_enum_extension));
     EXPECT_EQ(TestAllTypes::FOO,
-              message.GetExtension(repeated_nested_enum_extension, 0));
+            message.GetExtension(repeated_nested_enum_extension, 0));
     EXPECT_EQ(TestAllTypes::BAZ,
-              message.GetExtension(repeated_nested_enum_extension, 1));
+            message.GetExtension(repeated_nested_enum_extension, 1));
 
     const UnknownFieldSet& unknown_fields = message.unknown_fields();
     ASSERT_EQ(3, unknown_fields.field_count());
@@ -527,24 +527,24 @@ TEST_F(UnknownFieldSetTest, DeleteSubrange) {
   // sizes from 0 through 9.
   for (int size = 0; size < 10; ++size) {
     for (int num = 0; num <= size; ++num) {
-      for (int start = 0; start < size - num; ++start) {
+    for (int start = 0; start < size - num; ++start) {
         // Create a set with "size" fields.
         UnknownFieldSet unknown;
         for (int i = 0; i < size; ++i) {
-          unknown.AddFixed32(i, i);
+        unknown.AddFixed32(i, i);
         }
         // Delete the specified subrange.
         unknown.DeleteSubrange(start, num);
         // Make sure the resulting field values are still correct.
         EXPECT_EQ(size - num, unknown.field_count());
         for (int i = 0; i < unknown.field_count(); ++i) {
-          if (i < start) {
+        if (i < start) {
             EXPECT_EQ(i, unknown.field(i).fixed32());
-          } else {
+        } else {
             EXPECT_EQ(i + num, unknown.field(i).fixed32());
-          }
         }
-      }
+        }
+    }
     }
   }
 }
@@ -559,7 +559,7 @@ void CheckDeleteByNumber(const vector<int>& field_numbers, int deleted_number,
   ASSERT_EQ(expected_field_nubmers.size(), unknown_fields.field_count());
   for (int i = 0; i < expected_field_nubmers.size(); ++i) {
     EXPECT_EQ(expected_field_nubmers[i],
-              unknown_fields.field(i).number());
+            unknown_fields.field(i).number());
   }
 }
 
@@ -570,27 +570,27 @@ TEST_F(UnknownFieldSetTest, DeleteByNumber) {
   static const int kFieldNumberToDelete1 = 1;
   static const int kExpectedFieldNumbers1[] = {2, 3};
   CheckDeleteByNumber(MAKE_VECTOR(kTestFieldNumbers1), kFieldNumberToDelete1,
-                      MAKE_VECTOR(kExpectedFieldNumbers1));
+                    MAKE_VECTOR(kExpectedFieldNumbers1));
   static const int kTestFieldNumbers2[] = {1, 2, 3};
   static const int kFieldNumberToDelete2 = 2;
   static const int kExpectedFieldNumbers2[] = {1, 3};
   CheckDeleteByNumber(MAKE_VECTOR(kTestFieldNumbers2), kFieldNumberToDelete2,
-                      MAKE_VECTOR(kExpectedFieldNumbers2));
+                    MAKE_VECTOR(kExpectedFieldNumbers2));
   static const int kTestFieldNumbers3[] = {1, 2, 3};
   static const int kFieldNumberToDelete3 = 3;
   static const int kExpectedFieldNumbers3[] = {1, 2};
   CheckDeleteByNumber(MAKE_VECTOR(kTestFieldNumbers3), kFieldNumberToDelete3,
-                      MAKE_VECTOR(kExpectedFieldNumbers3));
+                    MAKE_VECTOR(kExpectedFieldNumbers3));
   static const int kTestFieldNumbers4[] = {1, 2, 1, 4, 1};
   static const int kFieldNumberToDelete4 = 1;
   static const int kExpectedFieldNumbers4[] = {2, 4};
   CheckDeleteByNumber(MAKE_VECTOR(kTestFieldNumbers4), kFieldNumberToDelete4,
-                      MAKE_VECTOR(kExpectedFieldNumbers4));
+                    MAKE_VECTOR(kExpectedFieldNumbers4));
   static const int kTestFieldNumbers5[] = {1, 2, 3, 4, 5};
   static const int kFieldNumberToDelete5 = 6;
   static const int kExpectedFieldNumbers5[] = {1, 2, 3, 4, 5};
   CheckDeleteByNumber(MAKE_VECTOR(kTestFieldNumbers5), kFieldNumberToDelete5,
-                      MAKE_VECTOR(kExpectedFieldNumbers5));
+                    MAKE_VECTOR(kExpectedFieldNumbers5));
 }
 #undef MAKE_VECTOR
 }  // namespace

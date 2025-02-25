@@ -27,7 +27,7 @@ class CHudTrain : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudTrain, vgui::Panel );
 
-   public:
+    public:
     CHudTrain( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -36,7 +36,7 @@ class CHudTrain : public CHudElement, public vgui::Panel
     virtual void Paint( void );
     void MsgFunc_Train( bf_read &msg );
 
-   private:
+    private:
     int m_iPos;
 };
 

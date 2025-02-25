@@ -12,7 +12,7 @@ class CTFBotHintSentrygun;
 
 class CTFBotEngineerMoveToBuild : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -28,7 +28,7 @@ class CTFBotEngineerMoveToBuild : public Action< CTFBot >
         return "EngineerMoveToBuild";
     };
 
-   private:
+    private:
     CHandle< CTFBotHintSentrygun > m_sentryBuildHint;
     Vector m_sentryBuildLocation;
 

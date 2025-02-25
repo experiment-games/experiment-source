@@ -50,9 +50,9 @@
 class HybridPrimeTable : public PrimeTable {
  public:
   HybridPrimeTable(bool force_on_the_fly, int max_precalculated)
-      : on_the_fly_impl_(new OnTheFlyPrimeTable),
+    : on_the_fly_impl_(new OnTheFlyPrimeTable),
         precalc_impl_(force_on_the_fly ? NULL :
-                          new PreCalculatedPrimeTable(max_precalculated)),
+                        new PreCalculatedPrimeTable(max_precalculated)),
         max_precalculated_(max_precalculated) {}
   virtual ~HybridPrimeTable() {
     delete on_the_fly_impl_;
@@ -61,15 +61,15 @@ class HybridPrimeTable : public PrimeTable {
 
   virtual bool IsPrime(int n) const {
     if (precalc_impl_ != NULL && n < max_precalculated_)
-      return precalc_impl_->IsPrime(n);
+    return precalc_impl_->IsPrime(n);
     else
-      return on_the_fly_impl_->IsPrime(n);
+    return on_the_fly_impl_->IsPrime(n);
   }
 
   virtual int GetNextPrime(int p) const {
     int next_prime = -1;
     if (precalc_impl_ != NULL && p < max_precalculated_)
-      next_prime = precalc_impl_->GetNextPrime(p);
+    next_prime = precalc_impl_->GetNextPrime(p);
 
     return next_prime != -1 ? next_prime : on_the_fly_impl_->GetNextPrime(p);
   }

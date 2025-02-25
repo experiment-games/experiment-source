@@ -4,7 +4,7 @@
 
 class CToolDictionary : public IToolDictionary
 {
-   public:
+    public:
     virtual int GetToolCount() const
     {
         return m_Tools.Count();
@@ -19,13 +19,13 @@ class CToolDictionary : public IToolDictionary
         return m_Tools[index];
     }
 
-   public:
+    public:
     void RegisterTool( IToolSystem *tool )
     {
         m_Tools.AddToTail( tool );
     }
 
-   private:
+    private:
     CUtlVector< IToolSystem * > m_Tools;
 };
 

@@ -18,7 +18,7 @@ static char *CopyString( const char *pStr )
 
 class CMySQLAsync : public IMySQLAsync
 {
-   public:
+    public:
     CMySQLAsync()
     {
         m_hThread = NULL;
@@ -151,7 +151,7 @@ class CMySQLAsync : public IMySQLAsync
         }
     }
 
-   private:
+    private:
     DWORD ThreadFn()
     {
         HANDLE hEvents[2] = { m_hExitEvent, m_hPendingQueryEvent };
@@ -222,7 +222,7 @@ class CMySQLAsync : public IMySQLAsync
         return ( ( CMySQLAsync * )lpParameter )->ThreadFn();
     }
 
-   private:
+    private:
     HANDLE m_hThread;
     HANDLE m_hExitEvent;
     HANDLE m_hPendingQueryEvent;  // Signaled when a new query is added.
@@ -239,7 +239,7 @@ class CMySQLAsync : public IMySQLAsync
     // New ones added to the tail.
     class CPendingQuery
     {
-       public:
+        public:
         char *m_pStr;
         void *m_pUserData;
         CFastTimer m_Timer;  // Times how long this query is in the queue.

@@ -101,17 +101,17 @@ void CNetViewThread::UpdateServicesFromNetView()
         PROCESS_INFORMATION pi;
 
         if ( CreateProcess(
-                 NULL,
-                 "net view",
-                 NULL,              // lpProcessAttributes
-                 NULL,              // lpThreadAttributes
-                 TRUE,              // bInheritHandls
-                 DETACHED_PROCESS,  // dwCreationFlags
-                 NULL,              // lpEnvironment
-                 NULL,              // lpCurrentDirectory
-                 &si,               // lpStartupInfo
-                 &pi                // lpProcessInformation
-                 ) )
+                NULL,
+                "net view",
+                NULL,              // lpProcessAttributes
+                NULL,              // lpThreadAttributes
+                TRUE,              // bInheritHandls
+                DETACHED_PROCESS,  // dwCreationFlags
+                NULL,              // lpEnvironment
+                NULL,              // lpCurrentDirectory
+                &si,               // lpStartupInfo
+                &pi                // lpProcessInformation
+                ) )
         {
 // read from pipe..
 #define BUFFER_SIZE 8192

@@ -71,7 +71,7 @@ namespace java
 // since extensions are just simple identifiers with interesting types.
 class ExtensionGenerator
 {
-   public:
+    public:
     explicit ExtensionGenerator() {}
     virtual ~ExtensionGenerator() {}
 
@@ -79,35 +79,35 @@ class ExtensionGenerator
     virtual void GenerateNonNestedInitializationCode( io::Printer* printer ) = 0;
     virtual void GenerateRegistrationCode( io::Printer* printer ) = 0;
 
-   protected:
+    protected:
     static void InitTemplateVars( const FieldDescriptor* descriptor,
-                                  const string& scope,
-                                  bool immutable,
-                                  ClassNameResolver* name_resolver,
-                                  map< string, string >* vars_pointer );
+                                const string& scope,
+                                bool immutable,
+                                ClassNameResolver* name_resolver,
+                                map< string, string >* vars_pointer );
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ExtensionGenerator );
 };
 
 class ImmutableExtensionGenerator : public ExtensionGenerator
 {
-   public:
+    public:
     explicit ImmutableExtensionGenerator( const FieldDescriptor* descriptor,
-                                          Context* context );
+                                        Context* context );
     virtual ~ImmutableExtensionGenerator();
 
     virtual void Generate( io::Printer* printer );
     virtual void GenerateNonNestedInitializationCode( io::Printer* printer );
     virtual void GenerateRegistrationCode( io::Printer* printer );
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     Context* context_;
     ClassNameResolver* name_resolver_;
     string scope_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutableExtensionGenerator );
 };
 

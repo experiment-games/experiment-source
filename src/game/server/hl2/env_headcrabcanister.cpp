@@ -76,7 +76,7 @@ class CEnvHeadcrabCanister : public CBaseAnimating
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     // Initialization
     CEnvHeadcrabCanister();
 
@@ -86,7 +86,7 @@ class CEnvHeadcrabCanister : public CBaseAnimating
 
     virtual void SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways );
 
-   private:
+    private:
     void InputFireCanister( inputdata_t &inputdata );
     void InputOpenCanister( inputdata_t &inputdata );
     void InputSpawnHeadcrabs( inputdata_t &inputdata );
@@ -127,7 +127,7 @@ class CEnvHeadcrabCanister : public CBaseAnimating
     // Start spawning headcrabs
     void StartSpawningHeadcrabs( float flDelay );
 
-   private:
+    private:
     CNetworkVar( bool, m_bLanded );
 
     CNetworkVarEmbedded( CEnvHeadcrabCanisterShared, m_Shared );
@@ -528,7 +528,7 @@ void CEnvHeadcrabCanister::InputStopSmoke( inputdata_t &inputdata )
 //
 class CCollideList : public IEntityEnumerator
 {
-   public:
+    public:
     CCollideList( Ray_t *pRay, CBaseEntity *pIgnoreEntity, int nContentsMask )
         : m_Entities( 0, 32 ), m_pIgnoreEntity( pIgnoreEntity ), m_nContentsMask( nContentsMask ), m_pRay( pRay ) {}
 
@@ -553,7 +553,7 @@ class CCollideList : public IEntityEnumerator
 
     CUtlVector< CBaseEntity * > m_Entities;
 
-   private:
+    private:
     CBaseEntity *m_pIgnoreEntity;
     int m_nContentsMask;
     Ray_t *m_pRay;

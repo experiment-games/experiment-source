@@ -35,14 +35,14 @@ class CHudMedicChargeMeter : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudMedicChargeMeter, EditablePanel );
 
-   public:
+    public:
     CHudMedicChargeMeter( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
     virtual bool ShouldDraw( void );
     virtual void OnTick( void );
 
-   private:
+    private:
     void UpdateKnownChargeType( bool bForce );
     void UpdateControlVisibility();
 
@@ -159,7 +159,7 @@ bool CHudMedicChargeMeter::ShouldDraw( void )
     }
 
     if ( pWpn->GetWeaponID() != TF_WEAPON_MEDIGUN && pWpn->GetWeaponID() != TF_WEAPON_BONESAW &&
-         !( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
+        !( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
     {
         return false;
     }
@@ -186,7 +186,7 @@ void CHudMedicChargeMeter::OnTick( void )
         return;
 
     if ( pWpn->GetWeaponID() == TF_WEAPON_BONESAW ||
-         ( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
+        ( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
     {
         pWpn = pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN );
     }

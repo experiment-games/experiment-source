@@ -17,11 +17,11 @@
 //-----------------------------------------------------------------------------
 class C_FuncTrackTrain : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncTrackTrain, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual bool GetSoundSpatialization( SpatializationInfo_t& info );
 
@@ -30,7 +30,7 @@ class C_FuncTrackTrain : public C_BaseEntity
         return true;
     }
 
-   private:
+    private:
     int m_nLongAxis;
     float m_flRadius;
     float m_flLineLength;

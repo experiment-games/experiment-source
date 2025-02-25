@@ -40,11 +40,11 @@ PRECACHE_WEAPON_REGISTER( weapon_grenade );
 
 class CGrenadeProjectile : public CBaseGrenadeProjectile
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeProjectile, CBaseGrenadeProjectile );
 
     // Overrides.
-   public:
+    public:
     virtual void Spawn()
     {
         SetModel( GRENADE_MODEL );
@@ -58,7 +58,7 @@ class CGrenadeProjectile : public CBaseGrenadeProjectile
     }
 
     // Grenade stuff.
-   public:
+    public:
     static CGrenadeProjectile *Create(
         const Vector &position,
         const QAngle &angles,

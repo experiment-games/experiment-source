@@ -23,7 +23,7 @@ class C_WeaponStunStick : public C_BaseHLBludgeonWeapon
 {
     DECLARE_CLASS( C_WeaponStunStick, C_BaseHLBludgeonWeapon );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
 
@@ -65,8 +65,8 @@ class C_WeaponStunStick : public C_BaseHLBludgeonWeapon
     {
         // Update our effects
         if ( m_bActive &&
-             gpGlobals->frametime != 0.0f &&
-             ( random->RandomInt( 0, 5 ) == 0 ) )
+            gpGlobals->frametime != 0.0f &&
+            ( random->RandomInt( 0, 5 ) == 0 ) )
         {
             Vector vecOrigin;
             QAngle vecAngles;
@@ -150,7 +150,7 @@ class C_WeaponStunStick : public C_BaseHLBludgeonWeapon
         return RENDER_GROUP_TRANSLUCENT_ENTITY;
     }
 
-   private:
+    private:
     CNetworkVar( bool, m_bActive );
 };
 

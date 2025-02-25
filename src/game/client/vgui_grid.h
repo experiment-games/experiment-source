@@ -21,7 +21,7 @@ namespace vgui
 // To use this control, call SetDimensions, SetSpacing and fill the controls.
 class CGrid : public Panel
 {
-   public:
+    public:
     CGrid();
     virtual ~CGrid();
 
@@ -45,8 +45,8 @@ class CGrid : public Panel
     int CalcFitRowHeight( int iRow );       // Returns the maximum height of all panels in the row.
 
     int CalcDrawHeight();  // Returns how many pixels high the grid control should be
-                           // for all of its contents to be visible (based on its row heights
-                           // and y spacing).
+                            // for all of its contents to be visible (based on its row heights
+                            // and y spacing).
 
     void AutoSetRowHeights();  // Just does SetRowHeight(iRow, CalcFitRowHeight(iRow)) for all rows.
 
@@ -59,7 +59,7 @@ class CGrid : public Panel
         int &h );
 
     bool CopyColumnWidths( CGrid *pOther );  // Copy the column widths from the other grid. Fails if the
-                                             // column count is different.
+                                            // column count is different.
 
     void RepositionContents();  // Sets the size and position of all the grid entries based
                                 // on current spacings and row/column widths.
@@ -73,14 +73,14 @@ class CGrid : public Panel
     bool GetCellAtPoint( int worldX, int worldY, int &row, int &col );
 
     // Panel overrides.
-   public:
+    public:
     virtual void Paint();
     virtual void PaintBackground();
 
-   protected:
+    protected:
     class CGridEntry
     {
-       public:
+        public:
         CGridEntry();
         ~CGridEntry();
 
@@ -97,7 +97,7 @@ class CGrid : public Panel
     void CalcColOffsets( int iStart );
     void CalcRowOffsets( int iStart );
 
-   protected:
+    protected:
     bool m_bDirty;  // Set when controls will need to be repositioned.
 
     int m_xCols;

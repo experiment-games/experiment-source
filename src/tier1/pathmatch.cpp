@@ -177,7 +177,7 @@ inline __attribute__( ( always_inline ) ) static uint32_t utf8codepoint( const c
 
         *_str += 4;  // skip to next possible start of codepoint.
         retval = ( ( ( octet << 18 ) ) | ( ( octet2 - 128 ) << 12 ) |
-                   ( ( octet3 - 128 ) << 6 ) | ( ( octet4 - 128 ) ) );
+                    ( ( octet3 - 128 ) << 6 ) | ( ( octet4 - 128 ) ) );
         if ( ( retval >= 0x10000 ) && ( retval <= 0x10FFFF ) )
             return retval;
     }
@@ -337,7 +337,7 @@ static int utf8casecmp( const char *str1, const char *str2 )
 // gets closed when it goes out of scope.
 class CDirPtr
 {
-   public:
+    public:
     CDirPtr()
     {
         m_pDir = NULL;
@@ -364,7 +364,7 @@ class CDirPtr
         return m_pDir != NULL;
     }
 
-   private:
+    private:
     void Close()
     {
         if ( m_pDir ) closedir( m_pDir );
@@ -378,7 +378,7 @@ class CDirPtr
 // temp object that is a parameter to a function.
 class CDirTrimmer
 {
-   public:
+    public:
     CDirTrimmer( char *pPath, size_t nTrimIdx )
     {
         m_pPath = pPath;
@@ -396,7 +396,7 @@ class CDirTrimmer
         return m_pPath;
     }
 
-   private:
+    private:
     size_t m_idx;
     char *m_pPath;
     char m_c;
@@ -474,7 +474,7 @@ static bool Descend( char *pPath, size_t nStartIdx, bool bAllowBasenameMismatch,
         // the candidate must match the target, but not be a case-identical match (we would
         // have looked there in the short-circuit code above, so don't look again)
         bool bMatches = ( strcasecmp( CDirTrimmer( pszComponent, cbComponent ), pEntry->d_name ) == 0 &&
-                          strcmp( CDirTrimmer( pszComponent, cbComponent ), pEntry->d_name ) != 0 );
+                        strcmp( CDirTrimmer( pszComponent, cbComponent ), pEntry->d_name ) != 0 );
 
         if ( bMatches )
         {
@@ -681,7 +681,7 @@ bool pathmatch_external( const char *pszIn, char **ppszOut, bool bAllowBasenameM
 // Wrapper object that manages the 'typical' usage cases of pathmatch()
 class CWrap
 {
-   public:
+    public:
     CWrap( const char *pSuppliedPath, bool bAllowMismatchedBasename )
         : m_pSuppliedPath( pSuppliedPath ), m_pBestMatch( NULL )
     {
@@ -716,7 +716,7 @@ class CWrap
         return GetBest();
     }
 
-   private:
+    private:
     const char *m_pSuppliedPath;
     char *m_pBestMatch;
     char m_BestMatchBuf[512];

@@ -141,7 +141,7 @@ void CMessageWatchDlg::OnIdle()
             break;
 
         if ( data[0] == MSGMGR_PACKETID_ANNOUNCE_PRESENCE &&
-             *( ( int * )&data[1] ) == MSGMGR_VERSION )
+            *( ( int * )&data[1] ) == MSGMGR_VERSION )
         {
             int iPort = *( ( int * )&data[5] );
 

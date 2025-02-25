@@ -20,7 +20,7 @@ class CTFProjectile_Syringe : public CTFBaseProjectile
 {
     DECLARE_CLASS( CTFProjectile_Syringe, CTFBaseProjectile );
 
-   public:
+    public:
     // Creation.
     static CTFBaseProjectile *Create( const Vector &vecOrigin, const QAngle &vecAngles, CTFWeaponBaseGun *pLauncher = NULL, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL, bool bCritical = false );
 

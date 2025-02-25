@@ -21,7 +21,7 @@ class CTFTeam : public CTeam
     DECLARE_CLASS( CTFTeam, CTeam );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CTFTeam();
 
     // Classes.
@@ -98,7 +98,7 @@ class CTFTeam : public CTeam
     bool SetTeamLeader( CBasePlayer *pPlayer );
     CBasePlayer *GetTeamLeader( void );
 
-   private:
+    private:
     color32 m_TeamColor;
     CUtlVector< CHandle< CBaseObject > > m_aObjects;  // List of team objects.
 
@@ -113,7 +113,7 @@ class CTFTeam : public CTeam
 
 class CTFTeamManager
 {
-   public:
+    public:
     CTFTeamManager();
 
     // Creation/Destruction.
@@ -139,10 +139,10 @@ class CTFTeamManager
 
     // Vox
 
-   private:
+    private:
     int Create( const char *pName, color32 color );
 
-   private:
+    private:
     color32 m_UndefinedTeamColor;
 };
 

@@ -24,19 +24,19 @@
 //
 
 class CAI_GoalEntity : public CBaseEntity,
-                       public IEntityListener
+                        public IEntityListener
 {
     DECLARE_CLASS( CAI_GoalEntity, CBaseEntity );
 
-   public:
+    public:
     CAI_GoalEntity()
         : m_iszActor( NULL_STRING ),
-          m_iszGoal( NULL_STRING ),
-          m_fStartActive( false ),
-          m_SearchType( ST_ENTNAME ),
-          m_iszConceptModifiers( NULL_STRING ),
-          m_hGoalEntity( NULL ),
-          m_flags( 0 )
+        m_iszGoal( NULL_STRING ),
+        m_fStartActive( false ),
+        m_SearchType( ST_ENTNAME ),
+        m_iszConceptModifiers( NULL_STRING ),
+        m_hGoalEntity( NULL ),
+        m_flags( 0 )
     {
     }
 
@@ -69,7 +69,7 @@ class CAI_GoalEntity : public CBaseEntity,
 
     const char *GetConceptModifiers();
 
-   protected:
+    protected:
     virtual void UpdateOnRemove();
 
     virtual void OnEntityCreated( CBaseEntity *pEntity );
@@ -85,7 +85,7 @@ class CAI_GoalEntity : public CBaseEntity,
         return m_actors;
     }
 
-   private:
+    private:
     enum Flags_t
     {
         ACTIVE = 0x01,
@@ -114,7 +114,7 @@ class CAI_GoalEntity : public CBaseEntity,
     EHANDLE m_hGoalEntity;
     unsigned m_flags;
 
-   protected:
+    protected:
     DECLARE_DATADESC();
 };
 

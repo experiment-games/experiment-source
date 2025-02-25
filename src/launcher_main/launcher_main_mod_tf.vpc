@@ -6,10 +6,10 @@ $Include "launcher_main.vpc"
 
 $Configuration
 {
-	$Compiler
-	{
-		$PreprocessorDefinitions	"$BASE;MOD_APPID=243750" // Replace with your appid if you ship on Steam.
-	}
+    $Compiler
+    {
+        $PreprocessorDefinitions	"$BASE;MOD_APPID=243750" // Replace with your appid if you ship on Steam.
+    }
 }
 
 $Project "Launcher Main (Mod TF)"

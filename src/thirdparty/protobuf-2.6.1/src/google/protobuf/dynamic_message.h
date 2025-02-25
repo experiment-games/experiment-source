@@ -71,7 +71,7 @@ class DescriptorPool;  // descriptor.h
 // used with a particular factory must outlive the factory.
 class LIBPROTOBUF_EXPORT DynamicMessageFactory : public MessageFactory
 {
-   public:
+    public:
     // Construct a DynamicMessageFactory that will search for extensions in
     // the DescriptorPool in which the extendee is defined.
     DynamicMessageFactory();
@@ -117,7 +117,7 @@ class LIBPROTOBUF_EXPORT DynamicMessageFactory : public MessageFactory
     // The method is thread-safe.
     const Message* GetPrototype( const Descriptor* type );
 
-   private:
+    private:
     const DescriptorPool* pool_;
     bool delegate_to_generated_factory_;
 
@@ -136,8 +136,8 @@ class LIBPROTOBUF_EXPORT DynamicMessageFactory : public MessageFactory
     // Construct default oneof instance for reflection usage if oneof
     // is defined.
     static void ConstructDefaultOneofInstance( const Descriptor* type,
-                                               const int offsets[],
-                                               void* default_oneof_instance );
+                                                const int offsets[],
+                                                void* default_oneof_instance );
     // Delete default oneof instance. Called by ~DynamicMessageFactory.
     static void DeleteDefaultOneofInstance( const Descriptor* type,
                                             const int offsets[],

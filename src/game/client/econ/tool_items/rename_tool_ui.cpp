@@ -282,7 +282,7 @@ void CConfirmNameDialog::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 class CGCNameBaseItemResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCNameBaseItemResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

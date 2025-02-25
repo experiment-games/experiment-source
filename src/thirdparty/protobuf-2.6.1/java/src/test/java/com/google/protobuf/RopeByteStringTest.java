@@ -37,7 +37,7 @@ import java.util.Iterator;
 /**
  * This class tests {@link RopeByteString} by inheriting the tests from
  * {@link LiteralByteStringTest}.  Only a couple of methods are overridden.
- * 
+ *
  * <p>A full test of the result of {@link RopeByteString#substring(int, int)} is found in the
  * separate class {@link RopeByteStringSubstringTest}.
  *
@@ -52,7 +52,7 @@ public class RopeByteStringTest extends LiteralByteStringTest {
     Iterator<ByteString> iter = ByteStringTest.makeConcretePieces(referenceBytes).iterator();
     stringUnderTest = iter.next();
     while (iter.hasNext()) {
-      stringUnderTest = stringUnderTest.concat(iter.next());
+    stringUnderTest = stringUnderTest.concat(iter.next());
     }
     expectedHashCode = -1214197238;
   }
@@ -71,7 +71,7 @@ public class RopeByteStringTest extends LiteralByteStringTest {
     // Build up a big ByteString from smaller pieces to force a rebalance
     ByteString concatenated = ByteString.EMPTY;
     for (int i = 0; i < numberOfPieces; ++i) {
-      concatenated = concatenated.concat(ByteString.copyFrom(testBytes, i * pieceSize, pieceSize));
+    concatenated = concatenated.concat(ByteString.copyFrom(testBytes, i * pieceSize, pieceSize));
     }
 
     assertEquals(classUnderTest + " from string must have the expected type",
@@ -97,8 +97,8 @@ public class RopeByteStringTest extends LiteralByteStringTest {
     StringBuilder builder = new StringBuilder(copies * sourceString.length());
     ByteString unicode = ByteString.EMPTY;
     for (int i = 0; i < copies; ++i) {
-      builder.append(sourceString);
-      unicode = RopeByteString.concatenate(unicode, sourceByteString);
+    builder.append(sourceString);
+    unicode = RopeByteString.concatenate(unicode, sourceByteString);
     }
     String testString = builder.toString();
 

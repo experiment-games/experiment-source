@@ -71,7 +71,7 @@ DEFINE_FIELD( iTemplateIndex, FIELD_INTEGER ),
     //-----------------------------------------------------------------------------
     class CPointTemplatePrecacher : public CAutoGameSystem
 {
-   public:
+    public:
     CPointTemplatePrecacher( char const *name )
         : CAutoGameSystem( name )
     {
@@ -107,7 +107,7 @@ DEFINE_FIELD( iTemplateIndex, FIELD_INTEGER ),
         m_Ents.RemoveAll();
     }
 
-   private:
+    private:
     CUtlVector< CHandle< CPointTemplate > > m_Ents;
 };
 

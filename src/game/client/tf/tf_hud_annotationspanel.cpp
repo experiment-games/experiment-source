@@ -448,9 +448,9 @@ void CTFAnnotationsPanelCallout::PerformLayout( void )
             // Not visible ie obstructed by some objects in the world.
             // Do *not* show entities that are not the same team
             if ( m_FollowEntity.Get() &&
-                 m_FollowEntity->GetTeamNumber() != TEAM_UNASSIGNED && m_FollowEntity->GetTeamNumber() != TEAM_INVALID &&
-                 m_FollowEntity->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() &&
-                 pLocalTFPlayer->GetTeamNumber() != TEAM_SPECTATOR )
+                m_FollowEntity->GetTeamNumber() != TEAM_UNASSIGNED && m_FollowEntity->GetTeamNumber() != TEAM_INVALID &&
+                m_FollowEntity->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() &&
+                pLocalTFPlayer->GetTeamNumber() != TEAM_SPECTATOR )
             {
                 SetAlpha( 0 );
                 m_pArrow->SetAlpha( 0 );

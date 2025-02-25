@@ -23,7 +23,7 @@ class CEconSampleRootUI : public vgui::Frame, public IEconRootUI, public CGameEv
 {
     DECLARE_CLASS_SIMPLE( CEconSampleRootUI, vgui::Frame );
 
-   public:
+    public:
     CEconSampleRootUI( vgui::Panel *parent );
     virtual ~CEconSampleRootUI();
 
@@ -102,12 +102,12 @@ class CEconSampleRootUI : public vgui::Frame, public IEconRootUI, public CGameEv
         AssertMsg( 0, "Implement me!" );
     }
 
-   protected:
+    protected:
     void OpenSubPanel( EconBaseUIPanels_t nPanel );
     void UpdateSubPanelVisibility( void );
     void OpenTradingStartDialog( void );
 
-   private:
+    private:
     bool m_bPreventClosure;
     bool m_bCheckForRoomOnExit;
     EconBaseUIPanels_t m_nVisiblePanel;

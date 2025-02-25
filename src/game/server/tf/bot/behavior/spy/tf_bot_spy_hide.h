@@ -10,7 +10,7 @@
 
 class CTFBotSpyHide : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotSpyHide( CTFPlayer *victim = NULL );
     virtual ~CTFBotSpyHide() {}
 
@@ -29,7 +29,7 @@ class CTFBotSpyHide : public Action< CTFBot >
         return "SpyHide";
     };
 
-   private:
+    private:
     CHandle< CTFPlayer > m_initialVictim;
 
     HidingSpot *m_hidingSpot;

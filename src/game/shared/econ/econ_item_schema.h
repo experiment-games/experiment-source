@@ -137,7 +137,7 @@ enum EEquipType_t
 //-----------------------------------------------------------------------------
 class IEconItemPropertyGenerator
 {
-   public:
+    public:
     virtual ~IEconItemPropertyGenerator() {}
 
     MUST_CHECK_RETURN virtual bool BGenerateProperties( CEconItem *pItem ) const = 0;
@@ -148,7 +148,7 @@ class IEconItemPropertyGenerator
 //-----------------------------------------------------------------------------
 class CEconItemSeriesDefinition
 {
-   public:
+    public:
     CEconItemSeriesDefinition( void );
     CEconItemSeriesDefinition( const CEconItemSeriesDefinition &that );
     CEconItemSeriesDefinition &operator=( const CEconItemSeriesDefinition &rhs );
@@ -174,7 +174,7 @@ class CEconItemSeriesDefinition
         return !m_strUiFile.IsEmpty() ? m_strUiFile.String() : "unknown";
     }
 
-   private:
+    private:
     // The value that the game/DB will know this series by
     int32 m_nValue;
 
@@ -187,7 +187,7 @@ class CEconItemSeriesDefinition
 //-----------------------------------------------------------------------------
 class CEconItemRarityDefinition
 {
-   public:
+    public:
     CEconItemRarityDefinition( void );
 
     ~CEconItemRarityDefinition( void ) {}
@@ -227,7 +227,7 @@ class CEconItemRarityDefinition
         return m_nLootlistWeight;
     }
 
-   private:
+    private:
     // The value that the game/DB will know this rarity by
     int32 m_nValue;
 
@@ -255,7 +255,7 @@ class CEconItemRarityDefinition
 //-----------------------------------------------------------------------------
 class CEconItemQualityDefinition
 {
-   public:
+    public:
     CEconItemQualityDefinition( void );
     CEconItemQualityDefinition( const CEconItemQualityDefinition &that );
     CEconItemQualityDefinition &operator=( const CEconItemQualityDefinition &rhs );
@@ -289,7 +289,7 @@ class CEconItemQualityDefinition
     }
 #endif  // DBGFLAG_VALIDATE
 
-   private:
+    private:
     // The value that the game/DB will know this quality by
     int32 m_nValue;
 
@@ -308,7 +308,7 @@ class CEconItemQualityDefinition
 //-----------------------------------------------------------------------------
 class CEconColorDefinition
 {
-   public:
+    public:
     bool BInitFromKV( KeyValues *pKVColor, CUtlVector< CUtlString > *pVecErrors = NULL );
 
     const char *GetName( void ) const
@@ -324,7 +324,7 @@ class CEconColorDefinition
         return m_strHexColor.Get();
     }
 
-   private:
+    private:
     // The English name of this color. Only used for lookup.
     CUtlConstString m_strName;
 
@@ -342,7 +342,7 @@ class CEconColorDefinition
 //-----------------------------------------------------------------------------
 class CEconItemSetDefinition
 {
-   public:
+    public:
     CEconItemSetDefinition( void );
     CEconItemSetDefinition( const CEconItemSetDefinition &that );
     CEconItemSetDefinition &operator=( const CEconItemSetDefinition &rhs );
@@ -353,7 +353,7 @@ class CEconItemSetDefinition
 
     void IterateAttributes( class IEconItemAttributeIterator *pIterator ) const;
 
-   public:
+    public:
     CUtlString m_strName;
     const char *m_pszLocalizedName;
     CUtlVector< item_definition_index_t > m_iItemDefs;
@@ -371,7 +371,7 @@ class CEconItemSetDefinition
 //-----------------------------------------------------------------------------
 class CEconItemCollectionDefinition
 {
-   public:
+    public:
     CEconItemCollectionDefinition( void );
     ~CEconItemCollectionDefinition( void ) {}
 
@@ -387,13 +387,13 @@ class CEconItemCollectionDefinition
         return m_iRarityMax;
     }
 
-   public:
+    public:
     CUtlString m_strName;
     const char *m_pszLocalizedName;
     const char *m_pszLocalizedDesc;
     CUtlVector< item_definition_index_t > m_iItemDefs;
 
-   private:
+    private:
     bool m_bIsReferenceCollection;
 
     uint8 m_iRarityMin;
@@ -403,7 +403,7 @@ class CEconItemCollectionDefinition
 //-----------------------------------------------------------------------------
 class CEconOperationDefinition
 {
-   public:
+    public:
     CEconOperationDefinition( void );
     ~CEconOperationDefinition( void );
 
@@ -493,7 +493,7 @@ class CEconOperationDefinition
         return m_nKillEaterEventType_Points;
     }
 
-   private:
+    private:
     const char *m_pszName;
     operation_definition_index_t m_unOperationID;
 
@@ -525,7 +525,7 @@ class CEconOperationDefinition
 //-----------------------------------------------------------------------------
 class IEconLootList
 {
-   public:
+    public:
     virtual ~IEconLootList() {}
 
     MUST_CHECK_RETURN virtual bool BPublicListContents() const = 0;
@@ -535,7 +535,7 @@ class IEconLootList
 
     class IEconLootListIterator
     {
-       public:
+        public:
         virtual ~IEconLootListIterator() {}
         virtual void OnIterate( item_definition_index_t unItemDefIndex ) = 0;
     };
@@ -564,8 +564,8 @@ struct lootlist_attrib_t
 {
     lootlist_attrib_t()
         : m_pVecCriteria( NULL ),
-          m_flWeight( 1.f ),
-          m_bAllowDuplicate( false )
+        m_flWeight( 1.f ),
+        m_bAllowDuplicate( false )
     {
     }
 
@@ -612,7 +612,7 @@ struct loot_list_additional_drop_t
 
 class CLootlistJob
 {
-   public:
+    public:
     CLootlistJob( const char *pszOwnerName );
     ~CLootlistJob();
     bool BInitFromKV( const char *pszContext, KeyValues *pKVKey, CEconItemSchema &pschema, CUtlVector< CUtlString > *pVecErrors );
@@ -632,7 +632,7 @@ class CLootlistJob
         return m_vecAdditionalDrops;
     }
 
-   private:
+    private:
     bool AddRandomAtrributes( KeyValues *pRandomAttributesKV, CEconItemSchema &pschema, CUtlVector< CUtlString > *pVecErrors = NULL );
     bool AddRandomAttributesFromTemplates( KeyValues *pRandomAttributesKV, CEconItemSchema &pschema, CUtlVector< CUtlString > *pVecErrors = NULL );
 
@@ -645,7 +645,7 @@ class CLootlistJob
 
 class CEconLootListDefinition : public IEconLootList
 {
-   public:
+    public:
     virtual ~CEconLootListDefinition();
 
     bool BInitFromKV( KeyValues *pKVLootList, CEconItemSchema &pschema, CUtlVector< CUtlString > *pVecErrors );
@@ -685,7 +685,7 @@ class CEconLootListDefinition : public IEconLootList
         return m_bPublicListContents;
     }
 
-   private:
+    private:
     CUtlString m_strName;
     const char *m_pszLootListHeader;
     const char *m_pszLootListFooter;
@@ -715,7 +715,7 @@ bool GetClientLootListInfo( const IEconItemInterface *pEconItem, LootListInfo_t 
 //-----------------------------------------------------------------------------
 class CEconCraftingRecipeDefinition
 {
-   public:
+    public:
     CEconCraftingRecipeDefinition( void );
     virtual ~CEconCraftingRecipeDefinition( void ) {}
 
@@ -832,7 +832,7 @@ class CEconCraftingRecipeDefinition
     bool BSerializeToMsg( CSOItemRecipe &msg ) const;
     bool BDeserializeFromMsg( const CSOItemRecipe &msg );
 
-   protected:
+    protected:
     // The number used to refer to this definition in the DB
     int32 m_nDefIndex;
 
@@ -910,7 +910,7 @@ enum EAssetClassAttrExportRule_t
 //-----------------------------------------------------------------------------
 class CEconItemAttributeDefinition
 {
-   public:
+    public:
     CEconItemAttributeDefinition( void );
     CEconItemAttributeDefinition( const CEconItemAttributeDefinition &that );
     CEconItemAttributeDefinition &operator=( const CEconItemAttributeDefinition &rhs );
@@ -1030,7 +1030,7 @@ class CEconItemAttributeDefinition
     }
 #endif  // DBGFLAG_VALIDATE
 
-   private:
+    private:
     // The raw keyvalues for this attribute definition.
     KeyValues *m_pKVAttribute;
 
@@ -1112,9 +1112,9 @@ struct attachedparticlesystem_t
 {
     attachedparticlesystem_t()
         : pszSystemName( NULL ), bFollowRootBone( NULL ), iCustomType( 0 ), nSystemID( 0 ), fRefireTime( 0 )  // only works for taunt effects, currently
-          ,
-          bDrawInViewModel( false ),
-          bUseSuffixName( false )
+        ,
+        bDrawInViewModel( false ),
+        bUseSuffixName( false )
     {
         V_memset( pszControlPoints, 0, sizeof( pszControlPoints ) );
     }
@@ -1213,7 +1213,7 @@ struct poseparamtable_t
 #endif  // defined(CLIENT_DLL) || defined(GAME_DLL)
 class CEconStyleInfo
 {
-   public:
+    public:
     CEconStyleInfo()
     {
         for ( int i = 0; i < TEAM_VISUAL_SECTIONS; i++ )
@@ -1310,7 +1310,7 @@ class CEconStyleInfo
         m_sIconURLLarge = szURL;
     }
 
-   protected:
+    protected:
     int m_iSkins[TEAM_VISUAL_SECTIONS];
     int m_iViewmodelSkins[TEAM_VISUAL_SECTIONS];
     const char *m_pszName;
@@ -1324,7 +1324,7 @@ class CEconStyleInfo
 
     CUtlVector< CUtlString > m_vecAdditionalHideBodygroups;
 
-   private:
+    private:
     CUtlString m_sIconURLSmall;
     CUtlString m_sIconURLLarge;
 };
@@ -1449,7 +1449,7 @@ class IEconTool
 {
     friend class CEconSharedToolSupport;
 
-   public:
+    public:
     IEconTool( const char *pszTypeName, const char *pszUseString, const char *pszUsageRestriction, item_capabilities_t unCapabilities )
         : m_pszTypeName( pszTypeName ), m_pszUseString( pszUseString ), m_pszUsageRestriction( pszUsageRestriction ), m_unCapabilities( unCapabilities )
     {
@@ -1542,7 +1542,7 @@ class IEconTool
     }
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     const char *m_pszTypeName;
     const char *m_pszUseString;
     const char *m_pszUsageRestriction;
@@ -1555,7 +1555,7 @@ class IEconTool
 //-----------------------------------------------------------------------------
 class CEconItemDefinition
 {
-   public:
+    public:
     CEconItemDefinition( void );
     virtual ~CEconItemDefinition( void );
 
@@ -2102,7 +2102,7 @@ class CEconItemDefinition
     }
 #endif  // DBGFLAG_VALIDATE
 
-   private:
+    private:
     // Pointer to the raw KeyValue definition of the item
     KeyValues *m_pKVItem;
 
@@ -2143,7 +2143,7 @@ class CEconItemDefinition
     // The base name of this item. i.e. "The Kritz-Krieg".
     const char *m_pszItemBaseName;
     bool m_bProperName;  // If set, the name will have "The" prepended to it, unless it's got a non-unique quality
-                         // in which case it'll have "A" prepended to the quality. i.e. A Community Kritzkrieg
+                        // in which case it'll have "A" prepended to the quality. i.e. A Community Kritzkrieg
 
     // The base type of this item. i.e. "Rocket Launcher" or "Shotgun".
     // This is often the same as the base name, but not always.
@@ -2307,7 +2307,7 @@ class CEconItemDefinition
     // False if this definition should not grant self-made items
     bool m_bValidForSelfMade;
 
-   protected:
+    protected:
     // Protected to allow subclasses to add/remove game-specific tags.
     CUtlVector< econ_tag_handle_t > m_vecTags;
     CUtlVector< const CEconItemDefinition * > m_vecContainingBundleItemDefs;  // Item definition indices for any bundles which contain this item
@@ -2746,8 +2746,8 @@ inline int CEconItemDefinition::GetStyleSkin( style_index_t unStyle, int iTeam, 
 
     // Return our skin if we have a style or our default skin of -1 otherwise.
     return pStyle
-               ? pStyle->GetSkin( iTeam, bViewmodel )
-               : GetDefaultSkin();
+                ? pStyle->GetSkin( iTeam, bViewmodel )
+                : GetDefaultSkin();
 }
 
 //-----------------------------------------------------------------------------
@@ -2896,7 +2896,7 @@ inline int CEconItemDefinition::GetBestVisualTeamData( int iTeam ) const
 //-----------------------------------------------------------------------------
 class CTimedItemRewardDefinition
 {
-   public:
+    public:
     CTimedItemRewardDefinition( void );
     CTimedItemRewardDefinition( const CTimedItemRewardDefinition &that );
     CTimedItemRewardDefinition &operator=( const CTimedItemRewardDefinition &rhs );
@@ -2947,7 +2947,7 @@ class CTimedItemRewardDefinition
     }
 #endif  // DBGFLAG_VALIDATE
 
-   private:
+    private:
     // Frequency of how often the item is awarded
     uint32 m_unMinFreq;
     uint32 m_unMaxFreq;
@@ -2968,7 +2968,7 @@ class CTimedItemRewardDefinition
 //-----------------------------------------------------------------------------
 class CItemLevelingDefinition
 {
-   public:
+    public:
     CItemLevelingDefinition( void );
     CItemLevelingDefinition( const CItemLevelingDefinition &that );
     CItemLevelingDefinition &operator=( const CItemLevelingDefinition &rhs );
@@ -2990,7 +2990,7 @@ class CItemLevelingDefinition
         return m_pszLocalizedName_LocalStorage;
     }
 
-   private:
+    private:
     uint32 m_unLevel;
     uint32 m_unRequiredScore;
     char *m_pszLocalizedName_LocalStorage;
@@ -3005,8 +3005,8 @@ struct AchievementAward_t
 {
     AchievementAward_t( const AchievementAward_t &rhs )
         : m_sNativeName( rhs.m_sNativeName ),
-          m_unSourceAppId( rhs.m_unSourceAppId ),
-          m_unAuditData( rhs.m_unAuditData )
+        m_unSourceAppId( rhs.m_unSourceAppId ),
+        m_unAuditData( rhs.m_unAuditData )
     {
         m_vecDefIndex.CopyArray( rhs.m_vecDefIndex.Base(), rhs.m_vecDefIndex.Count() );
     }
@@ -3049,14 +3049,14 @@ struct schema_string_table_entry_t
 
 class CForeignAppImports
 {
-   public:
+    public:
     CForeignAppImports()
         : m_mapDefinitions( DefLessFunc( uint16 ) ) {}
 
     void AddMapping( uint16 unForeignDefIndex, const CEconItemDefinition *pDefn );
     const CEconItemDefinition *FindMapping( uint16 unForeignDefIndex ) const;
 
-   private:
+    private:
     CUtlMap< uint16, const CEconItemDefinition * > m_mapDefinitions;
 };
 
@@ -3128,7 +3128,7 @@ class CForeignAppImports
 // or creation of a new item on the GC (LoadOrGenerate).
 class ISchemaAttributeType
 {
-   public:
+    public:
     virtual ~ISchemaAttributeType() {}
 
     // Returns a unique integer describing the C++-in-memory-layout type used by this attribute type.
@@ -3198,11 +3198,11 @@ struct attr_type_t
 #if defined( CLIENT_DLL ) || defined( GAME_DLL )
 class IDelayedSchemaData
 {
-   public:
+    public:
     virtual ~IDelayedSchemaData() {}
     virtual bool InitializeSchema( CEconItemSchema *pItemSchema ) = 0;
 
-   protected:
+    protected:
     // Passing '0' as the expected version means "we weren't expecting any version in particular" and will
     // skip the sanity checking.
     bool InitializeSchemaInternal( CEconItemSchema *pItemSchema, CUtlBuffer &bufRawData, bool bInitAsBinary, uint32 nExpectedVersion );
@@ -3213,14 +3213,14 @@ class CEconStorePriceSheet;
 
 class CEconItemSchema
 {
-   public:
+    public:
     CEconItemSchema();
 
-   private:
+    private:
     CEconItemSchema( const CEconItemSchema &rhs );
     CEconItemSchema &operator=( CEconItemSchema &rhs );
 
-   public:
+    public:
     virtual ~CEconItemSchema( void )
     {
         Reset();
@@ -3285,7 +3285,7 @@ class CEconItemSchema
     bool IsValidItemSlot( equipped_slot_t unSlot, EEquipType_t eType ) const
     {
         return eType == EQUIP_TYPE_ACCOUNT ? unSlot >= m_unFirstValidAccountItemSlot && unSlot <= m_unLastValidAccountItemSlot
-                                           : unSlot >= m_unFirstValidClassItemSlot && unSlot <= m_unLastValidClassItemSlot;
+                                            : unSlot >= m_unFirstValidClassItemSlot && unSlot <= m_unLastValidClassItemSlot;
     }
 
     enum
@@ -3468,11 +3468,11 @@ class CEconItemSchema
 
     const char *FindStringTableEntry( const char *pszTableName, int iIndex ) const;
 
-   private:
+    private:
     void SetEquipRegionConflict( int iRegion, unsigned int unBit );
     int GetEquipRegionIndexByName( const char *pRegionName ) const;
 
-   public:
+    public:
     // Common lookup methods
     bool BGetItemQualityFromName( const char *pchName, uint8 *nQuality ) const;
     const CEconItemQualityDefinition *GetQualityDefinition( int nQuality ) const;
@@ -3599,7 +3599,7 @@ class CEconItemSchema
         return k_RTime32Nil;
     }
 
-   public:
+    public:
     // Subclass interface.
     virtual CEconItemDefinition *CreateEconItemDefinition()
     {
@@ -3625,7 +3625,7 @@ class CEconItemSchema
 
     bool BInsertLootlist( const char *pListName, KeyValues *pKVLootList, CUtlVector< CUtlString > *pVecErrors );
 
-   protected:
+    protected:
     virtual void Reset( void );
 
     virtual bool BInitSchema( KeyValues *pKVRawDefinition, CUtlVector< CUtlString > *pVecErrors = NULL );
@@ -3634,7 +3634,7 @@ class CEconItemSchema
     virtual int CalculateNumberOfConcreteItems( const CEconItemDefinition *pItemDef );  // Let derived classes handle custom item types
 #endif                                                                                  // TF_CLIENT_DLL
 
-   private:
+    private:
     bool BInitGameInfo( KeyValues *pKVGameInfo, CUtlVector< CUtlString > *pVecErrors );
     bool BInitAttributeTypes( CUtlVector< CUtlString > *pVecErrors );
     bool BInitDefinitionPrefabs( KeyValues *pKVPrefabs, CUtlVector< CUtlString > *pVecErrors );
@@ -3843,7 +3843,7 @@ extern CEconItemSchema &GEconItemSchema();
 template < class T >
 class CSchemaFieldHandle
 {
-   public:
+    public:
     explicit CSchemaFieldHandle( const char *szName )
         : m_szName( szName )
     {
@@ -3882,10 +3882,10 @@ class CSchemaFieldHandle
         return m_szName;
     }
 
-   private:
+    private:
     const T *GetTypedRef() const;
 
-   private:
+    private:
     const char *m_szName;
 
     mutable const T *m_pRef;
@@ -3966,11 +3966,11 @@ int StringFieldToInt( const char *szValue, const CUtlVector< const char * > &vec
 //-----------------------------------------------------------------------------
 class CAttributeLineItemLootList : public IEconLootList
 {
-   public:
+    public:
     static CSchemaAttributeDefHandle s_pAttrDef_RandomDropLineItems[4];
     static CSchemaAttributeDefHandle s_pAttrDef_RandomDropLineItemFooterDesc;
 
-   public:
+    public:
     CAttributeLineItemLootList( const IEconItemInterface *pEconItem )
         : m_pEconItem( pEconItem )
     {
@@ -3986,7 +3986,7 @@ class CAttributeLineItemLootList : public IEconLootList
     virtual const char *GetLootListFooterLocalizationKey() const OVERRIDE;
     virtual const char *GetLootListCollectionReference() const OVERRIDE;
 
-   private:
+    private:
     const IEconItemInterface *m_pEconItem;
 };
 

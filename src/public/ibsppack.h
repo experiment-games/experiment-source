@@ -19,7 +19,7 @@ class IFileSystem;
 
 abstract_class IBSPPack
 {
-   public:
+    public:
     virtual void LoadBSPFile( IFileSystem * pFileSystem, char *filename ) = 0;
     virtual void WriteBSPFile( char *filename ) = 0;
     virtual void ClearPackFile( void ) = 0;

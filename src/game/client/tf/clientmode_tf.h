@@ -33,9 +33,9 @@ class ClientModeTFNormal : public ClientModeShared
 {
     DECLARE_CLASS( ClientModeTFNormal, ClientModeShared );
 
-   private:
+    private:
     // IClientMode overrides.
-   public:
+    public:
     ClientModeTFNormal();
     virtual ~ClientModeTFNormal();
 
@@ -113,11 +113,11 @@ class ClientModeTFNormal : public ClientModeShared
 
     bool BIsFriendOrPartyMember( C_TFPlayer *pPlayer );
 
-   private:
+    private:
     virtual bool BCanSendPartyChatMessages() const OVERRIDE;
     //	void	UpdateSpectatorMode( void );
 
-   private:
+    private:
     CHudMenuEngyBuild *m_pMenuEngyBuild;
     CHudMenuEngyDestroy *m_pMenuEngyDestroy;
     CHudMenuSpyDisguise *m_pMenuSpyDisguise;

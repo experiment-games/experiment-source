@@ -13,7 +13,7 @@
 
 abstract_class ISceneTokenProcessor
 {
-   public:
+    public:
     virtual const char *CurrentToken( void ) = 0;
     virtual bool GetToken( bool crossline ) = 0;
     virtual bool TokenAvailable( void ) = 0;

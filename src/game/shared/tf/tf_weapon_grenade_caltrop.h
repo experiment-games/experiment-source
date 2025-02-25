@@ -24,7 +24,7 @@
 //
 class CTFGrenadeCaltrop : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeCaltrop, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -56,7 +56,7 @@ class CTFGrenadeCaltrop : public CTFWeaponBaseGrenade
 //
 class CTFGrenadeCaltropProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeCaltropProjectile, CTFWeaponBaseGrenadeProj );
     DECLARE_NETWORKCLASS();
 
@@ -82,7 +82,7 @@ class CTFGrenadeCaltropProjectile : public CTFWeaponBaseGrenadeProj
     virtual void OnDataChanged( DataUpdateType_t updateType );
 #endif
 
-   private:
+    private:
     float m_flDetonateTime;
 };
 

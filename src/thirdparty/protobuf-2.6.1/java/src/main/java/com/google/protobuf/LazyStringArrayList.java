@@ -66,7 +66,7 @@ public class LazyStringArrayList extends AbstractList<String>
     implements LazyStringList, RandomAccess {
 
   public static final LazyStringList EMPTY =
-      new LazyStringArrayList().getUnmodifiableView();
+    new LazyStringArrayList().getUnmodifiableView();
 
   private final List<Object> list;
 
@@ -87,21 +87,21 @@ public class LazyStringArrayList extends AbstractList<String>
   public String get(int index) {
     Object o = list.get(index);
     if (o instanceof String) {
-      return (String) o;
+    return (String) o;
     } else if (o instanceof ByteString) {
-      ByteString bs = (ByteString) o;
-      String s = bs.toStringUtf8();
-      if (bs.isValidUtf8()) {
+    ByteString bs = (ByteString) o;
+    String s = bs.toStringUtf8();
+    if (bs.isValidUtf8()) {
         list.set(index, s);
-      }
-      return s;
+    }
+    return s;
     } else {
-      byte[] ba = (byte[]) o;
-      String s = Internal.toStringUtf8(ba);
-      if (Internal.isValidUtf8(ba)) {
+    byte[] ba = (byte[]) o;
+    String s = Internal.toStringUtf8(ba);
+    if (Internal.isValidUtf8(ba)) {
         list.set(index, s);
-      }
-      return s;
+    }
+    return s;
     }
   }
 
@@ -174,7 +174,7 @@ public class LazyStringArrayList extends AbstractList<String>
     list.add(element);
     modCount++;
   }
-  
+
   // @Override
   public void add(byte[] element) {
     list.add(element);
@@ -186,17 +186,17 @@ public class LazyStringArrayList extends AbstractList<String>
     Object o = list.get(index);
     ByteString b = asByteString(o);
     if (b != o) {
-      list.set(index, b);
+    list.set(index, b);
     }
     return b;
   }
-  
+
   // @Override
   public byte[] getByteArray(int index) {
     Object o = list.get(index);
     byte[] b = asByteArray(o);
     if (b != o) {
-      list.set(index, b);
+    list.set(index, b);
     }
     return b;
   }
@@ -214,31 +214,31 @@ public class LazyStringArrayList extends AbstractList<String>
 
   private static String asString(Object o) {
     if (o instanceof String) {
-      return (String) o;
+    return (String) o;
     } else if (o instanceof ByteString) {
-      return ((ByteString) o).toStringUtf8();
+    return ((ByteString) o).toStringUtf8();
     } else {
-      return Internal.toStringUtf8((byte[]) o);
+    return Internal.toStringUtf8((byte[]) o);
     }
   }
-  
+
   private static ByteString asByteString(Object o) {
     if (o instanceof ByteString) {
-      return (ByteString) o;
+    return (ByteString) o;
     } else if (o instanceof String) {
-      return ByteString.copyFromUtf8((String) o);
+    return ByteString.copyFromUtf8((String) o);
     } else {
-      return ByteString.copyFrom((byte[]) o);
+    return ByteString.copyFrom((byte[]) o);
     }
   }
-  
+
   private static byte[] asByteArray(Object o) {
     if (o instanceof byte[]) {
-      return (byte[]) o;
+    return (byte[]) o;
     } else if (o instanceof String) {
-      return Internal.toByteArray((String) o);
+    return Internal.toByteArray((String) o);
     } else {
-      return ((ByteString) o).toByteArray();
+    return ((ByteString) o).toByteArray();
     }
   }
 
@@ -250,107 +250,107 @@ public class LazyStringArrayList extends AbstractList<String>
   // @Override
   public void mergeFrom(LazyStringList other) {
     for (Object o : other.getUnderlyingElements()) {
-      if (o instanceof byte[]) {
+    if (o instanceof byte[]) {
         byte[] b = (byte[]) o;
         // Byte array's content is mutable so they should be copied rather than
         // shared when merging from one message to another.
         list.add(Arrays.copyOf(b, b.length));
-      } else {
+    } else {
         list.add(o);
-      }
+    }
     }
   }
 
   private static class ByteArrayListView extends AbstractList<byte[]>
-      implements RandomAccess {
+    implements RandomAccess {
     private final List<Object> list;
-    
+
     ByteArrayListView(List<Object> list) {
-      this.list = list;
+    this.list = list;
     }
-    
+
     @Override
     public byte[] get(int index) {
-      Object o = list.get(index);
-      byte[] b = asByteArray(o);
-      if (b != o) {
+    Object o = list.get(index);
+    byte[] b = asByteArray(o);
+    if (b != o) {
         list.set(index, b);
-      }
-      return b;
+    }
+    return b;
     }
 
     @Override
     public int size() {
-      return list.size();
+    return list.size();
     }
 
     @Override
     public byte[] set(int index, byte[] s) {
-      Object o = list.set(index, s);
-      modCount++;
-      return asByteArray(o);
+    Object o = list.set(index, s);
+    modCount++;
+    return asByteArray(o);
     }
 
     @Override
     public void add(int index, byte[] s) {
-      list.add(index, s);
-      modCount++;
+    list.add(index, s);
+    modCount++;
     }
 
     @Override
     public byte[] remove(int index) {
-      Object o = list.remove(index);
-      modCount++;
-      return asByteArray(o);
+    Object o = list.remove(index);
+    modCount++;
+    return asByteArray(o);
     }
   }
-  
+
   // @Override
   public List<byte[]> asByteArrayList() {
     return new ByteArrayListView(list);
   }
 
   private static class ByteStringListView extends AbstractList<ByteString>
-      implements RandomAccess {
+    implements RandomAccess {
     private final List<Object> list;
 
     ByteStringListView(List<Object> list) {
-      this.list = list;
+    this.list = list;
     }
 
     @Override
     public ByteString get(int index) {
-      Object o = list.get(index);
-      ByteString b = asByteString(o);
-      if (b != o) {
+    Object o = list.get(index);
+    ByteString b = asByteString(o);
+    if (b != o) {
         list.set(index, b);
-      }
-      return b;
+    }
+    return b;
     }
 
     @Override
     public int size() {
-      return list.size();
+    return list.size();
     }
 
     @Override
     public ByteString set(int index, ByteString s) {
-      Object o = list.set(index, s);
-      modCount++;
-      return asByteString(o);
+    Object o = list.set(index, s);
+    modCount++;
+    return asByteString(o);
     }
 
     @Override
     public void add(int index, ByteString s) {
-      list.add(index, s);
-      modCount++;
+    list.add(index, s);
+    modCount++;
     }
 
     @Override
     public ByteString remove(int index) {
-      Object o = list.remove(index);
-      modCount++;
-      return asByteString(o);
+    Object o = list.remove(index);
+    modCount++;
+    return asByteString(o);
     }
   }
 

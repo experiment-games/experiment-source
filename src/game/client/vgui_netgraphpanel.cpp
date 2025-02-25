@@ -72,7 +72,7 @@ class CNetGraphPanel : public Panel
 {
     typedef Panel BaseClass;
 
-   private:
+    private:
     typedef struct
     {
         int latency;
@@ -134,7 +134,7 @@ class CNetGraphPanel : public Panel
     const ConVar_ServerBounded *cl_updaterate;
     const ConVar_ServerBounded *cl_cmdrate;
 
-   public:
+    public:
     CNetGraphPanel( VPANEL parent );
     virtual ~CNetGraphPanel( void );
 
@@ -177,7 +177,7 @@ class CNetGraphPanel : public Panel
 
     void OnFontChanged();
 
-   private:
+    private:
     void PaintLineArt( int x, int y, int w, int graphtype, int maxmsgbytes );
     void DrawLargePacketSizes( int x, int w, int graphtype, float warning_threshold );
 
@@ -1142,7 +1142,7 @@ void CNetGraphPanel::DrawLargePacketSizes( int x, int w, int graphtype, float wa
         int nTotalBytes = m_Graph[i].msgbytes[INetChannelInfo::TOTAL];
 
         if ( warning_threshold != 0.0f &&
-             nTotalBytes > MAX( 300, warning_threshold ) )
+            nTotalBytes > MAX( 300, warning_threshold ) )
         {
             char sz[32];
             Q_snprintf( sz, sizeof( sz ), "%i", nTotalBytes );
@@ -1513,10 +1513,10 @@ void CNetGraphPanel::UpdateEstimatedServerFramerate( INetChannelInfo *netchannel
 
 class CNetGraphPanelInterface : public INetGraphPanel
 {
-   private:
+    private:
     CNetGraphPanel *netGraphPanel;
 
-   public:
+    public:
     CNetGraphPanelInterface( void )
     {
         netGraphPanel = NULL;

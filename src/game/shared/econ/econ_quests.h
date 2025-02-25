@@ -36,7 +36,7 @@ extern QuestPointsDef_t g_QuestPointsDefs[];
 
 class CQuestThemeDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQuestTheme, DEF_TYPE_QUEST_THEME >
 {
-   public:
+    public:
     CQuestThemeDefinition( void );
     virtual ~CQuestThemeDefinition( void );
 
@@ -69,7 +69,7 @@ class CQuestThemeDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQ
         return UTIL_GetRandomSoundFromEntry( m_msgData.reveal_sound().c_str() );
     }
 
-   private:
+    private:
     static const char* GetRandomWeightedString( const CMsgQuestTheme_WeightedStringSet& msgSet );
 };
 
@@ -79,7 +79,7 @@ class CQuestThemeDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQ
 //-----------------------------------------------------------------------------
 class CQuestObjectiveConditionsDefinition
 {
-   public:
+    public:
     CQuestObjectiveConditionsDefinition( void );
     virtual ~CQuestObjectiveConditionsDefinition( void );
 
@@ -100,7 +100,7 @@ class CQuestObjectiveConditionsDefinition
         return m_vecRequiredItemSets;
     }
 
-   private:
+    private:
     ObjectiveConditionDefIndex_t m_nDefIndex;
     KeyValues* m_pConditionsKey;
 
@@ -112,7 +112,7 @@ class CQuestObjectiveConditionsDefinition
 //-----------------------------------------------------------------------------
 class CQuestObjectiveDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQuestObjectiveDef, DEF_TYPE_QUEST_OBJECTIVE >
 {
-   public:
+    public:
     CQuestObjectiveDefinition( void );
     virtual ~CQuestObjectiveDefinition( void );
 
@@ -130,13 +130,13 @@ class CQuestObjectiveDefinition : public CTypedProtoBufScriptObjectDefinition< C
     void AddModifiers( CTFQuestEvaluator* pEvaluator ) const;
     KeyValues* GetConditionsKeyValues() const;
 
-   private:
+    private:
     KeyValues* m_pKVConditions;
 };
 
 struct QuestObjectiveInstance_t
 {
-   public:
+    public:
     QuestObjectiveInstance_t( const CMsgQuestDef_ObjectiveInstance& obj )
         : m_objective( obj ), m_pDef( NULL )
     {
@@ -172,7 +172,7 @@ struct QuestObjectiveInstance_t
         return m_pDef;
     }
 
-   private:
+    private:
     CMsgQuestDef_ObjectiveInstance m_objective;
     const CQuestObjectiveDefinition* m_pDef;
 };
@@ -183,7 +183,7 @@ typedef CUtlVector< QuestObjectiveInstance_t > QuestObjectiveDefVec_t;
 //-----------------------------------------------------------------------------
 class CQuestDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQuestDef, DEF_TYPE_QUEST >
 {
-   public:
+    public:
     CQuestDefinition( void );
 
     virtual const char* GetDisplayName() const OVERRIDE
@@ -241,7 +241,7 @@ class CQuestDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQuestD
 
     void AddModifiers( CTFQuestEvaluator* pEvaluator ) const;
 
-   private:
+    private:
     CUtlVector< item_definition_index_t > m_vecLoanerDefindex;
     QuestObjectiveDefVec_t m_vecObjectives;
     const CEconOperationDefinition* m_pOperation = NULL;
@@ -252,7 +252,7 @@ class CQuestDefinition : public CTypedProtoBufScriptObjectDefinition< CMsgQuestD
 //---------------------------------------------------------------------------------
 class CQuest : public GCSDK::CProtoBufSharedObject< CSOQuest, k_EEConTypeQuest >
 {
-   public:
+    public:
     CQuest();
     CQuest( CSOQuest soData );
 
@@ -275,7 +275,7 @@ class CQuest : public GCSDK::CProtoBufSharedObject< CSOQuest, k_EEConTypeQuest >
 //---------------------------------------------------------------------------------
 class CQuestMapRewardPurchase : public GCSDK::CProtoBufSharedObject< CSOQuestMapRewardPurchase, k_EEconTypeQuestMapRewardPurchase >
 {
-   public:
+    public:
     CQuestMapRewardPurchase();
     CQuestMapRewardPurchase( CSOQuestMapRewardPurchase soData );
 };

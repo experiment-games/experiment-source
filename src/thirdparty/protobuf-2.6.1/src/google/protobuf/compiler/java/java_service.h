@@ -65,7 +65,7 @@ namespace java
 
 class ServiceGenerator
 {
-   public:
+    public:
     explicit ServiceGenerator( const ServiceDescriptor* descriptor );
     virtual ~ServiceGenerator();
 
@@ -82,23 +82,23 @@ class ServiceGenerator
         IS_CONCRETE
     };
 
-   protected:
+    protected:
     const ServiceDescriptor* descriptor_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ServiceGenerator );
 };
 
 class ImmutableServiceGenerator : public ServiceGenerator
 {
-   public:
+    public:
     explicit ImmutableServiceGenerator( const ServiceDescriptor* descriptor,
                                         Context* context );
     virtual ~ImmutableServiceGenerator();
 
     virtual void Generate( io::Printer* printer );
 
-   private:
+    private:
     // Generate the getDescriptorForType() method.
     void GenerateGetDescriptorForType( io::Printer* printer );
 
@@ -129,15 +129,15 @@ class ImmutableServiceGenerator : public ServiceGenerator
     // Generate a method signature, possibly abstract, without body or trailing
     // semicolon.
     void GenerateMethodSignature( io::Printer* printer,
-                                  const MethodDescriptor* method,
-                                  IsAbstract is_abstract );
+                                const MethodDescriptor* method,
+                                IsAbstract is_abstract );
 
     // Generate a blocking stub interface and implementation of the service.
     void GenerateBlockingStub( io::Printer* printer );
 
     // Generate the method signature for one method of a blocking stub.
     void GenerateBlockingMethodSignature( io::Printer* printer,
-                                          const MethodDescriptor* method );
+                                        const MethodDescriptor* method );
 
     Context* context_;
     ClassNameResolver* name_resolver_;

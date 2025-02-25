@@ -67,7 +67,7 @@ struct OneofGeneratorInfo;
 // generators.
 class Context
 {
-   public:
+    public:
     explicit Context( const FileDescriptor* file );
     ~Context();
 
@@ -83,7 +83,7 @@ class Context
     const OneofGeneratorInfo* GetOneofGeneratorInfo(
         const OneofDescriptor* oneof ) const;
 
-   private:
+    private:
     void InitializeFieldGeneratorInfo( const FileDescriptor* file );
     void InitializeFieldGeneratorInfoForMessage( const Descriptor* message );
     void InitializeFieldGeneratorInfoForFields(

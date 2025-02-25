@@ -52,8 +52,8 @@ void UTIL_GetNormalizedColorTintAndLuminosity( const Vector &color, Vector *tint
     {
         // Each channel contributes differently than the others
         *luminosity = ( color.x * RED_CHANNEL_CONTRIBUTION ) +
-                      ( color.y * GREEN_CHANNEL_CONTRIBUTION ) +
-                      ( color.z * BLUE_CHANNEL_CONTRIBUTION );
+                    ( color.y * GREEN_CHANNEL_CONTRIBUTION ) +
+                    ( color.z * BLUE_CHANNEL_CONTRIBUTION );
     }
 
     // Give tint if requested
@@ -260,118 +260,118 @@ void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float sc
 
 #if 0
 
-	float	colorRamp;
-	float	flScale = MIN( 1.0f, scale / 8.0f );
+    float	colorRamp;
+    float	flScale = MIN( 1.0f, scale / 8.0f );
 
-	PMaterialHandle	hMaterial = ParticleMgr()->GetPMaterial( "effects/slime1" );
-	PMaterialHandle	hMaterial2 = ParticleMgr()->GetPMaterial( "effects/splash4" );
+    PMaterialHandle	hMaterial = ParticleMgr()->GetPMaterial( "effects/slime1" );
+    PMaterialHandle	hMaterial2 = ParticleMgr()->GetPMaterial( "effects/splash4" );
 
-	Vector	color;
-	float	luminosity;
-	
-	// Get our lighting information
-	FX_GetSplashLighting( origin + ( normal * scale ), &color, &luminosity );
+    Vector	color;
+    float	luminosity;
 
-	Vector	offDir;
-	Vector	offset;
+    // Get our lighting information
+    FX_GetSplashLighting( origin + ( normal * scale ), &color, &luminosity );
 
-	TrailParticle	*tParticle;
+    Vector	offDir;
+    Vector	offset;
 
-	CSmartPtr<CTrailParticles> sparkEmitter = CTrailParticles::Create( "splash" );
+    TrailParticle	*tParticle;
 
-	if ( !sparkEmitter )
-		return;
+    CSmartPtr<CTrailParticles> sparkEmitter = CTrailParticles::Create( "splash" );
 
-	sparkEmitter->SetSortOrigin( origin );
-	sparkEmitter->m_ParticleCollision.SetGravity( 800.0f );
-	sparkEmitter->SetFlag( bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
-	sparkEmitter->SetVelocityDampen( 2.0f );
-	if ( IsXbox() )
-	{
-		sparkEmitter->GetBinding().SetBBox( origin - Vector( 32, 32, 64 ), origin + Vector( 32, 32, 64 ) );
-	}
+    if ( !sparkEmitter )
+        return;
 
-	//Dump out drops
-	for ( int i = 0; i < 24; i++ )
-	{
-		offset = origin;
-		offset[0] += random->RandomFloat( -16.0f, 16.0f ) * flScale;
-		offset[1] += random->RandomFloat( -16.0f, 16.0f ) * flScale;
+    sparkEmitter->SetSortOrigin( origin );
+    sparkEmitter->m_ParticleCollision.SetGravity( 800.0f );
+    sparkEmitter->SetFlag( bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+    sparkEmitter->SetVelocityDampen( 2.0f );
+    if ( IsXbox() )
+    {
+        sparkEmitter->GetBinding().SetBBox( origin - Vector( 32, 32, 64 ), origin + Vector( 32, 32, 64 ) );
+    }
 
-		tParticle = (TrailParticle *) sparkEmitter->AddParticle( sizeof(TrailParticle), hMaterial, offset );
+    //Dump out drops
+    for ( int i = 0; i < 24; i++ )
+    {
+        offset = origin;
+        offset[0] += random->RandomFloat( -16.0f, 16.0f ) * flScale;
+        offset[1] += random->RandomFloat( -16.0f, 16.0f ) * flScale;
 
-		if ( tParticle == NULL )
-			break;
+        tParticle = (TrailParticle *) sparkEmitter->AddParticle( sizeof(TrailParticle), hMaterial, offset );
 
-		tParticle->m_flLifetime	= 0.0f;
-		tParticle->m_flDieTime	= random->RandomFloat( 0.25f, 0.5f );
+        if ( tParticle == NULL )
+            break;
 
-		offDir = normal + RandomVector( -0.6f, 0.6f );
+        tParticle->m_flLifetime	= 0.0f;
+        tParticle->m_flDieTime	= random->RandomFloat( 0.25f, 0.5f );
 
-		tParticle->m_vecVelocity = offDir * random->RandomFloat( SPLASH_MIN_SPEED * flScale * 3.0f, SPLASH_MAX_SPEED * flScale * 3.0f );
-		tParticle->m_vecVelocity[2] += random->RandomFloat( 32.0f, 64.0f ) * flScale;
-   
-		tParticle->m_flWidth		= random->RandomFloat( 3.0f, 6.0f ) * flScale;
-		tParticle->m_flLength		= random->RandomFloat( 0.025f, 0.05f ) * flScale;
+        offDir = normal + RandomVector( -0.6f, 0.6f );
 
-		colorRamp = random->RandomFloat( 0.75f, 1.25f );
+        tParticle->m_vecVelocity = offDir * random->RandomFloat( SPLASH_MIN_SPEED * flScale * 3.0f, SPLASH_MAX_SPEED * flScale * 3.0f );
+        tParticle->m_vecVelocity[2] += random->RandomFloat( 32.0f, 64.0f ) * flScale;
 
-		tParticle->m_color.r = MIN( 1.0f, color.x * colorRamp ) * 255;
-		tParticle->m_color.g = MIN( 1.0f, color.y * colorRamp ) * 255;
-		tParticle->m_color.b = MIN( 1.0f, color.z * colorRamp ) * 255;
-		tParticle->m_color.a = 255 * luminosity;
-	}
+        tParticle->m_flWidth		= random->RandomFloat( 3.0f, 6.0f ) * flScale;
+        tParticle->m_flLength		= random->RandomFloat( 0.025f, 0.05f ) * flScale;
 
-	// Setup splash emitter
-	CSmartPtr<CSplashParticle> pSimple = CSplashParticle::Create( "splish" );
-	pSimple->SetSortOrigin( origin );
-	pSimple->SetClipHeight( origin.z );
-	pSimple->SetParticleCullRadius( scale * 2.0f );
+        colorRamp = random->RandomFloat( 0.75f, 1.25f );
 
-	if ( IsXbox() )
-	{
-		pSimple->GetBinding().SetBBox( origin - Vector( 32, 32, 64 ), origin + Vector( 32, 32, 64 ) );
-	}
+        tParticle->m_color.r = MIN( 1.0f, color.x * colorRamp ) * 255;
+        tParticle->m_color.g = MIN( 1.0f, color.y * colorRamp ) * 255;
+        tParticle->m_color.b = MIN( 1.0f, color.z * colorRamp ) * 255;
+        tParticle->m_color.a = 255 * luminosity;
+    }
 
-	SimpleParticle	*pParticle;
+    // Setup splash emitter
+    CSmartPtr<CSplashParticle> pSimple = CSplashParticle::Create( "splish" );
+    pSimple->SetSortOrigin( origin );
+    pSimple->SetClipHeight( origin.z );
+    pSimple->SetParticleCullRadius( scale * 2.0f );
 
-	// Tint
-	colorRamp = random->RandomFloat( 0.75f, 1.0f );
-	color = Vector( 1.0f, 0.8f, 0.0f ) * color * colorRamp;
+    if ( IsXbox() )
+    {
+        pSimple->GetBinding().SetBBox( origin - Vector( 32, 32, 64 ), origin + Vector( 32, 32, 64 ) );
+    }
 
-	//Main gout
-	for ( int i = 0; i < 8; i++ )
-	{
-		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), hMaterial2, origin );
+    SimpleParticle	*pParticle;
 
-		if ( pParticle == NULL )
-			break;
+    // Tint
+    colorRamp = random->RandomFloat( 0.75f, 1.0f );
+    color = Vector( 1.0f, 0.8f, 0.0f ) * color * colorRamp;
 
-		pParticle->m_flLifetime = 0.0f;
-		pParticle->m_flDieTime	= 2.0f;	//NOTENOTE: We use a clip plane to realistically control our lifespan
+    //Main gout
+    for ( int i = 0; i < 8; i++ )
+    {
+        pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), hMaterial2, origin );
 
-		pParticle->m_vecVelocity.Random( -0.2f, 0.2f );
-		pParticle->m_vecVelocity += ( normal * random->RandomFloat( 4.0f, 6.0f ) );
-		
-		VectorNormalize( pParticle->m_vecVelocity );
+        if ( pParticle == NULL )
+            break;
 
-		pParticle->m_vecVelocity *= 50 * flScale * (8-i);
-		
-		colorRamp = random->RandomFloat( 0.75f, 1.25f );
+        pParticle->m_flLifetime = 0.0f;
+        pParticle->m_flDieTime	= 2.0f;	//NOTENOTE: We use a clip plane to realistically control our lifespan
 
-		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
-		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
-		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
-		pParticle->m_uchStartSize	= 24 * flScale * RemapValClamped( i, 7, 0, 1, 0.5f );
-		pParticle->m_uchEndSize		= MIN( 255, pParticle->m_uchStartSize * 2 );
-		
-		pParticle->m_uchStartAlpha	= RemapValClamped( i, 7, 0, 255, 32 ) * luminosity;
-		pParticle->m_uchEndAlpha	= 0;
-		
-		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
-		pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
-	}
+        pParticle->m_vecVelocity.Random( -0.2f, 0.2f );
+        pParticle->m_vecVelocity += ( normal * random->RandomFloat( 4.0f, 6.0f ) );
+
+        VectorNormalize( pParticle->m_vecVelocity );
+
+        pParticle->m_vecVelocity *= 50 * flScale * (8-i);
+
+        colorRamp = random->RandomFloat( 0.75f, 1.25f );
+
+        pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
+        pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
+        pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
+
+        pParticle->m_uchStartSize	= 24 * flScale * RemapValClamped( i, 7, 0, 1, 0.5f );
+        pParticle->m_uchEndSize		= MIN( 255, pParticle->m_uchStartSize * 2 );
+
+        pParticle->m_uchStartAlpha	= RemapValClamped( i, 7, 0, 255, 32 ) * luminosity;
+        pParticle->m_uchEndAlpha	= 0;
+
+        pParticle->m_flRoll			= random->RandomInt( 0, 360 );
+        pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
+    }
 
 #else
 
@@ -539,10 +539,10 @@ float CSplashParticle::UpdateAlpha( const SimpleParticle *pParticle )
         float flAlpha = pParticle->m_uchStartAlpha / 255.0f;
 
         return flAlpha * RemapValClamped( pParticle->m_Pos.z,
-                                          m_flClipHeight,
-                                          m_flClipHeight - ( UpdateScale( pParticle ) * 0.5f ),
-                                          1.0f,
-                                          0.0f );
+                                        m_flClipHeight,
+                                        m_flClipHeight - ( UpdateScale( pParticle ) * 0.5f ),
+                                        1.0f,
+                                        0.0f );
     }
 
     return ( pParticle->m_uchStartAlpha / 255.0f ) + ( ( float )( pParticle->m_uchEndAlpha / 255.0f ) - ( float )( pParticle->m_uchStartAlpha / 255.0f ) ) * ( pParticle->m_flLifetime / pParticle->m_flDieTime );

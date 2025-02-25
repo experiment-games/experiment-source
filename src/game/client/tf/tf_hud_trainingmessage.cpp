@@ -32,7 +32,7 @@ class CHudTrainingMsg : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTrainingMsg, EditablePanel );
 
-   public:
+    public:
     CHudTrainingMsg( const char *pElementName );
 
     virtual void Init( void );
@@ -41,7 +41,7 @@ class CHudTrainingMsg : public CHudElement, public EditablePanel
     void MsgFunc_TrainingMsg( bf_read &msg );
     void MsgFunc_TrainingObjective( bf_read &msg );
 
-   private:
+    private:
 };
 
 DECLARE_HUDELEMENT( CHudTrainingMsg );

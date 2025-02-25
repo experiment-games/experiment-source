@@ -40,7 +40,7 @@ class CHudArenaNotification : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudArenaNotification, EditablePanel );
 
-   public:
+    public:
     CHudArenaNotification( const char *pElementName );
 
     virtual void Init( void );
@@ -53,7 +53,7 @@ class CHudArenaNotification : public CHudElement, public EditablePanel
     virtual void FireGameEvent( IGameEvent *event );
     void SetupSwitchPanel( int iNotification );
 
-   private:
+    private:
     Label *m_pBalanceLabel;
     float m_flHideAt;
     CHudTeamSwitch *m_pTeamSwitchPanel;

@@ -11,7 +11,7 @@
 //-------------------------------------------------------------------------------
 class CTFBotAttack : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotAttack( void );
     virtual ~CTFBotAttack() {}
 
@@ -30,7 +30,7 @@ class CTFBotAttack : public Action< CTFBot >
         return "Attack";
     };
 
-   private:
+    private:
     PathFollower m_path;
     ChasePath m_chasePath;
     CountdownTimer m_repathTimer;

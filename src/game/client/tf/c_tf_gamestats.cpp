@@ -21,12 +21,12 @@
 // Must run with -gamestats to be able to turn on/off stats with ConVar below.
 static ConVar tf_stats_track( "tf_stats_track",
 #ifdef _DEBUG
-                              "0",
+                            "0",
 #else
-                              "1",
+                            "1",
 #endif
-                              FCVAR_DEVELOPMENTONLY,
-                              "Turn on//off tf stats tracking." );
+                            FCVAR_DEVELOPMENTONLY,
+                            "Turn on//off tf stats tracking." );
 
 ConVar tf_matchmaking_ogs_odds( "tf_matchmaking_ogs_odds", "0.05", FCVAR_HIDDEN, "Percentage (0...1) of quickplay queries that will report to OGS" );
 
@@ -501,7 +501,7 @@ void C_CTFGameStats::SW_GameStats_WriteClientSessionSummary()
     }
 
     if ( sb_firstopentime.GetInt() > 0 &&
-         m_currentSession.m_FirstConnect > 0 )
+        m_currentSession.m_FirstConnect > 0 )
     {
         int iTimeFromBrowseToJoin = m_currentSession.m_FirstConnect - sb_firstopentime.GetInt();
         if ( iTimeFromBrowseToJoin > 0 )

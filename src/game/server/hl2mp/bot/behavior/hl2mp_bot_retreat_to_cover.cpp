@@ -29,7 +29,7 @@ CHL2MPBotRetreatToCover::CHL2MPBotRetreatToCover( Action< CHL2MPBot > *actionToC
 // for testing a given area's exposure to known threats
 class CTestAreaAgainstThreats : public IVision::IForEachKnownEntity
 {
-   public:
+    public:
     CTestAreaAgainstThreats( CHL2MPBot *me, CNavArea *area )
     {
         m_me = me;
@@ -64,7 +64,7 @@ class CTestAreaAgainstThreats : public IVision::IForEachKnownEntity
 // collect nearby areas that provide cover from our known threats
 class CSearchForCover : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CSearchForCover( CHL2MPBot *me )
     {
         m_me = me;

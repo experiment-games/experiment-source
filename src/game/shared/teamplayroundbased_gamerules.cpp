@@ -217,8 +217,8 @@ ConVar tf_arena_max_streak( "tf_arena_max_streak", "3", FCVAR_NOTIFY | FCVAR_REP
 ConVar tf_arena_use_queue( "tf_arena_use_queue", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "Enables the spectator queue system for Arena." );
 
 ConVar mp_teams_unbalance_limit( "mp_teams_unbalance_limit", "1", FCVAR_REPLICATED, "Teams are unbalanced when one team has this many more players than the other team. (0 disables check)", true, 0,  // min value
-                                 true,
-                                 30  // max value
+                                true,
+                                30  // max value
 );
 
 ConVar mp_maxrounds( "mp_maxrounds", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "max number of rounds to play before server changes maps", true, 0, false, 0 );
@@ -2250,7 +2250,7 @@ void CTeamplayRoundBasedRules::State_Think_STALEMATE( void )
         }
     }
     else if ( ( iDeadTeam && iAliveTeam == TEAM_UNASSIGNED ) ||
-              ( m_hStalemateTimer && TimerMayExpire() && m_hStalemateTimer->GetTimeRemaining() <= 0 ) )
+            ( m_hStalemateTimer && TimerMayExpire() && m_hStalemateTimer->GetTimeRemaining() <= 0 ) )
     {
         bool bFullReset = true;
 
@@ -2935,7 +2935,7 @@ void CTeamplayRoundBasedRules::CleanUpMap()
     // Now reload the map entities.
     class CTeamplayMapEntityFilter : public IMapEntityFilter
     {
-       public:
+        public:
         CTeamplayMapEntityFilter()
         {
             m_pRules = assert_cast< CTeamplayRoundBasedRules * >( GameRules() );
@@ -2986,7 +2986,7 @@ void CTeamplayRoundBasedRules::CleanUpMap()
             }
         }
 
-       public:
+        public:
         int m_iIterator;  // Iterator into g_MapEntityRefs.
         CTeamplayRoundBasedRules *m_pRules;
     };
@@ -3727,9 +3727,9 @@ void CTeamplayRoundBasedRules::OnPreDataChanged( DataUpdateType_t updateType )
 void CTeamplayRoundBasedRules::OnDataChanged( DataUpdateType_t updateType )
 {
     if ( updateType == DATA_UPDATE_CREATED ||
-         m_bOldInWaitingForPlayers != m_bInWaitingForPlayers ||
-         m_bOldInOvertime != m_bInOvertime ||
-         m_bOldInSetup != m_bInSetup )
+        m_bOldInWaitingForPlayers != m_bInWaitingForPlayers ||
+        m_bOldInOvertime != m_bInOvertime ||
+        m_bOldInSetup != m_bInSetup )
     {
         IGameEvent *event = gameeventmanager->CreateEvent( "teamplay_update_timer" );
         if ( event )

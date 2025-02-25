@@ -107,8 +107,8 @@ SHADER_DRAW
             nQuality = 1;
 
         if ( fabs( params[MOTIONBLURINTERNAL]->GetVecValue()[0] ) + fabs( params[MOTIONBLURINTERNAL]->GetVecValue()[1] ) +
-                 fabs( params[MOTIONBLURINTERNAL]->GetVecValue()[2] ) + fabs( params[MOTIONBLURINTERNAL]->GetVecValue()[3] ) ==
-             0.0f )
+                fabs( params[MOTIONBLURINTERNAL]->GetVecValue()[2] ) + fabs( params[MOTIONBLURINTERNAL]->GetVecValue()[3] ) ==
+            0.0f )
         {
             // No motion blur this frame, so force quality to 0
             nQuality = 0;

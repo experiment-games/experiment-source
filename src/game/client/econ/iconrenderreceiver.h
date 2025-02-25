@@ -13,17 +13,17 @@
 
 class CIconRenderReceiver : public IAsyncTextureOperationReceiver
 {
-   public:
+    public:
     CIconRenderReceiver()
         : m_pTex( NULL ) {}
 
-   protected:
+    protected:
     virtual ~CIconRenderReceiver()
     {
         SafeRelease( &m_pTex );
     }
 
-   public:
+    public:
     virtual int AddRef() OVERRIDE
     {
         return ++m_nReferenceCount;
@@ -65,7 +65,7 @@ class CIconRenderReceiver : public IAsyncTextureOperationReceiver
         return m_pTex;
     }
 
-   private:
+    private:
     CInterlockedInt m_nReferenceCount;
     ITexture* m_pTex;
 };

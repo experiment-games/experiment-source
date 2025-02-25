@@ -17,7 +17,7 @@
 // NOTE: any time simulation is run.
 class IPhysicsFrictionSnapshot
 {
-   public:
+    public:
     virtual ~IPhysicsFrictionSnapshot() {}
 
     virtual bool IsValid() = 0;

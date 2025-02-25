@@ -19,7 +19,7 @@
 //---------------------------------------------------------------------------------
 class CXPSource : public GCSDK::CProtoBufSharedObject< CMsgTFXPSource, k_EEconTypeXPSource >
 {
-   public:
+    public:
     CXPSource();
 };
 

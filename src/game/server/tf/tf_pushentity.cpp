@@ -14,20 +14,20 @@
 
 class CTFPhysicsPushEntities : public CPhysicsPushedEntities
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPhysicsPushEntities, CPhysicsPushedEntities );
 
     // Constructor/Destructor.
     CTFPhysicsPushEntities();
     ~CTFPhysicsPushEntities();
 
-   protected:
+    protected:
     // Speculatively checks to see if all entities in this list can be pushed
     virtual bool SpeculativelyCheckRotPush( const RotatingPushMove_t &rotPushMove, CBaseEntity *pRoot );
     virtual bool SpeculativelyCheckLinearPush( const Vector &vecAbsPush );
     virtual void FinishRotPushedEntity( CBaseEntity *pPushedEntity, const RotatingPushMove_t &rotPushMove );
 
-   private:
+    private:
     bool RotationPushTFPlayer( PhysicsPushedInfo_t &info, const Vector &vecAbsPush, const RotatingPushMove_t &rotPushMove, bool bRotationalPush );
     bool RotationCheckPush( PhysicsPushedInfo_t &info );
     bool LinearPushTFPlayer( PhysicsPushedInfo_t &info, const Vector &vecAbsPush, bool bRotationalPush );

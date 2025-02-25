@@ -18,7 +18,7 @@ class CStuckBotEvent;
 // For parsing and displaying stuck events from server logs.
 class CStuckBot
 {
-   public:
+    public:
     CStuckBot( int id, const char *name )
     {
         m_id = id;
@@ -40,7 +40,7 @@ class CStuckBot
 // For parsing and displaying stuck events from server logs.
 class CStuckBotEvent
 {
-   public:
+    public:
     Vector m_stuckSpot;
     float m_stuckDuration;
     Vector m_goalSpot;
@@ -71,7 +71,7 @@ class CStuckBotEvent
 //----------------------------------------------------------------------------------------------
 class CTFBotManager : public NextBotManager
 {
-   public:
+    public:
     CTFBotManager();
     virtual ~CTFBotManager();
 
@@ -100,7 +100,7 @@ class CTFBotManager : public NextBotManager
 
     bool RemoveBotFromTeamAndKick( int nTeam );
 
-   protected:
+    protected:
     void MaintainBotQuota();
     void SetIsInOfflinePractice( bool bIsInOfflinePractice );
     void RevertOfflinePracticeConvars();

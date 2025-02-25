@@ -23,7 +23,7 @@ class CTestItemBotControls : public vgui::EditablePanel, public CGameEventListen
 {
     DECLARE_CLASS_SIMPLE( CTestItemBotControls, vgui::EditablePanel );
 
-   public:
+    public:
     CTestItemBotControls( vgui::Panel *parent );
     ~CTestItemBotControls( void );
 
@@ -43,7 +43,7 @@ class CTestItemBotControls : public vgui::EditablePanel, public CGameEventListen
     void UpdateBots( void );
     void CommitSettingsToKV( void );
 
-   private:
+    private:
     vgui::ComboBox *m_pBotAnimationComboBox;
     vgui::Slider *m_pBotAnimationSpeedSlider;
     vgui::CheckButton *m_pBotForceFireCheckBox;
@@ -59,7 +59,7 @@ class CTestItemRoot : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTestItemRoot, vgui::EditablePanel );
 
-   public:
+    public:
     CTestItemRoot( vgui::Panel *parent );
     ~CTestItemRoot( void );
 
@@ -81,10 +81,10 @@ class CTestItemRoot : public vgui::EditablePanel, public CGameEventListener
     MESSAGE_FUNC_PARAMS( OnButtonChecked, "CheckButtonChecked", pData );
     MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
 
-   private:
+    private:
     void SetupComboBoxes( void );
 
-   private:
+    private:
     int m_iClassUsage;
 
     vgui::EditablePanel *m_pClassUsagePanel;

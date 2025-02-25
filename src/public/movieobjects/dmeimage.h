@@ -24,7 +24,7 @@ class CDmeImage : public CDmElement
 {
     DEFINE_ELEMENT( CDmeImage, CDmElement );
 
-   public:
+    public:
     // Methods related to image format
     ImageFormat Format() const;
     const char *FormatName() const;
@@ -32,12 +32,12 @@ class CDmeImage : public CDmElement
     // returns a pointer to the image bits buffer
     const void *ImageBits() const;
 
-   public:
+    public:
     CDmAttributeVar< int > m_Width;
     CDmAttributeVar< int > m_Height;
     CDmAttributeVar< int > m_Depth;
 
-   private:
+    private:
     CDmAttributeVar< int > m_Format;
     CDmAttributeVarBinaryBlock m_Bits;
 };

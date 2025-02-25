@@ -66,7 +66,7 @@ class CWeaponStriderBuster : public CPhysicsProp
     DECLARE_CLASS( CWeaponStriderBuster, CPhysicsProp );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CWeaponStriderBuster( void );
 
     virtual void Precache( void );
@@ -132,7 +132,7 @@ class CWeaponStriderBuster : public CPhysicsProp
         return m_iBusterFlags;
     }  // I added a flags field so we don't have to keep added bools for all of these contingencies (sjb)
 
-   private:
+    private:
     void Launch( CBasePlayer *pPhysGunUser );
     void Detonate( void );
     void Shatter( CBaseEntity *pAttacker );
@@ -217,9 +217,9 @@ DEFINE_KEYFIELD( m_bDud, FIELD_BOOLEAN, "dud" ),
 
         CWeaponStriderBuster::CWeaponStriderBuster( void )
     : m_pConstraint( NULL ),
-      m_flCollisionSpeedSqr( -1.0f ),
-      m_hConstrainedEntity( NULL ),
-      m_nAttachedBoneFollowerIndex( -1 )
+    m_flCollisionSpeedSqr( -1.0f ),
+    m_hConstrainedEntity( NULL ),
+    m_nAttachedBoneFollowerIndex( -1 )
 {
 }
 
@@ -942,8 +942,8 @@ void CWeaponStriderBuster::BusterFlyThink()
     // seek?
     const float magradius = 38.0 * sk_striderbuster_magnet_multiplier.GetFloat();  // radius of strider hull times multiplier
     if ( magradius > 0 &&
-         GetMoveType() == MOVETYPE_VPHYSICS &&
-         VPhysicsGetObject() )
+        GetMoveType() == MOVETYPE_VPHYSICS &&
+        VPhysicsGetObject() )
     {
         // find the nearest enemy.
         CBaseEntity *pList[16];

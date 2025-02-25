@@ -22,7 +22,7 @@ typedef uintp VPANEL;
 //-----------------------------------------------------------------------------
 abstract_class IGameConsole : public IBaseInterface
 {
-   public:
+    public:
     // activates the console, makes it visible and brings it to the foreground
     virtual void Activate() = 0;
 

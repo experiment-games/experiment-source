@@ -21,7 +21,7 @@ class C_Team : public C_BaseEntity
 {
     DECLARE_CLASS( C_Team, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
 
@@ -57,10 +57,10 @@ class C_Team : public C_BaseEntity
     void RemoveAllPlayers();
 
     // IClientThinkable overrides.
-   public:
+    public:
     virtual void ClientThink();
 
-   public:
+    public:
     // Data received from the server
     CUtlVector< int > m_aPlayers;
     char m_szTeamname[MAX_TEAM_NAME_LENGTH];

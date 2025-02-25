@@ -17,10 +17,10 @@
 
 class CReplayPerformancePlaybackHandler : public IReplayPerformancePlaybackHandler
 {
-   public:
+    public:
     CReplayPerformancePlaybackHandler() {}
 
-   private:
+    private:
     //
     // IReplayPerformancePlaybackController
     //

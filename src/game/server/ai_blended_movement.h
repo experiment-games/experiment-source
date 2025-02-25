@@ -25,7 +25,7 @@ class CAI_BlendedMotor : public CAI_Motor
 {
     typedef CAI_Motor BaseClass;
 
-   public:
+    public:
     CAI_BlendedMotor( CAI_BaseNPC *pOuter )
         : BaseClass( pOuter )
     {
@@ -82,7 +82,7 @@ class CAI_BlendedMotor : public CAI_Motor
     void MaintainTurnActivity( void );
     bool AddTurnGesture( float flYD );
 
-   private:
+    private:
     AIMotorMoveResult_t MoveGroundExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
     AIMotorMoveResult_t MoveFlyExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
 
@@ -139,7 +139,7 @@ class CAI_BlendedMotor : public CAI_Motor
 
     struct AI_Movementscript_t
     {
-       public:
+        public:
         AI_Movementscript_t()
         {
             Init();
@@ -167,7 +167,7 @@ class CAI_BlendedMotor : public CAI_Motor
 
         AI_Waypoint_t *pWaypoint;
 
-       public:
+        public:
         AI_Movementscript_t *pNext;
         AI_Movementscript_t *pPrev;
 
@@ -238,7 +238,7 @@ class CAI_BlendingHost : public BASE_NPC
 {
     DECLARE_CLASS_NOFRIEND( CAI_BlendingHost, BASE_NPC );
 
-   public:
+    public:
     const CAI_BlendedMotor *GetBlendedMotor() const
     {
         return assert_cast< const CAI_BlendedMotor * >( this->GetMotor() );

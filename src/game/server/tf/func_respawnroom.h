@@ -19,7 +19,7 @@ class CFuncRespawnRoomShim : public CBaseTrigger
 {
     virtual void RespawnRoomTouch( CBaseEntity *pOther ) = 0;
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther )
     {
         return RespawnRoomTouch( pOther );
@@ -35,7 +35,7 @@ class CFuncRespawnRoom : public CFuncRespawnRoomShim, public IFuncRespawnRoomAut
 {
     DECLARE_CLASS( CFuncRespawnRoom, CFuncRespawnRoomShim );
 
-   public:
+    public:
     CFuncRespawnRoom();
 
     DECLARE_DATADESC();
@@ -60,7 +60,7 @@ class CFuncRespawnRoom : public CFuncRespawnRoomShim, public IFuncRespawnRoomAut
 
     void AddVisualizer( CFuncRespawnRoomVisualizer *pViz );
 
-   private:
+    private:
     bool m_bActive;
     int m_iOriginalTeam;
 

@@ -19,7 +19,7 @@
 template < int M, int N >
 class NMatrix
 {
-   public:
+    public:
     NMatrixMN() {}
 
     static NMatrixMN SetupNMatrixNull();      // Return a matrix of all zeros.
@@ -44,7 +44,7 @@ class NMatrix
     bool InverseGeneral( NMatrixMN &mInverse ) const;
     NMatrix< N, M > Transpose() const;
 
-   public:
+    public:
     float m[M][N];
 };
 

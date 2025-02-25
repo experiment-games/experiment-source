@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 class CTFGlow : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGlow, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -23,7 +23,7 @@ class CTFGlow : public CBaseEntity
     void InputDisable( inputdata_t &inputdata );
     void InputSetGlowColor( inputdata_t &inputdata );
 
-   private:
+    private:
     CNetworkVar( int, m_iMode );
     CNetworkVar( color32, m_glowColor );
     CNetworkVar( bool, m_bDisabled );

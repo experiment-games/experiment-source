@@ -159,11 +159,11 @@ enum EOverlayToStoreFlag
 enum EActivateGameOverlayToWebPageMode
 {
     k_EActivateGameOverlayToWebPageMode_Default = 0,  // Browser will open next to all other windows that the user has open in the overlay.
-                                                      // The window will remain open, even if the user closes then re-opens the overlay.
+                                                    // The window will remain open, even if the user closes then re-opens the overlay.
 
     k_EActivateGameOverlayToWebPageMode_Modal = 1  // Browser will be opened in a special overlay configuration which hides all other windows
-                                                   // that the user has open in the overlay. When the user closes the overlay, the browser window
-                                                   // will also close. When the user closes the browser window, the overlay will automatically close.
+                                                    // that the user has open in the overlay. When the user closes the overlay, the browser window
+                                                    // will also close. When the user closes the browser window, the overlay will automatically close.
 };
 
 //-----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ enum ECommunityProfileItemProperty
 //-----------------------------------------------------------------------------
 class ISteamFriends
 {
-   public:
+    public:
     // returns the local players name - guaranteed to not be NULL.
     // this is the same name as on the users community profile page
     // this is stored in UTF-8 format

@@ -79,7 +79,7 @@ enum CompareState
 // Singletion Class
 class PME : public ia32detect
 {
-   public:
+    public:
     // private:
 
     static PME* _singleton;
@@ -92,7 +92,7 @@ class PME : public ia32detect
     HRESULT Init();
     HRESULT Close();
 
-   protected:
+    protected:
     PME()
     {
         hFile = NULL;
@@ -101,7 +101,7 @@ class PME : public ia32detect
         Init();
     }
 
-   public:
+    public:
     static PME* Instance();  // gives back a real object
 
     ~PME()

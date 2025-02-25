@@ -36,7 +36,7 @@ namespace internal
 template < typename Allocator >
 class Stack
 {
-   public:
+    public:
     // Optimization note: Do not allocate memory for stack_ in constructor.
     // Do it lazily when first Push() -> Expand() -> Resize().
     Stack( Allocator* allocator, size_t stackCapacity )
@@ -47,11 +47,11 @@ class Stack
 #if RAPIDJSON_HAS_CXX11_RVALUE_REFS
     Stack( Stack&& rhs )
         : allocator_( rhs.allocator_ ),
-          ownAllocator_( rhs.ownAllocator_ ),
-          stack_( rhs.stack_ ),
-          stackTop_( rhs.stackTop_ ),
-          stackEnd_( rhs.stackEnd_ ),
-          initialCapacity_( rhs.initialCapacity_ )
+        ownAllocator_( rhs.ownAllocator_ ),
+        stack_( rhs.stack_ ),
+        stackTop_( rhs.stackTop_ ),
+        stackEnd_( rhs.stackEnd_ ),
+        initialCapacity_( rhs.initialCapacity_ )
     {
         rhs.allocator_ = 0;
         rhs.ownAllocator_ = 0;
@@ -218,7 +218,7 @@ class Stack
         return static_cast< size_t >( stackEnd_ - stack_ );
     }
 
-   private:
+    private:
     template < typename T >
     void Expand( size_t count )
     {

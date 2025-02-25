@@ -85,7 +85,7 @@ WUIndexType g_ThreadWUs[4] = { ~0ull, ~0ull, ~0ull, ~0ull };
 
 class CMasterWorkUnitCompletedList
 {
-   public:
+    public:
     CUtlVector< WUIndexType > m_CompletedWUs;
 };
 static CCriticalSectionData< CMasterWorkUnitCompletedList > g_MasterWorkUnitCompletedList;

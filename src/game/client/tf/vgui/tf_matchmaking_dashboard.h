@@ -68,7 +68,7 @@ enum EMMDashboadSidePanel
 //-----------------------------------------------------------------------------
 class CDashboardSingletonManager
 {
-   public:
+    public:
     CDashboardSingletonManager();
 
     typedef vgui::Panel* ( *pFnPanelCreationFunc )();
@@ -83,7 +83,7 @@ class CDashboardSingletonManager
 
     void RecreateAll();
 
-   private:
+    private:
     pFnPanelCreationFunc m_pFnCreation[k_ePanelCount];
     vgui::Panel* m_pPanels[k_ePanelCount];
 };
@@ -93,7 +93,7 @@ CDashboardSingletonManager& GetDashboardPanel();
 // Used to register a functiom for the creation of a dashboard panel
 class CDashboardSingletonPanelCreationFunc
 {
-   public:
+    public:
     CDashboardSingletonPanelCreationFunc( CDashboardSingletonManager::pFnPanelCreationFunc func, EMMDashboadSidePanel eType )
     {
         GetDashboardPanel().RegisterFnForSingleton( eType, func );
@@ -106,7 +106,7 @@ class CDashboardSingletonPanelCreationFunc
 //-----------------------------------------------------------------------------
 class CTFMatchmakingDashboard : public CExpandablePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFMatchmakingDashboard, CExpandablePanel );
     CTFMatchmakingDashboard();
     virtual ~CTFMatchmakingDashboard();
@@ -142,7 +142,7 @@ class CTFMatchmakingDashboard : public CExpandablePanel, public CGameEventListen
     MESSAGE_FUNC( OnLeaveParty, "Context_LeaveParty" );
     MESSAGE_FUNC( OnOpenSettings, "Context_OpenSettings" );
 
-   private:
+    private:
     // Notifications
     MESSAGE_FUNC_PTR( OnNotificationCreated, "NotificationCreated", panel );
     MESSAGE_FUNC_PTR( OnNotificationCleared, "NotificationCleared", panel );

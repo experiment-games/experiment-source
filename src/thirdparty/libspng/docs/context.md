@@ -5,7 +5,7 @@
 typedef struct spng_ctx spng_ctx;
 ```
 
-   Context handle.
+  Context handle.
 
 !!!note
     The context handle has no public members.

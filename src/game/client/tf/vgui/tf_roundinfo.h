@@ -18,10 +18,10 @@ class RoundInfoOverlay;
 
 class CTFRoundInfo : public vgui::Frame, public IViewPortPanel, public CGameEventListener
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFRoundInfo, vgui::Frame );
 
-   public:
+    public:
     CTFRoundInfo( IViewPort *pViewPort );
 
     virtual const char *GetName( void )
@@ -65,7 +65,7 @@ class CTFRoundInfo : public vgui::Frame, public IViewPortPanel, public CGameEven
         return GAME_ACTION_SET_IN_GAME_HUD;
     }
 
-   protected:
+    protected:
     virtual void OnKeyCodePressed( vgui::KeyCode code );
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -73,7 +73,7 @@ class CTFRoundInfo : public vgui::Frame, public IViewPortPanel, public CGameEven
 
     void UpdateImage( vgui::ImagePanel *pImagePanel, const char *pszImageName );
 
-   protected:
+    protected:
     IViewPort *m_pViewPort;
 
     CExLabel *m_pTitle;

@@ -28,10 +28,10 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CReplayPerformanceSaveDlg : public EditablePanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CReplayPerformanceSaveDlg, EditablePanel );
 
-   public:
+    public:
     CReplayPerformanceSaveDlg( Panel *pParent, const char *pName, OnConfirmSaveCallback pfnCallback, void *pContext, CReplay *pReplay, bool bExitEditorWhenDone );
     ~CReplayPerformanceSaveDlg();
 
@@ -52,7 +52,7 @@ class CReplayPerformanceSaveDlg : public EditablePanel
 
     static vgui::DHANDLE< CReplayPerformanceSaveDlg > ms_hDlg;
 
-   private:
+    private:
     OnConfirmSaveCallback m_pfnCallback;
     void *m_pContext;
     Panel *m_pDlg;
@@ -69,12 +69,12 @@ vgui::DHANDLE< CReplayPerformanceSaveDlg > CReplayPerformanceSaveDlg::ms_hDlg;
 //-----------------------------------------------------------------------------
 CReplayPerformanceSaveDlg::CReplayPerformanceSaveDlg( Panel *pParent, const char *pName, OnConfirmSaveCallback pfnCallback, void *pContext, CReplay *pReplay, bool bExitEditorWhenDone )
     : BaseClass( pParent, pName ),
-      m_pfnCallback( pfnCallback ),
-      m_pContext( pContext ),
-      m_pReplay( pReplay ),
-      m_bExitEditorWhenDone( bExitEditorWhenDone ),
-      m_pDlg( NULL ),
-      m_pTitleEntry( NULL )
+    m_pfnCallback( pfnCallback ),
+    m_pContext( pContext ),
+    m_pReplay( pReplay ),
+    m_bExitEditorWhenDone( bExitEditorWhenDone ),
+    m_pDlg( NULL ),
+    m_pTitleEntry( NULL )
 {
     Assert( m_pContext );
 
@@ -233,9 +233,9 @@ void CReplayPerformanceSaveDlg::CloseWindow()
 // Purpose:
 //-----------------------------------------------------------------------------
 void ReplayUI_ShowPerformanceSaveDlg( OnConfirmSaveCallback pfnCallback,
-                                      void *pContext,
-                                      CReplay *pReplay,
-                                      bool bExitEditorWhenDone )
+                                    void *pContext,
+                                    CReplay *pReplay,
+                                    bool bExitEditorWhenDone )
 {
     CReplayPerformanceSaveDlg::Show( pfnCallback, pContext, pReplay, bExitEditorWhenDone );
 }

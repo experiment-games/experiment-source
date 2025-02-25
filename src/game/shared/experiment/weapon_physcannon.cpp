@@ -111,7 +111,7 @@ bool PhysCannonAccountableForObject( CBaseCombatWeapon *pPhysCannon, CBaseEntity
 // (lets player grab own grenades)
 class CTraceFilterNoOwnerTest : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterNoOwnerTest, CTraceFilterSimple );
 
     CTraceFilterNoOwnerTest( const IHandleEntity *passentity, int collisionGroup )
@@ -127,7 +127,7 @@ class CTraceFilterNoOwnerTest : public CTraceFilterSimple
         return false;
     }
 
-   protected:
+    protected:
     const IHandleEntity *m_pPassNotOwner;
 };
 
@@ -271,7 +271,7 @@ DEFINE_FIELD( targetPosition, FIELD_POSITION_VECTOR ),
     //-----------------------------------------------------------------------------
     class CGrabController : public IMotionEvent
 {
-   public:
+    public:
     CGrabController( void );
     ~CGrabController( void );
     void AttachEntity( CBasePlayer *pPlayer, CBaseEntity *pEntity, IPhysicsObject *pPhys, bool bIsMegaPhysCannon, const Vector &vGrabPosition, bool bUseGrabPosition );
@@ -308,7 +308,7 @@ DEFINE_FIELD( targetPosition, FIELD_POSITION_VECTOR ),
     QAngle m_attachedAnglesPlayerSpace;
     Vector m_attachedPositionObjectSpace;
 
-   private:
+    private:
     // Compute the max speed for an attached object
     void ComputeMaxSpeed( CBaseEntity *pEntity, IPhysicsObject *pPhysics );
 
@@ -723,7 +723,7 @@ class CPlayerPickupController : public CBaseEntity
 {
     DECLARE_CLASS( CPlayerPickupController, CBaseEntity );
 
-   public:
+    public:
     void Init( CBasePlayer *pPlayer, CBaseEntity *pObject );
     void Shutdown( bool bThrown = false );
     bool OnControls( CBaseEntity *pControls )
@@ -744,7 +744,7 @@ class CPlayerPickupController : public CBaseEntity
         return m_grabController;
     }
 
-   private:
+    private:
     CGrabController m_grabController;
     CBasePlayer *m_pPlayer;
 };
@@ -942,7 +942,7 @@ void PlayerPickupObject( CBasePlayer *pPlayer, CBaseEntity *pObject )
 
 class CPhysCannonEffect
 {
-   public:
+    public:
     CPhysCannonEffect( void )
         : m_vecColor( 255, 255, 255 ), m_bVisible( true ), m_nAttachment( -1 ){};
 
@@ -993,7 +993,7 @@ class CPhysCannonEffect
         return m_Scale;
     }
 
-   private:
+    private:
     CInterpolatedValue m_Alpha;
     CInterpolatedValue m_Scale;
 
@@ -1009,7 +1009,7 @@ class CPhysCannonEffect
 
 class CPhysCannonEffectBeam
 {
-   public:
+    public:
     CPhysCannonEffectBeam( void )
         : m_pBeam( NULL ){};
 
@@ -1084,7 +1084,7 @@ class CPhysCannonEffectBeam
         m_pBeam->brightness = ( state ) ? 255.0f : 0.0f;
     }
 
-   private:
+    private:
     Beam_t *m_pBeam;
 };
 
@@ -1100,7 +1100,7 @@ class CPhysCannonEffectBeam
 
 class CWeaponPhysCannon : public CBaseExperimentCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponPhysCannon, CBaseExperimentCombatWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -1150,7 +1150,7 @@ class CWeaponPhysCannon : public CBaseExperimentCombatWeapon
 
     EHANDLE m_hOldAttachedObject;
 
-   protected:
+    protected:
     enum FindObjectResult_t
     {
         OBJECT_FOUND = 0,
@@ -1266,10 +1266,10 @@ class CWeaponPhysCannon : public CBaseExperimentCombatWeapon
 
     void NotifyShouldTransmit( ShouldTransmitState_t state );
 
-   private:
+    private:
     virtual void ThirdPersonSwitch( bool bThirdPerson );
 
-   protected:
+    protected:
 #endif  // CLIENT_DLL
 
     int m_nChangeState;            // For delayed state change of elements
@@ -1292,7 +1292,7 @@ class CWeaponPhysCannon : public CBaseExperimentCombatWeapon
     float m_flRepuntObjectTime;
     EHANDLE m_hLastPuntedObject;
 
-   private:
+    private:
     CWeaponPhysCannon( const CWeaponPhysCannon & );
     DECLARE_ACTTABLE();
 };
@@ -2071,7 +2071,7 @@ bool CWeaponPhysCannon::AttachObject( CBaseEntity *pObject, const Vector &vPosit
     }
 
     /*	if( pOwner )
-      {
+    {
         pOwner->EnableSprint( false );
 
         float	loadWeight = ( 1.0f - GetLoadPercentage() );
@@ -2079,7 +2079,7 @@ bool CWeaponPhysCannon::AttachObject( CBaseEntity *pObject, const Vector &vPosit
 
         //Msg( "Load perc: %f -- Movement speed: %f/%f\n", loadWeight, maxSpeed, hl2_normspeed.GetFloat() );
         pOwner->SetMaxSpeed( maxSpeed );
-      }*/
+    }*/
 
     // Don't drop again for a slight delay, in case they were pulling objects near them
     m_flNextSecondaryAttack = gpGlobals->curtime + 0.4f;
@@ -2338,14 +2338,14 @@ bool CGrabController::UpdateObject( CBasePlayer *pPlayer, float flError )
         debugoverlay->AddBoxOverlay( end, -Vector( 2, 2, 2 ), Vector( 2, 2, 2 ), angles, 0, 255, 255, true, 0 );
 
         debugoverlay->AddBoxOverlay( GetAttached()->WorldSpaceCenter(),
-                                     -Vector( radius, radius, radius ),
-                                     Vector( radius, radius, radius ),
-                                     angles,
-                                     255,
-                                     255,
-                                     0,
-                                     true,
-                                     0.0f );
+                                    -Vector( radius, radius, radius ),
+                                    Vector( radius, radius, radius ),
+                                    angles,
+                                    255,
+                                    255,
+                                    0,
+                                    true,
+                                    0.0f );
 
 #else
 

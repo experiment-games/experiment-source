@@ -35,7 +35,7 @@ DECLARE_AUTO_LIST( IBaseProjectileAutoList );
 class CBaseProjectile : public CBaseAnimating, public IBaseProjectileAutoList
 #endif  // !CLIENT_DLL
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseProjectile, CBaseAnimating );
     DECLARE_NETWORKCLASS();
 
@@ -91,7 +91,7 @@ class CBaseProjectile : public CBaseAnimating, public IBaseProjectileAutoList
         return m_hOriginalLauncher;
     }
 
-   protected:
+    protected:
 #ifdef GAME_DLL
     void CollideWithTeammatesThink();
     virtual bool ShouldTouchNonWorldSolid( CBaseEntity *pOther, const trace_t *pTrace );
@@ -99,7 +99,7 @@ class CBaseProjectile : public CBaseAnimating, public IBaseProjectileAutoList
     int m_iDestroyableHitCount;
 #endif  // GAME_DLL
 
-   private:
+    private:
 #ifdef GAME_DLL
     void ResetCollideWithTeammates();
 
@@ -118,7 +118,7 @@ class CBaseProjectile : public CBaseAnimating, public IBaseProjectileAutoList
 
 class CTraceFilterIgnoreProjectiles : public CTraceFilterSimple
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS( CTraceFilterIgnoreProjectiles, CTraceFilterSimple );
 

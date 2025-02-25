@@ -42,29 +42,29 @@ extern ConVar tf_halloween_bot_min_player_count;
 //----------------------------------------------------------------------------
 class CEyeballBossBody : public CBotNPCBody
 {
-   public:
+    public:
     CEyeballBossBody( INextBot *bot );
     virtual ~CEyeballBossBody() {}
 
     virtual void Update( void );
 
     virtual void AimHeadTowards( const Vector &lookAtPos,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // aim the bot's head towards the given goal
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // aim the bot's head towards the given goal
     virtual void AimHeadTowards( CBaseEntity *subject,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // continually aim the bot's head towards the given subject
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // continually aim the bot's head towards the given subject
 
     virtual float GetMaxHeadAngularVelocity( void ) const  // return max turn rate of head in degrees/second
     {
         return 3000.0f;
     }
 
-   private:
+    private:
     int m_leftRightPoseParameter;
     int m_upDownPoseParameter;
 
@@ -75,7 +75,7 @@ class CEyeballBossBody : public CBotNPCBody
 // Bypass vision system
 class CDisableVision : public IVision
 {
-   public:
+    public:
     CDisableVision( INextBot *bot )
         : IVision( bot ) {}
     virtual ~CDisableVision() {}
@@ -87,7 +87,7 @@ class CDisableVision : public IVision
 //----------------------------------------------------------------------------
 class CEyeballBossLocomotion : public ILocomotion
 {
-   public:
+    public:
     CEyeballBossLocomotion( INextBot *bot );
     virtual ~CEyeballBossLocomotion();
 
@@ -117,7 +117,7 @@ class CEyeballBossLocomotion : public ILocomotion
     // for this floating boss, "feet" refers to the ground directly underneath him
     virtual const Vector &GetFeet( void ) const;
 
-   protected:
+    protected:
     float m_desiredSpeed;
     float m_currentSpeed;
     Vector m_forward;
@@ -166,7 +166,7 @@ DECLARE_AUTO_LIST( IEyeballBossAutoList );
 //----------------------------------------------------------------------------
 class CEyeballBoss : public CHalloweenBaseBoss, public IEyeballBossAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CEyeballBoss, CHalloweenBaseBoss );
     DECLARE_SERVERCLASS();
 
@@ -239,7 +239,7 @@ class CEyeballBoss : public CHalloweenBaseBoss, public IEyeballBossAutoList
         return HALLOWEEN_BOSS_MONOCULUS;
     }
 
-   private:
+    private:
     CEyeballBossLocomotion *m_locomotor;
     CEyeballBossBody *m_body;
     CDisableVision *m_vision;

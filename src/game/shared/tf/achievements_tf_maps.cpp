@@ -25,7 +25,7 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_KillCappingEnemy : public CBaseTFAchievementSimple
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -205,7 +205,7 @@ class CAchievementTFFoundry_FastFinalCap : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bRecentCapper;
     int iCapCount;
     float iCapTimes[2];
@@ -262,7 +262,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_TeleportAndCap, ACHIEVEMENT_TF_MAPS_F
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_PushIntoCauldron : public CBaseTFAchievementSimple
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -321,7 +321,7 @@ class CAchievementTFFoundry_PushBackAndWin : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bFinalPointContested;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PushBackAndWin, ACHIEVEMENT_TF_MAPS_FOUNDRY_PUSH_BACK_AND_WIN, "TF_MAPS_FOUNDRY_PUSH_BACK_AND_WIN", 5 );
@@ -365,7 +365,7 @@ class CAchievementTFFoundry_PlayEachClass : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     int m_iClassesPlayed;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PlayEachClass, ACHIEVEMENT_TF_MAPS_FOUNDRY_PLAY_EACH_CLASS, "TF_MAPS_FOUNDRY_PLAY_EACH_CLASS", 5 );
@@ -373,7 +373,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PlayEachClass, ACHIEVEMENT_TF_MAPS_FO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_KillEnemyOnRoof : public CBaseTFAchievementSimple
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
@@ -423,7 +423,7 @@ class CAchievementTFFoundry_KillEnemyOnRoof : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     int iKillCount;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFFoundry_KillEnemyOnRoof, ACHIEVEMENT_TF_MAPS_FOUNDRY_KILL_ENEMY_ON_ROOF, "TF_MAPS_FOUNDRY_KILL_ENEMY_ON_ROOF", 5 );
@@ -473,7 +473,7 @@ class CAchievementTFFoundry_BackAndForthBattle : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     int m_iCapCount;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFFoundry_BackAndForthBattle, ACHIEVEMENT_TF_MAPS_FOUNDRY_BACK_AND_FORTH_BATTLE, "TF_MAPS_FOUNDRY_BACK_AND_FORTH_BATTLE", 5 );
@@ -481,7 +481,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_BackAndForthBattle, ACHIEVEMENT_TF_MA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFFoundry_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -552,7 +552,7 @@ class CAchievementTFDoomsday_SoloCapture : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bCarriedFromHome;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_SoloCapture, ACHIEVEMENT_TF_MAPS_DOOMSDAY_SOLO_CAPTURE, "TF_MAPS_DOOMSDAY_SOLO_CAPTURE", 5 );
@@ -724,7 +724,7 @@ class CAchievementTFDoomsday_KillEnemiesOnElevator : public CBaseTFAchievementSi
         }
     }
 
-   private:
+    private:
     CUtlVector< float > m_History;
     float m_flTimeWindow;
     int m_nKillsToAchieve;
@@ -779,7 +779,7 @@ class CAchievementTFDoomsday_PushBackAndWin : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bRocketOpenedByEnemyTeam;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_PushBackAndWin, ACHIEVEMENT_TF_MAPS_DOOMSDAY_PUSH_BACK_AND_WIN, "TF_MAPS_DOOMSDAY_PUSH_BACK_AND_WIN", 5 );
@@ -835,7 +835,7 @@ class CAchievementTFDoomsday_KillCarriers : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     int m_iKillCount;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_KillCarriers, ACHIEVEMENT_TF_MAPS_DOOMSDAY_KILL_CARRIERS, "TF_MAPS_DOOMSDAY_KILL_CARRIERS", 5 );
@@ -895,7 +895,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_DefendCarrier, ACHIEVEMENT_TF_MAPS_D
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFDoomsday_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1045,7 +1045,7 @@ class CAchievementTFSnakewater_PushBackAndWin : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bFinalPointContested;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSnakewater_PushBackAndWin, ACHIEVEMENT_TF_MAPS_SNAKEWATER_PUSH_BACK_AND_WIN, "TF_MAPS_SNAKEWATER_PUSH_BACK_AND_WIN", 5 );
@@ -1297,7 +1297,7 @@ class CAchievementTFPowerhouse_PushBackAndWin : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bFinalPointContested;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFPowerhouse_PushBackAndWin, ACHIEVEMENT_TF_MAPS_POWERHOUSE_PUSH_BACK_AND_WIN, "TF_MAPS_POWERHOUSE_PUSH_BACK_AND_WIN", 5 );
@@ -1378,7 +1378,7 @@ class CAchievementTFPowerhouse_FastFinalCap : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     bool m_bRecentCapper;
     int iCapCount;
     float iCapTimes[2];
@@ -1422,7 +1422,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPowerhouse_KillCappingPlayer, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPowerhouse_KillEnemyInWater : public CBaseTFAchievementSimple
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );

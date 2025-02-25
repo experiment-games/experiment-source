@@ -122,27 +122,27 @@ static const char *GetProgressGoalImage( const C_FuncPasstimeGoal *pGoal )
         if ( pGoal->BGoalTriggerDisabled() )
         {
             return bRedIcon
-                       ? "../passtime/hud/passtime_goal_red_locked"
-                       : "../passtime/hud/passtime_goal_blue_locked";
+                        ? "../passtime/hud/passtime_goal_red_locked"
+                        : "../passtime/hud/passtime_goal_blue_locked";
         }
         else
         {
             return bRedIcon
-                       ? "../passtime/hud/passtime_goal_red_unlocked"
-                       : "../passtime/hud/passtime_goal_blue_unlocked";
+                        ? "../passtime/hud/passtime_goal_red_unlocked"
+                        : "../passtime/hud/passtime_goal_blue_unlocked";
         }
     }
     else if ( pGoal->GetGoalType() == C_FuncPasstimeGoal::TYPE_ENDZONE )
     {
         return bRedIcon
-                   ? "../passtime/hud/passtime_endzone_red_icon"
-                   : "../passtime/hud/passtime_endzone_blue_icon";
+                    ? "../passtime/hud/passtime_endzone_red_icon"
+                    : "../passtime/hud/passtime_endzone_blue_icon";
     }
     else
     {
         return bRedIcon
-                   ? "../passtime/hud/passtime_goal_red_icon"
-                   : "../passtime/hud/passtime_goal_blue_icon";
+                    ? "../passtime/hud/passtime_goal_red_icon"
+                    : "../passtime/hud/passtime_goal_blue_icon";
     }
 }
 
@@ -232,8 +232,8 @@ int CTFHudTeamScore::GetTeamScore( int iTeam )
 {
     C_TFTeam *pTeam = GetGlobalTFTeam( iTeam );
     return pTeam
-               ? pTeam->Get_Score()
-               : 0;
+                ? pTeam->Get_Score()
+                : 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -352,8 +352,8 @@ void CTFHudPasstimePassNotify::OnTick()
             if ( m_pTextBox )
             {
                 m_pTextBox->SetBorder( ( pLocalPlayer->GetTeamNumber() == TF_TEAM_RED )
-                                           ? m_pTextBoxBorderIncomingRed
-                                           : m_pTextBoxBorderIncomingBlu );
+                                            ? m_pTextBoxBorderIncomingRed
+                                            : m_pTextBoxBorderIncomingBlu );
             }
 
             return;
@@ -839,8 +839,8 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
     m_pBallPowerMeterFinalSection = pBallPowerRoot->FindControl< Panel >( "BallPowerMeterFinalSectionContainer", true );
 
     m_pEventText->SetControls( FindControl< Label >( "EventTitleLabel" ),
-                               FindControl< Label >( "EventDetailLabel" ),
-                               FindControl< Label >( "EventBonusLabel" ) );
+                                FindControl< Label >( "EventDetailLabel" ),
+                                FindControl< Label >( "EventBonusLabel" ) );
 
     m_bInitialized = m_pProgressBall && m_pProgressBallCarrierName && m_pProgressLevelBar && m_pSelfPlayerIcon && m_pBallPowerMeterFillContainer && m_pBallPowerMeterFill && m_pBallPowerMeterFinalSection && m_pBallPowerMeterFrame;
 
@@ -860,8 +860,8 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
         m_pBallPowerMeterFinalSection->SetPos( m_pBallPowerMeterFinalSection->GetXPos() + ( m_iBallPowerMeterFillWidth - iFinalSectionWidth ), m_pBallPowerMeterFinalSection->GetYPos() );
     }
     m_iPrevBallPower = g_pPasstimeLogic
-                           ? g_pPasstimeLogic->GetBallPower()
-                           : 0;
+                            ? g_pPasstimeLogic->GetBallPower()
+                            : 0;
 
     // find the left/right markers in the res files
     {
@@ -980,8 +980,8 @@ static float CalcBallProgressFrac()
     CPasstimeBall *pBall = g_pPasstimeLogic->GetBall();
     CTFPlayer *pCarrier = pBall->GetCarrier();
     return CalcProgressFrac( pCarrier
-                                 ? pCarrier->GetNetworkOrigin()
-                                 : pBall->GetNetworkOrigin() );
+                                ? pCarrier->GetNetworkOrigin()
+                                : pBall->GetNetworkOrigin() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1005,8 +1005,8 @@ void CTFHudPasstimeBallStatus::UpdateGoalIcon( vgui::ImagePanel *pIcon, C_FuncPa
     const auto iDisabledAlpha = 50;
     const auto iEnabledAlpha = 255;
     pIcon->SetAlpha( ( pGoal->BGoalTriggerDisabled() && ( pGoal->GetGoalType() != C_FuncPasstimeGoal::TYPE_TOWER ) )
-                         ? iDisabledAlpha
-                         : iEnabledAlpha );
+                        ? iDisabledAlpha
+                        : iEnabledAlpha );
 
     // TODO don't call SetImage(char*) every frame, wtf.
     pIcon->SetImage( GetProgressGoalImage( pGoal ) );
@@ -1055,8 +1055,8 @@ void CTFHudPasstimeBallStatus::OnTickHidden()
     }
 
     m_iPrevBallPower = g_pPasstimeLogic
-                           ? g_pPasstimeLogic->GetBallPower()
-                           : 0;
+                            ? g_pPasstimeLogic->GetBallPower()
+                            : 0;
 
     HideGoalIcons();
 }
@@ -1105,8 +1105,8 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
         int iCurPower = g_pPasstimeLogic->GetBallPower();
         int iThreshold = tf_passtime_powerball_threshold.GetInt();
         int iAlpha = ( iCurPower > iThreshold )
-                         ? FLerp( 150, 255, ( 1 + sin( gpGlobals->curtime * 5 ) ) / 2.0f )
-                         : 222;
+                        ? FLerp( 150, 255, ( 1 + sin( gpGlobals->curtime * 5 ) ) / 2.0f )
+                        : 222;
         if ( m_pBallPowerMeterFill )
         {
             m_pBallPowerMeterFill->SetDrawColor( GetTeamColor( iTeam, iAlpha ) );
@@ -1158,7 +1158,7 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 
         int iEntTeam = g_TF_PR->GetTeam( iEntIndex );
         if ( !g_TF_PR->IsAlive( iEntIndex )                                        // no dead people; not the same as IsDead
-             || ( ( iEntTeam != TF_TEAM_RED ) && ( iEntTeam != TF_TEAM_BLUE ) ) )  // no spectators
+            || ( ( iEntTeam != TF_TEAM_RED ) && ( iEntTeam != TF_TEAM_BLUE ) ) )  // no spectators
         {
             pIcon->SetVisible( false );
             continue;
@@ -1256,11 +1256,11 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
             C_FuncPasstimeGoal *sortedgoals[iMaxSortedGoals];
             std::copy( goals.begin(), goals.end(), sortedgoals );
             std::sort( sortedgoals, sortedgoals + iNumGoals, []( C_FuncPasstimeGoal *a, C_FuncPasstimeGoal *b )
-                       {
-				// this is wasteful but it should only happen one frame per round
-				// The order of the icons in the hud res file determines which direction to sort these
-				// so that the iteration below visits the goals in the same order.
-				return CalcProgressFrac( a->GetAbsOrigin() ) < CalcProgressFrac( b->GetAbsOrigin() ); } );
+                        {
+                // this is wasteful but it should only happen one frame per round
+                // The order of the icons in the hud res file determines which direction to sort these
+                // so that the iteration below visits the goals in the same order.
+                return CalcProgressFrac( a->GetAbsOrigin() ) < CalcProgressFrac( b->GetAbsOrigin() ); } );
 
             // Pair goals and icons so the tick function can update the icon state based on the actual goal state
             // This should work for any number of goals and icons in any order.
@@ -1550,7 +1550,7 @@ void CTFHudPasstimeBallStatus::OnBallFreeOther( C_TFPlayer *pOwner,
 
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeBallStatus::OnBallFreeSelf( C_TFPlayer *pOwner,
-                                               C_TFPlayer *pAttacker )
+                                                C_TFPlayer *pAttacker )
 {
     Assert( m_bInitialized );
     if ( m_pProgressBallCarrierName )

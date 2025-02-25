@@ -18,7 +18,7 @@ class CTFPlayer;
 //----------------------------------------------------------------------------
 class CHalloweenBaseBoss : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CHalloweenBaseBoss, NextBotCombatCharacter );
 
     CHalloweenBaseBoss();
@@ -71,7 +71,7 @@ class CHalloweenBaseBoss : public NextBotCombatCharacter
         HALLOWEEN_EVENT_BOSS_SPAWN = 0,
     };
 
-   private:
+    private:
     CUtlVector< AttackerInfo > m_attackerVector;  // list of everyone who injured me, and when
 
     void UpdateDamagePerSecond( void );

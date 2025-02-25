@@ -21,7 +21,7 @@ extern ConVar mat_fullbright;
 DEFINE_FALLBACK_SHADER( Cable, Cable_DX9 )
 
 BEGIN_VS_SHADER( Cable_DX9,
-                 "Help for Cable shader" )
+                "Help for Cable shader" )
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "cable/cablenormalmap", "bumpmap texture" )
 SHADER_PARAM( MINLIGHT, SHADER_PARAM_TYPE_FLOAT, "0.1", "Minimum amount of light (0-1 value)" )
@@ -31,7 +31,7 @@ END_SHADER_PARAMS
 SHADER_FALLBACK
 {
     if ( !( g_pHardwareConfig->SupportsPixelShaders_2_0() && g_pHardwareConfig->SupportsVertexShaders_2_0() ) ||
-         ( g_pHardwareConfig->GetDXSupportLevel() < 90 ) )
+        ( g_pHardwareConfig->GetDXSupportLevel() < 90 ) )
     {
         return "Cable_DX8";
     }

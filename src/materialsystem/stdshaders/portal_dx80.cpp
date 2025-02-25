@@ -13,7 +13,7 @@
 DEFINE_FALLBACK_SHADER( Portal, Portal_DX80 )
 
 BEGIN_VS_SHADER( Portal_DX80,
-                 "Help for Portal shader" )
+                "Help for Portal shader" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( COLOR, SHADER_PARAM_TYPE_COLOR, "{255 255 255}", "unused", SHADER_PARAM_NOT_EDITABLE )

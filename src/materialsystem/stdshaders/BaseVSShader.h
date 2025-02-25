@@ -68,7 +68,7 @@
 //-----------------------------------------------------------------------------
 class CBaseVSShader : public CBaseShader
 {
-   public:
+    public:
     // Loads bump lightmap coordinates into the pixel shader
     void LoadBumpLightmapCoordinateAxes_PixelShader( int pixelReg );
 
@@ -113,8 +113,8 @@ class CBaseVSShader : public CBaseShader
     void SetPixelShaderTextureScale( int pixelReg, int scaleVar );
     void SetPixelShaderTextureTransform( int pixelReg, int transformVar );
     void SetPixelShaderTextureScaledTransform( int pixelReg,
-                                               int transformVar,
-                                               int scaleVar );
+                                                int transformVar,
+                                                int scaleVar );
 
     // Moves a matrix into vertex shader constants
     void SetVertexShaderMatrix2x4( int vertexReg, int matrixVar );
@@ -181,21 +181,21 @@ class CBaseVSShader : public CBaseShader
     void DrawWorldBumpedSpecularLighting( int bumpmapVar, int envmapVar, int bumpFrameVar, int envmapFrameVar, int envmapTintVar, int alphaVar, int envmapContrastVar, int envmapSaturationVar, int bumpTransformVar, int fresnelReflectionVar, bool bBlend, bool bNoWriteZ = false );
 
     const char *UnlitGeneric_ComputeVertexShaderName( bool bMask,
-                                                      bool bEnvmap,
-                                                      bool bBaseTexture,
-                                                      bool bBaseAlphaEnvmapMask,
-                                                      bool bDetail,
-                                                      bool bVertexColor,
-                                                      bool bEnvmapCameraSpace,
-                                                      bool bEnvmapSphere );
+                                                    bool bEnvmap,
+                                                    bool bBaseTexture,
+                                                    bool bBaseAlphaEnvmapMask,
+                                                    bool bDetail,
+                                                    bool bVertexColor,
+                                                    bool bEnvmapCameraSpace,
+                                                    bool bEnvmapSphere );
 
     const char *UnlitGeneric_ComputePixelShaderName( bool bMask,
-                                                     bool bEnvmap,
-                                                     bool bBaseTexture,
-                                                     bool bBaseAlphaEnvmapMask,
-                                                     bool bDetail,
-                                                     bool bMultiplyDetail,
-                                                     bool bMaskBaseByDetailAlpha );
+                                                    bool bEnvmap,
+                                                    bool bBaseTexture,
+                                                    bool bBaseAlphaEnvmapMask,
+                                                    bool bDetail,
+                                                    bool bMultiplyDetail,
+                                                    bool bMaskBaseByDetailAlpha );
 
     void DrawWorldBaseTexture( int baseTextureVar, int baseTextureTransformVar, int frameVar, int colorVar, int alphaVar );
     void DrawWorldBumpedDiffuseLighting( int bumpmapVar, int bumpFrameVar, int bumpTransformVar, bool bMultiply, bool bSSBump );
@@ -258,9 +258,9 @@ class CBaseVSShader : public CBaseShader
         float m_fSeamlessScale;  // 0.0 = not seamless
     };
     void DrawFlashlight_dx90( IMaterialVar **params,
-                              IShaderDynamicAPI *pShaderAPI,
-                              IShaderShadow *pShaderShadow,
-                              DrawFlashlight_dx90_Vars_t &vars );
+                            IShaderDynamicAPI *pShaderAPI,
+                            IShaderShadow *pShaderShadow,
+                            DrawFlashlight_dx90_Vars_t &vars );
 #endif  // GAME_SHADER_DLL
 
     BlendType_t EvaluateBlendRequirements( int textureVar, bool isBaseTexture, int detailTextureVar = -1 );
@@ -272,7 +272,7 @@ class CBaseVSShader : public CBaseShader
     // by writing only equal depth pixels and only if we should be writing depth to dest alpha
     void DrawEqualDepthToDestAlpha( void );
 
-   private:
+    private:
     // Helper methods for VertexLitGenericPass
     //	void UnlitGenericShadowState( int baseTextureVar, int detailVar, int envmapVar, int envmapMaskVar, bool doSkin );
     void UnlitGenericDynamicState( int baseTextureVar, int frameVar, int baseTextureTransformVar, int detailVar, int detailTransform, bool bDetailTransformIsScale, int envmapVar, int envMapFrameVar, int envmapMaskVar, int envmapMaskFrameVar, int envmapMaskScaleVar, int envmapTintVar );

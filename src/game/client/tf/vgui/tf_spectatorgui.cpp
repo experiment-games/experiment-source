@@ -348,9 +348,9 @@ void CTFSpectatorGUI::UpdateReinforcements( void )
 
     C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
     if ( !pPlayer || pPlayer->IsHLTV() ||
-         ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
-         ( pPlayer->m_Shared.GetState() != TF_STATE_OBSERVER && pPlayer->m_Shared.GetState() != TF_STATE_DYING ) ||
-         ( pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM ) )
+        ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
+        ( pPlayer->m_Shared.GetState() != TF_STATE_OBSERVER && pPlayer->m_Shared.GetState() != TF_STATE_DYING ) ||
+        ( pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM ) )
     {
         m_pReinforcementsLabel->SetVisible( false );
         m_pBuyBackLabel->SetVisible( false );
@@ -836,10 +836,10 @@ void CTFSpectatorGUI::ShowPanel( bool bShow )
             extern IReplayManager *g_pReplayManager;
             CReplay *pCurLifeReplay = ( g_pReplayManager ) ? g_pReplayManager->GetReplayForCurrentLife() : NULL;
             if ( g_pReplay->IsRecording() &&
-                 !engine->IsPlayingDemo() &&
-                 !::input->IsSteamControllerActive() &&
-                 nDisplaySaveReplay &&
-                 ( pCurLifeReplay && !pCurLifeReplay->m_bRequestedByUser && !pCurLifeReplay->m_bSaved ) )
+                !engine->IsPlayingDemo() &&
+                !::input->IsSteamControllerActive() &&
+                nDisplaySaveReplay &&
+                ( pCurLifeReplay && !pCurLifeReplay->m_bRequestedByUser && !pCurLifeReplay->m_bSaved ) )
             {
                 wchar_t wText[256];
                 wchar wKeyBind[80];

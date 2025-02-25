@@ -191,11 +191,11 @@ GTEST_API_ bool InDeathTestChild();
 // Tests that an exit code describes a normal exit with a given exit code.
 class GTEST_API_ ExitedWithCode
 {
-   public:
+    public:
     explicit ExitedWithCode( int exit_code );
     bool operator()( int exit_status ) const;
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ExitedWithCode& other );
 
@@ -207,11 +207,11 @@ class GTEST_API_ ExitedWithCode
 // given signal.
 class GTEST_API_ KilledBySignal
 {
-   public:
+    public:
     explicit KilledBySignal( int signum );
     bool operator()( int exit_status ) const;
 
-   private:
+    private:
     const int signum_;
 };
 #endif  // !GTEST_OS_WINDOWS

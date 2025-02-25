@@ -19,7 +19,7 @@ class CPointPlayerMoveConstraint : public CBaseEntity
 {
     DECLARE_CLASS( CPointPlayerMoveConstraint, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     int UpdateTransmitState( void );
@@ -29,7 +29,7 @@ class CPointPlayerMoveConstraint : public CBaseEntity
     void InputTurnOn( inputdata_t &inputdata );
     void InputTurnOff( inputdata_t &inputdata );
 
-   private:
+    private:
     float m_flRadius;
     float m_flConstraintWidth;
     float m_flSpeedFactor;

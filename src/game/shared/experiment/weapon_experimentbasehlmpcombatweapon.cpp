@@ -160,7 +160,7 @@ bool CBaseExperimentCombatWeapon::WeaponShouldBeLowered( void )
 {
     // Can't be in the middle of another animation
     if ( GetIdealActivity() != ACT_VM_IDLE_LOWERED && GetIdealActivity() != ACT_VM_IDLE &&
-         GetIdealActivity() != ACT_VM_IDLE_TO_LOWERED && GetIdealActivity() != ACT_VM_LOWERED_TO_IDLE )
+        GetIdealActivity() != ACT_VM_IDLE_TO_LOWERED && GetIdealActivity() != ACT_VM_LOWERED_TO_IDLE )
         return false;
 
     if ( m_bLowered )

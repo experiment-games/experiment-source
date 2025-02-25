@@ -31,14 +31,14 @@ class CAI_TestHull;
 
 class CAI_NetworkManager : public CPointEntity
 {
-   public:
+    public:
     static void InitializeAINetworks();
 
     DECLARE_DATADESC();
 
     DECLARE_CLASS( CAI_NetworkManager, CPointEntity );
 
-   public:
+    public:
     CAI_NetworkManager( void );
     virtual ~CAI_NetworkManager( void );
 
@@ -67,7 +67,7 @@ class CAI_NetworkManager : public CPointEntity
     void FixupHints();
     void MarkDontSaveGraph();
 
-   public:
+    public:
     CAI_NetworkEditTools *GetEditOps()
     {
         return m_pEditOps;
@@ -77,7 +77,7 @@ class CAI_NetworkManager : public CPointEntity
         return m_pNetwork;
     }
 
-   private:
+    private:
     void DelayedInit();
     void RebuildThink();
     void SaveNetworkGraph( void );
@@ -99,7 +99,7 @@ abstract_class CAI_NetworkBuildHelper : public CLogicalEntity
 {
     DECLARE_CLASS( CAI_NetworkBuildHelper, CLogicalEntity );
 
-   public:
+    public:
     virtual void PostInitNodePosition( CAI_Network * pNetwork, CAI_Node * pNode ) = 0;
 };
 
@@ -107,7 +107,7 @@ abstract_class CAI_NetworkBuildHelper : public CLogicalEntity
 
 class CAI_NetworkBuilder
 {
-   public:
+    public:
     void Build( CAI_Network *pNetwork );
     void Rebuild( CAI_Network *pNetwork );
 
@@ -115,7 +115,7 @@ class CAI_NetworkBuilder
 
     void InitZones( CAI_Network *pNetwork );
 
-   private:
+    private:
     void InitVisibility( CAI_Network *pNetwork, CAI_Node *pNode );
     void InitNeighbors( CAI_Network *pNetwork, CAI_Node *pNode );
     void InitClimbNodePosition( CAI_Network *pNetwork, CAI_Node *pNode );
@@ -146,7 +146,7 @@ extern CAI_NetworkBuilder g_AINetworkBuilder;
 
 class CAI_NetworkEditTools
 {
-   public:
+    public:
     CAI_NetworkEditTools( CAI_NetworkManager * );
     ~CAI_NetworkEditTools();
     // ----------------------

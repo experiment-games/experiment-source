@@ -26,7 +26,7 @@ ConVar tf_use_fixed_weaponspreads( "tf_use_fixed_weaponspreads", "0", FCVAR_REPL
 
 class CGroupedSound
 {
-   public:
+    public:
     string_t m_SoundName;
     Vector m_vecPos;
 };

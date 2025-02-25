@@ -12,7 +12,7 @@
 
 class IHudLCD
 {
-   public:
+    public:
     virtual void SetGlobalStat( char const *name, char const *value ) = 0;
     virtual void AddChatLine( char const *txt ) = 0;
 };

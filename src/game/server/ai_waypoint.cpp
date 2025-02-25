@@ -184,7 +184,7 @@ void AddWaypointLists( AI_Waypoint_t *oldRoute, AI_Waypoint_t *addRoute )
 
     // Check for duplication, but copy the type
     if ( waypoint->iNodeID != NO_NODE &&
-         waypoint->iNodeID == addRoute->iNodeID )
+        waypoint->iNodeID == addRoute->iNodeID )
     {
         //		waypoint->iWPType = addRoute->iWPType; <<TODO>> found case where this was bad
         AI_Waypoint_t *pNext = addRoute->GetNext();

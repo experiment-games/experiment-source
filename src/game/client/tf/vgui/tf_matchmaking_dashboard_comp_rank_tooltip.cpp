@@ -21,7 +21,7 @@ EditablePanel* GetCompRanksTooltipPanel()
     {
         DECLARE_CLASS_SIMPLE( CRanksTooltipPanel, EditablePanel );
 
-       public:
+        public:
         CRanksTooltipPanel()
             : EditablePanel( nullptr, "CompRanksTooltip" )
         {
@@ -50,7 +50,7 @@ BaseTooltip* GetCompRanksTooltip()
     // Special tooltip that uses PositionTooltip to position itself
     class CPositionedSimplePanelToolTip : public CSimplePanelToolTip
     {
-       public:
+        public:
         CPositionedSimplePanelToolTip()
             : CSimplePanelToolTip( nullptr, ( const char* )nullptr )
         {

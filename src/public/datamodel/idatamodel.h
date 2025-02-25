@@ -102,7 +102,7 @@ typedef uintp DmAttributeReferenceIterator_t;
 //-----------------------------------------------------------------------------
 abstract_class IDmElementFramework : public IAppSystem
 {
-   public:
+    public:
     // Methods of IAppSystem
     virtual bool Connect( CreateInterfaceFn factory ) = 0;
     virtual void Disconnect() = 0;
@@ -134,7 +134,7 @@ extern IDmElementFramework *g_pDmElementFramework;
 //-----------------------------------------------------------------------------
 abstract_class IDmeOperator
 {
-   public:
+    public:
     virtual bool IsDirty() = 0;  // ie needs to operate
     virtual void Operate() = 0;
 
@@ -147,7 +147,7 @@ abstract_class IDmeOperator
 //-----------------------------------------------------------------------------
 class IDmElementFactory
 {
-   public:
+    public:
     // Creation, destruction
     virtual CDmElement *Create( DmElementHandle_t handle, const char *pElementType, const char *pElementName, DmFileId_t fileid, const DmObjectId_t &id ) = 0;
     virtual void Destroy( DmElementHandle_t hElement ) = 0;
@@ -168,7 +168,7 @@ enum DmConflictResolution_t
 // current file encodings supported: binary, xml, xml_flat, keyvalues2, keyvalues2_flat, keyvalues (vmf/vmt/actbusy), text? (qc/obj)
 class IDmSerializer
 {
-   public:
+    public:
     virtual const char *GetName() const = 0;
     virtual const char *GetDescription() const = 0;
     virtual bool IsBinaryFormat() const = 0;
@@ -188,7 +188,7 @@ class IDmSerializer
 //   where N is a version number (1..9 for sfm, 1..2 for binary)
 class IDmLegacyUpdater
 {
-   public:
+    public:
     virtual const char *GetName() const = 0;
     virtual bool IsLatestVersion() const = 0;
 
@@ -200,7 +200,7 @@ class IDmLegacyUpdater
 // current formats include: sfm session, animset presets, particle definitions, exported maya character, etc.
 class IDmFormatUpdater
 {
-   public:
+    public:
     virtual const char *GetName() const = 0;
     virtual const char *GetDescription() const = 0;
     virtual const char *GetExtension() const = 0;
@@ -216,7 +216,7 @@ class IDmFormatUpdater
 //-----------------------------------------------------------------------------
 class IElementForKeyValueCallback
 {
-   public:
+    public:
     virtual const char *GetElementForKeyValue( const char *pszKeyName, int iNestingLevel ) = 0;
 };
 
@@ -226,7 +226,7 @@ class IElementForKeyValueCallback
 //-----------------------------------------------------------------------------
 abstract_class IClipboardCleanup
 {
-   public:
+    public:
     virtual void ReleaseClipboardData( CUtlVector< KeyValues * > & list ) = 0;
 };
 
@@ -261,7 +261,7 @@ enum DmNotifyFlags_t
 
 abstract_class IDmNotify
 {
-   public:
+    public:
     // See DmNotifySource_t and DmNotifyFlags_t
     virtual void NotifyDataChanged( const char *pReason, int nNotifySource, int nNotifyFlags ) = 0;
 };
@@ -283,7 +283,7 @@ struct UndoInfo_t
 //-----------------------------------------------------------------------------
 abstract_class IUndoElement
 {
-   public:
+    public:
     virtual void Undo() = 0;
     virtual void Redo() = 0;
 
@@ -292,7 +292,7 @@ abstract_class IUndoElement
     virtual const char *GetDesc() const = 0;
     virtual void Release() = 0;
 
-   protected:
+    protected:
     virtual bool IsEndOfStream() const = 0;
     virtual void SetEndOfStream( bool end ) = 0;
     virtual ~IUndoElement() {}
@@ -316,7 +316,7 @@ enum TraversalDepth_t
 //-----------------------------------------------------------------------------
 class IDataModel : public IAppSystem
 {
-   public:
+    public:
     // Installs factories used to instance elements
     virtual void AddElementFactory( const char *pElementTypeName, IDmElementFactory *pFactory ) = 0;
 
@@ -514,7 +514,7 @@ extern IDataModel *g_pDataModel;
 //-----------------------------------------------------------------------------
 class CUndoElement : public IUndoElement
 {
-   public:
+    public:
     CUndoElement( const char *pDesc )
     {
         m_UndoDesc = g_pDataModel->GetUndoDescInternal( pDesc );
@@ -543,7 +543,7 @@ class CUndoElement : public IUndoElement
         return m_pDesc;
     }
 
-   protected:
+    protected:
     virtual bool IsEndOfStream() const
     {
         return m_bEndOfStream;
@@ -559,7 +559,7 @@ class CUndoElement : public IUndoElement
     CUtlSymbol m_RedoDesc;
     bool m_bEndOfStream;
 
-   private:
+    private:
     friend class CUndoManager;
 };
 
@@ -568,7 +568,7 @@ class CUndoElement : public IUndoElement
 //-----------------------------------------------------------------------------
 class CUndoScopeGuard
 {
-   public:
+    public:
     explicit CUndoScopeGuard( const char *udesc, const char *rdesc = NULL )
     {
         m_bReleased = false;
@@ -653,7 +653,7 @@ class CUndoScopeGuard
         }
     }
 
-   private:
+    private:
     IDmNotify *m_pNotify;
     bool m_bReleased;
     bool m_bNotify;
@@ -664,7 +664,7 @@ class CUndoScopeGuard
 //-----------------------------------------------------------------------------
 class CChangeUndoScopeGuard
 {
-   public:
+    public:
     CChangeUndoScopeGuard( bool bNewState )
     {
         m_bReleased = false;
@@ -717,7 +717,7 @@ class CChangeUndoScopeGuard
         }
     }
 
-   private:
+    private:
     IDmNotify *m_pNotify;
     bool m_bOldValue;
     bool m_bReleased;
@@ -728,7 +728,7 @@ class CDisableUndoScopeGuard : public CChangeUndoScopeGuard
 {
     typedef CChangeUndoScopeGuard BaseClass;
 
-   public:
+    public:
     CDisableUndoScopeGuard()
         : BaseClass( false ) {}
     CDisableUndoScopeGuard( const char *pDesc, int nNotifySource, int nNotifyFlags, IDmNotify *pNotify = NULL )
@@ -739,7 +739,7 @@ class CEnableUndoScopeGuard : public CChangeUndoScopeGuard
 {
     typedef CChangeUndoScopeGuard BaseClass;
 
-   public:
+    public:
     CEnableUndoScopeGuard()
         : BaseClass( true ) {}
     CEnableUndoScopeGuard( const char *pDesc, int nNotifySource, int nNotifyFlags, IDmNotify *pNotify = NULL )
@@ -750,8 +750,8 @@ class CEnableUndoScopeGuard : public CChangeUndoScopeGuard
     class C##_classnameprefix##UndoScopeGuard : public CUndoScopeGuard                                                                                                                                                                         \
     {                                                                                                                                                                                                                                          \
         typedef CUndoScopeGuard BaseClass;                                                                                                                                                                                                     \
-                                                                                                                                                                                                                                               \
-       public:                                                                                                                                                                                                                                 \
+                                                                                                                                                                                                                                                \
+        public:                                                                                                                                                                                                                                 \
         C##_classnameprefix##UndoScopeGuard( int nNotifyFlags, const char *pUndoDesc, const char *pRedoDesc = NULL, int nChainingID = 0 ) : BaseClass( _source, nNotifyFlags, pUndoDesc, pRedoDesc, nChainingID )                              \
         {                                                                                                                                                                                                                                      \
         }                                                                                                                                                                                                                                      \
@@ -765,8 +765,8 @@ class CEnableUndoScopeGuard : public CChangeUndoScopeGuard
     class C##_classnameprefix##DisableUndoScopeGuard : public CDisableUndoScopeGuard                                                                                                                                                           \
     {                                                                                                                                                                                                                                          \
         typedef CDisableUndoScopeGuard BaseClass;                                                                                                                                                                                              \
-                                                                                                                                                                                                                                               \
-       public:                                                                                                                                                                                                                                 \
+                                                                                                                                                                                                                                                \
+        public:                                                                                                                                                                                                                                 \
         C##_classnameprefix##DisableUndoScopeGuard( const char *pDesc, int nNotifyFlags, IDmNotify *pNotify = NULL ) : BaseClass( pDesc, _source, nNotifyFlags, pNotify )                                                                      \
         {                                                                                                                                                                                                                                      \
         }                                                                                                                                                                                                                                      \
@@ -774,8 +774,8 @@ class CEnableUndoScopeGuard : public CChangeUndoScopeGuard
     class C##_classnameprefix##EnableUndoScopeGuard : public CEnableUndoScopeGuard                                                                                                                                                             \
     {                                                                                                                                                                                                                                          \
         typedef CEnableUndoScopeGuard BaseClass;                                                                                                                                                                                               \
-                                                                                                                                                                                                                                               \
-       public:                                                                                                                                                                                                                                 \
+                                                                                                                                                                                                                                                \
+        public:                                                                                                                                                                                                                                 \
         C##_classnameprefix##EnableUndoScopeGuard( const char *pDesc, int nNotifyFlags, IDmNotify *pNotify = NULL ) : BaseClass( pDesc, _source, nNotifyFlags, pNotify )                                                                       \
         {                                                                                                                                                                                                                                      \
         }                                                                                                                                                                                                                                      \
@@ -786,7 +786,7 @@ class CEnableUndoScopeGuard : public CChangeUndoScopeGuard
 //-----------------------------------------------------------------------------
 class CNotifyScopeGuard
 {
-   public:
+    public:
     CNotifyScopeGuard( const char *pReason, int nNotifySource, int nNotifyFlags, IDmNotify *pNotify = NULL )
     {
         m_bReleased = false;
@@ -821,10 +821,10 @@ class CNotifyScopeGuard
         }
     }
 
-   private:
+    private:
     CNotifyScopeGuard( const CNotifyScopeGuard &g );
 
-   private:
+    private:
     IDmNotify *m_pNotify;
     bool m_bReleased;
 };
@@ -833,8 +833,8 @@ class CNotifyScopeGuard
     class C##_classnameprefix##NotifyScopeGuard : public CNotifyScopeGuard                                                                                               \
     {                                                                                                                                                                    \
         typedef CNotifyScopeGuard BaseClass;                                                                                                                             \
-                                                                                                                                                                         \
-       public:                                                                                                                                                           \
+                                                                                                                                                                        \
+        public:                                                                                                                                                           \
         C##_classnameprefix##NotifyScopeGuard( const char *pReason, int nNotifyFlags, IDmNotify *pNotify = NULL ) : BaseClass( pReason, _source, nNotifyFlags, pNotify ) \
         {                                                                                                                                                                \
         }                                                                                                                                                                \
@@ -845,7 +845,7 @@ class CNotifyScopeGuard
 //-----------------------------------------------------------------------------
 class CChangeNotifyScopeGuard
 {
-   public:
+    public:
     CChangeNotifyScopeGuard( bool bNewState )
     {
         m_bReleased = false;
@@ -868,7 +868,7 @@ class CChangeNotifyScopeGuard
         }
     }
 
-   private:
+    private:
     bool m_bOldValue;
     bool m_bReleased;
 };
@@ -877,11 +877,11 @@ class CDisableNotifyScopeGuard : public CChangeNotifyScopeGuard
 {
     typedef CChangeNotifyScopeGuard BaseClass;
 
-   public:
+    public:
     CDisableNotifyScopeGuard()
         : BaseClass( true ) {}
 
-   private:
+    private:
     CDisableNotifyScopeGuard( const CDisableNotifyScopeGuard &g );
 };
 
@@ -889,11 +889,11 @@ class CEnableNotifyScopeGuard : public CChangeNotifyScopeGuard
 {
     typedef CChangeNotifyScopeGuard BaseClass;
 
-   public:
+    public:
     CEnableNotifyScopeGuard()
         : BaseClass( false ) {}
 
-   private:
+    private:
     CEnableNotifyScopeGuard( const CEnableNotifyScopeGuard &g );
 };
 

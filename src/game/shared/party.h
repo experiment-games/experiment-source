@@ -18,7 +18,7 @@ class CSharedObject;
 
 class IParty : public IPlayerGroup
 {
-   public:
+    public:
     virtual ~IParty() {}
 };
 

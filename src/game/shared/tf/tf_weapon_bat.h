@@ -31,7 +31,7 @@
 //
 class CTFBat : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBat, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -49,7 +49,7 @@ class CTFBat : public CTFWeaponBaseMelee
     virtual void Smack( void );
     virtual void PlayDeflectionSound( bool bPlayer );
 
-   private:
+    private:
     CTFBat( const CTFBat & ) {}
 };
 
@@ -59,7 +59,7 @@ class CTFBat : public CTFWeaponBaseMelee
 //
 class CTFBat_Fish : public CTFBat
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBat_Fish, CTFBat );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -76,7 +76,7 @@ class CTFBat_Fish : public CTFBat
 //
 class CTFBat_Wood : public CTFBat
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBat_Wood, CTFBat );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -158,7 +158,7 @@ class CTFBat_Wood : public CTFBat
 //
 class CTFStunBall : public CTFGrenadePipebombProjectile
 {
-   public:
+    public:
     DECLARE_CLASS( CTFStunBall, CTFGrenadePipebombProjectile );
     DECLARE_NETWORKCLASS();
 
@@ -214,7 +214,7 @@ class CTFStunBall : public CTFGrenadePipebombProjectile
 
     int m_iOriginalOwnerID;
 
-   private:
+    private:
     float m_flInitialSpeed;
 
     float m_flBallTrailLife;
@@ -232,7 +232,7 @@ class CTFStunBall : public CTFGrenadePipebombProjectile
 //
 class CTFBat_Giftwrap : public CTFBat_Wood
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBat_Giftwrap, CTFBat_Wood );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -264,7 +264,7 @@ class CTFBat_Giftwrap : public CTFBat_Wood
 //
 class CTFBall_Ornament : public CTFStunBall
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBall_Ornament, CTFStunBall );
     DECLARE_NETWORKCLASS();
 
@@ -292,7 +292,7 @@ class CTFBall_Ornament : public CTFStunBall
 
     virtual void ApplyBallImpactEffectOnVictim( CBaseEntity *pOther );
 
-   protected:
+    protected:
     Vector m_vCollisionVelocity;
 #endif
 };

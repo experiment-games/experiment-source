@@ -21,7 +21,7 @@ class CAchievementTrackerItem : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CAchievementTrackerItem, vgui::EditablePanel );
 
-   public:
+    public:
     CAchievementTrackerItem( vgui::Panel *pParent, const char *pElementName );
     virtual ~CAchievementTrackerItem();
 
@@ -49,7 +49,7 @@ class CAchievementTrackerItem : public vgui::EditablePanel
     }
     virtual void UpdateAchievementDisplay();
 
-   protected:
+    protected:
     vgui::Label *m_pAchievementName;
     vgui::Label *m_pAchievementNameGlow;
     vgui::Label *m_pAchievementDesc;
@@ -84,14 +84,14 @@ class CFloatingAchievementNumber : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CFloatingAchievementNumber, vgui::EditablePanel );
 
-   public:
+    public:
     CFloatingAchievementNumber( int iProgress, int x, int y, floating_number_directions iDir, vgui::Panel *pParent );
     virtual ~CFloatingAchievementNumber();
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void OnThink();
 
-   protected:
+    protected:
     vgui::Label *m_pNumberLabel;
     int m_iStartX;
     int m_iStartY;
@@ -109,7 +109,7 @@ class CHudBaseAchievementTracker : public CHudElement, public vgui::EditablePane
 {
     DECLARE_CLASS_SIMPLE( CHudBaseAchievementTracker, vgui::EditablePanel );
 
-   public:
+    public:
     CHudBaseAchievementTracker( const char *pElementName );
 
     virtual void Reset();
@@ -124,7 +124,7 @@ class CHudBaseAchievementTracker : public CHudElement, public vgui::EditablePane
     virtual CAchievementTrackerItem *GetAchievementPanel( int i );
     virtual CAchievementTrackerItem *CreateAchievementPanel();
 
-   protected:
+    protected:
     float m_flNextThink;
     CUtlVector< CAchievementTrackerItem * > m_AchievementItem;
 

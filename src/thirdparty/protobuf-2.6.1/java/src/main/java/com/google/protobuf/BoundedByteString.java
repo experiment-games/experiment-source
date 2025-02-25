@@ -50,27 +50,27 @@ class BoundedByteString extends LiteralByteString {
   private final int bytesLength;
 
   /**
-   * Creates a {@code BoundedByteString} backed by the sub-range of given array,
-   * without copying.
-   *
-   * @param bytes  array to wrap
-   * @param offset index to first byte to use in bytes
-   * @param length number of bytes to use from bytes
-   * @throws IllegalArgumentException if {@code offset < 0}, {@code length < 0},
-   *                                  or if {@code offset + length >
-   *                                  bytes.length}.
-   */
+    * Creates a {@code BoundedByteString} backed by the sub-range of given array,
+    * without copying.
+    *
+    * @param bytes  array to wrap
+    * @param offset index to first byte to use in bytes
+    * @param length number of bytes to use from bytes
+    * @throws IllegalArgumentException if {@code offset < 0}, {@code length < 0},
+    *                                  or if {@code offset + length >
+    *                                  bytes.length}.
+    */
   BoundedByteString(byte[] bytes, int offset, int length) {
     super(bytes);
     if (offset < 0) {
-      throw new IllegalArgumentException("Offset too small: " + offset);
+    throw new IllegalArgumentException("Offset too small: " + offset);
     }
     if (length < 0) {
-      throw new IllegalArgumentException("Length too small: " + offset);
+    throw new IllegalArgumentException("Length too small: " + offset);
     }
     if ((long) offset + length > bytes.length) {
-      throw new IllegalArgumentException(
-          "Offset+Length too large: " + offset + "+" + length);
+    throw new IllegalArgumentException(
+        "Offset+Length too large: " + offset + "+" + length);
     }
 
     this.bytesOffset = offset;
@@ -78,25 +78,25 @@ class BoundedByteString extends LiteralByteString {
   }
 
   /**
-   * Gets the byte at the given index.
-   * Throws {@link ArrayIndexOutOfBoundsException}
-   * for backwards-compatibility reasons although it would more properly be
-   * {@link IndexOutOfBoundsException}.
-   *
-   * @param index index of byte
-   * @return the value
-   * @throws ArrayIndexOutOfBoundsException {@code index} is < 0 or >= size
-   */
+    * Gets the byte at the given index.
+    * Throws {@link ArrayIndexOutOfBoundsException}
+    * for backwards-compatibility reasons although it would more properly be
+    * {@link IndexOutOfBoundsException}.
+    *
+    * @param index index of byte
+    * @return the value
+    * @throws ArrayIndexOutOfBoundsException {@code index} is < 0 or >= size
+    */
   @Override
   public byte byteAt(int index) {
     // We must check the index ourselves as we cannot rely on Java array index
     // checking for substrings.
     if (index < 0) {
-      throw new ArrayIndexOutOfBoundsException("Index too small: " + index);
+    throw new ArrayIndexOutOfBoundsException("Index too small: " + index);
     }
     if (index >= size()) {
-      throw new ArrayIndexOutOfBoundsException(
-          "Index too large: " + index + ", " + size());
+    throw new ArrayIndexOutOfBoundsException(
+        "Index too large: " + index + ", " + size());
     }
 
     return bytes[bytesOffset + index];
@@ -116,8 +116,8 @@ class BoundedByteString extends LiteralByteString {
   // ByteString -> byte[]
 
   @Override
-  protected void copyToInternal(byte[] target, int sourceOffset, 
-      int targetOffset, int numberToCopy) {
+  protected void copyToInternal(byte[] target, int sourceOffset,
+    int targetOffset, int numberToCopy) {
     System.arraycopy(bytes, getOffsetIntoBytes() + sourceOffset, target,
         targetOffset, numberToCopy);
   }
@@ -136,28 +136,28 @@ class BoundedByteString extends LiteralByteString {
     private final int limit;
 
     private BoundedByteIterator() {
-      position = getOffsetIntoBytes();
-      limit = position + size();
+    position = getOffsetIntoBytes();
+    limit = position + size();
     }
 
     public boolean hasNext() {
-      return (position < limit);
+    return (position < limit);
     }
 
     public Byte next() {
-      // Boxing calls Byte.valueOf(byte), which does not instantiate.
-      return nextByte();
+    // Boxing calls Byte.valueOf(byte), which does not instantiate.
+    return nextByte();
     }
 
     public byte nextByte() {
-      if (position >= limit) {
+    if (position >= limit) {
         throw new NoSuchElementException();
-      }
-      return bytes[position++];
+    }
+    return bytes[position++];
     }
 
     public void remove() {
-      throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException();
     }
   }
 }

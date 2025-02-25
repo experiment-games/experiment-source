@@ -59,39 +59,39 @@ namespace {
 // are different). name1 and name2 are field1 and field2's camel-case name
 // respectively.
 bool IsConflicting(const FieldDescriptor* field1, const string& name1,
-                   const FieldDescriptor* field2, const string& name2,
-                   string* info) {
+                    const FieldDescriptor* field2, const string& name2,
+                    string* info) {
   if (field1->is_repeated()) {
     if (field2->is_repeated()) {
-      // Both fields are repeated.
-      return false;
+    // Both fields are repeated.
+    return false;
     } else {
-      // field1 is repeated, and field2 is not.
-      if (name1 + "Count" == name2) {
+    // field1 is repeated, and field2 is not.
+    if (name1 + "Count" == name2) {
         *info = "both repeated field \"" + field1->name() + "\" and singular " +
             "field \"" + field2->name() + "\" generates the method \"" +
             "get" + name1 + "Count()\"";
         return true;
-      }
-      if (name1 + "List" == name2) {
+    }
+    if (name1 + "List" == name2) {
         *info = "both repeated field \"" + field1->name() + "\" and singular " +
             "field \"" + field2->name() + "\" generates the method \"" +
             "get" + name1 + "List()\"";
         return true;
-      }
-      // Well, there are obviously many more conflicting cases, but it probably
-      // doesn't worth the effort to exhaust all of them because they rarely
-      // happen and as we are continuing adding new methods/changing existing
-      // methods the number of different conflicting cases will keep growing.
-      // We can just add more cases here when they are found in the real world.
-      return false;
+    }
+    // Well, there are obviously many more conflicting cases, but it probably
+    // doesn't worth the effort to exhaust all of them because they rarely
+    // happen and as we are continuing adding new methods/changing existing
+    // methods the number of different conflicting cases will keep growing.
+    // We can just add more cases here when they are found in the real world.
+    return false;
     }
   } else {
     if (field2->is_repeated()) {
-      return IsConflicting(field2, name2, field1, name1, info);
+    return IsConflicting(field2, name2, field1, name1, info);
     } else {
-      // None of the two fields are repeated.
-      return false;
+    // None of the two fields are repeated.
+    return false;
     }
   }
 }
@@ -133,22 +133,22 @@ void Context::InitializeFieldGeneratorInfoForFields(
     const FieldDescriptor* field = fields[i];
     const string& name = UnderscoresToCapitalizedCamelCase(field);
     for (int j = i + 1; j < fields.size(); ++j) {
-      const FieldDescriptor* other = fields[j];
-      const string& other_name = UnderscoresToCapitalizedCamelCase(other);
-      if (name == other_name) {
+    const FieldDescriptor* other = fields[j];
+    const string& other_name = UnderscoresToCapitalizedCamelCase(other);
+    if (name == other_name) {
         is_conflict[i] = is_conflict[j] = true;
         conflict_reason[i] = conflict_reason[j] =
             "capitalized name of field \"" + field->name() +
             "\" conflicts with field \"" + other->name() + "\"";
-      } else if (IsConflicting(field, name, other, other_name,
-                               &conflict_reason[j])) {
+    } else if (IsConflicting(field, name, other, other_name,
+                                &conflict_reason[j])) {
         is_conflict[i] = is_conflict[j] = true;
         conflict_reason[i] = conflict_reason[j];
-      }
+    }
     }
     if (is_conflict[i]) {
-      GOOGLE_LOG(WARNING) << "field \"" << field->full_name() << "\" is conflicting "
-                   << "with another field: " << conflict_reason[i];
+    GOOGLE_LOG(WARNING) << "field \"" << field->full_name() << "\" is conflicting "
+                    << "with another field: " << conflict_reason[i];
     }
   }
   for (int i = 0; i < fields.size(); ++i) {
@@ -159,9 +159,9 @@ void Context::InitializeFieldGeneratorInfoForFields(
     // For fields conflicting with some other fields, we append the field
     // number to their field names in generated code to avoid conflicts.
     if (is_conflict[i]) {
-      info.name += SimpleItoa(field->number());
-      info.capitalized_name += SimpleItoa(field->number());
-      info.disambiguated_reason = conflict_reason[i];
+    info.name += SimpleItoa(field->number());
+    info.capitalized_name += SimpleItoa(field->number());
+    info.disambiguated_reason = conflict_reason[i];
     }
     field_generator_info_map_[field] = info;
   }
@@ -170,10 +170,10 @@ void Context::InitializeFieldGeneratorInfoForFields(
 const FieldGeneratorInfo* Context::GetFieldGeneratorInfo(
     const FieldDescriptor* field) const {
   const FieldGeneratorInfo* result =
-      FindOrNull(field_generator_info_map_, field);
+    FindOrNull(field_generator_info_map_, field);
   if (result == NULL) {
     GOOGLE_LOG(FATAL) << "Can not find FieldGeneratorInfo for field: "
-               << field->full_name();
+                << field->full_name();
   }
   return result;
 }
@@ -181,10 +181,10 @@ const FieldGeneratorInfo* Context::GetFieldGeneratorInfo(
 const OneofGeneratorInfo* Context::GetOneofGeneratorInfo(
     const OneofDescriptor* oneof) const {
   const OneofGeneratorInfo* result =
-      FindOrNull(oneof_generator_info_map_, oneof);
+    FindOrNull(oneof_generator_info_map_, oneof);
   if (result == NULL) {
     GOOGLE_LOG(FATAL) << "Can not find OneofGeneratorInfo for oneof: "
-               << oneof->name();
+                << oneof->name();
   }
   return result;
 }

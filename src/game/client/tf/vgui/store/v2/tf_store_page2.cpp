@@ -32,7 +32,7 @@ ItemSortTypeData_t g_StoreSortTypes[kNumSortTypes] =
 
 class CClassFilterTooltip : public vgui::BaseTooltip
 {
-   public:
+    public:
     CClassFilterTooltip( CTFStorePage2 *pStorePage )
         : BaseTooltip( pStorePage ), m_pStorePage( pStorePage )
     {
@@ -80,16 +80,16 @@ class CClassFilterTooltip : public vgui::BaseTooltip
 //-----------------------------------------------------------------------------
 CTFStorePage2::CTFStorePage2( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile )
     : BaseClass( parent, pPageData, pPreviewItemResFile ),
-      m_pSubcategoriesFilterCombo( NULL ),
-      m_pSortByCombo( NULL ),
-      m_pHomeCategoryTabs( NULL ),
-      m_pClassFilterButtons( NULL ),
-      m_pNameFilterTextEntry( NULL ),
-      m_pSubcategoriesFilterLabel( NULL ),
-      m_iCurrentSubcategory( 2 ),  // Switch to Featured items tab on home page when store launches; BRETT SAID I COULD DO THIS
-      m_pClassFilterTooltipLabel( NULL ),
-      m_pClassFilterTooltip( NULL ),
-      m_flFilterItemTime( 0.0f )
+    m_pSubcategoriesFilterCombo( NULL ),
+    m_pSortByCombo( NULL ),
+    m_pHomeCategoryTabs( NULL ),
+    m_pClassFilterButtons( NULL ),
+    m_pNameFilterTextEntry( NULL ),
+    m_pSubcategoriesFilterLabel( NULL ),
+    m_iCurrentSubcategory( 2 ),  // Switch to Featured items tab on home page when store launches; BRETT SAID I COULD DO THIS
+    m_pClassFilterTooltipLabel( NULL ),
+    m_pClassFilterTooltip( NULL ),
+    m_flFilterItemTime( 0.0f )
 {
     const CEconStorePriceSheet *pPriceSheet = EconUI()->GetStorePanel()->GetPriceSheet();
 
@@ -792,10 +792,10 @@ CStorePreviewItemPanel *CTFStorePage2::CreatePreviewPanel( void )
 CStorePricePanel *CTFStorePage2::CreatePricePanel( int iIndex )
 {
     if ( m_pPageData &&
-         m_pPageData->m_bIsHome &&
-         HasSubcategories() &&
-         m_pPageData->m_vecSubcategories.IsValidIndex( m_iCurrentSubcategory ) &&
-         m_pPageData->m_vecSubcategories[m_iCurrentSubcategory]->m_unID == CEconStoreCategoryManager::k_CategoryID_Popular )
+        m_pPageData->m_bIsHome &&
+        HasSubcategories() &&
+        m_pPageData->m_vecSubcategories.IsValidIndex( m_iCurrentSubcategory ) &&
+        m_pPageData->m_vecSubcategories[m_iCurrentSubcategory]->m_unID == CEconStoreCategoryManager::k_CategoryID_Popular )
     {
         return vgui::SETUP_PANEL( new CStorePricePanel_Popular( this, "StorePrice", iIndex + 1 ) );
     }

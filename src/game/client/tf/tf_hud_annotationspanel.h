@@ -28,7 +28,7 @@ class CTFAnnotationsPanelCallout : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFAnnotationsPanelCallout, EditablePanel );
 
-   public:
+    public:
     CTFAnnotationsPanelCallout( Panel *parent, const char *name, int id, Vector &location, const char *text );
     ~CTFAnnotationsPanelCallout();
 
@@ -59,7 +59,7 @@ class CTFAnnotationsPanelCallout : public EditablePanel
     void SetText( const char *text );
     void FadeAndRemove();
 
-   private:
+    private:
     int m_ID;
     Vector m_Location;
     CHandle< CBaseEntity > m_FollowEntity;
@@ -82,10 +82,10 @@ class CTFAnnotationsPanelCallout : public EditablePanel
 //-----------------------------------------------------------------------------
 class CTFAnnotationsPanel : public EditablePanel, public CHudElement
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFAnnotationsPanel, EditablePanel );
 
-   public:
+    public:
     CTFAnnotationsPanel( const char *pElementName );
     virtual ~CTFAnnotationsPanel();
 
@@ -101,10 +101,10 @@ class CTFAnnotationsPanel : public EditablePanel, public CHudElement
     virtual bool ShouldDraw( void );
     void OnThink( void );
 
-   protected:
+    protected:
     CTFAnnotationsPanelCallout *TestAndAddCallout( int id, Vector &origin, const char *text );
 
-   private:
+    private:
     bool m_bShouldBeVisible;
     CUtlVector< CTFAnnotationsPanelCallout * > m_pCalloutPanels;
     vgui::Panel *m_pFreezePanelBG;

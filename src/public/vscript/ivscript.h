@@ -145,7 +145,7 @@ enum ScriptLanguage_t
 
 class IScriptManager : public IAppSystem
 {
-   public:
+    public:
     virtual IScriptVM *CreateVM( ScriptLanguage_t language = SL_DEFAULT ) = 0;
     virtual void DestroyVM( IScriptVM * ) = 0;
 };
@@ -246,7 +246,7 @@ struct ScriptFunctionBinding_t
 //---------------------------------------------------------
 class IScriptInstanceHelper
 {
-   public:
+    public:
     virtual void *GetProxied( void *p, ScriptFunctionBinding_t *pBinding )
     {
         return p;
@@ -406,7 +406,7 @@ inline IScriptInstanceHelper *GetScriptInstanceHelper_ScriptNoBase_t()
     {                                                                                                 \
         return &g_##className##_ScriptDesc;                                                           \
     }                                                                                                 \
-                                                                                                      \
+                                                                                                    \
     void Init##className##ScriptDesc()                                                                \
     {                                                                                                 \
         static bool bInitialized;                                                                     \
@@ -414,9 +414,9 @@ inline IScriptInstanceHelper *GetScriptInstanceHelper_ScriptNoBase_t()
         {                                                                                             \
             return;                                                                                   \
         }                                                                                             \
-                                                                                                      \
+                                                                                                    \
         bInitialized = true;                                                                          \
-                                                                                                      \
+                                                                                                    \
         typedef className _className;                                                                 \
         ScriptClassDesc_t *pDesc = &g_##className##_ScriptDesc;                                       \
         pDesc->m_pszDescription = description;                                                        \
@@ -462,7 +462,7 @@ inline ScriptClassDesc_t *GetScriptDesc< ScriptNoBase_t >( ScriptNoBase_t * )
 template < typename T >
 class CScriptConstructor
 {
-   public:
+    public:
     static void *Construct()
     {
         return new T;
@@ -515,7 +515,7 @@ class CSquirrelMetamethodDelegateImpl;
 
 class IScriptVM
 {
-   public:
+    public:
     virtual bool Init() = 0;
     virtual void Shutdown() = 0;
 
@@ -965,7 +965,7 @@ class IScriptVM
     */
     class ISquirrelMetamethodDelegate
     {
-       public:
+        public:
         /// create a virtual destructor
         virtual ~ISquirrelMetamethodDelegate(){};
 
@@ -977,36 +977,36 @@ class IScriptVM
     };
 
     /*! RAII class used to register an ISquirrelMetamethodDelegate as a slot in an existing Squirrel
-      class. For example, if you have a class foo, and you call this with the slotName "bar",
-      this will make things so that foo.bar.x in Squirrel will actually call Get( "x") on the
-      ISquirrelMetamethodDelegate you provided.
+    class. For example, if you have a class foo, and you call this with the slotName "bar",
+    this will make things so that foo.bar.x in Squirrel will actually call Get( "x") on the
+    ISquirrelMetamethodDelegate you provided.
 
-      To register a ISquirrelMetamethodDelegate for a given Squirrel object,
-      create one of these. When this object goes out of scope, the _get metamethod will
-      be unregistered and unbound. That lets you have automatic cleanup.
-      This kooky workaround is necessary because the actual machinery of registering
-      a metamethod has to be inside the vscript.dll, so the code that you would like
-      to simply be in the constructor for ISquirrelMetamethodDelegate actually has to
-      be hidden behind a function in this interface.
+    To register a ISquirrelMetamethodDelegate for a given Squirrel object,
+    create one of these. When this object goes out of scope, the _get metamethod will
+    be unregistered and unbound. That lets you have automatic cleanup.
+    This kooky workaround is necessary because the actual machinery of registering
+    a metamethod has to be inside the vscript.dll, so the code that you would like
+    to simply be in the constructor for ISquirrelMetamethodDelegate actually has to
+    be hidden behind a function in this interface.
 
-      \note It's impossible to create a new slot on a class *instance*, only set the
-      value of an existing slot. So you can't make a new slot with CSquirrelNamedSlotToGetMethodDelegate --
-      its pszSlotName should match a slot already existing in the class.
-     */
+    \note It's impossible to create a new slot on a class *instance*, only set the
+    value of an existing slot. So you can't make a new slot with CSquirrelNamedSlotToGetMethodDelegate --
+    its pszSlotName should match a slot already existing in the class.
+    */
     class CSquirrelNamedSlotToGetMethodDelegate
     {
-       public:
+        public:
         inline CSquirrelNamedSlotToGetMethodDelegate( IScriptVM *pVM,
-                                                      HSCRIPT &hParentObject,                  ///< the instance or class in which you want to register this metamethod
-                                                      const char *pszSlotName,                 ///< the name of the slot in the instance which will delegate to this metamethod. (eg, if you use "foo" here, then any call to instance.foo.x will result in a Get() call to your delegate with key 'x').
-                                                      ISquirrelMetamethodDelegate *pDelegate,  ///< your implementation of the delegate class, which has a Get() providing dictionary semantics
-                                                      bool bDeleteDelegateOnExit               ///< if true, this class' destructor will call DELETE on the ISquirrelMetamethodDelegate pointer you give it -- ie, have this take ownership of the delegate, and delete it when finished. You usually want true.
+                                                    HSCRIPT &hParentObject,                  ///< the instance or class in which you want to register this metamethod
+                                                    const char *pszSlotName,                 ///< the name of the slot in the instance which will delegate to this metamethod. (eg, if you use "foo" here, then any call to instance.foo.x will result in a Get() call to your delegate with key 'x').
+                                                    ISquirrelMetamethodDelegate *pDelegate,  ///< your implementation of the delegate class, which has a Get() providing dictionary semantics
+                                                    bool bDeleteDelegateOnExit               ///< if true, this class' destructor will call DELETE on the ISquirrelMetamethodDelegate pointer you give it -- ie, have this take ownership of the delegate, and delete it when finished. You usually want true.
         );
         inline ~CSquirrelNamedSlotToGetMethodDelegate();
 
         inline bool IsValid() const;  ///< check if everything got constructed properly, etc
 
-       protected:
+        protected:
         /// PIMPL idiom, necessary because the necessary Squirrel details can't be
         /// included at this interface layer. When we break the Squirrel abstraction,
         /// the code and data through this pointer can be brought into one class and
@@ -1015,7 +1015,7 @@ class IScriptVM
         // ISquirrelMetamethodDelegate * const m_pDelegate;
         IScriptVM *const m_pVM;
 
-       private:
+        private:
         /// prevent inadvertent copying, etc.
         /// if we really need to copy these (or more to the point, return them by value),
         /// could implement some kind of ref-counting to make copy constructors safe.
@@ -1025,7 +1025,7 @@ class IScriptVM
 
     /// @}
 
-   protected:
+    protected:
     /// interface hiding for the squirrel metamethod machinery -- don't call these directly,
     /// but instead try to use the constructor and dtor of the CSquirrelNamedSlotToGetMethodDelegate
     /// instead. That'll automatically clean up after itself when it goes out of scope.
@@ -1038,7 +1038,7 @@ class IScriptVM
     /// calls delete on the given pointer, and does other important cleanup work as well.
     virtual void DestroySquirrelMetamethod_Get( CSquirrelMetamethodDelegateImpl *pMetaMethodImpl ) = 0;
 
-   public:
+    public:
     virtual int GetKeyValue2( HSCRIPT hScope, int nIterator, ScriptVariant_t *pKey, ScriptVariant_t *pValue ) = 0;
 };
 
@@ -1048,7 +1048,7 @@ class IScriptVM
 
 class CDefScriptScopeBase
 {
-   public:
+    public:
     static IScriptVM *GetVM()
     {
         extern IScriptVM *g_pScriptVM;
@@ -1059,10 +1059,10 @@ class CDefScriptScopeBase
 template < class BASE_CLASS = CDefScriptScopeBase >
 class CScriptScopeT : public CDefScriptScopeBase
 {
-   public:
+    public:
     CScriptScopeT()
         : m_hScope( INVALID_HSCRIPT ),
-          m_flags( 0 )
+        m_flags( 0 )
     {
     }
 
@@ -1700,7 +1700,7 @@ class CScriptScopeT : public CDefScriptScopeBase
         return status;
     }
 
-   protected:
+    protected:
     HSCRIPT m_hScope;
     int m_flags;
     CUtlVectorConservative< HSCRIPT * > m_FuncHandles;
@@ -1719,7 +1719,7 @@ typedef CScriptScopeT<> CScriptScope;
 
 class CScriptFuncHolder
 {
-   public:
+    public:
     CScriptFuncHolder()
         : hFunction( INVALID_HSCRIPT ) {}
     bool IsValid()
@@ -1768,7 +1768,7 @@ class CScriptFuncHolder
             m_hScriptFunc_##FuncName.hFunction = LookupFunction( #FuncName );                             \
             m_FuncHandles.AddToTail( &m_hScriptFunc_##FuncName.hFunction );                               \
         }                                                                                                 \
-                                                                                                          \
+                                                                                                        \
         if ( !m_hScriptFunc_##FuncName.IsNull() )                                                         \
         {                                                                                                 \
             ScriptStatus_t result = Call( m_hScriptFunc_##FuncName.hFunction, NULL, FUNC_CALL_ARGS_##N ); \
@@ -1789,7 +1789,7 @@ class CScriptFuncHolder
             m_hScriptFunc_##FuncName.hFunction = LookupFunction( #FuncName );         \
             m_FuncHandles.AddToTail( &m_hScriptFunc_##FuncName.hFunction );           \
         }                                                                             \
-                                                                                      \
+                                                                                    \
         if ( !m_hScriptFunc_##FuncName.IsNull() )                                     \
         {                                                                             \
             ScriptStatus_t result = Call( m_hScriptFunc_##FuncName.hFunction, NULL ); \

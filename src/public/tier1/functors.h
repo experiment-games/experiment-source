@@ -374,7 +374,7 @@
 
 abstract_class CFunctor : public IRefCounted
 {
-   public:
+    public:
     CFunctor()
     {
 #ifdef DEBUG
@@ -415,7 +415,7 @@ inline T RefToVal( const T &item )
 template < typename T >
 class CLateBoundPtr
 {
-   public:
+    public:
     CLateBoundPtr( T **ppObject )
         : m_ppObject( ppObject )
     {
@@ -438,7 +438,7 @@ class CLateBoundPtr
         return *m_ppObject;
     }
 
-   private:
+    private:
     T **m_ppObject;
 };
 
@@ -451,7 +451,7 @@ class CLateBoundPtr
 
 class CFuncMemPolicyNone
 {
-   public:
+    public:
     static void OnAcquire( void *pObject ) {}
     static void OnRelease( void *pObject ) {}
 };
@@ -459,7 +459,7 @@ class CFuncMemPolicyNone
 template < class OBJECT_TYPE_PTR = IRefCounted * >
 class CFuncMemPolicyRefCount
 {
-   public:
+    public:
     static void OnAcquire( OBJECT_TYPE_PTR pObject )
     {
         pObject->AddRef();
@@ -481,10 +481,10 @@ class CFuncMemPolicyRefCount
 template < class OBJECT_TYPE_PTR, typename FUNCTION_TYPE, class MEM_POLICY = CFuncMemPolicyNone >
 class CMemberFuncProxyBase
 {
-   protected:
+    protected:
     CMemberFuncProxyBase( OBJECT_TYPE_PTR pObject, FUNCTION_TYPE pfnProxied )
         : m_pObject( pObject ),
-          m_pfnProxied( pfnProxied )
+        m_pfnProxied( pfnProxied )
     {
         MEM_POLICY::OnAcquire( m_pObject );
     }
@@ -513,12 +513,12 @@ class CMemberFuncProxyBase
     template < class OBJECT_TYPE_PTR, typename FUNCTION_TYPE FUNC_TEMPLATE_ARG_PARAMS_##N, class MEM_POLICY = CFuncMemPolicyNone > \
     class CMemberFuncProxy##N : public CMemberFuncProxyBase< OBJECT_TYPE_PTR, FUNCTION_TYPE, MEM_POLICY >                          \
     {                                                                                                                              \
-       public:                                                                                                                     \
+        public:                                                                                                                     \
         CMemberFuncProxy##N( OBJECT_TYPE_PTR pObject = NULL, FUNCTION_TYPE pfnProxied = NULL )                                     \
             : CMemberFuncProxyBase< OBJECT_TYPE_PTR, FUNCTION_TYPE, MEM_POLICY >( pObject, pfnProxied )                            \
         {                                                                                                                          \
         }                                                                                                                          \
-                                                                                                                                   \
+                                                                                                                                    \
         void operator()( FUNC_PROXY_ARG_FORMAL_PARAMS_##N )                                                                        \
         {                                                                                                                          \
             this->OnCall();                                                                                                        \
@@ -542,14 +542,14 @@ typedef CRefCounted1< CFunctor, CRefCountServiceMT > CFunctorBase;
     template < typename FUNC_TYPE FUNC_TEMPLATE_ARG_PARAMS_##N, class FUNCTOR_BASE = CFunctorBase >                            \
     class CFunctor##N : public CFunctorBase                                                                                    \
     {                                                                                                                          \
-       public:                                                                                                                 \
+        public:                                                                                                                 \
         CFunctor##N( FUNC_TYPE pfnProxied FUNC_ARG_FORMAL_PARAMS_##N ) : m_pfnProxied( pfnProxied ) FUNC_CALL_ARGS_INIT_##N {} \
         void operator()()                                                                                                      \
         {                                                                                                                      \
             m_pfnProxied( FUNC_CALL_MEMBER_ARGS_##N );                                                                         \
         }                                                                                                                      \
-                                                                                                                               \
-       private:                                                                                                                \
+                                                                                                                                \
+        private:                                                                                                                \
         FUNC_TYPE m_pfnProxied;                                                                                                \
         FUNC_ARG_MEMBERS_##N;                                                                                                  \
     }
@@ -560,14 +560,14 @@ FUNC_GENERATE_ALL( DEFINE_FUNCTOR_TEMPLATE );
     template < class OBJECT_TYPE_PTR, typename FUNCTION_TYPE FUNC_TEMPLATE_ARG_PARAMS_##N, class FUNCTOR_BASE = CFunctorBase, class MEM_POLICY = CFuncMemPolicyNone > \
     class CMemberFunctor##N : public FUNCTOR_BASE                                                                                                                     \
     {                                                                                                                                                                 \
-       public:                                                                                                                                                        \
+        public:                                                                                                                                                        \
         CMemberFunctor##N( OBJECT_TYPE_PTR pObject, FUNCTION_TYPE pfnProxied FUNC_ARG_FORMAL_PARAMS_##N ) : m_Proxy( pObject, pfnProxied ) FUNC_CALL_ARGS_INIT_##N {} \
         void operator()()                                                                                                                                             \
         {                                                                                                                                                             \
             m_Proxy( FUNC_CALL_MEMBER_ARGS_##N );                                                                                                                     \
         }                                                                                                                                                             \
-                                                                                                                                                                      \
-       private:                                                                                                                                                       \
+                                                                                                                                                                    \
+        private:                                                                                                                                                       \
         CMemberFuncProxy##N< OBJECT_TYPE_PTR, FUNCTION_TYPE FUNC_BASE_TEMPLATE_ARG_PARAMS_##N, MEM_POLICY > m_Proxy;                                                  \
         FUNC_ARG_MEMBERS_##N;                                                                                                                                         \
     };
@@ -679,7 +679,7 @@ FUNC_GENERATE_ALL( DEFINE_CONST_MEMBER_FUNCTOR_DIRECT );
 
 class CDefaultFunctorFactory
 {
-   public:
+    public:
     FUNC_GENERATE_ALL( DEFINE_NONMEMBER_FUNCTOR_FACTORY );
     FUNC_GENERATE_ALL( DEFINE_MEMBER_FUNCTOR_FACTORY );
     FUNC_GENERATE_ALL( DEFINE_CONST_MEMBER_FUNCTOR_FACTORY );
@@ -690,7 +690,7 @@ class CDefaultFunctorFactory
 template < class CAllocator, class CCustomFunctorBase = CFunctorBase >
 class CCustomizedFunctorFactory
 {
-   public:
+    public:
     void SetAllocator( CAllocator *pAllocator )
     {
         m_pAllocator = pAllocator;
@@ -750,7 +750,7 @@ class CCustomizedFunctorFactory
 
     FUNC_GENERATE_ALL( DEFINE_REF_COUNTING_CONST_MEMBER_FUNCTOR_FACTORY_CUSTOM );
 
-   private:
+    private:
     CAllocator *m_pAllocator;
 };
 

@@ -109,7 +109,7 @@ struct BeamInfo_t
 
 abstract_class IViewRenderBeams
 {
-   public:
+    public:
     virtual void InitBeams( void ) = 0;
     virtual void ShutdownBeams( void ) = 0;
     virtual void ClearBeams( void ) = 0;

@@ -86,10 +86,10 @@ inline int GetServerTickCount()
 
 RagdollSimulationData_t::RagdollSimulationData_t( C_BaseAnimating* pEntity, int nStartTick, int nNumBones )
     : m_pEntity( pEntity ),
-      m_nEntityIndex( -1 ),
-      m_nStartTick( nStartTick ),
-      m_nNumBones( nNumBones ),
-      m_nDuration( -1 )
+    m_nEntityIndex( -1 ),
+    m_nStartTick( nStartTick ),
+    m_nNumBones( nNumBones ),
+    m_nDuration( -1 )
 {
     if ( pEntity )
     {
@@ -306,7 +306,7 @@ void CReplayRagdollRecorder::StopRecordingSleepingRagdolls()
 }
 
 bool CReplayRagdollRecorder::FindEntryInRecordingList( C_BaseAnimating* pEntity,
-                                                       CReplayRagdollRecorder::Iterator_t& nOutIndex )
+                                                        CReplayRagdollRecorder::Iterator_t& nOutIndex )
 {
     // Find the entry
     FOR_EACH_LL( m_lstRagdollsToRecord, i )
@@ -692,7 +692,7 @@ RagdollSimulationData_t* CReplayRagdollCache::FindRagdollEntry( C_BaseAnimating*
 
         // We've got the ragdoll, but only return it if nTick is in the window
         if ( nTick < pRagdollData->m_nStartTick ||
-             nTick > pRagdollData->m_nStartTick + pRagdollData->m_nDuration )
+            nTick > pRagdollData->m_nStartTick + pRagdollData->m_nDuration )
             return NULL;
 
         return pRagdollData;
@@ -715,7 +715,7 @@ bool CReplayRagdollCache::FindFrame( RagdollSimulationFrame_t*& pFrameOut, Ragdo
 
         // Use this frame?
         if ( nTick >= pFrame->nTick &&
-             ( ( pNextFrame && nTick <= pNextFrame->nTick ) || !pNextFrame ) )  // Use the last frame if the tick is past the range of frames -
+            ( ( pNextFrame && nTick <= pNextFrame->nTick ) || !pNextFrame ) )  // Use the last frame if the tick is past the range of frames -
         {                                                                       // this is the "sleeping" ragdoll frame
             pFrameOut = pFrame;
             pNextFrameOut = pNextFrame;
@@ -737,7 +737,7 @@ void CReplayRagdollCache::Think()
     engine->Con_NPrintf( 8, "time: %d", engine->GetDemoPlaybackTick() );
     FOR_EACH_LL( m_lstRagdolls, i )
     {
-      engine->Con_NPrintf( 10 + i, "entity %d: start time=%d  duration=%d  num bones=%d", m_lstRagdolls[i]->m_nEntityIndex, m_lstRagdolls[i]->m_nStartTick, m_lstRagdolls[i]->m_nDuration, m_lstRagdolls[i]->m_nNumBones );
+    engine->Con_NPrintf( 10 + i, "entity %d: start time=%d  duration=%d  num bones=%d", m_lstRagdolls[i]->m_nEntityIndex, m_lstRagdolls[i]->m_nStartTick, m_lstRagdolls[i]->m_nDuration, m_lstRagdolls[i]->m_nNumBones );
     }
     */
 }

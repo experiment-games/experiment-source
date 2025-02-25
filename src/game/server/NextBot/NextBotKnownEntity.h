@@ -17,7 +17,7 @@
  */
 class CKnownEntity
 {
-   public:
+    public:
     // constructing assumes we currently know about this entity
     CKnownEntity( CBaseEntity *who )
     {
@@ -159,7 +159,7 @@ class CKnownEntity
         return ( GetEntity() == who );
     }
 
-   private:
+    private:
     CHandle< CBaseEntity > m_who;
     Vector m_lastKnownPostion;
     bool m_hasLastKnownPositionBeenSeen;

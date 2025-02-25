@@ -45,7 +45,7 @@ struct characterset_t;
 //-----------------------------------------------------------------------------
 class IConCommandBaseAccessor
 {
-   public:
+    public:
     // Flags is a combination of FCVAR flags in cvar.h.
     // hOut is filled in with a handle to the variable.
     virtual bool RegisterConCommandBase( ConCommandBase *pVar ) = 0;
@@ -77,13 +77,13 @@ typedef int ( *FnCommandCompletionCallback )( const char *partial, char commands
 //-----------------------------------------------------------------------------
 class ICommandCallback
 {
-   public:
+    public:
     virtual void CommandCallback( const CCommand &command ) = 0;
 };
 
 class ICommandCompletionCallback
 {
-   public:
+    public:
     virtual int CommandCompletionCallback( const char *pPartial, CUtlVector< CUtlString > &commands ) = 0;
 };
 
@@ -101,7 +101,7 @@ class ConCommandBase
     // FIXME: Remove when ConVar changes are done
     friend class CDefaultCvar;
 
-   public:
+    public:
     ConCommandBase( void );
     ConCommandBase( const char *pName, const char *pHelpString = 0, int flags = 0 );
 
@@ -129,7 +129,7 @@ class ConCommandBase
     // Returns the DLL identifier
     virtual CVarDLLIdentifier_t GetDLLIdentifier() const;
 
-   protected:
+    protected:
     virtual void CreateBase( const char *pName, const char *pHelpString = 0, int flags = 0 );
 
     // Used internally by OneTimeInit to initialize/shutdown
@@ -139,7 +139,7 @@ class ConCommandBase
     // Internal copy routine ( uses new operator from correct module )
     char *CopyString( const char *from );
 
-   private:
+    private:
     // Next ConVar in chain
     // Prior to register, it points to the next convar in the DLL.
     // Once registered, though, m_pNext is reset to point to the next
@@ -156,7 +156,7 @@ class ConCommandBase
     // ConVar flags
     int m_nFlags;
 
-   protected:
+    protected:
     // ConVars add themselves to this list for the executable.
     // Then ConVar_Register runs through  all the console variables
     // and registers them into a global list stored in vstdlib.dll
@@ -171,7 +171,7 @@ class ConCommandBase
 //-----------------------------------------------------------------------------
 class CCommand
 {
-   public:
+    public:
     CCommand();
     CCommand( int nArgC, const char **ppArgV );
     bool Tokenize( const char *pCommand, characterset_t *pBreakSet = NULL );
@@ -191,7 +191,7 @@ class CCommand
     static int MaxCommandLength();
     static characterset_t *DefaultBreakSet();
 
-   private:
+    private:
     enum
     {
         COMMAND_MAX_ARGC = 64,
@@ -252,7 +252,7 @@ class ConCommand : public ConCommandBase
 {
     friend class CCvar;
 
-   public:
+    public:
     typedef ConCommandBase BaseClass;
 
     ConCommand( const char *pName, FnCommandCallbackVoid_t callback, const char *pHelpString = 0, int flags = 0, FnCommandCompletionCallback completionFunc = 0 );
@@ -270,7 +270,7 @@ class ConCommand : public ConCommandBase
     // Invoke the function
     virtual void Dispatch( const CCommand &command );
 
-   private:
+    private:
     // NOTE: To maintain backward compat, we have to be very careful:
     // All public virtual methods must appear in the same order always
     // since engine code will be calling into this code, which *does not match*
@@ -306,7 +306,7 @@ class ConVar : public ConCommandBase, public IConVar
     friend class CCvar;
     friend class ConVarRef;
 
-   public:
+    public:
     typedef ConCommandBase BaseClass;
 
     ConVar( const char *pName, const char *pDefaultValue, int flags = 0 );
@@ -362,7 +362,7 @@ class ConVar : public ConCommandBase, public IConVar
     FORCEINLINE_CVAR bool IsCompetitiveRestricted() const;
     bool SetCompetitiveMode( bool bCompetitive );
 
-   private:
+    private:
     // Called by CCvar when the value of a var is changing.
     virtual void InternalSetValue( const char *value );
     // For CVARs marked FCVAR_NEVER_AS_STRING
@@ -389,7 +389,7 @@ class ConVar : public ConCommandBase, public IConVar
         this->InternalSetFloatValue2( fNewValue, bForce );
     }
 
-   private:
+    private:
     // This either points to "this" or it points to the original declaration of a ConVar.
     // This allows ConVars to exist in separate modules, and they all use the first one to be declared.
     // m_pParent->m_pParent must equal m_pParent (ie: m_pParent must be the root, or original, ConVar).
@@ -475,7 +475,7 @@ FORCEINLINE_CVAR bool ConVar::IsCompetitiveRestricted() const
 //-----------------------------------------------------------------------------
 class ConVarRef
 {
-   public:
+    public:
     ConVarRef( const char *pName );
     ConVarRef( const char *pName, bool bIgnoreMissing );
     ConVarRef( IConVar *pConVar );
@@ -506,7 +506,7 @@ class ConVarRef
 
     const char *GetDefault() const;
 
-   private:
+    private:
     // High-speed method to read convar data
     IConVar *m_pConVar;
     ConVar *m_pConVarState;
@@ -616,7 +616,7 @@ class IVEngineClient;
 // regex.
 class UIConVarRef : public ConVarRef
 {
-   public:
+    public:
     UIConVarRef( IVEngineClient *pEngine, const char *pName, bool bIgnoreMissing = false );
 
     void Init( const char *pName, bool bIgnoreMissing ) = delete;
@@ -630,7 +630,7 @@ class UIConVarRef : public ConVarRef
     void SetValue( int nValue );
     void SetValue( bool bValue );
 
-   private:
+    private:
     bool CanSetWithoutEngine();
 
     IVEngineClient *m_pEngine;
@@ -660,7 +660,7 @@ class CConCommandMemberAccessor : public ConCommand, public ICommandCallback, pu
     typedef void ( T::*FnMemberCommandCallback_t )( const CCommand &command );
     typedef int ( T::*FnMemberCommandCompletionCallback_t )( const char *pPartial, CUtlVector< CUtlString > &commands );
 
-   public:
+    public:
     CConCommandMemberAccessor( T *pOwner, const char *pName, FnMemberCommandCallback_t callback, const char *pHelpString = 0, int flags = 0, FnMemberCommandCompletionCallback_t completionFunc = 0 )
         : BaseClass( pName, this, pHelpString, flags, ( completionFunc != 0 ) ? this : NULL )
     {
@@ -691,7 +691,7 @@ class CConCommandMemberAccessor : public ConCommand, public ICommandCallback, pu
         return ( m_pOwner->*m_CompletionFunc )( pPartial, commands );
     }
 
-   private:
+    private:
     T *m_pOwner;
     FnMemberCommandCallback_t m_Func;
     FnMemberCommandCompletionCallback_t m_CompletionFunc;
@@ -732,16 +732,16 @@ class CConCommandMemberAccessor : public ConCommand, public ICommandCallback, pu
     friend class CCommandMemberInitializer_##_funcname;                                                                          \
     class CCommandMemberInitializer_##_funcname                                                                                  \
     {                                                                                                                            \
-       public:                                                                                                                   \
+        public:                                                                                                                   \
         CCommandMemberInitializer_##_funcname() : m_ConCommandAccessor( NULL, name, &_thisclass::_funcname, description, flags ) \
         {                                                                                                                        \
             m_ConCommandAccessor.SetOwner( GET_OUTER( _thisclass, m_##_funcname##_register ) );                                  \
         }                                                                                                                        \
-                                                                                                                                 \
-       private:                                                                                                                  \
+                                                                                                                                \
+        private:                                                                                                                  \
         CConCommandMemberAccessor< _thisclass > m_ConCommandAccessor;                                                            \
     };                                                                                                                           \
-                                                                                                                                 \
+                                                                                                                                \
     CCommandMemberInitializer_##_funcname m_##_funcname##_register;
 
 #endif  // CONVAR_H

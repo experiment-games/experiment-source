@@ -839,9 +839,9 @@ void CTFClientScoreBoardDialog::InitializeInputScheme( void )
     m_pPlayerListRed->SetClickable( UseMouseMode() );
 
     if ( m_pPlayerListBlue->GetScrollBar() &&
-         m_pPlayerListBlue->GetScrollBar()->GetButton( 0 ) &&
-         m_pPlayerListBlue->GetScrollBar()->GetButton( 1 ) &&
-         m_pPlayerListBlue->GetScrollBar()->GetSlider() )
+        m_pPlayerListBlue->GetScrollBar()->GetButton( 0 ) &&
+        m_pPlayerListBlue->GetScrollBar()->GetButton( 1 ) &&
+        m_pPlayerListBlue->GetScrollBar()->GetSlider() )
     {
         m_pPlayerListBlue->SetVerticalScrollbar( UseMouseMode() );
         m_pPlayerListBlue->GetScrollBar()->GetButton( 0 )->SetMouseInputEnabled( UseMouseMode() );
@@ -851,9 +851,9 @@ void CTFClientScoreBoardDialog::InitializeInputScheme( void )
     }
 
     if ( m_pPlayerListRed->GetScrollBar() &&
-         m_pPlayerListRed->GetScrollBar()->GetButton( 0 ) &&
-         m_pPlayerListRed->GetScrollBar()->GetButton( 1 ) &&
-         m_pPlayerListRed->GetScrollBar()->GetSlider() )
+        m_pPlayerListRed->GetScrollBar()->GetButton( 0 ) &&
+        m_pPlayerListRed->GetScrollBar()->GetButton( 1 ) &&
+        m_pPlayerListRed->GetScrollBar()->GetSlider() )
     {
         m_pPlayerListRed->SetVerticalScrollbar( UseMouseMode() );
         m_pPlayerListRed->GetScrollBar()->SetMouseInputEnabled( UseMouseMode() );
@@ -957,7 +957,7 @@ void CTFClientScoreBoardDialog::Update()
     if ( UseMouseMode() )
     {
         if ( ( m_pPlayerListRed && m_pPlayerListRed->GetScrollBar() && m_pPlayerListRed->GetScrollBar()->IsVisible() ) ||
-             ( m_pPlayerListBlue && m_pPlayerListBlue->GetScrollBar() && m_pPlayerListBlue->GetScrollBar()->IsVisible() ) )
+            ( m_pPlayerListBlue && m_pPlayerListBlue->GetScrollBar() && m_pPlayerListBlue->GetScrollBar()->IsVisible() ) )
         {
             // we need a much faster update rate for MouseMode() so the MedalList can update when the scrollbar is quickly moved
             // we're listening for the ScrollBarSliderMoved message but it still doesn't keep up with dragging the mouse around
@@ -1970,7 +1970,7 @@ void CTFClientScoreBoardDialog::UpdatePlayerDetails()
         int iClass = pSelectedPlayer->m_Shared.GetDesiredPlayerClassIndex();
         int iTeam = pSelectedPlayer->GetTeamNumber();
         if ( ( pLocalPlayer->InSameTeam( pSelectedPlayer ) || pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM ) &&
-             iTeam >= FIRST_GAME_TEAM && iClass >= TF_FIRST_NORMAL_CLASS && iClass <= TF_LAST_NORMAL_CLASS )
+            iTeam >= FIRST_GAME_TEAM && iClass >= TF_FIRST_NORMAL_CLASS && iClass <= TF_LAST_NORMAL_CLASS )
         {
             if ( cl_hud_playerclass_use_playermodel.GetBool() )
             {

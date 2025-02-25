@@ -12,7 +12,7 @@ class CBaseTFBotHintEntity : public CPointEntity, public ITFBotHintEntityAutoLis
 {
     DECLARE_CLASS( CBaseTFBotHintEntity, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CBaseTFBotHintEntity( void );
@@ -38,7 +38,7 @@ class CBaseTFBotHintEntity : public CPointEntity, public ITFBotHintEntityAutoLis
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_isDisabled;
     HintType m_hintType;
 };

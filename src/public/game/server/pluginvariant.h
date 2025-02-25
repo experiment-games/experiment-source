@@ -40,7 +40,7 @@ class pluginvariant
 
     fieldtype_t fieldType;
 
-   public:
+    public:
     // constructor
     pluginvariant()
         : fieldType( FIELD_VOID ), iVal( 0 ) {}
@@ -124,7 +124,7 @@ class pluginvariant
         fieldType = FIELD_COLOR32;
     }
 
-   protected:
+    protected:
     //
     // Returns a string representation of the value without modifying the variant.
     //

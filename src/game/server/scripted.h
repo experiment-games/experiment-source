@@ -72,7 +72,7 @@ class CAI_ScriptedSequence : public CBaseEntity
 {
     DECLARE_CLASS( CAI_ScriptedSequence, CBaseEntity );
 
-   public:
+    public:
     void Spawn( void );
     virtual void Blocked( CBaseEntity *pOther );
     virtual void Touch( CBaseEntity *pOther );
@@ -173,7 +173,7 @@ class CAI_ScriptedSequence : public CBaseEntity
 
     void InputScriptPlayerDeath( inputdata_t &inputdata );
 
-   private:
+    private:
     friend class CAI_BaseNPC;  // should probably try to eliminate this relationship
 
     string_t m_iszEntry;       // String index for animation that must be played before entering the main action anim
@@ -197,10 +197,10 @@ class CAI_ScriptedSequence : public CBaseEntity
     int m_iDelay;  // A counter indicating how many scripts are NOT ready to start.
 
     bool m_bDelayed;  // This moderately hacky hack ensures that we don't calls to DelayStart(true) or DelayStart(false)
-                      // twice in succession. This is necessary because we didn't want to remove the call to DelayStart(true)
-                      // from StartScript, even though DelayStart(true) is called from TASK_PRE_SCRIPT.
-                      // All of this is necessary in case the NPCs schedule gets cleared during the script and then they
-                      // reselect the schedule to play the script. Without this you can get NPCs stuck with m_iDelay = -1
+                    // twice in succession. This is necessary because we didn't want to remove the call to DelayStart(true)
+                    // from StartScript, even though DelayStart(true) is called from TASK_PRE_SCRIPT.
+                    // All of this is necessary in case the NPCs schedule gets cleared during the script and then they
+                    // reselect the schedule to play the script. Without this you can get NPCs stuck with m_iDelay = -1
 
     float m_startTime;             // Time when script actually started, used for synchronization
     bool m_bWaitForBeginSequence;  // Set to true when we are told to MoveToPosition. Holds the actor in the pre-action idle until BeginSequence is called.

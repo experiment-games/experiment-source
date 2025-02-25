@@ -106,7 +106,7 @@ message TestAllTypes {
 
   // Defined in unittest_import_public.proto
   optional protobuf_unittest_import.PublicImportMessage
-      optional_public_import_message = 26;
+    optional_public_import_message = 26;
 
   optional NestedMessage optional_lazy_message = 27 [lazy=true];
 
@@ -164,7 +164,7 @@ message TestAllTypes {
   optional NestedEnum  default_nested_enum  = 81 [default = BAR        ];
   optional ForeignEnum default_foreign_enum = 82 [default = FOREIGN_BAR];
   optional protobuf_unittest_import.ImportEnum
-      default_import_enum = 83 [default = IMPORT_BAR];
+    default_import_enum = 83 [default = IMPORT_BAR];
 
   optional string default_string_piece = 84 [ctype=STRING_PIECE,default="abc"];
   optional string default_cord = 85 [ctype=CORD,default="123"];
@@ -307,7 +307,7 @@ extend TestAllExtensions {
     default_import_enum_extension = 83 [default = IMPORT_BAR];
 
   optional string default_string_piece_extension = 84 [ctype=STRING_PIECE,
-                                                       default="abc"];
+                                                        default="abc"];
   optional string default_cord_extension = 85 [ctype=CORD, default="123"];
 
   // For oneof test
@@ -557,9 +557,9 @@ message TestExtremeDefaultValues {
   optional string string_with_zero       = 23 [default = "hel\000lo"];
   optional  bytes bytes_with_zero        = 24 [default = "wor\000ld"];
   optional string string_piece_with_zero = 25 [ctype=STRING_PIECE,
-                                               default="ab\000c"];
+                                                default="ab\000c"];
   optional string cord_with_zero         = 26 [ctype=CORD,
-                                               default="12\0003"];
+                                                default="12\0003"];
   optional string replacement_string     = 27 [default="${unknown}"];
 }
 
@@ -612,8 +612,8 @@ message TestOneof {
     string foo_string = 2;
     TestAllTypes foo_message = 3;
     group FooGroup = 4 {
-      optional int32 a = 5;
-      optional string b = 6;
+    optional int32 a = 5;
+    optional string b = 6;
     }
   }
 }
@@ -638,8 +638,8 @@ message TestOneof2 {
     NestedEnum foo_enum = 6;
     NestedMessage foo_message = 7;
     group FooGroup = 8 {
-      optional int32 a = 9;
-      optional string b = 10;
+    optional int32 a = 9;
+    optional string b = 10;
     }
     NestedMessage foo_lazy_message = 11 [lazy=true];
   }
@@ -813,10 +813,10 @@ message TestParsingMerge {
     repeated TestAllTypes field2 = 2;
     repeated TestAllTypes field3 = 3;
     repeated group Group1 = 10 {
-      optional TestAllTypes field1 = 11;
+    optional TestAllTypes field1 = 11;
     }
     repeated group Group2 = 20 {
-      optional TestAllTypes field1 = 21;
+    optional TestAllTypes field1 = 21;
     }
     repeated TestAllTypes ext1 = 1000;
     repeated TestAllTypes ext2 = 1001;
@@ -858,4 +858,3 @@ service TestService {
 
 message BarRequest  {}
 message BarResponse {}
-

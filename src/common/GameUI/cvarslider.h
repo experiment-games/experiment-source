@@ -17,7 +17,7 @@ class CCvarSlider : public vgui::Slider
 {
     DECLARE_CLASS_SIMPLE( CCvarSlider, vgui::Slider );
 
-   public:
+    public:
     CCvarSlider( vgui::Panel *parent, const char *panelName );
     CCvarSlider( vgui::Panel *parent, const char *panelName, char const *caption, float minValue, float maxValue, char const *cvarname, bool bAllowOutOfRange = false );
     ~CCvarSlider();
@@ -39,7 +39,7 @@ class CCvarSlider : public vgui::Slider
     void Reset();
     bool HasBeenModified();
 
-   private:
+    private:
     MESSAGE_FUNC( OnSliderMoved, "SliderMoved" );
     MESSAGE_FUNC( OnSliderDragEnd, "SliderDragEnd" );
 

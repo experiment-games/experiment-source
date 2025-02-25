@@ -55,17 +55,17 @@ class CTFDashboardEventPanel : public CMatchMakingDashboardSidePanel, public CGa
             if ( pMatchGroup && pMatchGroup->BUsesStrictAbandons() )
             {
                 ShowConfirmDialog( "#TF_MM_Disconnect_Title",
-                                   "#TF_Matchmaking_AbandonQueuePrompt",
-                                   "#TF_OK",
-                                   "#Cancel",
-                                   []( bool bConfirmed, void* pContext )
-                                   {
-                                       if ( bConfirmed )
-                                       {
-                                           ETFMatchGroup eEventMatchGroup = GTFGCClientSystem()->WorldStatus().event_match_group();
-                                           GTFPartyClient()->RequestQueueForMatch( eEventMatchGroup );
-                                       }
-                                   } );
+                                    "#TF_Matchmaking_AbandonQueuePrompt",
+                                    "#TF_OK",
+                                    "#Cancel",
+                                    []( bool bConfirmed, void* pContext )
+                                    {
+                                        if ( bConfirmed )
+                                        {
+                                            ETFMatchGroup eEventMatchGroup = GTFGCClientSystem()->WorldStatus().event_match_group();
+                                            GTFPartyClient()->RequestQueueForMatch( eEventMatchGroup );
+                                        }
+                                    } );
             }
             else
             {
@@ -94,7 +94,7 @@ class CTFDashboardEventPanel : public CMatchMakingDashboardSidePanel, public CGa
         }
     }
 
-   private:
+    private:
     void UpdateFromWorldStatus()
     {
         auto& msgWorldStatus = GTFGCClientSystem()->WorldStatus();

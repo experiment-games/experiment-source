@@ -97,7 +97,7 @@ struct WorkshopMapDesc_t
 //-----------------------------------------------------------------------------
 abstract_class IVEngineServer
 {
-   public:
+    public:
     // Tell engine to change level ( "changelevel s1\n" or "changelevel2 s1 s2\n" )
     virtual void ChangeLevel( const char *s1, const char *s2 ) = 0;
 
@@ -473,13 +473,13 @@ class IServerGCLobby;
 //-----------------------------------------------------------------------------
 abstract_class IServerGameDLL
 {
-   public:
+    public:
     // Initialize the game (one-time call when the DLL is first loaded )
     // Return false if there is an error during startup.
     virtual bool DLLInit( CreateInterfaceFn engineFactory,
-                          CreateInterfaceFn physicsFactory,
-                          CreateInterfaceFn fileSystemFactory,
-                          CGlobalVars * pGlobals ) = 0;
+                        CreateInterfaceFn physicsFactory,
+                        CreateInterfaceFn fileSystemFactory,
+                        CGlobalVars * pGlobals ) = 0;
 
     // Setup replay interfaces on the server
     virtual bool ReplayInit( CreateInterfaceFn fnReplayFactory ) = 0;
@@ -623,9 +623,9 @@ abstract_class IServerGameDLL
         ePrepareLevelResources_InProgress
     };
     virtual ePrepareLevelResourcesResult AsyncPrepareLevelResources( /* in/out */ char *pszMapName, size_t nMapNameSize,
-                                                                     /* in/out */ char *pszMapFile,
-                                                                     size_t nMapFileSize,
-                                                                     float *flProgress = NULL ) = 0;
+                                                                    /* in/out */ char *pszMapFile,
+                                                                    size_t nMapFileSize,
+                                                                    float *flProgress = NULL ) = 0;
 
     // Ask the game DLL to evaluate what it would do with this map name were it passed to PrepareLevelResources.
     // NOTE That this is this is syncronous and non-blocking, so it is possible that async PrepareLevelResources call
@@ -668,7 +668,7 @@ typedef IServerGameDLL IServerGameDLL008;
 //-----------------------------------------------------------------------------
 abstract_class IServerGameEnts
 {
-   public:
+    public:
     virtual ~IServerGameEnts() {}
 
     // Only for debugging. Set the edict base so you can get an edict's index in the debugger while debugging the game .dll
@@ -701,7 +701,7 @@ abstract_class IServerGameEnts
 //-----------------------------------------------------------------------------
 abstract_class IServerGameClients
 {
-   public:
+    public:
     // Get server maxplayers and lower bound for same
     virtual void GetPlayerLimits( int &minplayers, int &maxplayers, int &defaultMaxPlayers ) const = 0;
 
@@ -770,7 +770,7 @@ typedef IServerGameClients IServerGameClients004;
 
 abstract_class IUploadGameStats
 {
-   public:
+    public:
     // Note that this call will block the server until the upload is completed, so use only at levelshutdown if at all.
     virtual bool UploadGameStats(
         char const *mapname,           // Game map name
@@ -806,7 +806,7 @@ abstract_class IUploadGameStats
 //-----------------------------------------------------------------------------
 abstract_class IPluginHelpersCheck
 {
-   public:
+    public:
     virtual bool CreateMessage( const char *plugin, edict_t *pEntity, DIALOG_TYPE type, KeyValues *data ) = 0;
 };
 
@@ -815,7 +815,7 @@ abstract_class IPluginHelpersCheck
 //-----------------------------------------------------------------------------
 abstract_class IServerDLLSharedAppSystems
 {
-   public:
+    public:
     virtual int Count() = 0;
     virtual char const *GetDllName( int idx ) = 0;
     virtual char const *GetInterfaceName( int idx ) = 0;
@@ -830,7 +830,7 @@ abstract_class IServerDLLSharedAppSystems
 //-----------------------------------------------------------------------------
 abstract_class IServerGameTags
 {
-   public:
+    public:
     // Get the list of cvars that require tags to show differently in the server browser
     virtual void GetTaggedConVarList( KeyValues * pCvarTagList ) = 0;
 };
@@ -840,7 +840,7 @@ abstract_class IServerGameTags
 //-----------------------------------------------------------------------------
 abstract_class IServerGCLobby
 {
-   public:
+    public:
     virtual bool HasLobby() const = 0;
     virtual bool SteamIDAllowedToConnect( const CSteamID &steamId ) const = 0;
     virtual void UpdateServerDetails( void ) = 0;

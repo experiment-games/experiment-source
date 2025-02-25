@@ -41,11 +41,11 @@ DECLARE_POINTER_HANDLE( YouTubeInfoHandle_t );
  */
 class CYouTubeResponseHandler
 {
-   public:
+    public:
     /**
-     * Invoked in the main thread after a response has been fully received.
-     * @param pResponse
-     */
+    * Invoked in the main thread after a response has been fully received.
+    * @param pResponse
+    */
     virtual void HandleResponse( long responseCode, const char *pResponse ) = 0;
 };
 

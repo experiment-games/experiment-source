@@ -19,7 +19,7 @@ class ILocomotion;
  */
 class CTFPathFollower : public PathFollower
 {
-   public:
+    public:
     CTFPathFollower( void );
     virtual ~CTFPathFollower();
 
@@ -32,7 +32,7 @@ class CTFPathFollower : public PathFollower
 
     virtual void SetMinLookAheadDistance( float value );  // minimum range movement goal must be along path
 
-   private:
+    private:
     const Path::Segment *m_goal;  // our current goal along the path
     float m_minLookAheadRange;
 

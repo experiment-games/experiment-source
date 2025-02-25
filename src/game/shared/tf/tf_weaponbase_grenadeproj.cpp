@@ -497,39 +497,39 @@ void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector
     }
 
 #if 0
-	// if its breakable glass and we kill it, don't bounce.
-	// give some damage to the glass, and if it breaks, pass 
-	// through it.
-	bool breakthrough = false;
+    // if its breakable glass and we kill it, don't bounce.
+    // give some damage to the glass, and if it breaks, pass
+    // through it.
+    bool breakthrough = false;
 
-	if( trace.m_pEnt && FClassnameIs( trace.m_pEnt, "func_breakable" ) )
-	{
-		breakthrough = true;
-	}
+    if( trace.m_pEnt && FClassnameIs( trace.m_pEnt, "func_breakable" ) )
+    {
+        breakthrough = true;
+    }
 
-	if( trace.m_pEnt && FClassnameIs( trace.m_pEnt, "func_breakable_surf" ) )
-	{
-		breakthrough = true;
-	}
+    if( trace.m_pEnt && FClassnameIs( trace.m_pEnt, "func_breakable_surf" ) )
+    {
+        breakthrough = true;
+    }
 
-	if (breakthrough)
-	{
-		CTakeDamageInfo info( this, this, 10, DMG_CLUB );
-		trace.m_pEnt->DispatchTraceAttack( info, GetAbsVelocity(), &trace );
+    if (breakthrough)
+    {
+        CTakeDamageInfo info( this, this, 10, DMG_CLUB );
+        trace.m_pEnt->DispatchTraceAttack( info, GetAbsVelocity(), &trace );
 
-		ApplyMultiDamage();
+        ApplyMultiDamage();
 
-		if( trace.m_pEnt->m_iHealth <= 0 )
-		{
-			// slow our flight a little bit
-			Vector vel = GetAbsVelocity();
+        if( trace.m_pEnt->m_iHealth <= 0 )
+        {
+            // slow our flight a little bit
+            Vector vel = GetAbsVelocity();
 
-			vel *= 0.4;
+            vel *= 0.4;
 
-			SetAbsVelocity( vel );
-			return;
-		}
-	}
+            SetAbsVelocity( vel );
+            return;
+        }
+    }
 #endif
 
     float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
@@ -606,14 +606,14 @@ void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector
     BounceSound();
 
 #if 0
-	// tell the bots a grenade has bounced
-	CCSPlayer *player = ToCSPlayer(GetThrower());
-	if ( player )
-	{
-		KeyValues *event = new KeyValues( "grenade_bounce" );
-		event->SetInt( "userid", player->GetUserID() );
-		gameeventmanager->FireEventServerOnly( event );
-	}
+    // tell the bots a grenade has bounced
+    CCSPlayer *player = ToCSPlayer(GetThrower());
+    if ( player )
+    {
+        KeyValues *event = new KeyValues( "grenade_bounce" );
+        event->SetInt( "userid", player->GetUserID() );
+        gameeventmanager->FireEventServerOnly( event );
+    }
 #endif
 }
 
@@ -659,7 +659,7 @@ void CTFWeaponBaseGrenadeProj::Destroy( bool bBlinkOut, bool bBreak )
 //-----------------------------------------------------------------------------
 class CTraceFilterCollisionGrenades : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterCollisionGrenades );
 
@@ -694,7 +694,7 @@ class CTraceFilterCollisionGrenades : public CTraceFilterEntitiesOnly
         return true;
     }
 
-   protected:
+    protected:
     const IHandleEntity *m_pPassEnt;
     const IHandleEntity *m_pPassEnt2;
 };

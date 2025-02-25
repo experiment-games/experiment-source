@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class C_TEBloodStream : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBloodStream, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
@@ -27,7 +27,7 @@ class C_TEBloodStream : public C_TEParticleSystem
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecDirection;
     int r, g, b, a;
     int m_nAmount;

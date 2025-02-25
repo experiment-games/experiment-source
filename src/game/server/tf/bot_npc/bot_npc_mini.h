@@ -19,7 +19,7 @@
 //----------------------------------------------------------------------------
 class CBotNPCMiniRockets : public CBossAlpha
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCMiniRockets, CBossAlpha );
 
     virtual void Precache();
@@ -74,7 +74,7 @@ inline bool CBotNPCMiniRockets::HasAbility( Ability ability ) const
 //----------------------------------------------------------------------------
 class CBotNPCMiniNuker : public CBossAlpha
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCMiniNuker, CBossAlpha );
 
     virtual void Precache();

@@ -5,7 +5,7 @@
 
 class CHL2MPBotGenerator : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPBotGenerator, CPointEntity );
     DECLARE_DATADESC();
 
@@ -32,7 +32,7 @@ class CHL2MPBotGenerator : public CPointEntity
     // Output
     void OnBotKilled( CHL2MPBot *pBot );
 
-   private:
+    private:
     bool m_bSuppressFire;
     bool m_bDisableDodge;
     bool m_bUseTeamSpawnpoint;
@@ -68,7 +68,7 @@ class CHL2MPBotActionPoint : public CPointEntity
 {
     DECLARE_CLASS( CHL2MPBotActionPoint, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CHL2MPBotActionPoint( void );

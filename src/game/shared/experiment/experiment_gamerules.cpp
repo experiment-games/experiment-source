@@ -178,7 +178,7 @@ extern ConVar sk_plr_grenade_drop_time;
 
 class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
 {
-   public:
+    public:
     virtual bool CanPlayerHearPlayer( CBasePlayer *pListener, CBasePlayer *pTalker, bool &bProximity )
     {
 #if defined( LUA_SDK )
@@ -327,7 +327,7 @@ bool CExperimentRules::IsIntermission( void )
 }
 
 void CExperimentRules::PlayerKilled( CBasePlayer *pVictim,
-                                     const CTakeDamageInfo &info )
+                                    const CTakeDamageInfo &info )
 {
 #if defined( LUA_SDK )
     CTakeDamageInfo linfo = info;
@@ -348,7 +348,7 @@ void CExperimentRules::PlayerKilled( CBasePlayer *pVictim,
 #ifndef CLIENT_DLL
 #if defined( LUA_SDK )
 bool CExperimentRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer,
-                                             CBaseEntity *pAttacker )
+                                            CBaseEntity *pAttacker )
 {
     CTakeDamageInfo info;
     LUA_CALL_HOOK_BEGIN( "FPlayerCanTakeDamage" );
@@ -413,7 +413,7 @@ bool CExperimentRules::NPC_ShouldDropGrenade( CBasePlayer *pRecipient )
 
     // If we're not maxed out on grenades and we've randomly okay'd it
     if ( ( numGrenades < GetAmmoDef()->MaxCarry( grenadeIndex ) ) &&
-         ( random->RandomInt( 0, 2 ) == 0 ) )
+        ( random->RandomInt( 0, 2 ) == 0 ) )
         return true;
 
     return false;
@@ -518,7 +518,7 @@ void CExperimentRules::Think( void )
             CTeam *pRebels = g_Teams[TEAM_REBELS];
 
             if ( pCombine->GetScore() >= flFragLimit ||
-                 pRebels->GetScore() >= flFragLimit )
+                pRebels->GetScore() >= flFragLimit )
             {
                 GoToIntermission();
                 return;
@@ -548,7 +548,7 @@ void CExperimentRules::Think( void )
     }
 
     if ( m_flRestartGameTime > 0.0f &&
-         m_flRestartGameTime <= gpGlobals->curtime )
+        m_flRestartGameTime <= gpGlobals->curtime )
     {
         RestartGame();
     }
@@ -646,7 +646,7 @@ float CExperimentRules::FlWeaponTryRespawn( CBaseCombatWeapon *pWeapon )
     if ( pWeapon && ( pWeapon->GetWeaponFlags() & ITEM_FLAG_LIMITINWORLD ) )
     {
         if ( gEntList.NumberOfEntities() <
-             ( gpGlobals->maxEntities - ENTITY_INTOLERANCE ) )
+            ( gpGlobals->maxEntities - ENTITY_INTOLERANCE ) )
             return 0;
 
         // we're past the entity tolerance level,  so delay the respawn
@@ -756,8 +756,8 @@ void CExperimentRules::ManageObjectRelocation( void )
                         else
                         {
                             shouldReset = ( pObject->GetFlags() & FL_ONGROUND )
-                                              ? true
-                                              : false;
+                                            ? true
+                                            : false;
                         }
 
                         if ( shouldReset )
@@ -897,13 +897,13 @@ int CExperimentRules::ItemShouldRespawn( CItem *pItem )
 // to pick up this weapon
 //=========================================================
 bool CExperimentRules::CanHavePlayerItem( CBasePlayer *pPlayer,
-                                          CBaseCombatWeapon *pItem )
+                                        CBaseCombatWeapon *pItem )
 {
 #if !defined( LUA_SDK )
     if ( weaponstay.GetInt() > 0 )
     {
         if ( pPlayer->Weapon_OwnsThisType( pItem->GetClassname(),
-                                           pItem->GetSubType() ) )
+                                            pItem->GetSubType() ) )
             return false;
     }
 #else
@@ -1132,7 +1132,7 @@ void CExperimentRules::DeathNotice( CBasePlayer *pVictim,
             killer_weapon_name = "smg1_grenade";
         }
         else if ( strcmp( killer_weapon_name, "satchel" ) == 0 ||
-                  strcmp( killer_weapon_name, "tripmine" ) == 0 )
+                strcmp( killer_weapon_name, "tripmine" ) == 0 )
         {
             killer_weapon_name = "slam";
         }
@@ -1250,7 +1250,7 @@ void CExperimentRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 }
 
 int CExperimentRules::PlayerRelationship( CBaseEntity *pPlayer,
-                                          CBaseEntity *pTarget )
+                                        CBaseEntity *pTarget )
 {
 #if defined( LUA_SDK )
     LUA_CALL_HOOK_BEGIN( "PlayerRelationship" );
@@ -1268,7 +1268,7 @@ int CExperimentRules::PlayerRelationship( CBaseEntity *pPlayer,
         return GR_NOTTEAMMATE;
 
     if ( ( *GetTeamID( pPlayer ) != '\0' ) && ( *GetTeamID( pTarget ) != '\0' ) &&
-         !stricmp( GetTeamID( pPlayer ), GetTeamID( pTarget ) ) )
+        !stricmp( GetTeamID( pPlayer ), GetTeamID( pTarget ) ) )
     {
         return GR_TEAMMATE;
     }
@@ -1280,7 +1280,7 @@ int CExperimentRules::PlayerRelationship( CBaseEntity *pPlayer,
 #ifndef CLIENT_DLL
 #if defined( LUA_SDK )
 bool CExperimentRules::PlayerCanHearChat( CBasePlayer *pListener,
-                                          CBasePlayer *pSpeaker )
+                                        CBasePlayer *pSpeaker )
 {
     LUA_CALL_HOOK_BEGIN( "PlayerCanHearChat" );
     CBasePlayer::PushLuaInstanceSafe( L, pListener );
@@ -1367,7 +1367,7 @@ float CExperimentRules::GetMapRemainingTime()
     // timelimit is in minutes
 
     float timeleft = ( m_flGameStartTime + mp_timelimit.GetInt() * 60.0f ) -
-                     gpGlobals->curtime;
+                    gpGlobals->curtime;
 
     return timeleft;
 }
@@ -1394,8 +1394,8 @@ bool CExperimentRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     }
 
     if ( ( collisionGroup0 == COLLISION_GROUP_PLAYER ||
-           collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
-         collisionGroup1 == COLLISION_GROUP_WEAPON )
+            collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
+        collisionGroup1 == COLLISION_GROUP_WEAPON )
     {
         return false;
     }
@@ -1446,7 +1446,7 @@ bool CExperimentRules::ClientCommand( CBaseEntity *pEdict, const CCommand &args 
 // convert a velocity in ft/sec and a mass in grains to an impulse in kg in/s
 #define BULLET_IMPULSE( grains, ftpersec )                     \
     ( ( ftpersec ) * 12 * BULLET_MASS_GRAINS_TO_KG( grains ) * \
-      BULLET_IMPULSE_EXAGGERATION )
+    BULLET_IMPULSE_EXAGGERATION )
 
 CAmmoDef *GetAmmoDef()
 {
@@ -1646,7 +1646,7 @@ void CExperimentRules::CleanUpMap()
     // Now reload the map entities.
     class CExperimentMapEntityFilter : public IMapEntityFilter
     {
-       public:
+        public:
         virtual bool ShouldCreateEntity( const char *pClassname )
         {
             // Don't recreate the preserved entities.
@@ -1683,7 +1683,7 @@ void CExperimentRules::CleanUpMap()
                     m_iIterator );  // Seek to the next entity.
 
                 if ( ref.m_iEdict == -1 ||
-                     engine->PEntityOfEntIndex( ref.m_iEdict ) )
+                    engine->PEntityOfEntIndex( ref.m_iEdict ) )
                 {
                     // Doh! The entity was delete and its slot was reused.
                     // Just use any old edict slot. This case sucks because we
@@ -1700,7 +1700,7 @@ void CExperimentRules::CleanUpMap()
             }
         }
 
-       public:
+        public:
         int m_iIterator;  // Iterator into g_MapEntityRefs.
     };
     CExperimentMapEntityFilter filter;
@@ -1727,7 +1727,7 @@ void CExperimentRules::CheckChatForReadySignal( CExperiment_Player *pPlayer,
 #endif
 
     if ( m_bAwaitingReadyRestart &&
-         FStrEq( chatmsg, mp_ready_signal.GetString() ) )
+        FStrEq( chatmsg, mp_ready_signal.GetString() ) )
     {
         if ( !pPlayer->IsReady() )
         {

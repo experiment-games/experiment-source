@@ -87,7 +87,7 @@ struct spng_ihdr ihdr =
 spng_set_ihdr(enc, &ihdr);
 
 /* SPNG_FMT_PNG is a special value that matches the format in ihdr,
-   SPNG_ENCODE_FINALIZE will finalize the PNG with the end-of-file marker */
+  SPNG_ENCODE_FINALIZE will finalize the PNG with the end-of-file marker */
 spng_encode_image(enc, image, image_size, SPNG_FMT_PNG, SPNG_ENCODE_FINALIZE);
 
 /* PNG is written to an internal buffer by default */

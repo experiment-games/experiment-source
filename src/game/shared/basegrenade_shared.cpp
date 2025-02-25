@@ -142,27 +142,27 @@ DEFINE_PRED_FIELD( m_hThrower, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
         CPASFilter filter( vecAbsOrigin );
 
         te->Explosion( filter, -1.0,  // don't apply cl_interp delay
-                       &vecAbsOrigin,
-                       !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-                       m_DmgRadius * .03,
-                       25,
-                       TE_EXPLFLAG_NONE,
-                       m_DmgRadius,
-                       m_flDamage,
-                       &vecNormal,
-                       ( char )pdata->game.material );
+                        &vecAbsOrigin,
+                        !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
+                        m_DmgRadius * .03,
+                        25,
+                        TE_EXPLFLAG_NONE,
+                        m_DmgRadius,
+                        m_flDamage,
+                        &vecNormal,
+                        ( char )pdata->game.material );
     }
     else
     {
         CPASFilter filter( vecAbsOrigin );
         te->Explosion( filter, -1.0,  // don't apply cl_interp delay
-                       &vecAbsOrigin,
-                       !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-                       m_DmgRadius * .03,
-                       25,
-                       TE_EXPLFLAG_NONE,
-                       m_DmgRadius,
-                       m_flDamage );
+                        &vecAbsOrigin,
+                        !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
+                        m_DmgRadius * .03,
+                        25,
+                        TE_EXPLFLAG_NONE,
+                        m_DmgRadius,
+                        m_flDamage );
     }
 
 #if !defined( CLIENT_DLL )

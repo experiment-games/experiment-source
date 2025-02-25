@@ -25,11 +25,11 @@ class C_BaseEntity;
 //-----------------------------------------------------------------------------
 class CTextureTransformProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     IMaterialVar *m_pCenterVar;
     IMaterialVar *m_pScaleVar;
     IMaterialVar *m_pRotateVar;
@@ -124,11 +124,11 @@ EXPOSE_INTERFACE( CTextureTransformProxy, IMaterialProxy, "TextureTransform" IMA
 //-----------------------------------------------------------------------------
 class CMatrixRotateProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Angle;
     IMaterialVar *m_pAxisVar;
 };

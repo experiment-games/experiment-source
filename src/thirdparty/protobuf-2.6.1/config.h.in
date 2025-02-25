@@ -82,7 +82,7 @@
 #undef HAVE_ZLIB
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+    */
 #undef LT_OBJDIR
 
 /* Name of package */
@@ -107,7 +107,7 @@
 #undef PACKAGE_VERSION
 
 /* Define to necessary symbol if this constant uses a non-standard name on
-   your system. */
+    your system. */
 #undef PTHREAD_CREATE_JOINABLE
 
 /* 64bit enabled */
@@ -145,7 +145,7 @@
 #undef _MINIX
 
 /* Define to 2 if the system does not provide POSIX.1 features except with
-   this defined. */
+    this defined. */
 #undef _POSIX_1_SOURCE
 
 /* Define to 1 if you need to in order for `stat' and other things to work. */

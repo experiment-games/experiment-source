@@ -30,7 +30,7 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 class CMaterialReference
 {
-   public:
+    public:
     // constructor, destructor
     CMaterialReference( char const *pMaterialName = 0, const char *pTextureGroupName = 0, bool bComplain = true );
     ~CMaterialReference();
@@ -67,7 +67,7 @@ class CMaterialReference
         return m_pMaterial;
     }
 
-   private:
+    private:
     IMaterial *m_pMaterial;
 };
 
@@ -76,7 +76,7 @@ class CMaterialReference
 //-----------------------------------------------------------------------------
 class CTextureReference
 {
-   public:
+    public:
     // constructor, destructor
     CTextureReference();
     CTextureReference( const CTextureReference &ref );
@@ -117,7 +117,7 @@ class CTextureReference
     // Assignment operator
     void operator=( CTextureReference &ref );
 
-   private:
+    private:
     ITexture *m_pTexture;
 };
 

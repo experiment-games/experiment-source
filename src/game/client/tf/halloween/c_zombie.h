@@ -11,7 +11,7 @@
  */
 class C_Zombie : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_Zombie, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
@@ -26,7 +26,7 @@ class C_Zombie : public C_NextBotCombatCharacter
 
     virtual void BuildTransformations( CStudioHdr *hdr, Vector *pos, Quaternion q[], const matrix3x4_t &cameraTransform, int boneMask, CBoneBitList &boneComputed ) OVERRIDE;
 
-   private:
+    private:
     C_Zombie( const C_Zombie & );  // not defined, not accessible
 
     float m_flHeadScale;

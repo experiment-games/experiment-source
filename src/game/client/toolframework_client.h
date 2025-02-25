@@ -84,11 +84,11 @@ enum TERecordingType_t
 //-----------------------------------------------------------------------------
 class CRecordEffectOwner
 {
-   public:
+    public:
     CRecordEffectOwner( C_BaseEntity *pEntity, bool bIsViewModel = false );
     ~CRecordEffectOwner();
 
-   private:
+    private:
     bool m_bToolsEnabled;
 };
 

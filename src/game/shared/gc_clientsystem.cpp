@@ -61,12 +61,12 @@ CON_COMMAND( dump_all_caches, "Dump the contents all subsribed SOCaches" )
 CGCClientSystem::CGCClientSystem()
     : CAutoGameSystemPerFrame( "CGCClientSystem" )
 #ifdef CLIENT_DLL
-      ,
-      m_GCClient( NULL, false )
+    ,
+    m_GCClient( NULL, false )
 #else
-      ,
-      m_GCClient( NULL, true ),
-      m_CallbackLogonSuccess( this, &CGCClientSystem::OnLogonSuccess )
+    ,
+    m_GCClient( NULL, true ),
+    m_CallbackLogonSuccess( this, &CGCClientSystem::OnLogonSuccess )
 #endif
 {
     m_bInittedGC = false;

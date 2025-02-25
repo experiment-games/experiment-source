@@ -18,7 +18,7 @@ class CNextMapWinnerDashboardState : public CTFMatchmakingPopup
 {
     DECLARE_CLASS_SIMPLE( CNextMapWinnerDashboardState, CTFMatchmakingPopup );
 
-   public:
+    public:
     CNextMapWinnerDashboardState( const char* pszName )
         : CTFMatchmakingPopup( pszName )
     {
@@ -36,10 +36,10 @@ class CNextMapWinnerDashboardState : public CTFMatchmakingPopup
         CTFGameRules::EUserNextMapVote eWinningVote = TFGameRules()->GetWinningVote( nVotes );
 
         if ( BInEndOfMatch() &&
-             TFGameRules() &&
-             TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_MAP_CHOSEN_PAUSE &&
-             eWinningVote != CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED &&
-             GTFGCClientSystem()->BConnectedToMatchServer( false ) )
+            TFGameRules() &&
+            TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_MAP_CHOSEN_PAUSE &&
+            eWinningVote != CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED &&
+            GTFGCClientSystem()->BConnectedToMatchServer( false ) )
         {
             return true;
         }
@@ -47,7 +47,7 @@ class CNextMapWinnerDashboardState : public CTFMatchmakingPopup
         return false;
     }
 
-   private:
+    private:
     virtual void OnEnter() OVERRIDE
     {
         CTFMatchmakingPopup::OnEnter();

@@ -14,7 +14,7 @@ namespace GCSDK
 // outputs to control log spamming
 class CGCEmitGroup
 {
-   public:
+    public:
     // the different severity levels for a message
     enum EMsgLevel
     {
@@ -64,7 +64,7 @@ class CGCEmitGroup
     void EmitV( EMsgLevel eLvl, PRINTF_FORMAT_STRING const char *pchMsg, va_list vaArgs ) const;
     void BoldMsgV( PRINTF_FORMAT_STRING const char *pchMsg, va_list vaArgs ) const;
 
-   private:
+    private:
     // the display name of this group, must be a static string
     const char *m_pszGroupName;
 };

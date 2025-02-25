@@ -83,13 +83,13 @@ RAPIDJSON_DIAG_OFF( effc++ )
 
     \code
     #define RAPIDJSON_PARSE_ERROR_NORETURN(parseErrorCode,offset) \
-       throw ParseException(parseErrorCode, #parseErrorCode, offset)
+        throw ParseException(parseErrorCode, #parseErrorCode, offset)
 
     #include <stdexcept>               // std::runtime_error
     #include "rapidjson/error/error.h" // rapidjson::ParseResult
 
     struct ParseException : std::runtime_error, rapidjson::ParseResult {
-      ParseException(rapidjson::ParseErrorCode code, const char* msg, size_t offset)
+    ParseException(rapidjson::ParseErrorCode code, const char* msg, size_t offset)
         : std::runtime_error(msg), ParseResult(code, offset) {}
     };
 
@@ -279,7 +279,7 @@ class StreamLocalCopy;
 template < typename Stream >
 class StreamLocalCopy< Stream, 1 >
 {
-   public:
+    public:
     StreamLocalCopy( Stream& original )
         : s( original ), original_( original ) {}
     ~StreamLocalCopy()
@@ -289,7 +289,7 @@ class StreamLocalCopy< Stream, 1 >
 
     Stream s;
 
-   private:
+    private:
     StreamLocalCopy& operator=( const StreamLocalCopy& ) /* = delete */;
 
     Stream& original_;
@@ -299,13 +299,13 @@ class StreamLocalCopy< Stream, 1 >
 template < typename Stream >
 class StreamLocalCopy< Stream, 0 >
 {
-   public:
+    public:
     StreamLocalCopy( Stream& original )
         : s( original ) {}
 
     Stream& s;
 
-   private:
+    private:
     StreamLocalCopy& operator=( const StreamLocalCopy& ) /* = delete */;
 };
 
@@ -632,7 +632,7 @@ inline void SkipWhitespace( EncodedInputStream< UTF8<>, MemoryStream >& is )
 template < typename SourceEncoding, typename TargetEncoding, typename StackAllocator = CrtAllocator >
 class GenericReader
 {
-   public:
+    public:
     typedef typename SourceEncoding::Ch Ch;  //!< SourceEncoding character type
 
     //! Constructor.
@@ -704,7 +704,7 @@ class GenericReader
 
     //! Initialize JSON text token-by-token parsing
     /*!
-     */
+    */
     void IterativeParseInit()
     {
         parseResult_.Clear();
@@ -717,7 +717,7 @@ class GenericReader
         \param is Input stream to be parsed.
         \param handler The handler to receive events.
         \return Whether the parsing is successful.
-     */
+    */
     template < unsigned parseFlags, typename InputStream, typename Handler >
     bool IterativeParseNext( InputStream& is, Handler& handler )
     {
@@ -782,7 +782,7 @@ class GenericReader
 
     //! Check if token-by-token parsing JSON text is complete
     /*! \return Whether the JSON has been fully decoded.
-     */
+    */
     RAPIDJSON_FORCEINLINE bool IterativeParseComplete() const
     {
         return IsIterativeParsingCompleteState( state_ );
@@ -806,13 +806,13 @@ class GenericReader
         return parseResult_.Offset();
     }
 
-   protected:
+    protected:
     void SetParseError( ParseErrorCode code, size_t offset )
     {
         parseResult_.Set( code, offset );
     }
 
-   private:
+    private:
     // Prohibit copy constructor & assignment operator.
     GenericReader( const GenericReader& );
     GenericReader& operator=( const GenericReader& );
@@ -832,7 +832,7 @@ class GenericReader
             r_.ClearStack();
         }
 
-       private:
+        private:
         GenericReader& r_;
         ClearStackOnExit( const ClearStackOnExit& );
         ClearStackOnExit& operator=( const ClearStackOnExit& );
@@ -1091,7 +1091,7 @@ class GenericReader
     template < typename CharType >
     class StackStream
     {
-       public:
+        public:
         typedef CharType Ch;
 
         StackStream( internal::Stack< StackAllocator >& stack )
@@ -1118,7 +1118,7 @@ class GenericReader
             return stack_.template Pop< Ch >( length_ );
         }
 
-       private:
+        private:
         StackStream( const StackStream& );
         StackStream& operator=( const StackStream& );
 
@@ -1618,7 +1618,7 @@ class GenericReader
     template < typename InputStream >
     class NumberStream< InputStream, false, false >
     {
-       public:
+        public:
         typedef typename InputStream::Ch Ch;
 
         NumberStream( GenericReader& reader, InputStream& s )
@@ -1654,7 +1654,7 @@ class GenericReader
             return 0;
         }
 
-       protected:
+        protected:
         NumberStream& operator=( const NumberStream& );
 
         InputStream& is;
@@ -1665,7 +1665,7 @@ class GenericReader
     {
         typedef NumberStream< InputStream, false, false > Base;
 
-       public:
+        public:
         NumberStream( GenericReader& reader, InputStream& is )
             : Base( reader, is ), stackStream( reader.stack_ ) {}
 
@@ -1691,7 +1691,7 @@ class GenericReader
             return stackStream.Pop();
         }
 
-       private:
+        private:
         StackStream< char > stackStream;
     };
 
@@ -1700,7 +1700,7 @@ class GenericReader
     {
         typedef NumberStream< InputStream, true, false > Base;
 
-       public:
+        public:
         NumberStream( GenericReader& reader, InputStream& is )
             : Base( reader, is ) {}
 
@@ -1715,9 +1715,9 @@ class GenericReader
     {
         internal::StreamLocalCopy< InputStream > copy( is );
         NumberStream< InputStream,
-                      ( ( parseFlags & kParseNumbersAsStringsFlag ) != 0 ) ? ( ( parseFlags & kParseInsituFlag ) == 0 ) : ( ( parseFlags & kParseFullPrecisionFlag ) != 0 ),
-                      ( parseFlags & kParseNumbersAsStringsFlag ) != 0 &&
-                          ( parseFlags & kParseInsituFlag ) == 0 >
+                    ( ( parseFlags & kParseNumbersAsStringsFlag ) != 0 ) ? ( ( parseFlags & kParseInsituFlag ) == 0 ) : ( ( parseFlags & kParseFullPrecisionFlag ) != 0 ),
+                    ( parseFlags & kParseNumbersAsStringsFlag ) != 0 &&
+                        ( parseFlags & kParseInsituFlag ) == 0 >
             s( *this, copy.s );
 
         size_t startOffset = s.Tell();

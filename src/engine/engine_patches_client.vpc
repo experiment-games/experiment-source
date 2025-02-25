@@ -8,7 +8,7 @@ $Include "$SRCDIR\engine\engine_patches_base.vpc"
 
 $Project
 {
-	$Folder "Engine Patches"
-	{
+    $Folder "Engine Patches"
+    {
     }
 }

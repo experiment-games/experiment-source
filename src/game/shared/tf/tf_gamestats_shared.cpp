@@ -393,7 +393,7 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
                     {
                         TF_Gamestats_ClassStats_t &classStats = pCurrentGame->m_aClassStats[i];
                         if ( ( classStats.iSpawns < 0 ) || ( classStats.iSpawns > 10000 ) || ( classStats.iTotalTime < 0 ) || ( classStats.iTotalTime > 36000 * 20 ) ||
-                             ( classStats.iKills < 0 ) || ( classStats.iKills > 10000 ) )
+                            ( classStats.iKills < 0 ) || ( classStats.iKills > 10000 ) )
                         {
                             return false;
                         }

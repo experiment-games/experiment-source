@@ -59,7 +59,7 @@ class CAchievementTFMedic_TopScoreboard : public CAchievementTopScoreboard
         }
     }
 
-   private:
+    private:
     bool m_bKilledAnyone;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_TopScoreboard, ACHIEVEMENT_TF_MEDIC_TOP_SCOREBOARD, "TF_MEDIC_TOP_SCOREBOARD", 5 );
@@ -195,7 +195,7 @@ class CAchievementTFMedic_RapidUbercharges : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlVector< float > m_vecPreviousCharges;
     CUtlVector< float > m_vecPreviousAssists;
 };
@@ -252,7 +252,7 @@ class CAchievementTFMedic_CounterUbercharges : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     float m_flPreviousEnemyCharge;
     EHANDLE m_hEnemyMedic;
 };
@@ -371,7 +371,7 @@ class CAchievementTFMedic_SwitchToMedic : public CBaseTFAchievementSimple
         }
     }
 
-   private:
+    private:
     float m_flPreviousMedicCall;
     bool m_bTrackingHealth;
     int m_iPrevHealPoints;
@@ -456,7 +456,7 @@ class CAchievementTFMedic_AssistMedic : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistMedic, ACHIEVEMENT_TF_MEDIC_ASSIST_MEDIC, "TF_MEDIC_ASSIST_MEDIC", 1 );
@@ -483,7 +483,7 @@ class CAchievementTFMedic_KillScoutsWithSyringe : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_KillScoutsWithSyringe, ACHIEVEMENT_TF_MEDIC_SYRINGE_SCOUTS, "TF_MEDIC_SYRINGE_SCOUTS", 1 );
@@ -510,7 +510,7 @@ class CAchievementTFMedic_KillMedicsWithBonesaw : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_KillMedicsWithBonesaw, ACHIEVEMENT_TF_MEDIC_BONESAW_MEDICS, "TF_MEDIC_BONESAW_MEDICS", 1 );
@@ -643,20 +643,20 @@ class CAchievementTFMedic_AssistHeavyLongStreak : public CBaseTFAchievement
             Msg("State:\n");
             for ( int i = 0; i < m_Partners.Count(); i++ )
             {
-              if ( m_Partners[i].hPartner )
-              {
+            if ( m_Partners[i].hPartner )
+            {
                 Msg("   %d: %s with %d\n", i, g_PR->GetPlayerName(m_Partners[i].hPartner->entindex()), m_Partners[i].iAssists );
-              }
-              else
-              {
+            }
+            else
+            {
                 Msg("   %d: EMPTY\n", i );
-              }
+            }
             }
             */
         }
     }
 
-   private:
+    private:
     struct partners_t
     {
         EHANDLE hPartner;
@@ -671,7 +671,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistHeavyLongStreak, ACHIEVEMENT_TF_M
 // Base helper for achievements that want to track assists while the medic is deploying his uber charge
 class CAchievementTFMedic_BaseAssistWhileCharged : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
@@ -745,7 +745,7 @@ class CAchievementTFMedic_AssistChargeScout : public CAchievementTFMedic_BaseAss
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistChargeScout, ACHIEVEMENT_TF_MEDIC_ASSIST_SCOUT, "TF_MEDIC_ASSIST_SCOUT", 1 );
@@ -784,7 +784,7 @@ class CAchievementTFMedic_AssistChargeSoldier : public CAchievementTFMedic_BaseA
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistChargeSoldier, ACHIEVEMENT_TF_MEDIC_ASSIST_SOLDIER, "TF_MEDIC_ASSIST_SOLDIER", 1 );
@@ -852,7 +852,7 @@ class CAchievementTFMedic_AssistChargeDemoman : public CAchievementTFMedic_BaseA
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistChargeDemoman, ACHIEVEMENT_TF_MEDIC_ASSIST_DEMOMAN, "TF_MEDIC_ASSIST_DEMOMAN", 1 );
@@ -917,7 +917,7 @@ class CAchievementTFMedic_AssistPyro : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iPlayersIgnited;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistPyro, ACHIEVEMENT_TF_MEDIC_ASSIST_PYRO, "TF_MEDIC_ASSIST_PYRO", 5 );
@@ -933,7 +933,7 @@ class CAchievementTFMedic_AssistHeavy : public CBaseTFAchievement
 
     // server awards this achievement, no other code within achievement necessary
 
-   private:
+    private:
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistHeavy, ACHIEVEMENT_TF_MEDIC_ASSIST_HEAVY, "TF_MEDIC_ASSIST_HEAVY", 5 );
 
@@ -1001,7 +1001,7 @@ class CAchievementTFMedic_HealCallers : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     float m_iLastHealee;
     float m_flLastHealTime;
 };
@@ -1146,7 +1146,7 @@ class CAchievementTFMedic_KillWhileCharged : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iKillCount;
     bool m_bPlayerHasCharge;
 };
@@ -1402,7 +1402,7 @@ class CAchievementTFMedic_ChargeJuggle : public CBaseTFAchievement
         m_InvulnHistory.PurgeAndDeleteElements();
     }
 
-   private:
+    private:
     int m_iNumJuggles;
 
     typedef struct
@@ -1619,7 +1619,7 @@ class CAchievementTFMedic_InviteJoinCharge : public CBaseTFAchievement
 
             // if this is not medic, stop listening
             bool bWantsMedic = ( IsLocalTFPlayerClass( TF_CLASS_MEDIC ) ||
-                                 pLocalPlayer->m_Shared.GetDesiredPlayerClassIndex() == TF_CLASS_MEDIC );
+                                pLocalPlayer->m_Shared.GetDesiredPlayerClassIndex() == TF_CLASS_MEDIC );
 
             if ( bWantsMedic )
             {
@@ -1702,7 +1702,7 @@ class CAchievementTFMedic_InviteJoinCharge : public CBaseTFAchievement
         return ( m_iConnectedFriends.Find( steamID ) != m_iConnectedFriends.InvalidIndex() );
     }
 
-   private:
+    private:
     CUtlVector< CSteamID > m_iConnectedFriends;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_InviteJoinCharge, ACHIEVEMENT_TF_MEDIC_INVITE_JOIN_CHARGE, "TF_MEDIC_INVITE_JOIN_CHARGE", 5 );
@@ -1753,7 +1753,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealAchiever, ACHIEVEMENT_TF_MEDIC_HEAL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFMedic_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1768,7 +1768,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AchieveProgress1, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFMedic_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1783,7 +1783,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AchieveProgress2, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFMedic_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {

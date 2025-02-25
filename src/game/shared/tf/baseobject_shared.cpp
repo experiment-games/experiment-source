@@ -613,9 +613,9 @@ bool CBaseObject::CalculatePlacementPos( void )
     // Verify that it's not on too much of a slope by seeing how far the corners are from the ground.
     Vector vBottomCenter( m_vecBuildOrigin.x, m_vecBuildOrigin.y, bottomZ );
     if ( !VerifyCorner( vBottomCenter, -vHalfBuildDims.x, -vHalfBuildDims.y ) ||
-         !VerifyCorner( vBottomCenter, +vHalfBuildDims.x, +vHalfBuildDims.y ) ||
-         !VerifyCorner( vBottomCenter, +vHalfBuildDims.x, -vHalfBuildDims.y ) ||
-         !VerifyCorner( vBottomCenter, -vHalfBuildDims.x, +vHalfBuildDims.y ) )
+        !VerifyCorner( vBottomCenter, +vHalfBuildDims.x, +vHalfBuildDims.y ) ||
+        !VerifyCorner( vBottomCenter, +vHalfBuildDims.x, -vHalfBuildDims.y ) ||
+        !VerifyCorner( vBottomCenter, -vHalfBuildDims.x, +vHalfBuildDims.y ) )
     {
         m_vecBuildOrigin = vErrorOrigin;
         return false;

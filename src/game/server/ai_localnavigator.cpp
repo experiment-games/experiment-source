@@ -113,9 +113,9 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
         if ( !m_FullDirectTimer.Expired() )
         {
             if ( !m_fLastWasClear ||
-                 ( !VectorsAreEqual( pMoveGoal->target, m_LastMoveGoal.target, 0.1 ) ||
-                   !VectorsAreEqual( pMoveGoal->dir, m_LastMoveGoal.dir, 0.1 ) ) ||
-                 bExpectingArrival )
+                ( !VectorsAreEqual( pMoveGoal->target, m_LastMoveGoal.target, 0.1 ) ||
+                    !VectorsAreEqual( pMoveGoal->dir, m_LastMoveGoal.dir, 0.1 ) ) ||
+                bExpectingArrival )
             {
                 m_FullDirectTimer.Force();
             }
@@ -207,7 +207,7 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
             m_fLastWasClear = true;
         }
         else if ( ( pMoveGoal->flags & ( AILMG_TARGET_IS_TRANSITION | AILMG_TARGET_IS_GOAL ) ) &&
-                  pMoveGoal->maxDist < distClear )
+                pMoveGoal->maxDist < distClear )
         {
             *pResult = AIMR_OK;
             bRetVal = true;

@@ -17,7 +17,7 @@ class IThreadedTCPSocket;
 
 class CTCPPacket
 {
-   public:
+    public:
     // Access the contents of the packet.
     const char *GetData() const;
     int GetLen() const;
@@ -29,7 +29,7 @@ class CTCPPacket
     // Free resources associated with the packet.
     void Release();
 
-   public:
+    public:
     friend class CThreadedTCPSocket;
     ~CTCPPacket();  // Use Release(), not delete.
 
@@ -53,7 +53,7 @@ inline int CTCPPacket::GetLen() const
 // from various threads.
 class ITCPSocketHandler
 {
-   public:
+    public:
     enum
     {
         SocketError = 0,
@@ -91,7 +91,7 @@ class ITCPSocketHandler
 //
 class IThreadedTCPSocket
 {
-   public:
+    public:
     // Cleanup everything and exit.
     // Note: if the receive thread is inside your HandlePacketFn returns, this function blocks until that function returns.
     virtual void Release() = 0;
@@ -114,7 +114,7 @@ class IThreadedTCPSocket
 // Use these to get incoming connections.
 class ITCPConnectSocket
 {
-   public:
+    public:
     // Call this to stop listening for connections and delete the object.
     virtual void Release() = 0;
 
@@ -131,7 +131,7 @@ class ITCPConnectSocket
 // the received packets and errors for the new socket.
 class IHandlerCreator
 {
-   public:
+    public:
     // This function must return a valid value.
     virtual ITCPSocketHandler *CreateNewHandler() = 0;
     virtual bool DeleteHandlersOnTerm()
@@ -153,8 +153,8 @@ ITCPConnectSocket *ThreadedTCP_CreateListener(
 ITCPConnectSocket *ThreadedTCP_CreateConnector(
     const CIPAddr &addr,              // Who to connect to.
     const CIPAddr &localAddr,         // Local address to bind to. Leave uninitialized (pass in CIPAddr()) and it will
-                                      // an interface and a port for you. You can also just fill in the port, and it will
-                                      // use that port and choose an interface for you.
+                                    // an interface and a port for you. You can also just fill in the port, and it will
+                                    // use that port and choose an interface for you.
     IHandlerCreator *pHandlerCreator  // If it connects, it asks this thing to make a handler for the connection.
 );
 

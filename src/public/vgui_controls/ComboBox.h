@@ -23,7 +23,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class ComboBoxButton : public vgui::Button
 {
-   public:
+    public:
     ComboBoxButton( ComboBox *parent, const char *panelName, const char *text );
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual IBorder *GetBorder( bool depressed, bool armed, bool selected, bool keyfocus );
@@ -37,7 +37,7 @@ class ComboBoxButton : public vgui::Button
         return m_DisabledBgColor;
     }
 
-   private:
+    private:
     Color m_DisabledBgColor;
 };
 
@@ -48,7 +48,7 @@ class ComboBox : public TextEntry
 {
     DECLARE_CLASS_SIMPLE( ComboBox, TextEntry );
 
-   public:
+    public:
     ComboBox( Panel *parent, const char *panelName, int numLines, bool allowEdit );
     ~ComboBox();
 
@@ -120,7 +120,7 @@ class ComboBox : public TextEntry
     virtual void PerformLayout();
 
     /* action signals
-      "TextChanged" - signals that the text has changed in the combo box
+    "TextChanged" - signals that the text has changed in the combo box
 
     */
 
@@ -142,7 +142,7 @@ class ComboBox : public TextEntry
         return m_pButton;
     }
 
-   protected:
+    protected:
     // overrides
     virtual void OnMousePressed( MouseCode code );
     virtual void OnMouseDoublePressed( MouseCode code );
@@ -167,7 +167,7 @@ class ComboBox : public TextEntry
     void MoveToFirstMenuItem();
     void MoveToLastMenuItem();
 
-   private:
+    private:
     void DoMenuLayout();
 
     Menu *m_pDropDown;

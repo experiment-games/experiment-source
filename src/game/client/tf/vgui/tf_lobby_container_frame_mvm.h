@@ -21,7 +21,7 @@ class CLobbyContainerFrame_MvM : public CBaseLobbyContainerFrame
 {
     DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_MvM, CBaseLobbyContainerFrame );
 
-   public:
+    public:
     CLobbyContainerFrame_MvM();
     ~CLobbyContainerFrame_MvM();
 
@@ -38,7 +38,7 @@ class CLobbyContainerFrame_MvM : public CBaseLobbyContainerFrame
         return TypeCanHandleMatchGroup( eMatchGroup );
     }
 
-   private:
+    private:
     virtual const char *GetResFile() const OVERRIDE
     {
         return "Resource/UI/LobbyContainerFrame_MvM.res";

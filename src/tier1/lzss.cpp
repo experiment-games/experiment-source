@@ -251,34 +251,34 @@ unsigned int CLZSS::Uncompress( unsigned char *pInput, CUtlBuffer &buf )
   {
     if ( !getCmdByte )
     {
-      cmdByte = *pInput++;
+    cmdByte = *pInput++;
     }
     getCmdByte = ( getCmdByte + 1 ) & 0x07;
 
     if ( cmdByte & 0x01 )
     {
-      int position = *pInput++ << LZSS_LOOKSHIFT;
-      position |= ( *pInput >> LZSS_LOOKSHIFT );
-      int count = ( *pInput++ & 0x0F ) + 1;
-      if ( count == 1 )
-      {
+    int position = *pInput++ << LZSS_LOOKSHIFT;
+    position |= ( *pInput >> LZSS_LOOKSHIFT );
+    int count = ( *pInput++ & 0x0F ) + 1;
+    if ( count == 1 )
+    {
         break;
-      }
-      unsigned int pos = buf.TellPut();
-      unsigned char *pSource = ( pBase + pos ) - position - 1;
+    }
+    unsigned int pos = buf.TellPut();
+    unsigned char *pSource = ( pBase + pos ) - position - 1;
 
-      // BUGBUG:
-      // This is failing!!!
-      // buf.WriteBytes( pSource, count );
-      // So have to iterate them manually
-      for ( int i =0; i < count; ++i )
-      {
+    // BUGBUG:
+    // This is failing!!!
+    // buf.WriteBytes( pSource, count );
+    // So have to iterate them manually
+    for ( int i =0; i < count; ++i )
+    {
         buf.PutUnsignedChar( *pSource++ );
-      }
+    }
     }
     else
     {
-      buf.PutUnsignedChar( *pInput++ );
+    buf.PutUnsignedChar( *pInput++ );
     }
     cmdByte = cmdByte >> 1;
   }

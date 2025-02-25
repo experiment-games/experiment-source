@@ -15,7 +15,7 @@
 
 class FX_Cube : public CClientSideEffect
 {
-   public:
+    public:
     FX_Cube( IMaterial *pMaterial )
         : CClientSideEffect( "FX_Cube" )
     {
@@ -110,7 +110,7 @@ class FX_Cube : public CClientSideEffect
         return m_Life > 0.0;
     }
 
-   public:
+    public:
     Vector m_mins;
     Vector m_maxs;
     Vector m_vColor;

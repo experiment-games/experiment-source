@@ -24,7 +24,7 @@ class CDebugHistory : public CBaseEntity
 {
     DECLARE_CLASS( CDebugHistory, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn();
@@ -35,7 +35,7 @@ class CDebugHistory : public CBaseEntity
     int Save( ISave &save );
     int Restore( IRestore &restore );
 
-   private:
+    private:
     char m_DebugLines[MAX_HISTORY_CATEGORIES][MAX_DEBUG_HISTORY_LENGTH];
     char *m_DebugLineEnd[MAX_HISTORY_CATEGORIES];
 };
@@ -141,7 +141,7 @@ void CDebugHistory::DumpDebugHistory( int iCategory )
 
     // Are we at the start of a line? If there's a null terminator before us, then we're good to go.
     while ( ( !( pszLine == m_DebugLines[iCategory] && *( m_DebugLines[iCategory] + sizeof( m_DebugLines[iCategory] ) - 1 ) == '\0' ) &&
-              !( pszLine != m_DebugLines[iCategory] && *( pszLine - 1 ) == '\0' ) ) ||
+            !( pszLine != m_DebugLines[iCategory] && *( pszLine - 1 ) == '\0' ) ) ||
             *pszLine == '\0' )
     {
         pszLine++;

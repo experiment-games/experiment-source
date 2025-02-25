@@ -88,19 +88,19 @@ void FX_AddQuad( const FXQuadData_t &data )
 // Purpose: Parameter heavy version
 //-----------------------------------------------------------------------------
 void FX_AddQuad( const Vector &origin,
-                 const Vector &normal,
-                 float startSize,
-                 float endSize,
-                 float sizeBias,
-                 float startAlpha,
-                 float endAlpha,
-                 float alphaBias,
-                 float yaw,
-                 float deltaYaw,
-                 const Vector &color,
-                 float lifeTime,
-                 const char *shader,
-                 unsigned int flags )
+                const Vector &normal,
+                float startSize,
+                float endSize,
+                float sizeBias,
+                float startAlpha,
+                float endAlpha,
+                float alphaBias,
+                float yaw,
+                float deltaYaw,
+                const Vector &color,
+                float lifeTime,
+                const char *shader,
+                unsigned int flags )
 {
     FXQuadData_t data;
 
@@ -182,7 +182,7 @@ FX_Tracer
 
 class CBulletWhizTimer : public CAutoGameSystem
 {
-   public:
+    public:
     CBulletWhizTimer( char const *name )
         : CAutoGameSystem( name )
     {

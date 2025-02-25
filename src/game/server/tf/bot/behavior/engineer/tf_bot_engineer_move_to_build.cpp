@@ -235,8 +235,8 @@ void CTFBotEngineerMoveToBuild::SelectBuildLocation( CTFBot *me )
 
     CTFBotHintSentrygun *sentryHint;
     for ( sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( NULL, "bot_hint_sentrygun" ) );
-          sentryHint;
-          sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
+        sentryHint;
+        sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
     {
         // clear the previous owner if it is us
         if ( sentryHint->GetPlayerOwner() == me )
@@ -336,8 +336,8 @@ ActionResult< CTFBot > CTFBotEngineerMoveToBuild::Update( CTFBot *me, float inte
         // if we used a sentry hint last time, reuse it
         CTFBotHintSentrygun *sentryHint;
         for ( sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( NULL, "bot_hint_sentrygun" ) );
-              sentryHint;
-              sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
+            sentryHint;
+            sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
         {
             if ( sentryHint->GetPlayerOwner() == me )
             {
@@ -350,7 +350,7 @@ ActionResult< CTFBot > CTFBotEngineerMoveToBuild::Update( CTFBot *me, float inte
 
     // offensive engineers need to place a forward teleporter
     if ( ( TFGameRules()->IsAttackDefenseMode() && me->GetTeamNumber() == TF_TEAM_BLUE ) ||
-         ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP && !TFGameRules()->IsAttackDefenseMode() && !TFGameRules()->IsInKothMode() ) )
+        ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP && !TFGameRules()->IsAttackDefenseMode() && !TFGameRules()->IsInKothMode() ) )
     {
         CObjectTeleporter *myTeleportExit = ( CObjectTeleporter * )me->GetObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_EXIT );
         int myTeam = me->GetTeamNumber();

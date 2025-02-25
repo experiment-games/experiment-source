@@ -59,7 +59,7 @@ void TE_GaussExplosion( IRecipientFilter& filter, float delayt, const Vector& po
 
 class CTempEntsSystem : public ITempEntsSystem
 {
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose: Returning true means don't even call TE func
     // Input  : filter -
@@ -88,7 +88,7 @@ class CTempEntsSystem : public ITempEntsSystem
         return false;
     }
 
-   public:
+    public:
     virtual void ArmorRicochet( IRecipientFilter& filter, float delay, const Vector* pos, const Vector* dir )
     {
         if ( !SuppressTE( filter ) )

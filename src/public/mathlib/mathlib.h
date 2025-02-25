@@ -42,19 +42,19 @@
 // state will be reset at the end.
 class FPExceptionDisabler
 {
-   public:
+    public:
 #ifdef FP_EXCEPTIONS_ENABLED
     FPExceptionDisabler();
     ~FPExceptionDisabler();
 
-   private:
+    private:
     unsigned int mOldValues;
 #else
     FPExceptionDisabler() {}
     ~FPExceptionDisabler() {}
 #endif
 
-   private:
+    private:
     // Make the copy constructor and assignment operator private
     // and unimplemented to prohibit copying.
     FPExceptionDisabler( const FPExceptionDisabler & );
@@ -67,14 +67,14 @@ class FPExceptionDisabler
 // This class can be nested.
 class FPExceptionEnabler
 {
-   public:
+    public:
     // Overflow, divide-by-zero, and invalid-operation are the FP
     // exceptions most frequently associated with bugs.
 #ifdef FP_EXCEPTIONS_ENABLED
     FPExceptionEnabler( unsigned int enableBits = _EM_OVERFLOW | _EM_ZERODIVIDE | _EM_INVALID );
     ~FPExceptionEnabler();
 
-   private:
+    private:
     unsigned int mOldValues;
 #else
     FPExceptionEnabler( unsigned int enableBits = 0 )
@@ -85,7 +85,7 @@ class FPExceptionEnabler
     }
 #endif
 
-   private:
+    private:
     // Make the copy constructor and assignment operator private
     // and unimplemented to prohibit copying.
     FPExceptionEnabler( const FPExceptionEnabler & );
@@ -114,11 +114,11 @@ FORCEINLINE float clamp( float val, float minVal, float maxVal )
 {
 #if defined( PLATFORM_INTEL )
     _mm_store_ss( &val,
-                  _mm_min_ss(
-                      _mm_max_ss(
-                          _mm_load_ss( &val ),
-                          _mm_load_ss( &minVal ) ),
-                      _mm_load_ss( &maxVal ) ) );
+                _mm_min_ss(
+                    _mm_max_ss(
+                        _mm_load_ss( &val ),
+                        _mm_load_ss( &minVal ) ),
+                    _mm_load_ss( &maxVal ) ) );
 #else
     val = fpmax( minVal, val );
     val = fpmin( maxVal, val );
@@ -163,7 +163,7 @@ struct cplane_t
 #ifdef VECTOR_NO_SLOW_OPERATIONS
     cplane_t() {}
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     cplane_t( const cplane_t &vOther );
 #endif
@@ -209,7 +209,7 @@ extern int SignbitsForPlane( cplane_t *out );
 
 class Frustum_t
 {
-   public:
+    public:
     void SetPlane( int i, int nType, const Vector &vecNormal, float dist )
     {
         m_Plane[i].normal = vecNormal;
@@ -228,7 +228,7 @@ class Frustum_t
         return m_AbsNormal[i];
     }
 
-   private:
+    private:
     cplane_t m_Plane[FRUSTUM_NUMPLANES];
     Vector m_AbsNormal[FRUSTUM_NUMPLANES];
 };
@@ -344,7 +344,7 @@ struct matrix3x4_t
 
 class ALIGN16 matrix3x4a_t : public matrix3x4_t
 {
-   public:
+    public:
     /*
     matrix3x4a_t() { if (((size_t)Base()) % 16 != 0) { Error( "matrix3x4a_t missaligned" ); } }
     */
@@ -861,10 +861,10 @@ inline int ClampArrayBounds( int n, unsigned maxindex )
 #define BOX_ON_PLANE_SIDE( emins, emaxs, p )                                                                                      \
     ( ( ( p )->type < 3 ) ? (                                                                                                     \
                                 ( ( p )->dist <= ( emins )[( p )->type] ) ? 1                                                     \
-                                                                          : (                                                     \
+                                                                        : (                                                     \
                                                                                 ( ( p )->dist >= ( emaxs )[( p )->type] ) ? 2     \
-                                                                                                                          : 3 ) ) \
-                          : BoxOnPlaneSide( ( emins ), ( emaxs ), ( p ) ) )
+                                                                                                                        : 3 ) ) \
+                        : BoxOnPlaneSide( ( emins ), ( emaxs ), ( p ) ) )
 
 //-----------------------------------------------------------------------------
 // FIXME: Vector versions.... the float versions will go away hopefully soon!
@@ -1314,8 +1314,8 @@ FORCEINLINE unsigned long RoundFloatToUnsignedLong( float f )
 #if defined( _WIN32 )
     __asm
     {
-			fld f
-			fistp       qword ptr nResult
+            fld f
+            fistp       qword ptr nResult
     }
 #elif POSIX
     __asm __volatile__(
@@ -1466,8 +1466,8 @@ inline bool QuickBoxSphereTest(
     const Vector &bbMax )
 {
     return vOrigin.x - flRadius < bbMax.x && vOrigin.x + flRadius > bbMin.x &&
-           vOrigin.y - flRadius < bbMax.y && vOrigin.y + flRadius > bbMin.y &&
-           vOrigin.z - flRadius < bbMax.z && vOrigin.z + flRadius > bbMin.z;
+            vOrigin.y - flRadius < bbMax.y && vOrigin.y + flRadius > bbMin.y &&
+            vOrigin.z - flRadius < bbMax.z && vOrigin.z + flRadius > bbMin.z;
 }
 
 // Return true of the boxes intersect (but not if they just touch).
@@ -1478,8 +1478,8 @@ inline bool QuickBoxIntersectTest(
     const Vector &vBox2Max )
 {
     return vBox1Min.x < vBox2Max.x && vBox1Max.x > vBox2Min.x &&
-           vBox1Min.y < vBox2Max.y && vBox1Max.y > vBox2Min.y &&
-           vBox1Min.z < vBox2Max.z && vBox1Max.z > vBox2Min.z;
+            vBox1Min.y < vBox2Max.y && vBox1Max.y > vBox2Min.y &&
+            vBox1Min.z < vBox2Max.z && vBox1Max.z > vBox2Min.z;
 }
 
 extern float GammaToLinearFullRange( float gamma );
@@ -1779,14 +1779,14 @@ FORCEINLINE float QuinticInterpolatingPolynomial( float t )
 // interpolate. Does a search. Can be used to find the blend value to interpolate between
 // keyframes.
 void GetInterpolationData( float const *pKnotPositions,
-                           float const *pKnotValues,
-                           int nNumValuesinList,
-                           int nInterpolationRange,
-                           float flPositionToInterpolateAt,
-                           bool bWrap,
-                           float *pValueA,
-                           float *pValueB,
-                           float *pInterpolationValue );
+                            float const *pKnotValues,
+                            int nNumValuesinList,
+                            int nInterpolationRange,
+                            float flPositionToInterpolateAt,
+                            bool bWrap,
+                            float *pValueA,
+                            float *pValueB,
+                            float *pInterpolationValue );
 
 float RangeCompressor( float flValue, float flMin, float flMax, float flBase );
 
@@ -1969,8 +1969,8 @@ FORCEINLINE unsigned int *PackNormal_HEND3N( const float *pNormal, unsigned int 
     Assert( temp[2] >= -511 && temp[2] <= 511 );
 
     *pPackedNormal = ( ( temp[2] & 0x3ff ) << 22L ) |
-                     ( ( temp[1] & 0x7ff ) << 11L ) |
-                     ( ( temp[0] & 0x7ff ) << 0L );
+                    ( ( temp[1] & 0x7ff ) << 11L ) |
+                    ( ( temp[0] & 0x7ff ) << 0L );
     return pPackedNormal;
 }
 
@@ -1989,8 +1989,8 @@ FORCEINLINE unsigned int *PackNormal_HEND3N( float nx, float ny, float nz, unsig
     Assert( temp[2] >= -511 && temp[2] <= 511 );
 
     *pPackedNormal = ( ( temp[2] & 0x3ff ) << 22L ) |
-                     ( ( temp[1] & 0x7ff ) << 11L ) |
-                     ( ( temp[0] & 0x7ff ) << 0L );
+                    ( ( temp[1] & 0x7ff ) << 11L ) |
+                    ( ( temp[0] & 0x7ff ) << 0L );
     return pPackedNormal;
 }
 
@@ -2212,8 +2212,8 @@ inline bool CloseEnough( float a, float b, float epsilon = EQUAL_EPSILON )
 inline bool CloseEnough( const Vector &a, const Vector &b, float epsilon = EQUAL_EPSILON )
 {
     return fabs( a.x - b.x ) <= epsilon &&
-           fabs( a.y - b.y ) <= epsilon &&
-           fabs( a.z - b.z ) <= epsilon;
+            fabs( a.y - b.y ) <= epsilon &&
+            fabs( a.z - b.z ) <= epsilon;
 }
 
 // Fast compare
@@ -2228,8 +2228,8 @@ bool AlmostEqual( float a, float b, int maxUlps = 10 );
 inline bool AlmostEqual( const Vector &a, const Vector &b, int maxUlps = 10 )
 {
     return AlmostEqual( a.x, b.x, maxUlps ) &&
-           AlmostEqual( a.y, b.y, maxUlps ) &&
-           AlmostEqual( a.z, b.z, maxUlps );
+            AlmostEqual( a.y, b.y, maxUlps ) &&
+            AlmostEqual( a.z, b.z, maxUlps );
 }
 
 #endif  // MATH_BASE_H

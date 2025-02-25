@@ -19,7 +19,7 @@ Split clusters for outdoor vis
 
 // -----------------------------------------------------------------
 
-QBSP3 Chop is based on recursive subdivision.  
+QBSP3 Chop is based on recursive subdivision.
  - Force natural alignment of some sort to eliminate slivers where brushes meet ?
 
 
@@ -33,7 +33,7 @@ Use Q2 style friction indicator? probably or not if physics based
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 NOTE: set DISP_PROTO to compile with displacement map info -- not on by default until
-      the prototype is done, the checked in .exe does not have displacement map functionality
+	the prototype is done, the checked in .exe does not have displacement map functionality
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 DONE: put DISP_PROTO defines around all of the displacement code until prototyping is done

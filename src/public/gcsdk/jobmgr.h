@@ -112,7 +112,7 @@ struct JobProfileStats_t
 //-----------------------------------------------------------------------------
 class CJobMgr
 {
-   public:
+    public:
     // Constructors & destructors
     CJobMgr();
     ~CJobMgr();
@@ -247,7 +247,7 @@ class CJobMgr
         m_bDebugDisallowPause = !bNewPauseAllowed;
     }
 
-   private:
+    private:
     bool BRouteWorkItemCompletedInternal( JobID_t jobID, bool bWorkItemCanceled, bool bShouldExist, bool bResumeImmediately );
 
     // Create a new job for this message
@@ -367,7 +367,7 @@ inline void Job_SetJobType( CJob &job, const JobType_t *pJobType )
     }                                                                                                                                                        \
     static class CRegJob_##jobclass                                                                                                                          \
     {                                                                                                                                                        \
-       public:                                                                                                                                               \
+        public:                                                                                                                                               \
         CRegJob_##jobclass()                                                                                                                                 \
         {                                                                                                                                                    \
             Job_RegisterJobType( &g_JobType_##jobclass );                                                                                                    \
@@ -396,7 +396,7 @@ inline void Job_SetJobType( CJob &job, const JobType_t *pJobType )
     }                                                                                                                                  \
     static class CRegJob_##jobclass                                                                                                    \
     {                                                                                                                                  \
-       public:                                                                                                                         \
+        public:                                                                                                                         \
         CRegJob_##jobclass()                                                                                                           \
         {                                                                                                                              \
             Job_RegisterJobType( &g_JobType_##jobclass );                                                                              \

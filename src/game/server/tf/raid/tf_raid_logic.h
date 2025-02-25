@@ -18,7 +18,7 @@ class CRaidLogic : public CPointEntity, public CGameEventListener
 {
     DECLARE_CLASS( CRaidLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CRaidLogic();
@@ -65,7 +65,7 @@ class CRaidLogic : public CPointEntity, public CGameEventListener
 
     CBaseEntity *GetRescueRespawn( void ) const;  // return entity positioned within next valid rescue closet area for to respawn players in
 
-   private:
+    private:
     bool LoadPopulationFromFile( void );
 
     int m_priorRaiderAliveCount;

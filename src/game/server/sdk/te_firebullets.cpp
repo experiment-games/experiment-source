@@ -20,14 +20,14 @@
 //-----------------------------------------------------------------------------
 class CTEFireBullets : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEFireBullets, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
     CTEFireBullets( const char *name );
     virtual ~CTEFireBullets( void );
 
-   public:
+    public:
     CNetworkVar( int, m_iPlayer );     // player who fired
     CNetworkVector( m_vecOrigin );     // firing origin
     CNetworkQAngle( m_vecAngles );     // firing angle

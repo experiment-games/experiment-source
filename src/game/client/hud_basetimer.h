@@ -20,20 +20,20 @@ class CHudBaseTimer : public CHudNumericDisplay
 {
     DECLARE_CLASS_SIMPLE( CHudBaseTimer, CHudNumericDisplay );
 
-   public:
+    public:
     CHudBaseTimer( vgui::Panel *parent, const char *name );
 
     void SetMinutes( int minutes );
     void SetSeconds( int seconds );
 
-   protected:
+    protected:
     // vgui overrides
     virtual void Paint();
 
     void SetToPrimaryColor();
     void SetToSecondaryColor();
 
-   private:
+    private:
     void PaintTime( vgui::HFont font, int xpos, int ypos, int mins, int secs );
 
     int m_iMinutes;

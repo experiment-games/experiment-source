@@ -26,7 +26,7 @@
 
 class CSelectMostHelpfulFriendDialog : public CSelectPlayerDialog
 {
-   public:
+    public:
     CSelectMostHelpfulFriendDialog( vgui::Panel *parent )
         : CSelectPlayerDialog( parent ), m_iNumFriends( 0 ), m_bRefreshing( false )
     {
@@ -125,7 +125,7 @@ class CSelectMostHelpfulFriendDialog : public CSelectPlayerDialog
         }
     }
 
-   protected:
+    protected:
     virtual const char *GetResFile()
     {
         return "resource/ui/SelectMostHelpfulFriendDialog.res";
@@ -184,7 +184,7 @@ static vgui::DHANDLE< CSelectMostHelpfulFriendDialog > g_hSelectMostHelpfulFrien
  */
 class CSelectHelpfulFriendNotification : public CEconNotification
 {
-   public:
+    public:
     CSelectHelpfulFriendNotification() {}
 
     virtual void Accept()
@@ -217,7 +217,7 @@ class CSelectHelpfulFriendNotification : public CEconNotification
 
 class CWasThankedBySomeoneNotification : public CEconNotification
 {
-   public:
+    public:
     CWasThankedBySomeoneNotification( const CSteamID &steamID )
     {
         SetText( "#TF_Trial_Alert_ThankedBySomeone" );
@@ -258,7 +258,7 @@ CON_COMMAND( cl_thanks_test, "Tests the thanked ui notification." )
 
 class CGCRequestTF2FriendsResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCRequestTF2FriendsResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -276,7 +276,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCRequestTF2FriendsResponse, "CGCRequestTF2Friend
 
 class CGCThankedBySomeone : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCThankedBySomeone( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -291,7 +291,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCThankedBySomeone, "CGCThankedBySomeone", k_EMsg
 
 class CGCThankedSomeone : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCThankedSomeone( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -305,7 +305,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCThankedSomeone, "CGCThankedSomeone", k_EMsgGCFr
 
 class CGCFreeTrialConvertedToPremium : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCFreeTrialConvertedToPremium( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

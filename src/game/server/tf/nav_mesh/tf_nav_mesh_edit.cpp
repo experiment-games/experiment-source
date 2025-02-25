@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------------------------------
 class CTFAttributeClearer
 {
-   public:
+    public:
     CTFAttributeClearer( TFNavAttributeType attribute )
     {
         m_attribute = attribute;
@@ -104,14 +104,14 @@ static int AttributeAutocomplete( const char *input, char commands[COMMAND_COMPL
     }
 
     /* all of these are deprecated
-      for( unsigned int i=0; TheNavAttributeTable[i].name && count < COMMAND_COMPLETION_MAXITEMS; ++i )
-      {
+    for( unsigned int i=0; TheNavAttributeTable[i].name && count < COMMAND_COMPLETION_MAXITEMS; ++i )
+    {
         if ( !Q_strnicmp( TheNavAttributeTable[i].name, partialArg, partialArgLength ) )
         {
-          // Add to the autocomplete array
-          Q_snprintf( commands[ count++ ], COMMAND_COMPLETION_ITEM_LENGTH, "%s %s", command, TheNavAttributeTable[i].name );
+        // Add to the autocomplete array
+        Q_snprintf( commands[ count++ ], COMMAND_COMPLETION_ITEM_LENGTH, "%s %s", command, TheNavAttributeTable[i].name );
         }
-      }
+    }
     */
 
     return count;
@@ -180,7 +180,7 @@ static ConCommand ClearAttributeTF( "tf_clear_attribute", TF_EditClearAttribute,
 //--------------------------------------------------------------------------------------------------------
 class CTFAttributeToggler
 {
-   public:
+    public:
     CTFAttributeToggler( TFNavAttributeType attribute )
     {
         m_attribute = attribute;

@@ -9,7 +9,7 @@ source sdk_container
 run_in_sniper "$@"
 
 if [ $# -eq 0 ]; then
-    export VPC_NINJA_BUILD_MODE="release"     
+    export VPC_NINJA_BUILD_MODE="release"
 else
     if [[ "$1" == "debug" ]]; then
         export VPC_NINJA_BUILD_MODE="debug"

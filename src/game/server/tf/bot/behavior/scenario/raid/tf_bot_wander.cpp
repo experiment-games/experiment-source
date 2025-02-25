@@ -133,7 +133,7 @@ EventDesiredResult< CTFBot > CTFBotWander::OnOtherKilled( CTFBot *me, CBaseComba
             if ( me->IsRangeLessThan( victim, tf_raid_wanderer_notice_friend_death_range.GetFloat() ) )
             {
                 if ( me->GetVisionInterface()->IsAbleToSee( victim, IVision::DISREGARD_FOV ) &&
-                     me->GetVisionInterface()->IsAbleToSee( info.GetAttacker(), IVision::DISREGARD_FOV ) )
+                    me->GetVisionInterface()->IsAbleToSee( info.GetAttacker(), IVision::DISREGARD_FOV ) )
                 {
                     float rangeToAttacker = me->GetRangeTo( info.GetAttacker() );
                     float reactionTime;

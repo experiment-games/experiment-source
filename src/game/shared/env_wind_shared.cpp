@@ -116,10 +116,10 @@ void CEnvWindShared::Init( int nEntIndex, int iRandomSeed, float flTime, int iIn
     // Cache in the wind sound...
     if (!g_pEffects->IsServer())
     {
-      CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
-      m_pWindSound = controller.SoundCreate( -1, CHAN_STATIC,
+    CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
+    m_pWindSound = controller.SoundCreate( -1, CHAN_STATIC,
         "EnvWind.Loop", ATTN_NONE );
-      controller.Play( m_pWindSound, 0.0f, 100 );
+    controller.Play( m_pWindSound, 0.0f, 100 );
     }
     */
 

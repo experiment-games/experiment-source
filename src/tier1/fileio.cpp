@@ -246,7 +246,7 @@ CDirWatcher::~CDirWatcher()
 //-----------------------------------------------------------------------------
 class CDirWatcherFriend
 {
-   public:
+    public:
     static void WINAPI DirWatchCallback( DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, OVERLAPPED *pOverlapped )
     {
         DirWatcherOverlapped *pDirWatcherOverlapped = ( DirWatcherOverlapped * )pOverlapped;
@@ -308,7 +308,7 @@ void CheckDirectoryForChanges( const char *path_buff, CDirWatcher *pDirWatch, bo
             CheckDirectoryForChanges( fullpath, pDirWatch, bRecurse );
         }
         else if ( st.st_mtimespec.tv_sec > pDirWatch->m_modTime.tv_sec ||
-                  ( st.st_mtimespec.tv_sec == pDirWatch->m_modTime.tv_sec && st.st_mtimespec.tv_nsec > pDirWatch->m_modTime.tv_nsec ) )
+                ( st.st_mtimespec.tv_sec == pDirWatch->m_modTime.tv_sec && st.st_mtimespec.tv_nsec > pDirWatch->m_modTime.tv_nsec ) )
         {
             ts = st.st_mtimespec;
             bTimeSet = true;
@@ -385,12 +385,12 @@ void CDirWatcher::SetDirToWatch( const char *pchDir )
     CFAbsoluteTime latency = 1.0;  // Latency in seconds
 
     m_WatcherStream = ( void * )FSEventStreamCreate( NULL,
-                                                     &fsevents_callback,
-                                                     &callbackInfo,
-                                                     pathsToWatch,
-                                                     kFSEventStreamEventIdSinceNow,
-                                                     latency,
-                                                     kFSEventStreamCreateFlagNoDefer );
+                                                    &fsevents_callback,
+                                                    &callbackInfo,
+                                                    pathsToWatch,
+                                                    kFSEventStreamEventIdSinceNow,
+                                                    latency,
+                                                    kFSEventStreamCreateFlagNoDefer );
 
     FSEventStreamScheduleWithRunLoop( ( FSEventStreamRef )m_WatcherStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode );
     CFRelease( pathsToWatch );

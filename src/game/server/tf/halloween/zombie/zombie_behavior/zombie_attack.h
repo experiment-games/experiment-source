@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CZombieAttack : public Action< CZombie >
 {
-   public:
+    public:
     virtual ActionResult< CZombie > OnStart( CZombie *me, Action< CZombie > *priorAction );
     virtual ActionResult< CZombie > Update( CZombie *me, float interval );
 
@@ -23,7 +23,7 @@ class CZombieAttack : public Action< CZombie >
         return "Attack";
     }  // return name of this action
 
-   private:
+    private:
     PathFollower m_path;
 
     CHandle< CBaseCombatCharacter > m_attackTarget;

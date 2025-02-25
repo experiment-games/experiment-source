@@ -21,7 +21,7 @@ class CFuncForceField : public CFuncBrush, public IFuncForceFieldAutoList
 {
     DECLARE_CLASS( CFuncForceField, CFuncBrush );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -34,7 +34,7 @@ class CFuncForceField : public CFuncBrush, public IFuncForceFieldAutoList
     virtual void TurnOff( void ) OVERRIDE;
     virtual void TurnOn( void ) OVERRIDE;
 
-   private:
+    private:
     void SetActive( bool bActive );
 };
 

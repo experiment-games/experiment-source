@@ -53,7 +53,7 @@ ToolWindow::ToolWindow(
     bool contextMenu /*=false*/,
     bool inGlobalList /*= true*/ )
     : BaseClass( parent, "ToolWindow" ),
-      m_pFactory( factory )
+    m_pFactory( factory )
 {
     if ( inGlobalList )
     {

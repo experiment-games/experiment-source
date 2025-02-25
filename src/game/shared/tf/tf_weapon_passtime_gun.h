@@ -30,7 +30,7 @@ class CPasstimeGun : public CTFWeaponBase, public ITFChargeUpWeapon
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();  // this has to be here because the client's precache code uses it to get the classname of this entity...
 
-   public:
+    public:
     CPasstimeGun();
     ~CPasstimeGun();
     virtual float GetChargeBeginTime() OVERRIDE;
@@ -53,7 +53,7 @@ class CPasstimeGun : public CTFWeaponBase, public ITFChargeUpWeapon
 
     static LaunchParams CalcLaunch( CTFPlayer *pPlayer, bool bHoming );
 
-   protected:
+    protected:
     virtual int GetWeaponID() const OVERRIDE
     {
         return TF_WEAPON_PASSTIME_GUN;

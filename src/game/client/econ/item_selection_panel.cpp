@@ -743,8 +743,8 @@ static int SortRarityEconIdKeysBackpack( CEconItemView *const *a, CEconItemView 
     // Sorting by the backpack order doesn't need to check any subproperties like level because
     // every item should have a unique backpack slot already/
     return ExtractBackpackPositionFromBackend( ( *a )->GetInventoryPosition() ) < ExtractBackpackPositionFromBackend( ( *b )->GetInventoryPosition() )
-               ? -1
-               : 1;
+                ? -1
+                : 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -767,15 +767,15 @@ static int SortRarityEconIdKeysAlphabetical_Views( CEconItemView *const *a, CEco
     static CSchemaAttributeDefHandle pAttrDef_KillEaterScore( "kill eater" );
 
     uint32 unKillEaterScoreA = 0,
-           unKillEaterScoreB = 0;
+            unKillEaterScoreB = 0;
 
     ( *a )->FindAttribute( pAttrDef_KillEaterScore, &unKillEaterScoreA );
     ( *b )->FindAttribute( pAttrDef_KillEaterScore, &unKillEaterScoreB );
 
     // Our names match so sort by quality for similarly-named items.
     if ( EconQuality_GetRarityScore( ( EEconItemQuality )( *a )->GetItemQuality() ) < EconQuality_GetRarityScore( ( EEconItemQuality )( *b )->GetItemQuality() ) ||
-         unKillEaterScoreA < unKillEaterScoreB ||
-         ( *a )->GetItemLevel() < ( *b )->GetItemLevel() )
+        unKillEaterScoreA < unKillEaterScoreB ||
+        ( *a )->GetItemLevel() < ( *b )->GetItemLevel() )
     {
         return -1;
     }
@@ -795,7 +795,7 @@ static int SortRarityEconIdKeysAlphabetical( const CEquippableItemsForSlotGenera
 static int SortRarityEconIdKeysDate( const CEquippableItemsForSlotGenerator::CEquippableResult *a, const CEquippableItemsForSlotGenerator::CEquippableResult *b )
 {
     return ( a->m_pEconItemView->GetID() > b->m_pEconItemView->GetID() ) ? -1 : ( a->m_pEconItemView->GetID() < b->m_pEconItemView->GetID() ) ? 1
-                                                                                                                                              : 0;
+                                                                                                                                            : 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -1008,9 +1008,9 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
     const equip_region_mask_t unUsedEquipRegionMask = GenerateEquipRegionConflictMask( m_iClass, CLASS_LOADOUT_POSITION_COUNT, m_iSlot );
 
     CEquippableItemsForSlotGenerator equippableItems( m_iClass,
-                                                      m_iSlot,
-                                                      unUsedEquipRegionMask,
-                                                      bShowEquippedItemFirst ? CEquippableItemsForSlotGenerator::kSlotGenerator_EquippedSpecialHandling : CEquippableItemsForSlotGenerator::kSlotGenerator_None );
+                                                    m_iSlot,
+                                                    unUsedEquipRegionMask,
+                                                    bShowEquippedItemFirst ? CEquippableItemsForSlotGenerator::kSlotGenerator_EquippedSpecialHandling : CEquippableItemsForSlotGenerator::kSlotGenerator_None );
 
     if ( m_bShowingEntireBackpack )
     {

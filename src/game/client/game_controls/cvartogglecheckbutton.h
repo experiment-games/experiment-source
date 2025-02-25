@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -17,7 +17,7 @@ class CCvarToggleCheckButton : public vgui::CheckButton
 {
     DECLARE_CLASS_SIMPLE( CCvarToggleCheckButton, vgui::CheckButton );
 
-   public:
+    public:
     CCvarToggleCheckButton( vgui::Panel *parent, const char *panelName, const char *text, char const *cvarname );
     ~CCvarToggleCheckButton();
 
@@ -30,7 +30,7 @@ class CCvarToggleCheckButton : public vgui::CheckButton
     bool HasBeenModified();
     virtual void ApplySettings( KeyValues *inResourceData );
 
-   private:
+    private:
     MESSAGE_FUNC( OnButtonChecked, "CheckButtonChecked" );
 
     char *m_pszCvarName;

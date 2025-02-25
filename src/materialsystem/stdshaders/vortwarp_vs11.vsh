@@ -10,7 +10,7 @@ $WARPPARAM = $SHADER_SPECIFIC_CONST_2;
 $ENTITY_ORIGIN = $SHADER_SPECIFIC_CONST_3;
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldPos );
 &AllocateRegister( \$worldNormal );
@@ -26,7 +26,7 @@ free $tmp
 
 if( $SKINNING == 1 )
 {
-	&Normalize( $worldNormal );
+    &Normalize( $worldNormal );
 }
 
 ;------------------------------------------------------------------------------
@@ -50,16 +50,16 @@ mov oPos, $projPos
 ;------------------------------------------------------------------------------
 if( $UNLIT )
 {
-	mov oD0, $cHalf
+    mov oD0, $cHalf
 }
 else
 {
-	&DoLighting( $worldPos, $worldNormal );
+    &DoLighting( $worldPos, $worldNormal );
 }
 
 if( !$envmap )
 {
-	&FreeRegister( \$worldNormal );
+    &FreeRegister( \$worldNormal );
 }
 
 ;------------------------------------------------------------------------------
@@ -82,4 +82,3 @@ free $tmp2
 mov oT2, $cZero
 
 &FreeRegister( \$worldPos );
-

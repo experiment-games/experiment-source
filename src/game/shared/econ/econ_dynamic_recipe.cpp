@@ -63,12 +63,12 @@ bool DefinedItemAttribMatch( const CAttribute_DynamicRecipeComponent& attribValu
 
     // If the item_def flag is set, and the item's item_def doesnt match then not a match
     if ( ( attribValue.component_flags() & DYNAMIC_RECIPE_FLAG_PARAM_ITEM_DEF_SET ) &&
-         ( attribValue.def_index() != ( uint32 )pItem->GetItemDefIndex() ) )
+        ( attribValue.def_index() != ( uint32 )pItem->GetItemDefIndex() ) )
         return false;
 
     // If the quality flag is set, and the item's quality doesn't match, then not a match
     if ( ( attribValue.component_flags() & DYNAMIC_RECIPE_FLAG_PARAM_QUALITY_SET ) &&
-         ( attribValue.item_quality() != ( uint32 )pItem->GetQuality() ) )
+        ( attribValue.item_quality() != ( uint32 )pItem->GetQuality() ) )
         return false;
 
     // check if we have ALL required attributes

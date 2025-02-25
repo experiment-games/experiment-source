@@ -40,7 +40,7 @@ void CreateHolidayLight( const HolidayLightData_t &holidayLight );
 
 class CHolidayLightManager : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CHolidayLightManager( char const *name );
 
     // Methods of IGameSystem
@@ -51,7 +51,7 @@ class CHolidayLightManager : public CAutoGameSystemPerFrame
 
     void AddHolidayLight( const CEffectData &data );
 
-   private:
+    private:
     CUtlVector< HolidayLightData_t > m_PendingLightData;
 };
 
@@ -157,9 +157,9 @@ void CreateHolidayLight( const HolidayLightData_t &holidayLight )
 
         // Set the color
         pTemp->SetRenderColor( rgbaHolidayLightColors[g_nHolidayLightColor]->r(),
-                               rgbaHolidayLightColors[g_nHolidayLightColor]->g(),
-                               rgbaHolidayLightColors[g_nHolidayLightColor]->b(),
-                               rgbaHolidayLightColors[g_nHolidayLightColor]->a() );
+                                rgbaHolidayLightColors[g_nHolidayLightColor]->g(),
+                                rgbaHolidayLightColors[g_nHolidayLightColor]->b(),
+                                rgbaHolidayLightColors[g_nHolidayLightColor]->a() );
 
         // Next color in the pattern
         g_nHolidayLightColor = ( g_nHolidayLightColor + 1 ) % ARRAYSIZE( rgbaHolidayLightColors );

@@ -164,8 +164,8 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 
         // Is the killer the local player?
         if ( nKillerID == pLocalPlayer->GetUserID() &&
-             !bSuicide &&
-             !bSentry )
+            !bSuicide &&
+            !bSentry )
         {
             // Domination?
             if ( nDeathFlags & TF_DEATH_DOMINATION )
@@ -208,7 +208,7 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 
         // Player death?
         else if ( pKiller &&
-                  nVictimID == pLocalPlayer->GetUserID() )
+                nVictimID == pLocalPlayer->GetUserID() )
         {
             // Record who killed the player if not a suicide
             if ( !bSuicide && !bFeignDeath )
@@ -230,7 +230,7 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 
         // Killer is invuln/crit boosted and healer is local player?
         else if ( bKillerLastHealerIsLocalPlayer &&
-                  ( pKiller->m_Shared.IsCritBoosted() ||
+                ( pKiller->m_Shared.IsCritBoosted() ||
                     pKiller->m_Shared.InCond( TF_COND_INVULNERABLE ) ||
                     pKiller->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) ) )
         {
@@ -241,10 +241,10 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 
         // Is the inflictor a sentry belonging to the local player?
         else if ( pLocalPlayer->IsAlive() &&
-                  bSentry &&
-                  pSentry &&
-                  pSentry->GetOwner() == pLocalPlayer &&
-                  pVictim )
+                bSentry &&
+                pSentry &&
+                pSentry->GetOwner() == pLocalPlayer &&
+                pVictim )
         {
             ConVarRef replay_sentrycammaxverticaloffset( "replay_sentrycammaxverticaloffset" );
             ConVarRef replay_sentrycamoffset_frontback( "replay_sentrycamoffset_frontback" );
@@ -277,8 +277,8 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
             Vector out;  // Transform the point relative to the sentry's eye
             Vector vecOffset;
             if ( replay_sentrycamoffset_frontback.IsValid() &&
-                 replay_sentrycamoffset_leftright.IsValid() &&
-                 replay_sentrycamoffset_updown.IsValid() )
+                replay_sentrycamoffset_leftright.IsValid() &&
+                replay_sentrycamoffset_updown.IsValid() )
             {
                 vecOffset.Init( replay_sentrycamoffset_frontback.GetFloat(), -replay_sentrycamoffset_leftright.GetFloat(), replay_sentrycamoffset_updown.GetFloat() );
             }
@@ -384,7 +384,7 @@ void CTFReplay::DumpGameSpecificData() const
 
 class CTFReplayFactory : public IReplayFactory
 {
-   public:
+    public:
     virtual CReplay *Create()
     {
         return new CTFReplay();

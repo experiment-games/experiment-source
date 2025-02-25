@@ -79,12 +79,12 @@ bool CFuncBulletShield::TestCollision( const Ray_t &ray, unsigned int mask, trac
         const model_t *pModel = this->GetCollisionModel();
         if ( pModel && pModel->type == mod_brush )
         {
-          int nModelIndex = this->GetCollisionModelIndex();
-          cmodel_t *pCModel = CM_InlineModelNumber( nModelIndex - 1 );
-          int nHeadNode = pCModel->headnode;
+        int nModelIndex = this->GetCollisionModelIndex();
+        cmodel_t *pCModel = CM_InlineModelNumber( nModelIndex - 1 );
+        int nHeadNode = pCModel->headnode;
 
-          CM_TransformedBoxTrace( ray, nHeadNode, fMask, this->GetCollisionOrigin(), this->GetCollisionAngles(), *pTrace );
-          return true;
+        CM_TransformedBoxTrace( ray, nHeadNode, fMask, this->GetCollisionOrigin(), this->GetCollisionAngles(), *pTrace );
+        return true;
         }
         return false;
         */

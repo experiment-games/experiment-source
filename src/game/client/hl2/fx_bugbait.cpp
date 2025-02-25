@@ -22,7 +22,7 @@
 
 class SporeSmokeEffect : public CSimpleEmitter
 {
-   public:
+    public:
     SporeSmokeEffect( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -31,7 +31,7 @@ class SporeSmokeEffect : public CSimpleEmitter
     virtual void UpdateVelocity( SimpleParticle *pParticle, float timeDelta );
     virtual float UpdateAlpha( const SimpleParticle *pParticle );
 
-   private:
+    private:
     SporeSmokeEffect( const SporeSmokeEffect & );
 };
 

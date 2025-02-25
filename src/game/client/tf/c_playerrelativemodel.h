@@ -25,18 +25,18 @@ class C_PlayerRelativeModel : public C_BaseAnimating
 {
     DECLARE_CLASS( C_PlayerRelativeModel, C_BaseAnimating );
 
-   public:
+    public:
     static C_PlayerRelativeModel *Create( const char *pszModelName, C_BaseEntity *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime = 0.2, int iFlags = 0 );
 
     bool Initialize( const char *pszModelName, C_BaseEntity *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime, int iFlags );
     void SetLifetime( float flLifetime );
     void ClientThink( void );
 
-   protected:
+    protected:
     float m_flExpiresAt;
     int m_iFlags;
 
-   private:
+    private:
     float m_flRotateAt;
     float m_flAnimateAt;
     float m_flScale;
@@ -55,13 +55,13 @@ class C_MerasmusBombEffect : public C_PlayerRelativeModel
 {
     DECLARE_CLASS( C_MerasmusBombEffect, C_PlayerRelativeModel );
 
-   public:
+    public:
     static C_MerasmusBombEffect *Create( const char *pszModelName, C_TFPlayer *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime = 0.2, int iFlags = 0 );
 
     bool Initialize( const char *pszModelName, C_TFPlayer *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime, int iFlags );
     void ClientThink( void );
 
-   private:
+    private:
     CNewParticleEffect *m_pBombonomiconBeam;
     CNewParticleEffect *m_pBombonomiconEffect;
 };

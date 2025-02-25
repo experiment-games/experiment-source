@@ -64,10 +64,10 @@ enum matchsummary_columns_t
 
 class TFSectionedListPanel : public vgui::SectionedListPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( TFSectionedListPanel, vgui::SectionedListPanel );
 
-   public:
+    public:
     TFSectionedListPanel( Panel *parent, const char *panelName )
         : BaseClass( parent, panelName ) {}
     virtual ~TFSectionedListPanel() {}
@@ -84,10 +84,10 @@ class TFSectionedListPanel : public vgui::SectionedListPanel
 
 class CTFMatchSummary : public CHudElement, public vgui::EditablePanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFMatchSummary, vgui::EditablePanel );
 
-   public:
+    public:
     CTFMatchSummary( const char *pElementName );
     virtual ~CTFMatchSummary();
 
@@ -107,7 +107,7 @@ class CTFMatchSummary : public CHudElement, public vgui::EditablePanel
 
     bool ShowPerformanceMedals( void );
 
-   private:
+    private:
     void Update( void );
     void InitPlayerList( TFSectionedListPanel *pPlayerList, int nTeam );
     static bool TFPlayerSortFunc( vgui::SectionedListPanel *list, int itemID1, int itemID2 );
@@ -121,7 +121,7 @@ class CTFMatchSummary : public CHudElement, public vgui::EditablePanel
     matchsummary_columns_t InternalAddMedalKeyValues( int iIndex, StatMedal_t eMedal, KeyValues *pKeyValues, int nTotalMedals = -1 );
     void FireMedalEffects( Panel *pPanel, int nPanelXPos, int nPanelYPos, int nPanelWide, int nPanelTall, StatMedal_t eParticleMedal );
 
-   private:
+    private:
     EditablePanel *m_pTeamScoresPanel;
 
     int m_iImageClass[SCOREBOARD_CLASS_ICONS];

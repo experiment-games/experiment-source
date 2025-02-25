@@ -190,16 +190,16 @@
 #if !defined( LUA_PATH_DEFAULT )
 #define LUA_PATH_DEFAULT                                                                                               \
     LUA_LDIR "?.lua;" LUA_LDIR "?\\init.lua;" LUA_CDIR "?.lua;" LUA_CDIR "?\\init.lua;" LUA_SHRDIR "?.lua;" LUA_SHRDIR \
-             "?\\init.lua;"                                                                                            \
-             ".\\?.lua;"                                                                                               \
-             ".\\?\\init.lua"
+            "?\\init.lua;"                                                                                            \
+            ".\\?.lua;"                                                                                               \
+            ".\\?\\init.lua"
 #endif
 
 #if !defined( LUA_CPATH_DEFAULT )
 #define LUA_CPATH_DEFAULT                                                    \
     LUA_CDIR "?.dll;" LUA_CDIR "..\\lib\\lua\\" LUA_VDIR "\\?.dll;" LUA_CDIR \
-             "loadall.dll;"                                                  \
-             ".\\?.dll"
+            "loadall.dll;"                                                  \
+            ".\\?.dll"
 #endif
 
 #else /* }{ */
@@ -211,16 +211,16 @@
 #if !defined( LUA_PATH_DEFAULT )
 #define LUA_PATH_DEFAULT                                                \
     LUA_LDIR "?.lua;" LUA_LDIR "?/init.lua;" LUA_CDIR "?.lua;" LUA_CDIR \
-             "?/init.lua;"                                              \
-             "./?.lua;"                                                 \
-             "./?/init.lua"
+            "?/init.lua;"                                              \
+            "./?.lua;"                                                 \
+            "./?/init.lua"
 #endif
 
 #if !defined( LUA_CPATH_DEFAULT )
 #define LUA_CPATH_DEFAULT     \
     LUA_CDIR "?.so;" LUA_CDIR \
-             "loadall.so;"    \
-             "./?.so"
+            "loadall.so;"    \
+            "./?.so"
 #endif
 
 #endif /* } */
@@ -396,8 +396,8 @@
 */
 #define lua_numbertointeger( n, p )                \
     ( ( n ) >= ( LUA_NUMBER )( LUA_MININTEGER ) && \
-      ( n ) < -( LUA_NUMBER )( LUA_MININTEGER ) && \
-      ( *( p ) = ( LUA_INTEGER )( n ), 1 ) )
+    ( n ) < -( LUA_NUMBER )( LUA_MININTEGER ) && \
+    ( *( p ) = ( LUA_INTEGER )( n ), 1 ) )
 
 /* now the variable definitions */
 

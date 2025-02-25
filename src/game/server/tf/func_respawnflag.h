@@ -19,7 +19,7 @@ class CFuncRespawnFlagZone : public CBaseTrigger
 {
     DECLARE_CLASS( CFuncRespawnFlagZone, CBaseTrigger );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CFuncRespawnFlagZone();

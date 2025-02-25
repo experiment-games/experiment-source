@@ -63,10 +63,10 @@ DEFINE_FIELD( m_bWasBoosting, FIELD_BOOLEAN ),
 //-----------------------------------------------------------------------------
 CAI_PassengerBehavior::CAI_PassengerBehavior( void )
     : m_bEnabled( false ),
-      m_hVehicle( NULL ),
-      m_PassengerState( PASSENGER_STATE_OUTSIDE ),
-      m_PassengerIntent( PASSENGER_INTENT_NONE ),
-      m_nTransitionSequence( -1 )
+    m_hVehicle( NULL ),
+    m_PassengerState( PASSENGER_STATE_OUTSIDE ),
+    m_PassengerIntent( PASSENGER_INTENT_NONE ),
+    m_nTransitionSequence( -1 )
 {
 }
 
@@ -510,16 +510,16 @@ bool CAI_PassengerBehavior::PointIsNavigable( const Vector &vecTargetPos )
     {
         // Try a movement trace between the test position and the node
         GetOuter()->GetMoveProbe()->MoveLimit( NAV_GROUND,
-                                               g_pBigAINet->GetNodePosition( GetOuter()->GetHullType(), iNearestNode ),
-                                               vecTargetPos,
-                                               MASK_SOLID_BRUSHONLY,
-                                               NULL,
-                                               0,
-                                               &moveTrace );
+                                                g_pBigAINet->GetNodePosition( GetOuter()->GetHullType(), iNearestNode ),
+                                                vecTargetPos,
+                                                MASK_SOLID_BRUSHONLY,
+                                                NULL,
+                                                0,
+                                                &moveTrace );
 
         // See if we got close enough to call it arrived
         if ( ( moveTrace.vEndPosition - vecTargetPos ).LengthSqr() < Square( GetHullWidth() ) &&
-             GetOuter()->GetMoveProbe()->CheckStandPosition( moveTrace.vEndPosition, MASK_SOLID_BRUSHONLY ) )
+            GetOuter()->GetMoveProbe()->CheckStandPosition( moveTrace.vEndPosition, MASK_SOLID_BRUSHONLY ) )
         {
             // NDebugOverlay::HorzArrow( vecTargetPos, moveTrace.vEndPosition, 8.0f, 255, 0, 0, 16, true, 4.0f );
             // NDebugOverlay::HorzArrow( vecTargetPos, g_pBigAINet->GetNodePosition(GetOuter()->GetHullType(), iNearestNode ), 8.0f, 255, 255, 0, 16, true, 4.0f );

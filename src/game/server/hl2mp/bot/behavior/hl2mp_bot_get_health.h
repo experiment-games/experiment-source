@@ -5,7 +5,7 @@
 
 class CHL2MPBotGetHealth : public Action< CHL2MPBot >
 {
-   public:
+    public:
     static bool IsPossible( CHL2MPBot *me );  // Return true if this Action has what it needs to perform right now
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -22,7 +22,7 @@ class CHL2MPBotGetHealth : public Action< CHL2MPBot >
         return "GetHealth";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CHandle< CBaseEntity > m_healthKit;
 

@@ -106,7 +106,7 @@ class CSteamApplication : public CAppSystemGroup
 {
     typedef CAppSystemGroup BaseClass;
 
-   public:
+    public:
     CSteamApplication( CSteamAppSystemGroup *pAppSystemGroup );
 
     // Implementation of IAppSystemGroup
@@ -121,7 +121,7 @@ class CSteamApplication : public CAppSystemGroup
     virtual int Startup();
     virtual void Shutdown();
 
-   protected:
+    protected:
     IFileSystem *m_pFileSystem;
     CSteamAppSystemGroup *m_pChildAppSystemGroup;
     bool m_bSteam;

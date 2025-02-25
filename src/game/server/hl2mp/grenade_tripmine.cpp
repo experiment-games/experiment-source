@@ -222,16 +222,16 @@ void CTripmineGrenade::BeamBreakThink( void )
 #if 0  // FIXME: OnTakeDamage_Alive() is no longer called now that base grenade derives from CBaseAnimating
 int CTripmineGrenade::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
-	if (gpGlobals->curtime < m_flPowerUp && info.GetDamage() < m_iHealth)
-	{
-		// disable
-		// Create( "weapon_tripmine", GetLocalOrigin() + m_vecDir * 24, GetAngles() );
-		SetThink( &CTripmineGrenade::SUB_Remove );
-		SetNextThink( gpGlobals->curtime + 0.1f );
-		KillBeam();
-		return FALSE;
-	}
-	return BaseClass::OnTakeDamage_Alive( info );
+    if (gpGlobals->curtime < m_flPowerUp && info.GetDamage() < m_iHealth)
+    {
+        // disable
+        // Create( "weapon_tripmine", GetLocalOrigin() + m_vecDir * 24, GetAngles() );
+        SetThink( &CTripmineGrenade::SUB_Remove );
+        SetNextThink( gpGlobals->curtime + 0.1f );
+        KillBeam();
+        return FALSE;
+    }
+    return BaseClass::OnTakeDamage_Alive( info );
 }
 #endif
 

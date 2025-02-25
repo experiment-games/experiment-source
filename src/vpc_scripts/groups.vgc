@@ -10,8 +10,8 @@
 
 $Group "gamedlls"
 {
-	"client"
-	"server"
+    "client"
+    "server"
 
     "lua54"
     "luasocket"
@@ -20,77 +20,76 @@ $Group "gamedlls"
 
 $Group "game"
 {
-	"client"
-	"launcher_main"
-	"mathlib"
-	"raytrace"
-	"server"
-	"tier1"
-	"vgui_controls"
+    "client"
+    "launcher_main"
+    "mathlib"
+    "raytrace"
+    "server"
+    "tier1"
+    "vgui_controls"
 
     "lua54"
     "luasocket"
     "libpng"
     "helloworldmodule"
 
-	"networksystem"
+    "networksystem"
 }
 
 $Group "shaders"
 {
-	"game_shader_generic_example"
-	//"game_shader_generic_std"
+    "game_shader_generic_example"
+    //"game_shader_generic_std"
 }
 
 $Group "everything"
 {
-	"captioncompiler"
-	"client"
-	"fgdlib"
-	"glview"
-	"height2normal"
-	"launcher_main"
+    "captioncompiler"
+    "client"
+    "fgdlib"
+    "glview"
+    "height2normal"
+    "launcher_main"
     "lzma"
-	"mathlib"
-	"motionmapper"
-	"phonemeextractor"
-	"qc_eyes"
-	"raytrace"
-	"server"
-	"serverplugin_empty"
-	"tgadiff"
-	"tier1"
-	"vbsp"
-	"vgui_controls"
-	"vice"
-	"vrad_dll"
-	"vrad_launcher"
-	"vtf2tga"
-	"vtfdiff"
-	"vvis_dll"
-	"vvis_launcher"
+    "mathlib"
+    "motionmapper"
+    "phonemeextractor"
+    "qc_eyes"
+    "raytrace"
+    "server"
+    "serverplugin_empty"
+    "tgadiff"
+    "tier1"
+    "vbsp"
+    "vgui_controls"
+    "vice"
+    "vrad_dll"
+    "vrad_launcher"
+    "vtf2tga"
+    "vtfdiff"
+    "vvis_dll"
+    "vvis_launcher"
 
     "lua54"
     "luasocket"
     "libpng"
     "helloworldmodule"
 
-	"networksystem"
+    "networksystem"
 
-	"game_shader_generic_example"
+    "game_shader_generic_example"
 
-	// You probably don't want to override all shaders by default.
-	// This is just an example mainly! Pick and choose what you want from this project. :D
-	//"game_shader_generic_std"
+    // You probably don't want to override all shaders by default.
+    // This is just an example mainly! Pick and choose what you want from this project. :D
+    //"game_shader_generic_std"
 }
 
 $Group "dedicated"
 {
-	"mathlib"
-	"server"
-	"tier1"
+    "mathlib"
+    "server"
+    "tier1"
 
     "lua54"
     "luasocket"
 }
-

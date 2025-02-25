@@ -36,15 +36,15 @@ class FastSortListPanelItem;
 //-----------------------------------------------------------------------------
 class ListPanelItem
 {
-   public:
+    public:
     ListPanelItem()
         : kv( 0 ),
-          userData( 0 ),
-          m_pDragData( 0 ),
-          m_bImage( false ),
-          m_nImageIndex( -1 ),
-          m_nImageIndexSelected( -1 ),
-          m_pIcon( 0 )
+        userData( 0 ),
+        m_pDragData( 0 ),
+        m_bImage( false ),
+        m_nImageIndex( -1 ),
+        m_nImageIndexSelected( -1 ),
+        m_pIcon( 0 )
     {
     }
 
@@ -69,7 +69,7 @@ class ListPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( ListPanel, Panel );
 
-   public:
+    public:
     ListPanel( Panel *parent, const char *panelName );
     ~ListPanel();
 
@@ -222,7 +222,7 @@ class ListPanel : public Panel
     /// user configs (which will be screwed up) to be discarded.
     int m_nUserConfigFileVersion;
 
-   protected:
+    protected:
     // PAINTING
     virtual Panel *GetCellRenderer( int row, int column );
 
@@ -254,15 +254,15 @@ class ListPanel : public Panel
     virtual bool HasUserConfigSettings();
 
     /* MESSAGES SENT
-      "ItemSelected" - query which items are selected
-      "ItemDeselected" - query which items are selected
+    "ItemSelected" - query which items are selected
+    "ItemDeselected" - query which items are selected
     */
 
-   public:
+    public:
     virtual void SetSortColumnEx( int iPrimarySortColumn, int iSecondarySortColumn, bool bSortAscending );
     void GetSortColumnEx( int &iPrimarySortColumn, int &iSecondarySortColumn, bool &bSortAscending ) const;
 
-   private:
+    private:
     // Cleans up allocations associated with a particular item
     void CleanupItem( FastSortListPanelItem *data );
 

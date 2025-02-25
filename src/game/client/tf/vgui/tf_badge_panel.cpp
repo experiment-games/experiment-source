@@ -231,7 +231,7 @@ class CTFStaticBadgePanel : public vgui::EditablePanel
         SetDialogVariable( "name", g_pVGuiLocalize->Find( level.m_pszLevelTitle ) );
     }
 
-   private:
+    private:
     void SetLevel( int nLevel )
     {
         auto pMatchDesc = GetMatchGroupDescription( m_eMatchGroup );

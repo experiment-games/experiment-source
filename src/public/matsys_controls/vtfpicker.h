@@ -29,11 +29,11 @@ class CVTFPicker : public CBaseAssetPicker
 {
     DECLARE_CLASS_SIMPLE( CVTFPicker, CBaseAssetPicker );
 
-   public:
+    public:
     CVTFPicker( vgui::Panel *pParent );
     virtual ~CVTFPicker();
 
-   private:
+    private:
     // Derived classes have this called when the previewed asset changes
     virtual void OnSelectedAssetPicked( const char *pAssetName );
 
@@ -48,7 +48,7 @@ class CVTFPickerFrame : public CBaseAssetPickerFrame
 {
     DECLARE_CLASS_SIMPLE( CVTFPickerFrame, CBaseAssetPickerFrame );
 
-   public:
+    public:
     CVTFPickerFrame( vgui::Panel *pParent, const char *pTitle );
 };
 

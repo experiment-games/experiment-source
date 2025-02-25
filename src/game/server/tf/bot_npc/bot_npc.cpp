@@ -415,7 +415,7 @@ int CBotNPC::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
                         CBaseEntity *inflictor = info.GetInflictor();
                         if ( inflictor )
                         {
-                          damagePos = inflictor->GetAbsOrigin() + 3.0f * gpGlobals->frametime * inflictor->GetAbsVelocity();
+                        damagePos = inflictor->GetAbsOrigin() + 3.0f * gpGlobals->frametime * inflictor->GetAbsVelocity();
                         }
                 */
 
@@ -970,9 +970,9 @@ bool CBotNPC::IsIgnored( CTFPlayer *player ) const
         }
 
         if ( player->m_Shared.InCond( TF_COND_BURNING ) ||
-             player->m_Shared.InCond( TF_COND_URINE ) ||
-             player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             player->m_Shared.InCond( TF_COND_BLEEDING ) )
+            player->m_Shared.InCond( TF_COND_URINE ) ||
+            player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            player->m_Shared.InCond( TF_COND_BLEEDING ) )
         {
             // always notice players with these conditions
             return false;
@@ -1110,7 +1110,7 @@ void CBotNPC::CollectPlayersStandingOnMe( CUtlVector< CTFPlayer * > *playerVecto
 //---------------------------------------------------------------------------------------------
 class CBotNPCStunned : public Action< CBotNPC >
 {
-   public:
+    public:
     CBotNPCStunned( float duration, Action< CBotNPC > *nextAction = NULL );
 
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
@@ -1124,7 +1124,7 @@ class CBotNPCStunned : public Action< CBotNPC >
         return "Stunned";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     enum StunStateType
     {
@@ -1294,7 +1294,7 @@ void CBotNPCStunned::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 //---------------------------------------------------------------------------------------------
 class CBotNPCBigJump : public Action< CBotNPC >
 {
-   public:
+    public:
     CBotNPCBigJump( const Vector &destination, Action< CBotNPC > *nextAction = NULL );
 
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
@@ -1308,7 +1308,7 @@ class CBotNPCBigJump : public Action< CBotNPC >
         return "Jump";
     }  // return name of this action
 
-   private:
+    private:
     enum StunStateType
     {
         JUMPING_UP,
@@ -1408,7 +1408,7 @@ void CBotNPCBigJump::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 //---------------------------------------------------------------------------------------------
 class CBotNPCLaunchMinions : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
 
@@ -1423,7 +1423,7 @@ class CBotNPCLaunchMinions : public Action< CBotNPC >
         return "LaunchMinions";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     int m_minionsLeft;
 
@@ -1500,7 +1500,7 @@ ActionResult< CBotNPC > CBotNPCLaunchMinions::Update( CBotNPC *me, float interva
 //---------------------------------------------------------------------------------------------
 class CBotNPCNukeAttack : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -1512,7 +1512,7 @@ class CBotNPCNukeAttack : public Action< CBotNPC >
         return "NukeAttack";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_shakeTimer;
     CountdownTimer m_chargeUpTimer;
 };
@@ -1702,7 +1702,7 @@ EventDesiredResult< CBotNPC > CBotNPCNukeAttack::OnInjured( CBotNPC *me, const C
 //---------------------------------------------------------------------------------------------
 class CBotNPCLaunchRockets : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -1718,7 +1718,7 @@ class CBotNPCLaunchRockets : public Action< CBotNPC >
         return "LaunchRockets";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 
     CountdownTimer m_launchTimer;
@@ -1831,7 +1831,7 @@ void CBotNPCLaunchRockets::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 //---------------------------------------------------------------------------------------------
 class CBotNPCRush : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -1849,7 +1849,7 @@ class CBotNPCRush : public Action< CBotNPC >
         return "Rush";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     Vector m_chargeOrigin;
     float m_maxAttainedSpeed;
@@ -2007,7 +2007,7 @@ EventDesiredResult< CBotNPC > CBotNPCRush::OnContact( CBotNPC *me, CBaseEntity *
 //---------------------------------------------------------------------------------------------
 class CBotNPCBlock : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -2019,7 +2019,7 @@ class CBotNPCBlock : public Action< CBotNPC >
         return "Block";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 
@@ -2071,7 +2071,7 @@ ActionResult< CBotNPC > CBotNPCBlock::OnSuspend( CBotNPC *me, Action< CBotNPC > 
 //---------------------------------------------------------------------------------------------
 class CBotNPCLaunchGrenades : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -2087,7 +2087,7 @@ class CBotNPCLaunchGrenades : public Action< CBotNPC >
         return "LaunchGrenades";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     CountdownTimer m_detonateTimer;
     CUtlVector< CHandle< CTFGrenadePipebombProjectile > > m_grenadeVector;
@@ -2283,7 +2283,7 @@ void CBotNPCLaunchGrenades::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 //---------------------------------------------------------------------------------------------
 class CBotNPCShootCrossbow : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
 
@@ -2298,7 +2298,7 @@ class CBotNPCShootCrossbow : public Action< CBotNPC >
         return "ShootCrossbow";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 
@@ -2368,7 +2368,7 @@ ActionResult< CBotNPC > CBotNPCShootCrossbow::Update( CBotNPC *me, float interva
 //---------------------------------------------------------------------------------------------
 class CBotNPCLostVictim : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -2378,7 +2378,7 @@ class CBotNPCLostVictim : public Action< CBotNPC >
         return "LostVictim";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     float m_headTurn;
     int m_headYawPoseParameter;
@@ -2437,7 +2437,7 @@ void CBotNPCLostVictim::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 //---------------------------------------------------------------------------------------------
 class CBotNPCChaseVictim : public Action< CBotNPC >
 {
-   public:
+    public:
     CBotNPCChaseVictim( CBaseCombatCharacter *chaseTarget );
 
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
@@ -2453,7 +2453,7 @@ class CBotNPCChaseVictim : public Action< CBotNPC >
         return "ChaseVictim";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     IntervalTimer m_visibleTimer;
     CHandle< CBaseCombatCharacter > m_lastTarget;
@@ -2514,7 +2514,7 @@ ActionResult< CBotNPC > CBotNPCChaseVictim::Update( CBotNPC *me, float interval 
         if ( me->HasAbility( CBotNPC::CAN_LAUNCH_STICKIES ) )
         {
             if ( ( me->GetGrenadeTimer()->IsElapsed() && me->IsRangeLessThan( m_chaseTarget, tf_bot_npc_grenade_launch_range.GetFloat() ) ) ||
-                 me->IsInCondition( CBotNPC::ENRAGED ) )
+                me->IsInCondition( CBotNPC::ENRAGED ) )
             {
                 return SuspendFor( new CBotNPCLaunchGrenades, "Target is close (or I am enraged) - grenades!" );
             }
@@ -2524,7 +2524,7 @@ ActionResult< CBotNPC > CBotNPCChaseVictim::Update( CBotNPC *me, float interval 
         if ( me->HasAbility( CBotNPC::CAN_FIRE_ROCKETS ) )
         {
             if ( m_visibleTimer.IsGreaterThen( 1.0f ) ||
-                 me->IsRangeLessThan( m_chaseTarget, tf_bot_npc_chase_range.GetFloat() ) )
+                me->IsRangeLessThan( m_chaseTarget, tf_bot_npc_chase_range.GetFloat() ) )
             {
                 return SuspendFor( new CBotNPCLaunchRockets, "Fire!" );
             }
@@ -2609,7 +2609,7 @@ EventDesiredResult< CBotNPC > CBotNPCChaseVictim::OnStuck( CBotNPC *me )
 //---------------------------------------------------------------------------------------------
 class CBotNPCLaserBlast : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -2623,7 +2623,7 @@ class CBotNPCLaserBlast : public Action< CBotNPC >
         return "LaserBlast";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     CountdownTimer m_laserTimer;
     IntervalTimer m_visibleTimer;
@@ -2795,7 +2795,7 @@ EventDesiredResult< CBotNPC > CBotNPCLaserBlast::OnStuck( CBotNPC *me )
 //---------------------------------------------------------------------------------------------
 class CBotNPCAttack : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
 
@@ -2809,7 +2809,7 @@ class CBotNPCAttack : public Action< CBotNPC >
         return "Attack";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
 
     CountdownTimer m_chargeTimer;
@@ -2871,8 +2871,8 @@ ActionResult< CBotNPC > CBotNPCAttack::Update( CBotNPC *me, float interval )
         }
 
         if ( me->GetReceivedDamagePerSecond() > tf_bot_npc_block_dps_react.GetFloat() &&
-             target->IsPlayer() &&
-             ToTFPlayer( target )->GetTimeSinceWeaponFired() < 1.0f )
+            target->IsPlayer() &&
+            ToTFPlayer( target )->GetTimeSinceWeaponFired() < 1.0f )
         {
             return SuspendFor( new CBotNPCBlock, "Blocking" );
         }
@@ -2941,7 +2941,7 @@ EventDesiredResult< CBotNPC > CBotNPCAttack::OnContact( CBotNPC *me, CBaseEntity
 //---------------------------------------------------------------------------------------------
 class CBotNPCGuardSpot : public Action< CBotNPC >
 {
-   public:
+    public:
     //-----------------------------------------------------------------------------------------------------
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction )
     {
@@ -3081,7 +3081,7 @@ class CBotNPCGuardSpot : public Action< CBotNPC >
                         if ( isDeflectedRocket )
                         {
                             if ( !m_consecutiveRocketTimer.HasStarted() ||  // first rocket hit
-                                 m_consecutiveRocketTimer.IsElapsed() )     // too much time between hits - treat as first hit
+                                m_consecutiveRocketTimer.IsElapsed() )     // too much time between hits - treat as first hit
                             {
                                 m_consecutiveRocketTimer.Start( tf_bot_npc_stun_rocket_reflect_duration.GetFloat() );
                                 m_consecutiveRockets = 1;
@@ -3123,7 +3123,7 @@ class CBotNPCGuardSpot : public Action< CBotNPC >
         return "GuardSpot";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     CountdownTimer m_lookTimer;
     Vector m_lookAtSpot;
@@ -3184,7 +3184,7 @@ void CBotNPCGetOffMe::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 //---------------------------------------------------------------------------------------------
 class CBotNPCWaitForPlayers : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction );
     virtual ActionResult< CBotNPC > Update( CBotNPC *me, float interval );
     virtual void OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction );
@@ -3248,7 +3248,7 @@ EventDesiredResult< CBotNPC > CBotNPCWaitForPlayers::OnContact( CBotNPC *me, CBa
 //---------------------------------------------------------------------------------------------
 class CBotNPCTacticalMonitor : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual Action< CBotNPC > *InitialContainedAction( CBotNPC *me )
     {
         if ( TFGameRules()->IsBossBattleMode() )
@@ -3271,9 +3271,9 @@ class CBotNPCTacticalMonitor : public Action< CBotNPC >
         // HACK: If we fell off the ledge, jump back
         /*
             if ( me->GetLocomotionInterface()->IsOnGround() &&
-               me->GetAbsOrigin().z < me->GetHomePosition().z - 200.0f )
+                me->GetAbsOrigin().z < me->GetHomePosition().z - 200.0f )
             {
-              return SuspendFor( new CBotNPCBigJump( me->GetHomePosition(), new CBotNPCLaunchRockets ), "Jumping home" );
+            return SuspendFor( new CBotNPCBigJump( me->GetHomePosition(), new CBotNPCLaunchRockets ), "Jumping home" );
             }
         */
 
@@ -3312,7 +3312,7 @@ class CBotNPCTacticalMonitor : public Action< CBotNPC >
         return "TacticalMonitor";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_backOffCooldownTimer;
 
     CountdownTimer m_getOffMeTimer;
@@ -3322,7 +3322,7 @@ class CBotNPCTacticalMonitor : public Action< CBotNPC >
 //---------------------------------------------------------------------------------------------
 class CBotNPCBehavior : public Action< CBotNPC >
 {
-   public:
+    public:
     virtual Action< CBotNPC > *InitialContainedAction( CBotNPC *me )
     {
         return new CBotNPCTacticalMonitor;
@@ -3416,7 +3416,7 @@ class CBotNPCBehavior : public Action< CBotNPC >
         return "Behavior";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_vocalTimer;
 };
 
@@ -3491,9 +3491,9 @@ bool CBotNPCVision::IsIgnored( CBaseEntity *subject ) const
         CTFPlayer *enemy = static_cast< CTFPlayer * >( subject );
 
         if ( enemy->m_Shared.InCond( TF_COND_BURNING ) ||
-             enemy->m_Shared.InCond( TF_COND_URINE ) ||
-             enemy->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             enemy->m_Shared.InCond( TF_COND_BLEEDING ) )
+            enemy->m_Shared.InCond( TF_COND_URINE ) ||
+            enemy->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            enemy->m_Shared.InCond( TF_COND_BLEEDING ) )
         {
             // always notice players with these conditions
             return false;

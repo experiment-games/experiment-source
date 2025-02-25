@@ -28,7 +28,7 @@ class CMissile : public CBaseCombatCharacter
 {
     DECLARE_CLASS( CMissile, CBaseCombatCharacter );
 
-   public:
+    public:
     static const int EXPLOSION_RADIUS = 200;
 
     CMissile();
@@ -84,7 +84,7 @@ class CMissile : public CBaseCombatCharacter
     static void AddCustomDetonator( CBaseEntity *pEntity, float radius, float height = -1 );
     static void RemoveCustomDetonator( CBaseEntity *pEntity );
 
-   protected:
+    protected:
     virtual void DoExplosion();
     virtual void ComputeActualDotPosition( CLaserDot *pLaserDot, Vector *pActualDotPosition, float *pHomingSpeed );
     virtual int AugerHealth()
@@ -112,7 +112,7 @@ class CMissile : public CBaseCombatCharacter
 
     static CUtlVector< CustomDetonator_t > gm_CustomDetonators;
 
-   private:
+    private:
     float m_flGracePeriodEndsAt;
     bool m_bCreateDangerSounds;
 
@@ -134,7 +134,7 @@ class CAPCMissile : public CMissile
     DECLARE_CLASS( CMissile, CMissile );
     DECLARE_DATADESC();
 
-   public:
+    public:
     static CAPCMissile *Create( const Vector &vecOrigin, const QAngle &vecAngles, const Vector &vecVelocity, CBaseEntity *pOwner );
 
     CAPCMissile();
@@ -157,12 +157,12 @@ class CAPCMissile : public CMissile
 
     CAPCMissile *m_pNext;
 
-   protected:
+    protected:
     virtual void DoExplosion();
     virtual void ComputeActualDotPosition( CLaserDot *pLaserDot, Vector *pActualDotPosition, float *pHomingSpeed );
     virtual int AugerHealth();
 
-   private:
+    private:
     void Init();
     void ComputeLeadingPosition( const Vector &vecShootPosition, CBaseEntity *pTarget, Vector *pLeadPosition );
     void BeginSeekThink();
@@ -190,7 +190,7 @@ class CWeaponRPG : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponRPG, CBaseHLCombatWeapon );
 
-   public:
+    public:
     CWeaponRPG();
     ~CWeaponRPG();
 
@@ -279,7 +279,7 @@ class CWeaponRPG : public CBaseHLCombatWeapon
     DECLARE_ACTTABLE();
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     bool m_bInitialStateUpdate;
     bool m_bGuiding;
     bool m_bHideGuiding;  // User to override the player's wish to guide under certain circumstances

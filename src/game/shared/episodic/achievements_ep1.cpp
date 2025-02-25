@@ -12,7 +12,7 @@
 
 class CAchievementEp1KillAntlionsWithCar : public CBaseAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
@@ -36,7 +36,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp1KillAntlionsWithCar, ACHIEVEMENT_EP1_KILL_AN
 
 class CAchievementEp1KillEnemiesWithSniperAlyx : public CBaseAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
@@ -49,7 +49,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp1KillEnemiesWithSniperAlyx, ACHIEVEMENT_EP1_K
 
 class CAchievementEp1BeatCitizenEscortNoCitizenDeaths : public CFailableAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_MAP_EVENTS | ACH_LISTEN_KILL_EVENTS | ACH_SAVE_WITH_GAME );
@@ -83,7 +83,7 @@ class CAchievementEp1BeatGameOneBullet : public CFailableAchievement
 {
     DECLARE_CLASS( CAchievementEp1BeatGameOneBullet, CFailableAchievement );
 
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_MAP_EVENTS | ACH_SAVE_WITH_GAME );

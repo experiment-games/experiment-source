@@ -187,7 +187,7 @@ void C_TFHaptics::HapticsThink( C_TFPlayer *player )
 
 class C_TFHapticsInternal : public C_TFHaptics
 {
-   public:
+    public:
     C_TFHapticsInternal()
         : C_TFHaptics(){};
 };

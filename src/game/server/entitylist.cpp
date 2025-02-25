@@ -35,7 +35,7 @@ CBaseEntityList *g_pEntityList = &gEntList;
 
 class CAimTargetManager : public IEntityListener
 {
-   public:
+    public:
     // Called by CEntityListSystem
     void LevelInitPreEntity()
     {
@@ -106,7 +106,7 @@ class CAimTargetManager : public IEntityListener
         return count;
     }
 
-   private:
+    private:
     CUtlVector< CBaseEntity * > m_targetList;
 };
 
@@ -137,7 +137,7 @@ struct simthinkentry_t
 };
 class CSimThinkManager : public IEntityListener
 {
-   public:
+    public:
     CSimThinkManager()
     {
         Clear();
@@ -260,7 +260,7 @@ class CSimThinkManager : public IEntityListener
         }
     }
 
-   private:
+    private:
     unsigned short m_entinfoIndex[NUM_ENT_ENTRIES];
     CUtlVector< simthinkentry_t > m_simThinkList;
 };
@@ -413,13 +413,13 @@ CBaseEntity *CGlobalEntityList::NextEnt( CBaseEntity *pCurrentEnt )
     while ( pList )
     {
 #if 0
-		if ( pList->m_pEntity )
-		{
-			IServerUnknown *pUnk = static_cast<IServerUnknown*>(const_cast<IHandleEntity*>(pList->m_pEntity));
-			CBaseEntity *pRet = pUnk->GetBaseEntity();
-			if ( pRet )
-				return pRet;
-		}
+        if ( pList->m_pEntity )
+        {
+            IServerUnknown *pUnk = static_cast<IServerUnknown*>(const_cast<IHandleEntity*>(pList->m_pEntity));
+            CBaseEntity *pRet = pUnk->GetBaseEntity();
+            if ( pRet )
+                return pRet;
+        }
 #else
         return ( CBaseEntity * )pList->m_pEntity;
 #endif
@@ -1191,7 +1191,7 @@ struct entitynotify_t
 };
 class CNotifyList : public INotify, public IEntityListener
 {
-   public:
+    public:
     // INotify
     void AddEntity( CBaseEntity *pNotify, CBaseEntity *pWatched );
     void RemoveEntity( CBaseEntity *pNotify, CBaseEntity *pWatched );
@@ -1207,7 +1207,7 @@ class CNotifyList : public INotify, public IEntityListener
     void LevelInitPreEntity();
     void LevelShutdownPreEntity();
 
-   private:
+    private:
     CUtlVector< entitynotify_t > m_notifyList;
 };
 
@@ -1301,7 +1301,7 @@ INotify *g_pNotify = &g_NotifyList;
 
 class CEntityTouchManager : public IEntityListener
 {
-   public:
+    public:
     // called by CEntityListSystem
     void LevelInitPreEntity()
     {
@@ -1339,7 +1339,7 @@ class CEntityTouchManager : public IEntityListener
         m_updateList.AddToTail( pEntity );
     }
 
-   private:
+    private:
     CUtlVector< CBaseEntity * > m_updateList;
 };
 
@@ -1379,7 +1379,7 @@ void CEntityTouchManager::FrameUpdatePostEntityThink()
 
 class CRespawnEntitiesFilter : public IMapEntityFilter
 {
-   public:
+    public:
     virtual bool ShouldCreateEntity( const char *pClassname )
     {
         // Create everything but the world
@@ -1397,7 +1397,7 @@ class CRespawnEntitiesFilter : public IMapEntityFilter
 // system callbacks, this hook is a game system that passes them the appropriate callbacks
 class CEntityListSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CEntityListSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -1504,14 +1504,14 @@ static ConCommand restart_entities( "respawn_entities", RespawnEntities, "Respaw
 
 class CSortedEntityList
 {
-   public:
+    public:
     CSortedEntityList()
         : m_sortedList(), m_emptyCount( 0 ) {}
 
     typedef CBaseEntity *ENTITYPTR;
     class CEntityReportLess
     {
-       public:
+        public:
         bool Less( const ENTITYPTR &src1, const ENTITYPTR &src2, void *pCtx )
         {
             if ( stricmp( src1->GetClassname(), src2->GetClassname() ) < 0 )
@@ -1570,7 +1570,7 @@ class CSortedEntityList
         }
     }
 
-   private:
+    private:
     CUtlSortVector< CBaseEntity *, CEntityReportLess > m_sortedList;
     int m_emptyCount;
 };

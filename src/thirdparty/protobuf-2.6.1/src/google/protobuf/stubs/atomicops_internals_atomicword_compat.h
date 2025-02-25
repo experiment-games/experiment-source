@@ -69,30 +69,30 @@ inline AtomicWord NoBarrier_AtomicExchange( volatile AtomicWord* ptr,
 }
 
 inline AtomicWord NoBarrier_AtomicIncrement( volatile AtomicWord* ptr,
-                                             AtomicWord increment )
+                                            AtomicWord increment )
 {
     return NoBarrier_AtomicIncrement(
         reinterpret_cast< volatile Atomic32* >( ptr ), increment );
 }
 
 inline AtomicWord Barrier_AtomicIncrement( volatile AtomicWord* ptr,
-                                           AtomicWord increment )
+                                            AtomicWord increment )
 {
     return Barrier_AtomicIncrement(
         reinterpret_cast< volatile Atomic32* >( ptr ), increment );
 }
 
 inline AtomicWord Acquire_CompareAndSwap( volatile AtomicWord* ptr,
-                                          AtomicWord old_value,
-                                          AtomicWord new_value )
+                                        AtomicWord old_value,
+                                        AtomicWord new_value )
 {
     return Acquire_CompareAndSwap(
         reinterpret_cast< volatile Atomic32* >( ptr ), old_value, new_value );
 }
 
 inline AtomicWord Release_CompareAndSwap( volatile AtomicWord* ptr,
-                                          AtomicWord old_value,
-                                          AtomicWord new_value )
+                                        AtomicWord old_value,
+                                        AtomicWord new_value )
 {
     return Release_CompareAndSwap(
         reinterpret_cast< volatile Atomic32* >( ptr ), old_value, new_value );

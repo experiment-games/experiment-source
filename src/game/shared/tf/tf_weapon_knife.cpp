@@ -639,8 +639,8 @@ void CTFKnife::BackstabVMThink( void )
     //		return;
     int iActivity = GetActivity();
     if ( ( iActivity != ACT_VM_IDLE ) && ( iActivity != ACT_BACKSTAB_VM_IDLE ) && ( iActivity != ACT_MELEE_VM_IDLE ) &&
-         ( iActivity != ACT_ITEM1_VM_IDLE ) && ( iActivity != ACT_ITEM1_BACKSTAB_VM_IDLE ) &&
-         ( iActivity != ACT_ITEM2_VM_IDLE ) && ( iActivity != ACT_ITEM2_BACKSTAB_VM_IDLE ) )
+        ( iActivity != ACT_ITEM1_VM_IDLE ) && ( iActivity != ACT_ITEM1_BACKSTAB_VM_IDLE ) &&
+        ( iActivity != ACT_ITEM2_VM_IDLE ) && ( iActivity != ACT_ITEM2_BACKSTAB_VM_IDLE ) )
         return;
 
     // Are we in backstab range and not cloaked?

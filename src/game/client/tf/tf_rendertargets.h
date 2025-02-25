@@ -25,14 +25,14 @@ class CTFRenderTargets : public CBaseClientRenderTargets
     // no networked vars
     DECLARE_CLASS_GAMEROOT( CTFRenderTargets, CBaseClientRenderTargets );
 
-   public:
+    public:
     virtual void InitClientRenderTargets( IMaterialSystem* pMaterialSystem, IMaterialSystemHardwareConfig* pHardwareConfig );
     virtual void ShutdownClientRenderTargets();
 
-   private:
+    private:
     ITexture* CreateItemModelPanelTexture( const char* pszName, IMaterialSystem* pMaterialSystem, int iSize );
 
-   private:
+    private:
     // Used for rendering item model panels.
     CUtlVector< CTextureReference > m_tfRenderTargets;
 };

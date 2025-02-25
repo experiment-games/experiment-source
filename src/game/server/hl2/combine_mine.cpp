@@ -928,10 +928,10 @@ bool CBounceBomb::IsFriend( CBaseEntity *pEntity )
     }
 
     if ( classify == CLASS_METROPOLICE ||
-         classify == CLASS_COMBINE ||
-         classify == CLASS_MILITARY ||
-         classify == CLASS_COMBINE_HUNTER ||
-         classify == CLASS_SCANNER )
+        classify == CLASS_COMBINE ||
+        classify == CLASS_MILITARY ||
+        classify == CLASS_COMBINE_HUNTER ||
+        classify == CLASS_SCANNER )
     {
         bIsCombine = true;
     }

@@ -22,7 +22,7 @@
 //
 class CTFSMG : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSMG, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -50,7 +50,7 @@ class CTFSMG : public CTFWeaponBaseGun
         return ( iMode == 1 );
     };
 
-   private:
+    private:
     CTFSMG( const CTFSMG & ) {}
 };
 
@@ -60,7 +60,7 @@ class CTFSMG : public CTFWeaponBaseGun
 //
 class CTFChargedSMG : public CTFSMG
 {
-   public:
+    public:
     DECLARE_CLASS( CTFChargedSMG, CTFSMG );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -92,12 +92,12 @@ class CTFChargedSMG : public CTFSMG
     void ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPlayer *pAttacker, const CTakeDamageInfo &info ) OVERRIDE;
 #endif
 
-   protected:
+    protected:
     CNetworkVar( float, m_flMinicritCharge );
 
     float m_flMinicritStartTime;
 
-   private:
+    private:
     CTFChargedSMG( const CTFChargedSMG & ) {}
 };
 

@@ -44,7 +44,7 @@ extern int g_nKillCamTarget2;
 
 class C_CommandContext
 {
-   public:
+    public:
     bool needsprocessing;
 
     CUserCmd cmd;
@@ -53,7 +53,7 @@ class C_CommandContext
 
 class C_PredictionError
 {
-   public:
+    public:
     float time;
     Vector error;
 };
@@ -69,7 +69,7 @@ bool IsInFreezeCam( void );
 //-----------------------------------------------------------------------------
 class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( C_BasePlayer, C_BaseCombatCharacter );
 
 #ifdef LUA_SDK
@@ -116,10 +116,10 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     C_BaseAnimating *GetHands();
     void SetHands( C_BaseAnimating *pHandsEntity );
 
-   protected:
+    protected:
     EHANDLE m_hHandsEntity;
 
-   public:
+    public:
     C_BaseCombatWeapon *GetActiveWeapon( void ) const;
     const char *GetTracerType( void );
 
@@ -608,11 +608,11 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
         return true;
     }
 
-   protected:
+    protected:
     fogparams_t m_CurrentFog;
     EHANDLE m_hOldFogController;
 
-   public:
+    public:
     int m_StuckLast;
 
     const char *GetScriptOverlayMaterial() const
@@ -636,7 +636,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flFOVTime;     // starting time of the FOV zoom
     int m_iDefaultFOV;     // default FOV if no other zooms are occurring
     EHANDLE m_hZoomOwner;  // This is a pointer to the entity currently controlling the player's zoom
-                           // Only this entity can change the zoom state once it has ownership
+                            // Only this entity can change the zoom state once it has ownership
 
     // For weapon prediction
     bool m_fOnTarget;  // Is the crosshair on a target?
@@ -664,7 +664,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
         return m_ArmorValue;
     }
 
-   protected:
+    protected:
     void CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     void CalcVehicleView( IClientVehicle *pVehicle, CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     virtual void CalcObserverView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
@@ -690,7 +690,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 
     virtual void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     // Did we just enter a vehicle this frame?
     bool JustEnteredVehicle();
 
@@ -709,7 +709,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 
     bool m_bCalcViewForceDrawPlayer;
 
-   private:
+    private:
     // Make sure no one calls this...
     C_BasePlayer &operator=( const C_BasePlayer &src );
     C_BasePlayer( const C_BasePlayer & );  // not defined, not accessible
@@ -816,7 +816,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flAvoidanceDotForward;
     float m_flAvoidanceDotRight;
 
-   protected:
+    protected:
     virtual bool IsDucked( void ) const
     {
         return m_Local.m_bDucked;
@@ -863,9 +863,9 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 #endif
 
 #if !defined( LUA_SDK )
-   private:
+    private:
 #else
-   public:
+    public:
 #endif
 
     struct StepSoundCache_t
@@ -878,7 +878,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     // One for left and one for right side of step
     StepSoundCache_t m_StepSoundCache[2];
 
-   public:
+    public:
     const char *GetLastKnownPlaceName( void ) const
     {
         return m_szLastPlaceName;

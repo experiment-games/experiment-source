@@ -12,7 +12,7 @@ class CTFBotHint;
 
 class CTFBotSniperLurk : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
@@ -21,9 +21,9 @@ class CTFBotSniperLurk : public Action< CTFBot >
 
     // Snipers choose their targets a bit differently
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
     virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;  // should we attack "them"?
     virtual QueryResultType ShouldRetreat( const INextBot *me ) const;                           // is it time to retreat?
@@ -33,7 +33,7 @@ class CTFBotSniperLurk : public Action< CTFBot >
         return "SniperLurk";
     };
 
-   private:
+    private:
     CountdownTimer m_boredTimer;
     CountdownTimer m_repathTimer;
     PathFollower m_path;

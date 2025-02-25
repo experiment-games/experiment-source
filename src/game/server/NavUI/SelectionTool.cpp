@@ -83,7 +83,7 @@ void SelectionToolPanel::OnCursorMoved( int x, int y )
 //--------------------------------------------------------------------------------------------------------
 class FloodSelectionCollector
 {
-   public:
+    public:
     FloodSelectionCollector( SelectionToolPanel *panel )
     {
         m_count = 0;
@@ -107,7 +107,7 @@ class FloodSelectionCollector
 
     int m_count;
 
-   private:
+    private:
     SelectionToolPanel *m_panel;
 };
 

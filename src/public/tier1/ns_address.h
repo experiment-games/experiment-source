@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -30,7 +30,7 @@ const int STEAM_P2P_CHANNEL_HLTV = 3;
 
 class CPeerToPeerAddress
 {
-   public:
+    public:
     CPeerToPeerAddress( void )
         : m_AddrType( P2P_STEAMID ), m_steamChannel( STEAM_P2P_CHANNEL_DEFAULT )
     {
@@ -63,11 +63,11 @@ class CPeerToPeerAddress
     {
     }
 
-   private:
+    private:
     // disallow since we can't deal with steamchannel
     CPeerToPeerAddress &operator=( const CSteamID &steamID );
 
-   public:
+    public:
     // Like operator =
     CPeerToPeerAddress &SetFromSteamID( const CSteamID &steamID, int nSteamChannel )
     {
@@ -153,7 +153,7 @@ class CPeerToPeerAddress
         return dummy;
     }
 
-   private:
+    private:
     CSteamID m_steamID;
     int m_steamChannel;  // SteamID channel (like a port number to disambiguate multiple connections)
 
@@ -542,7 +542,7 @@ class ns_address_render
 {
     char m_buf[64];
 
-   public:
+    public:
     ns_address_render( const ns_address &a )
     {
         switch ( a.m_AddrType )

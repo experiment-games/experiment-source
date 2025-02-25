@@ -92,8 +92,8 @@ static int sortlong( void const *a, void const *b )
 {
     // treat the entire vector of values as a long integer for duplicate removal.
     return memcmp( ( ( struct Sample * )a )->Value,
-                   ( ( struct Sample * )b )->Value,
-                   current_ndims );
+                    ( ( struct Sample * )b )->Value,
+                    current_ndims );
 }
 
 #define NEXTSAMPLE( s ) ( ( struct Sample * )( ( ( uint8 * )s ) + current_ssize ) )
@@ -591,7 +591,7 @@ struct QuantizedValue *FindMatch( uint8 const *sample, int ndims, uint8 *weights
         struct QuantizedValue *test = ( struct QuantizedValue * )
             RemoveHeapItem( &TheQueue );
         if ( !test ) break;  // heap empty
-                             //    printf("got pop node =%p minerror=%f\n",test,test->MinError);
+                            //    printf("got pop node =%p minerror=%f\n",test,test->MinError);
 
         if ( test->MinError > besterror ) break;
         if ( test->Children[0] )

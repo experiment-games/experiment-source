@@ -1,4 +1,4 @@
-//===== Copyright © Valve Corporation, All rights reserved. =================//
+//===== Copyright ï¿½ Valve Corporation, All rights reserved. =================//
 //
 // Purpose: audio mix data structures
 //
@@ -29,7 +29,7 @@ struct dspglobalvars_t
 
 class CAudioProcessor
 {
-   public:
+    public:
     virtual ~CAudioProcessor() {}
     CAudioProcessor( const char *pDebugName, int nChannelCount );
     void SetDebugName( const char *pName );
@@ -126,7 +126,7 @@ class CAudioMixState
 
     dspglobalvars_t *m_pGlobals;
 
-   public:
+    public:
     inline void Init( audio_source_input_t *pInput, uint32 nInputStride, audio_source_indexstate_t *pPlayback, uint32 nPlaybackStride, uint32 nCount )
     {
         m_pChannelsIn = pInput;
@@ -235,7 +235,7 @@ struct audio_mix_command_t
 
 class CAudioMixCommandList
 {
-   public:
+    public:
     inline void ClearBuffer( uint16 nTarget )
     {
         audio_mix_command_t cmd;
@@ -356,7 +356,7 @@ class CAudioMixCommandList
 // in order to produce one buffer of mixed output
 class CAudioMixDescription : public CAudioMixCommandList
 {
-   public:
+    public:
     inline void Init( int nChannels )
     {
         m_nMixBuffersInUse = 0;
@@ -424,7 +424,7 @@ struct mix_debug_outputs_t
 // NOTE: This object is large (>64KB) declaring one on the stack may crash some platforms
 class CAudioMixResults
 {
-   public:
+    public:
     CUtlVectorFixedGrowable< mix_debug_outputs_t, 8 > m_debugOutputs;
     CUtlVectorFixedGrowable< float, 16 > m_flOutputLevels;
     CUtlVectorFixedGrowable< CAudioMixBuffer, 32 > m_pOutput;

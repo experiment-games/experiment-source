@@ -29,10 +29,10 @@ int GetCustomTextureGuiHandle( uint64 hCloudId );
 //-----------------------------------------------------------------------------
 class CApplyCustomTextureJob : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CApplyCustomTextureJob( itemid_t nToolItemID, itemid_t nSubjectItemID, const void *pPNGData, int nPNGDataBytes );
 
-   protected:
+    protected:
     char m_chRemoteStorageName[MAX_PATH];
 
     virtual bool BYieldingRunGCJob();
@@ -52,7 +52,7 @@ class CApplyCustomTextureJob : public GCSDK::CGCClientJob
     /// Cloud file ID
     uint64 m_hCloudID;
 
-   private:
+    private:
     void CleanUp();
 };
 

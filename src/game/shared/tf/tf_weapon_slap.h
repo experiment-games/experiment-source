@@ -22,7 +22,7 @@
 //
 class CTFSlap : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSlap, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -65,7 +65,7 @@ class CTFSlap : public CTFWeaponBaseMelee
 //	void UpdateFireEffect( void );
 #endif  // GAME_DLL
 
-   private:
+    private:
     CNetworkVar( bool, m_bFirstHit );
     CNetworkVar( int, m_nNumKills );
 

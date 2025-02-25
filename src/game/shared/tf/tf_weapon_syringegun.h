@@ -29,7 +29,7 @@ enum syringe_weapontypes_t
 //
 class CTFSyringeGun : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSyringeGun, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -59,7 +59,7 @@ class CTFSyringeGun : public CTFWeaponBaseGun
     virtual void RemoveProjectileAmmo( CTFPlayer *pPlayer );
     virtual bool HasPrimaryAmmo( void );
 
-   private:
+    private:
     CTFSyringeGun( const CTFSyringeGun & ) {}
 };
 

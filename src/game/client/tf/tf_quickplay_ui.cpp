@@ -49,12 +49,12 @@ extern int g_iQuickplaySessionIndex;
 
 ConVar tf_matchmaking_debug( "tf_matchmaking_spew_level",
 #ifdef _DEBUG
-                             "3",
+                            "3",
 #else
-                             "1",
+                            "1",
 #endif
-                             FCVAR_NONE,
-                             "Set to 1 for basic console spew of quickplay-related decisions.  4 for maximum verbosity." );
+                            FCVAR_NONE,
+                            "Set to 1 for basic console spew of quickplay-related decisions.  4 for maximum verbosity." );
 
 ConVar tf_quickplay_pref_community_servers( "tf_quickplay_pref_community_servers", "0", FCVAR_ARCHIVE, "0=Valve only, 1=Community only, 2=Either" );
 
@@ -304,7 +304,7 @@ struct gameserver_ping_queue_entry_t
 //-----------------------------------------------------------------------------
 class CGameServerItemSort
 {
-   public:
+    public:
     bool Less( const sortable_gameserveritem_t *src1, const sortable_gameserveritem_t *src2, void *pCtx )
     {
         // we want higher scores sorted to the front
@@ -322,7 +322,7 @@ class CQuickListPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQuickListPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CQuickListPanel( vgui::Panel *parent, const char *panelName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -372,7 +372,7 @@ class CQuickListPanel : public vgui::EditablePanel
         PostMessage( GetParent()->GetVParent(), new KeyValues( "PanelSelected" ) );
     }
 
-   private:
+    private:
     char m_szMapName[64];
 
     vgui::ImagePanel *m_pLatencyImage;
@@ -662,7 +662,7 @@ class CQuickplayWaitDialog : public CGenericWaitingDialog, public ISteamMatchmak
 {
     DECLARE_CLASS_SIMPLE( CQuickplayWaitDialog, CGenericWaitingDialog );
 
-   public:
+    public:
     CQuickplayWaitDialog( bool bFeelingLucky, const QuickplaySearchOptions &opt )
         : CGenericWaitingDialog( NULL ), m_options( opt ), m_fHoursPlayed( 0 ), m_nAppID( GetTfMatchmakingAppID() ), m_hServerListRequest( NULL ), m_hServerQueryRequest( HSERVERQUERY_INVALID ), m_fPingA( tf_matchmaking_ping_a.GetFloat() ), m_fPingAScore( tf_matchmaking_ping_a_score.GetFloat() ), m_fPingB( tf_matchmaking_ping_b.GetFloat() ), m_fPingBScore( tf_matchmaking_ping_b_score.GetFloat() ), m_fPingC( tf_matchmaking_ping_c.GetFloat() ), m_fPingCScore( tf_matchmaking_ping_c_score.GetFloat() ), m_bFeelingLucky( bFeelingLucky ), m_eCurrentStep( k_EStep_GMSQuery ), m_timeGCScoreTimeout( 0.0 ), m_timeGMSSearchStarted( 0.0 ), m_timePingServerTimeout( 0.0 ), m_pBusyContainer( NULL ), m_pResultsContainer( NULL ), m_pServerListPanel( NULL ), m_pProgressBar( NULL ), m_ScoringNumbers( steamapicontext ? steamapicontext->SteamUser()->GetSteamID() : CSteamID() )
     {
@@ -1184,7 +1184,7 @@ class CQuickplayWaitDialog : public CGenericWaitingDialog, public ISteamMatchmak
         BaseClass::OnUserClose();
     }
 
-   protected:
+    protected:
     enum EStep
     {
         k_EStep_GMSQuery,          // We're waiting on the GMS to give us back some servers
@@ -1962,21 +1962,21 @@ class CQuickplayWaitDialog : public CGenericWaitingDialog, public ISteamMatchmak
             {
                 sortable_gameserveritem_t &item = *vecGameServersToPrint[i];
                 Msg( "\"%s\",\"%s\",%d,%d,%d,%d,%d,%d,%.2f,%7.4f,%7.4f,%7.4f,\"%s\",\"%s\",\"%s\"\n",
-                     item.server.GetName(),
-                     item.server.m_NetAdr.GetConnectionAddressString(),
-                     item.server.m_nPlayers - item.server.m_nBotPlayers,
-                     item.server.m_nMaxPlayers,
-                     item.server.m_nPing,
-                     item.m_bNewUserFriendly ? 1 : 0,
-                     item.m_bRegistered ? 1 : 0,
-                     item.m_bValve ? 1 : 0,
-                     item.m_fRecentMatchPenalty,
-                     item.userScore,
-                     item.serverScore,
-                     item.serverScore + item.userScore,
-                     item.server.m_steamID.Render(),
-                     item.server.m_szMap,
-                     item.server.m_szGameTags );
+                    item.server.GetName(),
+                    item.server.m_NetAdr.GetConnectionAddressString(),
+                    item.server.m_nPlayers - item.server.m_nBotPlayers,
+                    item.server.m_nMaxPlayers,
+                    item.server.m_nPing,
+                    item.m_bNewUserFriendly ? 1 : 0,
+                    item.m_bRegistered ? 1 : 0,
+                    item.m_bValve ? 1 : 0,
+                    item.m_fRecentMatchPenalty,
+                    item.userScore,
+                    item.serverScore,
+                    item.serverScore + item.userScore,
+                    item.server.m_steamID.Render(),
+                    item.server.m_szMap,
+                    item.server.m_szGameTags );
             }
         }
 
@@ -2127,7 +2127,7 @@ class CStandaloneQuickplayMenu : public CQuickplayWaitDialog
 {
     DECLARE_CLASS_SIMPLE( CStandaloneQuickplayMenu, CQuickplayWaitDialog );
 
-   public:
+    public:
     CStandaloneQuickplayMenu( bool bFeelingLucky, const QuickplaySearchOptions &opt )
         : BaseClass( bFeelingLucky, opt )
     {
@@ -2634,7 +2634,7 @@ class CQuickplayDialog : public CQuickplayPanelBase
 {
     DECLARE_CLASS_SIMPLE( CQuickplayDialog, CQuickplayPanelBase );
 
-   public:
+    public:
     CQuickplayDialog( vgui::Panel *parent )
         : CQuickplayPanelBase( parent, "QuickPlayDialog" )
     {
@@ -2796,18 +2796,18 @@ class CQuickplayDialog : public CQuickplayPanelBase
             OnCommand( "more_info" );
         }
         else if ( nButtonCode == KEY_XBUTTON_LEFT ||
-                  nButtonCode == KEY_XSTICK1_LEFT ||
-                  nButtonCode == KEY_XSTICK2_LEFT ||
-                  nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-                  code == KEY_LEFT )
+                nButtonCode == KEY_XSTICK1_LEFT ||
+                nButtonCode == KEY_XSTICK2_LEFT ||
+                nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
+                code == KEY_LEFT )
         {
             OnCommand( "prevpage" );
         }
         else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-                  nButtonCode == KEY_XSTICK1_RIGHT ||
-                  nButtonCode == KEY_XSTICK2_RIGHT ||
-                  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-                  code == KEY_RIGHT )
+                nButtonCode == KEY_XSTICK1_RIGHT ||
+                nButtonCode == KEY_XSTICK2_RIGHT ||
+                nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
+                code == KEY_RIGHT )
         {
             OnCommand( "nextpage" );
         }
@@ -2833,7 +2833,7 @@ class CQuickplayDialog : public CQuickplayPanelBase
         }
     }
 
-   protected:
+    protected:
     virtual const char *GetItemImage( const QuickplayItem &item ) const OVERRIDE
     {
         if ( m_pBetaCheckButton->IsSelected() && item.pBetaImage )
@@ -2910,7 +2910,7 @@ class CQuickplayDialog : public CQuickplayPanelBase
         ShowItemByIndex( 0 );
     }
 
-   private:
+    private:
     vgui::CheckButton *m_pBetaCheckButton;
     CExplanationPopup *m_pTauntsExplanationPopup;
 };
@@ -2920,7 +2920,7 @@ static vgui::DHANDLE< CQuickplayDialog > g_pQuickplayDialog;
 
 class CGCTFQuickplay_ScoreServers_Response : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCTFQuickplay_ScoreServers_Response( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

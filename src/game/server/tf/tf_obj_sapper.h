@@ -28,7 +28,7 @@ class CObjectSapper : public CBaseObjectUpgrade
 {
     DECLARE_CLASS( CObjectSapper, CBaseObjectUpgrade );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -64,7 +64,7 @@ class CObjectSapper : public CBaseObjectUpgrade
 
     float GetReversesBuildingConstructionSpeed( void );
 
-   private:
+    private:
     float m_flSapperDamageAccumulator;
     float m_flLastThinkTime;
     float m_flLastHealthLeachTime;

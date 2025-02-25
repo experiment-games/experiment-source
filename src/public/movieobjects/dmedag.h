@@ -31,7 +31,7 @@ class CDmeDag : public CDmElement
 {
     DEFINE_ELEMENT( CDmeDag, CDmElement );
 
-   public:
+    public:
     // Accessors
     CDmeTransform *GetTransform();
     CDmeShape *GetShape();
@@ -77,7 +77,7 @@ class CDmeDag : public CDmElement
     static void DmeToEngineMatrix( matrix3x4_t &dmeToEngine );
     static void EngineToDmeMatrix( matrix3x4_t &engineToDme );
 
-   protected:
+    protected:
     void GetBoundingSphere( Vector &center, float &radius, const matrix3x4_t &pMat ) const;
 
     void PushDagTransform();
@@ -89,7 +89,7 @@ class CDmeDag : public CDmElement
     CDmaElement< CDmeShape > m_Shape;
     CDmaElementArray< CDmeDag > m_Children;
 
-   private:
+    private:
     struct TransformInfo_t
     {
         CDmeTransform *m_pTransform;

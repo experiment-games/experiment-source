@@ -15,10 +15,10 @@
 
 class NavMenu : public vgui::Menu
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( NavMenu, vgui::Menu );
 
-   public:
+    public:
     NavMenu( vgui::Panel *parent, const char *panelName );
     ~NavMenu();
 

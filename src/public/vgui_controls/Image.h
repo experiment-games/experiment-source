@@ -26,7 +26,7 @@ class Panel;
 //-----------------------------------------------------------------------------
 class Image : public IImage
 {
-   public:
+    public:
     Image();
     virtual ~Image();
 
@@ -55,7 +55,7 @@ class Image : public IImage
         return;
     };
 
-   protected:
+    protected:
     virtual void SetSize( int wide, int tall );
     virtual void DrawSetColor( Color color );
     virtual void DrawSetColor( int r, int g, int b, int a );
@@ -75,7 +75,7 @@ class Image : public IImage
     virtual void DrawTexturedRect( int x0, int y0, int x1, int y1 );
     virtual void Paint() = 0;
 
-   private:
+    private:
     int _pos[2];
     int _size[2];
     Color _color;

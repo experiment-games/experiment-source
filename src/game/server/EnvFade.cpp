@@ -13,7 +13,7 @@
 
 class CEnvFade : public CLogicalEntity
 {
-   private:
+    private:
     float m_Duration;
     float m_HoldTime;
 
@@ -21,7 +21,7 @@ class CEnvFade : public CLogicalEntity
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CEnvFade, CLogicalEntity );
 
     virtual void Spawn( void );

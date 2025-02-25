@@ -170,7 +170,7 @@ struct AbuseIncidentData_t
 /// Generic abuse reporting panel.  Your
 class CAbuseReportManager : public CBaseGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
     CAbuseReportManager();
     virtual ~CAbuseReportManager();
 
@@ -229,7 +229,7 @@ class CAbuseReportManager : public CBaseGameSystemPerFrame, public CGameEventLis
     static const char k_rchScreenShotFilenameBase[];
     static const char k_rchScreenShotFilename[];
 
-   protected:
+    protected:
     /// Your app will probably define its own abuse report types.
     /// if so, you will need to override this function.
     /// The base class just calls new to create an object, then calls

@@ -21,17 +21,17 @@
 
 class CVMPICriticalSection
 {
-   public:
+    public:
     CVMPICriticalSection();
     ~CVMPICriticalSection();
 
-   protected:
+    protected:
     friend class CVMPICriticalSectionLock;
 
     void Lock();
     void Unlock();
 
-   public:
+    public:
     char m_CS[SIZEOF_CS];
 
     // Used to protect against deadlock in debug mode.
@@ -44,13 +44,13 @@ class CVMPICriticalSection
 // Use this to lock a critical section.
 class CVMPICriticalSectionLock
 {
-   public:
+    public:
     CVMPICriticalSectionLock( CVMPICriticalSection *pCS );
     ~CVMPICriticalSectionLock();
     void Lock();
     void Unlock();
 
-   private:
+    private:
     CVMPICriticalSection *m_pCS;
     bool m_bLocked;
 };
@@ -58,7 +58,7 @@ class CVMPICriticalSectionLock
 template < class T >
 class CCriticalSectionData : private CVMPICriticalSection
 {
-   public:
+    public:
     // You only have access to the data between Lock() and Unlock().
     T *Lock()
     {
@@ -71,7 +71,7 @@ class CCriticalSectionData : private CVMPICriticalSection
         CVMPICriticalSection::Unlock();
     }
 
-   private:
+    private:
     T m_Data;
 };
 
@@ -80,7 +80,7 @@ class CCriticalSectionData : private CVMPICriticalSection
 // ------------------------------------------------------------------------------------------------ //
 class CEvent
 {
-   public:
+    public:
     CEvent();
     ~CEvent();
 
@@ -95,7 +95,7 @@ class CEvent
     // Unset the event's signalled status.
     bool ResetEvent();
 
-   private:
+    private:
     void *m_hEvent;
 };
 

@@ -137,23 +137,23 @@ ENDLOOP:;
     int largest = max( nMaxBytesSent, nMaxBytesReceived );
     int topValue = ( largest * 11 ) / 10;
     /*
-      DWORD nZeros;
-      for( nZeros = 1; nZeros < 20; nZeros++ )
-      {
+    DWORD nZeros;
+    for( nZeros = 1; nZeros < 20; nZeros++ )
+    {
         if ( largest < pow( 10, nZeros ) )
-          break;
-      }
+        break;
+    }
 
-      // Now find the value at the top of the graph. We choose the smallest enclosing tenth of the
-      // order of magnitude we're at (so if we were at 1,000,000, and our max value was 350,000, we'd choose 400,000).
-      int iTenth;
-      int topValue;
-      for ( iTenth=1; iTenth <= 10; iTenth++ )
-      {
+    // Now find the value at the top of the graph. We choose the smallest enclosing tenth of the
+    // order of magnitude we're at (so if we were at 1,000,000, and our max value was 350,000, we'd choose 400,000).
+    int iTenth;
+    int topValue;
+    for ( iTenth=1; iTenth <= 10; iTenth++ )
+    {
         topValue = (DWORD)( pow( 10, nZeros-1 ) * iTenth );
         if ( topValue >= largest )
-          break;
-      }
+        break;
+    }
     */
 
     for ( int iSample = 0; iSample < sentPoints.Count(); iSample++ )

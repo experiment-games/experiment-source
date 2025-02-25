@@ -34,7 +34,7 @@ class CMDLPicker : public CBaseAssetPicker
 {
     DECLARE_CLASS_SIMPLE( CMDLPicker, CBaseAssetPicker );
 
-   public:
+    public:
     enum PageType_t
     {
         PAGE_NONE = 0,
@@ -74,7 +74,7 @@ class CMDLPicker : public CBaseAssetPicker
     void SelectSkin( int nSkin );
     int GetSelectedSkin();
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnAssetSelected, "AssetSelected", params );
 
     virtual void OnSelectedAssetPicked( const char *pMDLName );
@@ -138,7 +138,7 @@ class CMDLPickerFrame : public CBaseAssetPickerFrame
 {
     DECLARE_CLASS_SIMPLE( CMDLPickerFrame, CBaseAssetPickerFrame );
 
-   public:
+    public:
     CMDLPickerFrame( vgui::Panel *pParent, const char *pTitle, int nFlags = CMDLPicker::PAGE_ALL );
     virtual ~CMDLPickerFrame();
 

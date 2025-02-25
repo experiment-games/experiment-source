@@ -29,7 +29,7 @@ bool IsTakingAFreezecamScreenshot( void );
 //-----------------------------------------------------------------------------
 class CTFFreezePanelHealth : public CTFHudPlayerHealth
 {
-   public:
+    public:
     CTFFreezePanelHealth( Panel *parent, const char *name )
         : CTFHudPlayerHealth( parent, name )
     {
@@ -52,7 +52,7 @@ class CTFFreezePanelCallout : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFFreezePanelCallout, EditablePanel );
 
-   public:
+    public:
     CTFFreezePanelCallout( Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -60,7 +60,7 @@ class CTFFreezePanelCallout : public EditablePanel
     void UpdateForGib( int iGib, int iCount );
     void UpdateForRagdoll( void );
 
-   private:
+    private:
     vgui::Label *m_pGibLabel;
 };
 
@@ -71,10 +71,10 @@ class CReplayReminderPanel;
 
 class CTFFreezePanel : public EditablePanel, public CHudElement
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFFreezePanel, EditablePanel );
 
-   public:
+    public:
     CTFFreezePanel( const char *pElementName );
 
     static CTFFreezePanel *Instance();
@@ -105,10 +105,10 @@ class CTFFreezePanel : public EditablePanel, public CHudElement
     }
     void SendTauntAcknowledgement( const char *pszCommand, int iGibs = 0 );
 
-   protected:
+    protected:
     CTFFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector< Vector > *vecCalloutsTL, CUtlVector< Vector > *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY );
 
-   private:
+    private:
     static CTFFreezePanel *s_pFreezePanel;
 
     void DeleteCalloutPanels();

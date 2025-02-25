@@ -54,7 +54,7 @@ extern int g_iLegacyClassSelectWeaponSlots[TF_LAST_NORMAL_CLASS];
 
 class CShowMannUpLootNotification : public CEconNotification
 {
-   public:
+    public:
     CShowMannUpLootNotification()
     {
         m_pObjective = TFObjectiveResource();

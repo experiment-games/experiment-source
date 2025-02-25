@@ -154,19 +154,19 @@ void CNPC_CombineS::PrescheduleThink( void )
     /*//FIXME: This doesn't need to be in here, it's all debug info
     if( HasCondition( COND_HEAR_PHYSICS_DANGER ) )
     {
-      // Don't react unless we see the item!!
-      CSound *pSound = NULL;
+    // Don't react unless we see the item!!
+    CSound *pSound = NULL;
 
-      pSound = GetLoudestSoundOfType( SOUND_PHYSICS_DANGER );
+    pSound = GetLoudestSoundOfType( SOUND_PHYSICS_DANGER );
 
-      if( pSound )
-      {
+    if( pSound )
+    {
         if( FInViewCone( pSound->GetSoundReactOrigin() ) )
         {
-          DevMsg( "OH NO!\n" );
-          NDebugOverlay::Line( EyePosition(), pSound->GetSoundReactOrigin(), 0, 0, 255, false, 2.0f );
+        DevMsg( "OH NO!\n" );
+        NDebugOverlay::Line( EyePosition(), pSound->GetSoundReactOrigin(), 0, 0, 255, false, 2.0f );
         }
-      }
+    }
     }
     */
 
@@ -262,10 +262,10 @@ void CNPC_CombineS::OnListened()
 
     // debugging to find missed schedules
 #if 0
-	if ( HasCondition( COND_HEAR_DANGER ) && !HasInterruptCondition( COND_HEAR_DANGER ) )
-	{
-		DevMsg("Ignore danger in %s\n", GetCurSchedule()->GetName() );
-	}
+    if ( HasCondition( COND_HEAR_DANGER ) && !HasInterruptCondition( COND_HEAR_DANGER ) )
+    {
+        DevMsg("Ignore danger in %s\n", GetCurSchedule()->GetName() );
+    }
 #endif
 }
 

@@ -24,7 +24,7 @@ phase
 ; Sample environment map
 texld  r3, r2
 texld  r4, t5					; Normalize the tangent-space eye vector
-	 
+
 ; dot eye-vector with per-pixel normal from r0
 dp3_sat	r1, r4_bx2, r0_bx2
 

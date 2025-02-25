@@ -525,7 +525,7 @@ void CBaseHudWeaponSelection::UserCmd_LastWeapon( void )
     /*
     if ( IsHudMenuPreventingWeaponSelection() )
     {
-      return;
+    return;
     }
     */
 

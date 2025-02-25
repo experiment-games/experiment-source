@@ -25,9 +25,9 @@ static ISzAlloc g_Alloc = { SzAlloc, SzFree };
 void PrintHelp(char *buffer)
 {
   strcat(buffer, "\nLZMA Utility " MY_VERSION_COPYRIGHT_DATE "\n"
-      "\nUsage:  lzma <e|d> inputFile outputFile\n"
-             "  e: encode file\n"
-             "  d: decode file\n");
+    "\nUsage:  lzma <e|d> inputFile outputFile\n"
+            "  e: encode file\n"
+            "  d: decode file\n");
 }
 
 int PrintError(char *buffer, const char *message)
@@ -64,43 +64,43 @@ static SRes Decode2(CLzmaDec *state, ISeqOutStream *outStream, ISeqInStream *inS
   {
     if (inPos == inSize)
     {
-      inSize = IN_BUF_SIZE;
-      RINOK(inStream->Read(inStream, inBuf, &inSize));
-      inPos = 0;
+    inSize = IN_BUF_SIZE;
+    RINOK(inStream->Read(inStream, inBuf, &inSize));
+    inPos = 0;
     }
     {
-      SRes res;
-      SizeT inProcessed = inSize - inPos;
-      SizeT outProcessed = OUT_BUF_SIZE - outPos;
-      ELzmaFinishMode finishMode = LZMA_FINISH_ANY;
-      ELzmaStatus status;
-      if (thereIsSize && outProcessed > unpackSize)
-      {
+    SRes res;
+    SizeT inProcessed = inSize - inPos;
+    SizeT outProcessed = OUT_BUF_SIZE - outPos;
+    ELzmaFinishMode finishMode = LZMA_FINISH_ANY;
+    ELzmaStatus status;
+    if (thereIsSize && outProcessed > unpackSize)
+    {
         outProcessed = (SizeT)unpackSize;
         finishMode = LZMA_FINISH_END;
-      }
-      
-      res = LzmaDec_DecodeToBuf(state, outBuf + outPos, &outProcessed,
+    }
+
+    res = LzmaDec_DecodeToBuf(state, outBuf + outPos, &outProcessed,
         inBuf + inPos, &inProcessed, finishMode, &status);
-      inPos += inProcessed;
-      outPos += outProcessed;
-      unpackSize -= outProcessed;
-      
-      if (outStream)
+    inPos += inProcessed;
+    outPos += outProcessed;
+    unpackSize -= outProcessed;
+
+    if (outStream)
         if (outStream->Write(outStream, outBuf, outPos) != outPos)
-          return SZ_ERROR_WRITE;
-        
-      outPos = 0;
-      
-      if (res != SZ_OK || (thereIsSize && unpackSize == 0))
+        return SZ_ERROR_WRITE;
+
+    outPos = 0;
+
+    if (res != SZ_OK || (thereIsSize && unpackSize == 0))
         return res;
-      
-      if (inProcessed == 0 && outProcessed == 0)
-      {
+
+    if (inProcessed == 0 && outProcessed == 0)
+    {
         if (thereIsSize || status != LZMA_STATUS_FINISHED_WITH_MARK)
-          return SZ_ERROR_DATA;
+        return SZ_ERROR_DATA;
         return res;
-      }
+    }
     }
   }
 }
@@ -154,12 +154,12 @@ static SRes Encode(ISeqOutStream *outStream, ISeqInStream *inStream, UInt64 file
 
     res = LzmaEnc_WriteProperties(enc, header, &headerSize);
     for (i = 0; i < 8; i++)
-      header[headerSize++] = (Byte)(fileSize >> (8 * i));
+    header[headerSize++] = (Byte)(fileSize >> (8 * i));
     if (outStream->Write(outStream, header, headerSize) != headerSize)
-      res = SZ_ERROR_WRITE;
+    res = SZ_ERROR_WRITE;
     else
     {
-      if (res == SZ_OK)
+    if (res == SZ_OK)
         res = LzmaEnc_Encode(enc, outStream, inStream, NULL, &g_Alloc, &g_Alloc);
     }
   }
@@ -200,7 +200,7 @@ int main2(int numArgs, const char *args[], char *rs)
     size_t t4 = sizeof(UInt32);
     size_t t8 = sizeof(UInt64);
     if (t4 != 4 || t8 != 8)
-      return PrintError(rs, "Incorrect UInt32 or UInt64");
+    return PrintError(rs, "Incorrect UInt32 or UInt64");
   }
 
   if (InFile_Open(&inStream.file, args[2]) != 0)
@@ -210,7 +210,7 @@ int main2(int numArgs, const char *args[], char *rs)
   {
     useOutFile = True;
     if (OutFile_Open(&outStream.file, args[3]) != 0)
-      return PrintError(rs, "Can not open output file");
+    return PrintError(rs, "Can not open output file");
   }
   else if (encodeMode)
     PrintUserError(rs);
@@ -233,13 +233,13 @@ int main2(int numArgs, const char *args[], char *rs)
   if (res != SZ_OK)
   {
     if (res == SZ_ERROR_MEM)
-      return PrintError(rs, kCantAllocateMessage);
+    return PrintError(rs, kCantAllocateMessage);
     else if (res == SZ_ERROR_DATA)
-      return PrintError(rs, kDataErrorMessage);
+    return PrintError(rs, kDataErrorMessage);
     else if (res == SZ_ERROR_WRITE)
-      return PrintError(rs, kCantWriteMessage);
+    return PrintError(rs, kCantWriteMessage);
     else if (res == SZ_ERROR_READ)
-      return PrintError(rs, kCantReadMessage);
+    return PrintError(rs, kCantReadMessage);
     return PrintErrorNumber(rs, res);
   }
   return 0;

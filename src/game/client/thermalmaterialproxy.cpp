@@ -17,13 +17,13 @@ void HueToRGB( float frac, Vector &color );
 // $ThermalMin: the min value for the Thermal wave  (default: 0.0f )
 class CThermalMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CThermalMaterialProxy();
     virtual ~CThermalMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pEntity );
 
-   private:
+    private:
     IMaterialVar *m_ThermalVar;
     IMaterialVar *m_ThermalPeriod;
     IMaterialVar *m_ThermalMax;

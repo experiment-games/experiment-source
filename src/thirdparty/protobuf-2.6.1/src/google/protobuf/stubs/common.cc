@@ -54,30 +54,30 @@ namespace protobuf {
 namespace internal {
 
 void VerifyVersion(int headerVersion,
-                   int minLibraryVersion,
-                   const char* filename) {
+                    int minLibraryVersion,
+                    const char* filename) {
   if (GOOGLE_PROTOBUF_VERSION < minLibraryVersion) {
     // Library is too old for headers.
     GOOGLE_LOG(FATAL)
-      << "This program requires version " << VersionString(minLibraryVersion)
-      << " of the Protocol Buffer runtime library, but the installed version "
-         "is " << VersionString(GOOGLE_PROTOBUF_VERSION) << ".  Please update "
-         "your library.  If you compiled the program yourself, make sure that "
-         "your headers are from the same version of Protocol Buffers as your "
-         "link-time library.  (Version verification failed in \""
-      << filename << "\".)";
+    << "This program requires version " << VersionString(minLibraryVersion)
+    << " of the Protocol Buffer runtime library, but the installed version "
+        "is " << VersionString(GOOGLE_PROTOBUF_VERSION) << ".  Please update "
+        "your library.  If you compiled the program yourself, make sure that "
+        "your headers are from the same version of Protocol Buffers as your "
+        "link-time library.  (Version verification failed in \""
+    << filename << "\".)";
   }
   if (headerVersion < kMinHeaderVersionForLibrary) {
     // Headers are too old for library.
     GOOGLE_LOG(FATAL)
-      << "This program was compiled against version "
-      << VersionString(headerVersion) << " of the Protocol Buffer runtime "
-         "library, which is not compatible with the installed version ("
-      << VersionString(GOOGLE_PROTOBUF_VERSION) <<  ").  Contact the program "
-         "author for an update.  If you compiled the program yourself, make "
-         "sure that your headers are from the same version of Protocol Buffers "
-         "as your link-time library.  (Version verification failed in \""
-      << filename << "\".)";
+    << "This program was compiled against version "
+    << VersionString(headerVersion) << " of the Protocol Buffer runtime "
+        "library, which is not compatible with the installed version ("
+    << VersionString(GOOGLE_PROTOBUF_VERSION) <<  ").  Contact the program "
+        "author for an update.  If you compiled the program yourself, make "
+        "sure that your headers are from the same version of Protocol Buffers "
+        "as your link-time library.  (Version verification failed in \""
+    << filename << "\".)";
   }
 }
 
@@ -105,13 +105,13 @@ string VersionString(int version) {
 namespace internal {
 
 void DefaultLogHandler(LogLevel level, const char* filename, int line,
-                       const string& message) {
+                        const string& message) {
   static const char* level_names[] = { "INFO", "WARNING", "ERROR", "FATAL" };
 
   // We use fprintf() instead of cerr because we want this to work at static
   // initialization time.
   fprintf(stderr, "[libprotobuf %s %s:%d] %s\n",
-          level_names[level], filename, line, message.c_str());
+        level_names[level], filename, line, message.c_str());
   fflush(stderr);  // Needed on MSVC.
 }
 

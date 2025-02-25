@@ -40,10 +40,10 @@ enum RecordBreakType_t
 
 class CTFStatPanel : public EditablePanel, public CHudElement
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFStatPanel, EditablePanel );
 
-   public:
+    public:
     CTFStatPanel( const char *pElementName );
     virtual ~CTFStatPanel();
 
@@ -89,7 +89,7 @@ class CTFStatPanel : public EditablePanel, public CHudElement
         return 40;
     }  // less than winpanel, build menu
 
-   private:
+    private:
     void GetStatValueAsString( int iValue, TFStatType_t statType, char *value, int valuelen );
     void UpdateStats( int iClass, const RoundStats_t &stats, bool bAlive );
     void UpdateMapStats( map_identifier_t iMapID, const RoundMapStats_t &stats );

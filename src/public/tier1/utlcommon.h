@@ -78,7 +78,7 @@ struct CTypeEquals< A, B, false, true > : CTypeEquals< A &, B & >
 template < typename K, typename V >
 class CUtlKeyValuePair
 {
-   public:
+    public:
     typedef V ValueReturn_t;
     K m_key;
     V m_value;
@@ -110,7 +110,7 @@ class CUtlKeyValuePair
 template < typename K >
 class CUtlKeyValuePair< K, empty_t >
 {
-   public:
+    public:
     typedef const K ValueReturn_t;
     K m_key;
 

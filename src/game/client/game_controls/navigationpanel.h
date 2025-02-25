@@ -31,10 +31,10 @@ class CExImageButton;
 //
 class CNavigationPanel : public vgui::EditablePanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CNavigationPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CNavigationPanel( vgui::Panel *pParent, const char *pName, bool bAddParentAsActionSignalTarget = true );
     virtual ~CNavigationPanel();
 
@@ -47,7 +47,7 @@ class CNavigationPanel : public vgui::EditablePanel
 
     void UpdateButtonSelectionStates( int iButton );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void ApplySettings( KeyValues *pInResourceData );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -64,8 +64,8 @@ class CNavigationPanel : public vgui::EditablePanel
     /*
     enum Alignment_t
     {
-      ALIGN_WEST,	// left
-      ALIGN_CENTER,
+    ALIGN_WEST,	// left
+    ALIGN_CENTER,
     };
 
     Alignment_t	m_nAlignment;

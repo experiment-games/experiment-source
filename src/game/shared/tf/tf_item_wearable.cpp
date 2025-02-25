@@ -359,7 +359,7 @@ bool CTFWearable::ShouldDraw()
             else
             {
                 if ( pOwner->m_Shared.GetDisguiseClass() == TF_CLASS_SPY &&
-                     pOwner->m_Shared.GetDisguiseTeam() == iLocalPlayerTeam )
+                    pOwner->m_Shared.GetDisguiseTeam() == iLocalPlayerTeam )
                 {
                     // This enemy spy is disguised as a spy on our team, don't draw wearables.
                     return false;

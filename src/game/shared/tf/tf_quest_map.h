@@ -23,7 +23,7 @@ typedef CTypedProtoBufScriptObjectDefinition< CMsgQuestMapStoreItem, DEF_TYPE_QU
 
 class CQuestMapRegion : public CTypedProtoBufScriptObjectDefinition< CMsgQuestMapRegionDef, DEF_TYPE_QUEST_MAP_REGION >
 {
-   public:
+    public:
     CQuestMapRegion()
         : m_pParent( NULL )
     {
@@ -66,7 +66,7 @@ class CQuestMapRegion : public CTypedProtoBufScriptObjectDefinition< CMsgQuestMa
         return m_pParent;
     }
 
-   private:
+    private:
     const CQuestMapRegion* m_pParent;
     CUtlVector< const CQuestMapNodeDefinition* > m_vecNodesWithin;
 };

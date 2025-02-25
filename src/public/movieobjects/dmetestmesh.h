@@ -87,14 +87,14 @@ class CDmeTestMesh : public CDmeShape
 {
     DEFINE_ELEMENT( CDmeTestMesh, CDmeShape );
 
-   public:
+    public:
     virtual void Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDrawSettings = NULL );
 
     static CDmeTestMesh *ReadMeshFromSMD( char *pFilename, DmFileId_t fileid );
 
     virtual void Resolve();
 
-   private:
+    private:
     // Addref/Release the MDL handle
     void ReferenceMDL( const char *pMDLName );
     void UnreferenceMDL();

@@ -33,7 +33,7 @@ class CHudLocator : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudLocator, vgui::Panel );
 
-   public:
+    public:
     CHudLocator( const char *pElementName );
     virtual ~CHudLocator( void );
 
@@ -41,13 +41,13 @@ class CHudLocator : public CHudElement, public vgui::Panel
     void VidInit( void );
     bool ShouldDraw();
 
-   protected:
+    protected:
     void FillRect( int x, int y, int w, int h );
     float LocatorXPositionForYawDiff( float yawDiff );
     void DrawGraduations( float flYawPlayerFacing );
     virtual void Paint();
 
-   private:
+    private:
     void Reset( void );
 
     int m_textureID_IconJalopy;

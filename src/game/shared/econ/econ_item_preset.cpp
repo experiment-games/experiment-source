@@ -95,7 +95,7 @@ void CEconItemPerClassPresetData::Copy( const CSharedObject& soRHS )
 void CEconItemPerClassPresetData::Dump() const
 {
 #if 0
-	EmitInfo( SPEW_GC, SPEW_ALWAYS, LOG_ALWAYS, "preset id=%d  class id=%d   slot id=%d  item id=%llu\n",
-		m_unPresetID, m_unClassID, m_unSlotID, m_ulItemID );
+    EmitInfo( SPEW_GC, SPEW_ALWAYS, LOG_ALWAYS, "preset id=%d  class id=%d   slot id=%d  item id=%llu\n",
+        m_unPresetID, m_unClassID, m_unSlotID, m_ulItemID );
 #endif
 }

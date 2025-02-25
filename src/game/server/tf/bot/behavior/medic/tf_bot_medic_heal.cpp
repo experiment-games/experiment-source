@@ -43,7 +43,7 @@ ActionResult< CTFBot > CTFBotMedicHeal::OnStart( CTFBot *me, Action< CTFBot > *p
  */
 class CSelectPrimaryPatient : public IVision::IForEachKnownEntity
 {
-   public:
+    public:
     CSelectPrimaryPatient( CTFBot *me, CTFPlayer *currentPatient )
     {
         m_me = me;
@@ -220,9 +220,9 @@ class CSelectPrimaryPatient : public IVision::IForEachKnownEntity
         if ( !player->HasTheFlag() && !m_me->IsInASquad() )
         {
             if ( player->IsPlayerClass( TF_CLASS_MEDIC ) ||
-                 player->IsPlayerClass( TF_CLASS_SNIPER ) ||
-                 player->IsPlayerClass( TF_CLASS_ENGINEER ) ||
-                 player->IsPlayerClass( TF_CLASS_SPY ) )
+                player->IsPlayerClass( TF_CLASS_SNIPER ) ||
+                player->IsPlayerClass( TF_CLASS_ENGINEER ) ||
+                player->IsPlayerClass( TF_CLASS_SPY ) )
             {
                 // these classes can't be our primary heal target (although they will get opportunistic healing
                 return true;
@@ -317,7 +317,7 @@ bool CTFBotMedicHeal::IsStable( CTFPlayer *patient ) const
 //---------------------------------------------------------------------------------------------
 class CFindMostInjuredNeighbor : public IVision::IForEachKnownEntity
 {
-   public:
+    public:
     CFindMostInjuredNeighbor( CTFBot *me, float maxRange, bool isInCombat )
     {
         m_me = me;
@@ -417,10 +417,10 @@ bool CTFBotMedicHeal::IsReadyToDeployUber( const CWeaponMedigun *pMedigun ) cons
 bool CTFBotMedicHeal::IsGoodUberTarget( CTFPlayer *who ) const
 {
     if ( who->IsPlayerClass( TF_CLASS_MEDIC ) ||
-         who->IsPlayerClass( TF_CLASS_SNIPER ) ||
-         who->IsPlayerClass( TF_CLASS_ENGINEER ) ||
-         who->IsPlayerClass( TF_CLASS_SCOUT ) ||
-         who->IsPlayerClass( TF_CLASS_SPY ) )
+        who->IsPlayerClass( TF_CLASS_SNIPER ) ||
+        who->IsPlayerClass( TF_CLASS_ENGINEER ) ||
+        who->IsPlayerClass( TF_CLASS_SCOUT ) ||
+        who->IsPlayerClass( TF_CLASS_SPY ) )
     {
         return false;
     }
@@ -661,7 +661,7 @@ ActionResult< CTFBot > CTFBotMedicHeal::Update( CTFBot *me, float interval )
                 if ( TFGameRules()->IsMannVsMachineMode() )
                 {
                     if ( m_patient->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) &&
-                         me->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) )
+                        me->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) )
                     {
                         useUber = false;
                     }
@@ -860,7 +860,7 @@ QueryResultType CTFBotMedicHeal::ShouldRetreat( const INextBot *bot ) const
 //---------------------------------------------------------------------------------------------
 class CKnownCollector : public IVision::IForEachKnownEntity
 {
-   public:
+    public:
     virtual bool Inspect( const CKnownEntity &known )
     {
         m_vector.AddToTail( &known );
@@ -951,8 +951,8 @@ void CTFBotMedicHeal::ComputeFollowPosition( CTFBot *me )
     }
 
     for ( radius = tf_bot_medic_stop_follow_range.GetFloat() + RandomFloat( 0.0f, radiusInc );
-          radius <= maxRadius;
-          radius += radiusInc )
+        radius <= maxRadius;
+        radius += radiusInc )
     {
         Vector offset = vec3_origin;
 

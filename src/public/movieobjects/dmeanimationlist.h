@@ -27,7 +27,7 @@ class CDmeAnimationList : public CDmElement
 {
     DEFINE_ELEMENT( CDmeAnimationList, CDmElement );
 
-   public:
+    public:
     int GetAnimationCount() const;
     CDmeChannelsClip *GetAnimation( int nIndex );
     int FindAnimation( const char *pAnimName );
@@ -35,7 +35,7 @@ class CDmeAnimationList : public CDmElement
     int AddAnimation( CDmeChannelsClip *pAnimation );
     void RemoveAnimation( int nIndex );
 
-   private:
+    private:
     CDmaElementArray< CDmeChannelsClip > m_Animations;
 };
 

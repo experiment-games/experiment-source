@@ -54,7 +54,7 @@ class CChoreoScene : public ICurveDataAccessor
         CChoreoEvent *e;
     };
 
-   public:
+    public:
     // Construction
     CChoreoScene( IChoreoEventCallback *callback );
     ~CChoreoScene( void );
@@ -269,7 +269,7 @@ class CChoreoScene : public ICurveDataAccessor
     //  therefore we can precompute the end time
     static bool s_bEditingDisabled;
 
-   private:
+    private:
     // Simulation stuff
     enum
     {
@@ -319,10 +319,10 @@ class CChoreoScene : public ICurveDataAccessor
     void PrintActor( int level, CChoreoActor *a );
 
     // File I/O
-   public:
+    public:
     static void FilePrintf( CUtlBuffer &buf, int level, PRINTF_FORMAT_STRING const char *fmt, ... );
 
-   private:
+    private:
     void FileSaveEvent( CUtlBuffer &buf, int level, CChoreoEvent *e );
     void FileSaveChannel( CUtlBuffer &buf, int level, CChoreoChannel *c );
     void FileSaveActor( CUtlBuffer &buf, int level, CChoreoActor *a );
@@ -415,7 +415,7 @@ void CChoreoScene::SetRestoring( bool bRestoring )
 
 abstract_class IChoreoStringPool
 {
-   public:
+    public:
     virtual short FindOrAddString( const char *pString ) = 0;
     virtual bool GetString( short stringId, char *buff, int buffSize ) = 0;
 };

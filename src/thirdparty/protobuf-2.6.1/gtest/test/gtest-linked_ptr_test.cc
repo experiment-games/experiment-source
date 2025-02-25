@@ -88,32 +88,32 @@ TEST_F(LinkedPtrTest, GeneralTest) {
     ASSERT_TRUE(a2 == NULL);
 
     {
-      linked_ptr<A> a3(new A);
-      a0 = a3;
-      ASSERT_TRUE(a0 == a3);
-      ASSERT_TRUE(a0 != NULL);
-      ASSERT_TRUE(a0.get() == a3);
-      ASSERT_TRUE(a0 == a3.get());
-      linked_ptr<A> a4(a0);
-      a1 = a4;
-      linked_ptr<A> a5(new A);
-      ASSERT_TRUE(a5.get() != a3);
-      ASSERT_TRUE(a5 != a3.get());
-      a2 = a5;
-      linked_ptr<B> b0(new B);
-      linked_ptr<A> a6(b0);
-      ASSERT_TRUE(b0 == a6);
-      ASSERT_TRUE(a6 == b0);
-      ASSERT_TRUE(b0 != NULL);
-      a5 = b0;
-      a5 = b0;
-      a3->Use();
-      a4->Use();
-      a5->Use();
-      a6->Use();
-      b0->Use();
-      (*b0).Use();
-      b0.get()->Use();
+    linked_ptr<A> a3(new A);
+    a0 = a3;
+    ASSERT_TRUE(a0 == a3);
+    ASSERT_TRUE(a0 != NULL);
+    ASSERT_TRUE(a0.get() == a3);
+    ASSERT_TRUE(a0 == a3.get());
+    linked_ptr<A> a4(a0);
+    a1 = a4;
+    linked_ptr<A> a5(new A);
+    ASSERT_TRUE(a5.get() != a3);
+    ASSERT_TRUE(a5 != a3.get());
+    a2 = a5;
+    linked_ptr<B> b0(new B);
+    linked_ptr<A> a6(b0);
+    ASSERT_TRUE(b0 == a6);
+    ASSERT_TRUE(a6 == b0);
+    ASSERT_TRUE(b0 != NULL);
+    a5 = b0;
+    a5 = b0;
+    a3->Use();
+    a4->Use();
+    a5->Use();
+    a6->Use();
+    b0->Use();
+    (*b0).Use();
+    b0.get()->Use();
     }
 
     a0->Use();

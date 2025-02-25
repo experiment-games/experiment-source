@@ -26,26 +26,26 @@ class C_PropJeep : public C_PropVehicleDriveable
 {
     DECLARE_CLASS( C_PropJeep, C_PropVehicleDriveable );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
 
     C_PropJeep();
     ~C_PropJeep();
 
-   public:
+    public:
     void UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd );
     void DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles );
 
     void OnEnteredVehicle( C_BasePlayer *pPlayer );
     void Simulate( void );
 
-   private:
+    private:
     void DampenForwardMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles, float flFrameTime );
     void DampenUpMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles, float flFrameTime );
     void ComputePDControllerCoefficients( float *pCoefficientsOut, float flFrequency, float flDampening, float flDeltaTime );
 
-   private:
+    private:
     Vector m_vecLastEyePos;
     Vector m_vecLastEyeTarget;
     Vector m_vecEyeSpeed;

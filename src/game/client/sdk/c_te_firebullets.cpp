@@ -12,13 +12,13 @@
 
 class C_TEFireBullets : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEFireBullets, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_iPlayer;
     Vector m_vecOrigin;
     QAngle m_vecAngles;

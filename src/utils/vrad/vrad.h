@@ -115,11 +115,11 @@ struct LightingValue_t
     FORCEINLINE bool IsValid( void ) const
     {
         return ( m_vecLighting.x >= 0 &&
-                 m_vecLighting.y >= 0 &&
-                 m_vecLighting.z >= 0 &&
-                 m_vecLighting.x < 1e10 &&
-                 m_vecLighting.y < 1e10 &&
-                 m_vecLighting.z < 1e10 );
+                m_vecLighting.y >= 0 &&
+                m_vecLighting.z >= 0 &&
+                m_vecLighting.x < 1e10 &&
+                m_vecLighting.y < 1e10 &&
+                m_vecLighting.z < 1e10 );
     }
 
     FORCEINLINE void Zero( void )
@@ -200,8 +200,8 @@ struct CPatch
     float scale[2];  // Scaling of texture in s & t
 
     bumplights_t totallight;  // accumulated by radiosity
-                              // does NOT include light
-                              // accounted for by direct lighting
+                            // does NOT include light
+                            // accounted for by direct lighting
     Vector baselight;         // emissivity only
     float basearea;           // surface per area per baselight instance
 
@@ -222,9 +222,9 @@ struct CPatch
     int ndxNext;              // next patch index in face
     int ndxNextParent;        // next parent patch index in face
     int ndxNextClusterChild;  // next terminal child index in cluster
-                              //	struct		patch_s		*next;					// next in face
-                              //	struct		patch_s		*nextparent;		    // next in face
-                              //	struct		patch_s		*nextclusterchild;		// next terminal child in cluster
+                            //	struct		patch_s		*next;					// next in face
+                            //	struct		patch_s		*nextparent;		    // next in face
+                            //	struct		patch_s		*nextclusterchild;		// next terminal child in cluster
 
     int numtransfers;
     transfer_t *transfers;
@@ -439,9 +439,9 @@ struct SSE_sampleLightOutput_t
 
 // SSE Gather light stuff
 void GatherSampleLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, FourVectors const &pos, FourVectors *pNormals, int normalCount, int iThread,
-                           int nLFlags = 0,  // GATHERLFLAGS_xxx
-                           int static_prop_to_skip = -1,
-                           float flEpsilon = 0.0 );
+                            int nLFlags = 0,  // GATHERLFLAGS_xxx
+                            int static_prop_to_skip = -1,
+                            float flEpsilon = 0.0 );
 // void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum,
 //							 FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
 //							 int nLFlags = 0,
@@ -476,7 +476,7 @@ struct DispTested_t
 
 class IVRadDispMgr
 {
-   public:
+    public:
     // creation/destruction
     virtual void Init( void ) = 0;
     virtual void Shutdown( void ) = 0;
@@ -540,7 +540,7 @@ inline bool ValidDispFace( dface_t *pFace )
 
 #define SAMPLEHASH_VOXEL_SIZE 64.0f
 typedef unsigned int SampleHandle_t;  // the upper 16 bits = facelight index (works because max face are 65536)
-                                      // the lower 16 bits = sample index inside of facelight
+                                    // the lower 16 bits = sample index inside of facelight
 struct sample_t;
 struct SampleData_t
 {
@@ -585,7 +585,7 @@ struct PropTested_t
 
 class IVradStaticPropMgr
 {
-   public:
+    public:
     // methods of IStaticPropMgr
     virtual void Init() = 0;
     virtual void Shutdown() = 0;

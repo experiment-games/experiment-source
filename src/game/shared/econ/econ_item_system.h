@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class CEconItemSystem
 {
-   public:
+    public:
     CEconItemSystem( void );
     virtual ~CEconItemSystem( void );
 
@@ -77,7 +77,7 @@ class CEconItemSystem
 
     void ResetAttribStringCache( void );
 
-   protected:
+    protected:
     // Read the specified item schema file. Init the item schema with the contents
     void ParseItemSchemaFile( const char *pFilename );
 
@@ -87,7 +87,7 @@ class CEconItemSystem
         return ( unsigned char * )"A5fSXbf7";
     }
 
-   private:
+    private:
     GameItemSchema_t m_itemSchema;
 };
 

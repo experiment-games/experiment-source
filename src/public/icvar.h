@@ -28,7 +28,7 @@ typedef int CVarDLLIdentifier_t;
 //-----------------------------------------------------------------------------
 abstract_class IConsoleDisplayFunc
 {
-   public:
+    public:
     virtual void ColorPrint( const Color &clr, const char *pMessage ) = 0;
     virtual void Print( const char *pMessage ) = 0;
     virtual void DPrint( const char *pMessage ) = 0;
@@ -40,7 +40,7 @@ abstract_class IConsoleDisplayFunc
 #define CVAR_QUERY_INTERFACE_VERSION "VCvarQuery001"
 abstract_class ICvarQuery : public IAppSystem
 {
-   public:
+    public:
     // Can these two convars be aliased?
     virtual bool AreConVarsLinkable( const ConVar *child, const ConVar *parent ) = 0;
 };
@@ -50,7 +50,7 @@ abstract_class ICvarQuery : public IAppSystem
 //-----------------------------------------------------------------------------
 abstract_class ICvar : public IAppSystem
 {
-   public:
+    public:
     // Allocate a unique DLL identifier
     virtual CVarDLLIdentifier_t AllocateDLLIdentifier() = 0;
 
@@ -105,10 +105,10 @@ abstract_class ICvar : public IAppSystem
     virtual bool HasQueuedMaterialThreadConVarSets() const = 0;
     virtual int ProcessQueuedMaterialThreadConVarSets() = 0;
 
-   protected:
+    protected:
     class ICVarIteratorInternal;
 
-   public:
+    public:
     /// Iteration over all cvars.
     /// (THIS IS A SLOW OPERATION AND YOU SHOULD AVOID IT.)
     /// usage:
@@ -127,7 +127,7 @@ abstract_class ICvar : public IAppSystem
     /// prone to change.
     class Iterator
     {
-       public:
+        public:
         inline Iterator( ICvar *icvar );
         inline ~Iterator( void );
         inline void SetFirst( void );
@@ -135,15 +135,15 @@ abstract_class ICvar : public IAppSystem
         inline bool IsValid( void );
         inline ConCommandBase *Get( void );
 
-       private:
+        private:
         ICVarIteratorInternal *m_pIter;
     };
 
-   protected:
+    protected:
     // internals for  ICVarIterator
     class ICVarIteratorInternal
     {
-       public:
+        public:
         // warning: delete called on 'ICvar::ICVarIteratorInternal' that is abstract but has non-virtual destructor [-Wdelete-non-virtual-dtor]
         virtual ~ICVarIteratorInternal() {}
         virtual void SetFirst( void ) = 0;

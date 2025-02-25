@@ -11,7 +11,7 @@
 //----------------------------------------------------------------------------
 class CTFBotLocomotion : public PlayerLocomotion
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBotLocomotion, PlayerLocomotion );
 
     CTFBotLocomotion( INextBot *bot )
@@ -38,7 +38,7 @@ class CTFBotLocomotion : public PlayerLocomotion
     //
     virtual void Jump( void ) OVERRIDE;  // initiate a simple undirected jump in the air
 
-   protected:
+    protected:
     virtual void AdjustPosture( const Vector &moveGoal ) {}  // never crouch to navigate
 };
 

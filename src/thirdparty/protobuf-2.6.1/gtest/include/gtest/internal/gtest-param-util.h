@@ -60,8 +60,8 @@ namespace internal
 // TEST_P macro is used to define two tests with the same name
 // but in different namespaces.
 GTEST_API_ void ReportInvalidTestCaseType( const char* test_case_name,
-                                           const char* file,
-                                           int line );
+                                            const char* file,
+                                            int line );
 
 template < typename >
 class ParamGeneratorInterface;
@@ -73,7 +73,7 @@ class ParamGenerator;
 template < typename T >
 class ParamIteratorInterface
 {
-   public:
+    public:
     virtual ~ParamIteratorInterface() {}
     // A pointer to the base generator instance.
     // Used only for the purposes of iterator comparison
@@ -104,7 +104,7 @@ class ParamIteratorInterface
 template < typename T >
 class ParamIterator
 {
-   public:
+    public:
     typedef T value_type;
     typedef const T& reference;
     typedef ptrdiff_t difference_type;
@@ -149,7 +149,7 @@ class ParamIterator
         return !( *this == other );
     }
 
-   private:
+    private:
     friend class ParamGenerator< T >;
     explicit ParamIterator( ParamIteratorInterface< T >* impl )
         : impl_( impl ) {}
@@ -161,7 +161,7 @@ class ParamIterator
 template < typename T >
 class ParamGeneratorInterface
 {
-   public:
+    public:
     typedef T ParamType;
 
     virtual ~ParamGeneratorInterface() {}
@@ -179,7 +179,7 @@ class ParamGeneratorInterface
 template < typename T >
 class ParamGenerator
 {
-   public:
+    public:
     typedef ParamIterator< T > iterator;
 
     explicit ParamGenerator( ParamGeneratorInterface< T >* impl )
@@ -202,7 +202,7 @@ class ParamGenerator
         return iterator( impl_->End() );
     }
 
-   private:
+    private:
     linked_ptr< const ParamGeneratorInterface< T > > impl_;
 };
 
@@ -213,7 +213,7 @@ class ParamGenerator
 template < typename T, typename IncrementT >
 class RangeGenerator : public ParamGeneratorInterface< T >
 {
-   public:
+    public:
     RangeGenerator( T begin, T end, IncrementT step )
         : begin_( begin ), end_( end ), step_( step ), end_index_( CalculateEndIndex( begin, end, step ) ) {}
     virtual ~RangeGenerator() {}
@@ -227,10 +227,10 @@ class RangeGenerator : public ParamGeneratorInterface< T >
         return new Iterator( this, end_, end_index_, step_ );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< T >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< T >* base, T value, int index, IncrementT step )
             : base_( base ), value_( value ), index_( index ), step_( step ) {}
         virtual ~Iterator() {}
@@ -264,13 +264,13 @@ class RangeGenerator : public ParamGeneratorInterface< T >
             return index_ == other_index;
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : ParamIteratorInterface< T >(),
-              base_( other.base_ ),
-              value_( other.value_ ),
-              index_( other.index_ ),
-              step_( other.step_ ) {}
+            base_( other.base_ ),
+            value_( other.value_ ),
+            index_( other.index_ ),
+            step_( other.step_ ) {}
 
         // No implementation - assignment is unsupported.
         void operator=( const Iterator& other );
@@ -282,8 +282,8 @@ class RangeGenerator : public ParamGeneratorInterface< T >
     };  // class RangeGenerator::Iterator
 
     static int CalculateEndIndex( const T& begin,
-                                  const T& end,
-                                  const IncrementT& step )
+                                const T& end,
+                                const IncrementT& step )
     {
         int end_index = 0;
         for ( T i = begin; i < end; i = i + step )
@@ -309,7 +309,7 @@ class RangeGenerator : public ParamGeneratorInterface< T >
 template < typename T >
 class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
 {
-   public:
+    public:
     template < typename ForwardIterator >
     ValuesInIteratorRangeGenerator( ForwardIterator begin, ForwardIterator end )
         : container_( begin, end )
@@ -326,14 +326,14 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
         return new Iterator( this, container_.end() );
     }
 
-   private:
+    private:
     typedef typename ::std::vector< T > ContainerType;
 
     class Iterator : public ParamIteratorInterface< T >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< T >* base,
-                  typename ContainerType::const_iterator iterator )
+                typename ContainerType::const_iterator iterator )
             : base_( base ), iterator_( iterator ) {}
         virtual ~Iterator() {}
 
@@ -371,16 +371,16 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
                 << "The program attempted to compare iterators "
                 << "from different generators." << std::endl;
             return iterator_ ==
-                   CheckedDowncastToActualType< const Iterator >( &other )->iterator_;
+                    CheckedDowncastToActualType< const Iterator >( &other )->iterator_;
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             // The explicit constructor call suppresses a false warning
             // emitted by gcc when supplied with the -Wextra option.
             : ParamIteratorInterface< T >(),
-              base_( other.base_ ),
-              iterator_( other.iterator_ )
+            base_( other.base_ ),
+            iterator_( other.iterator_ )
         {
         }
 
@@ -407,7 +407,7 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
 template < class TestClass >
 class ParameterizedTestFactory : public TestFactoryBase
 {
-   public:
+    public:
     typedef typename TestClass::ParamType ParamType;
     explicit ParameterizedTestFactory( ParamType parameter )
         : parameter_( parameter ) {}
@@ -417,7 +417,7 @@ class ParameterizedTestFactory : public TestFactoryBase
         return new TestClass();
     }
 
-   private:
+    private:
     const ParamType parameter_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( ParameterizedTestFactory );
@@ -430,7 +430,7 @@ class ParameterizedTestFactory : public TestFactoryBase
 template < class ParamType >
 class TestMetaFactoryBase
 {
-   public:
+    public:
     virtual ~TestMetaFactoryBase() {}
 
     virtual TestFactoryBase* CreateTestFactory( ParamType parameter ) = 0;
@@ -448,7 +448,7 @@ template < class TestCase >
 class TestMetaFactory
     : public TestMetaFactoryBase< typename TestCase::ParamType >
 {
-   public:
+    public:
     typedef typename TestCase::ParamType ParamType;
 
     TestMetaFactory() {}
@@ -458,7 +458,7 @@ class TestMetaFactory
         return new ParameterizedTestFactory< TestCase >( parameter );
     }
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( TestMetaFactory );
 };
 
@@ -474,7 +474,7 @@ class TestMetaFactory
 // and calls RegisterTests() on each of them when asked.
 class ParameterizedTestCaseInfoBase
 {
-   public:
+    public:
     virtual ~ParameterizedTestCaseInfoBase() {}
 
     // Base part of test case name for display purposes.
@@ -487,10 +487,10 @@ class ParameterizedTestCaseInfoBase
     // instance of a ParameterizedTestCaseInfoBase derived class.
     virtual void RegisterTests() = 0;
 
-   protected:
+    protected:
     ParameterizedTestCaseInfoBase() {}
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( ParameterizedTestCaseInfoBase );
 };
 
@@ -504,7 +504,7 @@ class ParameterizedTestCaseInfoBase
 template < class TestCase >
 class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
 {
-   public:
+    public:
     // ParamType and GeneratorCreationFunc are private types but are required
     // for declarations of public methods AddTestPattern() and
     // AddTestCaseInstantiation().
@@ -532,8 +532,8 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
     // parameter index. For the test SequenceA/FooTest.DoBar/1 FooTest is
     // test case base name and DoBar is test base name.
     void AddTestPattern( const char* test_case_name,
-                         const char* test_base_name,
-                         TestMetaFactoryBase< ParamType >* meta_factory )
+                        const char* test_base_name,
+                        TestMetaFactoryBase< ParamType >* meta_factory )
     {
         tests_.push_back( linked_ptr< TestInfo >( new TestInfo( test_case_name,
                                                                 test_base_name,
@@ -542,9 +542,9 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
     // INSTANTIATE_TEST_CASE_P macro uses AddGenerator() to record information
     // about a generator.
     int AddTestCaseInstantiation( const string& instantiation_name,
-                                  GeneratorCreationFunc* func,
-                                  const char* /* file */,
-                                  int /* line */ )
+                                GeneratorCreationFunc* func,
+                                const char* /* file */,
+                                int /* line */ )
     {
         instantiations_.push_back( ::std::make_pair( instantiation_name, func ) );
         return 0;  // Return value used only to run this method in namespace scope.
@@ -557,14 +557,14 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
     virtual void RegisterTests()
     {
         for ( typename TestInfoContainer::iterator test_it = tests_.begin();
-              test_it != tests_.end();
-              ++test_it )
+            test_it != tests_.end();
+            ++test_it )
         {
             linked_ptr< TestInfo > test_info = *test_it;
             for ( typename InstantiationContainer::iterator gen_it =
-                      instantiations_.begin();
-                  gen_it != instantiations_.end();
-                  ++gen_it )
+                    instantiations_.begin();
+                gen_it != instantiations_.end();
+                ++gen_it )
             {
                 const string& instantiation_name = gen_it->first;
                 ParamGenerator< ParamType > generator( ( *gen_it->second )() );
@@ -576,9 +576,9 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
 
                 int i = 0;
                 for ( typename ParamGenerator< ParamType >::iterator param_it =
-                          generator.begin();
-                      param_it != generator.end();
-                      ++param_it, ++i )
+                        generator.begin();
+                    param_it != generator.end();
+                    ++param_it, ++i )
                 {
                     Message test_name_stream;
                     test_name_stream << test_info->test_base_name << "/" << i;
@@ -596,17 +596,17 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
         }          // for test_it
     }              // RegisterTests
 
-   private:
+    private:
     // LocalTestInfo structure keeps information about a single test registered
     // with TEST_P macro.
     struct TestInfo
     {
         TestInfo( const char* a_test_case_base_name,
-                  const char* a_test_base_name,
-                  TestMetaFactoryBase< ParamType >* a_test_meta_factory )
+                const char* a_test_base_name,
+                TestMetaFactoryBase< ParamType >* a_test_meta_factory )
             : test_case_base_name( a_test_case_base_name ),
-              test_base_name( a_test_base_name ),
-              test_meta_factory( a_test_meta_factory ) {}
+            test_base_name( a_test_base_name ),
+            test_meta_factory( a_test_meta_factory ) {}
 
         const string test_case_base_name;
         const string test_base_name;
@@ -633,13 +633,13 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
 // descriptors.
 class ParameterizedTestCaseRegistry
 {
-   public:
+    public:
     ParameterizedTestCaseRegistry() {}
     ~ParameterizedTestCaseRegistry()
     {
         for ( TestCaseInfoContainer::iterator it = test_case_infos_.begin();
-              it != test_case_infos_.end();
-              ++it )
+            it != test_case_infos_.end();
+            ++it )
         {
             delete *it;
         }
@@ -655,8 +655,8 @@ class ParameterizedTestCaseRegistry
     {
         ParameterizedTestCaseInfo< TestCase >* typed_test_info = NULL;
         for ( TestCaseInfoContainer::iterator it = test_case_infos_.begin();
-              it != test_case_infos_.end();
-              ++it )
+            it != test_case_infos_.end();
+            ++it )
         {
             if ( ( *it )->GetTestCaseName() == test_case_name )
             {
@@ -689,14 +689,14 @@ class ParameterizedTestCaseRegistry
     void RegisterTests()
     {
         for ( TestCaseInfoContainer::iterator it = test_case_infos_.begin();
-              it != test_case_infos_.end();
-              ++it )
+            it != test_case_infos_.end();
+            ++it )
         {
             ( *it )->RegisterTests();
         }
     }
 
-   private:
+    private:
     typedef ::std::vector< ParameterizedTestCaseInfoBase* > TestCaseInfoContainer;
 
     TestCaseInfoContainer test_case_infos_;

@@ -70,7 +70,7 @@ void InitExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar **params, Exampl
 
 class CExampleModel_DX9_Context : public CBasePerMaterialContextData
 {
-   public:
+    public:
     CCommandBufferBuilder< CFixedCommandStorageBuffer< 800 > > m_SemiStaticCmdsOut;
     bool m_bFastPath;
 };

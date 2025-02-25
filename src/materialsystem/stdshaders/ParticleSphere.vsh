@@ -64,8 +64,8 @@ mov oPos, $projPos
 alloc $worldPos
 if( $DOWATERFOG == 1 )
 {
-	; Get the worldpos z component only since that's all we need for height fog
-	dp4 $worldPos.z, $vPos, $cModel2
+    ; Get the worldpos z component only since that's all we need for height fog
+    dp4 $worldPos.z, $vPos, $cModel2
 }
 &CalcFog( $worldPos, $projPos );
 free $worldPos
@@ -99,22 +99,22 @@ mov		oT2.xyz, $vColor
 ; Note that since the model and view matrices are identity, the coordinate
 ; system has X=right, Y=up, and Z=behind you  (negative Z goes into the screen).
 ;------------------------------------------------------------------------------
-								; r5 (forward) = normalized P
+                                ; r5 (forward) = normalized P
 dp3		r1, $vPos, $vPos
 rsq		r5, r1
 mul		r5, r5, $vPos
 mov		r5.z, -r5.z				; This basis wants Z positive going into the screen
-								; so flip it here.
+                                ; so flip it here.
 
-								; r1 (up) = r5 x c24
+                                ; r1 (up) = r5 x c24
 mul		r1, r5.xzyw, $SHADER_SPECIFIC_CONST_0; (This effectively does a cross product with [1,0,0,0]
-								; You wind up with [0, r5.z, -r5.y, 1]
+                                ; You wind up with [0, r5.z, -r5.y, 1]
 dp3		r2, r1, r1
 rsq		r2, r2
 mul		r1, r1, r2
 
-								; r2 (right) = r1 x r5
-mul		r2,  r1.yzxw, r5.zxyw	
+                                ; r2 (right) = r1 x r5
+mul		r2,  r1.yzxw, r5.zxyw
 mad		r2, -r1.zxyw, r5.yzxw, r2
 
 sub		r3, c[45 + a0.x], $vPos    ; r3 = L - P
@@ -149,15 +149,13 @@ mul		r8,  r8, r7				; r8 = C * r / Length(L - P)^2
 mul		r9,  r7, c[46 + a0.x]	; r9 = r / Length(L - P)^2
 
 ; If the light intensity scales the color > 1
-	sge		r10, r9.xxxx, $cOne	; r10.x = 1 if the color's max component > 1
-	rcp		r6,  r9.xxxx			
-	mul		r6,  r6, r10.xxxx		; r6 = 1 / max_component or [0,0,0,0] if max_component < 1
-	mul		r2,  r8, r6				; rescaled color (all zeros if no component was > 1)
+    sge		r10, r9.xxxx, $cOne	; r10.x = 1 if the color's max component > 1
+    rcp		r6,  r9.xxxx
+    mul		r6,  r6, r10.xxxx		; r6 = 1 / max_component or [0,0,0,0] if max_component < 1
+    mul		r2,  r8, r6				; rescaled color (all zeros if no component was > 1)
 ; else
-	slt		r11, r9.xxxx, $cOne	; r11.x = 1 if the color's max component < 1
-	mad		oD0.xyz, r8, r11, r2	; if it was rescaled, then r8*r11 = 0
-									; if not, then r8*r11 = the original color
+    slt		r11, r9.xxxx, $cOne	; r11.x = 1 if the color's max component < 1
+    mad		oD0.xyz, r8, r11, r2	; if it was rescaled, then r8*r11 = 0
+                                    ; if not, then r8*r11 = the original color
 
 mov		oD0.a, $vColor.a				; Pass in vertex alpha so the pixel shader can use it.
-
-

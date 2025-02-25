@@ -64,7 +64,7 @@ enum AmmoFlags_t
 //=============================================================================
 class CAmmoDef
 {
-   public:
+    public:
     int m_nAmmoIndex;
 
     Ammo_t m_AmmoType[MAX_AMMO_TYPES];
@@ -87,7 +87,7 @@ class CAmmoDef
     CAmmoDef( void );
     virtual ~CAmmoDef( void );
 
-   private:
+    private:
     bool AddAmmoType( char const* name, int damageType, int tracerType, int nFlags, int minSplashSize, int maxSplashSize );
 };
 

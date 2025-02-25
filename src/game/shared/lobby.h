@@ -18,7 +18,7 @@ class CSharedObject;
 
 class ILobby : public IPlayerGroup
 {
-   public:
+    public:
     virtual ~ILobby() {}
 };
 

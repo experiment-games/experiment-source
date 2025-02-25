@@ -17,7 +17,7 @@
 //=========================================================
 abstract_class CHLMachineGun : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CHLMachineGun, CBaseHLCombatWeapon );
     DECLARE_DATADESC();
 
@@ -41,7 +41,7 @@ abstract_class CHLMachineGun : public CBaseHLCombatWeapon
     // utility function
     static void DoMachineGunKick( CBasePlayer * pPlayer, float dampEasy, float maxVerticleKickAngle, float fireDurationTime, float slideLimitTime );
 
-   protected:
+    protected:
     int m_nShotsFired;  // Number of consecutive shots fired
 
     float m_flNextSoundTime;  // real-time clock of when to make next sound
@@ -66,7 +66,7 @@ class CHLSelectFireMachineGun : public CHLMachineGun
 {
     DECLARE_CLASS( CHLSelectFireMachineGun, CHLMachineGun );
 
-   public:
+    public:
     CHLSelectFireMachineGun( void );
 
     DECLARE_SERVERCLASS();
@@ -92,7 +92,7 @@ class CHLSelectFireMachineGun : public CHLMachineGun
     virtual int WeaponRangeAttack1Condition( float flDot, float flDist );
     virtual int WeaponRangeAttack2Condition( float flDot, float flDist );
 
-   protected:
+    protected:
     int m_iBurstSize;
     int m_iFireMode;
 };

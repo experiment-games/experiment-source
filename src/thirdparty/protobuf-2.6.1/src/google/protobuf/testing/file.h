@@ -47,7 +47,7 @@ const int DEFAULT_FILE_MODE = 0777;
 // in tests.
 class File
 {
-   public:
+    public:
     // Check if the file exists.
     static bool Exists( const string& name );
 
@@ -60,7 +60,7 @@ class File
 
     // Create a file and write a string to it.
     static bool WriteStringToFile( const string& contents,
-                                   const string& name );
+                                    const string& name );
 
     // Same as above, but crash on failure.
     static void WriteStringToFileOrDie( const string& contents,
@@ -78,8 +78,8 @@ class File
     // The "dummy" parameters have a meaning in the original version of this
     // method but they are not used anywhere in protocol buffers.
     static void DeleteRecursively( const string& name,
-                                   void* dummy1,
-                                   void* dummy2 );
+                                    void* dummy1,
+                                    void* dummy2 );
 
     static bool GetContents(
         const string& name,
@@ -97,7 +97,7 @@ class File
         return WriteStringToFile( contents, name );
     }
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( File );
 };
 

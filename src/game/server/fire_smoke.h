@@ -21,7 +21,7 @@
 
 class CBaseFire : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CBaseFire, CBaseEntity );
 
@@ -51,7 +51,7 @@ class CBaseFire : public CBaseEntity
 
 class CFireSmoke : public CBaseFire
 {
-   public:
+    public:
     DECLARE_CLASS( CFireSmoke, CBaseFire );
 
     CFireSmoke( void );
@@ -66,7 +66,7 @@ class CFireSmoke : public CBaseFire
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     // Client-side
     CNetworkVar( int, m_nFlameModelIndex );
     CNetworkVar( int, m_nFlameFromAboveModelIndex );

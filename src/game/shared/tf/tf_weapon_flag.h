@@ -22,7 +22,7 @@
 //
 class CTFFlag : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFFlag, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -40,7 +40,7 @@ class CTFFlag : public CTFWeaponBaseMelee
         return true;
     }
 
-   private:
+    private:
     CTFFlag( const CTFFlag& ) {}
 };
 

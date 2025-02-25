@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CToolFrameworkServer : public CAutoGameSystemPerFrame, public IToolFrameworkServer
 {
-   public:
+    public:
     virtual bool Init();
     // Level init, shutdown
     virtual void LevelInitPreEntity();

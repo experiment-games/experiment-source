@@ -20,31 +20,31 @@ class CMySQLQuery
 {
     friend class CMySQL;
 
-   public:
+    public:
     // This is like a sprintf, but it will grow the string as necessary.
     void Format( PRINTF_FORMAT_STRING const char *pFormat, ... );
 
-   private:
+    private:
     CUtlVector< char > m_QueryText;
 };
 
 class CColumnValue
 {
-   public:
+    public:
     CColumnValue( CMySQL *pSQL, int iColumn );
 
     const char *String();
     long Int32();
     unsigned long UInt32();
 
-   private:
+    private:
     CMySQL *m_pSQL;
     int m_iColumn;
 };
 
 class IMySQL
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     // These execute SQL commands. They return 0 if the query was successful.

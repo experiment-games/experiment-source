@@ -18,11 +18,11 @@ using namespace vgui;
 
 class CStreamInfo
 {
-   public:
+    public:
     CStreamInfo()
         : m_numViewers( 0 ) {}
 
-   public:
+    public:
     CUtlString m_sGlobalName;
     int m_numViewers;
     CUtlString m_sTextDescription;
@@ -34,7 +34,7 @@ class CStreamInfo
 
 class CTFStreamPanel : public EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFStreamPanel, EditablePanel );
 
     CTFStreamPanel( Panel *parent, const char *panelName );
@@ -50,7 +50,7 @@ class CTFStreamPanel : public EditablePanel
     }
     CStreamInfo *GetStreamInfo() const;
 
-   private:
+    private:
     void UpdatePanels();
     void SetPreviewImage( const char *pszPreviewImageFile );
 
@@ -61,7 +61,7 @@ class CTFStreamPanel : public EditablePanel
 
 class CTFStreamListPanel : public EditablePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFStreamListPanel, EditablePanel );
 
     CTFStreamListPanel( Panel *parent, const char *panelName );
@@ -97,7 +97,7 @@ struct TwitchTvAccountInfo_t
 
 class CTFStreamManager : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CTFStreamManager();
     ~CTFStreamManager();
 
@@ -114,16 +114,16 @@ class CTFStreamManager : public CAutoGameSystemPerFrame
 
     TwitchTvAccountInfo_t *GetTwitchTvAccountInfo( uint64 uiSteamID );
 
-   private:  // cache stream info
+    private:  // cache stream info
     CUtlVector< CStreamInfo > m_streamInfoVec;
 
-   private:  // query for top X viewers
+    private:  // query for top X viewers
     double m_dblTimeStampLastUpdate;
     HTTPRequestHandle m_hHTTPRequestHandle;
     CCallResult< CTFStreamManager, HTTPRequestCompleted_t > m_CallbackOnHTTPRequestCompleted;
     void Steam_OnHTTPRequestCompletedStreams( HTTPRequestCompleted_t *p, bool bError );
 
-   private:  // checking for twitch account linking with steam account
+    private:  // checking for twitch account linking with steam account
     void UpdateTwitchTvAccounts();
 
     TwitchTvAccountInfo_t *m_pLoadingAccount;

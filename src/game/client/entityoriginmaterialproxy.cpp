@@ -14,7 +14,7 @@
 
 class CEntityOriginMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CEntityOriginMaterialProxy()
     {
         m_pMaterial = NULL;
@@ -46,7 +46,7 @@ class CEntityOriginMaterialProxy : public CEntityMaterialProxy
         return m_pMaterial;
     }
 
-   protected:
+    protected:
     IMaterial *m_pMaterial;
     IMaterialVar *m_pOriginVar;
 };
@@ -58,7 +58,7 @@ EXPOSE_INTERFACE( CEntityOriginMaterialProxy, IMaterialProxy, "EntityOrigin" IMA
 //=================================================================================================================
 class CEntityOriginAlyxMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CEntityOriginAlyxMaterialProxy()
     {
         m_pMaterial = NULL;
@@ -90,7 +90,7 @@ class CEntityOriginAlyxMaterialProxy : public CEntityMaterialProxy
         return m_pMaterial;
     }
 
-   protected:
+    protected:
     IMaterial *m_pMaterial;
     IMaterialVar *m_pOriginVar;
 };
@@ -102,7 +102,7 @@ EXPOSE_INTERFACE( CEntityOriginAlyxMaterialProxy, IMaterialProxy, "EntityOriginA
 //=================================================================================================================
 class CEp1IntroVortRefractMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CEp1IntroVortRefractMaterialProxy()
     {
         m_pMaterial = NULL;
@@ -140,7 +140,7 @@ class CEp1IntroVortRefractMaterialProxy : public CEntityMaterialProxy
         return m_pMaterial;
     }
 
-   protected:
+    protected:
     IMaterial *m_pMaterial;
     IMaterialVar *m_pOriginVar;
 };

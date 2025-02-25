@@ -50,7 +50,7 @@ class CAI_BaseActor : public CAI_ExpresserHost< CAI_BaseHumanoid >
     // friend CPoseParameter;
     // friend CFlexWeight;
 
-   public:
+    public:
     // FIXME: this method is lame, isn't there some sort of template thing that would get rid of the Outer pointer?
 
     void Init( PoseParameter_t &index, const char *szName )
@@ -90,20 +90,20 @@ class CAI_BaseActor : public CAI_ExpresserHost< CAI_BaseHumanoid >
         return GetFlexWeight( ( LocalFlexController_t )index );
     }
 
-   public:
+    public:
     CAI_BaseActor()
         : m_fLatchedPositions( 0 ),
-          m_latchedEyeOrigin( vec3_origin ),
-          m_latchedEyeDirection( vec3_origin ),
-          m_latchedHeadDirection( vec3_origin ),
-          m_flBlinktime( 0 ),
-          m_hLookTarget( NULL ),
-          m_iszExpressionScene( NULL_STRING ),
-          m_iszIdleExpression( NULL_STRING ),
-          m_iszAlertExpression( NULL_STRING ),
-          m_iszCombatExpression( NULL_STRING ),
-          m_iszDeathExpression( NULL_STRING ),
-          m_iszExpressionOverride( NULL_STRING )
+        m_latchedEyeOrigin( vec3_origin ),
+        m_latchedEyeDirection( vec3_origin ),
+        m_latchedHeadDirection( vec3_origin ),
+        m_flBlinktime( 0 ),
+        m_hLookTarget( NULL ),
+        m_iszExpressionScene( NULL_STRING ),
+        m_iszIdleExpression( NULL_STRING ),
+        m_iszAlertExpression( NULL_STRING ),
+        m_iszCombatExpression( NULL_STRING ),
+        m_iszDeathExpression( NULL_STRING ),
+        m_iszExpressionOverride( NULL_STRING )
     {
         memset( m_flextarget, 0, 64 * sizeof( m_flextarget[0] ) );
     }
@@ -214,7 +214,7 @@ class CAI_BaseActor : public CAI_ExpresserHost< CAI_BaseHumanoid >
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     enum
     {
         HUMANOID_LATCHED_EYE = 0x0001,
@@ -264,13 +264,13 @@ class CAI_BaseActor : public CAI_ExpresserHost< CAI_BaseHumanoid >
 
     string_t m_iszExpressionOverride;
 
-   protected:
+    protected:
     string_t m_iszIdleExpression;
     string_t m_iszAlertExpression;
     string_t m_iszCombatExpression;
     string_t m_iszDeathExpression;
 
-   private:
+    private:
     //---------------------------------
 
     // PoseParameter_t			m_ParameterBodyTransY;		// "body_trans_Y"
@@ -306,30 +306,30 @@ class CAI_BaseActor : public CAI_ExpresserHost< CAI_BaseHumanoid >
     FlexWeight_t m_FlexweightGestureUpDown;     // "gesture_updown"
     FlexWeight_t m_FlexweightGestureRightLeft;  // "gesture_rightleft"
 
-   private:
+    private:
     //---------------------------------
     bool RandomFaceFlex( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event );
     bool RandomHeadFlex( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event );
     float m_flextarget[64];
 
-   public:
+    public:
     virtual bool UseSemaphore( void );
 
-   protected:
+    protected:
     bool m_bDontUseSemaphore;
 
-   public:
+    public:
     //---------------------------------
     //
     // Speech support
     //
     virtual CAI_Expresser *GetExpresser();
 
-   protected:
+    protected:
     bool CreateComponents();
     virtual CAI_Expresser *CreateExpresser();
 
-   private:
+    private:
     //---------------------------------
     CAI_Expresser *m_pExpresser;
 };

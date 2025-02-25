@@ -24,17 +24,17 @@ class CComboBoxBackpackOverlayDialogBase : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CComboBoxBackpackOverlayDialogBase, vgui::EditablePanel );
 
-   protected:
+    protected:
     CComboBoxBackpackOverlayDialogBase( vgui::Panel *pParent, CEconItemView *pItem );
 
-   public:
+    public:
     virtual ~CComboBoxBackpackOverlayDialogBase() {}
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void OnCommand( const char *command );
     void Show();
 
-   protected:
+    protected:
     CItemModelPanel *GetPreviewModelPanel()
     {
         return m_pPreviewModelPanel;
@@ -46,7 +46,7 @@ class CComboBoxBackpackOverlayDialogBase : public vgui::EditablePanel
 
     CEconItemView *m_pItem;
 
-   private:
+    private:
     virtual void PopulateComboBoxOptions() = 0;
     virtual void OnComboBoxApplication() = 0;
     virtual void OnComboBoxChanged( int iNewSelection ) {}
@@ -65,11 +65,11 @@ class CStyleSelectDialog : public CComboBoxBackpackOverlayDialogBase
 {
     DECLARE_CLASS_SIMPLE( CStyleSelectDialog, CComboBoxBackpackOverlayDialogBase );
 
-   public:
+    public:
     CStyleSelectDialog( vgui::Panel *pParent, CEconItemView *pItem )
         : CComboBoxBackpackOverlayDialogBase( pParent, pItem ) {}
 
-   protected:
+    protected:
     virtual void PopulateComboBoxOptions();
     virtual void OnComboBoxApplication();
     virtual void OnComboBoxChanged( int iNewSelection );

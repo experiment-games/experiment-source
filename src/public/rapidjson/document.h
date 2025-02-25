@@ -103,7 +103,7 @@ class GenericMemberIterator
     typedef GenericMember< Encoding, Allocator > PlainType;
     typedef typename internal::MaybeAddConst< Const, PlainType >::Type ValueType;
 
-   public:
+    public:
     //! Iterator type itself
     typedef GenericMemberIterator Iterator;
     //! Constant iterator type
@@ -130,7 +130,7 @@ class GenericMemberIterator
     //! Default constructor (singular value)
     /*! Creates an iterator pointing to no element.
         \note All operations, except for comparisons, are undefined on such values.
-     */
+    */
     GenericMemberIterator()
         : ptr_() {}
 
@@ -257,7 +257,7 @@ class GenericMemberIterator
         return ptr_ - that.ptr_;
     }
 
-   private:
+    private:
     //! Internal constructor from plain pointer
     explicit GenericMemberIterator( Pointer p )
         : ptr_( p ) {}
@@ -347,12 +347,12 @@ struct GenericStringRef
             \c snprintf are excluded from consideration.
             In such cases, the referenced string should be \b copied to the
             GenericValue instead.
-     */
+    */
 #endif
     template < SizeType N >
     GenericStringRef( const CharType ( &str )[N] ) RAPIDJSON_NOEXCEPT
         : s( str ),
-          length( N - 1 )
+        length( N - 1 )
     {
     }
 
@@ -375,7 +375,7 @@ struct GenericStringRef
             \c snprintf are excluded from consideration.
             In such cases, the referenced string should be \b copied to the
             GenericValue instead.
-     */
+    */
 #endif
     explicit GenericStringRef( const CharType* str )
         : s( str ), length( NotNullStrLen( str ) ) {}
@@ -387,7 +387,7 @@ struct GenericStringRef
 
         \post \ref s == str && \ref length == len
         \note Constant complexity.
-     */
+    */
 #endif
     GenericStringRef( const CharType* str, SizeType len )
         : s( RAPIDJSON_LIKELY( str ) ? str : emptyString ), length( len )
@@ -407,7 +407,7 @@ struct GenericStringRef
     const Ch* const s;      //!< plain CharType pointer
     const SizeType length;  //!< length of the string (excluding the trailing NULL terminator)
 
-   private:
+    private:
     SizeType NotNullStrLen( const CharType* str )
     {
         RAPIDJSON_ASSERT( str != 0 );
@@ -853,7 +853,7 @@ class GenericObject;
 template < typename Encoding, typename Allocator = MemoryPoolAllocator<> >
 class GenericValue
 {
-   public:
+    public:
     //! Name-value pair in an object.
     typedef GenericMember< Encoding, Allocator > Member;
     typedef Encoding EncodingType;                                                                      //!< Encoding type from template parameter.
@@ -887,7 +887,7 @@ class GenericValue
     }
 #endif
 
-   private:
+    private:
     //! Copy constructor is not permitted.
     GenericValue( const GenericValue& rhs );
 
@@ -901,7 +901,7 @@ class GenericValue
     GenericValue& operator=( GenericDocument< Encoding, Allocator, StackAllocator >&& rhs );
 #endif
 
-   public:
+    public:
     //! Constructor with JSON value type.
     /*! This creates a Value of specified type with default content.
         \param type Type of the value.
@@ -980,7 +980,7 @@ class GenericValue
         \note This constructor is limited to \em real boolean values and rejects
             implicitly converted types like arbitrary pointers.  Use an explicit cast
             to \c bool, if you want to construct a boolean JSON value in such cases.
-     */
+    */
 #ifndef RAPIDJSON_DOXYGEN_RUNNING  // hide SFINAE from Doxygen
     template < typename T >
     explicit GenericValue( T b, RAPIDJSON_ENABLEIF( ( internal::IsSame< bool, T > )) ) RAPIDJSON_NOEXCEPT  // See #472
@@ -1081,7 +1081,7 @@ class GenericValue
 #if RAPIDJSON_HAS_STDSTRING
     //! Constructor for copy-string from a string object (i.e. do make a copy of string)
     /*! \note Requires the definition of the preprocessor symbol \ref RAPIDJSON_HAS_STDSTRING.
-     */
+    */
     GenericValue( const std::basic_string< Ch >& s, Allocator& allocator )
         : data_()
     {
@@ -1115,7 +1115,7 @@ class GenericValue
 
     //! Destructor.
     /*! Need to destruct elements of array, members of object, or copy-string.
-     */
+    */
     ~GenericValue()
     {
         if ( Allocator::kNeedFree )
@@ -1154,7 +1154,7 @@ class GenericValue
 
     //! Assignment with move semantics.
     /*! \param rhs Source of the assignment. It will become a null value after assignment.
-     */
+    */
     GenericValue& operator=( GenericValue& rhs ) RAPIDJSON_NOEXCEPT
     {
         if ( RAPIDJSON_LIKELY( this != &rhs ) )
@@ -1210,7 +1210,7 @@ class GenericValue
         \param rhs Value to copy from (read-only)
         \param allocator Allocator to use for copying
         \param copyConstStrings Force copying of constant strings (e.g. referencing an in-situ buffer)
-     */
+    */
     template < typename SourceAllocator >
     GenericValue& CopyFrom( const GenericValue< Encoding, SourceAllocator >& rhs, Allocator& allocator, bool copyConstStrings = false )
     {
@@ -1245,7 +1245,7 @@ class GenericValue
         }
         \endcode
         \see Swap()
-     */
+    */
     friend inline void swap( GenericValue& a, GenericValue& b ) RAPIDJSON_NOEXCEPT
     {
         a.Swap( b );
@@ -1321,7 +1321,7 @@ class GenericValue
 #if RAPIDJSON_HAS_STDSTRING
     //! Equal-to operator with string object
     /*! \note Requires the definition of the preprocessor symbol \ref RAPIDJSON_HAS_STDSTRING.
-     */
+    */
     bool operator==( const std::basic_string< Ch >& rhs ) const
     {
         return *this == GenericValue( StringRef( rhs ) );
@@ -1330,7 +1330,7 @@ class GenericValue
 
     //! Equal-to operator with primitive types
     /*! \tparam T Either \ref Type, \c int, \c unsigned, \c int64_t, \c uint64_t, \c double, \c true, \c false
-     */
+    */
     template < typename T >
     RAPIDJSON_DISABLEIF_RETURN( ( internal::OrExpr< internal::IsPointer< T >, internal::IsGenericValue< T > > ), ( bool ))
     operator==( const T & rhs ) const
@@ -1340,7 +1340,7 @@ class GenericValue
 
     //! Not-equal-to operator
     /*! \return !(*this == rhs)
-     */
+    */
     template < typename SourceAllocator >
     bool operator!=( const GenericValue< Encoding, SourceAllocator >& rhs ) const
     {
@@ -1355,7 +1355,7 @@ class GenericValue
 
     //! Not-equal-to operator with arbitrary types
     /*! \return !(*this == rhs)
-     */
+    */
     template < typename T >
     RAPIDJSON_DISABLEIF_RETURN( ( internal::IsGenericValue< T > ), ( bool ))
     operator!=( const T & rhs ) const
@@ -1365,7 +1365,7 @@ class GenericValue
 
     //! Equal-to operator with arbitrary types (symmetric version)
     /*! \return (rhs == lhs)
-     */
+    */
     template < typename T >
     friend RAPIDJSON_DISABLEIF_RETURN( ( internal::IsGenericValue< T > ), ( bool )) operator==( const T & lhs, const GenericValue & rhs )
     {
@@ -1374,7 +1374,7 @@ class GenericValue
 
     //! Not-Equal-to operator with arbitrary types (symmetric version)
     /*! \return !(rhs == lhs)
-     */
+    */
     template < typename T >
     friend RAPIDJSON_DISABLEIF_RETURN( ( internal::IsGenericValue< T > ), ( bool )) operator!=( const T & lhs, const GenericValue & rhs )
     {
@@ -2345,7 +2345,7 @@ class GenericValue
 
     //! Get the value as double type.
     /*! \note If the value is 64-bit integer type, it may lose precision. Use \c IsLosslessDouble() to check whether the conversion is lossless.
-     */
+    */
     double GetDouble() const
     {
         RAPIDJSON_ASSERT( IsNumber() );
@@ -2359,7 +2359,7 @@ class GenericValue
 
     //! Get the value as float type.
     /*! \note If the value is 64-bit integer type, it may lose precision. Use \c IsLosslessFloat() to check whether the conversion is lossless.
-     */
+    */
     float GetFloat() const
     {
         return static_cast< float >( GetDouble() );
@@ -2415,7 +2415,7 @@ class GenericValue
 
     //! Get the length of string.
     /*! Since rapidjson permits "\\u0000" in the json string, strlen(v.GetString()) may not equal to v.GetStringLength().
-     */
+    */
     SizeType GetStringLength() const
     {
         RAPIDJSON_ASSERT( IsString() );
@@ -2597,7 +2597,7 @@ class GenericValue
         }
     }
 
-   private:
+    private:
     template < typename, typename >
     friend class GenericValue;
     template < typename, typename, typename >
@@ -2879,7 +2879,7 @@ typedef GenericValue< UTF8<> > Value;
 template < typename Encoding, typename Allocator = MemoryPoolAllocator<>, typename StackAllocator = CrtAllocator >
 class GenericDocument : public GenericValue< Encoding, Allocator >
 {
-   public:
+    public:
     typedef typename Encoding::Ch Ch;                       //!< Character type derived from Encoding.
     typedef GenericValue< Encoding, Allocator > ValueType;  //!< Value type of the document.
     typedef Allocator AllocatorType;                        //!< Allocator type from template parameter.
@@ -2915,10 +2915,10 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
     //! Move constructor in C++11
     GenericDocument( GenericDocument&& rhs ) RAPIDJSON_NOEXCEPT
         : ValueType( std::forward< ValueType >( rhs ) ),  // explicit cast to avoid prohibited move from Document
-          allocator_( rhs.allocator_ ),
-          ownAllocator_( rhs.ownAllocator_ ),
-          stack_( std::move( rhs.stack_ ) ),
-          parseResult_( rhs.parseResult_ )
+        allocator_( rhs.allocator_ ),
+        ownAllocator_( rhs.ownAllocator_ ),
+        stack_( std::move( rhs.stack_ ) ),
+        parseResult_( rhs.parseResult_ )
     {
         rhs.allocator_ = 0;
         rhs.ownAllocator_ = 0;
@@ -2986,7 +2986,7 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
         }
         \endcode
         \see Swap()
-     */
+    */
     friend inline void swap( GenericDocument& a, GenericDocument& b ) RAPIDJSON_NOEXCEPT
     {
         a.Swap( b );
@@ -3111,7 +3111,7 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
 
     //! Parse JSON text from a read-only string (with \ref kParseDefaultFlags)
     /*! \param str Read-only zero-terminated string to be parsed.
-     */
+    */
     GenericDocument& Parse( const Ch* str )
     {
         return Parse< kParseDefaultFlags >( str );
@@ -3186,12 +3186,12 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
     /*! \return \ref ParseResult of the last parse operation
 
         \code
-          Document doc;
-          ParseResult ok = doc.Parse(json);
-          if (!ok)
+        Document doc;
+        ParseResult ok = doc.Parse(json);
+        if (!ok)
             printf( "JSON parse error: %s (%u)\n", GetParseError_En(ok.Code()), ok.Offset());
         \endcode
-     */
+    */
 #endif
     operator ParseResult() const
     {
@@ -3212,7 +3212,7 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
         return stack_.GetCapacity();
     }
 
-   private:
+    private:
     // clear stack on any exit from ParseStream, e.g. due to exception
     struct ClearStackOnExit
     {
@@ -3223,7 +3223,7 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
             d_.ClearStack();
         }
 
-       private:
+        private:
         ClearStackOnExit( const ClearStackOnExit& );
         ClearStackOnExit& operator=( const ClearStackOnExit& );
         GenericDocument& d_;
@@ -3234,7 +3234,7 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
     template < typename, typename >
     friend class GenericValue;  // for deep copying
 
-   public:
+    public:
     // Implementation of Handler
     bool Null()
     {
@@ -3321,7 +3321,7 @@ class GenericDocument : public GenericValue< Encoding, Allocator >
         return true;
     }
 
-   private:
+    private:
     //! Prohibit copying
     GenericDocument( const GenericDocument& );
     //! Prohibit assignment
@@ -3360,7 +3360,7 @@ typedef GenericDocument< UTF8<> > Document;
 template < bool Const, typename ValueT >
 class GenericArray
 {
-   public:
+    public:
     typedef GenericArray< true, ValueT > ConstArray;
     typedef GenericArray< false, ValueT > Array;
     typedef ValueT PlainType;
@@ -3464,7 +3464,7 @@ class GenericArray
     }
 #endif
 
-   private:
+    private:
     GenericArray();
     GenericArray( ValueType& value )
         : value_( value ) {}
@@ -3479,7 +3479,7 @@ class GenericArray
 template < bool Const, typename ValueT >
 class GenericObject
 {
-   public:
+    public:
     typedef GenericObject< true, ValueT > ConstObject;
     typedef GenericObject< false, ValueT > Object;
     typedef ValueT PlainType;
@@ -3695,7 +3695,7 @@ class GenericObject
     }
 #endif
 
-   private:
+    private:
     GenericObject();
     GenericObject( ValueType& value )
         : value_( value ) {}

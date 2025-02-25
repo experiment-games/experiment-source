@@ -174,7 +174,7 @@ inline bool FieldOptions_CType_Parse(
 
 class LIBPROTOBUF_EXPORT FileDescriptorSet : public ::google::protobuf::Message
 {
-   public:
+    public:
     FileDescriptorSet();
     virtual ~FileDescriptorSet();
 
@@ -222,12 +222,12 @@ class LIBPROTOBUF_EXPORT FileDescriptorSet : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -247,7 +247,7 @@ class LIBPROTOBUF_EXPORT FileDescriptorSet : public ::google::protobuf::Message
     mutable_file();
 
     // @@protoc_insertion_point(class_scope:google.protobuf.FileDescriptorSet)
-   private:
+    private:
     ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
     ::google::protobuf::uint32 _has_bits_[1];
@@ -264,7 +264,7 @@ class LIBPROTOBUF_EXPORT FileDescriptorSet : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT FileDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     FileDescriptorProto();
     virtual ~FileDescriptorProto();
 
@@ -312,12 +312,12 @@ class LIBPROTOBUF_EXPORT FileDescriptorProto : public ::google::protobuf::Messag
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -455,7 +455,7 @@ class LIBPROTOBUF_EXPORT FileDescriptorProto : public ::google::protobuf::Messag
     inline void set_allocated_source_code_info( ::google::protobuf::SourceCodeInfo* source_code_info );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.FileDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_package();
@@ -491,7 +491,7 @@ class LIBPROTOBUF_EXPORT FileDescriptorProto : public ::google::protobuf::Messag
 
 class LIBPROTOBUF_EXPORT DescriptorProto_ExtensionRange : public ::google::protobuf::Message
 {
-   public:
+    public:
     DescriptorProto_ExtensionRange();
     virtual ~DescriptorProto_ExtensionRange();
 
@@ -539,12 +539,12 @@ class LIBPROTOBUF_EXPORT DescriptorProto_ExtensionRange : public ::google::proto
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -566,7 +566,7 @@ class LIBPROTOBUF_EXPORT DescriptorProto_ExtensionRange : public ::google::proto
     inline void set_end( ::google::protobuf::int32 value );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.DescriptorProto.ExtensionRange)
-   private:
+    private:
     inline void set_has_start();
     inline void clear_has_start();
     inline void set_has_end();
@@ -589,7 +589,7 @@ class LIBPROTOBUF_EXPORT DescriptorProto_ExtensionRange : public ::google::proto
 
 class LIBPROTOBUF_EXPORT DescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     DescriptorProto();
     virtual ~DescriptorProto();
 
@@ -637,12 +637,12 @@ class LIBPROTOBUF_EXPORT DescriptorProto : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -745,7 +745,7 @@ class LIBPROTOBUF_EXPORT DescriptorProto : public ::google::protobuf::Message
     inline void set_allocated_options( ::google::protobuf::MessageOptions* options );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.DescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_options();
@@ -774,7 +774,7 @@ class LIBPROTOBUF_EXPORT DescriptorProto : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT FieldDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     FieldDescriptorProto();
     virtual ~FieldDescriptorProto();
 
@@ -822,12 +822,12 @@ class LIBPROTOBUF_EXPORT FieldDescriptorProto : public ::google::protobuf::Messa
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -871,7 +871,7 @@ class LIBPROTOBUF_EXPORT FieldDescriptorProto : public ::google::protobuf::Messa
         return FieldDescriptorProto_Type_Name( value );
     }
     static inline bool Type_Parse( const ::std::string& name,
-                                   Type* value )
+                                    Type* value )
     {
         return FieldDescriptorProto_Type_Parse( name, value );
     }
@@ -993,7 +993,7 @@ class LIBPROTOBUF_EXPORT FieldDescriptorProto : public ::google::protobuf::Messa
     inline void set_allocated_options( ::google::protobuf::FieldOptions* options );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.FieldDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_number();
@@ -1037,7 +1037,7 @@ class LIBPROTOBUF_EXPORT FieldDescriptorProto : public ::google::protobuf::Messa
 
 class LIBPROTOBUF_EXPORT OneofDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     OneofDescriptorProto();
     virtual ~OneofDescriptorProto();
 
@@ -1085,12 +1085,12 @@ class LIBPROTOBUF_EXPORT OneofDescriptorProto : public ::google::protobuf::Messa
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1110,7 +1110,7 @@ class LIBPROTOBUF_EXPORT OneofDescriptorProto : public ::google::protobuf::Messa
     inline void set_allocated_name( ::std::string* name );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.OneofDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
 
@@ -1130,7 +1130,7 @@ class LIBPROTOBUF_EXPORT OneofDescriptorProto : public ::google::protobuf::Messa
 
 class LIBPROTOBUF_EXPORT EnumDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     EnumDescriptorProto();
     virtual ~EnumDescriptorProto();
 
@@ -1178,12 +1178,12 @@ class LIBPROTOBUF_EXPORT EnumDescriptorProto : public ::google::protobuf::Messag
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1224,7 +1224,7 @@ class LIBPROTOBUF_EXPORT EnumDescriptorProto : public ::google::protobuf::Messag
     inline void set_allocated_options( ::google::protobuf::EnumOptions* options );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.EnumDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_options();
@@ -1248,7 +1248,7 @@ class LIBPROTOBUF_EXPORT EnumDescriptorProto : public ::google::protobuf::Messag
 
 class LIBPROTOBUF_EXPORT EnumValueDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     EnumValueDescriptorProto();
     virtual ~EnumValueDescriptorProto();
 
@@ -1296,12 +1296,12 @@ class LIBPROTOBUF_EXPORT EnumValueDescriptorProto : public ::google::protobuf::M
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1337,7 +1337,7 @@ class LIBPROTOBUF_EXPORT EnumValueDescriptorProto : public ::google::protobuf::M
     inline void set_allocated_options( ::google::protobuf::EnumValueOptions* options );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.EnumValueDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_number();
@@ -1363,7 +1363,7 @@ class LIBPROTOBUF_EXPORT EnumValueDescriptorProto : public ::google::protobuf::M
 
 class LIBPROTOBUF_EXPORT ServiceDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     ServiceDescriptorProto();
     virtual ~ServiceDescriptorProto();
 
@@ -1411,12 +1411,12 @@ class LIBPROTOBUF_EXPORT ServiceDescriptorProto : public ::google::protobuf::Mes
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1457,7 +1457,7 @@ class LIBPROTOBUF_EXPORT ServiceDescriptorProto : public ::google::protobuf::Mes
     inline void set_allocated_options( ::google::protobuf::ServiceOptions* options );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.ServiceDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_options();
@@ -1481,7 +1481,7 @@ class LIBPROTOBUF_EXPORT ServiceDescriptorProto : public ::google::protobuf::Mes
 
 class LIBPROTOBUF_EXPORT MethodDescriptorProto : public ::google::protobuf::Message
 {
-   public:
+    public:
     MethodDescriptorProto();
     virtual ~MethodDescriptorProto();
 
@@ -1529,12 +1529,12 @@ class LIBPROTOBUF_EXPORT MethodDescriptorProto : public ::google::protobuf::Mess
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1587,7 +1587,7 @@ class LIBPROTOBUF_EXPORT MethodDescriptorProto : public ::google::protobuf::Mess
     inline void set_allocated_options( ::google::protobuf::MethodOptions* options );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.MethodDescriptorProto)
-   private:
+    private:
     inline void set_has_name();
     inline void clear_has_name();
     inline void set_has_input_type();
@@ -1616,7 +1616,7 @@ class LIBPROTOBUF_EXPORT MethodDescriptorProto : public ::google::protobuf::Mess
 
 class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     FileOptions();
     virtual ~FileOptions();
 
@@ -1664,12 +1664,12 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1698,7 +1698,7 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message
         return FileOptions_OptimizeMode_Name( value );
     }
     static inline bool OptimizeMode_Parse( const ::std::string& name,
-                                           OptimizeMode* value )
+                                            OptimizeMode* value )
     {
         return FileOptions_OptimizeMode_Parse( name, value );
     }
@@ -1811,7 +1811,7 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( FileOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.FileOptions)
-   private:
+    private:
     inline void set_has_java_package();
     inline void clear_has_java_package();
     inline void set_has_java_outer_classname();
@@ -1864,7 +1864,7 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT MessageOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     MessageOptions();
     virtual ~MessageOptions();
 
@@ -1912,12 +1912,12 @@ class LIBPROTOBUF_EXPORT MessageOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -1959,7 +1959,7 @@ class LIBPROTOBUF_EXPORT MessageOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( MessageOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.MessageOptions)
-   private:
+    private:
     inline void set_has_message_set_wire_format();
     inline void clear_has_message_set_wire_format();
     inline void set_has_no_standard_descriptor_accessor();
@@ -1988,7 +1988,7 @@ class LIBPROTOBUF_EXPORT MessageOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT FieldOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     FieldOptions();
     virtual ~FieldOptions();
 
@@ -2036,12 +2036,12 @@ class LIBPROTOBUF_EXPORT FieldOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2138,7 +2138,7 @@ class LIBPROTOBUF_EXPORT FieldOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( FieldOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.FieldOptions)
-   private:
+    private:
     inline void set_has_ctype();
     inline void clear_has_ctype();
     inline void set_has_packed();
@@ -2176,7 +2176,7 @@ class LIBPROTOBUF_EXPORT FieldOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT EnumOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     EnumOptions();
     virtual ~EnumOptions();
 
@@ -2224,12 +2224,12 @@ class LIBPROTOBUF_EXPORT EnumOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2264,7 +2264,7 @@ class LIBPROTOBUF_EXPORT EnumOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( EnumOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.EnumOptions)
-   private:
+    private:
     inline void set_has_allow_alias();
     inline void clear_has_allow_alias();
     inline void set_has_deprecated();
@@ -2290,7 +2290,7 @@ class LIBPROTOBUF_EXPORT EnumOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT EnumValueOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     EnumValueOptions();
     virtual ~EnumValueOptions();
 
@@ -2338,12 +2338,12 @@ class LIBPROTOBUF_EXPORT EnumValueOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2371,7 +2371,7 @@ class LIBPROTOBUF_EXPORT EnumValueOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( EnumValueOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.EnumValueOptions)
-   private:
+    private:
     inline void set_has_deprecated();
     inline void clear_has_deprecated();
 
@@ -2394,7 +2394,7 @@ class LIBPROTOBUF_EXPORT EnumValueOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT ServiceOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     ServiceOptions();
     virtual ~ServiceOptions();
 
@@ -2442,12 +2442,12 @@ class LIBPROTOBUF_EXPORT ServiceOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2475,7 +2475,7 @@ class LIBPROTOBUF_EXPORT ServiceOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( ServiceOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.ServiceOptions)
-   private:
+    private:
     inline void set_has_deprecated();
     inline void clear_has_deprecated();
 
@@ -2498,7 +2498,7 @@ class LIBPROTOBUF_EXPORT ServiceOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT MethodOptions : public ::google::protobuf::Message
 {
-   public:
+    public:
     MethodOptions();
     virtual ~MethodOptions();
 
@@ -2546,12 +2546,12 @@ class LIBPROTOBUF_EXPORT MethodOptions : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2579,7 +2579,7 @@ class LIBPROTOBUF_EXPORT MethodOptions : public ::google::protobuf::Message
 
     GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( MethodOptions )
     // @@protoc_insertion_point(class_scope:google.protobuf.MethodOptions)
-   private:
+    private:
     inline void set_has_deprecated();
     inline void clear_has_deprecated();
 
@@ -2602,7 +2602,7 @@ class LIBPROTOBUF_EXPORT MethodOptions : public ::google::protobuf::Message
 
 class LIBPROTOBUF_EXPORT UninterpretedOption_NamePart : public ::google::protobuf::Message
 {
-   public:
+    public:
     UninterpretedOption_NamePart();
     virtual ~UninterpretedOption_NamePart();
 
@@ -2650,12 +2650,12 @@ class LIBPROTOBUF_EXPORT UninterpretedOption_NamePart : public ::google::protobu
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2682,7 +2682,7 @@ class LIBPROTOBUF_EXPORT UninterpretedOption_NamePart : public ::google::protobu
     inline void set_is_extension( bool value );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.UninterpretedOption.NamePart)
-   private:
+    private:
     inline void set_has_name_part();
     inline void clear_has_name_part();
     inline void set_has_is_extension();
@@ -2705,7 +2705,7 @@ class LIBPROTOBUF_EXPORT UninterpretedOption_NamePart : public ::google::protobu
 
 class LIBPROTOBUF_EXPORT UninterpretedOption : public ::google::protobuf::Message
 {
-   public:
+    public:
     UninterpretedOption();
     virtual ~UninterpretedOption();
 
@@ -2753,12 +2753,12 @@ class LIBPROTOBUF_EXPORT UninterpretedOption : public ::google::protobuf::Messag
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2837,7 +2837,7 @@ class LIBPROTOBUF_EXPORT UninterpretedOption : public ::google::protobuf::Messag
     inline void set_allocated_aggregate_value( ::std::string* aggregate_value );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.UninterpretedOption)
-   private:
+    private:
     inline void set_has_identifier_value();
     inline void clear_has_identifier_value();
     inline void set_has_positive_int_value();
@@ -2873,7 +2873,7 @@ class LIBPROTOBUF_EXPORT UninterpretedOption : public ::google::protobuf::Messag
 
 class LIBPROTOBUF_EXPORT SourceCodeInfo_Location : public ::google::protobuf::Message
 {
-   public:
+    public:
     SourceCodeInfo_Location();
     virtual ~SourceCodeInfo_Location();
 
@@ -2921,12 +2921,12 @@ class LIBPROTOBUF_EXPORT SourceCodeInfo_Location : public ::google::protobuf::Me
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -2982,7 +2982,7 @@ class LIBPROTOBUF_EXPORT SourceCodeInfo_Location : public ::google::protobuf::Me
     inline void set_allocated_trailing_comments( ::std::string* trailing_comments );
 
     // @@protoc_insertion_point(class_scope:google.protobuf.SourceCodeInfo.Location)
-   private:
+    private:
     inline void set_has_leading_comments();
     inline void clear_has_leading_comments();
     inline void set_has_trailing_comments();
@@ -3009,7 +3009,7 @@ class LIBPROTOBUF_EXPORT SourceCodeInfo_Location : public ::google::protobuf::Me
 
 class LIBPROTOBUF_EXPORT SourceCodeInfo : public ::google::protobuf::Message
 {
-   public:
+    public:
     SourceCodeInfo();
     virtual ~SourceCodeInfo();
 
@@ -3057,12 +3057,12 @@ class LIBPROTOBUF_EXPORT SourceCodeInfo : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -3084,7 +3084,7 @@ class LIBPROTOBUF_EXPORT SourceCodeInfo : public ::google::protobuf::Message
     mutable_location();
 
     // @@protoc_insertion_point(class_scope:google.protobuf.SourceCodeInfo)
-   private:
+    private:
     ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
     ::google::protobuf::uint32 _has_bits_[1];

@@ -28,7 +28,7 @@
 // Cacheable types must derive from this and implement the appropriate methods...
 abstract_class IBaseCacheInfo
 {
-   public:
+    public:
     virtual void Save( CUtlBuffer & buf ) = 0;
     virtual void Restore( CUtlBuffer & buf ) = 0;
 
@@ -46,7 +46,7 @@ typedef enum
 template < class T >
 class CUtlCachedFileData
 {
-   public:
+    public:
     CUtlCachedFileData(
         char const *repositoryFileName,
         int version,
@@ -56,16 +56,16 @@ class CUtlCachedFileData
         bool readonly = false,
         bool savemanifest = false )
         : m_Elements( 0, 0, FileNameHandleLessFunc ),
-          m_sRepositoryFileName( repositoryFileName ),
-          m_nVersion( version ),
-          m_pfnMetaChecksum( checksumfunc ),
-          m_bDirty( false ),
-          m_bInitialized( false ),
-          m_uCurrentMetaChecksum( 0u ),
-          m_fileCheckType( fileCheckType ),
-          m_bNeverCheckDisk( nevercheckdisk ),
-          m_bReadOnly( readonly ),
-          m_bSaveManifest( savemanifest )
+        m_sRepositoryFileName( repositoryFileName ),
+        m_nVersion( version ),
+        m_pfnMetaChecksum( checksumfunc ),
+        m_bDirty( false ),
+        m_bInitialized( false ),
+        m_uCurrentMetaChecksum( 0u ),
+        m_fileCheckType( fileCheckType ),
+        m_bNeverCheckDisk( nevercheckdisk ),
+        m_bReadOnly( readonly ),
+        m_bSaveManifest( savemanifest )
     {
         Assert( !m_sRepositoryFileName.IsEmpty() );
     }
@@ -132,7 +132,7 @@ class CUtlCachedFileData
 
         e.fileinfo = fileinfo;
         if ( ( e.fileinfo == -1 ) &&
-             ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) )
+            ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) )
         {
             e.fileinfo = 0;
         }
@@ -188,7 +188,7 @@ class CUtlCachedFileData
 
     T *RebuildItem( const char *filename );
 
-   private:
+    private:
     void InitSmallBuffer( FileHandle_t &fh, int fileSize, bool &deleteFile );
     void InitLargeBuffer( FileHandle_t &fh, bool &deleteFile );
 
@@ -222,9 +222,9 @@ class CUtlCachedFileData
     {
         ElementType_t()
             : handle( 0 ),
-              fileinfo( 0 ),
-              diskfileinfo( UTL_CACHED_FILE_DATA_UNDEFINED_DISKINFO ),
-              dataIndex( -1 )
+            fileinfo( 0 ),
+            diskfileinfo( UTL_CACHED_FILE_DATA_UNDEFINED_DISKINFO ),
+            dataIndex( -1 )
         {
         }
 
@@ -261,7 +261,7 @@ T *CUtlCachedFileData< T >::Get( char const *filename )
     ElementType_t &e = m_Elements[idx];
 
     if ( e.fileinfo == -1 &&
-         m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE )
+        m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE )
     {
         e.fileinfo = 0;
     }
@@ -471,7 +471,7 @@ void CUtlCachedFileData< T >::InitSmallBuffer( FileHandle_t &fh, int fileSize, b
 
                     element.fileinfo = buf.GetInt();
                     if ( ( element.fileinfo == -1 ) &&
-                         ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) )
+                        ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) )
                     {
                         element.fileinfo = 0;
                     }
@@ -570,7 +570,7 @@ void CUtlCachedFileData< T >::InitLargeBuffer( FileHandle_t &fh, bool &deleteFil
 
                     element.fileinfo = buf.GetInt();
                     if ( ( element.fileinfo == -1 ) &&
-                         ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) )
+                        ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) )
                     {
                         element.fileinfo = 0;
                     }
@@ -670,7 +670,7 @@ void CUtlCachedFileData< T >::Save()
     g_pFullFileSystem->CreateDirHierarchy( path, "MOD" );
 
     if ( g_pFullFileSystem->FileExists( m_sRepositoryFileName, "MOD" ) &&
-         !g_pFullFileSystem->IsFileWritable( m_sRepositoryFileName, "MOD" ) )
+        !g_pFullFileSystem->IsFileWritable( m_sRepositoryFileName, "MOD" ) )
     {
         g_pFullFileSystem->SetFileWritable( m_sRepositoryFileName, true, "MOD" );
     }
@@ -795,7 +795,7 @@ void CUtlCachedFileData< T >::SaveManifest()
     Q_SetExtension( manifest_name, ".manifest", sizeof( manifest_name ) );
 
     if ( g_pFullFileSystem->FileExists( manifest_name, "MOD" ) &&
-         !g_pFullFileSystem->IsFileWritable( manifest_name, "MOD" ) )
+        !g_pFullFileSystem->IsFileWritable( manifest_name, "MOD" ) )
     {
         g_pFullFileSystem->SetFileWritable( manifest_name, true, "MOD" );
     }
@@ -889,7 +889,7 @@ void CUtlCachedFileData< T >::ForceRecheckDiskInfo()
 
 class CSortedCacheFile
 {
-   public:
+    public:
     FileNameHandle_t handle;
     int index;
 

@@ -17,7 +17,7 @@
 
 class CTeamRoundTimer : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTeamRoundTimer, CBaseEntity );
     DECLARE_NETWORKCLASS();
 
@@ -128,7 +128,7 @@ class CTeamRoundTimer : public CBaseEntity
         return m_nSetupTimeLength;
     }
 
-   private:
+    private:
     void CalculateOutputMessages( void );
 
 #ifdef CLIENT_DLL
@@ -147,7 +147,7 @@ class CTeamRoundTimer : public CBaseEntity
     static void SetActiveTimer( CTeamRoundTimer *pNewlyActive );
 #endif
 
-   private:
+    private:
     CNetworkVar( bool, m_bTimerPaused );
     CNetworkVar( float, m_flTimeRemaining );
     CNetworkVar( float, m_flTimerEndTime );

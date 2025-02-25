@@ -79,7 +79,7 @@ enum PointerParseErrorCode
 template < typename ValueType, typename Allocator = CrtAllocator >
 class GenericPointer
 {
-   public:
+    public:
     typedef typename ValueType::EncodingType EncodingType;  //!< Encoding type from Value
     typedef typename ValueType::Ch Ch;                      //!< Character type from Value
 
@@ -388,8 +388,8 @@ class GenericPointer
         for ( size_t i = 0; i < tokenCount_; i++ )
         {
             if ( tokens_[i].index != rhs.tokens_[i].index ||
-                 tokens_[i].length != rhs.tokens_[i].length ||
-                 ( tokens_[i].length != 0 && std::memcmp( tokens_[i].name, rhs.tokens_[i].name, sizeof( Ch ) * tokens_[i].length ) != 0 ) )
+                tokens_[i].length != rhs.tokens_[i].length ||
+                ( tokens_[i].length != 0 && std::memcmp( tokens_[i].name, rhs.tokens_[i].name, sizeof( Ch ) * tokens_[i].length ) != 0 ) )
             {
                 return false;
             }
@@ -843,7 +843,7 @@ class GenericPointer
         }
     }
 
-   private:
+    private:
     //! Clone the content from rhs to this.
     /*!
         \param rhs Source pointer.
@@ -1103,7 +1103,7 @@ class GenericPointer
     */
     class PercentDecodeStream
     {
-       public:
+        public:
         typedef typename ValueType::Ch Ch;
 
         //! Constructor
@@ -1152,7 +1152,7 @@ class GenericPointer
             return valid_;
         }
 
-       private:
+        private:
         const Ch* src_;   //!< Current read position.
         const Ch* head_;  //!< Original head of the string.
         const Ch* end_;   //!< Past-the-end position.
@@ -1163,7 +1163,7 @@ class GenericPointer
     template < typename OutputStream >
     class PercentEncodeStream
     {
-       public:
+        public:
         PercentEncodeStream( OutputStream& os )
             : os_( os ) {}
         void Put( char c )
@@ -1175,7 +1175,7 @@ class GenericPointer
             os_.Put( static_cast< typename OutputStream::Ch >( hexDigits[u & 15] ) );
         }
 
-       private:
+        private:
         OutputStream& os_;
     };
 

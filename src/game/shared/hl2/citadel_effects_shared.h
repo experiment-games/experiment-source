@@ -34,7 +34,7 @@ class CCitadelEnergyCore : public CBaseEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     void InputStartCharge( inputdata_t &inputdata );
     void InputStartDischarge( inputdata_t &inputdata );
     void InputStop( inputdata_t &inputdata );
@@ -53,7 +53,7 @@ class CCitadelEnergyCore : public CBaseEntity
     virtual void Precache();
     void Spawn( void );
 
-   private:
+    private:
     CNetworkVar( float, m_flScale );
     CNetworkVar( int, m_nState );
     CNetworkVar( float, m_flDuration );

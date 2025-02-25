@@ -92,7 +92,7 @@ class MockErrorCollector : public MultiFileErrorCollector {
   void AddError(const string& filename, int line, int column,
                 const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1:$2: $3\n",
-                                 filename, line, column, message);
+                                filename, line, column, message);
   }
 };
 
@@ -165,7 +165,7 @@ TEST(GeneratedMessageTest, Int64StringConversion) {
 
 TEST(GeneratedMessageTest, FloatingPointDefaults) {
   const unittest::TestExtremeDefaultValues& extreme_default =
-      unittest::TestExtremeDefaultValues::default_instance();
+    unittest::TestExtremeDefaultValues::default_instance();
 
   EXPECT_EQ(0.0f, extreme_default.zero_float());
   EXPECT_EQ(1.0f, extreme_default.one_float());
@@ -188,14 +188,14 @@ TEST(GeneratedMessageTest, FloatingPointDefaults) {
 
 TEST(GeneratedMessageTest, Trigraph) {
   const unittest::TestExtremeDefaultValues& extreme_default =
-      unittest::TestExtremeDefaultValues::default_instance();
+    unittest::TestExtremeDefaultValues::default_instance();
 
   EXPECT_EQ("? ? ?? ?? ??? ?\?/ ?\?-", extreme_default.cpp_trigraph());
 }
 
 TEST(GeneratedMessageTest, ExtremeSmallIntegerDefault) {
   const unittest::TestExtremeDefaultValues& extreme_default =
-      unittest::TestExtremeDefaultValues::default_instance();
+    unittest::TestExtremeDefaultValues::default_instance();
   EXPECT_EQ(~0x7fffffff, kint32min);
   EXPECT_EQ(GOOGLE_LONGLONG(~0x7fffffffffffffff), kint64min);
   EXPECT_EQ(kint32min, extreme_default.really_small_int32());
@@ -268,7 +268,7 @@ TEST(GeneratedMessageTest, ReleaseMessage) {
 
   message.mutable_optional_nested_message()->set_bb(1);
   scoped_ptr<unittest::TestAllTypes::NestedMessage> nest(
-      message.release_optional_nested_message());
+    message.release_optional_nested_message());
   EXPECT_FALSE(message.has_optional_nested_message());
   ASSERT_TRUE(nest != NULL);
   EXPECT_EQ(1, nest->bb());
@@ -311,7 +311,7 @@ TEST(GeneratedMessageTest, SetAllocatedMessage) {
 
   message.mutable_optional_nested_message()->set_bb(1);
   unittest::TestAllTypes::NestedMessage* nest =
-      message.release_optional_nested_message();
+    message.release_optional_nested_message();
   ASSERT_TRUE(nest != NULL);
   EXPECT_FALSE(message.has_optional_nested_message());
 
@@ -533,7 +533,7 @@ TEST(GeneratedMessageTest, DynamicMessageCopyFrom) {
   DynamicMessageFactory factory;
   scoped_ptr<Message> message1;
   message1.reset(factory.GetPrototype(
-                     unittest::TestAllTypes::descriptor())->New());
+                    unittest::TestAllTypes::descriptor())->New());
 
   TestUtil::ReflectionTester reflection_tester(
     unittest::TestAllTypes::descriptor());
@@ -580,7 +580,7 @@ TEST(GeneratedMessageTest, MergeFromSelf) {
   unittest::TestAllTypes message;
   EXPECT_DEATH(message.MergeFrom(message), "&from");
   EXPECT_DEATH(message.MergeFrom(implicit_cast<const Message&>(message)),
-               "&from");
+                "&from");
 }
 
 #endif  // PROTOBUF_HAS_DEATH_TEST
@@ -842,7 +842,7 @@ TEST(GeneratedMessageTest, TestSpaceUsed) {
   // increase SpaceUsed(), because it cannot store the value internally.
   message1.set_optional_string(string(sizeof(string) + 1, 'x'));
   int min_expected_increase = message1.optional_string().capacity() +
-      sizeof(string);
+    sizeof(string);
   EXPECT_LE(empty_message_size + min_expected_increase,
             message1.SpaceUsed());
 
@@ -877,7 +877,7 @@ TEST(GeneratedMessageTest, TestOneofSpaceUsed) {
   // should increase SpaceUsed(), because it cannot store the value internally.
   message1.set_foo_string(string(sizeof(string) + 1, 'x'));
   int min_expected_increase = message1.foo_string().capacity() +
-      sizeof(string);
+    sizeof(string);
   EXPECT_LE(empty_message_size + min_expected_increase,
             message1.SpaceUsed());
 
@@ -931,17 +931,17 @@ TEST(GeneratedEnumTest, EnumValuesAsSwitchCases) {
   unittest::TestAllTypes::NestedEnum a = unittest::TestAllTypes::BAR;
   switch (a) {
     case unittest::TestAllTypes::FOO:
-      i = 1;
-      break;
+    i = 1;
+    break;
     case unittest::TestAllTypes::BAR:
-      i = 2;
-      break;
+    i = 2;
+    break;
     case unittest::TestAllTypes::BAZ:
-      i = 3;
-      break;
+    i = 3;
+    break;
     case unittest::TestAllTypes::NEG:
-      i = -1;
-      break;
+    i = -1;
+    break;
     // no default case:  We want to make sure the compiler recognizes that
     //   all cases are covered.  (GCC warns if you do not cover all cases of
     //   an enum in a switch.)
@@ -1002,9 +1002,9 @@ TEST(GeneratedEnumTest, MinAndMax) {
   switch (unittest::SPARSE_A) {
     case unittest::TestSparseEnum_MIN:
     case unittest::TestSparseEnum_MAX:
-      break;
+    break;
     default:
-      break;
+    break;
   }
 }
 
@@ -1068,9 +1068,9 @@ TEST(GeneratedEnumTest, IsProtoEnumTypeTrait) {
 class GeneratedServiceTest : public testing::Test {
  protected:
   class MockTestService : public unittest::TestService {
-   public:
+    public:
     MockTestService()
-      : called_(false),
+    : called_(false),
         method_(""),
         controller_(NULL),
         request_(NULL),
@@ -1084,29 +1084,29 @@ class GeneratedServiceTest : public testing::Test {
     // implements TestService ----------------------------------------
 
     void Foo(RpcController* controller,
-             const unittest::FooRequest* request,
-             unittest::FooResponse* response,
-             Closure* done) {
-      ASSERT_FALSE(called_);
-      called_ = true;
-      method_ = "Foo";
-      controller_ = controller;
-      request_ = request;
-      response_ = response;
-      done_ = done;
+            const unittest::FooRequest* request,
+            unittest::FooResponse* response,
+            Closure* done) {
+    ASSERT_FALSE(called_);
+    called_ = true;
+    method_ = "Foo";
+    controller_ = controller;
+    request_ = request;
+    response_ = response;
+    done_ = done;
     }
 
     void Bar(RpcController* controller,
-             const unittest::BarRequest* request,
-             unittest::BarResponse* response,
-             Closure* done) {
-      ASSERT_FALSE(called_);
-      called_ = true;
-      method_ = "Bar";
-      controller_ = controller;
-      request_ = request;
-      response_ = response;
-      done_ = done;
+            const unittest::BarRequest* request,
+            unittest::BarResponse* response,
+            Closure* done) {
+    ASSERT_FALSE(called_);
+    called_ = true;
+    method_ = "Bar";
+    controller_ = controller;
+    request_ = request;
+    response_ = response;
+    done_ = done;
     }
 
     // ---------------------------------------------------------------
@@ -1120,9 +1120,9 @@ class GeneratedServiceTest : public testing::Test {
   };
 
   class MockRpcChannel : public RpcChannel {
-   public:
+    public:
     MockRpcChannel()
-      : called_(false),
+    : called_(false),
         method_(NULL),
         controller_(NULL),
         request_(NULL),
@@ -1131,7 +1131,7 @@ class GeneratedServiceTest : public testing::Test {
         destroyed_(NULL) {}
 
     ~MockRpcChannel() {
-      if (destroyed_ != NULL) *destroyed_ = true;
+    if (destroyed_ != NULL) *destroyed_ = true;
     }
 
     void Reset() { called_ = false; }
@@ -1143,13 +1143,13 @@ class GeneratedServiceTest : public testing::Test {
                     const Message* request,
                     Message* response,
                     Closure* done) {
-      ASSERT_FALSE(called_);
-      called_ = true;
-      method_ = method;
-      controller_ = controller;
-      request_ = request;
-      response_ = response;
-      done_ = done;
+    ASSERT_FALSE(called_);
+    called_ = true;
+    method_ = method;
+    controller_ = controller;
+    request_ = request;
+    response_ = response;
+    done_ = done;
     }
 
     // ---------------------------------------------------------------
@@ -1164,39 +1164,39 @@ class GeneratedServiceTest : public testing::Test {
   };
 
   class MockController : public RpcController {
-   public:
+    public:
     void Reset() {
-      ADD_FAILURE() << "Reset() not expected during this test.";
+    ADD_FAILURE() << "Reset() not expected during this test.";
     }
     bool Failed() const {
-      ADD_FAILURE() << "Failed() not expected during this test.";
-      return false;
+    ADD_FAILURE() << "Failed() not expected during this test.";
+    return false;
     }
     string ErrorText() const {
-      ADD_FAILURE() << "ErrorText() not expected during this test.";
-      return "";
+    ADD_FAILURE() << "ErrorText() not expected during this test.";
+    return "";
     }
     void StartCancel() {
-      ADD_FAILURE() << "StartCancel() not expected during this test.";
+    ADD_FAILURE() << "StartCancel() not expected during this test.";
     }
     void SetFailed(const string& reason) {
-      ADD_FAILURE() << "SetFailed() not expected during this test.";
+    ADD_FAILURE() << "SetFailed() not expected during this test.";
     }
     bool IsCanceled() const {
-      ADD_FAILURE() << "IsCanceled() not expected during this test.";
-      return false;
+    ADD_FAILURE() << "IsCanceled() not expected during this test.";
+    return false;
     }
     void NotifyOnCancel(Closure* callback) {
-      ADD_FAILURE() << "NotifyOnCancel() not expected during this test.";
+    ADD_FAILURE() << "NotifyOnCancel() not expected during this test.";
     }
   };
 
   GeneratedServiceTest()
     : descriptor_(unittest::TestService::descriptor()),
-      foo_(descriptor_->FindMethodByName("Foo")),
-      bar_(descriptor_->FindMethodByName("Bar")),
-      stub_(&mock_channel_),
-      done_(NewPermanentCallback(&DoNothing)) {}
+    foo_(descriptor_->FindMethodByName("Foo")),
+    bar_(descriptor_->FindMethodByName("Bar")),
+    stub_(&mock_channel_),
+    done_(NewPermanentCallback(&DoNothing)) {}
 
   virtual void SetUp() {
     ASSERT_TRUE(foo_ != NULL);
@@ -1250,7 +1250,7 @@ TEST_F(GeneratedServiceTest, CallMethod) {
 
   // Call Foo() via CallMethod().
   mock_service_.CallMethod(foo_, &mock_controller_,
-                           &foo_request_, &foo_response_, done_.get());
+                            &foo_request_, &foo_response_, done_.get());
 
   ASSERT_TRUE(mock_service_.called_);
 
@@ -1263,7 +1263,7 @@ TEST_F(GeneratedServiceTest, CallMethod) {
   // Try again, but call Bar() instead.
   mock_service_.Reset();
   mock_service_.CallMethod(bar_, &mock_controller_,
-                           &bar_request_, &bar_response_, done_.get());
+                            &bar_request_, &bar_response_, done_.get());
 
   ASSERT_TRUE(mock_service_.called_);
   EXPECT_EQ("Bar", mock_service_.method_);
@@ -1275,13 +1275,13 @@ TEST_F(GeneratedServiceTest, CallMethodTypeFailure) {
 #ifdef PROTOBUF_HAS_DEATH_TEST  // death tests do not work on Windows yet
   EXPECT_DEBUG_DEATH(
     mock_service_.CallMethod(foo_, &mock_controller_,
-                             &foo_request_, &bar_response_, done_.get()),
+                            &foo_request_, &bar_response_, done_.get()),
     "dynamic_cast");
 
   mock_service_.Reset();
   EXPECT_DEBUG_DEATH(
     mock_service_.CallMethod(foo_, &mock_controller_,
-                             &bar_request_, &foo_response_, done_.get()),
+                            &bar_request_, &foo_response_, done_.get()),
     "dynamic_cast");
 #endif  // PROTOBUF_HAS_DEATH_TEST
 }
@@ -1328,7 +1328,7 @@ TEST_F(GeneratedServiceTest, NotImplemented) {
 
   // A service which doesn't implement any methods.
   class UnimplementedService : public unittest::TestService {
-   public:
+    public:
     UnimplementedService() {}
   };
 
@@ -1336,13 +1336,13 @@ TEST_F(GeneratedServiceTest, NotImplemented) {
 
   // And a controller which expects to get a "not implemented" error.
   class ExpectUnimplementedController : public MockController {
-   public:
+    public:
     ExpectUnimplementedController() : called_(false) {}
 
     void SetFailed(const string& reason) {
-      EXPECT_FALSE(called_);
-      called_ = true;
-      EXPECT_EQ("Method Foo() not implemented.", reason);
+    EXPECT_FALSE(called_);
+    called_ = true;
+    EXPECT_EQ("Method Foo() not implemented.", reason);
     }
 
     bool called_;
@@ -1366,25 +1366,25 @@ class OneofTest : public testing::Test {
 
   void ExpectEnumCasesWork(const unittest::TestOneof2 &message) {
     switch (message.foo_case()) {
-      case unittest::TestOneof2::kFooInt:
+    case unittest::TestOneof2::kFooInt:
         EXPECT_TRUE(message.has_foo_int());
         break;
-      case unittest::TestOneof2::kFooString:
+    case unittest::TestOneof2::kFooString:
         EXPECT_TRUE(message.has_foo_string());
         break;
-      case unittest::TestOneof2::kFooBytes:
+    case unittest::TestOneof2::kFooBytes:
         EXPECT_TRUE(message.has_foo_bytes());
         break;
-      case unittest::TestOneof2::kFooEnum:
+    case unittest::TestOneof2::kFooEnum:
         EXPECT_TRUE(message.has_foo_enum());
         break;
-      case unittest::TestOneof2::kFooMessage:
+    case unittest::TestOneof2::kFooMessage:
         EXPECT_TRUE(message.has_foo_message());
         break;
-      case unittest::TestOneof2::kFoogroup:
+    case unittest::TestOneof2::kFoogroup:
         EXPECT_TRUE(message.has_foogroup());
         break;
-      case unittest::TestOneof2::FOO_NOT_SET:
+    case unittest::TestOneof2::FOO_NOT_SET:
         break;
     }
   }
@@ -1571,7 +1571,7 @@ TEST_F(OneofTest, ReleaseMessage) {
   message.mutable_foo_message()->set_qux_int(1);
   EXPECT_TRUE(message.has_foo_message());
   scoped_ptr<unittest::TestOneof2_NestedMessage> mes(
-      message.release_foo_message());
+    message.release_foo_message());
   EXPECT_FALSE(message.has_foo_message());
   ASSERT_TRUE(mes != NULL);
   EXPECT_EQ(1, mes->qux_int());
@@ -1846,12 +1846,12 @@ TEST_F(OneofTest, SerializationToStream) {
     data.resize(size);
 
     {
-      // Allow the output stream to buffer only one byte at a time.
-      io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
-      io::CodedOutputStream output_stream(&array_stream);
-      message1.SerializeWithCachedSizes(&output_stream);
-      EXPECT_FALSE(output_stream.HadError());
-      EXPECT_EQ(size, output_stream.ByteCount());
+    // Allow the output stream to buffer only one byte at a time.
+    io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
+    io::CodedOutputStream output_stream(&array_stream);
+    message1.SerializeWithCachedSizes(&output_stream);
+    EXPECT_FALSE(output_stream.HadError());
+    EXPECT_EQ(size, output_stream.ByteCount());
     }
 
     EXPECT_TRUE(message2.ParseFromString(data));
@@ -1867,12 +1867,12 @@ TEST_F(OneofTest, SerializationToStream) {
     data.resize(size);
 
     {
-      // Allow the output stream to buffer only one byte at a time.
-      io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
-      io::CodedOutputStream output_stream(&array_stream);
-      message1.SerializeWithCachedSizes(&output_stream);
-      EXPECT_FALSE(output_stream.HadError());
-      EXPECT_EQ(size, output_stream.ByteCount());
+    // Allow the output stream to buffer only one byte at a time.
+    io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
+    io::CodedOutputStream output_stream(&array_stream);
+    message1.SerializeWithCachedSizes(&output_stream);
+    EXPECT_FALSE(output_stream.HadError());
+    EXPECT_EQ(size, output_stream.ByteCount());
     }
 
     EXPECT_TRUE(message2.ParseFromString(data));
@@ -1889,12 +1889,12 @@ TEST_F(OneofTest, SerializationToStream) {
     data.resize(size);
 
     {
-      // Allow the output stream to buffer only one byte at a time.
-      io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
-      io::CodedOutputStream output_stream(&array_stream);
-      message1.SerializeWithCachedSizes(&output_stream);
-      EXPECT_FALSE(output_stream.HadError());
-      EXPECT_EQ(size, output_stream.ByteCount());
+    // Allow the output stream to buffer only one byte at a time.
+    io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
+    io::CodedOutputStream output_stream(&array_stream);
+    message1.SerializeWithCachedSizes(&output_stream);
+    EXPECT_FALSE(output_stream.HadError());
+    EXPECT_EQ(size, output_stream.ByteCount());
     }
 
     EXPECT_TRUE(message2.ParseFromString(data));
@@ -1910,12 +1910,12 @@ TEST_F(OneofTest, SerializationToStream) {
     data.resize(size);
 
     {
-      // Allow the output stream to buffer only one byte at a time.
-      io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
-      io::CodedOutputStream output_stream(&array_stream);
-      message1.SerializeWithCachedSizes(&output_stream);
-      EXPECT_FALSE(output_stream.HadError());
-      EXPECT_EQ(size, output_stream.ByteCount());
+    // Allow the output stream to buffer only one byte at a time.
+    io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
+    io::CodedOutputStream output_stream(&array_stream);
+    message1.SerializeWithCachedSizes(&output_stream);
+    EXPECT_FALSE(output_stream.HadError());
+    EXPECT_EQ(size, output_stream.ByteCount());
     }
 
     EXPECT_TRUE(message2.ParseFromString(data));
@@ -1931,12 +1931,12 @@ TEST_F(OneofTest, SerializationToStream) {
     data.resize(size);
 
     {
-      // Allow the output stream to buffer only one byte at a time.
-      io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
-      io::CodedOutputStream output_stream(&array_stream);
-      message1.SerializeWithCachedSizes(&output_stream);
-      EXPECT_FALSE(output_stream.HadError());
-      EXPECT_EQ(size, output_stream.ByteCount());
+    // Allow the output stream to buffer only one byte at a time.
+    io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
+    io::CodedOutputStream output_stream(&array_stream);
+    message1.SerializeWithCachedSizes(&output_stream);
+    EXPECT_FALSE(output_stream.HadError());
+    EXPECT_EQ(size, output_stream.ByteCount());
     }
 
     EXPECT_TRUE(message2.ParseFromString(data));
@@ -1952,12 +1952,12 @@ TEST_F(OneofTest, SerializationToStream) {
     data.resize(size);
 
     {
-      // Allow the output stream to buffer only one byte at a time.
-      io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
-      io::CodedOutputStream output_stream(&array_stream);
-      message1.SerializeWithCachedSizes(&output_stream);
-      EXPECT_FALSE(output_stream.HadError());
-      EXPECT_EQ(size, output_stream.ByteCount());
+    // Allow the output stream to buffer only one byte at a time.
+    io::ArrayOutputStream array_stream(string_as_array(&data), size, 1);
+    io::CodedOutputStream output_stream(&array_stream);
+    message1.SerializeWithCachedSizes(&output_stream);
+    EXPECT_FALSE(output_stream.HadError());
+    EXPECT_EQ(size, output_stream.ByteCount());
     }
 
     EXPECT_TRUE(message2.ParseFromString(data));
@@ -2037,7 +2037,7 @@ TEST_F(GeneratedServiceTest, NoGenericServices) {
   // Verify that a ServiceDescriptor is generated for the service even if the
   // class itself is not.
   const FileDescriptor* file =
-      no_generic_services_test::TestMessage::descriptor()->file();
+    no_generic_services_test::TestMessage::descriptor()->file();
 
   ASSERT_EQ(1, file->service_count());
   EXPECT_EQ("TestService", file->service(0)->name());
@@ -2063,7 +2063,7 @@ TEST(DescriptorInitializationTest, Initialized) {
 
   EXPECT_EQ(should_have_descriptors,
     DescriptorPool::generated_pool()->InternalIsFileLoaded(
-      "google/protobuf/unittest.proto"));
+    "google/protobuf/unittest.proto"));
 }
 
 }  // namespace cpp_unittest

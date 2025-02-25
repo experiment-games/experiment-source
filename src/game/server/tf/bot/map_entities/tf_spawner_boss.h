@@ -14,7 +14,7 @@ class CBotNPC;
 
 class CTFSpawnerBoss : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSpawnerBoss, CPointEntity );
     DECLARE_DATADESC();
 
@@ -31,7 +31,7 @@ class CTFSpawnerBoss : public CPointEntity
     void OnBotKilled( CBotNPC *pBot );
     void OnBotStunned( CBotNPC *pBot );
 
-   private:
+    private:
     bool m_isExpended;
     int m_spawnCount;
     int m_spawnCountRemaining;

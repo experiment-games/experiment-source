@@ -21,7 +21,7 @@ const int SF_AUTO_FIREONRELOAD = 0x02;
 
 class CLogicAuto : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLogicAuto, CBaseEntity );
 
     void Activate( void );
@@ -34,7 +34,7 @@ class CLogicAuto : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     // fired no matter why the map loaded
     COutputEvent m_OnMapSpawn;
 

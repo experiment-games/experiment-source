@@ -28,7 +28,7 @@ class Label;
 //-----------------------------------------------------------------------------
 class CTFClassImage : public vgui::ImagePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFClassImage, vgui::ImagePanel );
 
     CTFClassImage( vgui::Panel *parent, const char *name )
@@ -46,19 +46,19 @@ class CTFHudPlayerClass : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTFHudPlayerClass, EditablePanel );
 
-   public:
+    public:
     CTFHudPlayerClass( Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void Reset();
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     virtual void OnThink();
 
-   private:
+    private:
     void UpdateModelPanel();
 
     float m_flNextThink;
@@ -91,7 +91,7 @@ class CTFHudPlayerClass : public vgui::EditablePanel, public CGameEventListener
 //-----------------------------------------------------------------------------
 class CTFHealthPanel : public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFHealthPanel, vgui::Panel );
 
     CTFHealthPanel( vgui::Panel *parent, const char *name );
@@ -101,7 +101,7 @@ class CTFHealthPanel : public vgui::Panel
         m_flHealth = ( flHealth <= 1.0 ) ? flHealth : 1.0f;
     }
 
-   private:
+    private:
     float m_flHealth;  // percentage from 0.0 -> 1.0
     int m_iMaterialIndex;
     int m_iDeadMaterialIndex;
@@ -134,7 +134,7 @@ enum BuffClass_t
 
 struct CTFBuffInfo
 {
-   public:
+    public:
     CTFBuffInfo( ETFCond eCond, BuffClass_t eClass, vgui::ImagePanel *pPanel, const char *pzsBlueImage = NULL, const char *pzsRedImage = NULL )
     {
         m_eCond = eCond;
@@ -160,7 +160,7 @@ class CTFHudPlayerHealth : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudPlayerHealth, EditablePanel );
 
-   public:
+    public:
     CTFHudPlayerHealth( Panel *parent, const char *name );
     ~CTFHudPlayerHealth();
 
@@ -183,13 +183,13 @@ class CTFHudPlayerHealth : public vgui::EditablePanel
         m_bAnimate = bValue;
     }
 
-   protected:
+    protected:
     virtual void OnThink();
 
-   protected:
+    protected:
     float m_flNextThink;
 
-   private:
+    private:
     CTFHealthPanel *m_pHealthImage;
     vgui::ImagePanel *m_pHealthBonusImage;
     vgui::ImagePanel *m_pHealthImageBG;
@@ -232,13 +232,13 @@ class CTFHudPlayerStatus : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudPlayerStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudPlayerStatus( const char *pElementName );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void Reset();
     virtual bool ShouldDraw( void ) OVERRIDE;
 
-   private:
+    private:
     CTFHudPlayerClass *m_pHudPlayerClass;
     CTFHudPlayerHealth *m_pHudPlayerHealth;
 };

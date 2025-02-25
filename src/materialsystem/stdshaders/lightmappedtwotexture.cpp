@@ -13,7 +13,7 @@
 
 // FIXME!!  Need to make dx9 version so that "CENTROID" flags can be added!
 BEGIN_SHADER( LightmappedTwoTexture,
-              "Help for LightmappedTwoTexture" )
+            "Help for LightmappedTwoTexture" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/Detail", "detail" )
@@ -117,14 +117,14 @@ void DrawBaseTimesDetail( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, 
     bool detailIsTranslucent = TextureIsTranslucent( DETAIL, false );
     if ( detailIsTranslucent )
     {
-      if ( IS_FLAG_SET( MATERIAL_VAR_ADDITIVE ) )
+    if ( IS_FLAG_SET( MATERIAL_VAR_ADDITIVE ) )
         EnableAlphaBlending( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
-      else
+    else
         EnableAlphaBlending( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
     }
     else
     {
-      SetDefaultBlendingShadowState( BASETEXTURE, true );
+    SetDefaultBlendingShadowState( BASETEXTURE, true );
     }
 
     // independently configure alpha and color
@@ -143,7 +143,7 @@ void DrawBaseTimesDetail( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, 
 
     int flags = SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_SECONDARY_TEXCOORD1;
     if (IS_FLAG_SET(MATERIAL_VAR_VERTEXCOLOR))
-      flags |= SHADER_DRAW_COLOR;
+    flags |= SHADER_DRAW_COLOR;
     pShaderShadow->DrawFlags( flags );
     DefaultFog();
   }

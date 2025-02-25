@@ -312,8 +312,8 @@ struct MsgGCServerBrowser_Server_t
 struct MsgGC_RevolvingLootList_t
 {
     uint8 m_usListID;  // Id of this list.
-                       // Var Data:
-                       // Serialized Lootlist KV
+                        // Var Data:
+                        // Serialized Lootlist KV
 };
 
 // k_EMsgGCLookupAccount

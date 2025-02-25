@@ -95,15 +95,15 @@ static bool BHelperCheckSafeUserCmdString( char const *ipconnect )
     while ( *ipconnect )
     {
         if ( ( ( *ipconnect >= '0' ) && ( *ipconnect <= '9' ) ) ||
-             ( ( *ipconnect >= 'a' ) && ( *ipconnect <= 'z' ) ) ||
-             ( ( *ipconnect >= 'A' ) && ( *ipconnect <= 'Z' ) ) ||
-             ( *ipconnect == '_' ) || ( *ipconnect == '-' ) || ( *ipconnect == '.' ) ||
-             ( *ipconnect == ':' ) || ( *ipconnect == '?' ) || ( *ipconnect == '%' ) ||
-             ( *ipconnect == '/' ) || ( *ipconnect == '=' ) || ( *ipconnect == ' ' ) ||
-             ( *ipconnect == '[' ) || ( *ipconnect == ']' ) || ( *ipconnect == '@' ) ||
-             ( *ipconnect == '"' ) || ( *ipconnect == '\'' ) || ( *ipconnect == '#' ) ||
-             ( *ipconnect == '(' ) || ( *ipconnect == ')' ) || ( *ipconnect == '!' ) ||
-             ( *ipconnect == '\\' ) || ( *ipconnect == '$' ) )
+            ( ( *ipconnect >= 'a' ) && ( *ipconnect <= 'z' ) ) ||
+            ( ( *ipconnect >= 'A' ) && ( *ipconnect <= 'Z' ) ) ||
+            ( *ipconnect == '_' ) || ( *ipconnect == '-' ) || ( *ipconnect == '.' ) ||
+            ( *ipconnect == ':' ) || ( *ipconnect == '?' ) || ( *ipconnect == '%' ) ||
+            ( *ipconnect == '/' ) || ( *ipconnect == '=' ) || ( *ipconnect == ' ' ) ||
+            ( *ipconnect == '[' ) || ( *ipconnect == ']' ) || ( *ipconnect == '@' ) ||
+            ( *ipconnect == '"' ) || ( *ipconnect == '\'' ) || ( *ipconnect == '#' ) ||
+            ( *ipconnect == '(' ) || ( *ipconnect == ')' ) || ( *ipconnect == '!' ) ||
+            ( *ipconnect == '\\' ) || ( *ipconnect == '$' ) )
             ++ipconnect;
         else
         {
@@ -188,7 +188,7 @@ void TFUnsafeCmdLineProcessor( const char *pchUnsafeCmdLine, int cubSize, CSteam
         while ( *szItemId )
         {
             if ( ( ( *szItemId >= '0' ) && ( *szItemId <= '9' ) ) ||
-                 ( ( *szItemId >= 'A' ) && ( *szItemId <= 'S' ) ) )
+                ( ( *szItemId >= 'A' ) && ( *szItemId <= 'S' ) ) )
                 ++szItemId;  // support new encoding for owner steamid and assetid
             else
             {

@@ -38,7 +38,7 @@ class CFPSPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CFPSPanel, vgui::Panel );
 
-   public:
+    public:
     CFPSPanel( vgui::VPANEL parent );
     virtual ~CFPSPanel( void );
 
@@ -48,10 +48,10 @@ class CFPSPanel : public vgui::Panel
 
     virtual bool ShouldDraw( void );
 
-   protected:
+    protected:
     MESSAGE_FUNC_INT_INT( OnScreenSizeChanged, "OnScreenSizeChanged", oldwide, oldtall );
 
-   private:
+    private:
     void ComputeSize( void );
     void InitAverages()
     {
@@ -163,7 +163,7 @@ bool CFPSPanel::ShouldDraw( void )
     if ( g_bDisplayParticlePerformance )
         return true;
     if ( ( !cl_showfps.GetInt() || ( gpGlobals->absoluteframetime <= 0 ) ) &&
-         ( !cl_showpos.GetInt() ) )
+        ( !cl_showpos.GetInt() ) )
     {
         m_bLastDraw = false;
         return false;
@@ -348,7 +348,7 @@ void CFPSPanel::Paint()
     if ( cl_showbattery.GetInt() > 0 )
     {
         if ( steamapicontext && steamapicontext->SteamUtils() &&
-             ( m_lastBatteryPercent == -1.0f || ( gpGlobals->realtime - m_lastBatteryPercent ) > 10.0f ) )
+            ( m_lastBatteryPercent == -1.0f || ( gpGlobals->realtime - m_lastBatteryPercent ) > 10.0f ) )
         {
             m_BatteryPercent = steamapicontext->SteamUtils()->GetCurrentBatteryPower();
             m_lastBatteryPercent = gpGlobals->realtime;
@@ -370,10 +370,10 @@ void CFPSPanel::Paint()
 
 class CFPS : public IFPSPanel
 {
-   private:
+    private:
     CFPSPanel *fpsPanel;
 
-   public:
+    public:
     CFPS( void )
     {
         fpsPanel = NULL;
@@ -417,7 +417,7 @@ class CBlockingFileIOPanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     CBlockingFileIOPanel( vgui::VPANEL parent );
     virtual ~CBlockingFileIOPanel( void );
 
@@ -429,7 +429,7 @@ class CBlockingFileIOPanel : public vgui::Panel
 
     void SpewRecent();
 
-   private:
+    private:
     void DrawIOTime( int x, int y, int w, int h, int slot, char const *label, const Color &clr );
 
     vgui::HFont m_hFont;
@@ -593,7 +593,7 @@ void CBlockingFileIOPanel::Paint()
 
                     // Only care about time consuming synch or async blocking calls
                     if ( item.m_ItemType == FILESYSTEM_BLOCKING_SYNCHRONOUS ||
-                         item.m_ItemType == FILESYSTEM_BLOCKING_ASYNCHRONOUS_BLOCK )
+                        item.m_ItemType == FILESYSTEM_BLOCKING_ASYNCHRONOUS_BLOCK )
                     {
                         if ( item.m_flElapsed > cl_blocking_threshold.GetFloat() )
                         {
@@ -698,20 +698,20 @@ void CBlockingFileIOPanel::SpewItem( const RecentPeaks_t &item )
         case FILESYSTEM_BLOCKING_ASYNCHRONOUS:
         case FILESYSTEM_BLOCKING_CALLBACKTIMING:
             Msg( "%8.3f %16.16s i/o [%6.6s] took %8.3f msec:  %33.33s\n",
-                 item.time,
-                 GetBlockReason( item.reason ),
-                 GetIOType( item.ioType ),
-                 item.elapsed * 1000.0f,
-                 item.fileName.String() );
+                item.time,
+                GetBlockReason( item.reason ),
+                GetIOType( item.ioType ),
+                item.elapsed * 1000.0f,
+                item.fileName.String() );
             break;
         case FILESYSTEM_BLOCKING_SYNCHRONOUS:
         case FILESYSTEM_BLOCKING_ASYNCHRONOUS_BLOCK:
             Warning( "%8.3f %16.16s i/o [%6.6s] took %8.3f msec:  %33.33s\n",
-                     item.time,
-                     GetBlockReason( item.reason ),
-                     GetIOType( item.ioType ),
-                     item.elapsed * 1000.0f,
-                     item.fileName.String() );
+                    item.time,
+                    GetBlockReason( item.reason ),
+                    GetIOType( item.ioType ),
+                    item.elapsed * 1000.0f,
+                    item.fileName.String() );
             break;
     }
 }
@@ -753,7 +753,7 @@ void CBlockingFileIOPanel::DrawIOTime( int x, int y, int w, int h, int slot, cha
     bool bDrawHistorySpike = false;
 
     if ( m_History[slot].m_LastFile.IsValid() &&
-         ( gpGlobals->realtime < latchedtime + 10.0f ) )
+        ( gpGlobals->realtime < latchedtime + 10.0f ) )
     {
         bDrawHistorySpike = true;
         g_pMatSystemSurface->DrawColoredText( m_hFont, x + w + 5, y + 1, 255, 255, 255, 200, "[%8.3f ms]", m_History[slot].m_flHistorySpike * 1000.0f );
@@ -784,10 +784,10 @@ void CBlockingFileIOPanel::DrawIOTime( int x, int y, int w, int h, int slot, cha
 
 class CBlockingFileIO : public IShowBlockingPanel
 {
-   private:
+    private:
     CBlockingFileIOPanel *ioPanel;
 
-   public:
+    public:
     CBlockingFileIO( void )
     {
         ioPanel = NULL;

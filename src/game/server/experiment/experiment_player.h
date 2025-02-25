@@ -20,7 +20,7 @@ class CExperiment_Player;
 //=============================================================================
 class CExperimentPlayerStateInfo
 {
-   public:
+    public:
     ExperimentPlayerState m_iPlayerState;
     const char *m_pStateName;
 
@@ -36,7 +36,7 @@ class CExperiment_Player : public CHL2_Player
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CExperiment_Player, LUA_EXPERIMENTPLAYERLIBNAME )
 #endif
 
-   public:
+    public:
     DECLARE_CLASS( CExperiment_Player, CHL2_Player );
 
     CExperiment_Player();
@@ -80,8 +80,8 @@ class CExperiment_Player : public CHL2_Player
     virtual void PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize );
     virtual void PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force );
     virtual void Weapon_Drop( CBaseCombatWeapon *pWeapon,
-                              const Vector *pvecTarget = NULL,
-                              const Vector *pVelocity = NULL );
+                            const Vector *pvecTarget = NULL,
+                            const Vector *pVelocity = NULL );
     virtual void UpdateOnRemove( void );
     virtual void DeathSound( const CTakeDamageInfo &info );
     virtual CBaseEntity *EntSelectSpawnPoint( void );
@@ -148,7 +148,7 @@ class CExperiment_Player : public CHL2_Player
     virtual void StopObserverMode( void );
 
     Vector m_vecTotalBulletForce;  // Accumulator for bullet force in a single
-                                   // frame
+                                    // frame
 
     // Tracks our ragdoll entity.
     CNetworkHandle( CBaseEntity, m_hRagdoll );  // networked entity handle
@@ -170,7 +170,7 @@ class CExperiment_Player : public CHL2_Player
         return m_hRagdoll;
     }
 
-   private:
+    private:
     CExperimentPlayerAnimState *m_PlayerAnimState;
 
     CNetworkQAngle( m_angEyeAngles );
@@ -207,7 +207,7 @@ class CExperiment_Player : public CHL2_Player
 
 class CExperimentRagdoll : public CBaseAnimatingOverlay
 {
-   public:
+    public:
     DECLARE_CLASS( CExperimentRagdoll, CBaseAnimatingOverlay );
     DECLARE_SERVERCLASS();
 
@@ -217,7 +217,7 @@ class CExperimentRagdoll : public CBaseAnimatingOverlay
         return SetTransmitState( FL_EDICT_ALWAYS );
     }
 
-   public:
+    public:
     // In case the client has the player entity, we transmit the player index.
     // In case the client doesn't have it, we transmit the player's model index,
     // origin, and angles so they can create a ragdoll in the right place.

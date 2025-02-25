@@ -3,27 +3,27 @@
 /* Example how to plug this into an existing shader:
 
     In the VMT:
-      // Cloak Pass
-      "$cloakPassEnabled" "1"
+    // Cloak Pass
+    "$cloakPassEnabled" "1"
 
     #include "cloak_blended_pass_helper.h"
 
     In BEGIN_SHADER_PARAMS:
-      // Cloak Pass
-      SHADER_PARAM( CLOAKPASSENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enables cloak render in a second pass" )
-      SHADER_PARAM( CLOAKFACTOR, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
-      SHADER_PARAM( CLOAKCOLORTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Cloak color tint" )
-      SHADER_PARAM( REFRACTAMOUNT, SHADER_PARAM_TYPE_FLOAT, "2", "" )
+    // Cloak Pass
+    SHADER_PARAM( CLOAKPASSENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enables cloak render in a second pass" )
+    SHADER_PARAM( CLOAKFACTOR, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
+    SHADER_PARAM( CLOAKCOLORTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Cloak color tint" )
+    SHADER_PARAM( REFRACTAMOUNT, SHADER_PARAM_TYPE_FLOAT, "2", "" )
 
-      // This should already exist
-      //SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map" )
-      //SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
-      //SHADER_PARAM( BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$bumpmap texcoord transform" )
+    // This should already exist
+    //SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map" )
+    //SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
+    //SHADER_PARAM( BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$bumpmap texcoord transform" )
 
     Add this above SHADER_INIT_PARAMS()
-      // Cloak Pass
-      void SetupVarsCloakBlendedPass( CloakBlendedPassVars_t &info )
-      {
+    // Cloak Pass
+    void SetupVarsCloakBlendedPass( CloakBlendedPassVars_t &info )
+    {
         info.m_nCloakFactor = CLOAKFACTOR;
         info.m_nCloakColorTint = CLOAKCOLORTINT;
         info.m_nRefractAmount = REFRACTAMOUNT;
@@ -32,100 +32,100 @@
         info.m_nBumpmap = BUMPMAP;
         info.m_nBumpFrame = BUMPFRAME;
         info.m_nBumpTransform = BUMPTRANSFORM;
-      }
+    }
 
-      bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
-      {
+    bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+    {
         if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
         {
-          if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
+        if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
             return true;
-          else if ( ( params[CLOAKFACTOR]->GetFloatValue() > 0.0f ) && ( params[CLOAKFACTOR]->GetFloatValue() < 1.0f ) ) // Per-frame check
+        else if ( ( params[CLOAKFACTOR]->GetFloatValue() > 0.0f ) && ( params[CLOAKFACTOR]->GetFloatValue() < 1.0f ) ) // Per-frame check
             return true;
-          // else, not cloaking this frame, so check flag2 in case the base material still needs it
+        // else, not cloaking this frame, so check flag2 in case the base material still needs it
         }
 
         // Check flag2 if not drawing cloak pass
         return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
-      }
+    }
 
-      bool IsTranslucent( IMaterialVar **params ) const
-      {
+    bool IsTranslucent( IMaterialVar **params ) const
+    {
         if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
         {
-          if ( ( params[CLOAKFACTOR]->GetFloatValue() > 0.0f ) && ( params[CLOAKFACTOR]->GetFloatValue() < 1.0f ) ) // Per-frame check
+        if ( ( params[CLOAKFACTOR]->GetFloatValue() > 0.0f ) && ( params[CLOAKFACTOR]->GetFloatValue() < 1.0f ) ) // Per-frame check
             return true;
-          // else, not cloaking this frame, so check flag in case the base material still needs it
+        // else, not cloaking this frame, so check flag in case the base material still needs it
         }
 
         // Check flag if not drawing cloak pass
         return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
-      }
+    }
 
     In SHADER_INIT_PARAMS()
-      // Cloak Pass
-      if ( !params[CLOAKPASSENABLED]->IsDefined() )
-      {
+    // Cloak Pass
+    if ( !params[CLOAKPASSENABLED]->IsDefined() )
+    {
         params[CLOAKPASSENABLED]->SetIntValue( 0 );
-      }
-      else if ( params[CLOAKPASSENABLED]->GetIntValue() )
-      {
+    }
+    else if ( params[CLOAKPASSENABLED]->GetIntValue() )
+    {
         CloakBlendedPassVars_t info;
         SetupVarsCloakBlendedPass( info );
         InitParamsCloakBlendedPass( this, params, pMaterialName, info );
-      }
+    }
 
     In SHADER_INIT
-      // Cloak Pass
-      if ( params[CLOAKPASSENABLED]->GetIntValue() )
-      {
+    // Cloak Pass
+    if ( params[CLOAKPASSENABLED]->GetIntValue() )
+    {
         CloakBlendedPassVars_t info;
         SetupVarsCloakBlendedPass( info );
         InitCloakBlendedPass( this, params, info );
-      }
+    }
 
     Modify SHADER_DRAW to look something like this:
-      // Skip the standard rendering if cloak pass is fully opaque
-      bool bDrawStandardPass = true;
-      if ( params[CLOAKPASSENABLED]->GetIntValue() && ( pShaderShadow == NULL ) ) // && not snapshotting
-      {
+    // Skip the standard rendering if cloak pass is fully opaque
+    bool bDrawStandardPass = true;
+    if ( params[CLOAKPASSENABLED]->GetIntValue() && ( pShaderShadow == NULL ) ) // && not snapshotting
+    {
         CloakBlendedPassVars_t info;
         SetupVarsCloakBlendedPass( info );
         if ( CloakBlendedPassIsFullyOpaque( params, info ) )
         {
-          bDrawStandardPass = false;
+        bDrawStandardPass = false;
         }
-      }
+    }
 
-      // Standard rendering pass
-      if ( bDrawStandardPass )
-      {
+    // Standard rendering pass
+    if ( bDrawStandardPass )
+    {
         Eye_Refract_Vars_t info;
         SetupVarsEyeRefract( info );
         Draw_Eyes_Refract( this, params, pShaderAPI, pShaderShadow, info );
-      }
-      else
-      {
+    }
+    else
+    {
         // Skip this pass!
         Draw( false );
-      }
+    }
 
-      // Cloak Pass
-      if ( params[CLOAKPASSENABLED]->GetIntValue() )
-      {
+    // Cloak Pass
+    if ( params[CLOAKPASSENABLED]->GetIntValue() )
+    {
         // If ( snapshotting ) or ( we need to draw this frame )
         if ( ( pShaderShadow != NULL ) || ( ( params[CLOAKFACTOR]->GetFloatValue() > 0.0f ) && ( params[CLOAKFACTOR]->GetFloatValue() < 1.0f ) ) )
         {
-          CloakBlendedPassVars_t info;
-          SetupVarsCloakBlendedPass( info );
-          DrawCloakBlendedPass( this, params, pShaderAPI, pShaderShadow, info );
+        CloakBlendedPassVars_t info;
+        SetupVarsCloakBlendedPass( info );
+        DrawCloakBlendedPass( this, params, pShaderAPI, pShaderShadow, info );
         }
         else // We're not snapshotting and we don't need to draw this frame
         {
-          // Skip this pass!
-          Draw( false );
+        // Skip this pass!
+        Draw( false );
         }
-      }
+    }
 
 ==================================================================================================== */
 

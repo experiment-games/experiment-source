@@ -28,7 +28,7 @@
 
 class CFlare : public CBaseCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CFlare, CBaseCombatCharacter );
 
     CFlare();
@@ -95,7 +95,7 @@ class CFlare : public CBaseCombatCharacter
 //---------------------
 class CFlaregun : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CFlaregun, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();

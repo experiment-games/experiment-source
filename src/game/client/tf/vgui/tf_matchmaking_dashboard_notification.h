@@ -18,7 +18,7 @@
 //
 class CTFDashboardNotification : public vgui::EditablePanel
 {
-   public:
+    public:
     enum ENotificationType
     {
         TYPE_CHAT = 0,
@@ -36,9 +36,9 @@ class CTFDashboardNotification : public vgui::EditablePanel
 
     DECLARE_CLASS_SIMPLE( CTFDashboardNotification, vgui::EditablePanel );
     CTFDashboardNotification( ENotificationType eType,
-                              EAlignment eAlignment,
-                              float flLifetime,  // 0 for infinite
-                              const char* pszName );
+                            EAlignment eAlignment,
+                            float flLifetime,  // 0 for infinite
+                            const char* pszName );
     virtual ~CTFDashboardNotification();
 
     void SetToExpire( float flDelay = 1.f );
@@ -59,7 +59,7 @@ class CTFDashboardNotification : public vgui::EditablePanel
         return 0;
     }
 
-   private:
+    private:
     MESSAGE_FUNC( OnExpire, "Expire" );
     ENotificationType m_eType;
     EAlignment m_eAlignment;

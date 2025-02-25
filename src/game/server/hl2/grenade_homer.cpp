@@ -194,50 +194,50 @@ void CGrenadeHomer::StartRocketTrail( void )
     pRocketTrail = RocketTrail::CreateRocketTrail();
     if(pRocketTrail)
     {
-      pRocketTrail->m_SpawnRate = 100;
-      pRocketTrail->m_ParticleLifetime = HOMER_TRAIL1_LIFE;
-      if ( m_nRocketTrailType == HOMER_SMOKE_TRAIL_ALIEN )
-      {
+    pRocketTrail->m_SpawnRate = 100;
+    pRocketTrail->m_ParticleLifetime = HOMER_TRAIL1_LIFE;
+    if ( m_nRocketTrailType == HOMER_SMOKE_TRAIL_ALIEN )
+    {
         pRocketTrail->m_StartColor.Init(0.0, 0.0, 0.5);
-      }
-      else
-      {
+    }
+    else
+    {
         pRocketTrail->m_StartColor.Init(0.5, 0.5, 0.0);
-      }
-      pRocketTrail->m_EndColor.Init(0.5,0.5,0.5);
-      pRocketTrail->m_StartSize = 3;
-      pRocketTrail->m_EndSize = 6;
-      pRocketTrail->m_SpawnRadius = 1;
-      pRocketTrail->m_MinSpeed = 15;
-      pRocketTrail->m_MaxSpeed = 25;
-      pRocketTrail->SetLifetime(120);
-      pRocketTrail->FollowEntity(this);
+    }
+    pRocketTrail->m_EndColor.Init(0.5,0.5,0.5);
+    pRocketTrail->m_StartSize = 3;
+    pRocketTrail->m_EndSize = 6;
+    pRocketTrail->m_SpawnRadius = 1;
+    pRocketTrail->m_MinSpeed = 15;
+    pRocketTrail->m_MaxSpeed = 25;
+    pRocketTrail->SetLifetime(120);
+    pRocketTrail->FollowEntity(this);
 
-      m_hRocketTrail[1] = pRocketTrail;
+    m_hRocketTrail[1] = pRocketTrail;
     }
     pRocketTrail = RocketTrail::CreateRocketTrail();
     if(pRocketTrail)
     {
-      pRocketTrail->m_SpawnRate = 50;
-      pRocketTrail->m_ParticleLifetime = HOMER_TRAIL2_LIFE;
-      if ( m_nRocketTrailType == HOMER_SMOKE_TRAIL_ALIEN )
-      {
+    pRocketTrail->m_SpawnRate = 50;
+    pRocketTrail->m_ParticleLifetime = HOMER_TRAIL2_LIFE;
+    if ( m_nRocketTrailType == HOMER_SMOKE_TRAIL_ALIEN )
+    {
         pRocketTrail->m_StartColor.Init(0.1, 0.0, 0.1);
-      }
-      else
-      {
+    }
+    else
+    {
         pRocketTrail->m_StartColor.Init(0.1, 0.1, 0.1);
-      }
-      pRocketTrail->m_EndColor.Init(0.5,0.5,0.5);
-      pRocketTrail->m_StartSize = 8;
-      pRocketTrail->m_EndSize = 20;
-      pRocketTrail->m_SpawnRadius = 1;
-      pRocketTrail->m_MinSpeed = 15;
-      pRocketTrail->m_MaxSpeed = 25;
-      pRocketTrail->SetLifetime(120);
-      pRocketTrail->FollowEntity(this);
+    }
+    pRocketTrail->m_EndColor.Init(0.5,0.5,0.5);
+    pRocketTrail->m_StartSize = 8;
+    pRocketTrail->m_EndSize = 20;
+    pRocketTrail->m_SpawnRadius = 1;
+    pRocketTrail->m_MinSpeed = 15;
+    pRocketTrail->m_MaxSpeed = 25;
+    pRocketTrail->SetLifetime(120);
+    pRocketTrail->FollowEntity(this);
 
-      m_hRocketTrail[2] = pRocketTrail;
+    m_hRocketTrail[2] = pRocketTrail;
     }
     */
 }
@@ -389,43 +389,43 @@ void CGrenadeHomer::Detonate( void )
         // Add a shockring
         CBroadcastRecipientFilter filter3;
         te->BeamRingPoint( filter3, 0,
-                           GetAbsOrigin(),   // origin
-                           16,               // start radius
-                           1000,             // end radius
-                           m_spriteTexture,  // texture
-                           0,                // halo index
-                           0,                // start frame
-                           2,                // framerate
-                           0.3f,             // life
-                           128,              // width
-                           16,               // spread
-                           0,                // amplitude
-                           100,              // r
-                           0,                // g
-                           200,              // b
-                           50,               // a
-                           128               // speed
+                            GetAbsOrigin(),   // origin
+                            16,               // start radius
+                            1000,             // end radius
+                            m_spriteTexture,  // texture
+                            0,                // halo index
+                            0,                // start frame
+                            2,                // framerate
+                            0.3f,             // life
+                            128,              // width
+                            16,               // spread
+                            0,                // amplitude
+                            100,              // r
+                            0,                // g
+                            200,              // b
+                            50,               // a
+                            128               // speed
         );
 
         // Add a shockring
         CBroadcastRecipientFilter filter4;
         te->BeamRingPoint( filter4, 0,
-                           GetAbsOrigin(),   // origin
-                           16,               // start radius
-                           500,              // end radius
-                           m_spriteTexture,  // texture
-                           0,                // halo index
-                           0,                // start frame
-                           2,                // framerate
-                           0.3f,             // life
-                           128,              // width
-                           16,               // spread
-                           0,                // amplitude
-                           200,              // r
-                           0,                // g
-                           100,              // b
-                           50,               // a
-                           128               // speed
+                            GetAbsOrigin(),   // origin
+                            16,               // start radius
+                            500,              // end radius
+                            m_spriteTexture,  // texture
+                            0,                // halo index
+                            0,                // start frame
+                            2,                // framerate
+                            0.3f,             // life
+                            128,              // width
+                            16,               // spread
+                            0,                // amplitude
+                            200,              // r
+                            0,                // g
+                            100,              // b
+                            50,               // a
+                            128               // speed
         );
     }
 
@@ -478,7 +478,7 @@ void CGrenadeHomer::AimThink( void )
     // Blow up the missile if we have an explicit detonate time that
     // has been reached
     if ( m_flDetonateTime != 0 &&
-         gpGlobals->curtime > m_flDetonateTime )
+        gpGlobals->curtime > m_flDetonateTime )
     {
         Detonate();
         return;
@@ -618,32 +618,32 @@ void CGrenadeHomer::AimThink( void )
     SetLocalAngles( angles );
 
 #if 0  // BUBBLE
-	if( gpGlobals->curtime > m_flNextWarnTime )
-	{
-		// Make a bubble of warning sound in front of me.
-		const float WARN_INTERVAL = 0.25f;
-		float flSpeed = GetAbsVelocity().Length();
-		Vector vecWarnLocation;
+    if( gpGlobals->curtime > m_flNextWarnTime )
+    {
+        // Make a bubble of warning sound in front of me.
+        const float WARN_INTERVAL = 0.25f;
+        float flSpeed = GetAbsVelocity().Length();
+        Vector vecWarnLocation;
 
-		// warn a little bit ahead of us, please.
-		vecWarnLocation = GetAbsOrigin() + GetAbsVelocity() * 0.75;
+        // warn a little bit ahead of us, please.
+        vecWarnLocation = GetAbsOrigin() + GetAbsVelocity() * 0.75;
 
-		// Make a bubble of warning ahead of the missile.
-		CSoundEnt::InsertSound ( SOUND_DANGER, vecWarnLocation, flSpeed * WARN_INTERVAL, 0.5 );
+        // Make a bubble of warning ahead of the missile.
+        CSoundEnt::InsertSound ( SOUND_DANGER, vecWarnLocation, flSpeed * WARN_INTERVAL, 0.5 );
 
 #if 0
-		Vector vecRight, vecForward;
+        Vector vecRight, vecForward;
 
-		AngleVectors( GetAbsAngles(), &vecForward, &vecRight, NULL );
+        AngleVectors( GetAbsAngles(), &vecForward, &vecRight, NULL );
 
-		NDebugOverlay::Line( vecWarnLocation, vecWarnLocation + vecForward * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
-		NDebugOverlay::Line( vecWarnLocation, vecWarnLocation - vecForward * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
+        NDebugOverlay::Line( vecWarnLocation, vecWarnLocation + vecForward * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
+        NDebugOverlay::Line( vecWarnLocation, vecWarnLocation - vecForward * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
 
-		NDebugOverlay::Line( vecWarnLocation, vecWarnLocation + vecRight * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
-		NDebugOverlay::Line( vecWarnLocation, vecWarnLocation - vecRight * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
+        NDebugOverlay::Line( vecWarnLocation, vecWarnLocation + vecRight * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
+        NDebugOverlay::Line( vecWarnLocation, vecWarnLocation - vecRight * flSpeed * WARN_INTERVAL * 0.5, 255,255,0, true, 10);
 #endif
-		m_flNextWarnTime = gpGlobals->curtime + WARN_INTERVAL;
-	}
+        m_flNextWarnTime = gpGlobals->curtime + WARN_INTERVAL;
+    }
 #endif  // BUBBLE
 
     SetNextThink( gpGlobals->curtime + 0.1f );

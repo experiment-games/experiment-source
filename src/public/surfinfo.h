@@ -16,7 +16,7 @@
 #define MAX_SURFINFO_VERTS 16
 class SurfInfo
 {
-   public:
+    public:
     // Shape of the surface.
     Vector m_Verts[MAX_SURFINFO_VERTS];
     unsigned long m_nVerts;

@@ -127,7 +127,7 @@ struct KeyBindingMap_t
     friend class className##_RegisterKBMap;                                                                 \
     class className##_RegisterKBMap                                                                         \
     {                                                                                                       \
-       public:                                                                                              \
+        public:                                                                                              \
         className##_RegisterKBMap()                                                                         \
         {                                                                                                   \
             className::KB_ChainToMap();                                                                     \
@@ -146,7 +146,7 @@ struct KeyBindingMap_t
     friend class PanelKBMapFunc_##name;                                                                                      \
     class PanelKBMapFunc_##name                                                                                              \
     {                                                                                                                        \
-       public:                                                                                                               \
+        public:                                                                                                               \
         static void InitVar()                                                                                                \
         {                                                                                                                    \
             static bool bAdded = false;                                                                                      \
@@ -168,7 +168,7 @@ struct KeyBindingMap_t
     friend class PanelKBBindFunc_##_classname;                   \
     class PanelKBBindFunc_##_classname                           \
     {                                                            \
-       public:                                                   \
+        public:                                                   \
         static void InitVar()                                    \
         {                                                        \
             static bool bAdded = false;                          \

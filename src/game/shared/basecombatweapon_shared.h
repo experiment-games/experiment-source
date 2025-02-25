@@ -33,10 +33,10 @@ extern void OnBaseCombatWeaponCreated( CBaseCombatWeapon * );
 extern void OnBaseCombatWeaponDestroyed( CBaseCombatWeapon * );
 
 void *SendProxy_SendLocalWeaponDataTable( const SendProp *pProp,
-                                          const void *pStruct,
-                                          const void *pVarData,
-                                          CSendProxyRecipients *pRecipients,
-                                          int objectID );
+                                        const void *pStruct,
+                                        const void *pVarData,
+                                        CSendProxyRecipients *pRecipients,
+                                        int objectID );
 #endif
 
 class CBasePlayer;
@@ -139,7 +139,7 @@ typedef unsigned long HFont;
 //-----------------------------------------------------------------------------
 class CDmgAccumulator
 {
-   public:
+    public:
     CDmgAccumulator( void );
     ~CDmgAccumulator();
 
@@ -152,12 +152,12 @@ class CDmgAccumulator
                                         CBaseEntity *pEntity );
     virtual void Process( void );
 
-   private:
+    private:
     CTakeDamageInfo m_updatedInfo;
     CUtlMap< int, CTakeDamageInfo > m_TargetsDmgInfo;
 #endif  // GAME_DLL
 
-   private:
+    private:
     bool m_bActive;
 };
 
@@ -171,7 +171,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBaseCombatWeapon, LUA_BASECOMBATWEAPONLIBNAME )
 #endif
 
-   public:
+    public:
     DECLARE_CLASS( CBaseCombatWeapon, BASECOMBATWEAPON_DERIVED_FROM );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -244,7 +244,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     virtual bool ShouldDisplayAltFireHUDHint();
     virtual void DisplayAltFireHudHint();
     virtual void RescindAltFireHudHint();  // < undisplay the hud hint and
-                                           // < pretend it never showed.
+                                            // < pretend it never showed.
 
     virtual bool ShouldDisplayReloadHUDHint();
     virtual void DisplayReloadHudHint();
@@ -255,7 +255,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     virtual bool SendWeaponAnim( int iActivity );
     virtual void SendViewModelAnim( int nSequence );
     float GetViewModelSequenceDuration();            // Return how long the current view
-                                                     // model sequence is.
+                                                    // model sequence is.
     bool IsViewModelSequenceFinished( void ) const;  // Returns if the viewmodel's current animation is finished
 
     virtual void SetViewModel();
@@ -310,14 +310,14 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     virtual void ItemPreFrame( void );        // called each frame by the player PreThink
     virtual void ItemPostFrame( void );       // called each frame by the player PostThink
     virtual void ItemBusyFrame( void );       // called each frame by the player PostThink, if the player's
-                                              // not ready to attack yet
+                                            // not ready to attack yet
     virtual void ItemHolsterFrame( void ){};  // called each frame by the player PreThink, if the weapon is
-                                              // holstered
+                                            // holstered
     virtual void WeaponIdle( void );          // called when no buttons pressed
     virtual void HandleFireOnEmpty();         // Called when they have the attack button down
-                                              // but they are out of ammo. The default
-                                              // implementation either reloads, switches weapons, or
-                                              // plays an empty sound.
+                                            // but they are out of ammo. The default
+                                            // implementation either reloads, switches weapons, or
+                                            // plays an empty sound.
     virtual bool CanPerformSecondaryAttack() const;
 
     virtual bool ShouldBlockPrimaryFire()
@@ -413,7 +413,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     {
         return 1.0f;
     }  // allows a weapon to influence the perceived size of the target's
-       // autoaim radius.
+        // autoaim radius.
 
     // TF Sprinting functions
     virtual bool StartSprinting( void )
@@ -478,7 +478,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         return -1;
     }
 
-   public:
+    public:
     // Weapon info accessors for data in the weapon's data file
 #ifndef LUA_SDK
     const FileWeaponInfo_t &GetWpnData( void ) const;
@@ -574,7 +574,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         return false;
     }
 
-   public:
+    public:
 // Server Only Methods
 #if !defined( CLIENT_DLL )
 
@@ -621,8 +621,8 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
 
     // Returns bits for	weapon conditions
     virtual bool WeaponLOSCondition( const Vector &ownerPos,
-                                     const Vector &targetPos,
-                                     bool bSetConditions );
+                                    const Vector &targetPos,
+                                    bool bSetConditions );
     virtual int WeaponRangeAttack1Condition( float flDot, float flDist );
     virtual int WeaponRangeAttack2Condition( float flDot, float flDist );
     virtual int WeaponMeleeAttack1Condition( float flDot, float flDist );
@@ -630,7 +630,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
 
     virtual void Operator_FrameUpdate( CBaseCombatCharacter *pOperator );
     virtual void Operator_HandleAnimEvent( animevent_t *pEvent,
-                                           CBaseCombatCharacter *pOperator );
+                                            CBaseCombatCharacter *pOperator );
     virtual void Operator_ForceNPCFire( CBaseCombatCharacter *pOperator,
                                         bool bSecondary )
     {
@@ -762,7 +762,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         return false;
     };
     virtual int DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel,
-                                         int flags )
+                                        int flags )
     {
         return 0;
     };
@@ -823,11 +823,11 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         }
     }
 
-   private:
+    private:
     typedef CHandle< CBaseCombatCharacter > CBaseCombatCharacterHandle;
     CNetworkVar( CBaseCombatCharacterHandle, m_hOwner );  // Player carrying this weapon
 
-   protected:
+    protected:
 #if defined( TF_CLIENT_DLL ) || defined( TF_DLL )
     // Regulate crit frequency to reduce client-side seed hacking
     void AddToCritBucket( float flAmount );
@@ -842,7 +842,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     int m_nCritSeedRequests;
 #endif  // TF
 
-   public:
+    public:
     // Networked fields
     CNetworkVar( int, m_nViewModelIndex );
 
@@ -855,7 +855,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     // Weapon state
     bool m_bInReload;         // Are we in the middle of a reload;
     bool m_bFireOnEmpty;      // True when the gun is empty and the player is still
-                              // holding down the attack key(s)
+                            // holding down the attack key(s)
     bool m_bFiringWholeClip;  // Are we in the middle of firing the whole clip;
     // Weapon art
     CNetworkVar( int, m_iViewModelIndex );
@@ -887,7 +887,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         return false;
     }
 
-   private:
+    private:
     Activity m_Activity;
     int m_nIdealSequence;
     Activity m_IdealActivity;
@@ -897,13 +897,13 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     int m_iPrimaryAmmoCount;
     int m_iSecondaryAmmoCount;
 
-   public:
+    public:
     IMPLEMENT_NETWORK_VAR_FOR_DERIVED( m_nNextThinkTick );
 
 #ifdef CLIENT_DLL
     static void RecvProxy_WeaponState( const CRecvProxyData *pData,
-                                       void *pStruct,
-                                       void *pOut );
+                                        void *pStruct,
+                                        void *pOut );
 #endif
     int WeaponState() const
     {
@@ -917,11 +917,11 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         int,
         m_iPrimaryAmmoType );                  // "primary" ammo index into the ammo info array
     CNetworkVar( int, m_iSecondaryAmmoType );  // "secondary" ammo index into the
-                                               // ammo info array
+                                                // ammo info array
     CNetworkVar( int, m_iClip1 );              // number of shots left in the primary weapon
-                                               // clip, -1 it not used
+                                                // clip, -1 it not used
     CNetworkVar( int, m_iClip2 );              // number of shots left in the secondary weapon
-                                               // clip, -1 it not used
+                                                // clip, -1 it not used
     bool m_bFiresUnderwater;                   // true if this weapon can fire underwater
     bool m_bAltFiresUnderwater;                // true if this weapon can fire underwater
     float m_fMinRange1;                        // What's the closest this weapon can be used?
@@ -930,7 +930,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     float m_fMaxRange2;                        // What's the furthest this weapon can be used?
     bool m_bReloadsSingly;                     // True if this weapon reloads 1 round at a time
     float m_fFireDuration;                     // The amount of time that the weapon has sustained
-                                               // firing
+                                                // firing
     int m_iSubType;
 
     float m_flUnlockTime;
@@ -943,20 +943,20 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
         return m_pConstraint;
     }
 
-   private:
+    private:
     WEAPON_FILE_INFO_HANDLE m_hWeaponFileInfo;
     IPhysicsConstraint *m_pConstraint;
 
     int m_iAltFireHudHintCount;       // How many times has this weapon displayed its
-                                      // alt-fire HUD hint?
+                                    // alt-fire HUD hint?
     int m_iReloadHudHintCount;        // How many times has this weapon displayed its
-                                      // reload HUD hint?
+                                    // reload HUD hint?
     bool m_bAltFireHudHintDisplayed;  // Have we displayed an alt-fire HUD hint
-                                      // since this weapon was deployed?
+                                    // since this weapon was deployed?
     bool m_bReloadHudHintDisplayed;   // Have we displayed a reload HUD hint
-                                      // since this weapon was deployed?
+                                    // since this weapon was deployed?
     float m_flHudHintPollTime;        // When to poll the weapon again for whether it
-                                      // should display a hud hint.
+                                    // should display a hud hint.
     float m_flHudHintMinDisplayTime;  // if the hint is squelched before this, reset my counter so we'll display it again.
 
     CNetworkVar( short, m_nCustomViewmodelModelIndex );
@@ -967,7 +967,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     bool m_bSoundsEnabled;
 
     // Outputs
-   protected:
+    protected:
     COutputEvent m_OnPlayerUse;         // Fired when the player uses the weapon.
     COutputEvent m_OnPlayerPickup;      // Fired when the player picks up the weapon.
     COutputEvent m_OnNPCPickup;         // Fired when an NPC picks up the weapon.
@@ -980,7 +980,7 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     // Allow weapons resource to access m_hWeaponFileInfo directly
     friend class WeaponsResource;
 
-   protected:
+    protected:
     int m_iOldState;
 
 #endif  // End Client .dll only

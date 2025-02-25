@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CZombieSpawn : public Action< CZombie >
 {
-   public:
+    public:
     virtual ActionResult< CZombie > OnStart( CZombie *me, Action< CZombie > *priorAction );
     virtual ActionResult< CZombie > Update( CZombie *me, float interval );
 
@@ -19,7 +19,7 @@ class CZombieSpawn : public Action< CZombie >
         return "Spawn";
     }  // return name of this action
 
-   private:
+    private:
 };
 
 #endif  // ZOMBIE_SPAWN_H

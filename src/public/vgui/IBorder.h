@@ -28,7 +28,7 @@ class IScheme;
 //-----------------------------------------------------------------------------
 class IBorder
 {
-   public:
+    public:
     IBorder() {}
     virtual ~IBorder() {}
 

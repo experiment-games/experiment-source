@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CTEMuzzleFlash : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEMuzzleFlash, CBaseTempEntity );
 
     DECLARE_SERVERCLASS();
@@ -26,7 +26,7 @@ class CTEMuzzleFlash : public CBaseTempEntity
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkQAngle( m_vecAngles );
     CNetworkVar( float, m_flScale );

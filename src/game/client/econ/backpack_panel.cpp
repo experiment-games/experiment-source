@@ -111,8 +111,8 @@ static bool HasCustomAttribute( const CEconItemView *pEconItemView, const char *
     const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinitionByName( szAttrName );
 
     return pAttrDef
-               ? pEconItemView->FindAttribute( pAttrDef )
-               : NULL;
+                ? pEconItemView->FindAttribute( pAttrDef )
+                : NULL;
 }
 
 static bool HasCustomUserAttribute( const CEconItemView *pEconItemView, const char *, int iUserData )
@@ -272,7 +272,7 @@ bool BCanPreviewPaintKit( const CEconItemView *pItem )
 int GetRemovableAttributesCount()
 {
     return ARRAYSIZE( g_RemoveableAttributes ) + GetKillEaterAttrCount() + GetMaxCardUpgradesPerItem()  // remove card upgrades
-           + 1;                                                                                         // strange quality item score reset
+            + 1;                                                                                         // strange quality item score reset
 }
 
 RefurbishableProperty RemovableAttributes_GetAttributeDetails( int i )
@@ -1233,9 +1233,9 @@ void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
         int nDirtyIndex = pItemData ? m_vecDirtyItems.Find( pItemData->GetItemID() ) : m_vecDirtyItems.InvalidIndex();
 
         if ( pItemData                                                    // Want to put in an item
-             && pPanel->GetItem()                                         // Panel has an item
-             && pItemData->GetItemID() == pPanel->GetItem()->GetItemID()  // That panel has the same item that we want to put in
-             && nDirtyIndex == m_vecDirtyItems.InvalidIndex() )           // And that item is not dirtied.
+            && pPanel->GetItem()                                         // Panel has an item
+            && pItemData->GetItemID() == pPanel->GetItem()->GetItemID()  // That panel has the same item that we want to put in
+            && nDirtyIndex == m_vecDirtyItems.InvalidIndex() )           // And that item is not dirtied.
         {
             // We dont do anything
             return;
@@ -1997,7 +1997,7 @@ void CBackpackPanel::OpenContextMenu()
         float flInspect = 0;
         static CSchemaAttributeDefHandle pAttrib_CosmeticAllowInspect( "cosmetic_allow_inspect" );
         if ( pItem && pItem->IsValid() && pItem->GetItemDefinition()->CanBackpackInspect() &&
-             ( BCanPreviewPaintKit( pItem ) || pItem->GetItemDefinition()->GetCollectionReference() != NULL || ( FindAttribute_UnsafeBitwiseCast< attrib_value_t >( pItem, pAttrib_CosmeticAllowInspect, &flInspect ) && flInspect != 0.f ) ) )
+            ( BCanPreviewPaintKit( pItem ) || pItem->GetItemDefinition()->GetCollectionReference() != NULL || ( FindAttribute_UnsafeBitwiseCast< attrib_value_t >( pItem, pAttrib_CosmeticAllowInspect, &flInspect ) && flInspect != 0.f ) ) )
         {
             if ( IsPaintKitTool( pItemDef ) )
             {
@@ -2795,8 +2795,8 @@ void CBackpackPanel::OnItemContentsChanged( CEconItemView *pEconItemView )
     for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
     {
         CEconItemView *pInternalItem = m_pItemModelPanels[i] && m_pItemModelPanels[i]->HasItem()
-                                           ? m_pItemModelPanels[i]->GetItem()
-                                           : NULL;
+                                            ? m_pItemModelPanels[i]->GetItem()
+                                            : NULL;
 
         if ( *pInternalItem == *pEconItemView )
         {
@@ -2999,17 +2999,17 @@ class CTFRemoveItemCustomizationConfirmDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFRemoveItemCustomizationConfirmDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CTFRemoveItemCustomizationConfirmDialog( const RefurbishableProperty &prop, CEconItemView *pItem )
         : CTFGenericConfirmDialog( prop.m_szDialogTitle,  // dialog title
-                                   prop.m_szDialogDesc,   // dialog text
-                                   "#RefurbishItem_Yes",  // confirm button text
-                                   "#RefurbishItem_No",   // cancel button text
-                                   NULL,                  // callback
-                                   NULL )                 // parent
-          ,
-          m_prop( prop ),
-          m_Item( *pItem )  // copy in case our UI changes behind us
+                                    prop.m_szDialogDesc,   // dialog text
+                                    "#RefurbishItem_Yes",  // confirm button text
+                                    "#RefurbishItem_No",   // cancel button text
+                                    NULL,                  // callback
+                                    NULL )                 // parent
+        ,
+        m_prop( prop ),
+        m_Item( *pItem )  // copy in case our UI changes behind us
     {
         GetCustomDialogLocalizationTokenFunc_t m_pDialogCustomTokenFunc = m_prop.m_pGetCustomDialogLocalizationTokenFunc;
         if ( m_pDialogCustomTokenFunc )
@@ -3027,7 +3027,7 @@ class CTFRemoveItemCustomizationConfirmDialog : public CTFGenericConfirmDialog
 
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     RefurbishableProperty m_prop;
     CEconItemView m_Item;
 };
@@ -3164,14 +3164,14 @@ void CTFRemoveItemCustomizationConfirmDialog::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 class CRefurbishItemDialog : public CComboBoxBackpackOverlayDialogBase
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CRefurbishItemDialog, CComboBoxBackpackOverlayDialogBase );
 
-   public:
+    public:
     CRefurbishItemDialog( vgui::Panel *pParent, CEconItemView *m_pItem )
         : CComboBoxBackpackOverlayDialogBase( pParent, m_pItem ) {}
 
-   private:
+    private:
     virtual void PopulateComboBoxOptions()
     {
         Assert( m_pItem );

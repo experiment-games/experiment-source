@@ -764,8 +764,8 @@ void CTargetID::UpdateID( void )
 
             // determine if the target is a disguised spy (either friendly or enemy)
             if ( pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) &&  // they're disguised
-                                                                   //! pPlayer->m_Shared.InCond( TF_COND_DISGUISING ) && // they're not in the process of disguising
-                 !pPlayer->m_Shared.IsStealthed() )  // they're not cloaked
+                                                                    //! pPlayer->m_Shared.InCond( TF_COND_DISGUISING ) && // they're not in the process of disguising
+                !pPlayer->m_Shared.IsStealthed() )  // they're not cloaked
             {
                 bDisguisedTarget = true;
                 pDisguiseTarget = pPlayer->m_Shared.GetDisguiseTarget();
@@ -847,8 +847,8 @@ void CTargetID::UpdateID( void )
 
             // Show target's clip state to attached medics
             bool bShowClipInfo = bIsAmmoData &&
-                                 sDataString[0] &&
-                                 ToTFPlayer( pLocalTFPlayer->MedicGetHealTarget() ) == pPlayer;
+                                sDataString[0] &&
+                                ToTFPlayer( pLocalTFPlayer->MedicGetHealTarget() ) == pPlayer;
             if ( m_pTargetAmmoIcon && m_pTargetAmmoIcon->IsVisible() != bShowClipInfo )
             {
                 m_pTargetAmmoIcon->SetVisible( bShowClipInfo );
@@ -1213,7 +1213,7 @@ bool CSpectatorTargetID::ShouldDraw( void )
         return false;
 
     if ( pLocalTFPlayer->GetObserverMode() <= OBS_MODE_NONE ||
-         pLocalTFPlayer->GetObserverMode() == OBS_MODE_FREEZECAM )
+        pLocalTFPlayer->GetObserverMode() == OBS_MODE_FREEZECAM )
         return false;
 
     if ( pLocalTFPlayer->m_bIsCoaching )

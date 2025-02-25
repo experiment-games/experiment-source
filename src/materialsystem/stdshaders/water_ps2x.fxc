@@ -51,63 +51,62 @@ const float3 g_EyePos				: register( c9 );
 
 struct PS_INPUT
 {
-	float2 vBumpTexCoord			: TEXCOORD0;
-	half3 vTangentEyeVect			: TEXCOORD1;
-	float4 vReflectXY_vRefractYX	: TEXCOORD2;
-	float4 vWorldPos_projPosW		: TEXCOORD3;
-	float4 vProjPos					: TEXCOORD4;
-	float screenCoord				: TEXCOORD5;
+    float2 vBumpTexCoord			: TEXCOORD0;
+    half3 vTangentEyeVect			: TEXCOORD1;
+    float4 vReflectXY_vRefractYX	: TEXCOORD2;
+    float4 vWorldPos_projPosW		: TEXCOORD3;
+    float4 vProjPos					: TEXCOORD4;
+    float screenCoord				: TEXCOORD5;
 #if MULTITEXTURE
-	float4 vExtraBumpTexCoord		: TEXCOORD6;
+    float4 vExtraBumpTexCoord		: TEXCOORD6;
 #endif
 #if BASETEXTURE
 // CENTROID: TEXCOORD6
-	HALF4 lightmapTexCoord1And2		: TEXCOORD6;
+    HALF4 lightmapTexCoord1And2		: TEXCOORD6;
 // CENTROID: TEXCOORD7
-	HALF4 lightmapTexCoord3			: TEXCOORD7;
+    HALF4 lightmapTexCoord3			: TEXCOORD7;
 #endif
 
-	float4 fogFactorW				: COLOR1;
+    float4 fogFactorW				: COLOR1;
 };
 
 float4 main( PS_INPUT i ) : COLOR
 {
-	DrawWater_params_t params;
+    DrawWater_params_t params;
 
-	params.vBumpTexCoord = i.vBumpTexCoord;
+    params.vBumpTexCoord = i.vBumpTexCoord;
 #if MULTITEXTURE
-	params.vExtraBumpTexCoord = i.vExtraBumpTexCoord;
+    params.vExtraBumpTexCoord = i.vExtraBumpTexCoord;
 #endif
-	params.vReflectXY_vRefractYX = i.vReflectXY_vRefractYX;
-	params.w = i.vWorldPos_projPosW.w;
-	params.vReflectRefractScale = g_ReflectRefractScale;
-	params.fReflectOverbright = g_Reflect_OverBright;
-	params.vReflectTint = vReflectTint;
-	params.vRefractTint = vRefractTint;
-	params.vTangentEyeVect = i.vTangentEyeVect;
-	params.waterFogColor = g_WaterFogColor;
+    params.vReflectXY_vRefractYX = i.vReflectXY_vRefractYX;
+    params.w = i.vWorldPos_projPosW.w;
+    params.vReflectRefractScale = g_ReflectRefractScale;
+    params.fReflectOverbright = g_Reflect_OverBright;
+    params.vReflectTint = vReflectTint;
+    params.vRefractTint = vRefractTint;
+    params.vTangentEyeVect = i.vTangentEyeVect;
+    params.waterFogColor = g_WaterFogColor;
 #if BASETEXTURE
-	params.lightmapTexCoord1And2 = i.lightmapTexCoord1And2;
-	params.lightmapTexCoord3 = i.lightmapTexCoord3;
+    params.lightmapTexCoord1And2 = i.lightmapTexCoord1And2;
+    params.lightmapTexCoord3 = i.lightmapTexCoord3;
 #endif
-	params.vProjPos = i.vProjPos;
-	params.pixelFogParams = g_PixelFogParams;
-	params.fWaterFogStart = g_WaterFogStart;
-	params.fWaterFogEndMinusStart = g_WaterFogEndMinusStart;
-	params.vEyePos = g_EyePos;
-	params.vWorldPos = i.vWorldPos_projPosW.xyz;
+    params.vProjPos = i.vProjPos;
+    params.pixelFogParams = g_PixelFogParams;
+    params.fWaterFogStart = g_WaterFogStart;
+    params.fWaterFogEndMinusStart = g_WaterFogEndMinusStart;
+    params.vEyePos = g_EyePos;
+    params.vWorldPos = i.vWorldPos_projPosW.xyz;
 
-	float4 result;
-	float fogFactor;
-	DrawWater( params, 
-			   // yay. . can't put sampler in a struct.
+    float4 result;
+    float fogFactor;
+    DrawWater( params,
+                // yay. . can't put sampler in a struct.
 #if BASETEXTURE
-			   BaseTextureSampler, 
-			   LightmapSampler, 
+                BaseTextureSampler,
+                LightmapSampler,
 #endif
-			   NormalSampler, RefractSampler, ReflectSampler,
-			   result, fogFactor );
+                NormalSampler, RefractSampler, ReflectSampler,
+                result, fogFactor );
 
-	return FinalOutput( float4( result.rgb, 1.0f ), fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE, (WRITE_DEPTH_TO_DESTALPHA != 0), i.vProjPos.z );
+    return FinalOutput( float4( result.rgb, 1.0f ), fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE, (WRITE_DEPTH_TO_DESTALPHA != 0), i.vProjPos.z );
 }
-

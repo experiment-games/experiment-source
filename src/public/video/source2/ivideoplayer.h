@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class IVideoPlayerVideoCallback
 {
-   public:
+    public:
     // For videos without an alpha plane, the pPlaneA pointer will be nullptr,
     // and the unStrideA value will be zero.
     virtual bool BPresentYUVA420Texture( uint nWidth, uint nHeight, void *pPlaneY, void *pPlaneU, void *pPlaneV, void *pPlaneA, uint unStrideY, uint unStrideU, uint unStrideV, uint unStrideA ) = 0;
@@ -30,7 +30,7 @@ class IVideoPlayerVideoCallback
 //-----------------------------------------------------------------------------
 class IVideoPlayerAudioCallback
 {
-   public:
+    public:
     virtual bool InitAudioOutput( int nSampleRate, int nChannels ) = 0;
     virtual void FreeAudioOutput() = 0;
     virtual bool IsReadyForAudioData() = 0;
@@ -62,7 +62,7 @@ enum EVideoPlayerEvent
 //-----------------------------------------------------------------------------
 class IVideoPlayerEventCallback
 {
-   public:
+    public:
     virtual void VideoPlayerEvent( EVideoPlayerEvent eEvent ) = 0;
 };
 
@@ -102,7 +102,7 @@ enum EVideoPlayerPlaybackError
 //-----------------------------------------------------------------------------
 class IVideoPlayer
 {
-   public:
+    public:
     virtual ~IVideoPlayer() {}
 
     virtual bool BLoad( const char *pchURL ) = 0;

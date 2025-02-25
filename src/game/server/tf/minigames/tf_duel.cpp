@@ -101,7 +101,7 @@ static void UpdateDuelScore( CTFPlayer *pKiller, CTFPlayer *pVictim, eDuelScoreT
     {
         duel_minigame_data_t &duel = g_duels[i];
         if ( ( duel.m_steamIDInitiator == steamIDKiller && duel.m_steamIDTarget == steamIDVictim ) ||
-             ( duel.m_steamIDInitiator == steamIDVictim && duel.m_steamIDTarget == steamIDKiller ) )
+            ( duel.m_steamIDInitiator == steamIDVictim && duel.m_steamIDTarget == steamIDKiller ) )
         {
             // if we have a class restriction...
             bool bCountScore = true;
@@ -147,7 +147,7 @@ static void UpdateDuelScore( CTFPlayer *pKiller, CTFPlayer *pVictim, eDuelScoreT
  */
 class CGC_GameServer_Duel_Request : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_GameServer_Duel_Request( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -165,7 +165,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGC_GameServer_Duel_Request, "CGC_GameServer_Duel_
  */
 class CGC_GameServer_Duel_Response : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_GameServer_Duel_Response( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -294,7 +294,7 @@ void DuelMiniGame_NotifyPlayerChangedTeam( CTFPlayer *pPlayer, int iNewTeam, boo
             }
             // found the opponent, if they are on the same team or the player is on spectator...
             else if ( iNewTeam == TEAM_SPECTATOR ||
-                      iNewTeam == pOpponent->GetTeamNumber() )
+                    iNewTeam == pOpponent->GetTeamNumber() )
             {
                 SendDuelResults( *pDuel, steamIDOpponent, bInitiatedByPlayer ? kDuelEndReason_PlayerSwappedTeams : kDuelEndReason_PlayerForceSwappedTeams );
                 RemoveDuel( pDuel );

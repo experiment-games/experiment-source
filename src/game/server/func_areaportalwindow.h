@@ -17,7 +17,7 @@
 
 class CFuncAreaPortalWindow : public CFuncAreaPortalBase
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncAreaPortalWindow, CFuncAreaPortalBase );
 
     DECLARE_SERVERCLASS();
@@ -27,19 +27,19 @@ class CFuncAreaPortalWindow : public CFuncAreaPortalBase
     ~CFuncAreaPortalWindow();
 
     // Overrides.
-   public:
+    public:
     virtual void Spawn();
     virtual void Activate();
 
     // CFuncAreaPortalBase stuff.
-   public:
+    public:
     virtual bool UpdateVisibility( const Vector &vOrigin, float fovDistanceAdjustFactor, bool &bIsOpenOnClient );
 
-   public:
+    public:
     // Returns false if the viewer is past the fadeout distance.
     bool IsWindowOpen( const Vector &vOrigin, float fovDistanceAdjustFactor );
 
-   public:
+    public:
     CNetworkVar( float, m_flFadeStartDist );  // Distance at which it starts fading (when <= this, alpha=m_flTranslucencyLimit).
     CNetworkVar( float, m_flFadeDist );       // Distance at which it becomes solid.
 

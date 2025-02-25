@@ -48,8 +48,8 @@ namespace internal
 // a syscall. This address is stable, and in active use (hard coded)
 // by at least glibc-2.7 and the Android C library.
 typedef Atomic32 ( *LinuxKernelCmpxchgFunc )( Atomic32 old_value,
-                                              Atomic32 new_value,
-                                              volatile Atomic32* ptr );
+                                            Atomic32 new_value,
+                                            volatile Atomic32* ptr );
 LinuxKernelCmpxchgFunc pLinuxKernelCmpxchg __attribute__( ( weak ) ) =
     ( LinuxKernelCmpxchgFunc )0xffff0fc0;
 
@@ -58,8 +58,8 @@ LinuxKernelMemoryBarrierFunc pLinuxKernelMemoryBarrier __attribute__( ( weak ) )
     ( LinuxKernelMemoryBarrierFunc )0xffff0fa0;
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     Atomic32 prev_value = *ptr;
     do
@@ -74,7 +74,7 @@ inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     Atomic32 old_value;
     do
@@ -85,13 +85,13 @@ inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     return Barrier_AtomicIncrement( ptr, increment );
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     for ( ;; )
     {

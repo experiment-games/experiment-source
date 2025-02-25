@@ -21,7 +21,7 @@
 
 class CMessageMgr : public IMessageMgr
 {
-   public:
+    public:
     CMessageMgr();
     ~CMessageMgr();
 
@@ -29,14 +29,14 @@ class CMessageMgr : public IMessageMgr
     void Term();
 
     // IMessageMgr overrides.
-   public:
+    public:
     virtual void Print( const char *pMsg );
 
-   private:
+    private:
     DWORD ThreadFn();
     static DWORD WINAPI StaticThreadFn( LPVOID pParameter );
 
-   private:
+    private:
     // Only our thread touches this, NOT the main thread.
     CUtlLinkedList< ITCPSocket *, int > m_Sockets;
 

@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 class C_TFGlow : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TFGlow, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -20,7 +20,7 @@ class C_TFGlow : public C_BaseEntity
     virtual ~C_TFGlow();
     virtual void PostDataUpdate( DataUpdateType_t updateType ) OVERRIDE;
 
-   private:
+    private:
     void CreateGlow();
 
     CGlowObject *pGlow;

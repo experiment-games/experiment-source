@@ -13,7 +13,7 @@ class CTFBotHintEngineerNest;
 
 class CTFBotMvMEngineerIdle : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -26,7 +26,7 @@ class CTFBotMvMEngineerIdle : public Action< CTFBot >
         return "MvMEngineerIdle";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
     CountdownTimer m_sentryInjuredTimer;
@@ -50,7 +50,7 @@ class CTFBotMvMEngineerIdle : public Action< CTFBot >
 
 class CTFBotMvMEngineerHintFinder
 {
-   public:
+    public:
     static bool FindHint( bool bShouldCheckForBlockingObjects, bool bAllowOutOfRangeNest, CHandle< CTFBotHintEngineerNest > *pFoundNest = NULL );
 };
 

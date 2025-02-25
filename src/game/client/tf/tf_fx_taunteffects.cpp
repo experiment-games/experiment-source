@@ -30,8 +30,8 @@ void TF_ThrowCigaretteCallback( const CEffectData &data )
     VectorAngles( -vUp, vecShellAngles );
 
     Vector vecVelocity = 180 * vForward +
-                         random->RandomFloat( -20, 20 ) * vRight +
-                         random->RandomFloat( 0, 20 ) * vUp;
+                        random->RandomFloat( -20, 20 ) * vRight +
+                        random->RandomFloat( 0, 20 ) * vUp;
 
     vecVelocity.z += 100;
 
@@ -115,8 +115,8 @@ void TF_ThrowHeadCallback( const CEffectData &data )
     // VectorAngles( -vUp, vecShellAngles );
 
     Vector vecVelocity = tf_head_throw_fwd_speed.GetFloat() * vForward +
-                         random->RandomFloat( -tf_head_throw_side_speed.GetFloat(), tf_head_throw_side_speed.GetFloat() ) * vRight +
-                         random->RandomFloat( 0, tf_head_throw_up_speed.GetFloat() ) * vUp;
+                        random->RandomFloat( -tf_head_throw_side_speed.GetFloat(), tf_head_throw_side_speed.GetFloat() ) * vRight +
+                        random->RandomFloat( 0, tf_head_throw_up_speed.GetFloat() ) * vUp;
 
     vecVelocity.z += tf_head_throw_vertical_speed.GetFloat();
 
@@ -134,7 +134,7 @@ void TF_ThrowHeadCallback( const CEffectData &data )
             return;
 
         Vector vOrigin = data.m_vOrigin +
-                         Vector( tf_head_throw_x_offset.GetFloat(), tf_head_throw_y_offset.GetFloat(), tf_head_throw_z_offset.GetFloat() );
+                        Vector( tf_head_throw_x_offset.GetFloat(), tf_head_throw_y_offset.GetFloat(), tf_head_throw_z_offset.GetFloat() );
         int nSkin = ( iTeam == TF_TEAM_RED ) ? 1 : 0;
         C_PhysPropClientside *pProp = tempents->PhysicsProp( pModel, nSkin, vOrigin, vec3_angle, vecVelocity, 0, 0 );
         if ( !pProp )

@@ -56,13 +56,13 @@ DEFINE_PANORAMA_EVENT( VScriptTrigger );
 
 class CScriptPanorama
 {
-   public:
+    public:
     void DispatchEvent( const char *pszEventName, const char *pszMessage )
     {
         panorama::DispatchEvent( VScriptTrigger(), nullptr, pszEventName, pszMessage );
     }
 
-   private:
+    private:
 } g_ScriptPanorama;
 
 BEGIN_SCRIPTDESC_ROOT_NAMED( CScriptPanorama, "CPanorama", SCRIPT_SINGLETON "Panorama VScript Interface" )
@@ -217,7 +217,7 @@ void VScriptClientTerm()
 
 class CVScriptGameSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     // Inherited from IAutoServerSystem
     virtual void LevelInitPreEntity( void )
     {

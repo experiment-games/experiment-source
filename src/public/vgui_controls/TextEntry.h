@@ -86,7 +86,7 @@ class TextEntry : public Panel
 {
     DECLARE_CLASS_SIMPLE( TextEntry, Panel );
 
-   public:
+    public:
 #ifdef LUA_SDK
     TextEntry( Panel *parent, const char *panelName, lua_State *L = nullptr );
 #else
@@ -186,22 +186,22 @@ class TextEntry : public Panel
     int GetNumLines();
 
     /* INFO HANDLING
-      "GetText"
+    "GetText"
         returns:
-          "text" - text contained in the text box
+        "text" - text contained in the text box
     */
 
     /* CUSTOM MESSAGE HANDLING
-      "SetText"
+    "SetText"
         input:	"text"	- text is set to be this string
     */
 
     /* MESSAGE SENDING (to action signal targets)
-      "TextChanged"	- sent when the text is edited by the user
+    "TextChanged"	- sent when the text is edited by the user
 
-      "TextNewLine" - sent when the end key is pressed in the text entry AND _sendNewLines is true
+    "TextNewLine" - sent when the end key is pressed in the text entry AND _sendNewLines is true
 
-      "TextKillFocus" - sent when focus leaves textentry field
+    "TextKillFocus" - sent when focus leaves textentry field
     */
 
     // Selects all the text in the text entry.
@@ -244,7 +244,7 @@ class TextEntry : public Panel
         _cursorPos = position;
     }
 
-   protected:
+    protected:
     virtual void ResetCursorBlink();
     virtual void PerformLayout();  // layout the text in the window
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -289,12 +289,12 @@ class TextEntry : public Panel
     // Returns the character index the drawing should Start at
     virtual int GetStartDrawIndex( int &lineBreakIndexIndex );
 
-   public:
+    public:
     // helper accessors for common gets
     virtual float GetValueAsFloat();
     virtual int GetValueAsInt();
 
-   protected:
+    protected:
     void ScrollRight();                                  // scroll to right until cursor is visible
     void ScrollLeft();                                   // scroll to left
     bool IsCursorOffRightSideOfWindow( int cursorPos );  // check if cursor is off right side of window
@@ -307,7 +307,7 @@ class TextEntry : public Panel
 
     bool NeedsEllipses( HFont font, int *pIndex );
 
-   private:
+    private:
     MESSAGE_FUNC_INT( OnSetState, "SetState", state );
     // get index in buffer of the Start of the current line we are on
     int GetCurrentLineStart();
@@ -319,17 +319,17 @@ class TextEntry : public Panel
     void CalcBreakIndex();  // calculate _recalculateLineBreaksIndex
     void CreateEditMenu();  // create copy/cut/paste menu
 
-   public:
+    public:
     Menu *GetEditMenu();  // retrieve copy/cut/paste menu
 
-   private:
+    private:
     void FlipToLastIME();
 
-   public:
+    public:
     virtual void GetTextRange( wchar_t *buf, int from, int numchars );  // copy a portion of the text to the buffer and add zero-termination
     virtual void GetTextRange( char *buf, int from, int numchars );     // copy a portion of the text to the buffer and add zero-termination
 
-   private:
+    private:
     CUtlVector< wchar_t > m_TextStream;      // the text in the text window is stored in this buffer
     CUtlVector< wchar_t > m_UndoTextStream;  // a copy of the text buffer to revert changes
     CUtlVector< int > m_LineBreaks;          // an array that holds the index in the buffer to wrap lines at
@@ -347,7 +347,7 @@ class TextEntry : public Panel
     long _cursorNextBlinkTime;    // time of next cursor blink
     int _cursorBlinkRate;         // speed of cursor blinking
     int _select[2];               // select[1] is the offset in the text to where the cursor is currently
-                                  // select[0] is the offset to where the cursor was dragged to. or -1 if no drag.
+                                // select[0] is the offset to where the cursor was dragged to. or -1 if no drag.
     int _pixelsIndent;
     int _charCount;
     int _maxCharCount;  // max number of chars that can be in the text buffer

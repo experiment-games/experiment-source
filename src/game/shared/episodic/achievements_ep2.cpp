@@ -16,7 +16,7 @@
 
 class CAchievementEp2KillPoisonAntlion : public CBaseAchievement
 {
-   protected:
+    protected:
     virtual void Init()
     {
         SetVictimFilter( "npc_antlion" );
@@ -38,7 +38,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp2KillPoisonAntlion, ACHIEVEMENT_EP2_KILL_POIS
 
 class CAchievementEp2KillAllGrubs : public CBaseAchievement
 {
-   protected:
+    protected:
     virtual void Init()
     {
         SetVictimFilter( "npc_antlion_grub" );
@@ -51,7 +51,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp2KillAllGrubs, ACHIEVEMENT_EP2_KILL_ALLGRUBS,
 
 class CAchievementEp2KillEnemiesWithCar : public CBaseAchievement
 {
-   protected:
+    protected:
     virtual void Init()
     {
         SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
@@ -75,7 +75,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp2KillEnemiesWithCar, ACHIEVEMENT_EP2_KILL_ENE
 
 class CAchievementEp2KillHunterWithFlechette : public CBaseAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_WITH_GAME );
@@ -112,7 +112,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp2FindAllWebCaches, ACHIEVEMENT_EP2_BREAK_ALLW
 
 class CAchievementEp2KillChopperNoMisses : public CFailableAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_MAP_EVENTS | ACH_SAVE_WITH_GAME );

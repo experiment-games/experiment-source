@@ -35,7 +35,7 @@ class CAI_DynamicLink;
 
 class CAI_Link
 {
-   public:
+    public:
     short m_iSrcID;   // the node that 'owns' this link
     short m_iDestID;  // the node on the other end of the link.
 
@@ -56,7 +56,7 @@ class CAI_Link
 
     // float	m_flWeight;		// length of the link line segment
 
-   private:
+    private:
     friend class CAI_Network;
     CAI_Link( void );
 };

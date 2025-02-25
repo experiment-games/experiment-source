@@ -18,7 +18,7 @@
 
 abstract_class IReplayPlayerCache : public IBaseInterface
 {
-   public:
+    public:
     virtual bool Init() = 0;
     virtual void Shutdown() = 0;
 

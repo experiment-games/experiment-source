@@ -70,10 +70,10 @@ void CPolyhedron_AllocByNew::Release( void )
 CPolyhedron_AllocByNew *CPolyhedron_AllocByNew::Allocate( unsigned short iVertices, unsigned short iLines, unsigned short iIndices, unsigned short iPolygons )  // creates the polyhedron along with enough memory to hold all it's data in a single allocation
 {
     void *pMemory = new unsigned char[sizeof( CPolyhedron_AllocByNew ) +
-                                      ( iVertices * sizeof( Vector ) ) +
-                                      ( iLines * sizeof( Polyhedron_IndexedLine_t ) ) +
-                                      ( iIndices * sizeof( Polyhedron_IndexedLineReference_t ) ) +
-                                      ( iPolygons * sizeof( Polyhedron_IndexedPolygon_t ) )];
+                                    ( iVertices * sizeof( Vector ) ) +
+                                    ( iLines * sizeof( Polyhedron_IndexedLine_t ) ) +
+                                    ( iIndices * sizeof( Polyhedron_IndexedLineReference_t ) ) +
+                                    ( iPolygons * sizeof( Polyhedron_IndexedPolygon_t ) )];
 
 #include "tier0/memdbgoff.h"  //the following placement new doesn't compile with memory debugging
     CPolyhedron_AllocByNew *pAllocated = new ( pMemory ) CPolyhedron_AllocByNew;
@@ -93,7 +93,7 @@ CPolyhedron_AllocByNew *CPolyhedron_AllocByNew::Allocate( unsigned short iVertic
 
 class CPolyhedron_TempMemory : public CPolyhedron
 {
-   public:
+    public:
 #ifdef DBGFLAG_ASSERT
     int iReferenceCount;
 #endif
@@ -109,7 +109,7 @@ class CPolyhedron_TempMemory : public CPolyhedron
 #ifdef DBGFLAG_ASSERT
         : iReferenceCount( 0 )
 #endif
-              {};
+            {};
 };
 
 static CUtlVector< unsigned char > s_TempMemoryPolyhedron_Buffer;
@@ -292,9 +292,9 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
         if ( bUseTemporaryMemory )
         {
             pReturn = GetTempPolyhedron( pExistingPolyhedron->iVertexCount,
-                                         pExistingPolyhedron->iLineCount,
-                                         pExistingPolyhedron->iIndexCount,
-                                         pExistingPolyhedron->iPolygonCount );
+                                        pExistingPolyhedron->iLineCount,
+                                        pExistingPolyhedron->iIndexCount,
+                                        pExistingPolyhedron->iPolygonCount );
         }
         else
         {
@@ -939,21 +939,21 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
                     //  Consider the case of a large on-plane epsilon leaving protrusions over time
                     /*if( fPointDist < 0.0f )
                     {
-                      double distAsDouble = fPointDist;
-                      double vPositionAsDouble[3];
-                      vPositionAsDouble[0] = pPoint->ptPosition.x;
-                      vPositionAsDouble[1] = pPoint->ptPosition.y;
-                      vPositionAsDouble[2] = pPoint->ptPosition.z;
+                    double distAsDouble = fPointDist;
+                    double vPositionAsDouble[3];
+                    vPositionAsDouble[0] = pPoint->ptPosition.x;
+                    vPositionAsDouble[1] = pPoint->ptPosition.y;
+                    vPositionAsDouble[2] = pPoint->ptPosition.z;
 
-                      pPoint->ptPosition.x = vPositionAsDouble[0] - (distAsDouble * vNormalAsDouble[0]);
-                      pPoint->ptPosition.y = vPositionAsDouble[1] - (distAsDouble * vNormalAsDouble[1]);
-                      pPoint->ptPosition.z = vPositionAsDouble[2] - (distAsDouble * vNormalAsDouble[2]);
+                    pPoint->ptPosition.x = vPositionAsDouble[0] - (distAsDouble * vNormalAsDouble[0]);
+                    pPoint->ptPosition.y = vPositionAsDouble[1] - (distAsDouble * vNormalAsDouble[1]);
+                    pPoint->ptPosition.z = vPositionAsDouble[2] - (distAsDouble * vNormalAsDouble[2]);
 
-          #if ( 0 && defined( _DEBUG ) )
-                      float fDebugDist = vNormal.Dot( pPoint->ptPosition ) - fPlaneDist; //just for looking at in watch windows
-                      AssertMsg( fabs( fDebugDist ) < fabs(fPointDist), "Projected point is further from plane than unprojected." );
-          #endif
-                      fPointDist = vNormal.Dot( pPoint->ptPosition ) - fPlaneDist; //recompute dist (not guaranteed to be 0.0 like we want)
+        #if ( 0 && defined( _DEBUG ) )
+                    float fDebugDist = vNormal.Dot( pPoint->ptPosition ) - fPlaneDist; //just for looking at in watch windows
+                    AssertMsg( fabs( fDebugDist ) < fabs(fPointDist), "Projected point is further from plane than unprojected." );
+        #endif
+                    fPointDist = vNormal.Dot( pPoint->ptPosition ) - fPlaneDist; //recompute dist (not guaranteed to be 0.0 like we want)
                     }*/
                 }
 
@@ -1215,8 +1215,8 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
                 else
                 {
                     AssertMsg_DumpPolyhedron( ( pActivePolygonWalk->pPolygon->pLines != NULL ) &&
-                                                  ( pActivePolygonWalk->pPolygon->pLines != pActivePolygonWalk->pPolygon->pLines->pNext ),
-                                              "Living polygon with less than 2 lines" );
+                                                ( pActivePolygonWalk->pPolygon->pLines != pActivePolygonWalk->pPolygon->pLines->pNext ),
+                                            "Living polygon with less than 2 lines" );
 
                     pActivePolygonWalk = pActivePolygonWalk->pNext;
                 }
@@ -1555,8 +1555,8 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 
                     Assert_DumpPolyhedron( pWorkPolygon != pLastWorkPolygon );
                     Assert_DumpPolyhedron( ( pWorkPoint == pStartPoint ) ||
-                                           ( pGapLines[0]->pLine->bCut == false ) ||
-                                           ( pWorkPolygon->bMissingASide == true ) );  // if we're not done fixing, and if the shared line was cut, the next polygon must be missing a side
+                                            ( pGapLines[0]->pLine->bCut == false ) ||
+                                            ( pWorkPolygon->bMissingASide == true ) );  // if we're not done fixing, and if the shared line was cut, the next polygon must be missing a side
                 }
                 else
                 {

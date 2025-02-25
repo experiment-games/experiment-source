@@ -76,7 +76,7 @@ void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure) {
   // First, try to change the state from UNINITIALIZED to EXECUTING_CLOSURE
   // atomically.
   state = internal::Acquire_CompareAndSwap(
-      once, ONCE_STATE_UNINITIALIZED, ONCE_STATE_EXECUTING_CLOSURE);
+    once, ONCE_STATE_UNINITIALIZED, ONCE_STATE_EXECUTING_CLOSURE);
   if (state == ONCE_STATE_UNINITIALIZED) {
     // We are the first thread to call this function, so we have to call the
     // closure.
@@ -86,9 +86,9 @@ void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure) {
     // Another thread has already started executing the closure. We need to
     // wait until it completes the initialization.
     while (state == ONCE_STATE_EXECUTING_CLOSURE) {
-      // Note that futex() could be used here on Linux as an improvement.
-      SchedYield();
-      state = internal::Acquire_Load(once);
+    // Note that futex() could be used here on Linux as an improvement.
+    SchedYield();
+    state = internal::Acquire_Load(once);
     }
   }
 }

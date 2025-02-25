@@ -70,7 +70,7 @@ extern const char *FormatSeconds( int seconds );
 //-----------------------------------------------------------------------------
 class CTFVoteNotification : public CEconNotification
 {
-   public:
+    public:
     CTFVoteNotification( const char *pPlayerName, int nVoteIdx )
         : CEconNotification(), m_nVoteIdx( nVoteIdx )
     {
@@ -88,10 +88,10 @@ class CTFVoteNotification : public CEconNotification
     virtual void Trigger()
     {
         CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#GameUI_Vote_Notification_Title",
-                                                              "#GameUI_Vote_Notification_Text",
-                                                              "#GameUI_Vote_Notification_View",
-                                                              "#cancel",
-                                                              &ConfirmShowVoteSetup );
+                                                            "#GameUI_Vote_Notification_Text",
+                                                            "#GameUI_Vote_Notification_View",
+                                                            "#cancel",
+                                                            &ConfirmShowVoteSetup );
         pDialog->SetContext( this );
         pDialog->AddStringToken( "initiator", m_wszPlayerName );
         // so we aren't deleted
@@ -122,10 +122,10 @@ class CTFVoteNotification : public CEconNotification
         pNotification->MarkForDeletion();
     }
 
-   public:
+    public:
     wchar_t m_wszPlayerName[MAX_PLAYER_NAME_LENGTH];
 
-   private:
+    private:
     int m_nVoteIdx;
 };
 #endif  // TF_CLIENT_DLL
@@ -594,15 +594,15 @@ void CVoteSetupDialog::OnCommand( const char *command )
                                 engine->ClientCmd( szVoteCommand );
 #ifdef TF_CLIENT_DLL
 #if 0   // No longer being collected, see GC job comment
-								uint32 unSteamID = g_TF_PR->GetAccountID( iPlayerIndex );
-								if ( unSteamID != 0 )
-								{
-									GCSDK::CProtoBufMsg<CMsgTFVoteKickBanPlayer> msg( k_EMsgGCVoteKickBanPlayer );
-									uint32 reason = GetKickBanPlayerReason( pReasonString );
-									msg.Body().set_account_id_subject( unSteamID );
-									msg.Body().set_kick_reason( reason );
-									GCClientSystem()->BSendMessage( msg );
-								}
+                                uint32 unSteamID = g_TF_PR->GetAccountID( iPlayerIndex );
+                                if ( unSteamID != 0 )
+                                {
+                                    GCSDK::CProtoBufMsg<CMsgTFVoteKickBanPlayer> msg( k_EMsgGCVoteKickBanPlayer );
+                                    uint32 reason = GetKickBanPlayerReason( pReasonString );
+                                    msg.Body().set_account_id_subject( unSteamID );
+                                    msg.Body().set_kick_reason( reason );
+                                    GCClientSystem()->BSendMessage( msg );
+                                }
 #endif  // 0
 #endif
                             }

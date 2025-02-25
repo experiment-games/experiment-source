@@ -45,7 +45,7 @@ enum PlayMode_t
 //-----------------------------------------------------------------------------
 class CDmeChannelRecordingMgr
 {
-   public:
+    public:
     // constructor
     CDmeChannelRecordingMgr();
 
@@ -83,7 +83,7 @@ class CDmeChannelRecordingMgr
     bool IsUsingDetachedTimeSelection() const;
     bool IsUsingTimeSelection() const;
 
-   private:
+    private:
     struct LayerChannelInfo_t
     {
         LayerChannelInfo_t()
@@ -123,7 +123,7 @@ class CDmeChannel : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeChannel, CDmeOperator );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
@@ -178,7 +178,7 @@ class CDmeChannel : public CDmeOperator
     CDmeClip *FindOwnerClipForChannel( CDmeClip *pRoot );
     bool BuildClipStack( DmeClipStack_t *pClipStack, CDmeClip *pRoot, CDmeClip *pShot );
 
-   protected:
+    protected:
     // Used to cache off handles to attributes
     CDmAttribute *SetupFromAttribute();
     CDmAttribute *SetupToAttribute();

@@ -18,13 +18,13 @@
 
 class CBaseGrenadeProjectile : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseGrenadeProjectile, CBaseGrenade );
     DECLARE_NETWORKCLASS();
 
     virtual void Spawn();
 
-   public:
+    public:
     // This gets sent to the client and placed in the client's interpolation history
     // so the projectile starts out moving right off the bat.
     CNetworkVector( m_vInitialVelocity );
@@ -66,11 +66,11 @@ class CBaseGrenadeProjectile : public CBaseGrenade
     // sit still until it had gotten a few updates from the server.
     void SetupInitialTransmittedGrenadeVelocity( const Vector &velocity );
 
-   protected:
+    protected:
     // Set the time to detonate ( now + timer )
     void SetDetonateTimerLength( float timer );
 
-   private:
+    private:
     // Custom collision to allow for constant elasticity on hit surfaces
     virtual void ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity );
 

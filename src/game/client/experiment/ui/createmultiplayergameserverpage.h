@@ -21,7 +21,7 @@ class CCreateMultiplayerGameServerPage : public vgui::PropertyPage
 {
     DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameServerPage, vgui::PropertyPage );
 
-   public:
+    public:
     CCreateMultiplayerGameServerPage( vgui::Panel *parent, const char *name );
     ~CCreateMultiplayerGameServerPage();
 
@@ -35,11 +35,11 @@ class CCreateMultiplayerGameServerPage : public vgui::PropertyPage
     int GetBotQuota( void );
     bool GetBotsEnabled( void );
 
-   protected:
+    protected:
     virtual void OnApplyChanges();
     MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
 
-   private:
+    private:
     void LoadMapList();
     void LoadMaps( const char *pszPathID );
 

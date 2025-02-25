@@ -22,16 +22,16 @@ class CTFHudPasstimeOffscreenArrow : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudPasstimeOffscreenArrow, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudPasstimeOffscreenArrow( vgui::Panel *pParent, const char *name );
     ~CTFHudPasstimeOffscreenArrow();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void PaintBackground() OVERRIDE;
 
-   protected:
+    protected:
     virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) = 0;
 
-   private:
+    private:
     IMaterial *m_pArrowMaterial;
     vgui::ImagePanel *m_pImage;
 };
@@ -41,10 +41,10 @@ class CTFHudPasstimeBallOffscreenArrow : public CTFHudPasstimeOffscreenArrow
 {
     DECLARE_CLASS_SIMPLE( CTFHudPasstimeBallOffscreenArrow, CTFHudPasstimeOffscreenArrow );
 
-   public:
+    public:
     CTFHudPasstimeBallOffscreenArrow( vgui::Panel *pParent );
 
-   private:
+    private:
     virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) OVERRIDE;
 };
 
@@ -53,10 +53,10 @@ class CTFHudPasstimePlayerOffscreenArrow : public CTFHudPasstimeOffscreenArrow
 {
     DECLARE_CLASS_SIMPLE( CTFHudPasstimePlayerOffscreenArrow, CTFHudPasstimeOffscreenArrow );
 
-   public:
+    public:
     CTFHudPasstimePlayerOffscreenArrow( vgui::Panel *pParent, int iPlayerIndex );
 
-   private:
+    private:
     virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) OVERRIDE;
 
     int m_iPlayerIndex;

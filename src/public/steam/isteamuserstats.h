@@ -95,7 +95,7 @@ struct LeaderboardEntry_t
 //-----------------------------------------------------------------------------
 class ISteamUserStats
 {
-   public:
+    public:
     // Ask the server to send down this user's data and achievements for this game
     STEAM_CALL_BACK( UserStatsReceived_t )
     virtual bool RequestCurrentStats() = 0;
@@ -220,8 +220,8 @@ class ISteamUserStats
     // a max of 100 users can be downloaded at a time, with only one outstanding call at a time
     STEAM_CALL_RESULT( LeaderboardScoresDownloaded_t )
     virtual SteamAPICall_t DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard,
-                                                               STEAM_ARRAY_COUNT_D( cUsers, Array of users to retrieve ) CSteamID *prgUsers,
-                                                               int cUsers ) = 0;
+                                                                STEAM_ARRAY_COUNT_D( cUsers, Array of users to retrieve ) CSteamID *prgUsers,
+                                                                int cUsers ) = 0;
 
     // Returns data about a single leaderboard entry
     // use a for loop from 0 to LeaderboardScoresDownloaded_t::m_cEntryCount to get all the downloaded entries

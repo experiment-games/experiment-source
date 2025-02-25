@@ -32,7 +32,7 @@ class CTFWearableLevelableItem : public CTFWearable
 {
     DECLARE_CLASS( CTFWearableLevelableItem, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -46,7 +46,7 @@ class CTFWearableLevelableItem : public CTFWearable
         return m_unLevel;
     }
 
-   private:
+    private:
     CNetworkVar( uint, m_unLevel );
 };
 

@@ -9,11 +9,11 @@ sampler FBSampler	: register( s0 );
 
 struct PS_INPUT
 {
-	float2 texCoord				: TEXCOORD0;
+    float2 texCoord				: TEXCOORD0;
 };
 
 float4 main( PS_INPUT i ) : COLOR
 {
-	float4 fbSample = tex2D( FBSampler, i.texCoord );
-	return fbSample;
+    float4 fbSample = tex2D( FBSampler, i.texCoord );
+    return fbSample;
 }

@@ -29,7 +29,7 @@ struct baseitemcriteria_t
 
 class CTFItemSystem : public CEconItemSystem
 {
-   public:
+    public:
     // Select and return the base item definition index for a class's load-out slot
     virtual item_definition_index_t GenerateBaseItem( baseitemcriteria_t *pCriteria );
 };

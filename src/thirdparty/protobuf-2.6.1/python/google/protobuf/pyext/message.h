@@ -125,15 +125,15 @@ PyObject* NewEmpty( PyObject* type );
 //
 // Corresponds to reflection api method ReleaseMessage.
 int ReleaseSubMessage( google::protobuf::Message* message,
-                       const google::protobuf::FieldDescriptor* field_descriptor,
-                       CMessage* child_cmessage );
+                        const google::protobuf::FieldDescriptor* field_descriptor,
+                        CMessage* child_cmessage );
 
 // Initializes a new CMessage instance for a submessage. Only called once per
 // submessage as the result is cached in composite_fields.
 //
 // Corresponds to reflection api method GetMessage.
 PyObject* InternalGetSubMessage( CMessage* self,
-                                 CFieldDescriptor* cfield_descriptor );
+                                CFieldDescriptor* cfield_descriptor );
 
 // Deletes a range of C++ submessages in a repeated field (following a
 // removal in a RepeatedCompositeContainer).
@@ -145,20 +145,20 @@ PyObject* InternalGetSubMessage( CMessage* self,
 //
 // Corresponds to reflection api method RemoveLast.
 int InternalDeleteRepeatedField( google::protobuf::Message* message,
-                                 const google::protobuf::FieldDescriptor* field_descriptor,
-                                 PyObject* slice,
-                                 PyObject* cmessage_list );
+                                const google::protobuf::FieldDescriptor* field_descriptor,
+                                PyObject* slice,
+                                PyObject* cmessage_list );
 
 // Sets the specified scalar value to the message.
 int InternalSetScalar( CMessage* self,
-                       const google::protobuf::FieldDescriptor* field_descriptor,
-                       PyObject* value );
+                        const google::protobuf::FieldDescriptor* field_descriptor,
+                        PyObject* value );
 
 // Retrieves the specified scalar value from the message.
 //
 // Returns a new python reference.
 PyObject* InternalGetScalar( CMessage* self,
-                             const google::protobuf::FieldDescriptor* field_descriptor );
+                            const google::protobuf::FieldDescriptor* field_descriptor );
 
 // Clears the message, removing all contained data. Extension dictionary and
 // submessages are released first if there are remaining external references.

@@ -35,10 +35,10 @@ static bool BindingLessFunc( KeyValues *const &lhs, KeyValues *const &rhs )
 
 CKeyBindingHelpDialog::CKeyBindingHelpDialog( Panel *parent, Panel *panelToView, KeyBindingContextHandle_t handle, KeyCode code, int modifiers )
     : BaseClass( parent, "KeyBindingHelpDialog" ),
-      m_Handle( handle ),
-      m_KeyCode( code ),
-      m_Modifiers( modifiers ),
-      m_bPermanent( false )
+    m_Handle( handle ),
+    m_KeyCode( code ),
+    m_Modifiers( modifiers ),
+    m_bPermanent( false )
 {
     Assert( panelToView );
     m_hPanel = panelToView;
@@ -162,8 +162,8 @@ bool CKeyBindingHelpDialog::IsHelpKeyStillBeingHeld()
 void CKeyBindingHelpDialog::OnCommand( char const *cmd )
 {
     if ( !Q_stricmp( cmd, "OK" ) ||
-         !Q_stricmp( cmd, "cancel" ) ||
-         !Q_stricmp( cmd, "Close" ) )
+        !Q_stricmp( cmd, "cancel" ) ||
+        !Q_stricmp( cmd, "Close" ) )
     {
         MarkForDeletion();
     }
@@ -291,7 +291,7 @@ void CKeyBindingHelpDialog::PopulateList()
             // Find the binding
             KeyBindingMap_t *bindingMap = pPanel->LookupBinding( kbMap->bindingname );
             if ( bindingMap &&
-                 bindingMap->helpstring )
+                bindingMap->helpstring )
             {
                 AnsiText( bindingMap->helpstring, ansi, sizeof( ansi ) );
                 item->SetString( "Description", ansi );

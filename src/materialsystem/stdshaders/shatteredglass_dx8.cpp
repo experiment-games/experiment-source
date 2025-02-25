@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER( ShatteredGlass_DX8,
-                 "Help for ShatteredGlass_DX8" )
+                "Help for ShatteredGlass_DX8" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/Detail", "detail" )

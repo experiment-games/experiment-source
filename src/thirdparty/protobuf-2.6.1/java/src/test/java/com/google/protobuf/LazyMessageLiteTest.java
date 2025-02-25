@@ -113,10 +113,10 @@ public class LazyMessageLiteTest extends TestCase {
     ArrayList<LazyInnerMessageLite> inners = new ArrayList<LazyInnerMessageLite>();
     int count = 4;
     for (int i = 0; i < count; i++) {
-      LazyInnerMessageLite inner = LazyInnerMessageLite.newBuilder()
-          .setNum(i)
-          .build();
-      inners.add(inner);
+    LazyInnerMessageLite inner = LazyInnerMessageLite.newBuilder()
+        .setNum(i)
+        .build();
+    inners.add(inner);
     }
 
     LazyMessageLite outer = LazyMessageLite.newBuilder()
@@ -124,7 +124,7 @@ public class LazyMessageLiteTest extends TestCase {
         .build();
     assertEquals(count, outer.getRepeatedInnerCount());
     for (int i = 0; i < count; i++) {
-      assertEquals(i, outer.getRepeatedInner(i).getNum());
+    assertEquals(i, outer.getRepeatedInner(i).getNum());
     }
   }
 

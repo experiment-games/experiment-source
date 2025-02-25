@@ -72,7 +72,7 @@ namespace java
 
 class FileGenerator
 {
-   public:
+    public:
     FileGenerator( const FileDescriptor* file, bool immutable_api = true );
     ~FileGenerator();
 
@@ -87,8 +87,8 @@ class FileGenerator
     // files other than the outer file (i.e. one for each message, enum, and
     // service type).
     void GenerateSiblings( const string& package_dir,
-                           GeneratorContext* generator_context,
-                           vector< string >* file_list );
+                            GeneratorContext* generator_context,
+                            vector< string >* file_list );
 
     const string& java_package()
     {
@@ -99,12 +99,12 @@ class FileGenerator
         return classname_;
     }
 
-   private:
+    private:
     void GenerateDescriptorInitializationCodeForImmutable( io::Printer* printer );
     void GenerateDescriptorInitializationCodeForMutable( io::Printer* printer );
 
     bool ShouldIncludeDependency( const FileDescriptor* descriptor,
-                                  bool immutable_api_ );
+                                bool immutable_api_ );
 
     const FileDescriptor* file_;
     string java_package_;

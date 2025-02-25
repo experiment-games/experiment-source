@@ -96,7 +96,7 @@ typedef void *PseudoGLContextPtr;
 // parrot the D3D present parameters, more or less... "adapter" translates into "active display index" per the m_activeDisplayCount below.
 class GLMDisplayParams
 {
-   public:
+    public:
     // presumption, these indices are in sync with the current display DB that GLMgr has handy
     // int					m_rendererIndex;		// index of renderer (-1 if root context)
     // int					m_displayIndex;			// index of display in renderer - for FS
@@ -113,7 +113,7 @@ class GLMDisplayParams
     uint m_backBufferHeight;       // pixel height (aka screen v-resolution if full screen)
     D3DFORMAT m_backBufferFormat;  // pixel format
     uint m_multiSampleCount;       // 0 means no MSAA, 2 means 2x MSAA, etc
-                                   // uint				m_multiSampleQuality;	// no MSAA quality control yet
+                                    // uint				m_multiSampleQuality;	// no MSAA quality control yet
 
     bool m_enableAutoDepthStencil;  // generally set to 'TRUE' per CShaderDeviceDx8::SetPresentParameters
     D3DFORMAT m_autoDepthStencilFormat;
@@ -130,7 +130,7 @@ class GLMDisplayParams
 
 class GLMgr
 {
-   public:
+    public:
     //===========================================================================
     // class methods - singleton
     static void NewGLMgr( void );  // instantiate singleton..
@@ -141,19 +141,19 @@ class GLMgr
     // plain methods
 
 #if 0  // turned all these off while new approach is coded
-						void			RefreshDisplayDB( void );	// blow away old display DB, make a new one
-						GLMDisplayDB	*GetDisplayDB( void );		// get a ptr to the one GLMgr keeps.  only valid til next refresh.
+                        void			RefreshDisplayDB( void );	// blow away old display DB, make a new one
+                        GLMDisplayDB	*GetDisplayDB( void );		// get a ptr to the one GLMgr keeps.  only valid til next refresh.
 
-							// eligible renderers will be ranked by desirability starting at index 0 within the db
-							// within each renderer, eligible displays will be ranked some kind of desirability (area? dist from menu bar?) 
-							// within each display, eligible modes will be ranked by descending areas
-						
-							// calls supplying indices are implicitly making reference to the current DB
-						bool			CaptureDisplay( int rendIndex, int displayIndex, bool captureAll );		// capture one display or all displays
-						void			ReleaseDisplays( void );												// release all captures
-						
-						int				GetDisplayMode( int rendIndex, int displayIndex );						// retrieve current display res (returns modeIndex)
-						void			SetDisplayMode( GLMDisplayParams *params );								// set the display res (only useful for FS)
+                            // eligible renderers will be ranked by desirability starting at index 0 within the db
+                            // within each renderer, eligible displays will be ranked some kind of desirability (area? dist from menu bar?)
+                            // within each display, eligible modes will be ranked by descending areas
+
+                            // calls supplying indices are implicitly making reference to the current DB
+                        bool			CaptureDisplay( int rendIndex, int displayIndex, bool captureAll );		// capture one display or all displays
+                        void			ReleaseDisplays( void );												// release all captures
+
+                        int				GetDisplayMode( int rendIndex, int displayIndex );						// retrieve current display res (returns modeIndex)
+                        void			SetDisplayMode( GLMDisplayParams *params );								// set the display res (only useful for FS)
 #endif
 
     GLMContext *NewContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params );  // this will have to change
@@ -165,7 +165,7 @@ class GLMgr
     void SetCurrentContext( GLMContext *context );  // make current in calling thread only
     GLMContext *GetCurrentContext( void );
 
-   protected:
+    protected:
     friend class GLMContext;
 
     GLMgr();
@@ -769,8 +769,8 @@ FORCEINLINE void GLContextSetIndexed( GLClipPlaneEquation_t *src, int index )
 FORCEINLINE void GLContextGetIndexed( GLClipPlaneEquation_t *dst, int index )
 {
     DebuggerBreak();  // do this later
-                      //	glClipPlane( GL_CLIP_PLANE0 + index, coeffs );
-                      //	GLdouble coeffs[4] = { src->x, src->y, src->z, src->w };
+                    //	glClipPlane( GL_CLIP_PLANE0 + index, coeffs );
+                    //	GLdouble coeffs[4] = { src->x, src->y, src->z, src->w };
 }
 
 FORCEINLINE void GLContextGetDefaultIndexed( GLClipPlaneEquation_t *dst, int index )
@@ -1101,7 +1101,7 @@ FORCEINLINE void GLContextGetDefault( GLClearStencil_t *dst )
 template < typename T >
 class GLState
 {
-   public:
+    public:
     inline GLState()
     {
         memset( &data, 0, sizeof( data ) );
@@ -1154,7 +1154,7 @@ class GLState
         return data;
     }
 
-   protected:
+    protected:
     T data;
 };
 
@@ -1162,7 +1162,7 @@ class GLState
 template < typename T, int COUNT >
 class GLStateArray
 {
-   public:
+    public:
     inline GLStateArray()
     {
         memset( &data, 0, sizeof( data ) );
@@ -1242,7 +1242,7 @@ class GLStateArray
         return result;
     };
 
-   protected:
+    protected:
     T data[COUNT];
 };
 
@@ -1268,8 +1268,8 @@ struct GLMVertexSetup
     unsigned char m_vtxAttribMap[16];
 
     /* high nibble is usage per _D3DDECLUSAGE
-      typedef enum _D3DDECLUSAGE
-      {
+    typedef enum _D3DDECLUSAGE
+    {
         D3DDECLUSAGE_POSITION		= 0,
         D3DDECLUSAGE_BLENDWEIGHT	= 1,
         D3DDECLUSAGE_BLENDINDICES	= 2,
@@ -1284,10 +1284,10 @@ struct GLMVertexSetup
         D3DDECLUSAGE_FOG			= 11,
         D3DDECLUSAGE_DEPTH			= 12,
         D3DDECLUSAGE_SAMPLE			= 13,
-      } D3DDECLUSAGE;
+    } D3DDECLUSAGE;
 
-      low nibble is usageindex (i.e. POSITION0, POSITION1, etc)
-      array position is attrib number.
+    low nibble is usageindex (i.e. POSITION0, POSITION1, etc)
+    array position is attrib number.
     */
 };
 
@@ -1377,7 +1377,7 @@ struct GLMDebugHookInfo
 
 class CFlushDrawStatesStats
 {
-   public:
+    public:
     CFlushDrawStatesStats()
     {
         Clear();
@@ -1419,12 +1419,12 @@ class CPinnedMemoryBuffer
     CPinnedMemoryBuffer( const CPinnedMemoryBuffer & );
     CPinnedMemoryBuffer &operator=( const CPinnedMemoryBuffer & );
 
-   public:
+    public:
     CPinnedMemoryBuffer()
         : m_pRawBuf( NULL ), m_pBuf( NULL ), m_nSize( 0 ), m_nOfs( 0 ), m_nBufferObj( 0 )
 #ifdef HAVE_GL_ARB_SYNC
-          ,
-          m_nSyncObj( 0 )
+        ,
+        m_nSyncObj( 0 )
 #endif
     {
     }
@@ -1530,7 +1530,7 @@ class CPinnedMemoryBuffer
         Assert( m_nOfs <= m_nSize );
     }
 
-   private:
+    private:
     void *m_pRawBuf;
     void *m_pBuf;
     uint m_nSize;
@@ -1547,7 +1547,7 @@ class CPinnedMemoryBuffer
 
 class GLMContext
 {
-   public:
+    public:
     // set/check current context (perq for many other calls)
     void MakeCurrent( bool bRenderThread = false );
     void ReleaseCurrent( bool bRenderThread = false );
@@ -1845,7 +1845,7 @@ class GLMContext
         return m_nCurOwnerThreadId;
     }
 
-   protected:
+    protected:
     friend class GLMgr;            // only GLMgr can make GLMContext objects
     friend class GLMRendererInfo;  // only GLMgr can make GLMContext objects
     friend class CGLMTex;          // tex needs to be able to do binds
@@ -1880,11 +1880,11 @@ class GLMContext
             gGL->glBindBufferARB( GL_ARRAY_BUFFER_ARB, nGLName );
         }
         else if ( ( curAttribs.m_pPtr == pBuf ) &&
-                  ( curAttribs.m_revision == nRevision ) &&
-                  ( curAttribs.m_stride == stride ) &&
-                  ( curAttribs.m_datatype == datatype ) &&
-                  ( curAttribs.m_normalized == normalized ) &&
-                  ( curAttribs.m_nCompCount == nCompCount ) )
+                ( curAttribs.m_revision == nRevision ) &&
+                ( curAttribs.m_stride == stride ) &&
+                ( curAttribs.m_datatype == datatype ) &&
+                ( curAttribs.m_normalized == normalized ) &&
+                ( curAttribs.m_nCompCount == nCompCount ) )
         {
             return;
         }
@@ -2082,7 +2082,7 @@ class GLMContext
 
     CGLMFBO *m_boundDrawFBO;  // FBO on GL_DRAW_FRAMEBUFFER bind point
     CGLMFBO *m_boundReadFBO;  // FBO on GL_READ_FRAMEBUFFER bind point
-                              // ^ both are set if you bind to GL_FRAMEBUFFER_EXT
+                            // ^ both are set if you bind to GL_FRAMEBUFFER_EXT
 
     CGLMFBO *m_drawingFBO;  // what FBO should be bound at draw time (to both read/draw bp's).
 
@@ -2271,68 +2271,68 @@ FORCEINLINE void GLMContext::DrawRangeElements( GLenum mode, GLuint start, GLuin
 
 // #if GLMDEBUG
 #if 0
-	bool	hasVP = m_drawingProgram[ kGLMVertexProgram ] != NULL;
-	bool	hasFP = m_drawingProgram[ kGLMFragmentProgram ] != NULL;
+    bool	hasVP = m_drawingProgram[ kGLMVertexProgram ] != NULL;
+    bool	hasFP = m_drawingProgram[ kGLMFragmentProgram ] != NULL;
 
-	// init debug hook information
-	GLMDebugHookInfo info;
-	memset( &info, 0, sizeof(info) );
-	info.m_caller = eDrawElements;
+    // init debug hook information
+    GLMDebugHookInfo info;
+    memset( &info, 0, sizeof(info) );
+    info.m_caller = eDrawElements;
 
-	// relay parameters we're operating under
-	info.m_drawMode = mode;
-	info.m_drawStart = start;
-	info.m_drawEnd = end;
-	info.m_drawCount = count;
-	info.m_drawType = type;
-	info.m_drawIndices = indices;
-		
-	do
-	{
-		// obey global options re pre-draw clear
-		if ( m_autoClearColor || m_autoClearDepth || m_autoClearStencil )
-		{
-			GLMPRINTF(("-- DrawRangeElements auto clear" ));
-			this->DebugClear();
-		}
+    // relay parameters we're operating under
+    info.m_drawMode = mode;
+    info.m_drawStart = start;
+    info.m_drawEnd = end;
+    info.m_drawCount = count;
+    info.m_drawType = type;
+    info.m_drawIndices = indices;
 
-		// always sync with editable shader text prior to draw
+    do
+    {
+        // obey global options re pre-draw clear
+        if ( m_autoClearColor || m_autoClearDepth || m_autoClearStencil )
+        {
+            GLMPRINTF(("-- DrawRangeElements auto clear" ));
+            this->DebugClear();
+        }
+
+        // always sync with editable shader text prior to draw
 #if GLMDEBUG
-		//FIXME disengage this path if context is in GLSL mode..
-		// it will need fixes to get the shader pair re-linked etc if edits happen anyway.
+        //FIXME disengage this path if context is in GLSL mode..
+        // it will need fixes to get the shader pair re-linked etc if edits happen anyway.
 
-		if (m_drawingProgram[ kGLMVertexProgram ])
-		{
-			m_drawingProgram[ kGLMVertexProgram ]->SyncWithEditable();
-		}
-		else
-		{
-			AssertOnce(!"drawing with no vertex program bound");
-		}
+        if (m_drawingProgram[ kGLMVertexProgram ])
+        {
+            m_drawingProgram[ kGLMVertexProgram ]->SyncWithEditable();
+        }
+        else
+        {
+            AssertOnce(!"drawing with no vertex program bound");
+        }
 
 
-		if (m_drawingProgram[ kGLMFragmentProgram ])
-		{
-			m_drawingProgram[ kGLMFragmentProgram ]->SyncWithEditable();
-		}
-		else
-		{
-			AssertOnce(!"drawing with no fragment program bound");
-		}
+        if (m_drawingProgram[ kGLMFragmentProgram ])
+        {
+            m_drawingProgram[ kGLMFragmentProgram ]->SyncWithEditable();
+        }
+        else
+        {
+            AssertOnce(!"drawing with no fragment program bound");
+        }
 #endif
-		// do the drawing
-		if (hasVP && hasFP)
-		{
-			gGL->glDrawRangeElementsBaseVertex( mode, start, end, count, type, indicesActual, baseVertex );
+        // do the drawing
+        if (hasVP && hasFP)
+        {
+            gGL->glDrawRangeElementsBaseVertex( mode, start, end, count, type, indicesActual, baseVertex );
 
-			if ( m_slowCheckEnable )
-			{
-				CheckNative();
-			}
-		}
-		this->DebugHook( &info );
+            if ( m_slowCheckEnable )
+            {
+                CheckNative();
+            }
+        }
+        this->DebugHook( &info );
 
-	} while ( info.m_loop );
+    } while ( info.m_loop );
 #else
     Assert( m_drawingLang == kGLMGLSL );
 
@@ -2388,11 +2388,11 @@ FORCEINLINE void GLMContext::SetProgramParametersF( EGLMProgramType type, uint b
     for ( uint i = 0; i < slotCount; i++ )
     {
         GLMPRINTF( ( "-S-    %03d: [ %7.4f %7.4f %7.4f %7.4f ]",
-                     baseSlot + i,
-                     slotData[i * 4],
-                     slotData[i * 4 + 1],
-                     slotData[i * 4 + 2],
-                     slotData[i * 4 + 3] ) );
+                    baseSlot + i,
+                    slotData[i * 4],
+                    slotData[i * 4 + 1],
+                    slotData[i * 4 + 2],
+                    slotData[i * 4 + 3] ) );
     }
 #endif
 
@@ -2473,8 +2473,8 @@ FORCEINLINE void GLMContext::SetProgramParametersB( EGLMProgramType type, uint b
     for ( uint i = 0; i < boolCount; i++ )
     {
         GLMPRINTF( ( "-S-    %03d: %d (bool)",
-                     baseSlot + i,
-                     slotData[i] ) );
+                    baseSlot + i,
+                    slotData[i] ) );
     }
 #endif
 
@@ -2501,11 +2501,11 @@ FORCEINLINE void GLMContext::SetProgramParametersI( EGLMProgramType type, uint b
     for ( uint i = 0; i < slotCount; i++ )
     {
         GLMPRINTF( ( "-S-    %03d: %d %d %d %d (int4)",
-                     baseSlot + i,
-                     slotData[i * 4],
-                     slotData[i * 4 + 1],
-                     slotData[i * 4 + 2],
-                     slotData[i * 4 + 3] ) );
+                    baseSlot + i,
+                    slotData[i * 4],
+                    slotData[i * 4 + 1],
+                    slotData[i * 4 + 2],
+                    slotData[i * 4 + 3] ) );
     }
 #endif
 
@@ -2741,7 +2741,7 @@ struct GLMTestParams
 
 class GLMTester
 {
-   public:
+    public:
     GLMTester( GLMTestParams *params );
     ~GLMTester();
 
@@ -2778,7 +2778,7 @@ class GLMTester
 
 class CShowPixelsParams
 {
-   public:
+    public:
     GLuint m_srcTexName;
     int m_width, m_height;
     bool m_vsyncEnable;
@@ -2792,7 +2792,7 @@ class CShowPixelsParams
 #define kMaxCrawlText ( kMaxCrawlFrames * 256 )
 class CStackCrawlParams
 {
-   public:
+    public:
     uint m_frameLimit;                    // input: max frames to retrieve
     uint m_frameCount;                    // output: frames found
     void *m_crawl[kMaxCrawlFrames];       // call site addresses

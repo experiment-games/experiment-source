@@ -17,7 +17,7 @@
 
 abstract_class IReplayMovie : public IQueryableReplayItem
 {
-   public:
+    public:
     virtual ReplayHandle_t GetMovieHandle() const = 0;
     virtual ReplayHandle_t GetReplayHandle() const = 0;
     virtual const ReplayRenderSettings_t &GetRenderSettings() = 0;

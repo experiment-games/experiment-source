@@ -23,7 +23,7 @@ class CRotationSlider : public vgui::Slider
 {
     DECLARE_CLASS_SIMPLE( CRotationSlider, vgui::Slider );
 
-   public:
+    public:
     CRotationSlider( vgui::Panel *pParent, const char *pName );
     void SetControlledObject( C_BaseObject *pObject );
 
@@ -31,7 +31,7 @@ class CRotationSlider : public vgui::Slider
     virtual void OnMouseReleased( vgui::MouseCode code );
     MESSAGE_FUNC_INT( OnSliderMoved, "SliderMoved", position );
 
-   private:
+    private:
     CHandle< C_BaseObject > m_hObject;
     float m_flInitialYaw;
     float m_flYaw;

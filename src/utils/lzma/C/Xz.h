@@ -232,9 +232,9 @@ finishMode:
 Returns:
   SZ_OK
     status:
-      CODER_STATUS_NOT_FINISHED,
-      CODER_STATUS_NEEDS_MORE_INPUT - maybe there are more xz streams,
-                                      call XzUnpacker_IsStreamWasFinished to check that current stream was finished
+    CODER_STATUS_NOT_FINISHED,
+    CODER_STATUS_NEEDS_MORE_INPUT - maybe there are more xz streams,
+                                    call XzUnpacker_IsStreamWasFinished to check that current stream was finished
   SZ_ERROR_MEM  - Memory allocation error
   SZ_ERROR_DATA - Data error
   SZ_ERROR_UNSUPPORTED - Unsupported method or method properties
@@ -242,9 +242,9 @@ Returns:
   // SZ_ERROR_INPUT_EOF - It needs more bytes in input buffer (src).
 
   SZ_ERROR_NO_ARCHIVE - the error with xz Stream Header with one of the following reasons:
-     - xz Stream Signature failure
-     - CRC32 of xz Stream Header is failed
-     - The size of Stream padding is not multiple of four bytes.
+    - xz Stream Signature failure
+    - CRC32 of xz Stream Header is failed
+    - The size of Stream padding is not multiple of four bytes.
     It's possible to get that error, if xz stream was finished and the stream
     contains some another data. In that case you can call XzUnpacker_GetExtraSize()
     function to get real size of xz stream.

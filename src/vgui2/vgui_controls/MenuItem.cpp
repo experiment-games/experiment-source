@@ -25,7 +25,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class MenuItemCheckImage : public TextImage
 {
-   public:
+    public:
     MenuItemCheckImage( MenuItem *item )
         : TextImage( "g" )
     {
@@ -64,7 +64,7 @@ class MenuItemCheckImage : public TextImage
         }
     }
 
-   private:
+    private:
     MenuItem *_menuItem;
 };
 

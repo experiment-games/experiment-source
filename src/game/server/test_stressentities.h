@@ -19,7 +19,7 @@ typedef CBaseEntity* ( *StressEntityFn )();  // Function to create an entity for
 // for the entity stress test.
 class CStressEntityReg
 {
-   public:
+    public:
     CStressEntityReg( StressEntityFn fn )
     {
         m_pFn = fn;
@@ -40,7 +40,7 @@ class CStressEntityReg
         return m_pFn;
     }
 
-   private:
+    private:
     static CStressEntityReg* s_pHead;  // List of all CStressEntityReg's.
     CStressEntityReg* m_pNext;
     StressEntityFn m_pFn;

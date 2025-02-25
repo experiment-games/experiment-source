@@ -169,49 +169,49 @@ void CWeaponBrickbat::BrickbatTouch( CBaseEntity *pOther )
     // ----------------------------------------------------
     if (pOther->GetFlags() & FL_CLIENT)
     {
-      CBaseCombatCharacter* pBCC = ToBaseCombatCharacter( pOther );
+    CBaseCombatCharacter* pBCC = ToBaseCombatCharacter( pOther );
 
-      // Exit if game rules say I can't have any more of this ammo type.
-      if ( g_pGameRules->CanHaveAmmo( pBCC, m_iPrimaryAmmoType ) == false )
+    // Exit if game rules say I can't have any more of this ammo type.
+    if ( g_pGameRules->CanHaveAmmo( pBCC, m_iPrimaryAmmoType ) == false )
         return;
 
-      // ------------------------------------------------
-      //  If already owned weapon of this type remove me
-      // ------------------------------------------------
-      CWeaponBrickbat* oldWeapon = (CWeaponBrickbat*)pBCC->Weapon_OwnsThisType( GetClassname() );
+    // ------------------------------------------------
+    //  If already owned weapon of this type remove me
+    // ------------------------------------------------
+    CWeaponBrickbat* oldWeapon = (CWeaponBrickbat*)pBCC->Weapon_OwnsThisType( GetClassname() );
 
-      // Remove physics object if is one
-      VPhysicsDestroyObject();
+    // Remove physics object if is one
+    VPhysicsDestroyObject();
 
-      if ( ( oldWeapon != NULL ) && ( oldWeapon != this ) )
-      {
+    if ( ( oldWeapon != NULL ) && ( oldWeapon != this ) )
+    {
         // Only pick up if not at max ammo amount
         if (oldWeapon->m_nAmmoCount[m_iCurrentAmmoType] < BrickBatAmmoArray[m_iCurrentAmmoType].m_nMaxCarry)
         {
-          oldWeapon->m_nAmmoCount[m_iCurrentAmmoType]++;
-          pBCC->GiveAmmo( 1, oldWeapon->m_iPrimaryAmmoType );
-          UTIL_Remove( this );
+        oldWeapon->m_nAmmoCount[m_iCurrentAmmoType]++;
+        pBCC->GiveAmmo( 1, oldWeapon->m_iPrimaryAmmoType );
+        UTIL_Remove( this );
         }
-      }
-      else
-      {
+    }
+    else
+    {
         // Only pick up if not at max ammo amount
         if (m_nAmmoCount[m_iCurrentAmmoType] < BrickBatAmmoArray[m_iCurrentAmmoType].m_nMaxCarry)
         {
-          m_nAmmoCount[m_iCurrentAmmoType]++;
-          pBCC->GiveAmmo( 1, m_iPrimaryAmmoType );
+        m_nAmmoCount[m_iCurrentAmmoType]++;
+        pBCC->GiveAmmo( 1, m_iPrimaryAmmoType );
 
-          SetThink (NULL);
+        SetThink (NULL);
         }
-      }
+    }
 
-      // -----------------------------------------------------
-      // Switch to this weapon if the only weapon I own
-      // -----------------------------------------------------
-      if (!pBCC->GetActiveWeapon() && pBCC->GetActiveWeapon() != this)
-      {
+    // -----------------------------------------------------
+    // Switch to this weapon if the only weapon I own
+    // -----------------------------------------------------
+    if (!pBCC->GetActiveWeapon() && pBCC->GetActiveWeapon() != this)
+    {
         pBCC->Weapon_Switch(oldWeapon);
-      }
+    }
     }
     */
 }
@@ -582,12 +582,12 @@ void CWeaponBrickbat::ItemPostFrame( void )
     /*  HANDY FOR DEBUG
     for (int i=0;i<NUM_BRICKBAT_AMMO_TYPES;i++)
     {
-      Msg("%i %s",m_nAmmoCount[i],BrickBatAmmoArray[i].m_sClassName);
-      if (i==m_iCurrentAmmoType)
-      {
+    Msg("%i %s",m_nAmmoCount[i],BrickBatAmmoArray[i].m_sClassName);
+    if (i==m_iCurrentAmmoType)
+    {
         Msg("**");
-      }
-      Msg("\n");
+    }
+    Msg("\n");
     }
     */
 

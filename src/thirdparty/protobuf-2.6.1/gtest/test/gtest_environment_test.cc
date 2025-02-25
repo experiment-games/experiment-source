@@ -61,13 +61,13 @@ class MyEnvironment : public testing::Environment {
     set_up_was_run_ = true;
 
     switch (failure_in_set_up_) {
-      case NON_FATAL_FAILURE:
+    case NON_FATAL_FAILURE:
         ADD_FAILURE() << "Expected non-fatal failure in global set-up.";
         break;
-      case FATAL_FAILURE:
+    case FATAL_FAILURE:
         FAIL() << "Expected fatal failure in global set-up.";
         break;
-      default:
+    default:
         break;
     }
   }

@@ -58,16 +58,16 @@ class CTFDashboardCompPanel : public CMatchMakingDashboardSidePanel, public CGam
         else if ( FStrEq( command, "find_game" ) )
         {
             ShowConfirmDialog( "#TF_MM_Disconnect_Title",
-                               "#TF_Matchmaking_AbandonQueuePrompt",
-                               "#TF_OK",
-                               "#Cancel",
-                               []( bool bConfirmed, void* pContext )
-                               {
-                                   if ( bConfirmed )
-                                   {
-                                       GTFPartyClient()->RequestQueueForMatch( k_eTFMatchGroup_Ladder_6v6 );
-                                   }
-                               } );
+                                "#TF_Matchmaking_AbandonQueuePrompt",
+                                "#TF_OK",
+                                "#Cancel",
+                                []( bool bConfirmed, void* pContext )
+                                {
+                                    if ( bConfirmed )
+                                    {
+                                        GTFPartyClient()->RequestQueueForMatch( k_eTFMatchGroup_Ladder_6v6 );
+                                    }
+                                } );
 
             return;
         }
@@ -78,15 +78,15 @@ class CTFDashboardCompPanel : public CMatchMakingDashboardSidePanel, public CGam
     void FireGameEvent( IGameEvent* event )
     {
         if ( FStrEq( event->GetName(), "party_criteria_changed" ) ||
-             FStrEq( event->GetName(), "party_queue_state_changed" ) ||
-             FStrEq( event->GetName(), "world_status_changed" ) ||
-             FStrEq( event->GetName(), "party_updated" ) )
+            FStrEq( event->GetName(), "party_queue_state_changed" ) ||
+            FStrEq( event->GetName(), "world_status_changed" ) ||
+            FStrEq( event->GetName(), "party_updated" ) )
         {
             InvalidateLayout();
         }
     }
 
-   private:
+    private:
     CCompStatsPanel* m_pCriteria;
 };
 

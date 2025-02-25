@@ -37,7 +37,7 @@ class CRecipeComponentItemModelPanel;
 
 class CRecipeComponentItemModelPanel : public CItemModelPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CRecipeComponentItemModelPanel, CItemModelPanel );
     CRecipeComponentItemModelPanel( vgui::Panel *parent, const char *name );
 
@@ -61,7 +61,7 @@ class CRecipeComponentItemModelPanel : public CItemModelPanel
         return m_nPageNumber;
     }
 
-   protected:
+    protected:
     struct RecipeItem_t
     {
         itemid_t m_nRecipeIndex;
@@ -78,7 +78,7 @@ class CRecipeComponentItemModelPanel : public CItemModelPanel
 
 class CInputPanelItemModelPanel : public CRecipeComponentItemModelPanel
 {
-   public:
+    public:
     CInputPanelItemModelPanel( vgui::Panel *parent, const char *name, const CEconItemView *pDynamicRecipeItem )
         : CRecipeComponentItemModelPanel( parent, name ), m_pDynamicRecipeItem( pDynamicRecipeItem )
     {
@@ -94,10 +94,10 @@ class CInputPanelItemModelPanel : public CRecipeComponentItemModelPanel
         m_pDynamicRecipeItem = pDynamicRecipeItem;
     }
 
-   protected:
+    protected:
     virtual void SetBlankState() OVERRIDE;
 
-   private:
+    private:
     CUtlVector< const CEconItemAttributeDefinition * > m_vecAttrDef;
     const CEconItemView *m_pDynamicRecipeItem;
 };
@@ -109,7 +109,7 @@ class CDynamicRecipePanel : public CBackpackPanel
 {
     DECLARE_CLASS_SIMPLE( CDynamicRecipePanel, CBackpackPanel );
 
-   public:
+    public:
     CDynamicRecipePanel( vgui::Panel *parent, const char *panelName, CEconItemView *pRecipeItem );
     ~CDynamicRecipePanel( void );
 
@@ -136,7 +136,7 @@ class CDynamicRecipePanel : public CBackpackPanel
     virtual void OnShowPanel( bool bVisible, bool bReturningFromArmory ) OVERRIDE;
     void OnCraftResponse( itemid_t nNewToolID, EGCMsgResponse eResponse );
 
-   private:
+    private:
     bool IsInputPanel( int iPanelIndex ) const;
     bool IsOutputPanel( int iPanelIndex ) const;
     bool IsBackpackPanel( int iPanelIndex ) const;
@@ -167,7 +167,7 @@ class CDynamicRecipePanel : public CBackpackPanel
 
     class CRecipeComponentAttributeCounter : public CEconItemSpecificAttributeIterator
     {
-       public:
+        public:
         CRecipeComponentAttributeCounter()
             : m_nInputCount( 0 )
         {
@@ -192,7 +192,7 @@ class CDynamicRecipePanel : public CBackpackPanel
 
         void Reset();
 
-       private:
+        private:
         struct InputComponent_t
         {
             CEconItemView m_ItemView;
@@ -212,7 +212,7 @@ class CDynamicRecipePanel : public CBackpackPanel
 
     class CDynamicRecipeItemMatchFind : public CEconItemSpecificAttributeIterator
     {
-       public:
+        public:
         CDynamicRecipeItemMatchFind( const CEconItemView *pSourceItem, const CEconItemView *pItemTomatch )
             : m_bMatchesAny( false ), m_pSourceItem( pSourceItem ), m_pItemToMatch( pItemTomatch )
         {
@@ -224,7 +224,7 @@ class CDynamicRecipePanel : public CBackpackPanel
             return m_bMatchesAny;
         }
 
-       private:
+        private:
         const CEconItemView *m_pSourceItem;
         const CEconItemView *m_pItemToMatch;
         bool m_bMatchesAny;

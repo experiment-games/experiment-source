@@ -8,7 +8,7 @@
 
 class CTFBotPrepareStickybombTrap : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotPrepareStickybombTrap( void );
     virtual ~CTFBotPrepareStickybombTrap();
 
@@ -35,7 +35,7 @@ class CTFBotPrepareStickybombTrap : public Action< CTFBot >
         int m_count;
     };
 
-   private:
+    private:
     bool m_isFullReloadNeeded;
 
     CTFNavArea *m_myArea;

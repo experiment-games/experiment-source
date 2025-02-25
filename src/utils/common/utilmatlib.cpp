@@ -95,11 +95,11 @@ void GetMaterialDimensions( MaterialSystemMaterial_t materialHandle, int *width,
     if ( retVal != MATERIAL_PREVIEW_IMAGE_OK )
     {
 #if 0
-		if (retVal == MATERIAL_PREVIEW_IMAGE_BAD ) 
-		{
-			Error( "problem getting preview image for %s", 
-				g_pMaterialSystem->GetMaterialName( materialInfo[matID].materialHandle ) );
-		}
+        if (retVal == MATERIAL_PREVIEW_IMAGE_BAD )
+        {
+            Error( "problem getting preview image for %s",
+                g_pMaterialSystem->GetMaterialName( materialInfo[matID].materialHandle ) );
+        }
 #else
         *width = 128;
         *height = 128;

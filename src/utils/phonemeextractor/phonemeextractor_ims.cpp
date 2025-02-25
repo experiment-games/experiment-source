@@ -30,7 +30,7 @@ static IImsHelper *talkback = NULL;
 //-----------------------------------------------------------------------------
 class CPhonemeExtractorLipSinc : public IPhonemeExtractor
 {
-   public:
+    public:
     virtual PE_APITYPE GetAPIType() const
     {
         return SPEECH_API_LIPSINC;
@@ -57,10 +57,10 @@ class CPhonemeExtractorLipSinc : public IPhonemeExtractor
         MAX_WORD_LENGTH = 128,
     };
 
-   private:
+    private:
     class CAnalyzedWord
     {
-       public:
+        public:
         char buffer[MAX_WORD_LENGTH];
         double starttime;
         double endtime;
@@ -68,7 +68,7 @@ class CPhonemeExtractorLipSinc : public IPhonemeExtractor
 
     class CAnalyzedPhoneme
     {
-       public:
+        public:
         char phoneme[32];
         double starttime;
         double endtime;
@@ -378,7 +378,7 @@ char const *CPhonemeExtractorLipSinc::ConstructInputSentence( CSentence &inwords
     }
 
     if ( inwords.m_Words.Count() == 1 &&
-         !Q_strnicmp( inwords.GetText(), TEXTLESS_WORDNAME, Q_strlen( TEXTLESS_WORDNAME ) ) )
+        !Q_strnicmp( inwords.GetText(), TEXTLESS_WORDNAME, Q_strlen( TEXTLESS_WORDNAME ) ) )
     {
         sentence[0] = 0;
     }
@@ -825,7 +825,7 @@ void CPhonemeExtractorLipSinc::ProcessWords( TALKBACK_ANALYSIS *analysis, CSente
     if ( count <= 0L )
     {
         if ( inwords.m_Words.Count() == 0 ||
-             !Q_strnicmp( inwords.GetText(), TEXTLESS_WORDNAME, Q_strlen( TEXTLESS_WORDNAME ) ) )
+            !Q_strnicmp( inwords.GetText(), TEXTLESS_WORDNAME, Q_strlen( TEXTLESS_WORDNAME ) ) )
         {
             ProcessWordsTextless( analysis, outwords );
         }
@@ -947,17 +947,17 @@ char const *CPhonemeExtractorLipSinc::ApplyTBWordRules( char const *word )
     while ( *in && ( ( out - outword ) <= 255 ) )
     {
         if ( *in == '\t' ||
-             *in == ' ' ||
-             *in == '\n' ||
-             *in == '-' ||
-             *in == '.' ||
-             *in == ',' ||
-             *in == ';' ||
-             *in == '?' ||
-             *in == '"' ||
-             *in == ':' ||
-             *in == '(' ||
-             *in == ')' )
+            *in == ' ' ||
+            *in == '\n' ||
+            *in == '-' ||
+            *in == '.' ||
+            *in == ',' ||
+            *in == ';' ||
+            *in == '?' ||
+            *in == '"' ||
+            *in == ':' ||
+            *in == '(' ||
+            *in == ')' )
         {
             in++;
             *out++ = ' ';

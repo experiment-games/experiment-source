@@ -33,7 +33,7 @@ enum InitReturnVal_t
 
 abstract_class IAppSystem
 {
-   public:
+    public:
     // Here's where the app systems get to learn about each other
     virtual bool Connect( CreateInterfaceFn factory ) = 0;
     virtual void Disconnect() = 0;
@@ -53,7 +53,7 @@ abstract_class IAppSystem
 template < class IInterface >
 class CBaseAppSystem : public IInterface
 {
-   public:
+    public:
     // Here's where the app systems get to learn about each other
     virtual bool Connect( CreateInterfaceFn factory )
     {
@@ -82,13 +82,13 @@ class CBaseAppSystem : public IInterface
 template < class IInterface >
 class CTier0AppSystem : public CBaseAppSystem< IInterface >
 {
-   public:
+    public:
     CTier0AppSystem( bool bIsPrimaryAppSystem = true )
     {
         m_bIsPrimaryAppSystem = bIsPrimaryAppSystem;
     }
 
-   protected:
+    protected:
     // NOTE: a single DLL may have multiple AppSystems it's trying to
     // expose. If this is true, you must return true from only
     // one of those AppSystems; not doing so will cause all static
@@ -101,7 +101,7 @@ class CTier0AppSystem : public CBaseAppSystem< IInterface >
         return m_bIsPrimaryAppSystem;
     }
 
-   private:
+    private:
     bool m_bIsPrimaryAppSystem;
 };
 
@@ -111,7 +111,7 @@ class CTier0AppSystem : public CBaseAppSystem< IInterface >
 //-----------------------------------------------------------------------------
 abstract_class IAppSystemV0
 {
-   public:
+    public:
     // Here's where the app systems get to learn about each other
     virtual bool Connect( CreateInterfaceFn factory ) = 0;
     virtual void Disconnect() = 0;

@@ -109,7 +109,7 @@ bool PhysCannonAccountableForObject( CBaseCombatWeapon *pPhysCannon, CBaseEntity
 // (lets player grab own grenades)
 class CTraceFilterNoOwnerTest : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterNoOwnerTest, CTraceFilterSimple );
 
     CTraceFilterNoOwnerTest( const IHandleEntity *passentity, int collisionGroup )
@@ -125,7 +125,7 @@ class CTraceFilterNoOwnerTest : public CTraceFilterSimple
         return false;
     }
 
-   protected:
+    protected:
     const IHandleEntity *m_pPassNotOwner;
 };
 
@@ -648,7 +648,7 @@ class CPlayerPickupController : public CBaseEntity
 {
     DECLARE_CLASS( CPlayerPickupController, CBaseEntity );
 
-   public:
+    public:
     void Init( CBasePlayer *pPlayer, CBaseEntity *pObject );
     void Shutdown( bool bThrown = false );
     bool OnControls( CBaseEntity *pControls )
@@ -669,7 +669,7 @@ class CPlayerPickupController : public CBaseEntity
         return m_grabController;
     }
 
-   private:
+    private:
     CGrabController m_grabController;
     CBasePlayer *m_pPlayer;
 };
@@ -1658,7 +1658,7 @@ bool CWeaponPhysCannon::AttachObject( CBaseEntity *pObject, const Vector &vPosit
     }
 
     /*	if( pOwner )
-      {
+    {
         pOwner->EnableSprint( false );
 
         float	loadWeight = ( 1.0f - GetLoadPercentage() );
@@ -1666,7 +1666,7 @@ bool CWeaponPhysCannon::AttachObject( CBaseEntity *pObject, const Vector &vPosit
 
         //Msg( "Load perc: %f -- Movement speed: %f/%f\n", loadWeight, maxSpeed, hl2_normspeed.GetFloat() );
         pOwner->SetMaxSpeed( maxSpeed );
-      }*/
+    }*/
 
     // Don't drop again for a slight delay, in case they were pulling objects near them
     m_flNextSecondaryAttack = gpGlobals->curtime + 0.4f;
@@ -1918,14 +1918,14 @@ bool CGrabController::UpdateObject( CBasePlayer *pPlayer, float flError )
         debugoverlay->AddBoxOverlay( end, -Vector( 2, 2, 2 ), Vector( 2, 2, 2 ), angles, 0, 255, 255, true, 0 );
 
         debugoverlay->AddBoxOverlay( GetAttached()->WorldSpaceCenter(),
-                                     -Vector( radius, radius, radius ),
-                                     Vector( radius, radius, radius ),
-                                     angles,
-                                     255,
-                                     255,
-                                     0,
-                                     true,
-                                     0.0f );
+                                    -Vector( radius, radius, radius ),
+                                    Vector( radius, radius, radius ),
+                                    angles,
+                                    255,
+                                    255,
+                                    0,
+                                    true,
+                                    0.0f );
 
 #else
 
@@ -2242,27 +2242,27 @@ void CWeaponPhysCannon::DoEffectIdle( void )
     /*
     else
     {
-      // Turn on the glow sprites
-      for ( int i = PHYSCANNON_GLOW1; i < (PHYSCANNON_GLOW1+NUM_GLOW_SPRITES); i++ )
-      {
+    // Turn on the glow sprites
+    for ( int i = PHYSCANNON_GLOW1; i < (PHYSCANNON_GLOW1+NUM_GLOW_SPRITES); i++ )
+    {
         m_Parameters[i].GetScale().SetAbsolute( random->RandomFloat( 0.075f, 0.05f ) * SPRITE_SCALE );
         m_Parameters[i].GetAlpha().SetAbsolute( random->RandomInt( 24, 32 ) );
-      }
+    }
 
-      // Turn on the glow sprites
-      for ( i = PHYSCANNON_ENDCAP1; i < (PHYSCANNON_ENDCAP1+NUM_ENDCAP_SPRITES); i++ )
-      {
+    // Turn on the glow sprites
+    for ( i = PHYSCANNON_ENDCAP1; i < (PHYSCANNON_ENDCAP1+NUM_ENDCAP_SPRITES); i++ )
+    {
         m_Parameters[i].GetScale().SetAbsolute( random->RandomFloat( 3, 5 ) );
         m_Parameters[i].GetAlpha().SetAbsolute( random->RandomInt( 200, 255 ) );
-      }
+    }
 
-      if ( m_EffectState != EFFECT_HOLDING )
-      {
+    if ( m_EffectState != EFFECT_HOLDING )
+    {
         // Turn beams off
         m_Beams[0].SetVisible( false );
         m_Beams[1].SetVisible( false );
         m_Beams[2].SetVisible( false );
-      }
+    }
     }
     */
 #endif

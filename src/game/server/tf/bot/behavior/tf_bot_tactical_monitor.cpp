@@ -444,8 +444,8 @@ EventDesiredResult< CTFBot > CTFBotTacticalMonitor::OnCommandString( CTFBot *me,
             float bestDist2 = FLT_MAX;
             CTFBotHintSentrygun *sentryHint;
             for ( sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( NULL, "bot_hint_sentrygun" ) );
-                  sentryHint;
-                  sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
+                sentryHint;
+                sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
             {
                 // clear the previous owner if it is us
                 if ( sentryHint->GetPlayerOwner() == me )

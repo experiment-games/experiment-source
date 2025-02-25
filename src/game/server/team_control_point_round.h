@@ -21,7 +21,7 @@ class CTeamControlPointRound : public CBaseEntity
 {
     DECLARE_CLASS( CTeamControlPointRound, CBaseEntity );
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void Activate( void );
 
@@ -70,7 +70,7 @@ class CTeamControlPointRound : public CBaseEntity
 
     CUtlVector< CHandle< CTeamControlPoint > > m_ControlPoints;
 
-   private:
+    private:
     void FindControlPoints( void );  // look in the map to find the control points for this round
     void SetupSpawnPoints( void );
     int TeamOwnsAllPoints( CTeamControlPoint *pOverridePoint = NULL, int iOverrideNewTeam = TEAM_UNASSIGNED ) const;

@@ -10,7 +10,7 @@
 
 class CCryBabyBossEscape : public Action< CHeadlessHatman >
 {
-   public:
+    public:
     virtual ActionResult< CHeadlessHatman > OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction );
     virtual ActionResult< CHeadlessHatman > Update( CHeadlessHatman *me, float interval );
 
@@ -21,7 +21,7 @@ class CCryBabyBossEscape : public Action< CHeadlessHatman >
         return "CryBabyBossEscape";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
     CountdownTimer m_footfallTimer;

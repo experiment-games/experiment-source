@@ -60,65 +60,65 @@ ImmutableFieldGenerator* MakeImmutableGenerator(
     Context* context) {
   if (field->is_repeated()) {
     switch (GetJavaType(field)) {
-      case JAVATYPE_MESSAGE:
+    case JAVATYPE_MESSAGE:
         if (IsLazy(field)) {
-          return new RepeatedImmutableLazyMessageFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
+        return new RepeatedImmutableLazyMessageFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
         } else {
-          return new RepeatedImmutableMessageFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
+        return new RepeatedImmutableMessageFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
         }
-      case JAVATYPE_ENUM:
+    case JAVATYPE_ENUM:
         return new RepeatedImmutableEnumFieldGenerator(
             field, messageBitIndex, builderBitIndex, context);
-      case JAVATYPE_STRING:
+    case JAVATYPE_STRING:
         return new RepeatedImmutableStringFieldGenerator(
             field, messageBitIndex, builderBitIndex, context);
-      default:
+    default:
         return new RepeatedImmutablePrimitiveFieldGenerator(
             field, messageBitIndex, builderBitIndex, context);
     }
   } else {
     if (field->containing_oneof()) {
-      switch (GetJavaType(field)) {
+    switch (GetJavaType(field)) {
         case JAVATYPE_MESSAGE:
-          if (IsLazy(field)) {
+        if (IsLazy(field)) {
             return new ImmutableLazyMessageOneofFieldGenerator(
                 field, messageBitIndex, builderBitIndex, context);
-          } else {
+        } else {
             return new ImmutableMessageOneofFieldGenerator(
                 field, messageBitIndex, builderBitIndex, context);
-          }
+        }
         case JAVATYPE_ENUM:
-          return new ImmutableEnumOneofFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
+        return new ImmutableEnumOneofFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
         case JAVATYPE_STRING:
-          return new ImmutableStringOneofFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
+        return new ImmutableStringOneofFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
         default:
-          return new ImmutablePrimitiveOneofFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
-      }
+        return new ImmutablePrimitiveOneofFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
+    }
     } else {
-      switch (GetJavaType(field)) {
+    switch (GetJavaType(field)) {
         case JAVATYPE_MESSAGE:
-          if (IsLazy(field)) {
+        if (IsLazy(field)) {
             return new ImmutableLazyMessageFieldGenerator(
                 field, messageBitIndex, builderBitIndex, context);
-          } else {
+        } else {
             return new ImmutableMessageFieldGenerator(
                 field, messageBitIndex, builderBitIndex, context);
-          }
+        }
         case JAVATYPE_ENUM:
-          return new ImmutableEnumFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
+        return new ImmutableEnumFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
         case JAVATYPE_STRING:
-          return new ImmutableStringFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
+        return new ImmutableStringFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
         default:
-          return new ImmutablePrimitiveFieldGenerator(
-              field, messageBitIndex, builderBitIndex, context);
-      }
+        return new ImmutablePrimitiveFieldGenerator(
+            field, messageBitIndex, builderBitIndex, context);
+    }
     }
   }
 }
@@ -131,7 +131,7 @@ static inline void ReportUnexpectedPackedFieldsCall(io::Printer* printer) {
   //   - This FieldGenerator doesn't support packing, and this method
   //     should never have been called.
   GOOGLE_LOG(FATAL) << "GenerateParsingCodeFromPacked() "
-             << "called on field generator that does not support packing.";
+            << "called on field generator that does not support packing.";
 }
 
 }  // namespace
@@ -149,8 +149,8 @@ template <>
 FieldGeneratorMap<ImmutableFieldGenerator>::FieldGeneratorMap(
     const Descriptor* descriptor, Context* context)
     : descriptor_(descriptor),
-      field_generators_(new scoped_ptr<
-          ImmutableFieldGenerator>[descriptor->field_count()]) {
+    field_generators_(new scoped_ptr<
+        ImmutableFieldGenerator>[descriptor->field_count()]) {
 
   // Construct all the FieldGenerators and assign them bit indices for their
   // bit fields.
@@ -170,8 +170,8 @@ FieldGeneratorMap<ImmutableFieldGenerator>::~FieldGeneratorMap() {}
 
 
 void SetCommonFieldVariables(const FieldDescriptor* descriptor,
-                             const FieldGeneratorInfo* info,
-                             map<string, string>* variables) {
+                            const FieldGeneratorInfo* info,
+                            map<string, string>* variables) {
   (*variables)["field_name"] = descriptor->name();
   (*variables)["name"] = info->name;
   (*variables)["capitalized_name"] = info->capitalized_name;
@@ -181,24 +181,24 @@ void SetCommonFieldVariables(const FieldDescriptor* descriptor,
 }
 
 void SetCommonOneofVariables(const FieldDescriptor* descriptor,
-                             const OneofGeneratorInfo* info,
-                             map<string, string>* variables) {
+                            const OneofGeneratorInfo* info,
+                            map<string, string>* variables) {
   (*variables)["oneof_name"] = info->name;
   (*variables)["oneof_capitalized_name"] = info->capitalized_name;
   (*variables)["oneof_index"] =
-      SimpleItoa(descriptor->containing_oneof()->index());
+    SimpleItoa(descriptor->containing_oneof()->index());
   (*variables)["set_oneof_case_message"] = info->name +
-      "Case_ = " + SimpleItoa(descriptor->number());
+    "Case_ = " + SimpleItoa(descriptor->number());
   (*variables)["clear_oneof_case_message"] = info->name +
-      "Case_ = 0";
+    "Case_ = 0";
   (*variables)["has_oneof_case_message"] = info->name +
-      "Case_ == " + SimpleItoa(descriptor->number());
+    "Case_ == " + SimpleItoa(descriptor->number());
 }
 
 void PrintExtraFieldInfo(const map<string, string>& variables,
-                         io::Printer* printer) {
+                        io::Printer* printer) {
   const map<string, string>::const_iterator it =
-      variables.find("disambiguated_reason");
+    variables.find("disambiguated_reason");
   if (it != variables.end() && !it->second.empty()) {
     printer->Print(
         variables,

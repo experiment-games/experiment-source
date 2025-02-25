@@ -35,7 +35,7 @@ struct MDLSquenceLayer_t
 //-----------------------------------------------------------------------------
 class CMDL
 {
-   public:
+    public:
     CMDL();
     ~CMDL();
 
@@ -55,10 +55,10 @@ class CMDL
 
     studiohdr_t *GetStudioHdr();
 
-   private:
+    private:
     void UnreferenceMDL();
 
-   public:
+    public:
     MDLHandle_t m_MDLHandle;
     Color m_Color;
     int m_nSkin;

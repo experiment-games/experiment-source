@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CMultiInputVar
 {
-   public:
+    public:
     CMultiInputVar()
         : m_InputList( NULL ) {}
     ~CMultiInputVar();

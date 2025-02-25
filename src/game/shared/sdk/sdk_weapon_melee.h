@@ -22,7 +22,7 @@ class CWeaponSDKMelee : public CWeaponSDKBase
 {
     DECLARE_CLASS( CWeaponSDKMelee, CWeaponSDKBase );
 
-   public:
+    public:
     CWeaponSDKMelee();
 
     DECLARE_NETWORKCLASS();
@@ -58,10 +58,10 @@ class CWeaponSDKMelee : public CWeaponSDKBase
 
     CWeaponSDKMelee( const CWeaponSDKMelee & );
 
-   protected:
+    protected:
     virtual void ImpactEffect( trace_t &trace );
 
-   private:
+    private:
     bool ImpactWater( const Vector &start, const Vector &end );
     void Swing( int bIsSecondary );
     void Hit( trace_t &traceHit, Activity nHitActivity );

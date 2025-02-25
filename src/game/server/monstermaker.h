@@ -30,7 +30,7 @@ class CNPCSpawnDestination : public CPointEntity
 {
     DECLARE_CLASS( CNPCSpawnDestination, CPointEntity );
 
-   public:
+    public:
     CNPCSpawnDestination();
     bool IsAvailable();                      // Is this spawn destination available for selection?
     void OnSpawnedNPC( CAI_BaseNPC *pNPC );  // Notify this spawn destination that an NPC has spawned here.
@@ -46,7 +46,7 @@ class CNPCSpawnDestination : public CPointEntity
 
 abstract_class CBaseNPCMaker : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseNPCMaker, CBaseEntity );
 
     void Spawn( void );
@@ -104,7 +104,7 @@ abstract_class CBaseNPCMaker : public CBaseEntity
 
 class CNPCMaker : public CBaseNPCMaker
 {
-   public:
+    public:
     DECLARE_CLASS( CNPCMaker, CBaseNPCMaker );
 
     CNPCMaker( void );
@@ -125,7 +125,7 @@ class CNPCMaker : public CBaseNPCMaker
 
 class CTemplateNPCMaker : public CBaseNPCMaker
 {
-   public:
+    public:
     DECLARE_CLASS( CTemplateNPCMaker, CBaseNPCMaker );
 
     CTemplateNPCMaker( void )
@@ -141,7 +141,7 @@ class CTemplateNPCMaker : public CBaseNPCMaker
     void MakeNPCInLine( void );
     virtual void MakeMultipleNPCS( int nNPCs );
 
-   protected:
+    protected:
     virtual void PrecacheTemplateEntity( CBaseEntity *pEntity );
 
     bool PlaceNPCInRadius( CAI_BaseNPC *pNPC );

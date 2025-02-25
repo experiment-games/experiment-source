@@ -438,7 +438,7 @@ class CAchievementTFSniper_KillRoundStart : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     float m_flRoundStartTime;
 };
 
@@ -512,7 +512,7 @@ class CAchievementTFSniper_DifferentWeaponsKill : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlVector< int > m_Weapons;
 };
 
@@ -629,7 +629,7 @@ class CAchievementTFSniper_KillEnemiesImportant : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iObjectivesDefended;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillEnemiesImportant, ACHIEVEMENT_TF_SNIPER_KILL_OBJECTIVES, "TF_SNIPER_KILL_OBJECTIVES", 5 );
@@ -666,7 +666,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_HeadShotPostInvuln, ACHIEVEMENT_TF_SNI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_BaseJarateGroup : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSniper_BaseJarateGroup, CBaseTFAchievement );
 
     void Init()
@@ -867,7 +867,7 @@ class CAchievementTFSniper_JarateKillMelee : public CAchievementTFSniper_BaseJar
         }
     }
 
-   private:
+    private:
     int m_iKilled;
 };
 
@@ -922,7 +922,7 @@ class CAchievementTFSniper_ShieldFailedSpy : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iAttackerIndex;
     float m_flAttackTime;
 };
@@ -953,7 +953,7 @@ class CAchievementTFSniper_KillMedicPair : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             m_hTargets.Purge();
         }
@@ -1039,7 +1039,7 @@ class CAchievementTFSniper_KillMedicPair : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hTarget;
@@ -1107,7 +1107,7 @@ class CAchievementTFSniper_JarateAssists : public CAchievementTFSniper_BaseJarat
         }
     }
 
-   private:
+    private:
     int m_iAssists;
 };
 
@@ -1223,7 +1223,7 @@ class CAchievementTFSniper_Pincushion : public CBaseTFAchievement
         m_hTargets[iTargetIndex].iArrows = 1;
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hTarget;
@@ -1277,7 +1277,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_SniperRifleNoMissing, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSniper_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1290,7 +1290,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_AchieveProgress1, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSniper_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1303,7 +1303,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_AchieveProgress2, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSniper_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {
@@ -1316,7 +1316,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_AchieveProgress3, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_ClassicRifleNoScopeHeadshot : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1331,7 +1331,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_ClassicRifleNoScopeHeadshot, ACHIEVEME
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_ClassicRifleHeadshotJumper : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1345,7 +1345,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_ClassicRifleHeadshotJumper, ACHIEVEMEN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_ClassicRifleGibGrind : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1395,7 +1395,7 @@ class CAchievementTFSniper_ClassicRifleGibGrind : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iClassesKilled;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSniper_ClassicRifleGibGrind, ACHIEVEMENT_TF_SNIPER_CLASSIC_RIFLE_GIB_GRIND, "TF_SNIPER_CLASSIC_RIFLE_GIB_GRIND", 5 );
@@ -1403,7 +1403,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_ClassicRifleGibGrind, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_ParachuteGrind : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1417,10 +1417,10 @@ class CAchievementTFSniper_ParachuteGrind : public CBaseTFAchievement
         {
             CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
             if ( pTFVictim &&
-                 ( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) &&
-                 ( IsHeadshot( event->GetInt( "customkill" ) ) ) &&
-                 ( event->GetInt( "damagebits" ) & DMG_CRITICAL ) &&
-                 ( pTFVictim->m_Shared.InCond( TF_COND_PARACHUTE_ACTIVE ) ) )
+                ( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) &&
+                ( IsHeadshot( event->GetInt( "customkill" ) ) ) &&
+                ( event->GetInt( "damagebits" ) & DMG_CRITICAL ) &&
+                ( pTFVictim->m_Shared.InCond( TF_COND_PARACHUTE_ACTIVE ) ) )
             {
                 IncrementCount();
             }

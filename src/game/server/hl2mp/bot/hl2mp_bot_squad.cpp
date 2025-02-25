@@ -210,8 +210,8 @@ bool CHL2MPBotSquad::ShouldSquadLeaderWaitForFormation( void ) const
         if ( m_roster[i].Get() != NULL && m_roster[i]->IsAlive() )
         {
             if ( m_roster[i]->GetSquadFormationError() >= 1.0f &&
-                 !m_roster[i]->HasBrokenFormation() &&
-                 !m_roster[i]->GetLocomotionInterface()->IsStuck() )
+                !m_roster[i]->HasBrokenFormation() &&
+                !m_roster[i]->GetLocomotionInterface()->IsStuck() )
             {
                 // wait for me!
                 return true;
@@ -232,7 +232,7 @@ bool CHL2MPBotSquad::IsInFormation( void ) const
         if ( m_roster[i].Get() != NULL && m_roster[i]->IsAlive() )
         {
             if ( m_roster[i]->HasBrokenFormation() ||
-                 m_roster[i]->GetLocomotionInterface()->IsStuck() )
+                m_roster[i]->GetLocomotionInterface()->IsStuck() )
             {
                 // I'm not "in formation"
                 continue;

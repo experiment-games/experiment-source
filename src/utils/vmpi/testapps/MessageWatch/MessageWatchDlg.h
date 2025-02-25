@@ -26,11 +26,11 @@
 
 class CSender
 {
-   public:
+    public:
     CSender();
     ~CSender();
 
-   public:
+    public:
     CIPAddr m_Addr;
     ITCPSocket* m_pSocket;
     IConsoleWnd* m_pConsoleWnd;
@@ -40,7 +40,7 @@ class CSender
 class CMessageWatchDlg : public CDialog
 {
     // Construction
-   public:
+    public:
     CMessageWatchDlg( CWnd* pParent = NULL );  // standard constructor
     ~CMessageWatchDlg();
 
@@ -67,12 +67,12 @@ class CMessageWatchDlg : public CDialog
 
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CMessageWatchDlg)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
                                                         //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     HICON m_hIcon;
 
     void OnIdle();

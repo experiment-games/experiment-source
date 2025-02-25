@@ -24,7 +24,7 @@ class CHintSystem;
 //--------------------------------------------------------------------------------------------------------------
 class CHintMessage
 {
-   public:
+    public:
     CHintMessage( const char *hintString, CUtlVector< const char * > *args, float duration );
     ~CHintMessage();
 
@@ -36,7 +36,7 @@ class CHintMessage
 
     bool IsEquivalent( const char *hintString, CUtlVector< const char * > *args ) const;
 
-   private:
+    private:
     const char *m_hintString;     ///< hintString is a pointer to a string that should never be deleted.
     CUtlVector< char * > m_args;  ///< list of arguments.  The memory for these strings is internal to the CHintMessage.
     float m_duration;             ///< time until the next message can be displayed
@@ -45,7 +45,7 @@ class CHintMessage
 //--------------------------------------------------------------------------------------------------------------
 class CHintMessageQueue
 {
-   public:
+    public:
     CHintMessageQueue( CBasePlayer *pPlayer );
     void Reset();
     void Update();
@@ -55,7 +55,7 @@ class CHintMessageQueue
         return m_messages.Count() == 0;
     }
 
-   private:
+    private:
     float m_tmMessageEnd;
     CUtlVector< CHintMessage * > m_messages;
     CBasePlayer *m_pPlayer;
@@ -67,7 +67,7 @@ class CHintMessageQueue
 // Timers that manage hint messages that should be displayed after some time.
 class CHintMessageTimers
 {
-   public:
+    public:
     CHintMessageTimers( void );
     CHintMessageTimers( CHintSystem *pSystem, CHintMessageQueue *pQueue );
 
@@ -82,10 +82,10 @@ class CHintMessageTimers
     void StartTimer( int iHintID );
     void StopTimer( int iHintID );
 
-   private:
+    private:
     int GetTimerIndex( int iHintID );
 
-   private:
+    private:
     struct hintmessagetime_t
     {
         hintmessagetime_t( float flTimerDuration )

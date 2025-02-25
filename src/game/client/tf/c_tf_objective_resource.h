@@ -21,7 +21,7 @@ class C_TFObjectiveResource : public C_BaseTeamObjectiveResource
 {
     DECLARE_CLASS( C_TFObjectiveResource, C_BaseTeamObjectiveResource );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TFObjectiveResource();
@@ -89,7 +89,7 @@ class C_TFObjectiveResource : public C_BaseTeamObjectiveResource
         return m_nMvMEventPopfileType;
     }
 
-   private:
+    private:
     int m_nMannVsMachineMaxWaveCount;
     int m_nMannVsMachineWaveCount;
     int m_nMannVsMachineWaveEnemyCount;

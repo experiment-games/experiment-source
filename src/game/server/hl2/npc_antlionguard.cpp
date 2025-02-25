@@ -220,7 +220,7 @@ struct PhysicsObjectCriteria_t
 //-----------------------------------------------------------------------------
 class CNPC_AntlionGuard : public CAI_BlendedNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_AntlionGuard, CAI_BlendedNPC );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -305,7 +305,7 @@ class CNPC_AntlionGuard : public CAI_BlendedNPC
     {
         typedef CAI_ComponentWithOuter< CNPC_AntlionGuard, CAI_Navigator > BaseClass;
 
-       public:
+        public:
         CNavigator( CNPC_AntlionGuard *pOuter )
             : BaseClass( pOuter )
         {
@@ -321,7 +321,7 @@ class CNPC_AntlionGuard : public CAI_BlendedNPC
 
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
     inline bool CanStandAtPoint( const Vector &vecPos, Vector *pOut );
     bool RememberFailedPhysicsTarget( CBaseEntity *pTarget );
     void GetPhysicsShoveDir( CBaseEntity *pObject, float flMass, Vector *pOut );
@@ -407,13 +407,13 @@ class CNPC_AntlionGuard : public CAI_BlendedNPC
 
     unsigned char GetBleedingLevel( void ) const;
 #endif
-   protected:
+    protected:
     int m_poseThrow;
     int m_poseHead_Yaw, m_poseHead_Pitch;
     virtual void PopulatePoseParameters( void );
 
     // inline accessors
-   public:
+    public:
     inline bool IsCavernBreed( void ) const
     {
         return m_bCavernBreed;
@@ -1089,7 +1089,7 @@ int CNPC_AntlionGuard::SelectCombatSchedule( void )
     bool bCanCharge = false;
     if ( HasCondition( COND_SEE_ENEMY ) )
     {
-      bCanCharge = ShouldCharge( GetAbsOrigin(), GetEnemy()->GetAbsOrigin(), true, false );
+    bCanCharge = ShouldCharge( GetAbsOrigin(), GetEnemy()->GetAbsOrigin(), true, false );
     }
     */
 
@@ -1254,13 +1254,13 @@ int CNPC_AntlionGuard::SelectSchedule( void )
         return SCHED_IDLE_STAND;
 
 #if 0
-	// Debug physics object finding
-	if ( 0 ) //g_debug_antlionguard.GetInt() == 3 )
-	{
-		m_flPhysicsCheckTime = 0;
-		UpdatePhysicsTarget( false );
-		return SCHED_IDLE_STAND;
-	}
+    // Debug physics object finding
+    if ( 0 ) //g_debug_antlionguard.GetInt() == 3 )
+    {
+        m_flPhysicsCheckTime = 0;
+        UpdatePhysicsTarget( false );
+        return SCHED_IDLE_STAND;
+    }
 #endif
 
     // Flinch on heavy damage, but not if we've flinched too recently.
@@ -1384,12 +1384,12 @@ float CNPC_AntlionGuard::MaxYawSpeed( void )
 
     // Stay still
     if ( ( eActivity == ACT_ANTLIONGUARD_SEARCH ) ||
-         ( eActivity == ACT_ANTLIONGUARD_PEEK_ENTER ) ||
-         ( eActivity == ACT_ANTLIONGUARD_PEEK_EXIT ) ||
-         ( eActivity == ACT_ANTLIONGUARD_PEEK1 ) ||
-         ( eActivity == ACT_ANTLIONGUARD_BARK ) ||
-         ( eActivity == ACT_ANTLIONGUARD_PEEK_SIGHTED ) ||
-         ( eActivity == ACT_MELEE_ATTACK1 ) )
+        ( eActivity == ACT_ANTLIONGUARD_PEEK_ENTER ) ||
+        ( eActivity == ACT_ANTLIONGUARD_PEEK_EXIT ) ||
+        ( eActivity == ACT_ANTLIONGUARD_PEEK1 ) ||
+        ( eActivity == ACT_ANTLIONGUARD_BARK ) ||
+        ( eActivity == ACT_ANTLIONGUARD_PEEK_SIGHTED ) ||
+        ( eActivity == ACT_MELEE_ATTACK1 ) )
         return 0.0f;
 
     CBaseEntity *pEnemy = GetEnemy();
@@ -1461,9 +1461,9 @@ bool CNPC_AntlionGuard::OverrideMove( float flInterval )
     /*
     if ( m_hPhysicsTarget != NULL )
     {
-      float flWidth = m_hPhysicsTarget->CollisionProp()->BoundingRadius2D();
-      GetLocalNavigator()->AddObstacle( m_hPhysicsTarget->WorldSpaceCenter(), flWidth * 0.75f, AIMST_AVOID_OBJECT );
-      //NDebugOverlay::Sphere( m_hPhysicsTarget->WorldSpaceCenter(), vec3_angle, flWidth, 255, 255, 255, 0, true, 0.5f );
+    float flWidth = m_hPhysicsTarget->CollisionProp()->BoundingRadius2D();
+    GetLocalNavigator()->AddObstacle( m_hPhysicsTarget->WorldSpaceCenter(), flWidth * 0.75f, AIMST_AVOID_OBJECT );
+    //NDebugOverlay::Sphere( m_hPhysicsTarget->WorldSpaceCenter(), vec3_angle, flWidth, 255, 255, 255, 0, true, 0.5f );
     }
     */
 
@@ -1593,7 +1593,7 @@ void CNPC_AntlionGuard::Shove( void )
 //-----------------------------------------------------------------------------
 class CTraceFilterCharge : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterCharge );
 
@@ -1667,7 +1667,7 @@ class CTraceFilterCharge : public CTraceFilterEntitiesOnly
         return false;
     }
 
-   public:
+    public:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
     CNPC_AntlionGuard *m_pAttacker;
@@ -1777,7 +1777,7 @@ void CNPC_AntlionGuard::HandleAnimEvent( animevent_t *pEvent )
         // Cancel the charge if it's no longer valid
         if ( ShouldCharge( GetAbsOrigin(), GetEnemy()->GetAbsOrigin(), false, true ) == false )
         {
-          SetSchedule( SCHED_ANTLIONGUARD_CHARGE_CANCEL );
+        SetSchedule( SCHED_ANTLIONGUARD_CHARGE_CANCEL );
         }
         */
 
@@ -2275,10 +2275,10 @@ int CNPC_AntlionGuard::OnTakeDamage_Alive( const CTakeDamageInfo &info )
         /*
         if ( dInfo.GetDamageType() & DMG_BLAST )
         {
-          // Create the dust effect in place
-          CParticleSystem *pParticle = (CParticleSystem *) CreateEntityByName( "info_particle_system" );
-          if ( pParticle != NULL )
-          {
+        // Create the dust effect in place
+        CParticleSystem *pParticle = (CParticleSystem *) CreateEntityByName( "info_particle_system" );
+        if ( pParticle != NULL )
+        {
             // Setup our basic parameters
             pParticle->KeyValue( "start_active", "1" );
             pParticle->KeyValue( "effect_name", "fire_medium_02_nosmoke" );
@@ -2287,11 +2287,11 @@ int CNPC_AntlionGuard::OnTakeDamage_Alive( const CTakeDamageInfo &info )
             pParticle->SetLocalOrigin( Vector( -16, 24, 0 ) );
             DispatchSpawn( pParticle );
             if ( gpGlobals->curtime > 0.5f )
-              pParticle->Activate();
+            pParticle->Activate();
 
             pParticle->SetThink( &CBaseEntity::SUB_Remove );
             pParticle->SetNextThink( gpGlobals->curtime + random->RandomFloat( 2.0f, 3.0f ) );
-          }
+        }
         }
         */
     }
@@ -2655,7 +2655,7 @@ void ApplyChargeDamage( CBaseEntity *pAntlionGuard, CBaseEntity *pTarget, float 
 //-----------------------------------------------------------------------------
 class CTraceFilterSkipPhysics : public CTraceFilter
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterSkipPhysics );
 
@@ -2702,7 +2702,7 @@ class CTraceFilterSkipPhysics : public CTraceFilter
         return true;
     }
 
-   private:
+    private:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
     float m_minMass;
@@ -2851,14 +2851,14 @@ bool CNPC_AntlionGuard::HandleChargeImpact( Vector vecImpact, CBaseEntity *pEnti
     /*
 
     ROBIN: Wrote & then removed this. If we want to have large rocks that the guard
-         should smack around, then we should enable it.
+        should smack around, then we should enable it.
 
     else
     {
-      // If we hit a physics prop, smack the heck out of it. (large rocks)
-      // Factor the object mass into it, because we want to move it no matter how heavy it is.
-      if ( pEntity->GetMoveType() == MOVETYPE_VPHYSICS )
-      {
+    // If we hit a physics prop, smack the heck out of it. (large rocks)
+    // Factor the object mass into it, because we want to move it no matter how heavy it is.
+    if ( pEntity->GetMoveType() == MOVETYPE_VPHYSICS )
+    {
         CTakeDamageInfo info( this, this, 250, DMG_BLAST );
         info.SetDamagePosition( vecImpact );
         float flForce = ImpulseScale( pEntity->VPhysicsGetObject()->GetMass(), 250 );
@@ -2872,7 +2872,7 @@ bool CNPC_AntlionGuard::HandleChargeImpact( Vector vecImpact, CBaseEntity *pEnti
         info.SetDamageForce( vecForce );
 
         pEntity->VPhysicsTakeDamage( info );
-      }
+    }
     }
     */
 }
@@ -2993,7 +2993,7 @@ void CNPC_AntlionGuard::RunTask( const Task_t *pTask )
             break;
 
             /*
-          case TASK_RUN_PATH:
+        case TASK_RUN_PATH:
             {
 
 
@@ -3454,18 +3454,18 @@ bool CNPC_AntlionGuard::ShouldWatchEnemy( void )
     Activity nActivity = GetActivity();
 
     if ( ( nActivity == ACT_ANTLIONGUARD_SEARCH ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PEEK_ENTER ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PEEK_EXIT ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PEEK1 ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PEEK_SIGHTED ) ||
-         ( nActivity == ACT_ANTLIONGUARD_SHOVE_PHYSOBJECT ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_FR ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_FL ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_RR ) ||
-         ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_RL ) ||
-         ( nActivity == ACT_ANTLIONGUARD_CHARGE_CRASH ) ||
-         ( nActivity == ACT_ANTLIONGUARD_CHARGE_HIT ) ||
-         ( nActivity == ACT_ANTLIONGUARD_CHARGE_ANTICIPATION ) )
+        ( nActivity == ACT_ANTLIONGUARD_PEEK_ENTER ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PEEK_EXIT ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PEEK1 ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PEEK_SIGHTED ) ||
+        ( nActivity == ACT_ANTLIONGUARD_SHOVE_PHYSOBJECT ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_FR ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_FL ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_RR ) ||
+        ( nActivity == ACT_ANTLIONGUARD_PHYSHIT_RL ) ||
+        ( nActivity == ACT_ANTLIONGUARD_CHARGE_CRASH ) ||
+        ( nActivity == ACT_ANTLIONGUARD_CHARGE_HIT ) ||
+        ( nActivity == ACT_ANTLIONGUARD_CHARGE_ANTICIPATION ) )
     {
         return false;
     }
@@ -3619,9 +3619,9 @@ void CNPC_AntlionGuard::PrescheduleThink( void )
 
     // Automatically update our physics target when chasing enemies
     if ( IsCurSchedule( SCHED_ANTLIONGUARD_CHASE_ENEMY ) ||
-         IsCurSchedule( SCHED_ANTLIONGUARD_PATROL_RUN ) ||
-         IsCurSchedule( SCHED_ANTLIONGUARD_CANT_ATTACK ) ||
-         IsCurSchedule( SCHED_ANTLIONGUARD_CHASE_ENEMY_TOLERANCE ) )
+        IsCurSchedule( SCHED_ANTLIONGUARD_PATROL_RUN ) ||
+        IsCurSchedule( SCHED_ANTLIONGUARD_CANT_ATTACK ) ||
+        IsCurSchedule( SCHED_ANTLIONGUARD_CHASE_ENEMY_TOLERANCE ) )
     {
         bool bCheckAlongLine = ( IsCurSchedule( SCHED_ANTLIONGUARD_CHASE_ENEMY ) || IsCurSchedule( SCHED_ANTLIONGUARD_CHASE_ENEMY_TOLERANCE ) );
         UpdatePhysicsTarget( bCheckAlongLine );
@@ -3800,7 +3800,7 @@ bool CNPC_AntlionGuard::IsUnreachable( CBaseEntity *pEntity )
         {
             // Test for reachability on any elements that have timed out
             if ( gpGlobals->curtime > m_UnreachableEnts[i].fExpireTime ||
-                 pEntity->GetAbsOrigin().DistToSqr( m_UnreachableEnts[i].vLocationWhenUnreachable ) > UNREACHABLE_DIST_TOLERANCE_SQ )
+                pEntity->GetAbsOrigin().DistToSqr( m_UnreachableEnts[i].vLocationWhenUnreachable ) > UNREACHABLE_DIST_TOLERANCE_SQ )
             {
                 m_UnreachableEnts.FastRemove( i );
                 return false;

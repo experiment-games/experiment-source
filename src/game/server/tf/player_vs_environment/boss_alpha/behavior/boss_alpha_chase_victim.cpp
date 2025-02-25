@@ -68,7 +68,7 @@ ActionResult< CBossAlpha > CBossAlphaChaseVictim::Update( CBossAlpha *me, float 
         if ( me->HasAbility( CBossAlpha::CAN_LAUNCH_STICKIES ) )
         {
             if ( ( me->GetGrenadeTimer()->IsElapsed() && me->IsRangeLessThan( m_chaseTarget, tf_boss_alpha_grenade_launch_range.GetFloat() ) ) ||
-                 me->IsInCondition( CBossAlpha::ENRAGED ) )
+                me->IsInCondition( CBossAlpha::ENRAGED ) )
             {
                 return SuspendFor( new CBossAlphaLaunchGrenades, "Target is close (or I am enraged) - grenades!" );
             }
@@ -78,7 +78,7 @@ ActionResult< CBossAlpha > CBossAlphaChaseVictim::Update( CBossAlpha *me, float 
         if ( me->HasAbility( CBossAlpha::CAN_FIRE_ROCKETS ) )
         {
             if ( m_visibleTimer.IsGreaterThen( 1.0f ) ||
-                 me->IsRangeLessThan( m_chaseTarget, tf_boss_alpha_chase_range.GetFloat() ) )
+                me->IsRangeLessThan( m_chaseTarget, tf_boss_alpha_chase_range.GetFloat() ) )
             {
                 return SuspendFor( new CBossAlphaLaunchRockets, "Fire!" );
             }

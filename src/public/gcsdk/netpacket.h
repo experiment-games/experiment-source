@@ -15,7 +15,7 @@ namespace GCSDK
 //-----------------------------------------------------------------------------
 class CNetPacket
 {
-   public:
+    public:
     CNetPacket();
     ~CNetPacket();
 
@@ -41,7 +41,7 @@ class CNetPacket
     void AddRef();
     void Release();
 
-   private:
+    private:
     int m_cRef;  // reference count, deletes self when 0
     uint m_cubData;
     uint8* m_pubData;

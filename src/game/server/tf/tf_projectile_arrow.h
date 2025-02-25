@@ -15,7 +15,7 @@
 
 class CTFProjectile_Arrow : public CTFBaseRocket, public IScorer
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_Arrow, CTFBaseRocket );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -120,7 +120,7 @@ class CTFProjectile_Arrow : public CTFBaseRocket, public IScorer
         m_bApplyMilkOnHit = true;
     }
 
-   private:
+    private:
     CBaseHandle m_Scorer;
 
     float m_flImpactTime;
@@ -141,7 +141,7 @@ class CTFProjectile_Arrow : public CTFBaseRocket, public IScorer
 
     bool m_bFiredWhileZoomed;
 
-   protected:
+    protected:
     CUtlVector< int > m_HitEntities;
     float m_flInitTime;
 
@@ -150,7 +150,7 @@ class CTFProjectile_Arrow : public CTFBaseRocket, public IScorer
 
 class CTFProjectile_HealingBolt : public CTFProjectile_Arrow
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_HealingBolt, CTFProjectile_Arrow );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -171,7 +171,7 @@ class CTFProjectile_HealingBolt : public CTFProjectile_Arrow
 
 class CTFProjectile_GrapplingHook : public CTFProjectile_Arrow
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_GrapplingHook, CTFProjectile_Arrow );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -216,7 +216,7 @@ class CTFProjectile_GrapplingHook : public CTFProjectile_Arrow
     void HookTarget( CBaseEntity *pOther );
     void HookLatchedThink();
 
-   private:
+    private:
     void StartImpactFleshSoundLoop();
     void StopImpactFleshSoundLoop();
 

@@ -12,7 +12,7 @@ class CTFMerasmusTrickOrTreatProp : public CBaseAnimating, public ITFMerasmusTri
 {
     DECLARE_CLASS( CTFMerasmusTrickOrTreatProp, CBaseAnimating );
 
-   public:
+    public:
     CTFMerasmusTrickOrTreatProp();
     ~CTFMerasmusTrickOrTreatProp() {}
 
@@ -27,7 +27,7 @@ class CTFMerasmusTrickOrTreatProp : public CBaseAnimating, public ITFMerasmusTri
 
     static CTFMerasmusTrickOrTreatProp* Create( const Vector& vPosition, const QAngle& qAngles );
 
-   private:
+    private:
     void SpawnTrickOrTreatItem();
 };
 

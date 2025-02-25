@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotSquadAttack : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -29,7 +29,7 @@ class CTFBotSquadAttack : public Action< CTFBot >
         return "SquadPatrol";
     };
 
-   private:
+    private:
     CountdownTimer m_vocalizeTimer;
     PathFollower m_path;
     ChasePath m_chasePath;

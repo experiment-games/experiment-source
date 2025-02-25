@@ -150,7 +150,7 @@ class CTFBot;
 
 class CCaptureFlagReturnIcon : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CCaptureFlagReturnIcon, CBaseEntity );
     DECLARE_NETWORKCLASS();
 
@@ -169,12 +169,12 @@ class CCaptureFlagReturnIcon : public CBaseAnimating
 
     virtual void GetRenderBounds( Vector &theMins, Vector &theMaxs );
 
-   private:
+    private:
     IMaterial *m_pReturnProgressMaterial_Empty;  // For labels above players' heads.
     IMaterial *m_pReturnProgressMaterial_Full;
 
 #else
-   public:
+    public:
     virtual void Spawn( void );
     virtual int UpdateTransmitState( void );
 
@@ -188,7 +188,7 @@ class CCaptureFlagReturnIcon : public CBaseAnimating
 DECLARE_AUTO_LIST( ICaptureFlagAutoList );
 class CCaptureFlag : public CTFItem, public ICaptureFlagAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CCaptureFlag, CTFItem );
     DECLARE_NETWORKCLASS();
 
@@ -337,7 +337,7 @@ class CCaptureFlag : public CTFItem, public ICaptureFlagAutoList
     }
     float GetReturnProgress( void );
 
-   public:
+    public:
     void UpdateGlowEffect( void );
     virtual bool ShouldHideGlowEffect( void );
 
@@ -376,7 +376,7 @@ class CCaptureFlag : public CTFItem, public ICaptureFlagAutoList
         return m_nPointValue.Get();
     }
 
-   private:
+    private:
     void Reset( void );
     void ResetMessage( void );
     void InternalForceReset( bool bSilent = false );
@@ -397,7 +397,7 @@ class CCaptureFlag : public CTFItem, public ICaptureFlagAutoList
         return m_bGlowEnabled;
     }
 
-   private:
+    private:
     CNetworkVar( bool, m_bDisabled );  // Enabled/Disabled?
     CNetworkVar( bool, m_bVisibleWhenDisabled );
     CNetworkVar( int, m_nType );  // Type of game this flag will be used for.

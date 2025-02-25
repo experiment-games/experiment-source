@@ -18,7 +18,7 @@
 
 class CWeaponSMG2 : public CHLSelectFireMachineGun
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponSMG2, CHLSelectFireMachineGun );
 
     CWeaponSMG2();

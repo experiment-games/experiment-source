@@ -29,7 +29,7 @@ class CPreviewRotButton : public CExButton
 {
     DECLARE_CLASS_SIMPLE( CPreviewRotButton, CExButton );
 
-   public:
+    public:
     CPreviewRotButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
         : CExButton( parent, name, text, pActionSignalTarget, cmd )
     {
@@ -56,7 +56,7 @@ class CStorePreviewItemPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CStorePreviewItemPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CStorePreviewItemPanel( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner );
     virtual ~CStorePreviewItemPanel();
 
@@ -84,10 +84,10 @@ class CStorePreviewItemPanel : public vgui::EditablePanel
 
     MESSAGE_FUNC_PARAMS( OnItemIconSelected, "ItemIconSelected", data );
 
-   protected:
+    protected:
     virtual void UpdateIcons( void );
 
-   protected:
+    protected:
     const char *m_pResFile;
     CUtlVector< CStorePreviewItemIcon * > m_pItemIcons;
 

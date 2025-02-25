@@ -168,8 +168,8 @@ bool C_PasstimeBallReticle::Update()
 
     auto teamColor = GetTeamColor( pTarget->GetTeamNumber() );
     auto iAlpha = ( bHomingActive || pLocalPlayer->m_Shared.IsTargetedForPasstimePass() )
-                      ? ( int )( ( fmodf( gpGlobals->curtime * 3.0f, 1.0f ) ) * 255 )
-                      : 180;
+                    ? ( int )( ( fmodf( gpGlobals->curtime * 3.0f, 1.0f ) ) * 255 )
+                    : 180;
 
     SetRgba( 0, teamColor.r(), teamColor.g(), teamColor.b(), iAlpha );
     SetRgba( 1, teamColor.r(), teamColor.g(), teamColor.b(), iAlpha );

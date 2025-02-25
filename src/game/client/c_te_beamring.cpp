@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class C_TEBeamRing : public C_TEBaseBeam
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBeamRing, C_TEBaseBeam );
     DECLARE_CLIENTCLASS();
 
@@ -31,7 +31,7 @@ class C_TEBeamRing : public C_TEBaseBeam
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_nStartEntity;
     int m_nEndEntity;
 };

@@ -369,7 +369,7 @@ bool INextBot::IsAbleToBreak( const CBaseEntity *object ) const
     if ( object && object->m_takedamage == DAMAGE_YES )
     {
         if ( FClassnameIs( const_cast< CBaseEntity * >( object ), "func_breakable" ) &&
-             object->GetHealth() )
+            object->GetHealth() )
         {
             return true;
         }

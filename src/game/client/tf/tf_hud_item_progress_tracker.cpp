@@ -495,12 +495,12 @@ void CQuestProgressTrackerPanel::PerformLayout()
         auto lambdaPendingCompletionForType = [&]( EQuestPoints eType )
         {
             return pItemTracker->GetEarnedPoints( eType ) > m_pQuest->GetEarnedPoints( eType ) &&
-                   pItemTracker->GetEarnedPoints( eType ) >= m_pQuestDef->GetMaxPoints( eType );
+                    pItemTracker->GetEarnedPoints( eType ) >= m_pQuestDef->GetMaxPoints( eType );
         };
 
         bPendingCompletion = lambdaPendingCompletionForType( QUEST_POINTS_NOVICE ) ||
-                             lambdaPendingCompletionForType( QUEST_POINTS_ADVANCED ) ||
-                             lambdaPendingCompletionForType( QUEST_POINTS_EXPERT );
+                            lambdaPendingCompletionForType( QUEST_POINTS_ADVANCED ) ||
+                            lambdaPendingCompletionForType( QUEST_POINTS_EXPERT );
     }
 
     //
@@ -796,7 +796,7 @@ void CQuestProgressTrackerPanel::FireGameEvent( IGameEvent* pEvent )
                     pScorerPanel->SetAutoDelete( false );
                     // Position it next to the objective that triggered
                     pScorerPanel->SetPos( m_PointsBars.m_pBarBG->GetXPos() - pScorerPanel->GetWide(),
-                                          m_PointsBars.m_pBarBG->GetYPos() );
+                                        m_PointsBars.m_pBarBG->GetYPos() );
                     // Animate the label so it drifts off to the left
                     g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( pScorerPanel, "ObjectiveCompletedByUser", false );
 
@@ -826,7 +826,7 @@ void CQuestProgressTrackerPanel::FireGameEvent( IGameEvent* pEvent )
             else
             {
                 pszSoundToPlay = bPartyCompleted ? g_QuestPointsDefs[ePointsType].m_pszObjectiveCompletedSoundParty
-                                                 : g_QuestPointsDefs[ePointsType].m_pszObjectiveCompletedSound;
+                                                : g_QuestPointsDefs[ePointsType].m_pszObjectiveCompletedSound;
             }
 
             // Make the objective text highlight
@@ -1319,13 +1319,13 @@ void CHudItemAttributeTracker::PerformLayout()
 
     // Most prominent is "You don't have a contract, but you could"
     if ( pActiveQuest == NULL &&
-         GetQuestMapHelper().GetNumCurrentlyUnlockableNodes() > 0 )
+        GetQuestMapHelper().GetNumCurrentlyUnlockableNodes() > 0 )
     {
         pszHeaderString = "#QuestTracker_NoContract";
         pszCallToActionString = "QuestTracker_New_CallToAction";
     }
     else if ( pNode &&
-              GetQuestMapHelper().BCanNodeBeTurnedIn( pNode->GetNodeDefinition()->GetDefIndex() ) )
+            GetQuestMapHelper().BCanNodeBeTurnedIn( pNode->GetNodeDefinition()->GetDefIndex() ) )
     {
         pszHeaderString = "#QuestTracker_ReadyForTurnIn";
         pszCallToActionString = "QuestTracker_New_CallToAction";

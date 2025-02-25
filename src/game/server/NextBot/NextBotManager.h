@@ -15,7 +15,7 @@ class CTerrorPlayer;
  */
 class NextBotManager
 {
-   public:
+    public:
     NextBotManager( void );
     virtual ~NextBotManager();
 
@@ -29,16 +29,16 @@ class NextBotManager
     int GetNextBotCount( void ) const;  // How many nextbots are alive right now?
 
     /**
-     * Populate given vector with all bots in the system
-     */
+    * Populate given vector with all bots in the system
+    */
     void CollectAllBots( CUtlVector< INextBot * > *botVector );
 
     /**
-     * DEPRECATED: Use CollectAllBots().
-     * Execute functor for each NextBot in the system.
-     * If a functor returns false, stop iteration early
-     * and return false.
-     */
+    * DEPRECATED: Use CollectAllBots().
+    * Execute functor for each NextBot in the system.
+    * If a functor returns false, stop iteration early
+    * and return false.
+    */
     template < typename Functor >
     bool ForEachBot( Functor &func )
     {
@@ -54,12 +54,12 @@ class NextBotManager
     }
 
     /**
-     * DEPRECATED: Use CollectAllBots().
-     * Execute functor for each NextBot in the system as
-     * a CBaseCombatCharacter.
-     * If a functor returns false, stop iteration early
-     * and return false.
-     */
+    * DEPRECATED: Use CollectAllBots().
+    * Execute functor for each NextBot in the system as
+    * a CBaseCombatCharacter.
+    * If a functor returns false, stop iteration early
+    * and return false.
+    */
     template < typename Functor >
     bool ForEachCombatCharacter( Functor &func )
     {
@@ -75,8 +75,8 @@ class NextBotManager
     }
 
     /**
-     * Return closest bot to given point that passes the given filter
-     */
+    * Return closest bot to given point that passes the given filter
+    */
     template < typename Filter >
     INextBot *GetClosestBot( const Vector &pos, Filter &filter )
     {
@@ -97,8 +97,8 @@ class NextBotManager
     }
 
     /**
-     * Event propagators
-     */
+    * Event propagators
+    */
     virtual void OnMapLoaded( void );                                                                      // when the server has changed maps
     virtual void OnRoundRestart( void );                                                                   // when the scenario restarts
     virtual void OnBeginChangeLevel( void );                                                               // when the server is about to change maps
@@ -108,8 +108,8 @@ class NextBotManager
     virtual void OnWeaponFired( CBaseCombatCharacter *whoFired, CBaseCombatWeapon *weapon );               // when someone fires a weapon
 
     /**
-     * Debugging
-     */
+    * Debugging
+    */
     bool IsDebugging( unsigned int type ) const;  // return true if debugging system is on for the given type(s)
     void SetDebugTypes( NextBotDebugType type );  // start displaying debug info of the given type(s)
 
@@ -140,7 +140,7 @@ class NextBotManager
         return sInstance;
     }
 
-   protected:
+    protected:
     static NextBotManager *sInstance;
 
     friend class INextBot;

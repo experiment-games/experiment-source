@@ -34,7 +34,7 @@ class CVMTPanel : public CPotteryWheelPanel
 {
     DECLARE_CLASS_SIMPLE( CVMTPanel, CPotteryWheelPanel );
 
-   public:
+    public:
     // constructor, destructor
     CVMTPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CVMTPanel();
@@ -50,7 +50,7 @@ class CVMTPanel : public CPotteryWheelPanel
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     // paint it stretched to the window size
     void DrawStretchedToPanel( CMeshBuilder &meshBuilder );
 
@@ -63,7 +63,7 @@ class CVMTPanel : public CPotteryWheelPanel
     // paint it!
     virtual void OnPaint3D();
 
-   private:
+    private:
     // The material to draw
     IMaterial *m_pMaterial;
 

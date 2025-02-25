@@ -311,15 +311,15 @@ TEST(TypeTraitsTest, TestAddReference) {
   COMPILE_ASSERT_TYPES_EQ(int&, add_reference<int>::type);
   COMPILE_ASSERT_TYPES_EQ(const int&, add_reference<const int>::type);
   COMPILE_ASSERT_TYPES_EQ(volatile int&,
-                          add_reference<volatile int>::type);
+                        add_reference<volatile int>::type);
   COMPILE_ASSERT_TYPES_EQ(const volatile int&,
-                          add_reference<const volatile int>::type);
+                        add_reference<const volatile int>::type);
   COMPILE_ASSERT_TYPES_EQ(int&, add_reference<int&>::type);
   COMPILE_ASSERT_TYPES_EQ(const int&, add_reference<const int&>::type);
   COMPILE_ASSERT_TYPES_EQ(volatile int&,
-                          add_reference<volatile int&>::type);
+                        add_reference<volatile int&>::type);
   COMPILE_ASSERT_TYPES_EQ(const volatile int&,
-                          add_reference<const volatile int&>::type);
+                        add_reference<const volatile int&>::type);
 }
 
 TEST(TypeTraitsTest, TestIsPod) {
@@ -550,7 +550,7 @@ TEST(TypeTraitsTest, TestRemoveConst) {
   // TR1 examples.
   COMPILE_ASSERT_TYPES_EQ(const int *, remove_const<const int *>::type);
   COMPILE_ASSERT_TYPES_EQ(volatile int,
-                          remove_const<const volatile int>::type);
+                        remove_const<const volatile int>::type);
 }
 
 TEST(TypeTraitsTest, TestRemoveVolatile) {
@@ -559,9 +559,9 @@ TEST(TypeTraitsTest, TestRemoveVolatile) {
   COMPILE_ASSERT_TYPES_EQ(int *, remove_volatile<int * volatile>::type);
   // TR1 examples.
   COMPILE_ASSERT_TYPES_EQ(volatile int *,
-                          remove_volatile<volatile int *>::type);
+                        remove_volatile<volatile int *>::type);
   COMPILE_ASSERT_TYPES_EQ(const int,
-                          remove_volatile<const volatile int>::type);
+                        remove_volatile<const volatile int>::type);
 }
 
 TEST(TypeTraitsTest, TestRemoveCV) {
@@ -571,9 +571,9 @@ TEST(TypeTraitsTest, TestRemoveCV) {
   COMPILE_ASSERT_TYPES_EQ(int *, remove_cv<int * const volatile>::type);
   // TR1 examples.
   COMPILE_ASSERT_TYPES_EQ(const volatile int *,
-                          remove_cv<const volatile int *>::type);
+                        remove_cv<const volatile int *>::type);
   COMPILE_ASSERT_TYPES_EQ(int,
-                          remove_cv<const volatile int>::type);
+                        remove_cv<const volatile int>::type);
 }
 
 TEST(TypeTraitsTest, TestRemoveReference) {

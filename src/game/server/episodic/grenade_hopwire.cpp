@@ -36,14 +36,14 @@ class CGravityVortexController : public CBaseEntity
     DECLARE_CLASS( CGravityVortexController, CBaseEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CGravityVortexController( void )
         : m_flEndTime( 0.0f ), m_flRadius( 256 ), m_flStrength( 256 ), m_flMass( 0.0f ) {}
     float GetConsumedMass( void ) const;
 
     static CGravityVortexController *Create( const Vector &origin, float radius, float strength, float duration );
 
-   private:
+    private:
     void ConsumeEntity( CBaseEntity *pEnt );
     void PullPlayersInRange( void );
     bool KillNPCInRange( CBaseEntity *pVictim, IPhysicsObject **pPhysObj );

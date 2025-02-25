@@ -50,8 +50,8 @@ RTime32 IEconItemInterface::GetExpirationDate() const
 
     // do we have a static timer set in the schema for all instances to expire?
     return GetItemDefinition()
-               ? GetItemDefinition()->GetExpirationDate()
-               : RTime32( 0 );
+                ? GetItemDefinition()->GetExpirationDate()
+                : RTime32( 0 );
 }
 
 // --------------------------------------------------------------------------

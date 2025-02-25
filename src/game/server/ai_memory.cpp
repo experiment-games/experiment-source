@@ -49,7 +49,7 @@ AI_EnemyInfo_t::AI_EnemyInfo_t( void )
 
 class CAI_EnemiesListSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     CAI_EnemiesListSaveRestoreOps()
     {
     }
@@ -251,7 +251,7 @@ bool CAI_Enemies::ShouldDiscardMemory( AI_EnemyInfo_t *pMemory )
     }
 
     if ( !pMemory->bUnforgettable &&
-         gpGlobals->curtime > pMemory->timeLastSeen + m_flEnemyDiscardTime )
+        gpGlobals->curtime > pMemory->timeLastSeen + m_flEnemyDiscardTime )
     {
         return true;
     }

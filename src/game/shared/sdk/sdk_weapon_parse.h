@@ -16,7 +16,7 @@
 //--------------------------------------------------------------------------------------------------------
 class CSDKWeaponInfo : public FileWeaponInfo_t
 {
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CSDKWeaponInfo, FileWeaponInfo_t );
 
     CSDKWeaponInfo();

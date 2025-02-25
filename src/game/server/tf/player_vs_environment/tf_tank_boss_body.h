@@ -13,7 +13,7 @@ class INextBot;
  */
 class CTFTankBossBody : public IBody
 {
-   public:
+    public:
     CTFTankBossBody( INextBot *bot );
     virtual ~CTFTankBossBody() {}
 

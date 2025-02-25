@@ -181,7 +181,7 @@ void CDashboardPartyMember::PerformLayout()
 
         // Casual ban, if they are
         if ( ( pParty && m_nDisplayPartySlot < pParty->GetNumMembers() && pParty->BMembersIsBanned( m_steamIDPartyMember, eMMPenaltyPool_Casual ) ) ||
-             ( BIsLocalPlayerSlot() && GTFGCClientSystem()->BIsBannedFromMatchmaking( eMMPenaltyPool_Casual ) ) )
+            ( BIsLocalPlayerSlot() && GTFGCClientSystem()->BIsBannedFromMatchmaking( eMMPenaltyPool_Casual ) ) )
         {
             lambdaAddTipText( CStrAutoEncode( FindStringSafe( "#TF_Matchmaking_PartyMember_CasualBanned" ) ).ToString() );
             bShowBannedIcon = true;
@@ -189,7 +189,7 @@ void CDashboardPartyMember::PerformLayout()
 
         // Comp ban, if they are
         if ( ( pParty && m_nDisplayPartySlot < pParty->GetNumMembers() && pParty->BMembersIsBanned( m_steamIDPartyMember, eMMPenaltyPool_Ranked ) ) ||
-             ( BIsLocalPlayerSlot() && GTFGCClientSystem()->BIsBannedFromMatchmaking( eMMPenaltyPool_Ranked ) ) )
+            ( BIsLocalPlayerSlot() && GTFGCClientSystem()->BIsBannedFromMatchmaking( eMMPenaltyPool_Ranked ) ) )
         {
             lambdaAddTipText( CStrAutoEncode( FindStringSafe( "#TF_Matchmaking_PartyMember_CompetitiveBanned" ) ).ToString() );
             bShowBannedIcon = true;
@@ -260,7 +260,7 @@ void CDashboardPartyMember::PostChildPaint()
 void CDashboardPartyMember::FireGameEvent( IGameEvent *pEvent )
 {
     if ( FStrEq( pEvent->GetName(), "party_updated" ) ||
-         FStrEq( pEvent->GetName(), "world_status_changed" ) )
+        FStrEq( pEvent->GetName(), "world_status_changed" ) )
     {
         // TODO: If a member joined or left
         InvalidateLayout();
@@ -451,8 +451,8 @@ void CDashboardPartyMember::DoKickFromParty()
     Assert( !BIsLocalPlayerSlot() );
     Assert( GTFPartyClient()->BControllingPartyActions() );
     if ( m_eMemberState == MEMBER_PRESENT &&
-         !BIsLocalPlayerSlot() &&
-         GTFPartyClient()->BControllingPartyActions() )
+        !BIsLocalPlayerSlot() &&
+        GTFPartyClient()->BControllingPartyActions() )
     {
         GTFPartyClient()->BKickPartyMember( m_steamIDPartyMember );
     }

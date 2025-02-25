@@ -253,7 +253,7 @@ int CTFViewModel::DrawModel( int flags )
 
     C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
     if ( pLocalPlayer && pLocalPlayer->GetObserverMode() == OBS_MODE_IN_EYE &&
-         pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
+        pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
     {
         pPlayer = ToTFPlayer( pLocalPlayer->GetObserverTarget() );
     }
@@ -415,7 +415,7 @@ const char *CTFViewModel::ModifyEventParticles( const char *token )
 //-----------------------------------------------------------------------------
 class CViewModelInvisProxy : public CBaseInvisMaterialProxy
 {
-   public:
+    public:
     virtual void OnBind( C_BaseEntity *pC_BaseEntity );
 };
 
@@ -505,7 +505,7 @@ EXPOSE_INTERFACE( CViewModelInvisProxy, IMaterialProxy, "vm_invis" IMATERIAL_PRO
 //-----------------------------------------------------------------------------
 class CInvisProxy : public CBaseInvisMaterialProxy
 {
-   public:
+    public:
     virtual void OnBind( C_BaseEntity *pC_BaseEntity ) OVERRIDE;
 };
 

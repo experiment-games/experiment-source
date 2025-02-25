@@ -23,11 +23,11 @@
 //-----------------------------------------------------------------------------
 class KVPacker
 {
-   public:
+    public:
     bool WriteAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
     bool ReadAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
 
-   private:
+    private:
     // These types are used for serialization of KeyValues nodes.
     // Do not renumber them or you will break serialization across
     // branches.

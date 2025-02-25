@@ -71,15 +71,15 @@ namespace java
 // and mutable API. Currently only descriptors are shared.
 class SharedCodeGenerator
 {
-   public:
+    public:
     explicit SharedCodeGenerator( const FileDescriptor* file );
     ~SharedCodeGenerator();
 
     void Generate( GeneratorContext* generator_context,
-                   vector< string >* file_list );
+                    vector< string >* file_list );
     void GenerateDescriptors( io::Printer* printer );
 
-   private:
+    private:
     // Returns whether the dependency should be included in the output file.
     // Always returns true for opensource, but used internally at Google to help
     // improve compatibility with version 1 of protocol buffers.

@@ -38,7 +38,7 @@ enum EEntityOffsetMode_t
 };
 
 #define QCACHE_MAXPNTS 3  // maximum number of points/entities
-                          // involved in a query
+                        // involved in a query
 
 struct QueryCacheKey_t
 {
@@ -73,14 +73,14 @@ struct QueryCacheEntry_t
 };
 
 bool IsLineOfSightBetweenTwoEntitiesClear( CBaseEntity *pSrcEntity,
-                                           EEntityOffsetMode_t nSrcOffsetMode,
-                                           CBaseEntity *pDestEntity,
-                                           EEntityOffsetMode_t nDestOffsetMode,
-                                           CBaseEntity *pSkipEntity,
-                                           int nCollisionGroup,
-                                           unsigned int nTraceMask,
-                                           ShouldHitFunc_t pTraceFilterCallback,
-                                           float flMinimumUpdateInterval = 0.2 );
+                                            EEntityOffsetMode_t nSrcOffsetMode,
+                                            CBaseEntity *pDestEntity,
+                                            EEntityOffsetMode_t nDestOffsetMode,
+                                            CBaseEntity *pSkipEntity,
+                                            int nCollisionGroup,
+                                            unsigned int nTraceMask,
+                                            ShouldHitFunc_t pTraceFilterCallback,
+                                            float flMinimumUpdateInterval = 0.2 );
 
 // call during main loop for threaded update of the query cache
 void UpdateQueryCache( void );

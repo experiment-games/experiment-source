@@ -28,12 +28,12 @@ class CGrenade_Brickbat;
 
 class CWeaponBrickbat : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponBrickbat, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     int m_iCurrentAmmoType;
 
     void Precache( void );
@@ -71,7 +71,7 @@ class CWeaponBrickbat : public CBaseHLCombatWeapon
 
     CWeaponBrickbat( void );
 
-   private:
+    private:
     bool m_bNeedDraw;
     bool m_bNeedThrow;
     int m_iThrowBits;         // Save the current throw bits state

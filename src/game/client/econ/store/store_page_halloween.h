@@ -20,7 +20,7 @@ class CTFStorePage_SpecialPromo : public CTFStorePage1
 {
     DECLARE_CLASS_SIMPLE( CTFStorePage_SpecialPromo, CTFStorePage1 );
 
-   public:
+    public:
     CTFStorePage_SpecialPromo( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 
     virtual const char *GetPageResFile()
@@ -28,10 +28,10 @@ class CTFStorePage_SpecialPromo : public CTFStorePage1
         return pszResFile;
     }
 
-   protected:
+    protected:
     //	virtual void OrderItemsForDisplay( CUtlVector<const econ_store_entry_t *>& vecItems ) const;
 
-   private:
+    private:
     const char *pszResFile;
 };
 
@@ -42,10 +42,10 @@ class CTFStorePage_Popular : public CTFStorePage1
 {
     DECLARE_CLASS_SIMPLE( CTFStorePage_Popular, CTFStorePage1 );
 
-   public:
+    public:
     CTFStorePage_Popular( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 
-   protected:
+    protected:
     virtual void UpdateFilteredItems( void );
 };
 

@@ -105,7 +105,7 @@ class CYouTubeLoginWaitDialog : public CGenericWaitingDialog
 {
     DECLARE_CLASS_SIMPLE( CYouTubeLoginWaitDialog, CGenericWaitingDialog );
 
-   public:
+    public:
     CYouTubeLoginWaitDialog( IReplayMovie *pMovie, CConfirmDialog *pLoginDialog )
         : CGenericWaitingDialog( pLoginDialog->GetParent() ), m_pMovie( pMovie ), m_pLoginDialog( pLoginDialog )
     {
@@ -148,7 +148,7 @@ class CYouTubeLoginWaitDialog : public CGenericWaitingDialog
         }
     }
 
-   private:
+    private:
     IReplayMovie *m_pMovie;
     CConfirmDialog *m_pLoginDialog;
 };
@@ -157,7 +157,7 @@ class CYouTubeUploadWaitDialog : public CGenericWaitingDialog
 {
     DECLARE_CLASS_SIMPLE( CYouTubeUploadWaitDialog, CGenericWaitingDialog );
 
-   public:
+    public:
     CYouTubeUploadWaitDialog( IReplayMovie *pMovie, const char *pTitle, const char *pDescription, YouTubeUploadHandle_t handle, vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent ), m_pMovie( pMovie ), m_strTitle( pTitle ), m_strDescription( pDescription ), m_uploadHandle( handle ), m_iTick( 0 )
     {
@@ -316,7 +316,7 @@ class CYouTubeUploadWaitDialog : public CGenericWaitingDialog
         }
     }
 
-   private:
+    private:
     IReplayMovie *m_pMovie;
     YouTubeUploadHandle_t m_uploadHandle;
     CUtlString m_strTitle;
@@ -332,7 +332,7 @@ class CYouTubeLoginDialog : public CConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CYouTubeLoginDialog, CConfirmDialog );
 
-   public:
+    public:
     CYouTubeLoginDialog( IReplayMovie *pMovie, Panel *pParent )
         : BaseClass( pParent ), m_pMovie( pMovie ) {}
 
@@ -380,7 +380,7 @@ class CYouTubeLoginDialog : public CConfirmDialog
         BaseClass::OnCommand( command );
     }
 
-   protected:
+    protected:
     virtual const char *GetResFile()
     {
         return "Resource/UI/YouTubeLoginDialog.res";
@@ -413,7 +413,7 @@ class CYouTubeLoginDialog : public CConfirmDialog
         ShowWaitingDialog( pDialog, "#YouTube_LoggingIn", true, true, -1 );
     }
 
-   private:
+    private:
     IReplayMovie *m_pMovie;
 };
 
@@ -424,7 +424,7 @@ class CYouTubeUploadDialog : public CConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CYouTubeUploadDialog, CConfirmDialog );
 
-   public:
+    public:
     CYouTubeUploadDialog( IReplayMovie *pMovie, Panel *pParent )
         : BaseClass( pParent ), m_pMovie( pMovie ) {}
 
@@ -599,7 +599,7 @@ class CYouTubeUploadDialog : public CConfirmDialog
         BaseClass::OnCommand( command );
     }
 
-   protected:
+    protected:
     virtual const char *GetResFile()
     {
         return "Resource/UI/YouTubeUploadDialog.res";
@@ -609,7 +609,7 @@ class CYouTubeUploadDialog : public CConfirmDialog
         return "GAME";
     }
 
-   private:
+    private:
     IReplayMovie *m_pMovie;
     TextEntry *m_pTextEntryMovieTitle;
     TextEntry *m_pTextEntryMovieDesc;

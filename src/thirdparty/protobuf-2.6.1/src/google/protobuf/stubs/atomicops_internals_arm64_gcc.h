@@ -54,8 +54,8 @@ inline void MemoryBarrier()
 // NoBarrier operations.
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     Atomic32 prev;
     int32_t temp;
@@ -69,17 +69,17 @@ inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
         "cbnz %w[temp], 0b                     \n\t"  // Retry if it did not work.
         "1:                                    \n\t"
         : [prev] "=&r"( prev ),
-          [temp] "=&r"( temp ),
-          [ptr] "+Q"( *ptr )
+        [temp] "=&r"( temp ),
+        [ptr] "+Q"( *ptr )
         : [old_value] "IJr"( old_value ),
-          [new_value] "r"( new_value )
+        [new_value] "r"( new_value )
         : "cc", "memory" );  // NOLINT
 
     return prev;
 }
 
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     Atomic32 result;
     int32_t temp;
@@ -90,8 +90,8 @@ inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
         "stxr %w[temp], %w[new_value], %[ptr]  \n\t"  // Try to store the new value.
         "cbnz %w[temp], 0b                     \n\t"  // Retry if it did not work.
         : [result] "=&r"( result ),
-          [temp] "=&r"( temp ),
-          [ptr] "+Q"( *ptr )
+        [temp] "=&r"( temp ),
+        [ptr] "+Q"( *ptr )
         : [new_value] "r"( new_value )
         : "memory" );  // NOLINT
 
@@ -99,7 +99,7 @@ inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     Atomic32 result;
     int32_t temp;
@@ -111,8 +111,8 @@ inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
         "stxr %w[temp], %w[result], %[ptr]        \n\t"  // Try to store the result.
         "cbnz %w[temp], 0b                        \n\t"  // Retry on failure.
         : [result] "=&r"( result ),
-          [temp] "=&r"( temp ),
-          [ptr] "+Q"( *ptr )
+        [temp] "=&r"( temp ),
+        [ptr] "+Q"( *ptr )
         : [increment] "IJr"( increment )
         : "memory" );  // NOLINT
 
@@ -120,7 +120,7 @@ inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     MemoryBarrier();
     Atomic32 result = NoBarrier_AtomicIncrement( ptr, increment );
@@ -197,8 +197,8 @@ inline Atomic32 Release_Load( volatile const Atomic32* ptr )
 // See the 32-bit versions for comments.
 
 inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
-                                          Atomic64 old_value,
-                                          Atomic64 new_value )
+                                        Atomic64 old_value,
+                                        Atomic64 new_value )
 {
     Atomic64 prev;
     int32_t temp;
@@ -212,17 +212,17 @@ inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
         "cbnz %w[temp], 0b                     \n\t"
         "1:                                    \n\t"
         : [prev] "=&r"( prev ),
-          [temp] "=&r"( temp ),
-          [ptr] "+Q"( *ptr )
+        [temp] "=&r"( temp ),
+        [ptr] "+Q"( *ptr )
         : [old_value] "IJr"( old_value ),
-          [new_value] "r"( new_value )
+        [new_value] "r"( new_value )
         : "cc", "memory" );  // NOLINT
 
     return prev;
 }
 
 inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
-                                          Atomic64 new_value )
+                                        Atomic64 new_value )
 {
     Atomic64 result;
     int32_t temp;
@@ -233,8 +233,8 @@ inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
         "stxr %w[temp], %[new_value], %[ptr]   \n\t"
         "cbnz %w[temp], 0b                     \n\t"
         : [result] "=&r"( result ),
-          [temp] "=&r"( temp ),
-          [ptr] "+Q"( *ptr )
+        [temp] "=&r"( temp ),
+        [ptr] "+Q"( *ptr )
         : [new_value] "r"( new_value )
         : "memory" );  // NOLINT
 
@@ -242,7 +242,7 @@ inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
 }
 
 inline Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr,
-                                           Atomic64 increment )
+                                            Atomic64 increment )
 {
     Atomic64 result;
     int32_t temp;
@@ -254,8 +254,8 @@ inline Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr,
         "stxr %w[temp], %[result], %[ptr]       \n\t"
         "cbnz %w[temp], 0b                      \n\t"
         : [result] "=&r"( result ),
-          [temp] "=&r"( temp ),
-          [ptr] "+Q"( *ptr )
+        [temp] "=&r"( temp ),
+        [ptr] "+Q"( *ptr )
         : [increment] "IJr"( increment )
         : "memory" );  // NOLINT
 
@@ -263,7 +263,7 @@ inline Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr,
 }
 
 inline Atomic64 Barrier_AtomicIncrement( volatile Atomic64* ptr,
-                                         Atomic64 increment )
+                                        Atomic64 increment )
 {
     MemoryBarrier();
     Atomic64 result = NoBarrier_AtomicIncrement( ptr, increment );

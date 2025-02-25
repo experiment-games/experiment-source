@@ -26,7 +26,7 @@ enum matchresult_t
 //-----------------------------------------------------------------------------
 class CTFAutoRP : public CAutoGameSystem
 {
-   public:
+    public:
     CTFAutoRP()
         : CAutoGameSystem( "CTFAutoRP" )
     {
@@ -37,7 +37,7 @@ class CTFAutoRP : public CAutoGameSystem
     void ParseDataFile( void );
     void ApplyRPTo( char *pBuf, int iBufSize );
 
-   private:
+    private:
     struct wordreplacement_t
     {
         int iChance;
@@ -60,7 +60,7 @@ class CTFAutoRP : public CAutoGameSystem
         bool bUsedPrevWord;
     };
 
-   private:
+    private:
     const char *GetRandomPre( void );
     const char *GetRandomPost( void );
     void ModifySpeech( const char *pszInText, char *pszOutText, int iOutLen, bool bGeneratePreAndPost, bool bInPrePost );
@@ -68,7 +68,7 @@ class CTFAutoRP : public CAutoGameSystem
     bool ReplaceWord( replacementcheck_t *pCheck, char *szRep, int iRepSize, bool bSymbols, bool bWordListOnly );
     bool PerformReplacement( const char *pszReplacement, replacementcheck_t *pRepCheck, char *szStoredWord, int iStoredWordSize, char *pszOutText, int iOutLen );
 
-   private:
+    private:
     // Database
     KeyValues *m_pDataFileKV;
     // Storage of all replacement blocks

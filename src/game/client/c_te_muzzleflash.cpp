@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class C_TEMuzzleFlash : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEMuzzleFlash, C_BaseTempEntity );
 
     DECLARE_CLIENTCLASS();
@@ -29,7 +29,7 @@ class C_TEMuzzleFlash : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecOrigin;
     QAngle m_vecAngles;
     float m_flScale;

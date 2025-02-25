@@ -24,7 +24,7 @@
 
 class CWorkerInfo
 {
-   public:
+    public:
     CWorkerInfo()
     {
         m_bConnected = false;
@@ -49,7 +49,7 @@ class CWorkerInfo
 class CJobWatchDlg : public CIdleDialog
 {
     // Construction
-   public:
+    public:
     CJobWatchDlg( CWnd* pParent = NULL );  // standard constructor
     virtual ~CJobWatchDlg();
 
@@ -66,13 +66,13 @@ class CJobWatchDlg : public CIdleDialog
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CJobWatchDlg)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
     virtual BOOL OnNotify( WPARAM wParam, LPARAM lParam, LRESULT* pResult );
     //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     virtual void OnIdle();
     void RefreshWorkerStats();
     CWorkerInfo* FindWorkerByID( unsigned long jobWorkerID );

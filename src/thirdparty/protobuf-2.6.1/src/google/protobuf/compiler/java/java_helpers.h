@@ -91,7 +91,7 @@ string JavaPackageToDir( string package_name );
 // TODO(xiaofeng): this method is deprecated and should be removed in the
 // future.
 string ToJavaName( const string& full_name,
-                   const FileDescriptor* file );
+                    const FileDescriptor* file );
 
 // TODO(xiaofeng): the following methods are kept for they are exposed
 // publicly in //google/protobuf/compiler/java/names.h. They return
@@ -169,7 +169,7 @@ const char* FieldTypeName( const FieldDescriptor::Type field_type );
 class ClassNameResolver;
 string DefaultValue( const FieldDescriptor* field, bool immutable, ClassNameResolver* name_resolver );
 inline string ImmutableDefaultValue( const FieldDescriptor* field,
-                                     ClassNameResolver* name_resolver )
+                                    ClassNameResolver* name_resolver )
 {
     return DefaultValue( field, true, name_resolver );
 }
@@ -180,7 +180,7 @@ bool IsDefaultValueJavaDefault( const FieldDescriptor* field );
 inline bool UseUnknownFieldSet( const Descriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 
 // Does this message class have generated parsing, serialization, and other
@@ -188,7 +188,7 @@ inline bool UseUnknownFieldSet( const Descriptor* descriptor )
 inline bool HasGeneratedMethods( const Descriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::CODE_SIZE;
+            FileOptions::CODE_SIZE;
 }
 
 // Does this message have specialized equals() and hashCode() methods?
@@ -201,32 +201,32 @@ inline bool HasEqualsAndHashCode( const Descriptor* descriptor )
 inline bool HasDescriptorMethods( const Descriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 inline bool HasDescriptorMethods( const EnumDescriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 inline bool HasDescriptorMethods( const FileDescriptor* descriptor )
 {
     return descriptor->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 
 inline bool HasNestedBuilders( const Descriptor* descriptor )
 {
     // The proto-lite version doesn't support nested builders.
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 
 // Should we generate generic services for this file?
 inline bool HasGenericServices( const FileDescriptor* file )
 {
     return file->service_count() > 0 &&
-           file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
-           file->options().java_generic_services();
+            file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
+            file->options().java_generic_services();
 }
 
 inline bool IsLazy( const FieldDescriptor* descriptor )
@@ -234,7 +234,7 @@ inline bool IsLazy( const FieldDescriptor* descriptor )
     // Currently, the proto-lite version suports lazy field.
     // TODO(niwasaki): Support lazy fields also for other proto runtimes.
     if ( descriptor->file()->options().optimize_for() !=
-         FileOptions::LITE_RUNTIME )
+        FileOptions::LITE_RUNTIME )
     {
         return false;
     }
@@ -313,7 +313,7 @@ struct FieldOrderingByNumber
 struct ExtensionRangeOrdering
 {
     bool operator()( const Descriptor::ExtensionRange* a,
-                     const Descriptor::ExtensionRange* b ) const
+                    const Descriptor::ExtensionRange* b ) const
     {
         return a->start < b->start;
     }

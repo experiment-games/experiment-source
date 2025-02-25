@@ -317,7 +317,7 @@ CPathTrack *CAI_TrackPather::BestPointOnPath( CPathTrack *pPath, const Vector &t
 
                 // Check to see if we've hit the target, or the player's vehicle if it's a player in a vehicle
                 bool bHitTarget = ( pTargetEnt && ( pTargetEnt == pBlocker ) ) ||
-                                  ( pVehicle && ( pVehicle == pBlocker ) );
+                                ( pVehicle && ( pVehicle == pBlocker ) );
 
                 // If we hit something, and it wasn't the target or his vehicle, then no dice
                 // If we hit the target and forced move was set, *still* no dice
@@ -337,9 +337,9 @@ CPathTrack *CAI_TrackPather::BestPointOnPath( CPathTrack *pPath, const Vector &t
 // Compute a point n units along a path
 //-----------------------------------------------------------------------------
 CPathTrack *CAI_TrackPather::ComputeLeadingPointAlongPath( const Vector &vecStartPoint,
-                                                           CPathTrack *pFirstTrack,
-                                                           float flDistance,
-                                                           Vector *pTarget )
+                                                            CPathTrack *pFirstTrack,
+                                                            float flDistance,
+                                                            Vector *pTarget )
 {
     bool bMovingForward = ( flDistance > 0.0f );
     flDistance = fabs( flDistance );
@@ -495,7 +495,7 @@ bool CAI_TrackPather::HasLOSToTarget( CPathTrack *pTrack )
 
     // Check to see if we've hit the target, or the player's vehicle if it's a player in a vehicle
     bool bHitTarget = ( pTargetEnt && ( pTargetEnt == pBlocker ) ) ||
-                      ( pVehicle && ( pVehicle == pBlocker ) );
+                    ( pVehicle && ( pVehicle == pBlocker ) );
 
     return ( pBlocker == NULL ) || bHitTarget;
 }
@@ -765,10 +765,10 @@ void CAI_TrackPather::ComputePointFromPerpDistance( const Vector &vecPointOnPath
 // and positive means on the right side
 //-----------------------------------------------------------------------------
 CPathTrack *CAI_TrackPather::FindClosestPointOnPath( CPathTrack *pPath,
-                                                     const Vector &targetPos,
-                                                     Vector *pVecClosestPoint,
-                                                     Vector *pVecPathDir,
-                                                     float *pDistanceFromPath )
+                                                    const Vector &targetPos,
+                                                    Vector *pVecClosestPoint,
+                                                    Vector *pVecPathDir,
+                                                    float *pDistanceFromPath )
 {
     // Find the node nearest to the destination path target if a path is not specified
     if ( pPath == NULL )

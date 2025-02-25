@@ -19,7 +19,7 @@ class CTFBadgePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFBadgePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFBadgePanel( vgui::Panel *pParent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
@@ -30,7 +30,7 @@ class CTFBadgePanel : public vgui::EditablePanel
     void SetupBadge( const IMatchGroupDescription *pMatchDesc, const LevelInfo_t &levelInfo, const CSteamID &steamID );
     void SetupBadge( const IMatchGroupDescription *pMatchDesc, const CSteamID &steamID );
 
-   private:
+    private:
     class CModelImagePanel *m_pBadgePanel;
     uint32 m_nPrevLevel;
     bool m_bPreviouslyInPlacement = false;
@@ -38,7 +38,7 @@ class CTFBadgePanel : public vgui::EditablePanel
 
 class CTFLocalPlayerBadgePanel : public CTFBadgePanel, public CLocalSteamSharedObjectListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFLocalPlayerBadgePanel, CTFBadgePanel );
     CTFLocalPlayerBadgePanel( vgui::Panel *pParent, const char *pName );
 
@@ -49,7 +49,7 @@ class CTFLocalPlayerBadgePanel : public CTFBadgePanel, public CLocalSteamSharedO
 
     void SetMatchGroup( ETFMatchGroup eMatchGroup );
 
-   private:
+    private:
     void UpdateBadge();
     ETFMatchGroup m_eMatchGroup = k_eTFMatchGroup_Invalid;
 };

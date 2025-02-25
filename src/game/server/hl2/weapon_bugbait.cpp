@@ -25,7 +25,7 @@ class CWeaponBugBait : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponBugBait, CBaseHLCombatWeapon );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CWeaponBugBait( void );
@@ -68,7 +68,7 @@ class CWeaponBugBait : public CBaseHLCombatWeapon
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     bool m_bDrawBackFinished;
     bool m_bRedraw;
     bool m_bEmitSpores;
@@ -403,23 +403,23 @@ bool CWeaponBugBait::Deploy( void )
     /*
     if ( m_hSporeTrail == NULL )
     {
-      m_hSporeTrail = SporeTrail::CreateSporeTrail();
+    m_hSporeTrail = SporeTrail::CreateSporeTrail();
 
-      m_hSporeTrail->m_bEmit				= true;
-      m_hSporeTrail->m_flSpawnRate		= 100.0f;
-      m_hSporeTrail->m_flParticleLifetime	= 2.0f;
-      m_hSporeTrail->m_flStartSize		= 1.0f;
-      m_hSporeTrail->m_flEndSize			= 4.0f;
-      m_hSporeTrail->m_flSpawnRadius		= 8.0f;
+    m_hSporeTrail->m_bEmit				= true;
+    m_hSporeTrail->m_flSpawnRate		= 100.0f;
+    m_hSporeTrail->m_flParticleLifetime	= 2.0f;
+    m_hSporeTrail->m_flStartSize		= 1.0f;
+    m_hSporeTrail->m_flEndSize			= 4.0f;
+    m_hSporeTrail->m_flSpawnRadius		= 8.0f;
 
-      m_hSporeTrail->m_vecEndColor		= Vector( 0, 0, 0 );
+    m_hSporeTrail->m_vecEndColor		= Vector( 0, 0, 0 );
 
-      CBaseViewModel *vm = pOwner->GetViewModel();
+    CBaseViewModel *vm = pOwner->GetViewModel();
 
-      if ( vm != NULL )
-      {
+    if ( vm != NULL )
+    {
         m_hSporeTrail->FollowEntity( vm );
-      }
+    }
     }
     */
 

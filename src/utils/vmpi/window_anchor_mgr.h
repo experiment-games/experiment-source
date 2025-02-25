@@ -25,11 +25,11 @@ enum
 
 class CWindowAnchor
 {
-   public:
+    public:
     bool Init( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom );
     void Update( CWnd *pParentWnd );
 
-   private:
+    private:
     CWnd *m_pWnd;
     CRect m_Rect;  // The rectangle in client coordinates of the parent.
     CRect m_ParentRect;
@@ -39,11 +39,11 @@ class CWindowAnchor
 
 class CWindowAnchorMgr
 {
-   public:
+    public:
     bool AddAnchor( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom );
     void UpdateAnchors( CWnd *pParentWnd );
 
-   private:
+    private:
     CUtlLinkedList< CWindowAnchor, int > m_Anchors;
 };
 

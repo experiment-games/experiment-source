@@ -8,7 +8,7 @@ vs.1.1
 #include "macros.vsh"
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldPos );
 &AllocateRegister( \$worldNormal );
@@ -37,4 +37,3 @@ mov oPos, $projPos
 
 &FreeRegister( \$worldPos );
 &FreeRegister( \$worldNormal );
-

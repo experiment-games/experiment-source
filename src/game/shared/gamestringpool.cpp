@@ -31,7 +31,7 @@ class CGameStringPool : public CStringPool, public CBaseGameSystem
         Cleanup();
     }
 
-   public:
+    public:
     ~CGameStringPool()
     {
         Cleanup();
@@ -88,7 +88,7 @@ class CGameStringPool : public CStringPool, public CBaseGameSystem
         return cached;
     }
 
-   private:
+    private:
     CUtlVector< const char * > m_DeferredDeleteList;
 
     CUtlHashtable< const void *, const char * > m_KeyLookupCache;

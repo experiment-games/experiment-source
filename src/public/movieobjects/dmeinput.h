@@ -19,7 +19,7 @@ class CDmeInput : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeInput, CDmeOperator );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
 };
 

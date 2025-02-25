@@ -23,7 +23,7 @@ class CLoadoutPresetPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CLoadoutPresetPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CLoadoutPresetPanel( vgui::Panel *pParent, const char *pName );  // name is ignored but needed for DECLARE_BUILD_FACTORY()
 
     void SetClass( int iClass );
@@ -42,7 +42,7 @@ class CLoadoutPresetPanel : public vgui::EditablePanel
         m_pClassLoadoutPanel = pPanel;
     }
 
-   private:
+    private:
     equipped_preset_t GetSelectedPresetID() const;
     void UpdatePresetButtonStates();
     void LoadPreset( int iPresetIndex );

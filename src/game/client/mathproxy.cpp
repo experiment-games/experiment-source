@@ -26,7 +26,7 @@ class C_BaseEntity;
 
 class CAddProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 };
@@ -82,7 +82,7 @@ EXPOSE_INTERFACE( CAddProxy, IMaterialProxy, "Add" IMATERIAL_PROXY_INTERFACE_VER
 
 class CSubtractProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 };
@@ -138,7 +138,7 @@ EXPOSE_INTERFACE( CSubtractProxy, IMaterialProxy, "Subtract" IMATERIAL_PROXY_INT
 
 class CMultiplyProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 };
@@ -194,7 +194,7 @@ EXPOSE_INTERFACE( CMultiplyProxy, IMaterialProxy, "Multiply" IMATERIAL_PROXY_INT
 
 class CDivideProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 };
@@ -264,11 +264,11 @@ EXPOSE_INTERFACE( CDivideProxy, IMaterialProxy, "Divide" IMATERIAL_PROXY_INTERFA
 
 class CClampProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Min;
     CFloatInput m_Max;
 };
@@ -362,11 +362,11 @@ EXPOSE_INTERFACE( CClampProxy, IMaterialProxy, "Clamp" IMATERIAL_PROXY_INTERFACE
 // sineMin: the min value for the sine wave  (default: 0.0f )
 class CSineProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_SinePeriod;
     CFloatInput m_SineMax;
     CFloatInput m_SineMin;
@@ -423,7 +423,7 @@ EXPOSE_INTERFACE( CSineProxy, IMaterialProxy, "Sine" IMATERIAL_PROXY_INTERFACE_V
 
 class CEqualsProxy : public CFunctionProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity );
 };
 
@@ -468,7 +468,7 @@ EXPOSE_INTERFACE( CEqualsProxy, IMaterialProxy, "Equals" IMATERIAL_PROXY_INTERFA
 
 class CFracProxy : public CFunctionProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity );
 };
 
@@ -521,7 +521,7 @@ EXPOSE_INTERFACE( CFracProxy, IMaterialProxy, "Frac" IMATERIAL_PROXY_INTERFACE_V
 
 class CIntProxy : public CFunctionProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity );
 };
 
@@ -573,11 +573,11 @@ EXPOSE_INTERFACE( CIntProxy, IMaterialProxy, "Int" IMATERIAL_PROXY_INTERFACE_VER
 //-----------------------------------------------------------------------------
 class CLinearRampProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Rate;
     CFloatInput m_InitialValue;
 };
@@ -619,11 +619,11 @@ EXPOSE_INTERFACE( CLinearRampProxy, IMaterialProxy, "LinearRamp" IMATERIAL_PROXY
 //-----------------------------------------------------------------------------
 class CUniformNoiseProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_flMinVal;
     CFloatInput m_flMaxVal;
 };
@@ -659,11 +659,11 @@ EXPOSE_INTERFACE( CUniformNoiseProxy, IMaterialProxy, "UniformNoise" IMATERIAL_P
 //-----------------------------------------------------------------------------
 class CGaussianNoiseProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Mean;
     CFloatInput m_StdDev;
     CFloatInput m_flMinVal;
@@ -726,11 +726,11 @@ EXPOSE_INTERFACE( CGaussianNoiseProxy, IMaterialProxy, "GaussianNoise" IMATERIAL
 //-----------------------------------------------------------------------------
 class CExponentialProxy : public CFunctionProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Scale;
     CFloatInput m_Offset;
     CFloatInput m_flMinVal;
@@ -792,7 +792,7 @@ EXPOSE_INTERFACE( CExponentialProxy, IMaterialProxy, "Exponential" IMATERIAL_PRO
 //-----------------------------------------------------------------------------
 class CAbsProxy : public CFunctionProxy
 {
-   public:
+    public:
     virtual void OnBind( void *pC_BaseEntity );
 };
 
@@ -813,7 +813,7 @@ EXPOSE_INTERFACE( CAbsProxy, IMaterialProxy, "Abs" IMATERIAL_PROXY_INTERFACE_VER
 //-----------------------------------------------------------------------------
 class CEmptyProxy : public IMaterialProxy
 {
-   public:
+    public:
     CEmptyProxy() {}
     virtual ~CEmptyProxy() {}
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues )
@@ -838,11 +838,11 @@ EXPOSE_INTERFACE( CEmptyProxy, IMaterialProxy, "Empty" IMATERIAL_PROXY_INTERFACE
 //-----------------------------------------------------------------------------
 class CLessOrEqualProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     IMaterialVar *m_pLessVar;
     IMaterialVar *m_pGreaterVar;
 };
@@ -936,11 +936,11 @@ EXPOSE_INTERFACE( CLessOrEqualProxy, IMaterialProxy, "LessOrEqual" IMATERIAL_PRO
 //-----------------------------------------------------------------------------
 class CWrapMinMaxProxy : public CFunctionProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_flMinVal;
     CFloatInput m_flMaxVal;
 };
@@ -1000,7 +1000,7 @@ EXPOSE_INTERFACE( CWrapMinMaxProxy, IMaterialProxy, "WrapMinMax" IMATERIAL_PROXY
 
 class CSelectFirstIfNonZeroProxy : public CFunctionProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 };

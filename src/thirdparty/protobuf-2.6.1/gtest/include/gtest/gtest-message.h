@@ -82,12 +82,12 @@ namespace testing
 // "(null)".
 class GTEST_API_ Message
 {
-   private:
+    private:
     // The type of basic IO manipulators (endl, ends, and flush) for
     // narrow streams.
     typedef std::ostream& ( *BasicNarrowIoManip )( std::ostream& );
 
-   public:
+    public:
     // Constructs an empty Message.
     // We allocate the stringstream separately because otherwise each use of
     // ASSERT/EXPECT in a procedure adds over 200 bytes to the procedure's
@@ -210,7 +210,7 @@ class GTEST_API_ Message
         return internal::StringStreamToString( ss_.get() );
     }
 
-   private:
+    private:
 #if GTEST_OS_SYMBIAN
     // These are needed as the Nokia Symbian Compiler cannot decide between
     // const T& and const T* in a function template. The Nokia compiler _can_

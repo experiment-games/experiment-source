@@ -21,7 +21,7 @@ CHL2MPBotGetAmmo::CHL2MPBotGetAmmo( void )
 //---------------------------------------------------------------------------------------------
 class CAmmoFilter : public INextBotFilter
 {
-   public:
+    public:
     CAmmoFilter( CHL2MPBot *me )
     {
         m_me = me;

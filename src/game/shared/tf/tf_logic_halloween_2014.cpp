@@ -814,7 +814,7 @@ class CConditionFortuneTellerEffect
     : public CGameEventListener
 #endif
 {
-   public:
+    public:
     CConditionFortuneTellerEffect( const char *pszActivateSound, ETFCond eCond )
         : m_pszActivateSound( pszActivateSound ), m_eCondition( eCond ), m_bUseTimer( false )
     {

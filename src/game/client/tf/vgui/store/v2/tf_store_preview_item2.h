@@ -27,7 +27,7 @@ class CFullscreenStorePreviewItem : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CFullscreenStorePreviewItem, EditablePanel );
 
-   public:
+    public:
     CFullscreenStorePreviewItem( vgui::Panel *pParent, EditablePanel *pOwner );
 
     void SetItemDef( itemid_t iItemDef );
@@ -36,7 +36,7 @@ class CFullscreenStorePreviewItem : public EditablePanel
     void ExitFullscreen();
     bool IsFullscreenMode();
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnNavButtonSelected, "NavButtonSelected", pData );
 
     virtual void OnThink();
@@ -101,7 +101,7 @@ class CTFStorePreviewItemPanel2 : public CTFStorePreviewItemPanelBase
 {
     DECLARE_CLASS_SIMPLE( CTFStorePreviewItemPanel2, CTFStorePreviewItemPanelBase );
 
-   public:
+    public:
     CTFStorePreviewItemPanel2( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner );
 
     virtual void PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t *pEntry = NULL ) OVERRIDE;
@@ -112,7 +112,7 @@ class CTFStorePreviewItemPanel2 : public CTFStorePreviewItemPanelBase
     MESSAGE_FUNC( OnHideClassIconMouseover, "HideClassIconMouseover" );
     MESSAGE_FUNC_PARAMS( OnShowClassIconMouseover, "ShowClassIconMouseover", data );
 
-   protected:
+    protected:
     virtual void OnThink();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnCommand( const char *command );

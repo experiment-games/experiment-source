@@ -19,11 +19,11 @@ class LCheckButton : public CheckButton
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LCheckButton, "CheckButton" );
 
-   public:
+    public:
     LCheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L );
     virtual ~LCheckButton();
 
-   protected:
+    protected:
     MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )

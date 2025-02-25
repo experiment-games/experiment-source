@@ -23,7 +23,7 @@
 
 class CEconPreviewNotification : public CEconNotification
 {
-   public:
+    public:
     CEconPreviewNotification( uint64 ulSteamID, uint32 iItemDef );
 
     virtual EType NotificationType()
@@ -38,13 +38,13 @@ class CEconPreviewNotification : public CEconNotification
         return m_pItemDef->GetDefinitionIndex();
     }
 
-   public:
+    public:
     const CEconItemDefinition *m_pItemDef;
 };
 
 class CEconPreviewExpiredNotification : public CEconPreviewNotification
 {
-   public:
+    public:
     CEconPreviewExpiredNotification( uint64 ulSteamID, uint32 iItemDef )
         : CEconPreviewNotification( ulSteamID, iItemDef ) {}
 
@@ -58,7 +58,7 @@ class CEconPreviewExpiredNotification : public CEconPreviewNotification
 
 class CEconPreviewItemBoughtNotification : public CEconPreviewNotification
 {
-   public:
+    public:
     CEconPreviewItemBoughtNotification( uint64 ulSteamID, uint32 iItemDef )
         : CEconPreviewNotification( ulSteamID, iItemDef ) {}
 

@@ -32,7 +32,7 @@ class CHudStalemate : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudStalemate, EditablePanel );
 
-   public:
+    public:
     CHudStalemate( const char *pElementName );
 
     virtual void Init( void );
@@ -44,7 +44,7 @@ class CHudStalemate : public CHudElement, public EditablePanel
     virtual void FireGameEvent( IGameEvent *event );
     void SetupStalematePanel( int iReason );
 
-   private:
+    private:
     Label *m_pStalemateLabel;
     Label *m_pReasonLabel;
     float m_flHideAt;

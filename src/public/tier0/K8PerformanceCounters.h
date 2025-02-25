@@ -66,7 +66,7 @@ enum UnitEncode
 #define k8NUM_COUNTERS 4
 class k8BaseEvent
 {
-   public:
+    public:
     PME *pme;
 
     PerfEvtSel eventSelect[k8NUM_COUNTERS];
@@ -133,9 +133,9 @@ class k8BaseEvent
     }
 
     void SetFiltering( CompareState compareEnable,
-                       CompareMethod compareMethod,
-                       uint8 threshold,
-                       EdgeState edgeEnable )
+                        CompareMethod compareMethod,
+                        uint8 threshold,
+                        EdgeState edgeEnable )
     {
         PerfEvtSel &select = eventSelect[eventSelectNum];
 
@@ -242,7 +242,7 @@ typedef union EVENT_MASK( k8_dispatched_fpu_ops )
 
 class k8Event_DISPATCHED_FPU_OPS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCHED_FPU_OPS()
     {
         eventMask = ( EVENT_MASK( k8_dispatched_fpu_ops ) * )&m_eventMask;
@@ -259,7 +259,7 @@ class k8Event_DISPATCHED_FPU_OPS : public k8BaseEvent
 
 class k8Event_NO_FPU_OPS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_NO_FPU_OPS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -276,7 +276,7 @@ class k8Event_NO_FPU_OPS : public k8BaseEvent
 
 class k8Event_FAST_FPU_OPS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_FAST_FPU_OPS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -308,7 +308,7 @@ typedef union EVENT_MASK( k8_segment_register_load )
 
 class k8Event_SEG_REG_LOAD : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_SEG_REG_LOAD()
     {
         eventMask = ( EVENT_MASK( k8_segment_register_load ) * )&m_eventMask;
@@ -321,7 +321,7 @@ class k8Event_SEG_REG_LOAD : public k8BaseEvent
 
 class k8Event_SELF_MODIFY_RESYNC : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_SELF_MODIFY_RESYNC()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -333,7 +333,7 @@ class k8Event_SELF_MODIFY_RESYNC : public k8BaseEvent
 };
 class k8Event_LS_RESYNC_BY_SNOOP : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_LS_RESYNC_BY_SNOOP()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -346,7 +346,7 @@ class k8Event_LS_RESYNC_BY_SNOOP : public k8BaseEvent
 };
 class k8Event_LS_BUFFER_FULL : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_LS_BUFFER_FULL()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -375,7 +375,7 @@ typedef union EVENT_MASK( k8_locked_op )
 
 class k8Event_LOCKED_OP : public k8BaseEvent
 {
-   public:
+    public:
     EVENT_MASK( k8_locked_op ) * eventMask;
 
     k8Event_LOCKED_OP()
@@ -391,7 +391,7 @@ class k8Event_LOCKED_OP : public k8BaseEvent
 
 class k8Event_OP_LATE_CANCEL : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_OP_LATE_CANCEL()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -404,7 +404,7 @@ class k8Event_OP_LATE_CANCEL : public k8BaseEvent
 };
 class k8Event_CFLUSH_RETIRED : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_CFLUSH_RETIRED()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -417,7 +417,7 @@ class k8Event_CFLUSH_RETIRED : public k8BaseEvent
 };
 class k8Event_CPUID_RETIRED : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_CPUID_RETIRED()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -565,7 +565,7 @@ class k8Event_MISALIGNED_DATA_REFERENCES : public k8BaseEvent
 
 class k8Event_ACCESS_CANCEL_LATE : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_ACCESS_CANCEL_LATE()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -578,7 +578,7 @@ class k8Event_ACCESS_CANCEL_LATE : public k8BaseEvent
 };
 class k8Event_ACCESS_CANCEL_EARLY : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_ACCESS_CANCEL_EARLY()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -602,7 +602,7 @@ typedef union EVENT_MASK( k8_ecc )
 
 class k8Event_ECC_BIT_ERR : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_ECC_BIT_ERR()
     {
         eventMask = ( EVENT_MASK( k8_ecc ) * )&m_eventMask;
@@ -629,7 +629,7 @@ typedef union EVENT_MASK( k8_distpatch_prefetch_instructions )
 
 class k8Event_DISPATCHED_PRE_INSTRS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCHED_PRE_INSTRS()
     {
         eventMask = ( EVENT_MASK( k8_distpatch_prefetch_instructions ) * )&m_eventMask;
@@ -656,7 +656,7 @@ typedef union EVENT_MASK( k8_lock_accesses )
 
 class k8Event_LOCK_ACCESSES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_LOCK_ACCESSES()
     {
         eventMask = ( EVENT_MASK( k8_lock_accesses ) * )&m_eventMask;
@@ -671,7 +671,7 @@ class k8Event_LOCK_ACCESSES : public k8BaseEvent
 
 class k8Event_CYCLES_PROCESSOR_IS_RUNNING : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_CYCLES_PROCESSOR_IS_RUNNING()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -699,7 +699,7 @@ typedef union EVENT_MASK( k8_internal_L2_request )
 
 class k8Event_BU_INT_L2_REQ : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_BU_INT_L2_REQ()
     {
         eventMask = ( EVENT_MASK( k8_internal_L2_request ) * )&m_eventMask;
@@ -728,7 +728,7 @@ typedef union EVENT_MASK( k8_fill_request_missed_L2 )
 
 class k8Event_BU_FILL_REQ : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_BU_FILL_REQ()
     {
         eventMask = ( EVENT_MASK( k8_fill_request_missed_L2 ) * )&m_eventMask;
@@ -754,7 +754,7 @@ typedef union EVENT_MASK( k8_fill_into_L2 )
 
 class k8Event_BU_FILL_L2 : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_BU_FILL_L2()
     {
         eventMask = ( EVENT_MASK( k8_fill_into_L2 ) * )&m_eventMask;
@@ -768,7 +768,7 @@ class k8Event_BU_FILL_L2 : public k8BaseEvent
 
 class k8Event_INSTRUCTION_CACHE_FETCHES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_INSTRUCTION_CACHE_FETCHES()
     {
         event_id = 0x80;
@@ -783,7 +783,7 @@ class k8Event_INSTRUCTION_CACHE_FETCHES : public k8BaseEvent
 
 class k8Event_INSTRUCTION_CACHE_MISSES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_INSTRUCTION_CACHE_MISSES()
     {
         event_id = 0x81;
@@ -799,7 +799,7 @@ class k8Event_INSTRUCTION_CACHE_MISSES : public k8BaseEvent
 
 class k8Event_IC_REFILL_FROM_L2 : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_IC_REFILL_FROM_L2()
     {
         eventMask = ( EVENT_MASK( k8_cache ) * )&m_eventMask;
@@ -812,7 +812,7 @@ class k8Event_IC_REFILL_FROM_L2 : public k8BaseEvent
 };
 class k8Event_IC_REFILL_FROM_SYS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_IC_REFILL_FROM_SYS()
     {
         eventMask = ( EVENT_MASK( k8_cache ) * )&m_eventMask;
@@ -825,7 +825,7 @@ class k8Event_IC_REFILL_FROM_SYS : public k8BaseEvent
 };
 class k8Event_L1_ITLB_MISSES_AND_L2_ITLB_HITS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_L1_ITLB_MISSES_AND_L2_ITLB_HITS()
     {
         event_id = 0x84;
@@ -839,7 +839,7 @@ class k8Event_L1_ITLB_MISSES_AND_L2_ITLB_HITS : public k8BaseEvent
 
 class k8Event_L1_AND_L2_ITLB_MISSES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_L1_AND_L2_ITLB_MISSES()
     {
         event_id = 0x85;
@@ -853,7 +853,7 @@ class k8Event_L1_AND_L2_ITLB_MISSES : public k8BaseEvent
 
 class k8Event_IC_RESYNC_BY_SNOOP : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_IC_RESYNC_BY_SNOOP()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -868,7 +868,7 @@ class k8Event_IC_RESYNC_BY_SNOOP : public k8BaseEvent
 };
 class k8Event_IC_FETCH_STALL : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_IC_FETCH_STALL()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -881,7 +881,7 @@ class k8Event_IC_FETCH_STALL : public k8BaseEvent
 };
 class k8Event_IC_STACK_HIT : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_IC_STACK_HIT()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -894,7 +894,7 @@ class k8Event_IC_STACK_HIT : public k8BaseEvent
 };
 class k8Event_IC_STACK_OVERFLOW : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_IC_STACK_OVERFLOW()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -909,7 +909,7 @@ class k8Event_IC_STACK_OVERFLOW : public k8BaseEvent
 /* 0xC0-0xC7: from K7 official event set */
 class k8Event_RETIRED_INSTRUCTIONS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_INSTRUCTIONS()
     {
         event_id = 0xC0;
@@ -925,7 +925,7 @@ class k8Event_RETIRED_INSTRUCTIONS : public k8BaseEvent
 
 class k8Event_RETIRED_OPS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_OPS()
     {
         event_id = 0xC1;
@@ -939,7 +939,7 @@ class k8Event_RETIRED_OPS : public k8BaseEvent
 };
 class k8Event_RETIRED_BRANCHES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_BRANCHES()
     {
         event_id = 0xC2;
@@ -953,7 +953,7 @@ class k8Event_RETIRED_BRANCHES : public k8BaseEvent
 };
 class k8Event_RETIRED_BRANCHES_MISPREDICTED : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_BRANCHES_MISPREDICTED()
     {
         event_id = 0xC3;
@@ -967,7 +967,7 @@ class k8Event_RETIRED_BRANCHES_MISPREDICTED : public k8BaseEvent
 };
 class k8Event_RETIRED_TAKEN_BRANCHES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_TAKEN_BRANCHES()
     {
         event_id = 0xC4;
@@ -981,7 +981,7 @@ class k8Event_RETIRED_TAKEN_BRANCHES : public k8BaseEvent
 };
 class k8Event_RETIRED_TAKEN_BRANCHES_MISPREDICTED : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_TAKEN_BRANCHES_MISPREDICTED()
     {
         event_id = 0xC5;
@@ -995,7 +995,7 @@ class k8Event_RETIRED_TAKEN_BRANCHES_MISPREDICTED : public k8BaseEvent
 };
 class k8Event_RETIRED_FAR_CONTROL_TRANSFERS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_FAR_CONTROL_TRANSFERS()
     {
         event_id = 0xC6;
@@ -1009,7 +1009,7 @@ class k8Event_RETIRED_FAR_CONTROL_TRANSFERS : public k8BaseEvent
 };
 class k8Event_RETIRED_RESYNC_BRANCHES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_RESYNC_BRANCHES()
     {
         event_id = 0xC7;
@@ -1024,7 +1024,7 @@ class k8Event_RETIRED_RESYNC_BRANCHES : public k8BaseEvent
 
 class k8Event_RETIRED_NEAR_RETURNS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_NEAR_RETURNS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1036,7 +1036,7 @@ class k8Event_RETIRED_NEAR_RETURNS : public k8BaseEvent
 };
 class k8Event_RETIRED_RETURNS_MISPREDICT : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_RETURNS_MISPREDICT()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1049,7 +1049,7 @@ class k8Event_RETIRED_RETURNS_MISPREDICT : public k8BaseEvent
 };
 class k8Event_RETIRED_BRANCH_MISCOMPARE : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_BRANCH_MISCOMPARE()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1078,7 +1078,7 @@ typedef union EVENT_MASK( k8_retired_fpu_instr )
 
 class k8Event_RETIRED_FPU_INSTRS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_FPU_INSTRS()
     {
         eventMask = ( EVENT_MASK( k8_retired_fpu_instr ) * )&m_eventMask;
@@ -1107,7 +1107,7 @@ typedef union EVENT_MASK( k8_retired_fastpath_double_op_instr )
 
 class k8Event_RETIRED_FASTPATH_INSTRS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_RETIRED_FASTPATH_INSTRS()
     {
         eventMask = ( EVENT_MASK( k8_retired_fastpath_double_op_instr ) * )&m_eventMask;
@@ -1122,7 +1122,7 @@ class k8Event_RETIRED_FASTPATH_INSTRS : public k8BaseEvent
 
 class k8Event_INTERRUPTS_MASKED_CYCLES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_INTERRUPTS_MASKED_CYCLES()
     {
         event_id = 0xCD;
@@ -1136,7 +1136,7 @@ class k8Event_INTERRUPTS_MASKED_CYCLES : public k8BaseEvent
 };
 class k8Event_INTERRUPTS_MASKED_WHILE_PENDING_CYCLES : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_INTERRUPTS_MASKED_WHILE_PENDING_CYCLES()
     {
         event_id = 0xCE;
@@ -1150,7 +1150,7 @@ class k8Event_INTERRUPTS_MASKED_WHILE_PENDING_CYCLES : public k8BaseEvent
 };
 class k8Event_NUMBER_OF_TAKEN_HARDWARE_INTERRUPTS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_NUMBER_OF_TAKEN_HARDWARE_INTERRUPTS()
     {
         event_id = 0xCF;
@@ -1165,7 +1165,7 @@ class k8Event_NUMBER_OF_TAKEN_HARDWARE_INTERRUPTS : public k8BaseEvent
 
 class k8Event_DECODER_EMPTY : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DECODER_EMPTY()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1178,7 +1178,7 @@ class k8Event_DECODER_EMPTY : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALLS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALLS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1191,7 +1191,7 @@ class k8Event_DISPATCH_STALLS : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_FROM_BRANCH_ABORT : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_FROM_BRANCH_ABORT()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1204,7 +1204,7 @@ class k8Event_DISPATCH_STALL_FROM_BRANCH_ABORT : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_SERIALIZATION : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_SERIALIZATION()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1217,7 +1217,7 @@ class k8Event_DISPATCH_STALL_SERIALIZATION : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_SEG_LOAD : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_SEG_LOAD()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1230,7 +1230,7 @@ class k8Event_DISPATCH_STALL_SEG_LOAD : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_REORDER_BUFFER : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_REORDER_BUFFER()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1243,7 +1243,7 @@ class k8Event_DISPATCH_STALL_REORDER_BUFFER : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_RESERVE_STATIONS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_RESERVE_STATIONS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1256,7 +1256,7 @@ class k8Event_DISPATCH_STALL_RESERVE_STATIONS : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_FPU : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_FPU()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1269,7 +1269,7 @@ class k8Event_DISPATCH_STALL_FPU : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_LS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_LS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1282,7 +1282,7 @@ class k8Event_DISPATCH_STALL_LS : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_QUIET_WAIT : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_QUIET_WAIT()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1295,7 +1295,7 @@ class k8Event_DISPATCH_STALL_QUIET_WAIT : public k8BaseEvent
 };
 class k8Event_DISPATCH_STALL_PENDING : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DISPATCH_STALL_PENDING()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1322,7 +1322,7 @@ typedef union EVENT_MASK( k8_fpu_exceptions )
 
 class k8Event_FPU_EXCEPTIONS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_FPU_EXCEPTIONS()
     {
         eventMask = ( EVENT_MASK( k8_fpu_exceptions ) * )&m_eventMask;
@@ -1338,7 +1338,7 @@ class k8Event_FPU_EXCEPTIONS : public k8BaseEvent
 };
 class k8Event_DR0_BREAKPOINTS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DR0_BREAKPOINTS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1351,7 +1351,7 @@ class k8Event_DR0_BREAKPOINTS : public k8BaseEvent
 };
 class k8Event_DR1_BREAKPOINTS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DR1_BREAKPOINTS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1364,7 +1364,7 @@ class k8Event_DR1_BREAKPOINTS : public k8BaseEvent
 };
 class k8Event_DR2_BREAKPOINTS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DR2_BREAKPOINTS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1377,7 +1377,7 @@ class k8Event_DR2_BREAKPOINTS : public k8BaseEvent
 };
 class k8Event_DR3_BREAKPOINTS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DR3_BREAKPOINTS()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1404,7 +1404,7 @@ typedef union EVENT_MASK( k8_page_access_event )
 
 class k8Event_MEM_PAGE_ACCESS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_MEM_PAGE_ACCESS()
     {
         eventMask = ( EVENT_MASK( k8_page_access_event ) * )&m_eventMask;
@@ -1417,7 +1417,7 @@ class k8Event_MEM_PAGE_ACCESS : public k8BaseEvent
 };
 class k8Event_MEM_PAGE_TBL_OVERFLOW : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_MEM_PAGE_TBL_OVERFLOW()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1430,7 +1430,7 @@ class k8Event_MEM_PAGE_TBL_OVERFLOW : public k8BaseEvent
 };
 class k8Event_DRAM_SLOTS_MISSED : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_DRAM_SLOTS_MISSED()
     {
         eventMask = ( EVENT_MASK( NULL_MASK ) * )&m_eventMask;
@@ -1457,7 +1457,7 @@ typedef union EVENT_MASK( k8_turnaround )
 
 class k8Event_MEM_TURNAROUND : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_MEM_TURNAROUND()
     {
         eventMask = ( EVENT_MASK( k8_turnaround ) * )&m_eventMask;
@@ -1485,7 +1485,7 @@ typedef union EVENT_MASK( k8_bypass_counter_saturation )
 
 class k8Event_MEM_BYPASS_SAT : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_MEM_BYPASS_SAT()
     {
         eventMask = ( EVENT_MASK( k8_bypass_counter_saturation ) * )&m_eventMask;
@@ -1516,7 +1516,7 @@ typedef union EVENT_MASK( k8_sized_commands )
 
 class k8Event_SIZED_COMMANDS : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_SIZED_COMMANDS()
     {
         eventMask = ( EVENT_MASK( k8_sized_commands ) * )&m_eventMask;
@@ -1546,7 +1546,7 @@ typedef union EVENT_MASK( k8_probe_result )
 
 class k8Event_PROBE_RESULT : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_PROBE_RESULT()
     {
         eventMask = ( EVENT_MASK( k8_probe_result ) * )&m_eventMask;
@@ -1573,7 +1573,7 @@ typedef union EVENT_MASK( k8_ht )
 
 class k8Event_HYPERTRANSPORT_BUS0_WIDTH : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_HYPERTRANSPORT_BUS0_WIDTH()
     {
         eventMask = ( EVENT_MASK( k8_ht ) * )&m_eventMask;
@@ -1586,7 +1586,7 @@ class k8Event_HYPERTRANSPORT_BUS0_WIDTH : public k8BaseEvent
 };
 class k8Event_HYPERTRANSPORT_BUS1_WIDTH : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_HYPERTRANSPORT_BUS1_WIDTH()
     {
         eventMask = ( EVENT_MASK( k8_ht ) * )&m_eventMask;
@@ -1599,7 +1599,7 @@ class k8Event_HYPERTRANSPORT_BUS1_WIDTH : public k8BaseEvent
 };
 class k8Event_HYPERTRANSPORT_BUS2_WIDTH : public k8BaseEvent
 {
-   public:
+    public:
     k8Event_HYPERTRANSPORT_BUS2_WIDTH()
     {
         eventMask = ( EVENT_MASK( k8_ht ) * )&m_eventMask;

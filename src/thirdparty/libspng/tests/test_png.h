@@ -193,7 +193,7 @@ unsigned char *getimage_libpng( png_structp png_ptr, png_infop info_ptr, size_t 
     memcpy( out_size, &image_size, sizeof( size_t ) );
 
     /* Neither library does zero-padding for <8-bit images,
-       but we want the images to be bit-identical for memcmp() */
+        but we want the images to be bit-identical for memcmp() */
     image = calloc( 1, image_size );
     if ( image == NULL )
     {

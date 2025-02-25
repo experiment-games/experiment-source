@@ -20,7 +20,7 @@ class CStatModuleItemSelectionPanel : public CItemCriteriaSelectionPanel
 {
     DECLARE_CLASS_SIMPLE( CStatModuleItemSelectionPanel, CItemCriteriaSelectionPanel );
 
-   public:
+    public:
     CStatModuleItemSelectionPanel( Panel *pParent, const CEconItemView *pCorrespondingItem )
         : BaseClass( pParent, NULL ), m_pCorrespondingItem( pCorrespondingItem ), m_mapXifierClassCount( CaselessStringLessThan )
     {
@@ -106,7 +106,7 @@ class CStatModuleItemSelectionPanel : public CItemCriteriaSelectionPanel
         return NULL;
     }
 
-   protected:
+    protected:
     const char *m_pszTitleToken;
     const CEconItemView *m_pCorrespondingItem;
     CUtlMap< const char *, int > m_mapXifierClassCount;
@@ -223,7 +223,7 @@ void CStrangeCountTransferPanel::OnItemPanelMousePressed( vgui::Panel *panel )
         m_pSelectingItemModelPanel = pItemPanel;
 
         CEconItemView *pOtherItem = pItemPanel == m_pSourceStrangeModelPanel ? m_pTargetStrangeModelPanel->GetItem()
-                                                                             : m_pSourceStrangeModelPanel->GetItem();
+                                                                            : m_pSourceStrangeModelPanel->GetItem();
 
         m_hSelectionPanel = new CStatModuleItemSelectionPanel( GetParent(), pOtherItem );
 

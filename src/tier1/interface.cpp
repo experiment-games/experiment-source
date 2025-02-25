@@ -340,8 +340,8 @@ CSysModule *Sys_LoadModule( const char *pModuleName, Sys_Flags flags /* = SYS_NO
     if ( Sys_GetProcAddress( hDLL, "BuiltDebug" ) )
     {
         if ( !IsX360() && hDLL &&
-             !CommandLine()->FindParm( "-allowdebug" ) &&
-             !Sys_IsDebuggerPresent() )
+            !CommandLine()->FindParm( "-allowdebug" ) &&
+            !Sys_IsDebuggerPresent() )
         {
             Error( "Module %s is a debug build\n", pModuleName );
         }
@@ -353,12 +353,12 @@ CSysModule *Sys_LoadModule( const char *pModuleName, Sys_Flags flags /* = SYS_NO
             s_bRunningWithDebugModules = true;
 
 #if 0  // def IS_WINDOWS_PC
-			char chMemoryName[ MAX_PATH ];
-			DebugKernelMemoryObjectName( chMemoryName );
-			
-			(void) CreateFileMapping( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 1024, chMemoryName );
-			// Created a shared memory kernel object specific to process id
-			// Existence of this object indicates that we have debug modules loaded
+            char chMemoryName[ MAX_PATH ];
+            DebugKernelMemoryObjectName( chMemoryName );
+
+            (void) CreateFileMapping( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 1024, chMemoryName );
+            // Created a shared memory kernel object specific to process id
+            // Existence of this object indicates that we have debug modules loaded
 #endif
         }
     }
@@ -375,15 +375,15 @@ bool Sys_RunningWithDebugModules()
     if ( !s_bRunningWithDebugModules )
     {
 #if 0  // def IS_WINDOWS_PC
-		char chMemoryName[ MAX_PATH ];
-		DebugKernelMemoryObjectName( chMemoryName );
+        char chMemoryName[ MAX_PATH ];
+        DebugKernelMemoryObjectName( chMemoryName );
 
-		HANDLE hObject = OpenFileMapping( FILE_MAP_READ, FALSE, chMemoryName );
-		if ( hObject && hObject != INVALID_HANDLE_VALUE )
-		{
-			CloseHandle( hObject );
-			s_bRunningWithDebugModules = true;
-		}
+        HANDLE hObject = OpenFileMapping( FILE_MAP_READ, FALSE, chMemoryName );
+        if ( hObject && hObject != INVALID_HANDLE_VALUE )
+        {
+            CloseHandle( hObject );
+            s_bRunningWithDebugModules = true;
+        }
 #endif
     }
     return s_bRunningWithDebugModules;
@@ -502,8 +502,8 @@ bool Sys_LoadInterface(
 //-----------------------------------------------------------------------------
 CDllDemandLoader::CDllDemandLoader( char const *pchModuleName )
     : m_pchModuleName( pchModuleName ),
-      m_hModule( 0 ),
-      m_bLoadAttempted( false )
+    m_hModule( 0 ),
+    m_bLoadAttempted( false )
 {
 }
 

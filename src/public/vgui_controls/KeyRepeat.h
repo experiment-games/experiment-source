@@ -27,7 +27,7 @@ enum KEYREPEAT_ALIASES
 
 class CKeyRepeatHandler
 {
-   public:
+    public:
     CKeyRepeatHandler()
     {
         Reset();
@@ -47,7 +47,7 @@ class CKeyRepeatHandler
     vgui::KeyCode KeyRepeated( void );
     void SetKeyRepeatTime( vgui::KeyCode code, float flRepeat );
 
-   private:
+    private:
     int GetIndexForCode( vgui::KeyCode code )
     {
         switch ( code )
@@ -74,7 +74,7 @@ class CKeyRepeatHandler
         return -1;
     }
 
-   private:
+    private:
     bool m_bAliasDown[FM_NUM_KEYREPEAT_ALIASES];
     float m_flRepeatTimes[FM_NUM_KEYREPEAT_ALIASES];
     float m_flNextKeyRepeat;

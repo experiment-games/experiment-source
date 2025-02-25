@@ -10,7 +10,7 @@ class CObjectSentrygun;
 
 class CTFBotStickybombSentrygun : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotStickybombSentrygun( CObjectSentrygun *sentrygun );
     CTFBotStickybombSentrygun( CObjectSentrygun *sentrygun, float aimYaw, float aimPitch, float aimCharge );
 
@@ -31,7 +31,7 @@ class CTFBotStickybombSentrygun : public Action< CTFBot >
         return "StickybombSentrygun";
     };
 
-   private:
+    private:
     float m_givenYaw, m_givenPitch, m_givenCharge;
     bool m_hasGivenAim;
 

@@ -26,7 +26,7 @@ struct Bitmap_t;
 //-----------------------------------------------------------------------------
 class BitmapImage : public vgui::Image
 {
-   public:
+    public:
     BitmapImage();
     BitmapImage( vgui::VPANEL pPanelSize, const char* pFileName );
     virtual ~BitmapImage();
@@ -61,7 +61,7 @@ class BitmapImage : public vgui::Image
     /// Clean up vgui resources
     void DestroyTexture();
 
-   private:
+    private:
     int m_nTextureId;
     Color m_clr;
     int m_pos[2];

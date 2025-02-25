@@ -35,7 +35,7 @@ DEFINE_FIELD( m_animate, FIELD_INTEGER ),
     //
     class CGenericCycler : public CCycler
 {
-   public:
+    public:
     DECLARE_CLASS( CGenericCycler, CCycler );
 
     void Spawn()
@@ -215,7 +215,7 @@ class CWeaponCycler : public CBaseCombatWeapon
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponCycler, CBaseCombatWeapon );
 
     DECLARE_SERVERCLASS();
@@ -318,7 +318,7 @@ void CWeaponCycler::SecondaryAttack( void )
 // Flaming Wreakage
 class CWreckage : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CWreckage, CAI_BaseNPC );
 
     DECLARE_DATADESC();
@@ -394,7 +394,7 @@ class CBlendingCycler : public CCycler
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CBlendingCycler, CCycler );
 
     void Spawn( void );

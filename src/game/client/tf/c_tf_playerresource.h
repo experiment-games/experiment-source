@@ -19,7 +19,7 @@ class C_TF_PlayerResource : public C_PlayerResource
 {
     DECLARE_CLASS( C_TF_PlayerResource, C_PlayerResource );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TF_PlayerResource();
@@ -116,7 +116,7 @@ class C_TF_PlayerResource : public C_PlayerResource
         return ( IsConnected( iIndex ) ? m_flConnectTime[iIndex] : 0.f );
     }
 
-   protected:
+    protected:
     int GetArrayValue( int iIndex, int *pArray, int defaultVal );
 
     int m_iTotalScore[MAX_PLAYERS_ARRAY_SAFE];
@@ -131,7 +131,7 @@ class C_TF_PlayerResource : public C_PlayerResource
     float m_flNextRespawnTime[MAX_PLAYERS_ARRAY_SAFE];
     int m_iChargeLevel[MAX_PLAYERS_ARRAY_SAFE];
 
-   private:
+    private:
     int m_iDamage[MAX_PLAYERS_ARRAY_SAFE];
     int m_iDamageAssist[MAX_PLAYERS_ARRAY_SAFE];
     int m_iDamageBoss[MAX_PLAYERS_ARRAY_SAFE];

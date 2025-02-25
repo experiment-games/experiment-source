@@ -35,7 +35,7 @@ class CBaseAssetPicker : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseAssetPicker, vgui::EditablePanel );
 
-   public:
+    public:
     CBaseAssetPicker( vgui::Panel *pParent, const char *pAssetType, const char *pExt, const char *pSubDir, const char *pTextType );
     ~CBaseAssetPicker();
 
@@ -68,7 +68,7 @@ class CBaseAssetPicker : public vgui::EditablePanel
 
     virtual void Activate();
 
-   protected:
+    protected:
     // Creates standard controls. Allows the derived class to
     // add these controls to various splitter windows
     void CreateStandardControls( vgui::Panel *pParent, bool bAllowMultiselect = false );
@@ -95,7 +95,7 @@ class CBaseAssetPicker : public vgui::EditablePanel
     MESSAGE_FUNC_PARAMS( OnCheckButtonChecked, "CheckButtonChecked", kv );
     MESSAGE_FUNC( OnFileSelected, "TreeViewItemSelected" );
 
-   protected:
+    protected:
     struct AssetInfo_t
     {
         int m_nAssetIndex;
@@ -151,7 +151,7 @@ class CBaseAssetPickerFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CBaseAssetPickerFrame, vgui::Frame );
 
-   public:
+    public:
     CBaseAssetPickerFrame( vgui::Panel *pParent );
     ~CBaseAssetPickerFrame();
 
@@ -170,7 +170,7 @@ class CBaseAssetPickerFrame : public vgui::Frame
     void SetFilter( const char *pFilter );
     const char *GetFilter();
 
-   protected:
+    protected:
     // Allows the derived class to create the picker
     void SetAssetPicker( CBaseAssetPicker *pPicker );
     CBaseAssetPicker *GetAssetPicker()
@@ -181,7 +181,7 @@ class CBaseAssetPickerFrame : public vgui::Frame
     // Posts a message (passing the key values)
     void PostMessageAndClose( KeyValues *pKeyValues );
 
-   private:
+    private:
     void CleanUpMessage();
 
     CBaseAssetPicker *m_pPicker;

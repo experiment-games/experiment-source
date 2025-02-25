@@ -27,7 +27,7 @@ enum HomerRocketTrail_t
 
 class CGrenadeHomer : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeHomer, CBaseGrenade );
 
     static CGrenadeHomer *CreateGrenadeHomer( string_t nModelName, string_t sFlySound, const Vector &vecOrigin, const QAngle &vecAngles, edict_t *pentOwner );
@@ -40,7 +40,7 @@ class CGrenadeHomer : public CBaseGrenade
 
     CHandle< RocketTrail > m_hRocketTrail[3];
 
-   private:
+    private:
     string_t m_sFlySound;
     float m_flNextFlySoundTime;
 
@@ -73,7 +73,7 @@ class CGrenadeHomer : public CBaseGrenade
     void Event_Killed( const CTakeDamageInfo &info );
     int OnTakeDamage( const CTakeDamageInfo &info );
 
-   public:
+    public:
     void EXPORT Detonate( void );
     CGrenadeHomer( void );
 

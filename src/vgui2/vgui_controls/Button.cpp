@@ -898,7 +898,7 @@ void Button::ApplySettings( KeyValues *inResourceData )
     }
 
     _activationType = ( ActivationType_t )inResourceData->GetInt( "button_activation_type",
-                                                                  this->IsToggleButton() ? ACTIVATE_ONRELEASED : ACTIVATE_ONPRESSEDANDRELEASED );
+                                                                this->IsToggleButton() ? ACTIVATE_ONRELEASED : ACTIVATE_ONPRESSEDANDRELEASED );
 }
 
 //-----------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( Cable, Cable_DX8 )
 
 BEGIN_VS_SHADER( Cable_DX8,
-                 "Help for Cable shader" )
+                "Help for Cable shader" )
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "cable/cablenormalmap", "bumpmap texture" )
 SHADER_PARAM( MINLIGHT, SHADER_PARAM_TYPE_FLOAT, "0.1", "Minimum amount of light (0-1 value)" )

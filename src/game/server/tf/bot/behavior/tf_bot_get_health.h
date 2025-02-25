@@ -10,7 +10,7 @@
 
 class CTFBotGetHealth : public Action< CTFBot >
 {
-   public:
+    public:
     static bool IsPossible( CTFBot *me );  // Return true if this Action has what it needs to perform right now
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -27,7 +27,7 @@ class CTFBotGetHealth : public Action< CTFBot >
         return "GetHealth";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CHandle< CBaseEntity > m_healthKit;
     bool m_isGoalDispenser;

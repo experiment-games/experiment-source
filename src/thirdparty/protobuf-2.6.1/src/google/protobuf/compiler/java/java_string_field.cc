@@ -57,33 +57,33 @@ using internal::WireFormatLite;
 namespace {
 
 void SetPrimitiveVariables(const FieldDescriptor* descriptor,
-                           int messageBitIndex,
-                           int builderBitIndex,
-                           const FieldGeneratorInfo* info,
-                           ClassNameResolver* name_resolver,
-                           map<string, string>* variables) {
+                            int messageBitIndex,
+                            int builderBitIndex,
+                            const FieldGeneratorInfo* info,
+                            ClassNameResolver* name_resolver,
+                            map<string, string>* variables) {
   SetCommonFieldVariables(descriptor, info, variables);
 
   (*variables)["empty_list"] = "com.google.protobuf.LazyStringArrayList.EMPTY";
 
   (*variables)["default"] = ImmutableDefaultValue(descriptor, name_resolver);
   (*variables)["default_init"] =
-      "= " + ImmutableDefaultValue(descriptor, name_resolver);
+    "= " + ImmutableDefaultValue(descriptor, name_resolver);
   (*variables)["capitalized_type"] = "String";
   (*variables)["tag"] = SimpleItoa(WireFormat::MakeTag(descriptor));
   (*variables)["tag_size"] = SimpleItoa(
-      WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
+    WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
   (*variables)["null_check"] =
-      "  if (value == null) {\n"
-      "    throw new NullPointerException();\n"
-      "  }\n";
+    "  if (value == null) {\n"
+    "    throw new NullPointerException();\n"
+    "  }\n";
 
   // TODO(birdo): Add @deprecated javadoc when generating javadoc is supported
   // by the proto compiler
   (*variables)["deprecation"] = descriptor->options().deprecated()
-      ? "@java.lang.Deprecated " : "";
+    ? "@java.lang.Deprecated " : "";
   (*variables)["on_changed"] =
-      HasDescriptorMethods(descriptor->containing_type()) ? "onChanged();" : "";
+    HasDescriptorMethods(descriptor->containing_type()) ? "onChanged();" : "";
 
   if (SupportFieldPresence(descriptor->file())) {
     // For singular messages and builders, one bit is used for the hasField bit.
@@ -116,14 +116,14 @@ void SetPrimitiveVariables(const FieldDescriptor* descriptor,
   // For repeated fields, one bit is used for whether the array is immutable
   // in the parsing constructor.
   (*variables)["get_mutable_bit_parser"] =
-      GenerateGetBitMutableLocal(builderBitIndex);
+    GenerateGetBitMutableLocal(builderBitIndex);
   (*variables)["set_mutable_bit_parser"] =
-      GenerateSetBitMutableLocal(builderBitIndex);
+    GenerateSetBitMutableLocal(builderBitIndex);
 
   (*variables)["get_has_field_bit_from_local"] =
-      GenerateGetBitFromLocal(builderBitIndex);
+    GenerateGetBitFromLocal(builderBitIndex);
   (*variables)["set_has_field_bit_to_local"] =
-      GenerateSetBitToLocal(messageBitIndex);
+    GenerateSetBitToLocal(messageBitIndex);
 }
 
 bool CheckUtf8(const FieldDescriptor* descriptor) {
@@ -136,9 +136,9 @@ bool CheckUtf8(const FieldDescriptor* descriptor) {
 
 ImmutableStringFieldGenerator::
 ImmutableStringFieldGenerator(const FieldDescriptor* descriptor,
-                              int messageBitIndex,
-                              int builderBitIndex,
-                              Context* context)
+                            int messageBitIndex,
+                            int builderBitIndex,
+                            Context* context)
   : descriptor_(descriptor), messageBitIndex_(messageBitIndex),
     builderBitIndex_(builderBitIndex), context_(context),
     name_resolver_(context->GetNameResolver()) {
@@ -194,7 +194,7 @@ GenerateInterfaceMembers(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$boolean has$capitalized_name$();\n");
+    "$deprecation$boolean has$capitalized_name$();\n");
   }
   WriteFieldDocComment(printer, descriptor_);
   printer->Print(variables_,
@@ -214,9 +214,9 @@ GenerateMembers(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $get_has_field_bit_message$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $get_has_field_bit_message$;\n"
+    "}\n");
   }
 
   WriteFieldDocComment(printer, descriptor_);
@@ -228,15 +228,15 @@ GenerateMembers(io::Printer* printer) const {
     "  } else {\n"
     "    com.google.protobuf.ByteString bs = \n"
     "        (com.google.protobuf.ByteString) ref;\n"
-      "    java.lang.String s = bs.toStringUtf8();\n");
+    "    java.lang.String s = bs.toStringUtf8();\n");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "    $name$_ = s;\n");
+    "    $name$_ = s;\n");
   } else {
     printer->Print(variables_,
-      "    if (bs.isValidUtf8()) {\n"
-      "      $name$_ = s;\n"
-      "    }\n");
+    "    if (bs.isValidUtf8()) {\n"
+    "      $name$_ = s;\n"
+    "    }\n");
   }
   printer->Print(variables_,
     "    return s;\n"
@@ -266,9 +266,9 @@ GenerateBuilderMembers(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $get_has_field_bit_builder$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $get_has_field_bit_builder$;\n"
+    "}\n");
   }
 
   WriteFieldDocComment(printer, descriptor_);
@@ -281,12 +281,12 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "    java.lang.String s = bs.toStringUtf8();\n");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "    $name$_ = s;\n");
+    "    $name$_ = s;\n");
   } else {
     printer->Print(variables_,
-      "    if (bs.isValidUtf8()) {\n"
-      "      $name$_ = s;\n"
-      "    }\n");
+    "    if (bs.isValidUtf8()) {\n"
+    "      $name$_ = s;\n"
+    "    }\n");
   }
   printer->Print(variables_,
     "    return s;\n"
@@ -341,7 +341,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "$null_check$");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "  checkByteStringIsUtf8(value);\n");
+    "  checkByteStringIsUtf8(value);\n");
   }
   printer->Print(variables_,
     "  $set_has_field_bit_builder$\n"
@@ -374,17 +374,17 @@ GenerateMergingCode(io::Printer* printer) const {
     // Allow a slight breach of abstraction here in order to avoid forcing
     // all string fields to Strings when copying fields from a Message.
     printer->Print(variables_,
-      "if (other.has$capitalized_name$()) {\n"
-      "  $set_has_field_bit_builder$\n"
-      "  $name$_ = other.$name$_;\n"
-      "  $on_changed$\n"
-      "}\n");
+    "if (other.has$capitalized_name$()) {\n"
+    "  $set_has_field_bit_builder$\n"
+    "  $name$_ = other.$name$_;\n"
+    "  $on_changed$\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "if (!other.get$capitalized_name$().isEmpty()) {\n"
-      "  $name$_ = other.$name$_;\n"
-      "  $on_changed$\n"
-      "}\n");
+    "if (!other.get$capitalized_name$().isEmpty()) {\n"
+    "  $name$_ = other.$name$_;\n"
+    "  $on_changed$\n"
+    "}\n");
   }
 }
 
@@ -392,9 +392,9 @@ void ImmutableStringFieldGenerator::
 GenerateBuildingCode(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     printer->Print(variables_,
-      "if ($get_has_field_bit_from_local$) {\n"
-      "  $set_has_field_bit_to_local$;\n"
-      "}\n");
+    "if ($get_has_field_bit_from_local$) {\n"
+    "  $set_has_field_bit_to_local$;\n"
+    "}\n");
   }
   printer->Print(variables_,
     "result.$name$_ = $name$_;\n");
@@ -404,14 +404,14 @@ void ImmutableStringFieldGenerator::
 GenerateParsingCode(io::Printer* printer) const {
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "String s = input.readStringRequireUtf8();\n"
-      "$set_has_field_bit_message$\n"
-      "$name$_ = s;\n");
+    "String s = input.readStringRequireUtf8();\n"
+    "$set_has_field_bit_message$\n"
+    "$name$_ = s;\n");
   } else {
     printer->Print(variables_,
-      "com.google.protobuf.ByteString bs = input.readBytes();\n"
-      "$set_has_field_bit_message$\n"
-      "$name$_ = bs;\n");
+    "com.google.protobuf.ByteString bs = input.readBytes();\n"
+    "$set_has_field_bit_message$\n"
+    "$name$_ = bs;\n");
   }
 }
 
@@ -460,13 +460,13 @@ string ImmutableStringFieldGenerator::GetBoxedType() const {
 
 ImmutableStringOneofFieldGenerator::
 ImmutableStringOneofFieldGenerator(const FieldDescriptor* descriptor,
-                                   int messageBitIndex,
-                                   int builderBitIndex,
-                                   Context* context)
+                                    int messageBitIndex,
+                                    int builderBitIndex,
+                                    Context* context)
     : ImmutableStringFieldGenerator(
-          descriptor, messageBitIndex, builderBitIndex, context) {
+        descriptor, messageBitIndex, builderBitIndex, context) {
   const OneofGeneratorInfo* info =
-      context->GetOneofGeneratorInfo(descriptor->containing_oneof());
+    context->GetOneofGeneratorInfo(descriptor->containing_oneof());
   SetCommonOneofVariables(descriptor, info, &variables_);
 }
 
@@ -541,9 +541,9 @@ GenerateBuilderMembers(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $has_oneof_case_message$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $has_oneof_case_message$;\n"
+    "}\n");
   }
 
   WriteFieldDocComment(printer, descriptor_);
@@ -560,12 +560,12 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "    if ($has_oneof_case_message$) {\n");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "      $oneof_name$_ = s;\n");
+    "      $oneof_name$_ = s;\n");
   } else {
     printer->Print(variables_,
-      "      if (bs.isValidUtf8()) {\n"
-      "        $oneof_name$_ = s;\n"
-      "      }\n");
+    "      if (bs.isValidUtf8()) {\n"
+    "        $oneof_name$_ = s;\n"
+    "      }\n");
   }
   printer->Print(variables_,
     "    }\n"
@@ -624,7 +624,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "$null_check$");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "  checkByteStringIsUtf8(value);\n");
+    "  checkByteStringIsUtf8(value);\n");
   }
   printer->Print(variables_,
     "  $set_oneof_case_message$;\n"
@@ -656,14 +656,14 @@ void ImmutableStringOneofFieldGenerator::
 GenerateParsingCode(io::Printer* printer) const {
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "String s = input.readStringRequireUtf8();\n"
-      "$set_oneof_case_message$;\n"
-      "$oneof_name$_ = s;\n}\n");
+    "String s = input.readStringRequireUtf8();\n"
+    "$set_oneof_case_message$;\n"
+    "$oneof_name$_ = s;\n}\n");
   } else {
     printer->Print(variables_,
-      "com.google.protobuf.ByteString bs = input.readBytes();\n"
-      "$set_oneof_case_message$;\n"
-      "$oneof_name$_ = bs;\n");
+    "com.google.protobuf.ByteString bs = input.readBytes();\n"
+    "$set_oneof_case_message$;\n"
+    "$oneof_name$_ = bs;\n");
   }
 }
 
@@ -688,9 +688,9 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 
 RepeatedImmutableStringFieldGenerator::
 RepeatedImmutableStringFieldGenerator(const FieldDescriptor* descriptor,
-                                      int messageBitIndex,
-                                      int builderBitIndex,
-                                      Context* context)
+                                    int messageBitIndex,
+                                    int builderBitIndex,
+                                    Context* context)
   : descriptor_(descriptor), messageBitIndex_(messageBitIndex),
     builderBitIndex_(builderBitIndex), context_(context),
     name_resolver_(context->GetNameResolver()) {
@@ -758,9 +758,9 @@ GenerateMembers(io::Printer* printer) const {
     "}\n");
 
   if (descriptor_->options().packed() &&
-      HasGeneratedMethods(descriptor_->containing_type())) {
+    HasGeneratedMethods(descriptor_->containing_type())) {
     printer->Print(variables_,
-      "private int $name$MemoizedSerializedSize = -1;\n");
+    "private int $name$MemoizedSerializedSize = -1;\n");
   }
 }
 
@@ -858,7 +858,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "$null_check$");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "  checkByteStringIsUtf8(value);\n");
+    "  checkByteStringIsUtf8(value);\n");
   }
   printer->Print(variables_,
     "  ensure$capitalized_name$IsMutable();\n"
@@ -934,10 +934,10 @@ GenerateParsingCode(io::Printer* printer) const {
     "}\n");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "$name$_.add(s);\n");
+    "$name$_.add(s);\n");
   } else {
     printer->Print(variables_,
-      "$name$_.add(bs);\n");
+    "$name$_.add(bs);\n");
   }
 }
 
@@ -953,10 +953,10 @@ GenerateParsingCodeFromPacked(io::Printer* printer) const {
     "while (input.getBytesUntilLimit() > 0) {\n");
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
-      "  String s = input.readStringRequireUtf8();\n");
+    "  String s = input.readStringRequireUtf8();\n");
   } else {
     printer->Print(variables_,
-      "  String s = input.readString();\n");
+    "  String s = input.readString();\n");
   }
   printer->Print(variables_,
     "  $name$.add(s);\n");
@@ -977,18 +977,18 @@ void RepeatedImmutableStringFieldGenerator::
 GenerateSerializationCode(io::Printer* printer) const {
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (get$capitalized_name$List().size() > 0) {\n"
-      "  output.writeRawVarint32($tag$);\n"
-      "  output.writeRawVarint32($name$MemoizedSerializedSize);\n"
-      "}\n"
-      "for (int i = 0; i < $name$_.size(); i++) {\n"
-      "  output.write$capitalized_type$NoTag($name$_.get(i));\n"
-      "}\n");
+    "if (get$capitalized_name$List().size() > 0) {\n"
+    "  output.writeRawVarint32($tag$);\n"
+    "  output.writeRawVarint32($name$MemoizedSerializedSize);\n"
+    "}\n"
+    "for (int i = 0; i < $name$_.size(); i++) {\n"
+    "  output.write$capitalized_type$NoTag($name$_.get(i));\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "for (int i = 0; i < $name$_.size(); i++) {\n"
-      "  output.writeBytes($number$, $name$_.getByteString(i));\n"
-      "}\n");
+    "for (int i = 0; i < $name$_.size(); i++) {\n"
+    "  output.writeBytes($number$, $name$_.getByteString(i));\n"
+    "}\n");
   }
 }
 
@@ -1006,24 +1006,24 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
     "}\n");
 
   printer->Print(
-      "size += dataSize;\n");
+    "size += dataSize;\n");
 
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (!get$capitalized_name$List().isEmpty()) {\n"
-      "  size += $tag_size$;\n"
-      "  size += com.google.protobuf.CodedOutputStream\n"
-      "      .computeInt32SizeNoTag(dataSize);\n"
-      "}\n");
+    "if (!get$capitalized_name$List().isEmpty()) {\n"
+    "  size += $tag_size$;\n"
+    "  size += com.google.protobuf.CodedOutputStream\n"
+    "      .computeInt32SizeNoTag(dataSize);\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "size += $tag_size$ * get$capitalized_name$List().size();\n");
+    "size += $tag_size$ * get$capitalized_name$List().size();\n");
   }
 
   // cache the data size for packed fields.
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "$name$MemoizedSerializedSize = dataSize;\n");
+    "$name$MemoizedSerializedSize = dataSize;\n");
   }
 
   printer->Outdent();

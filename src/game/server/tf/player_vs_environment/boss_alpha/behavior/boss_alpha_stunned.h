@@ -9,7 +9,7 @@
 
 class CBossAlphaStunned : public Action< CBossAlpha >
 {
-   public:
+    public:
     CBossAlphaStunned( float duration, Action< CBossAlpha > *nextAction = NULL );
 
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
@@ -23,7 +23,7 @@ class CBossAlphaStunned : public Action< CBossAlpha >
         return "Stunned";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     enum StunStateType
     {

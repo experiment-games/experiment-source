@@ -14,41 +14,41 @@ alloc $projPos
 
 if( 0 )
 {
-	; NOTE: Don't do this optimization anymore since it would mean a gazillion combos
-	; Special case for static prop lighting.  We can go directly from 
-	; world to proj space for position, with the exception of z, which 
-	; is needed for fogging *if* height fog is enabled.
+    ; NOTE: Don't do this optimization anymore since it would mean a gazillion combos
+    ; Special case for static prop lighting.  We can go directly from
+    ; world to proj space for position, with the exception of z, which
+    ; is needed for fogging *if* height fog is enabled.
 
-	; NOTE: We don't use this path if $envmap is defined since we need
-	; worldpos for envmapping.
-	dp4 $projPos.x, $vPos, $cModelViewProj0
-	dp4 $projPos.y, $vPos, $cModelViewProj1
-	dp4 $projPos.z, $vPos, $cModelViewProj2
-	dp4 $projPos.w, $vPos, $cModelViewProj3
-	; normal
-	dp3 $worldNormal.x, $vNormal, $cModel0
-	dp3 $worldNormal.y, $vNormal, $cModel1
-	dp3 $worldNormal.z, $vNormal, $cModel2
+    ; NOTE: We don't use this path if $envmap is defined since we need
+    ; worldpos for envmapping.
+    dp4 $projPos.x, $vPos, $cModelViewProj0
+    dp4 $projPos.y, $vPos, $cModelViewProj1
+    dp4 $projPos.z, $vPos, $cModelViewProj2
+    dp4 $projPos.w, $vPos, $cModelViewProj3
+    ; normal
+    dp3 $worldNormal.x, $vNormal, $cModel0
+    dp3 $worldNormal.y, $vNormal, $cModel1
+    dp3 $worldNormal.z, $vNormal, $cModel2
 
-	; Need this for height fog if it's enabled and for height clipping
-	dp4 $worldPos.z, $vPos, $cModel2
+    ; Need this for height fog if it's enabled and for height clipping
+    dp4 $worldPos.z, $vPos, $cModel2
 }
 else
 {
-	&SkinPositionAndNormal( $worldPos, $worldNormal );
+    &SkinPositionAndNormal( $worldPos, $worldNormal );
 
-	if( $SKINNING == 1 )
-	{
-		&Normalize( $worldNormal );
-	}
+    if( $SKINNING == 1 )
+    {
+        &Normalize( $worldNormal );
+    }
 
-	;------------------------------------------------------------------------------
-	; Transform the position from world to view space
-	;------------------------------------------------------------------------------
-	dp4 $projPos.x, $worldPos, $cViewProj0
-	dp4 $projPos.y, $worldPos, $cViewProj1
-	dp4 $projPos.z, $worldPos, $cViewProj2
-	dp4 $projPos.w, $worldPos, $cViewProj3
+    ;------------------------------------------------------------------------------
+    ; Transform the position from world to view space
+    ;------------------------------------------------------------------------------
+    dp4 $projPos.x, $worldPos, $cViewProj0
+    dp4 $projPos.y, $worldPos, $cViewProj1
+    dp4 $projPos.z, $worldPos, $cViewProj2
+    dp4 $projPos.w, $worldPos, $cViewProj3
 }
 
 mov oPos, $projPos
@@ -114,12 +114,12 @@ mul $vertAtten, $vertAtten, $endFalloffFactor
 
 if( $TEETH )
 {
-	alloc $mouthAtten
-	dp3 $mouthAtten, $worldNormal.xyz, $SHADER_SPECIFIC_CONST_10.xyz
-	max $mouthAtten, $cZero, $mouthAtten
-	mul $mouthAtten, $mouthAtten, $SHADER_SPECIFIC_CONST_10.w
-	mul $vertAtten, $vertAtten, $mouthAtten
-	free $mouthAtten
+    alloc $mouthAtten
+    dp3 $mouthAtten, $worldNormal.xyz, $SHADER_SPECIFIC_CONST_10.xyz
+    max $mouthAtten, $cZero, $mouthAtten
+    mul $mouthAtten, $mouthAtten, $SHADER_SPECIFIC_CONST_10.w
+    mul $vertAtten, $vertAtten, $mouthAtten
+    free $mouthAtten
 }
 
 mov oD0, $vertAtten

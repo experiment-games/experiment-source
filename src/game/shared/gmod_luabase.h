@@ -35,7 +35,7 @@ struct UserData
 //
 class ILuaBase
 {
-   public:
+    public:
     // You shouldn't need to use this struct
     // Instead, use the UserType functions
     struct UserData
@@ -44,14 +44,14 @@ class ILuaBase
         unsigned char type;  // Change me to a uint32 one day
     };
 
-   protected:
+    protected:
     template < class T >
     struct UserData_Value : UserData
     {
         T value;
     };
 
-   public:
+    public:
     // Returns the amount of values on the stack
     virtual int Top( void ) = 0;
 
@@ -125,12 +125,12 @@ class ILuaBase
     virtual int Next( int iStackPos ) = 0;
 
 #ifndef GMOD_ALLOW_DEPRECATED
-   protected:
+    protected:
 #endif
     // Deprecated: Use the UserType functions instead of this
     virtual void *NewUserdata( unsigned int iSize ) = 0;
 
-   public:
+    public:
     // Throws an error and ceases execution of the function
     // If this function is called, any local C values will not have their destructors called!
     virtual void ThrowError( const char *strError ) = 0;
@@ -175,12 +175,12 @@ class ILuaBase
     virtual CFunc GetCFunction( int iStackPos = -1 ) = 0;
 
 #ifndef GMOD_ALLOW_DEPRECATED
-   protected:
+    protected:
 #endif
     // Deprecated: You should probably be using the UserType functions instead of this
     virtual void *GetUserdata( int iStackPos = -1 ) = 0;
 
-   public:
+    public:
     // Pushes a nil value on to the stack
     virtual void PushNil() = 0;
 
@@ -202,12 +202,12 @@ class ILuaBase
     virtual void PushCClosure( CFunc val, int iVars ) = 0;
 
 #ifndef GMOD_ALLOW_DEPRECATED
-   protected:
+    protected:
 #endif
     // Deprecated: Don't use light userdata in GMod
     virtual void PushUserdata( void * ) = 0;
 
-   public:
+    public:
     // Allows for values to be stored by reference for later use
     // Make sure you call ReferenceFree when you are done with a reference
     virtual int ReferenceCreate() = 0;
@@ -231,12 +231,12 @@ class ILuaBase
     virtual const char *GetTypeName( int iType ) = 0;
 
 #ifndef GMOD_ALLOW_DEPRECATED
-   protected:
+    protected:
 #endif
     // Deprecated: Use CreateMetaTable
     virtual void CreateMetaTableType( const char *strName, int iType ) = 0;
 
-   public:
+    public:
     // Like Get* but throws errors and returns if they're not of the expected type
     // If these functions error, any local C values will not have their destructors called!
     virtual const char *CheckString( int iStackPos = -1 ) = 0;
@@ -297,12 +297,12 @@ class ILuaBase
 
         // The UserData allocated by CLuaInterface is only guaranteed to have a data alignment of 8
         static_assert( std::alignment_of< UserData_T >::value <= 8,
-                       "PushUserType_Value given type with unsupported alignment requirement" );
+                        "PushUserType_Value given type with unsupported alignment requirement" );
 
         // Don't give this function objects that can't be trivially destructed
         // You could ignore this limitation if you implement object destruction in `__gc`
         static_assert( std::is_trivially_destructible< UserData_T >::value,
-                       "PushUserType_Value given type that is not trivially destructible" );
+                        "PushUserType_Value given type that is not trivially destructible" );
 
         auto *ud = static_cast< UserData_T * >( NewUserdata( sizeof( UserData_T ) ) );
         ud->data = new ( &ud->value ) T( val );
@@ -326,12 +326,12 @@ enum
 
 class CLuaBase : public GarrysMod::Lua::ILuaBase
 {
-   private:
+    private:
     CLuaBase() {}
     CUtlVector< const char * > m_mapMetaTableNameToID;
     lua_State *L;
 
-   public:
+    public:
     // Singleton based on: https://stackoverflow.com/a/1008289
     CLuaBase( CLuaBase const & ) = delete;
     void operator=( CLuaBase const & ) = delete;

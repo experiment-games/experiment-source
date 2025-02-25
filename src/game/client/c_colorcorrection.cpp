@@ -21,7 +21,7 @@ static ConVar mat_colcorrection_disableentities( "mat_colcorrection_disableentit
 //------------------------------------------------------------------------------
 class C_ColorCorrection : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_ColorCorrection, C_BaseEntity );
 
     DECLARE_CLIENTCLASS();
@@ -34,7 +34,7 @@ class C_ColorCorrection : public C_BaseEntity
 
     void ClientThink();
 
-   private:
+    private:
     Vector m_vecOrigin;
 
     float m_minFalloff;

@@ -412,9 +412,9 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList()
             // of healing or damage assist results in 1 point of Score.  Bonus requires
             // only 10.  This makes it easier for players to evaluate their "support" value.
             int nSupport = g_TF_PR->GetDamageAssist( playerIndex ) +
-                           g_TF_PR->GetHealingAssist( playerIndex ) +
-                           g_TF_PR->GetDamageBlocked( playerIndex ) +
-                           ( g_TF_PR->GetBonusPoints( playerIndex ) * 25 );
+                            g_TF_PR->GetHealingAssist( playerIndex ) +
+                            g_TF_PR->GetDamageBlocked( playerIndex ) +
+                            ( g_TF_PR->GetBonusPoints( playerIndex ) * 25 );
 
             pKeyValues->SetString( "score", ConvertScoreboardValueToString( g_TF_PR->GetTotalScore( playerIndex ) ) );
             pKeyValues->SetString( "damage", ConvertScoreboardValueToString( g_TF_PR->GetDamage( playerIndex ) ) );

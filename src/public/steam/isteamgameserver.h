@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class ISteamGameServer
 {
-   public:
+    public:
     //
     // Basic server data.  These properties, if set, must be set before before calling LogOn.  They
     // may not be changed after logged in.
@@ -371,7 +371,7 @@ struct GSReputation_t
     EResult m_eResult;           // Result of the call;
     uint32 m_unReputationScore;  // The reputation score for the game server
     bool m_bBanned;              // True if the server is banned from the Steam
-                                 // master servers
+                                // master servers
 
     // The following members are only filled out if m_bBanned is true. They will all
     // be set to zero otherwise. Master server bans are by IP so it is possible to be

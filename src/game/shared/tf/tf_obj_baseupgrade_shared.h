@@ -24,7 +24,7 @@ class CBaseObjectUpgrade : public CBaseObject
 {
     DECLARE_CLASS( CBaseObjectUpgrade, CBaseObject );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     CBaseObjectUpgrade();
@@ -36,7 +36,7 @@ class CBaseObjectUpgrade : public CBaseObject
     }
     virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
-   private:
+    private:
     CBaseObjectUpgrade( const CBaseObjectUpgrade & );  // not defined, not accessible
 };
 

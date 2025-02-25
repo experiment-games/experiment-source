@@ -19,7 +19,7 @@ class C_TEBeamLaser : public C_TEBaseBeam
 {
     DECLARE_CLASS( C_TEBeamLaser, C_TEBaseBeam );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TEBeamLaser( void );
@@ -27,7 +27,7 @@ class C_TEBeamLaser : public C_TEBaseBeam
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_nStartEntity;
     int m_nEndEntity;
 };

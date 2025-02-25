@@ -27,7 +27,7 @@ class CHudHDRDemo : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudHDRDemo, vgui::Panel );
 
-   public:
+    public:
     CHudHDRDemo( const char *name );
 
     // vgui overrides
@@ -37,7 +37,7 @@ class CHudHDRDemo : public CHudElement, public vgui::Panel
 
     void SetHDRDemoActive( bool bActive );
 
-   private:
+    private:
     bool m_bHDRDemoActive;
 
     // Painting

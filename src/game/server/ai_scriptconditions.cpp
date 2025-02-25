@@ -296,7 +296,7 @@ bool CAI_ScriptConditions::EvalPlayerActorProximity( const EvalArgs_t &args )
 bool CAI_ScriptConditions::EvalPlayerTargetProximity( const EvalArgs_t &args )
 {
     return ( !args.pTarget ||
-             m_PlayerTargetProxTester.Check( args.pPlayer, args.pTarget ) );
+            m_PlayerTargetProxTester.Check( args.pPlayer, args.pTarget ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -304,7 +304,7 @@ bool CAI_ScriptConditions::EvalPlayerTargetProximity( const EvalArgs_t &args )
 bool CAI_ScriptConditions::EvalActorTargetProximity( const EvalArgs_t &args )
 {
     return ( !args.pTarget || !args.pActor ||
-             m_ActorTargetProxTester.Check( args.pActor, args.pTarget ) );
+            m_ActorTargetProxTester.Check( args.pActor, args.pTarget ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -312,7 +312,7 @@ bool CAI_ScriptConditions::EvalActorTargetProximity( const EvalArgs_t &args )
 bool CAI_ScriptConditions::EvalPlayerActorLook( const EvalArgs_t &args )
 {
     return ( !args.pActor ||
-             IsInFOV( args.pPlayer, args.pActor, m_flPlayerActorFOV, m_bPlayerActorFOVTrueCone ) );
+            IsInFOV( args.pPlayer, args.pActor, m_flPlayerActorFOV, m_bPlayerActorFOVTrueCone ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -367,16 +367,16 @@ bool CAI_ScriptConditions::EvalPlayerBlockingActor( const EvalArgs_t &args )
         return true;
 
 #if 0
-	CAI_BaseNPC *pNpc = args.pActor->MyNPCPointer();
+    CAI_BaseNPC *pNpc = args.pActor->MyNPCPointer();
 
-	const float testDist = 30.0;
+    const float testDist = 30.0;
 
-	Vector origin = args.pActor->WorldSpaceCenter();
-	Vector delta  = UTIL_YawToVector( args.pActor->GetAngles().y ) * testDist;
+    Vector origin = args.pActor->WorldSpaceCenter();
+    Vector delta  = UTIL_YawToVector( args.pActor->GetAngles().y ) * testDist;
 
-	Vector vecAbsMins, vecAbsMaxs;
-	args.pActor->CollisionProp()->WorldSpaceAABB( &vecAbsMins, &vecAbsMaxs );
-	bool intersect = IsBoxIntersectingRay( vecAbsMins, vecAbsMaxs, origin, delta );
+    Vector vecAbsMins, vecAbsMaxs;
+    args.pActor->CollisionProp()->WorldSpaceAABB( &vecAbsMins, &vecAbsMaxs );
+    bool intersect = IsBoxIntersectingRay( vecAbsMins, vecAbsMaxs, origin, delta );
 #endif
 
     if ( m_fPlayerBlockingActor == TRS_FALSE )

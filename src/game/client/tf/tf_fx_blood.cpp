@@ -126,7 +126,7 @@ void TFBloodSprayCallback( Vector vecOrigin, Vector vecNormal, ClientEntityHandl
 //-----------------------------------------------------------------------------
 class C_TETFBlood : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TETFBlood, C_BaseTempEntity );
 
     DECLARE_CLIENTCLASS();
@@ -135,7 +135,7 @@ class C_TETFBlood : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecNormal;
     ClientEntityHandle_t m_hEntity;

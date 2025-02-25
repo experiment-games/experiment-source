@@ -267,7 +267,7 @@ void DrawRoundedBorder( Color borderColor, int wide, int tall )
 //-----------------------------------------------------------------------------
 class CaptionLabel : public Label
 {
-   public:
+    public:
     CaptionLabel( Panel *parent, const char *panelName, const char *text )
         : Label( parent, panelName, text )
     {
@@ -408,10 +408,10 @@ void ApplyBackgroundSchemeSettings( EditablePanel *pWindow, vgui::IScheme *pSche
 
     // Logo -----------------------------------------------
     /*	pBitmapPanel = dynamic_cast< CBitmapImagePanel * >(pWindow->FindChildByName( "ExclamationPanel" ));
-      if ( pBitmapPanel )
-      {
+    if ( pBitmapPanel )
+    {
         pBitmapPanel->setImageColor( fgColor );
-      }
+    }
     */
 }
 
@@ -527,12 +527,12 @@ static void FixupBackgroundPanels( EditablePanel *pWindow, int offsetX, int offs
 
     // Logo -----------------------------------------------
     /*	int logoInset = (cornerSize + titleHeight - logoSize)/2;
-      pPanel = pWindow->FindChildByName( "ExclamationPanel" );
-      if ( pPanel )
-      {
+    pPanel = pWindow->FindChildByName( "ExclamationPanel" );
+    if ( pPanel )
+    {
         pPanel->SetZPos( -19 ); // higher than the background
         pPanel->SetBounds( offsetX + inset + logoInset, offsetY + inset + logoInset, logoSize, logoSize );
-      }
+    }
     */
     // Title caption --------------------------------------
     pPanel = dynamic_cast< Label * >( pWindow->FindChildByName( "CaptionLabel" ) );

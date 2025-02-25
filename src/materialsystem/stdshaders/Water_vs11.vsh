@@ -51,7 +51,7 @@ alloc $worldEyeVect
 
 ; Get the eye vector in world space
 add $worldEyeVect.xyz, -$worldPos, $cEyePos
-			  
+
 ; transform the eye vector to tangent space
 dp3 oT3.x, $worldEyeVect, $vTangentS
 dp3 oT3.y, $worldEyeVect, $vTangentT

@@ -11,7 +11,7 @@
 
 class CTFBotUseTeleporter : public Action< CTFBot >
 {
-   public:
+    public:
     enum UseHowType
     {
         USE_IF_READY,
@@ -27,7 +27,7 @@ class CTFBotUseTeleporter : public Action< CTFBot >
         return "UseTeleporter";
     };
 
-   private:
+    private:
     CHandle< CObjectTeleporter > m_teleporter;  // the teleporter we're trying to use
     UseHowType m_how;
 

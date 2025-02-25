@@ -26,7 +26,7 @@ class C_FleshEffectTarget : public C_BaseEntity
 {
     DECLARE_CLASS( C_FleshEffectTarget, C_BaseEntity );
 
-   public:
+    public:
     float GetRadius( void )
     {
         if ( m_flScaleTime <= 0.0f )
@@ -104,14 +104,14 @@ void RemoveFleshProxy( C_FleshEffectTarget *pTarget )
 // $sineVar : name of variable that controls the FleshInterior level (float)
 class CFleshInteriorMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CFleshInteriorMaterialProxy();
     virtual ~CFleshInteriorMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pMaterialParamFleshEffectCenterRadius1;
     IMaterialVar *m_pMaterialParamFleshEffectCenterRadius2;
     IMaterialVar *m_pMaterialParamFleshEffectCenterRadius3;

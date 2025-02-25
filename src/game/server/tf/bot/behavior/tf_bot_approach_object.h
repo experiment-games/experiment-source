@@ -10,7 +10,7 @@
 
 class CTFBotApproachObject : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotApproachObject( CBaseEntity *loot, float range = 10.0f );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -21,7 +21,7 @@ class CTFBotApproachObject : public Action< CTFBot >
         return "ApproachObject";
     };
 
-   private:
+    private:
     CHandle< CBaseEntity > m_loot;  // what we are collecting
     float m_range;                  // how close should we get
     PathFollower m_path;            // how we get to the loot

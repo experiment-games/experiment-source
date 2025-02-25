@@ -310,7 +310,7 @@ typedef struct GCObject
 #define ttisinteger( o ) checktag( ( o ), LUA_VNUMINT )
 
 #define nvalue( o ) check_exp( ttisnumber( o ), \
-                               ( ttisinteger( o ) ? cast_num( ivalue( o ) ) : fltvalue( o ) ) )
+                                ( ttisinteger( o ) ? cast_num( ivalue( o ) ) : fltvalue( o ) ) )
 #define fltvalue( o ) check_exp( ttisfloat( o ), val_( o ).n )
 #define ivalue( o ) check_exp( ttisinteger( o ), val_( o ).i )
 
@@ -496,7 +496,7 @@ typedef struct Udata0
 /* compute the offset of the memory area of a userdata */
 #define udatamemoffset( nuv )                    \
     ( ( nuv ) == 0 ? offsetof( Udata0, bindata ) \
-                   : offsetof( Udata, uv ) + ( sizeof( UValue ) * ( nuv ) ) )
+                    : offsetof( Udata, uv ) + ( sizeof( UValue ) * ( nuv ) ) )
 
 /* get the address of the memory block inside 'Udata' */
 #define getudatamem( u ) ( cast_charp( u ) + udatamemoffset( ( u )->nuvalue ) )

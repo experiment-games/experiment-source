@@ -142,10 +142,10 @@ void ImmutableServiceGenerator::GenerateNewReflectiveServiceMethod(
     printer->Print("@java.lang.Override\n");
     GenerateMethodSignature(printer, method, IS_CONCRETE);
     printer->Print(
-      " {\n"
-      "  impl.$method$(controller, request, done);\n"
-      "}\n\n",
-      "method", UnderscoresToCamelCase(method));
+    " {\n"
+    "  impl.$method$(controller, request, done);\n"
+    "}\n\n",
+    "method", UnderscoresToCamelCase(method));
   }
 
   printer->Outdent();
@@ -212,11 +212,11 @@ void ImmutableServiceGenerator::GenerateCallMethod(io::Printer* printer) {
     vars["output"] = name_resolver_->GetImmutableClassName(
         method->output_type());
     printer->Print(vars,
-      "case $index$:\n"
-      "  this.$method$(controller, ($input$)request,\n"
-      "    com.google.protobuf.RpcUtil.<$output$>specializeCallback(\n"
-      "      done));\n"
-      "  return;\n");
+    "case $index$:\n"
+    "  this.$method$(controller, ($input$)request,\n"
+    "    com.google.protobuf.RpcUtil.<$output$>specializeCallback(\n"
+    "      done));\n"
+    "  return;\n");
   }
 
   printer->Print(
@@ -260,8 +260,8 @@ void ImmutableServiceGenerator::GenerateCallBlockingMethod(
     vars["output"] = name_resolver_->GetImmutableClassName(
         method->output_type());
     printer->Print(vars,
-      "case $index$:\n"
-      "  return impl.$method$(controller, ($input$)request);\n");
+    "case $index$:\n"
+    "  return impl.$method$(controller, ($input$)request);\n");
   }
 
   printer->Print(
@@ -280,9 +280,9 @@ void ImmutableServiceGenerator::GenerateCallBlockingMethod(
 void ImmutableServiceGenerator::GenerateGetPrototype(RequestOrResponse which,
                                             io::Printer* printer) {
   /*
-   * TODO(cpovirk): The exception message says "Service.foo" when it may be
-   * "BlockingService.foo."  Consider fixing.
-   */
+    * TODO(cpovirk): The exception message says "Service.foo" when it may be
+    * "BlockingService.foo."  Consider fixing.
+    */
   printer->Print(
     "public final com.google.protobuf.Message\n"
     "    get$request_or_response$Prototype(\n"
@@ -302,10 +302,10 @@ void ImmutableServiceGenerator::GenerateGetPrototype(RequestOrResponse which,
     map<string, string> vars;
     vars["index"] = SimpleItoa(i);
     vars["type"] = name_resolver_->GetImmutableClassName(
-      (which == REQUEST) ? method->input_type() : method->output_type());
+    (which == REQUEST) ? method->input_type() : method->output_type());
     printer->Print(vars,
-      "case $index$:\n"
-      "  return $type$.getDefaultInstance();\n");
+    "case $index$:\n"
+    "  return $type$.getDefaultInstance();\n");
   }
 
   printer->Print(
@@ -356,15 +356,15 @@ void ImmutableServiceGenerator::GenerateStub(io::Printer* printer) {
     vars["output"] = name_resolver_->GetImmutableClassName(
         method->output_type());
     printer->Print(vars,
-      "channel.callMethod(\n"
-      "  getDescriptor().getMethods().get($index$),\n"
-      "  controller,\n"
-      "  request,\n"
-      "  $output$.getDefaultInstance(),\n"
-      "  com.google.protobuf.RpcUtil.generalizeCallback(\n"
-      "    done,\n"
-      "    $output$.class,\n"
-      "    $output$.getDefaultInstance()));\n");
+    "channel.callMethod(\n"
+    "  getDescriptor().getMethods().get($index$),\n"
+    "  controller,\n"
+    "  request,\n"
+    "  $output$.getDefaultInstance(),\n"
+    "  com.google.protobuf.RpcUtil.generalizeCallback(\n"
+    "    done,\n"
+    "    $output$.class,\n"
+    "    $output$.getDefaultInstance()));\n");
 
     printer->Outdent();
     printer->Print("}\n");
@@ -421,16 +421,16 @@ void ImmutableServiceGenerator::GenerateBlockingStub(io::Printer* printer) {
     vars["output"] = name_resolver_->GetImmutableClassName(
         method->output_type());
     printer->Print(vars,
-      "return ($output$) channel.callBlockingMethod(\n"
-      "  getDescriptor().getMethods().get($index$),\n"
-      "  controller,\n"
-      "  request,\n"
-      "  $output$.getDefaultInstance());\n");
+    "return ($output$) channel.callBlockingMethod(\n"
+    "  getDescriptor().getMethods().get($index$),\n"
+    "  controller,\n"
+    "  request,\n"
+    "  $output$.getDefaultInstance());\n");
 
     printer->Outdent();
     printer->Print(
-      "}\n"
-      "\n");
+    "}\n"
+    "\n");
   }
 
   printer->Outdent();
@@ -438,8 +438,8 @@ void ImmutableServiceGenerator::GenerateBlockingStub(io::Printer* printer) {
 }
 
 void ImmutableServiceGenerator::GenerateMethodSignature(io::Printer* printer,
-                                               const MethodDescriptor* method,
-                                               IsAbstract is_abstract) {
+                                                const MethodDescriptor* method,
+                                                IsAbstract is_abstract) {
   map<string, string> vars;
   vars["name"] = UnderscoresToCamelCase(method);
   vars["input"] = name_resolver_->GetImmutableClassName(method->input_type());

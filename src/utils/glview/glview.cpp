@@ -410,12 +410,12 @@ void ReadPolyFileType( const char *name, int nList, BOOL drawLines )
 
             /*
             if (!(fabs( v[0] ) < 32768.0&& fabs( v[1] ) < 32768.0 && fabs( v[2] ) < 32768.0 ) )
-              Error( "Out of range data\n");
+            Error( "Out of range data\n");
             */
 
             /*
             if (v[3] <= 0.1 && v[4] <= 0.1 && v[5] <= 0.1 )
-              continue;
+            continue;
             */
 
             if ( drawLines )  // YELLOW OUTLINES
@@ -776,26 +776,26 @@ void ReadPHYFile( const char *name, phyviewparams_t &params )
     vcollide_t collide;
     physcollision->VCollideLoad( &collide, header.solidCount, ( const char * )buf, fileSize );
 #if 0
-	Vector start0( -3859.1199, -2050.8674, 64.031250 );
-	Vector end0(-3859.2246, -2051.2817, 64.031250 );
-	Vector modelPosition(-3840,-2068.0000, 82.889099);
-	QAngle modelAngles(0,90,0);
+    Vector start0( -3859.1199, -2050.8674, 64.031250 );
+    Vector end0(-3859.2246, -2051.2817, 64.031250 );
+    Vector modelPosition(-3840,-2068.0000, 82.889099);
+    QAngle modelAngles(0,90,0);
 
-	{
-		Ray_t ray;
-		ray.Init( start0, end0, Vector(-16,-16,0), Vector(16,16,72));
-		trace_t tr;
-		physcollision->TraceBox( ray, collide.solids[0], modelPosition, modelAngles, &tr );
-		Assert(!tr.startsolid);
-		if ( tr.DidHit() )
-		{
-			Ray_t ray2;
-			ray2.Init( tr.endpos, tr.endpos, Vector(-16,-16,0), Vector(16,16,72));
-			trace_t tr2;
-			physcollision->TraceBox( ray2, collide.solids[0], modelPosition, modelAngles, &tr2 );
- 			Assert(!tr2.startsolid);
-		}
-	}
+    {
+        Ray_t ray;
+        ray.Init( start0, end0, Vector(-16,-16,0), Vector(16,16,72));
+        trace_t tr;
+        physcollision->TraceBox( ray, collide.solids[0], modelPosition, modelAngles, &tr );
+        Assert(!tr.startsolid);
+        if ( tr.DidHit() )
+        {
+            Ray_t ray2;
+            ray2.Init( tr.endpos, tr.endpos, Vector(-16,-16,0), Vector(16,16,72));
+            trace_t tr2;
+            physcollision->TraceBox( ray2, collide.solids[0], modelPosition, modelAngles, &tr2 );
+            Assert(!tr2.startsolid);
+        }
+    }
 #endif
 #if BENCHMARK_PHY
     Benchmark_PHY( collide.solids[0] );
@@ -987,18 +987,18 @@ void DrawDisplacementData( void )
     }
 
 #if 0
-	for( i = 0; i < width - 1; i++ )
-	{
-		for( j = 0; j < width - 1; j++ )
-		{
-			glBegin( GL_POLYGON );
-			glVertex3f( dispPoints[halfCount+(i*width+j)][0], dispPoints[halfCount+(i*width+j)][1], dispPoints[halfCount+(i*width+j)][2] );
-			glVertex3f( dispPoints[halfCount+((i+1)*width+j)][0], dispPoints[halfCount+(i+1)*width+j][1], dispPoints[halfCount+((i+1)*width+j)][2] );
-			glVertex3f( dispPoints[halfCount+((i+1)*width+(j+1))][0], dispPoints[halfCount+(i+1)*width+(j+1)][1], dispPoints[halfCount+((i+1)*width+(j+1))][2] );
-			glVertex3f( dispPoints[halfCount+(i*width+(j+1))][0], dispPoints[halfCount+(i*width+(j+1))][1], dispPoints[halfCount+(i*width+(j+1))][2] );
-			glEnd();
-		}
-	}
+    for( i = 0; i < width - 1; i++ )
+    {
+        for( j = 0; j < width - 1; j++ )
+        {
+            glBegin( GL_POLYGON );
+            glVertex3f( dispPoints[halfCount+(i*width+j)][0], dispPoints[halfCount+(i*width+j)][1], dispPoints[halfCount+(i*width+j)][2] );
+            glVertex3f( dispPoints[halfCount+((i+1)*width+j)][0], dispPoints[halfCount+(i+1)*width+j][1], dispPoints[halfCount+((i+1)*width+j)][2] );
+            glVertex3f( dispPoints[halfCount+((i+1)*width+(j+1))][0], dispPoints[halfCount+(i+1)*width+(j+1)][1], dispPoints[halfCount+((i+1)*width+(j+1))][2] );
+            glVertex3f( dispPoints[halfCount+(i*width+(j+1))][0], dispPoints[halfCount+(i*width+(j+1))][1], dispPoints[halfCount+(i*width+(j+1))][2] );
+            glEnd();
+        }
+    }
 #endif
 
     glColor3f( 0.0f, 1.0f, 0.0f );
@@ -1262,24 +1262,24 @@ void WCam_Create( HINSTANCE hInstance )
     y = ( nScy - h ) / 2;
 
     camerawindow = CreateWindow( "camera",
-                                 "Camera View",
-                                 WS_OVERLAPPED |
-                                     WS_CAPTION |
-                                     WS_SYSMENU |
-                                     WS_THICKFRAME |
-                                     WS_MAXIMIZEBOX |
-                                     WS_CLIPSIBLINGS |
-                                     WS_CLIPCHILDREN,
+                                "Camera View",
+                                WS_OVERLAPPED |
+                                    WS_CAPTION |
+                                    WS_SYSMENU |
+                                    WS_THICKFRAME |
+                                    WS_MAXIMIZEBOX |
+                                    WS_CLIPSIBLINGS |
+                                    WS_CLIPCHILDREN,
 
-                                 x,
-                                 y,
-                                 w,
-                                 h,  // size
+                                x,
+                                y,
+                                w,
+                                h,  // size
 
-                                 NULL,  // parent window
-                                 0,     // no menu
-                                 hInstance,
-                                 0 );
+                                NULL,  // parent window
+                                0,     // no menu
+                                hInstance,
+                                0 );
     if ( !camerawindow )
         Error( "Couldn't create camerawindow" );
 

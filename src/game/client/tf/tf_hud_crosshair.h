@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CHudTFCrosshair : public CHudCrosshair
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudTFCrosshair, CHudCrosshair );
 
     CHudTFCrosshair( const char *name );
@@ -28,11 +28,11 @@ class CHudTFCrosshair : public CHudCrosshair
     virtual void LevelShutdown( void ) OVERRIDE;
     virtual bool ShouldDraw() OVERRIDE;
 
-   protected:
+    protected:
     virtual void Paint() OVERRIDE;
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     int m_iCrosshairTextureID;
     IVguiMatInfo *m_pCrosshairMaterial;
 

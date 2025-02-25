@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -12,7 +12,7 @@
 
 class CVMPIRegistryQueryThread
 {
-   public:
+    public:
     CVMPIRegistryQueryThread();
     ~CVMPIRegistryQueryThread();
 
@@ -23,7 +23,7 @@ class CVMPIRegistryQueryThread
 
     void GetRegisteredServices( CUtlVector< CServiceInfo > &services );
 
-   private:
+    private:
     void UpdateServicesFromRegistry();
 
     DWORD ThreadFn();

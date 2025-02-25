@@ -62,7 +62,7 @@ class CTFGCClientSystem : public CGCClientSystem, public GCSDK::ISharedObjectLis
     friend class CSendCreateOrUpdatePartyMsgJob;
     DECLARE_CLASS_GAMEROOT( CTFGCClientSystem, CGCClientSystem );
 
-   public:
+    public:
     CTFGCClientSystem( void );
     ~CTFGCClientSystem( void );
 
@@ -308,12 +308,12 @@ class CTFGCClientSystem : public CGCClientSystem, public GCSDK::ISharedObjectLis
     void ServerRequestEquipment();
     void LocalInventoryChanged();
 
-   protected:
+    protected:
     // CGCClientSystem
     virtual void PreInitGC() OVERRIDE;
     virtual void PostInitGC() OVERRIDE;
 
-   private:
+    private:
     friend class CGCClientAcceptInviteResponse;
     friend class CGCWorldStatusBroadcast;
     //	void CreateSourceTVProxy( uint32 source_tv_public_addr, uint32 source_tv_private_addr, uint32 source_tv_port );

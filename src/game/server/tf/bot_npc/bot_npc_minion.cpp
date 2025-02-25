@@ -53,7 +53,7 @@ SendPropEHandle( SENDINFO( m_stunTarget ) ),
     //-----------------------------------------------------------------------------------------------------
     class CTFSpawnTemplateStunDrone : public CTFSpawnTemplate
 {
-   public:
+    public:
     virtual CBaseEntity *Instantiate( void ) const
     {
         return CreateEntityByName( "bot_npc_minion" );
@@ -403,7 +403,7 @@ void CBotNPCMinion::UpdateTarget( void )
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionHoldStunVictim : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction );
     virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval );
     virtual void OnEnd( CBotNPCMinion *me, Action< CBotNPCMinion > *nextAction );
@@ -413,7 +413,7 @@ class CBotNPCMinionHoldStunVictim : public Action< CBotNPCMinion >
         return "HoldStunVictim";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     CountdownTimer m_restunTimer;
     CountdownTimer m_killTimer;
@@ -512,7 +512,7 @@ void CBotNPCMinionHoldStunVictim::OnEnd( CBotNPCMinion *me, Action< CBotNPCMinio
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionStartStunAttack : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction );
     virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval );
 
@@ -521,7 +521,7 @@ class CBotNPCMinionStartStunAttack : public Action< CBotNPCMinion >
         return "StartStunAttack";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     CountdownTimer m_stunTimer;
 };
@@ -568,7 +568,7 @@ ActionResult< CBotNPCMinion > CBotNPCMinionStartStunAttack::Update( CBotNPCMinio
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionReadyToStun : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval );
 
     virtual const char *GetName( void ) const
@@ -599,7 +599,7 @@ ActionResult< CBotNPCMinion > CBotNPCMinionReadyToStun::Update( CBotNPCMinion *m
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionApproachTarget : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual Action< CBotNPCMinion > *InitialContainedAction( CBotNPCMinion *me );
 
     virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction );
@@ -611,7 +611,7 @@ class CBotNPCMinionApproachTarget : public Action< CBotNPCMinion >
         return "ApproachTarget";
     }  // return name of this action
 
-   private:
+    private:
     CTFPathFollower m_path;
     CountdownTimer m_initialStunTimer;
     CountdownTimer m_chooseTargetTimer;
@@ -697,7 +697,7 @@ void CBotNPCMinionApproachTarget::OnEnd( CBotNPCMinion *me, Action< CBotNPCMinio
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionNotice : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction );
     virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval );
 
@@ -706,7 +706,7 @@ class CBotNPCMinionNotice : public Action< CBotNPCMinion >
         return "Notice";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 
@@ -742,7 +742,7 @@ ActionResult< CBotNPCMinion > CBotNPCMinionNotice::Update( CBotNPCMinion *me, fl
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionRoam : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction );
     virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval );
 
@@ -751,7 +751,7 @@ class CBotNPCMinionRoam : public Action< CBotNPCMinion >
         return "Roam";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_pingTimer;
     CTFNavArea *m_goalArea;
     CountdownTimer m_waitTimer;
@@ -781,9 +781,9 @@ ActionResult< CBotNPCMinion > CBotNPCMinionRoam::Update( CBotNPCMinion *me, floa
     me->m_nSkin = MINION_LIGHT_OFF;
 
     if ( m_goalArea == NULL ||
-         me->GetLastKnownArea() == m_goalArea ||
-         m_goalArea->IsOverlapping( me->WorldSpaceCenter() ) ||
-         ( me->WorldSpaceCenter() - m_goalArea->GetCenter() ).AsVector2D().IsLengthLessThan( 20.0f ) )
+        me->GetLastKnownArea() == m_goalArea ||
+        m_goalArea->IsOverlapping( me->WorldSpaceCenter() ) ||
+        ( me->WorldSpaceCenter() - m_goalArea->GetCenter() ).AsVector2D().IsLengthLessThan( 20.0f ) )
     {
         // at goal
         if ( m_waitTimer.HasStarted() )
@@ -850,7 +850,7 @@ void CBotNPCMinionRoam::UpdateGoal( CBotNPCMinion *me )
 //---------------------------------------------------------------------------------------------
 class CBotNPCMinionIdle : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction );
     virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval );
 
@@ -859,7 +859,7 @@ class CBotNPCMinionIdle : public Action< CBotNPCMinion >
         return "Idle";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_pingTimer;
 };
 
@@ -897,7 +897,7 @@ ConVar tf_bot_npc_minion_init_vel( "tf_bot_npc_minion_init_vel", "250" /*, FCVAR
 
 class CBotNPCMinionBehavior : public Action< CBotNPCMinion >
 {
-   public:
+    public:
     virtual Action< CBotNPCMinion > *InitialContainedAction( CBotNPCMinion *me )
     {
         if ( TFGameRules()->GetActiveBoss() )
@@ -995,12 +995,12 @@ void CNextBotFlyingLocomotion::MaintainAltitude( void )
 
     // trace wider hull to account for nearby ledges we want to float over
     TraceHull( me->GetAbsOrigin() + Vector( 0, 0, ceiling ),
-               me->GetAbsOrigin() + Vector( 0, 0, -1000.0f ),
-               Vector( 2.0f * me->WorldAlignMins().x, 2.0f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
-               Vector( 2.0f * me->WorldAlignMaxs().x, 2.0f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
-               GetBot()->GetBodyInterface()->GetSolidMask(),
-               &filter,
-               &result );
+                me->GetAbsOrigin() + Vector( 0, 0, -1000.0f ),
+                Vector( 2.0f * me->WorldAlignMins().x, 2.0f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
+                Vector( 2.0f * me->WorldAlignMaxs().x, 2.0f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
+                GetBot()->GetBodyInterface()->GetSolidMask(),
+                &filter,
+                &result );
 
     float groundZ = result.endpos.z;
 

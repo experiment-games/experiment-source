@@ -46,7 +46,7 @@ class CInStreamRam : public ISeqInStream
     size_t Size;
     size_t Pos;
 
-   public:
+    public:
     void Init( const Byte *data, size_t size )
     {
         Data = data;
@@ -77,7 +77,7 @@ class COutStreamRam : public ISeqOutStream
 {
     size_t Size;
 
-   public:
+    public:
     Byte *Data;
     size_t Pos;
     bool Overflow;
@@ -115,10 +115,10 @@ size_t COutStreamRam_StaticWrite( void *p, const void *buf, size_t size )
 }
 
 SRes LzmaEncode( const Byte *inBuffer,
-                 size_t inSize,
-                 Byte *outBuffer,
-                 size_t outSize,
-                 size_t *outSizeProcessed )
+                size_t inSize,
+                Byte *outBuffer,
+                size_t outSize,
+                size_t *outSizeProcessed )
 {
     // Based on Encode helper in SDK/LzmaUtil
     *outSizeProcessed = 0;
@@ -197,8 +197,8 @@ SRes LzmaEncode( const Byte *inBuffer,
 // Caller must free.
 //-----------------------------------------------------------------------------
 unsigned char *LZMA_Compress( unsigned char *pInput,
-                              unsigned int inputSize,
-                              unsigned int *pOutputSize )
+                            unsigned int inputSize,
+                            unsigned int *pOutputSize )
 {
     *pOutputSize = 0;
 
@@ -230,8 +230,8 @@ unsigned char *LZMA_Compress( unsigned char *pInput,
 
     // shift the compressed data into place
     memmove( pOutputBuffer + sizeof( lzma_header_t ),
-             pOutputBuffer + sizeof( lzma_header_t ) + LZMA_ORIGINAL_HEADER_SIZE,
-             compressedSize - LZMA_ORIGINAL_HEADER_SIZE );
+            pOutputBuffer + sizeof( lzma_header_t ) + LZMA_ORIGINAL_HEADER_SIZE,
+            compressedSize - LZMA_ORIGINAL_HEADER_SIZE );
 
     // final output size is our header plus compressed bits
     *pOutputSize = ( unsigned int )( sizeof( lzma_header_t ) + compressedSize - LZMA_ORIGINAL_HEADER_SIZE );
@@ -243,8 +243,8 @@ unsigned char *LZMA_Compress( unsigned char *pInput,
 // Above, but returns null if compression would not yield a size improvement
 //-----------------------------------------------------------------------------
 unsigned char *LZMA_OpportunisticCompress( unsigned char *pInput,
-                                           unsigned int inputSize,
-                                           unsigned int *pOutputSize )
+                                            unsigned int inputSize,
+                                            unsigned int *pOutputSize )
 {
     unsigned char *pRet = LZMA_Compress( pInput, inputSize, pOutputSize );
     if ( *pOutputSize <= inputSize )
@@ -261,8 +261,8 @@ unsigned char *LZMA_OpportunisticCompress( unsigned char *pInput,
 //	Decoding glue. Returns TRUE if succesful.
 //-----------------------------------------------------------------------------
 bool LZMA_Uncompress( unsigned char *pInBuffer,
-                      unsigned char **ppOutBuffer,
-                      unsigned int *pOutSize )
+                    unsigned char **ppOutBuffer,
+                    unsigned int *pOutSize )
 {
     *ppOutBuffer = NULL;
     *pOutSize = 0;

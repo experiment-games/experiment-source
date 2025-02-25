@@ -38,7 +38,7 @@ class CTFBaseRocket : public CBaseProjectile
     //
     // Shared (client/server).
     //
-   public:
+    public:
     DECLARE_CLASS( CTFBaseRocket, CBaseProjectile );
     DECLARE_NETWORKCLASS();
 
@@ -69,7 +69,7 @@ class CTFBaseRocket : public CBaseProjectile
         return m_iDeflected;
     }
 
-   protected:
+    protected:
     // Networked.
     CNetworkVector( m_vInitialVelocity );
     CNetworkVar( int, m_iDeflected );
@@ -80,7 +80,7 @@ class CTFBaseRocket : public CBaseProjectile
 //
 #ifdef CLIENT_DLL
 
-   public:
+    public:
     virtual int DrawModel( int flags );
     virtual void PostDataUpdate( DataUpdateType_t type );
     virtual void OnDataChanged( DataUpdateType_t updateType );
@@ -90,7 +90,7 @@ class CTFBaseRocket : public CBaseProjectile
         return m_hLauncher;
     }
 
-   protected:
+    protected:
     float m_flSpawnTime;
     int m_iCachedDeflect;
     CNetworkHandle( CBaseEntity, m_hLauncher );
@@ -101,7 +101,7 @@ class CTFBaseRocket : public CBaseProjectile
 //
 #else
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     static CTFBaseRocket *Create( CBaseEntity *pLauncher, const char *szClassname, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL );
@@ -172,7 +172,7 @@ class CTFBaseRocket : public CBaseProjectile
 
     CBaseEntity *GetOwnerPlayer( void ) const;
 
-   protected:
+    protected:
     // Not networked.
     float m_flDamage;
 

@@ -16,27 +16,27 @@ DEFINE_FALLBACK_SHADER( Core, Core_dx70 )
 DEFINE_FALLBACK_SHADER( Core_dx70, Wireframe )
 
 #if 0
-BEGIN_VS_SHADER( Core_DX70, 
-			  "Help for Core_DX70" )
+BEGIN_VS_SHADER( Core_DX70,
+            "Help for Core_DX70" )
 
-	BEGIN_SHADER_PARAMS
-	END_SHADER_PARAMS
+    BEGIN_SHADER_PARAMS
+    END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()
-	{
-	}
+    SHADER_INIT_PARAMS()
+    {
+    }
 
-	SHADER_FALLBACK
-	{
-		return 0;
-	}
+    SHADER_FALLBACK
+    {
+        return 0;
+    }
 
-	SHADER_INIT
-	{
-	}
+    SHADER_INIT
+    {
+    }
 
-	SHADER_DRAW
-	{
-	}
+    SHADER_DRAW
+    {
+    }
 END_SHADER
 #endif

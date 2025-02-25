@@ -43,7 +43,7 @@ class CAI_NetworkManager;
 
 abstract_class INearestNodeFilter
 {
-   public:
+    public:
     virtual bool IsValid( CAI_Node * pNode ) = 0;
     virtual bool ShouldContinue() = 0;
 };
@@ -66,7 +66,7 @@ struct AI_NearNode_t
 
 class CNodeList : public CUtlPriorityQueue< AI_NearNode_t >
 {
-   public:
+    public:
     static bool IsLowerPriority( const AI_NearNode_t &node1, const AI_NearNode_t &node2 )
     {
         // nodes with greater distance are lower priority
@@ -92,7 +92,7 @@ class CNodeList : public CUtlPriorityQueue< AI_NearNode_t >
 
 class CAI_Network final : public IPartitionEnumerator
 {
-   public:
+    public:
     CAI_Network();
     ~CAI_Network();
 
@@ -122,7 +122,7 @@ class CAI_Network final : public IPartitionEnumerator
     CAI_Node *GetNode( int id, bool bHandleError = true )
     {
         if ( id >= 0 &&
-             id < m_iNumNodes )
+            id < m_iNumNodes )
         {
             return m_pAInode[id];
         }
@@ -143,7 +143,7 @@ class CAI_Network final : public IPartitionEnumerator
         return m_pAInode;
     }
 
-   private:
+    private:
     friend class CAI_NetworkManager;
 
     virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );

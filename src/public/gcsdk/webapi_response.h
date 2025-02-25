@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2010, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2010, Valve LLC, All rights reserved. ============
 //
 // Purpose: Header for CWebAPIResponse objects
 //
@@ -43,7 +43,7 @@ class CWebAPIValues;
 
 class CWebAPIResponse
 {
-   public:
+    public:
     CWebAPIResponse();
     ~CWebAPIResponse();
 
@@ -126,7 +126,7 @@ class CWebAPIResponse
         return m_bJSONAnonymousRootNode;
     }
 
-   private:
+    private:
     // Emits JSON formatted representation of response
     bool BEmitJSON( CUtlBuffer &outputBuffer, size_t unMaxResultSize );
 
@@ -152,12 +152,12 @@ class CWebAPIValues
     // !FIXME! DOTAMERGE
     // DECLARE_CLASS_MEMPOOL_MT( CWebAPIValues );
 
-   private:
+    private:
     void InitInternal( CWebAPIValues *pParent, int nNamePos, EWebAPIValueType eValueType, const char *pchArrayElementNames );
     CWebAPIValues( CWebAPIValues *pParent, int nNamePos, EWebAPIValueType eValueType, const char *pchArrayElementNames = NULL );
     CWebAPIValues( CWebAPIValues *pParent, const char *pchName, EWebAPIValueType eValueType, const char *pchArrayElementNames = NULL );
 
-   public:
+    public:
     explicit CWebAPIValues( const char *pchName );
     CWebAPIValues( const char *pchName, const char *pchArrayElementNames );
 
@@ -400,7 +400,7 @@ class CWebAPIValues
     // copies the children and type from the specified node into this node
     void CopyFrom( const CWebAPIValues *pSource );
 
-   private:
+    private:
     // sets the name of the node when constructing or copying
     void SetName( const char *pchName );
 
@@ -462,7 +462,7 @@ namespace GCSDK
 //-----------------------------------------------------------------------------
 class CWebAPIValuesAD
 {
-   public:
+    public:
     CWebAPIValuesAD()
     {
         m_pwav = NULL;
@@ -549,7 +549,7 @@ class CWebAPIValuesAD
             m_pwav = NULL;
     }
 
-   private:
+    private:
     CWebAPIValues *operator=( CWebAPIValues * );  // use Take() or Copy()
     CWebAPIValues *m_pwav;
 };

@@ -43,7 +43,7 @@ enum ESystemNotify
 //-----------------------------------------------------------------------------
 abstract_class IGameUI
 {
-   public:
+    public:
     // initialization/shutdown
     virtual void Initialize( CreateInterfaceFn appFactory ) = 0;
     virtual void PostInit() = 0;

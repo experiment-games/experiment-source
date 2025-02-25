@@ -248,8 +248,8 @@ struct econ_store_entry_t
     // Constructor
     econ_store_entry_t()
         : m_pchCategoryTags( NULL ),
-          m_unGiftSteamPackageID( 0 ),
-          m_bHighlighted( false )
+        m_unGiftSteamPackageID( 0 ),
+        m_bHighlighted( false )
     {
         V_memset( m_unBaseCosts, 0, sizeof( m_unBaseCosts ) );
         V_memset( m_unSaleCosts, 0, sizeof( m_unSaleCosts ) );
@@ -425,7 +425,7 @@ struct econ_store_entry_t
 
     bool m_bIsMarketItem;  // Is Market Item Link
 
-   private:
+    private:
     // Helper function -- so we do this calculation in a single place. Use CalculateSalePrice() instead of trying to call this directly.
     static item_price_t GetDiscountedPrice( item_price_t unBasePrice, ECurrency eCurrency, float fDiscountPercentage );
 
@@ -490,7 +490,7 @@ typedef CUtlMap< price_point_map_key_t, item_price_t > CurrencyPricePointMap_t;
 
 class CEconStorePriceSheet
 {
-   public:
+    public:
     typedef CUtlMap< item_definition_index_t, econ_store_entry_t > StoreEntryMap_t;
     typedef CUtlMap< const char *, float > RentalPriceScaleMap_t;
     typedef CUtlVector< item_definition_index_t > FeaturedItems_t;
@@ -600,13 +600,13 @@ class CEconStorePriceSheet
     }
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     bool BInitEntryFromKV( KeyValues *pKVEntry );
 #ifdef CLIENT_DLL
     bool BInitMarketEntryFromKV( KeyValues *pKVEntry );
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     void Clear();
     uint32 CalculateHashFromItems() const;
 

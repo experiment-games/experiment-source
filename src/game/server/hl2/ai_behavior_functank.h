@@ -33,7 +33,7 @@ class CAI_FuncTankBehavior : public CAI_SimpleBehavior
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
     DECLARE_DATADESC();
 
-   public:
+    public:
     // Contructor/Deconstructor
     CAI_FuncTankBehavior();
     ~CAI_FuncTankBehavior();
@@ -121,11 +121,11 @@ class CAI_FuncTankBehavior : public CAI_SimpleBehavior
         return m_bMounted;
     }
 
-   private:
+    private:
     // Schedule
     int SelectSchedule();
 
-   private:
+    private:
     CHandle< CFuncTank > m_hFuncTank;
     bool m_bMounted;
     float m_flBusyTime;

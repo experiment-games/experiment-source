@@ -37,7 +37,7 @@ class CBoneFollowerManager
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     CBoneFollowerManager();
     ~CBoneFollowerManager();
 
@@ -58,10 +58,10 @@ class CBoneFollowerManager
         return m_iNumBones;
     }
 
-   private:
+    private:
     bool CreatePhysicsFollower( CBaseAnimating *pParentEntity, physfollower_t &follow, const char *pBoneName, solid_t *pSolid );
 
-   private:
+    private:
     int m_iNumBones;
     CUtlVector< physfollower_t > m_physBones;
 };
@@ -72,7 +72,7 @@ class CBoneFollower : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     // CBaseEntity
     void VPhysicsUpdate( IPhysicsObject *pPhysics );
     int UpdateTransmitState( void );
@@ -98,7 +98,7 @@ class CBoneFollower : public CBaseEntity
     // factory
     static CBoneFollower *Create( CBaseEntity *pOwner, const char *pModelName, solid_t &solid, const Vector &position, const QAngle &orientation );
 
-   private:
+    private:
     CNetworkVar( int, m_modelIndex );
     CNetworkVar( int, m_solidIndex );
     int m_physicsBone;

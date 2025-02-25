@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------
 class CHeadlessHatmanDying : public Action< CHeadlessHatman >
 {
-   public:
+    public:
     virtual ActionResult< CHeadlessHatman > OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction );
     virtual ActionResult< CHeadlessHatman > Update( CHeadlessHatman *me, float interval );
     virtual const char *GetName( void ) const

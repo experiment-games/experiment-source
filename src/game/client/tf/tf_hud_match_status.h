@@ -26,7 +26,7 @@ bool ShouldUseMatchHUD();
 //-----------------------------------------------------------------------------
 class CRoundCounterPanel : public EditablePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CRoundCounterPanel, EditablePanel );
     typedef CUtlVector< ImagePanel * > ImageVector;
 
@@ -40,7 +40,7 @@ class CRoundCounterPanel : public EditablePanel, public CGameEventListener
 
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     void CreateRoundPanels( ImageVector &vecImages, const char *pszName, KeyValues *pKVSettings );
 
     enum EAlignment
@@ -76,7 +76,7 @@ class CTFHudMatchStatus : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudMatchStatus, EditablePanel );
 
-   public:
+    public:
     CTFHudMatchStatus( const char *pElementName );
     virtual ~CTFHudMatchStatus( void );
 
@@ -92,7 +92,7 @@ class CTFHudMatchStatus : public CHudElement, public EditablePanel
 
     void SetPanelsVisible();
 
-   private:
+    private:
     void ShowMatchStartDoors();
     void ShowRoundSign( int nRoundNumber );
     void InitPlayerList( SectionedListPanel *pPlayerList, int nTeam );

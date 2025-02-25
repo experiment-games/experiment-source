@@ -18,7 +18,7 @@
 
 class MapLine
 {
-   public:
+    public:
     MapLine()
     {
         worldpos.Init( 0, 0 );
@@ -45,7 +45,7 @@ class CDrawingPanel : public vgui::Panel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CDrawingPanel, vgui::Panel );
 
-   public:
+    public:
     CDrawingPanel( Panel *parent, const char *name );
 
     virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
@@ -71,7 +71,7 @@ class CDrawingPanel : public vgui::Panel, public CGameEventListener
 
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     void ReadColor( const char *pszToken, Color &color );
 
     bool m_bDrawingLines;

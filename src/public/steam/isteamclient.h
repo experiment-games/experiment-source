@@ -1,4 +1,4 @@
-﻿//====== Copyright Valve Corporation, All rights reserved. ====================
+//====== Copyright Valve Corporation, All rights reserved. ====================
 //
 // Internal low-level access to Steamworks interfaces.
 //
@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class ISteamClient
 {
-   public:
+    public:
     // Creates a communication pipe to the Steam client.
     // NOT THREADSAFE - ensure that no other threads are accessing Steamworks API when calling
     virtual HSteamPipe CreateSteamPipe() = 0;

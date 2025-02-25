@@ -18,7 +18,7 @@ class C_FuncRespawnRoom : public C_BaseEntity
 {
     DECLARE_CLASS( C_FuncRespawnRoom, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 };
 
@@ -32,7 +32,7 @@ class C_FuncRespawnRoomVisualizer : public C_BaseEntity
 {
     DECLARE_CLASS( C_FuncRespawnRoomVisualizer, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     virtual int DrawModel( int flags );

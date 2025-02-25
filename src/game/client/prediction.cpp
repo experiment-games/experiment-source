@@ -232,11 +232,11 @@ void CPrediction::ShutdownPredictables( void )
     }
 
     if ( ( release_count > 0 ) ||
-         ( shutdown_count > 0 ) )
+        ( shutdown_count > 0 ) )
     {
         Msg( "Shutdown %i predictable entities and %i client-created entities\n",
-             shutdown_count,
-             release_count );
+            shutdown_count,
+            release_count );
     }
 
     // All gone now...
@@ -266,7 +266,7 @@ void CPrediction::ReinitPredictables( void )
     }
 
     Msg( "Reinitialized %i predictable entities\n",
-         predictables->GetPredictableCount() );
+        predictables->GetPredictableCount() );
 #endif
 }
 
@@ -506,9 +506,9 @@ void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
             }
 #ifndef _XBOX
             if ( error_check &&
-                 !entityDumped &&
-                 dump &&
-                 ShouldDumpEntity( ent ) )
+                !entityDumped &&
+                dump &&
+                ShouldDumpEntity( ent ) )
             {
                 entityDumped = true;
                 dump->DumpEntity( ent, m_nServerCommandsAcknowledged );
@@ -892,23 +892,23 @@ void CPrediction::RunPostThink( C_BasePlayer *player )
 void CPrediction::CheckMovingGround( C_BasePlayer *player, double frametime )
 {
 #if 0
-	CBaseEntity	    *groundentity;
+    CBaseEntity	    *groundentity;
 
-	if ( player->GetFlags() & FL_ONGROUND )
-	{
-		groundentity = player->GetGroundEntity();
-		if ( groundentity && ( groundentity->GetFlags() & FL_CONVEYOR) )
-		{
-			Vector vecNewVelocity;
-			groundentity->GetGroundVelocityToApply( vecNewVelocity );
-			if ( player->GetFlags() & FL_BASEVELOCITY )
-			{
-				vecNewVelocity += player->GetBaseVelocity();
-			}
-			player->SetBaseVelocity( vecNewVelocity );
-			player->AddFlag( FL_BASEVELOCITY );
-		}
-	}
+    if ( player->GetFlags() & FL_ONGROUND )
+    {
+        groundentity = player->GetGroundEntity();
+        if ( groundentity && ( groundentity->GetFlags() & FL_CONVEYOR) )
+        {
+            Vector vecNewVelocity;
+            groundentity->GetGroundVelocityToApply( vecNewVelocity );
+            if ( player->GetFlags() & FL_BASEVELOCITY )
+            {
+                vecNewVelocity += player->GetBaseVelocity();
+            }
+            player->SetBaseVelocity( vecNewVelocity );
+            player->AddFlag( FL_BASEVELOCITY );
+        }
+    }
 #endif
 
     if ( !( player->GetFlags() & FL_BASEVELOCITY ) )
@@ -1185,11 +1185,11 @@ void CPrediction::RemoveStalePredictedEntities( int sequence_number )
                 {
                     // It's bogus, server doesn't have a match, destroy it:
                     Msg( "Removing unack'ed predicted entity:  %s created %s(%i) id == %s : %p\n",
-                         ent->GetClassname(),
-                         ctx->m_pszCreationModule,
-                         ctx->m_nCreationLineNumber,
-                         ent->m_PredictableID.Describe(),
-                         ent );
+                        ent->GetClassname(),
+                        ctx->m_pszCreationModule,
+                        ctx->m_nCreationLineNumber,
+                        ent->m_PredictableID.Describe(),
+                        ent );
                 }
             }
 
@@ -1514,9 +1514,9 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
         //  shift the # of commands worth of intermediate state off of front the intermediate state array, and
         //  only predict the usercmd from the latest render frame.
         if ( cl_pred_optimize.GetInt() >= 2 &&
-             !m_bPreviousAckHadErrors &&
-             m_nCommandsPredicted > 0 &&
-             m_nServerCommandsAcknowledged <= nPredictedLimit )
+            !m_bPreviousAckHadErrors &&
+            m_nCommandsPredicted > 0 &&
+            m_nServerCommandsAcknowledged <= nPredictedLimit )
         {
             // Copy all of the previously predicted data back into entity so we can skip repredicting it
             // This is the final slot that we previously predicted
@@ -1697,8 +1697,8 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
         /*
         if ( 0 )
         {
-          localPlayer->m_nFinalPredictedTick = localPlayer->m_nTickBase;
-          Msg( "%i/%i Latch final tick %i start == %i into slot %i\n",
+        localPlayer->m_nFinalPredictedTick = localPlayer->m_nTickBase;
+        Msg( "%i/%i Latch final tick %i start == %i into slot %i\n",
             gpGlobals->framecount, gpGlobals->tickcount,
             localPlayer->m_nFinalPredictedTick,
             localPlayer->m_nFinalPredictedTick - i,
@@ -1708,10 +1708,10 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 
         /*
         Msg( "%i/%i Predicted command %i tickbase == %i first %s\n",
-          gpGlobals->framecount, gpGlobals->tickcount,
-          m_nCommandsPredicted,
-          localPlayer->m_nTickBase,
-          m_bFirstTimePredicted ? "yes" : "no" );
+        gpGlobals->framecount, gpGlobals->tickcount,
+        m_nCommandsPredicted,
+        localPlayer->m_nTickBase,
+        m_bFirstTimePredicted ? "yes" : "no" );
         */
 
         // Mark that we issued any needed sounds, of not done already
@@ -1756,8 +1756,8 @@ void CPrediction::Update( int startframe, bool validframe, int incoming_acknowle
 
     // Still starting at same frame, so make sure we don't do extra prediction ,etc.
     if ( ( m_nPreviousStartFrame == startframe ) &&
-         cl_pred_optimize.GetBool() &&
-         cl_predict->GetInt() )
+        cl_pred_optimize.GetBool() &&
+        cl_predict->GetInt() )
     {
         received_new_world_update = false;
     }

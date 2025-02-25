@@ -14,7 +14,7 @@
 
 class CCasualProgressionDesc : public IProgressionDesc
 {
-   public:
+    public:
     CCasualProgressionDesc();
 
 #ifdef CLIENT_DLL
@@ -26,7 +26,7 @@ class CCasualProgressionDesc : public IProgressionDesc
     };
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     uint32 GetLevelsPerPrestige() const
     {
         return m_nSteps * m_nLevelsPerStep;

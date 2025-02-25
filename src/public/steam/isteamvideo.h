@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2014 Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2014 Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to Steam Video
 //
@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class ISteamVideo
 {
-   public:
+    public:
     // Get a URL suitable for streaming the given Video app ID's video
     virtual void GetVideoURL( AppId_t unVideoAppID ) = 0;
 

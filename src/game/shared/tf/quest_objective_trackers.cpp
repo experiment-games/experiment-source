@@ -61,11 +61,11 @@ CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker( const QuestObjectiveInst
     AssertMsg( m_pEvaluator != NULL, "%s", CFmtStr( "Failed to create quest condition name '%s' for '%s'", pszType, GetConditionName() ).Get() );
 
     SO_TRACKER_SPEW( CFmtStr( "Creating objective tracker def %d for quest def %d on item %llu for user %s\n",
-                              GetObjectiveDefIndex(),
-                              pParent->GetItem()->GetDefinition()->GetDefIndex(),
-                              pParent->GetItem()->GetID(),
-                              pParent->GetOwnerSteamID().Render() ),
-                     SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT );
+                            GetObjectiveDefIndex(),
+                            pParent->GetItem()->GetDefinition()->GetDefIndex(),
+                            pParent->GetItem()->GetID(),
+                            pParent->GetOwnerSteamID().Render() ),
+                    SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT );
 
     // Let the quest definition apply modifiers
     pParent->GetItem()->GetDefinition()->AddModifiers( m_pEvaluator );
@@ -170,8 +170,8 @@ CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID Steam
     : CBaseSOTracker( pItem, SteamIDOwner, pManager ), m_pQuest( NULL ), m_bObjectivesOnlyForOwner( true )  // True!  If we then detect their preference is false, we will create
                                                                                                             // trackers for everyone in their party.
 #ifdef GAME_DLL
-      ,
-      m_bHasUnneededObjectiveTrackers( false )
+    ,
+    m_bHasUnneededObjectiveTrackers( false )
 #endif
 {
     memset( m_nPoints, 0, sizeof( m_nPoints ) );
@@ -195,13 +195,13 @@ CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID Steam
     UpdatePointsFromSOItem();
 
     SO_TRACKER_SPEW( CFmtStr( "Creating tracker for quest %d on item %llu for user %s with %ds0 %ds1 %ds2\n",
-                              GetItem()->GetDefinition()->GetDefIndex(),
-                              GetItem()->GetID(),
-                              GetOwnerSteamID().Render(),
-                              GetEarnedPoints( 0 ),
-                              GetEarnedPoints( 1 ),
-                              GetEarnedPoints( 2 ) ),
-                     SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
+                            GetItem()->GetDefinition()->GetDefIndex(),
+                            GetItem()->GetID(),
+                            GetOwnerSteamID().Render(),
+                            GetEarnedPoints( 0 ),
+                            GetEarnedPoints( 1 ),
+                            GetEarnedPoints( 2 ) ),
+                    SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
 
     // The owner always gets objective trackers
     EnsureObjectiveTrackersForPlayer( GetOwnerSteamID() );
@@ -220,13 +220,13 @@ CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID Steam
     if ( m_vecObjectiveTrackers.IsEmpty() )
     {
         SO_TRACKER_SPEW( CFmtStr( "Did not create any objective trackers for quest %d on item %llu for user %s with %ds0 %ds1 %ds2\n",
-                                  GetItem()->GetDefinition()->GetDefIndex(),
-                                  GetItem()->GetID(),
-                                  GetOwnerSteamID().Render(),
-                                  GetEarnedPoints( 0 ),
-                                  GetEarnedPoints( 1 ),
-                                  GetEarnedPoints( 2 ) ),
-                         SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT );
+                                GetItem()->GetDefinition()->GetDefIndex(),
+                                GetItem()->GetID(),
+                                GetOwnerSteamID().Render(),
+                                GetEarnedPoints( 0 ),
+                                GetEarnedPoints( 1 ),
+                                GetEarnedPoints( 2 ) ),
+                        SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT );
     }
 }
 
@@ -237,23 +237,23 @@ CQuestItemTracker::~CQuestItemTracker()
 {
 #ifdef CLIENT_DLL
     SO_TRACKER_SPEW( CFmtStr( "Deleting tracker for questdef %d on quest %llu with %dp0 %dp1 %dp2\n",
-                              m_pQuest->GetDefinition()->GetDefIndex(),
-                              m_pQuest->GetID(),
-                              m_nPoints[0],
-                              m_nPoints[1],
-                              m_nPoints[2] ),
-                     SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
+                            m_pQuest->GetDefinition()->GetDefIndex(),
+                            m_pQuest->GetID(),
+                            m_nPoints[0],
+                            m_nPoints[1],
+                            m_nPoints[2] ),
+                    SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
 #else
     SO_TRACKER_SPEW( CFmtStr( "Deleting tracker for questdef %d on quest %llu with %dp0 %dp1 %dp2 and %dsp0 %dsp1 %dsp2\n",
-                              m_pQuest->GetDefinition()->GetDefIndex(),
-                              m_pQuest->GetID(),
-                              m_nPoints[0],
-                              m_nPoints[1],
-                              m_nPoints[2],
-                              m_nStartingPoints[0],
-                              m_nStartingPoints[1],
-                              m_nStartingPoints[2] ),
-                     SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
+                            m_pQuest->GetDefinition()->GetDefIndex(),
+                            m_pQuest->GetID(),
+                            m_nPoints[0],
+                            m_nPoints[1],
+                            m_nPoints[2],
+                            m_nStartingPoints[0],
+                            m_nStartingPoints[1],
+                            m_nStartingPoints[2] ),
+                    SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
 #endif
 
 #ifdef GAME_DLL
@@ -296,19 +296,19 @@ void CQuestItemTracker::UpdatePointsFromSOItem()
     SendUpdateToClient( NULL, CSteamID( 0ULL ) );
 
     SO_TRACKER_SPEW( CFmtStr( "Updated points from item.  %dp0 %dp1 %dp2 and %dsp0 %dsp1 %dsp2\n",
-                              m_nPoints[0],
-                              m_nPoints[1],
-                              m_nPoints[2],
-                              m_nStartingPoints[0],
-                              m_nStartingPoints[1],
-                              m_nStartingPoints[2] ),
-                     SO_TRACKER_SPEW_OBJECTIVES );
+                            m_nPoints[0],
+                            m_nPoints[1],
+                            m_nPoints[2],
+                            m_nStartingPoints[0],
+                            m_nStartingPoints[1],
+                            m_nStartingPoints[2] ),
+                    SO_TRACKER_SPEW_OBJECTIVES );
 #else
     SO_TRACKER_SPEW( CFmtStr( "Updated points from item.  %dp0 %dp1 %dp2\n",
-                              m_nPoints[0],
-                              m_nPoints[1],
-                              m_nPoints[2] ),
-                     SO_TRACKER_SPEW_OBJECTIVES );
+                            m_nPoints[0],
+                            m_nPoints[1],
+                            m_nPoints[2] ),
+                    SO_TRACKER_SPEW_OBJECTIVES );
 #endif
 }
 
@@ -494,7 +494,7 @@ void CQuestItemTracker::FireGameEvent( IGameEvent* event )
 {
 #ifdef GAME_DLL
     if ( FStrEq( event->GetName(), "show_match_summary" ) ||
-         FStrEq( event->GetName(), "teamplay_round_win" ) )
+        FStrEq( event->GetName(), "teamplay_round_win" ) )
     {
         // We only want to commit changes on round win and match summary.  The reason being we don't want
         // people to join a match, finish their contract (potentially very quickly), then leave before
@@ -684,7 +684,7 @@ void CQuestItemTracker::EnsureObjectiveTrackersForPlayer( const CSteamID& steamI
         {
             const CBaseQuestObjectiveTracker* pExistingTracker = m_vecObjectiveTrackers[j];
             if ( pExistingTracker->GetObjectiveDefIndex() == vecObjectives[i].GetObjectiveDef()->GetDefIndex() &&
-                 pExistingTracker->GetTrackingPlayer() == steamIDTrackingPlayer )
+                pExistingTracker->GetTrackingPlayer() == steamIDTrackingPlayer )
                 bAlreadyHas = true;
         }
 

@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEShowLine : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTEShowLine, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 
@@ -30,7 +30,7 @@ class CTEShowLine : public CTEParticleSystem
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVector( m_vecEnd );
 };
 

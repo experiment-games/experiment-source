@@ -25,7 +25,7 @@ struct UpgradeAttribBlock_t
 //-----------------------------------------------------------------------------
 class CUpgrades : public CBaseTrigger, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CUpgrades, CBaseTrigger );
     DECLARE_DATADESC();
 
@@ -47,7 +47,7 @@ class CUpgrades : public CBaseTrigger, public CGameEventListener
 
     const char *GetUpgradeAttributeName( int iUpgrade ) const;
 
-   private:
+    private:
     void NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_index_t nAttrDefIndex, bool bDowngrade = false );
     void ReportUpgrade( CTFPlayer *pTFPlayer, int nItemDef, int nAttributeDef, int nQuality, int nCost, bool bDowngrade, bool bIsFresh, bool bIsBottle = false );
     void RestoreItemAttributeToBaseValue( CEconItemAttributeDefinition *pAttrib, CEconItemView *pItem );

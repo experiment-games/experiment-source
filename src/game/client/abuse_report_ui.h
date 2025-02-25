@@ -22,7 +22,7 @@ class CAbuseReportDlg : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CAbuseReportDlg, vgui::EditablePanel );
 
-   public:
+    public:
     CAbuseReportDlg( vgui::Panel *parent, AbuseIncidentData_t *pIncidentData );
     ~CAbuseReportDlg();
 
@@ -43,7 +43,7 @@ class CAbuseReportDlg : public vgui::EditablePanel
     CUtlString GetAbuseDescription();
     bool GetAttachScreenShot();
 
-   protected:
+    protected:
     MESSAGE_FUNC_PTR( OnRadioButtonChecked, "RadioButtonChecked", panel );
 
     virtual const char *GetResFilename();

@@ -35,30 +35,30 @@ ActionResult< CTFBot > CTFBotGuardArea::OnStart( CTFBot *me, Action< CTFBot > *p
     m_chasePath.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
     /*
-      // give this guy a hat!
-      randomitemcriteria_t criteria;
-      criteria.iItemLevel = AE_USE_SCRIPT_VALUE;
-      criteria.iItemQuality = AE_USE_SCRIPT_VALUE;
-      criteria.vecAbsOrigin = me->GetAbsOrigin();
-      criteria.vecAbsAngles = vec3_angle;
+    // give this guy a hat!
+    randomitemcriteria_t criteria;
+    criteria.iItemLevel = AE_USE_SCRIPT_VALUE;
+    criteria.iItemQuality = AE_USE_SCRIPT_VALUE;
+    criteria.vecAbsOrigin = me->GetAbsOrigin();
+    criteria.vecAbsAngles = vec3_angle;
 
-      switch( me->GetPlayerClass()->GetClassIndex() )
-      {
-      case TF_CLASS_SCOUT:		criteria.pszItemName = "Scout Hat 1";		break;
-      case TF_CLASS_SNIPER:		criteria.pszItemName = "Sniper Hat 1";		break;
-      case TF_CLASS_SOLDIER:		criteria.pszItemName = "Soldier Pot Hat";	break;
-      case TF_CLASS_DEMOMAN:		criteria.pszItemName = "Demo Top Hat";		break;
-      case TF_CLASS_MEDIC:		criteria.pszItemName = "Medic Hat 1";		break;
-      case TF_CLASS_HEAVYWEAPONS:	criteria.pszItemName = "Heavy Ushanka Hat";	break;
-      case TF_CLASS_PYRO:			criteria.pszItemName = "Pyro Chicken Hat";	break;
-      case TF_CLASS_SPY:			criteria.pszItemName = "Spy Derby Hat";		break;
-      case TF_CLASS_ENGINEER:		criteria.pszItemName = "Engineer Hat 1";	break;
-      default:					criteria.pszItemName = "";					break;
-      }
+    switch( me->GetPlayerClass()->GetClassIndex() )
+    {
+    case TF_CLASS_SCOUT:		criteria.pszItemName = "Scout Hat 1";		break;
+    case TF_CLASS_SNIPER:		criteria.pszItemName = "Sniper Hat 1";		break;
+    case TF_CLASS_SOLDIER:		criteria.pszItemName = "Soldier Pot Hat";	break;
+    case TF_CLASS_DEMOMAN:		criteria.pszItemName = "Demo Top Hat";		break;
+    case TF_CLASS_MEDIC:		criteria.pszItemName = "Medic Hat 1";		break;
+    case TF_CLASS_HEAVYWEAPONS:	criteria.pszItemName = "Heavy Ushanka Hat";	break;
+    case TF_CLASS_PYRO:			criteria.pszItemName = "Pyro Chicken Hat";	break;
+    case TF_CLASS_SPY:			criteria.pszItemName = "Spy Derby Hat";		break;
+    case TF_CLASS_ENGINEER:		criteria.pszItemName = "Engineer Hat 1";	break;
+    default:					criteria.pszItemName = "";					break;
+    }
 
-      CBaseEntity *hat = ItemGeneration()->GenerateRandomItem( &criteria );
-      if ( hat )
-      {
+    CBaseEntity *hat = ItemGeneration()->GenerateRandomItem( &criteria );
+    if ( hat )
+    {
         // Fake global id
         static int s_nFakeID = 1;
         static_cast< CEconEntity * >( hat )->GetAttributeContainer()->GetItem()->SetItemID( s_nFakeID++ );
@@ -66,11 +66,11 @@ ActionResult< CTFBot > CTFBotGuardArea::OnStart( CTFBot *me, Action< CTFBot > *p
         DispatchSpawn( hat );
         static_cast< CEconEntity * >( hat )->GetAttributeContainer()->GetItem()->GenerateAttributes();
         static_cast< CEconEntity * >( hat )->GiveTo( me );
-      }
-      else
-      {
+    }
+    else
+    {
         Msg( "Failed to create hat\n" );
-      }
+    }
     */
 
     return Continue();
@@ -79,7 +79,7 @@ ActionResult< CTFBot > CTFBotGuardArea::OnStart( CTFBot *me, Action< CTFBot > *p
 //---------------------------------------------------------------------------------------------
 class CFindVantagePoint : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CFindVantagePoint( void )
     {
         m_vantageArea = NULL;
@@ -200,12 +200,12 @@ ActionResult< CTFBot > CTFBotGuardArea::Update( CTFBot *me, float interval )
             // no enemy is visible - move to where we can see them
             if ( !m_pathToVantageArea.IsValid() )
             {
-              CTFNavArea *vantageArea = me->FindVantagePoint();
-              if ( vantageArea )
-              {
+            CTFNavArea *vantageArea = me->FindVantagePoint();
+            if ( vantageArea )
+            {
                 CTFBotPathCost cost( me, FASTEST_ROUTE );
                 m_pathToVantageArea.Compute( me, vantageArea->GetCenter(), cost );
-              }
+            }
             }
 
             m_pathToVantageArea.Update( me );

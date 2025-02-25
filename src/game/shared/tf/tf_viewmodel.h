@@ -26,7 +26,7 @@ class CTFViewModel : public CBaseViewModel
 {
     DECLARE_CLASS( CTFViewModel, CBaseViewModel );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     CTFViewModel( void );
@@ -63,7 +63,7 @@ class CTFViewModel : public CBaseViewModel
 
     bool m_bBodygroupsDirty;
 
-   private:
+    private:
     void RecalculatePlayerBodygroups();
 
 #if defined( CLIENT_DLL )

@@ -66,7 +66,7 @@ bool FileSystem_AllowedSearchPath( const char *pchPath );
 // when it goes out of scope.
 class CTempEnvVar
 {
-   public:
+    public:
     CTempEnvVar( const char *pVarName )
     {
         m_bRestoreOriginalValue = true;
@@ -171,7 +171,7 @@ class CTempEnvVar
 #endif
     }
 
-   private:
+    private:
     bool m_bRestoreOriginalValue;
     const char *m_pVarName;
     bool m_bExisted;
@@ -180,12 +180,12 @@ class CTempEnvVar
 
 class CSteamEnvVars
 {
-   public:
+    public:
     CSteamEnvVars()
         : m_SteamAppId( "SteamAppId" ),
-          m_SteamUserPassphrase( "SteamUserPassphrase" ),
-          m_SteamAppUser( "SteamAppUser" ),
-          m_Path( "path" )
+        m_SteamUserPassphrase( "SteamUserPassphrase" ),
+        m_SteamAppUser( "SteamAppUser" ),
+        m_Path( "path" )
     {
     }
 
@@ -535,8 +535,8 @@ static void FileSystem_AddLoadedSearchPath(
     }
 
     if ( initInfo.m_pLanguage &&
-         Q_stricmp( initInfo.m_pLanguage, "english" ) &&
-         V_strstr( fullLocationPath, "_english" ) != NULL )
+        Q_stricmp( initInfo.m_pLanguage, "english" ) &&
+        V_strstr( fullLocationPath, "_english" ) != NULL )
     {
         char szPath[MAX_PATH];
         char szLangString[MAX_PATH];
@@ -919,9 +919,9 @@ static FSReturnCode_t TryLocateGameInfoFile( char *pOutDir, int outDirLen, bool 
 
     // Make appropriate slashes ('/' - Linux style)
     for ( char *pchFix = spchCopyNameBuffer.Get(),
-               *pchEnd = pchFix + outDirLen;
-          pchFix < pchEnd;
-          ++pchFix )
+                *pchEnd = pchFix + outDirLen;
+        pchFix < pchEnd;
+        ++pchFix )
     {
         if ( '\\' == *pchFix )
         {
@@ -1069,15 +1069,15 @@ FSReturnCode_t LocateGameInfoFile( const CFSSteamSetupInfo &fsInfo, char *pOutDi
         bool bBubbleDir = true;
         SuggestGameInfoDirFn_t pfnSuggestGameInfoDirFn = GetSuggestGameInfoDirFn();
         if ( pfnSuggestGameInfoDirFn &&
-             ( *pfnSuggestGameInfoDirFn )( &fsInfo, pOutDir, outDirLen, &bBubbleDir ) &&
-             FS_OK == TryLocateGameInfoFile( pOutDir, outDirLen, bBubbleDir ) )
+            ( *pfnSuggestGameInfoDirFn )( &fsInfo, pOutDir, outDirLen, &bBubbleDir ) &&
+            FS_OK == TryLocateGameInfoFile( pOutDir, outDirLen, bBubbleDir ) )
             return FS_OK;
     }
 
     // Try to use the environment variable / registry
     if ( ( pProject = getenv( GAMEDIR_TOKEN ) ) != NULL &&
-         ( Q_MakeAbsolutePath( pOutDir, outDirLen, pProject ), 1 ) &&
-         FS_OK == TryLocateGameInfoFile( pOutDir, outDirLen, false ) )
+        ( Q_MakeAbsolutePath( pOutDir, outDirLen, pProject ), 1 ) &&
+        FS_OK == TryLocateGameInfoFile( pOutDir, outDirLen, false ) )
         return FS_OK;
 
     if ( IsPC() )
@@ -1101,12 +1101,12 @@ FSReturnCode_t LocateGameInfoFile( const CFSSteamSetupInfo &fsInfo, char *pOutDi
 
 ShowError:
     return SetupFileSystemError( true, FS_MISSING_GAMEINFO_FILE,
-                                 "Unable to find %s. Solutions:\n\n"
-                                 "1. Read https://developer.valvesoftware.com/wiki/Gameinfo.txt\n"
-                                 "2. Run vconfig to specify which game you're working on.\n"
-                                 "3. Add -game <path> on the command line where <path> is the directory that %s is in.\n",
-                                 GAMEINFO_FILENAME,
-                                 GAMEINFO_FILENAME );
+                                "Unable to find %s. Solutions:\n\n"
+                                "1. Read https://developer.valvesoftware.com/wiki/Gameinfo.txt\n"
+                                "2. Run vconfig to specify which game you're working on.\n"
+                                "3. Add -game <path> on the command line where <path> is the directory that %s is in.\n",
+                                GAMEINFO_FILENAME,
+                                GAMEINFO_FILENAME );
 }
 
 bool DoesPathExistAlready( const char *pPathEnvVar, const char *pTestPath )
@@ -1316,10 +1316,10 @@ FSReturnCode_t FileSystem_LoadFileSystemModule( CFSLoadModuleInfo &fsInfo )
 
     // Now that the environment is setup, load the filesystem module.
     if ( !Sys_LoadInterface(
-             fsInfo.m_pFileSystemDLLName,
-             FILESYSTEM_INTERFACE_VERSION,
-             &fsInfo.m_pModule,
-             ( void ** )&fsInfo.m_pFileSystem ) )
+            fsInfo.m_pFileSystemDLLName,
+            FILESYSTEM_INTERFACE_VERSION,
+            &fsInfo.m_pModule,
+            ( void ** )&fsInfo.m_pFileSystem ) )
     {
         return SetupFileSystemError( false, FS_UNABLE_TO_INIT, "Can't load %s.", fsInfo.m_pFileSystemDLLName );
     }

@@ -18,11 +18,11 @@ DWORD WINAPI CWinIdle::ThreadStub( LPVOID pIdle )
 
 CWinIdle::CWinIdle()
     : m_hIdleThread( NULL ),
-      m_hIdleEvent( NULL ),
-      m_hStopEvent( NULL ),
-      m_hWnd( 0 ),
-      m_uMsg( 0 ),
-      m_dwDelay( 0 )
+    m_hIdleEvent( NULL ),
+    m_hStopEvent( NULL ),
+    m_hWnd( 0 ),
+    m_uMsg( 0 ),
+    m_dwDelay( 0 )
 {
 }
 

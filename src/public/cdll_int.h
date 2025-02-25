@@ -189,7 +189,7 @@ struct OcclusionParams_t
 //-----------------------------------------------------------------------------
 abstract_class IVEngineClient013
 {
-   public:
+    public:
     // Find the model's surfaces that intersect the given sphere.
     // Returns the number of surfaces filled in.
     virtual int GetIntersectingSurfaces(
@@ -554,7 +554,7 @@ abstract_class IVEngineClient013
 
 abstract_class IVEngineClient : public IVEngineClient013
 {
-   public:
+    public:
     virtual uint GetProtocolVersion() = 0;
     virtual bool IsWindowedMode() = 0;
 
@@ -579,11 +579,11 @@ abstract_class IVEngineClient : public IVEngineClient013
 //-----------------------------------------------------------------------------
 abstract_class IBaseClientDLL
 {
-   public:
+    public:
     // Called once when the client DLL is loaded
     virtual int Init( CreateInterfaceFn appSystemFactory,
-                      CreateInterfaceFn physicsFactory,
-                      CGlobalVarsBase * pGlobals ) = 0;
+                    CreateInterfaceFn physicsFactory,
+                    CGlobalVarsBase * pGlobals ) = 0;
 
     virtual void PostInit() = 0;
 
@@ -797,7 +797,7 @@ abstract_class IBaseClientDLL
 //-----------------------------------------------------------------------------
 abstract_class IClientDLLSharedAppSystems
 {
-   public:
+    public:
     virtual int Count() = 0;
     virtual char const *GetDllName( int idx ) = 0;
     virtual char const *GetInterfaceName( int idx ) = 0;

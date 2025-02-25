@@ -25,7 +25,7 @@ class CTFFlagCalloutPanel;
 //-----------------------------------------------------------------------------
 class CTFArrowPanel : public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFArrowPanel, vgui::Panel );
 
     CTFArrowPanel( vgui::Panel *parent, const char *name );
@@ -38,7 +38,7 @@ class CTFArrowPanel : public vgui::Panel
     float GetAngleRotation( void );
     void OnTick( void );
 
-   private:
+    private:
     EHANDLE m_hEntity;
 
     CMaterialReference m_RedMaterial;
@@ -59,7 +59,7 @@ class CTFArrowPanel : public vgui::Panel
 //-----------------------------------------------------------------------------
 class CTFFlagStatus : public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFFlagStatus, vgui::EditablePanel );
 
     CTFFlagStatus( vgui::Panel *parent, const char *name );
@@ -85,7 +85,7 @@ class CTFFlagStatus : public vgui::EditablePanel
         return m_hEntity.Get();
     }
 
-   private:
+    private:
     EHANDLE m_hEntity;
 
     CTFArrowPanel *m_pArrow;
@@ -100,7 +100,7 @@ class CTFHudFlagObjectives : public vgui::EditablePanel, public CGameEventListen
 {
     DECLARE_CLASS_SIMPLE( CTFHudFlagObjectives, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudFlagObjectives( vgui::Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -108,15 +108,15 @@ class CTFHudFlagObjectives : public vgui::EditablePanel, public CGameEventListen
     virtual void Reset();
     void OnTick();
 
-   public:  // IGameEventListener:
+    public:  // IGameEventListener:
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     void UpdateStatus( C_BasePlayer *pNewOwner = NULL, C_BaseEntity *pFlagEntity = NULL );
     void SetPlayingToLabelVisible( bool bVisible );
     void SetCarriedImage( const char *pchIcon );
 
-   private:
+    private:
     vgui::ImagePanel *m_pCarriedImage;
 
     CExLabel *m_pPlayingTo;
@@ -147,7 +147,7 @@ class CTFFlagCalloutPanel : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFFlagCalloutPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFFlagCalloutPanel( const char *pElementName );
     ~CTFFlagCalloutPanel( void );
 
@@ -165,7 +165,7 @@ class CTFFlagCalloutPanel : public CHudElement, public vgui::EditablePanel
 
     CHandle< CCaptureFlag > m_hFlag;
 
-   private:
+    private:
     IMaterial *m_pArrowMaterial;
     CTFImagePanel *m_pFlagCalloutPanel;
     vgui::Label *m_pFlagValueLabel;

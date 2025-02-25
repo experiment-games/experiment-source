@@ -106,7 +106,7 @@ public class WireFormatTest extends TestCase {
   }
 
   public void testSerializationPackedWithoutGetSerializedSize()
-      throws Exception {
+    throws Exception {
     // Write directly to an OutputStream, without invoking getSerializedSize()
     // This used to be a bug where the size of a packed field was incorrect,
     // since getSerializedSize() was never invoked.
@@ -164,7 +164,7 @@ public class WireFormatTest extends TestCase {
     ExtensionRegistry registry = TestUtil.getExtensionRegistry();
 
     TestAllExtensions message2 =
-      TestAllExtensions.parseFrom(rawBytes, registry);
+    TestAllExtensions.parseFrom(rawBytes, registry);
 
     TestUtil.assertAllExtensionsSet(message2);
   }
@@ -193,7 +193,7 @@ public class WireFormatTest extends TestCase {
     ExtensionRegistryLite registry_lite = TestUtil.getExtensionRegistryLite();
 
     TestAllExtensionsLite message2 =
-      TestAllExtensionsLite.parseFrom(rawBytes, registry_lite);
+    TestAllExtensionsLite.parseFrom(rawBytes, registry_lite);
 
     TestUtil.assertAllExtensionsSet(message2);
 
@@ -201,7 +201,7 @@ public class WireFormatTest extends TestCase {
     ExtensionRegistry registry = TestUtil.getExtensionRegistry();
 
     TestAllExtensionsLite message3 =
-      TestAllExtensionsLite.parseFrom(rawBytes, registry);
+    TestAllExtensionsLite.parseFrom(rawBytes, registry);
 
     TestUtil.assertAllExtensionsSet(message3);
   }
@@ -221,7 +221,7 @@ public class WireFormatTest extends TestCase {
 
   public void testExtensionsSerializedSize() throws Exception {
     assertNotSame(TestUtil.getAllSet().getSerializedSize(),
-                  TestUtil.getAllExtensionsSet().getSerializedSize());
+                TestUtil.getAllExtensionsSet().getSerializedSize());
   }
 
   public void testSerializeDelimited() throws Exception {
@@ -248,14 +248,14 @@ public class WireFormatTest extends TestCase {
     int previousTag = 0;
 
     while (true) {
-      int tag = input.readTag();
-      if (tag == 0) {
+    int tag = input.readTag();
+    if (tag == 0) {
         break;
-      }
+    }
 
-      assertTrue(tag > previousTag);
-      previousTag = tag;
-      input.skipField(tag);
+    assertTrue(tag > previousTag);
+    previousTag = tag;
+    input.skipField(tag);
     }
   }
 
@@ -263,7 +263,7 @@ public class WireFormatTest extends TestCase {
     // Tests that fields are written in order even when extension ranges
     // are interleaved with field numbers.
     ByteString data =
-      TestFieldOrderings.newBuilder()
+    TestFieldOrderings.newBuilder()
         .setMyInt(1)
         .setMyString("foo")
         .setMyFloat(1.0F)
@@ -274,7 +274,7 @@ public class WireFormatTest extends TestCase {
 
     Descriptors.Descriptor descriptor = TestFieldOrderings.getDescriptor();
     ByteString dynamic_data =
-      DynamicMessage.newBuilder(TestFieldOrderings.getDescriptor())
+    DynamicMessage.newBuilder(TestFieldOrderings.getDescriptor())
         .setField(descriptor.findFieldByName("my_int"), 1L)
         .setField(descriptor.findFieldByName("my_string"), "foo")
         .setField(descriptor.findFieldByName("my_float"), 1.0F)
@@ -295,7 +295,7 @@ public class WireFormatTest extends TestCase {
     // Make sure we can parse a message that contains multiple extensions
     // ranges.
     TestFieldOrderings source =
-      TestFieldOrderings.newBuilder()
+    TestFieldOrderings.newBuilder()
         .setMyInt(1)
         .setMyString("foo")
         .setMyFloat(1.0F)
@@ -303,8 +303,8 @@ public class WireFormatTest extends TestCase {
         .setExtension(UnittestProto.myExtensionString, "bar")
         .build();
     TestFieldOrderings dest =
-      TestFieldOrderings.parseFrom(source.toByteString(),
-                                   getTestFieldOrderingsRegistry());
+    TestFieldOrderings.parseFrom(source.toByteString(),
+                                    getTestFieldOrderingsRegistry());
     assertEquals(source, dest);
   }
 
@@ -312,7 +312,7 @@ public class WireFormatTest extends TestCase {
     // Same as above except with DynamicMessage.
     Descriptors.Descriptor descriptor = TestFieldOrderings.getDescriptor();
     DynamicMessage source =
-      DynamicMessage.newBuilder(TestFieldOrderings.getDescriptor())
+    DynamicMessage.newBuilder(TestFieldOrderings.getDescriptor())
         .setField(descriptor.findFieldByName("my_int"), 1L)
         .setField(descriptor.findFieldByName("my_string"), "foo")
         .setField(descriptor.findFieldByName("my_float"), 1.0F)
@@ -320,8 +320,8 @@ public class WireFormatTest extends TestCase {
         .setField(UnittestProto.myExtensionString.getDescriptor(), "bar")
         .build();
     DynamicMessage dest =
-      DynamicMessage.parseFrom(descriptor, source.toByteString(),
-                               getTestFieldOrderingsRegistry());
+    DynamicMessage.parseFrom(descriptor, source.toByteString(),
+                                getTestFieldOrderingsRegistry());
     assertEquals(source, dest);
   }
 
@@ -340,21 +340,21 @@ public class WireFormatTest extends TestCase {
   }
 
   private void testSerializeMessageSetWithFlag(boolean eagerParsing)
-      throws Exception {
+    throws Exception {
     ExtensionRegistryLite.setEagerlyParseMessageSets(eagerParsing);
     // Set up a TestMessageSet with two known messages and an unknown one.
     TestMessageSet messageSet =
-      TestMessageSet.newBuilder()
+    TestMessageSet.newBuilder()
         .setExtension(
-          TestMessageSetExtension1.messageSetExtension,
-          TestMessageSetExtension1.newBuilder().setI(123).build())
+        TestMessageSetExtension1.messageSetExtension,
+        TestMessageSetExtension1.newBuilder().setI(123).build())
         .setExtension(
-          TestMessageSetExtension2.messageSetExtension,
-          TestMessageSetExtension2.newBuilder().setStr("foo").build())
+        TestMessageSetExtension2.messageSetExtension,
+        TestMessageSetExtension2.newBuilder().setStr("foo").build())
         .setUnknownFields(
-          UnknownFieldSet.newBuilder()
+        UnknownFieldSet.newBuilder()
             .addField(UNKNOWN_TYPE_ID,
-              UnknownFieldSet.Field.newBuilder()
+            UnknownFieldSet.Field.newBuilder()
                 .addLengthDelimited(ByteString.copyFromUtf8("bar"))
                 .build())
             .build())
@@ -373,12 +373,12 @@ public class WireFormatTest extends TestCase {
     assertEquals(UNKNOWN_TYPE_ID, raw.getItem(2).getTypeId());
 
     TestMessageSetExtension1 message1 =
-      TestMessageSetExtension1.parseFrom(
+    TestMessageSetExtension1.parseFrom(
         raw.getItem(0).getMessage().toByteArray());
     assertEquals(123, message1.getI());
 
     TestMessageSetExtension2 message2 =
-      TestMessageSetExtension2.parseFrom(
+    TestMessageSetExtension2.parseFrom(
         raw.getItem(1).getMessage().toByteArray());
     assertEquals("foo", message2.getStr());
 
@@ -394,7 +394,7 @@ public class WireFormatTest extends TestCase {
   }
 
   private void testParseMessageSetWithFlag(boolean eagerParsing)
-      throws Exception {
+    throws Exception {
     ExtensionRegistryLite.setEagerlyParseMessageSets(eagerParsing);
     ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
     extensionRegistry.add(TestMessageSetExtension1.messageSetExtension);
@@ -402,25 +402,25 @@ public class WireFormatTest extends TestCase {
 
     // Set up a RawMessageSet with two known messages and an unknown one.
     RawMessageSet raw =
-      RawMessageSet.newBuilder()
+    RawMessageSet.newBuilder()
         .addItem(
-          RawMessageSet.Item.newBuilder()
+        RawMessageSet.Item.newBuilder()
             .setTypeId(TYPE_ID_1)
             .setMessage(
-              TestMessageSetExtension1.newBuilder()
+            TestMessageSetExtension1.newBuilder()
                 .setI(123)
                 .build().toByteString())
             .build())
         .addItem(
-          RawMessageSet.Item.newBuilder()
+        RawMessageSet.Item.newBuilder()
             .setTypeId(TYPE_ID_2)
             .setMessage(
-              TestMessageSetExtension2.newBuilder()
+            TestMessageSetExtension2.newBuilder()
                 .setStr("foo")
                 .build().toByteString())
             .build())
         .addItem(
-          RawMessageSet.Item.newBuilder()
+        RawMessageSet.Item.newBuilder()
             .setTypeId(UNKNOWN_TYPE_ID)
             .setMessage(ByteString.copyFromUtf8("bar"))
             .build())
@@ -430,12 +430,12 @@ public class WireFormatTest extends TestCase {
 
     // Parse as a TestMessageSet and check the contents.
     TestMessageSet messageSet =
-      TestMessageSet.parseFrom(data, extensionRegistry);
+    TestMessageSet.parseFrom(data, extensionRegistry);
 
     assertEquals(123, messageSet.getExtension(
-      TestMessageSetExtension1.messageSetExtension).getI());
+    TestMessageSetExtension1.messageSetExtension).getI());
     assertEquals("foo", messageSet.getExtension(
-      TestMessageSetExtension2.messageSetExtension).getStr());
+    TestMessageSetExtension2.messageSetExtension).getStr());
 
     // Check for unknown field with type LENGTH_DELIMITED,
     //   number UNKNOWN_TYPE_ID, and contents "bar".
@@ -457,7 +457,7 @@ public class WireFormatTest extends TestCase {
   }
 
   private void testParseMessageSetExtensionWithFlag(boolean eagerParsing)
-      throws Exception {
+    throws Exception {
     ExtensionRegistryLite.setEagerlyParseMessageSets(eagerParsing);
     ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
     extensionRegistry.add(TestMessageSetExtension1.messageSetExtension);
@@ -467,12 +467,12 @@ public class WireFormatTest extends TestCase {
         TestMessageSetExtension1
             .getDescriptor().getExtensions().get(0).getNumber();
     RawMessageSet raw =
-      RawMessageSet.newBuilder()
+    RawMessageSet.newBuilder()
         .addItem(
-          RawMessageSet.Item.newBuilder()
+        RawMessageSet.Item.newBuilder()
             .setTypeId(TYPE_ID_1)
             .setMessage(
-              TestMessageSetExtension1.newBuilder()
+            TestMessageSetExtension1.newBuilder()
                 .setI(123)
                 .build().toByteString())
             .build())
@@ -496,7 +496,7 @@ public class WireFormatTest extends TestCase {
   }
 
   private void testMergeLazyMessageSetExtensionWithFlag(boolean eagerParsing)
-      throws Exception {
+    throws Exception {
     ExtensionRegistryLite.setEagerlyParseMessageSets(eagerParsing);
     ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
     extensionRegistry.add(TestMessageSetExtension1.messageSetExtension);
@@ -506,12 +506,12 @@ public class WireFormatTest extends TestCase {
         TestMessageSetExtension1
             .getDescriptor().getExtensions().get(0).getNumber();
     RawMessageSet raw =
-      RawMessageSet.newBuilder()
+    RawMessageSet.newBuilder()
         .addItem(
-          RawMessageSet.Item.newBuilder()
+        RawMessageSet.Item.newBuilder()
             .setTypeId(TYPE_ID_1)
             .setMessage(
-              TestMessageSetExtension1.newBuilder()
+            TestMessageSetExtension1.newBuilder()
                 .setI(123)
                 .build().toByteString())
             .build())
@@ -538,7 +538,7 @@ public class WireFormatTest extends TestCase {
   }
 
   private void testMergeMessageSetExtensionWithFlag(boolean eagerParsing)
-      throws Exception {
+    throws Exception {
     ExtensionRegistryLite.setEagerlyParseMessageSets(eagerParsing);
     ExtensionRegistry extensionRegistry = ExtensionRegistry.newInstance();
     extensionRegistry.add(TestMessageSetExtension1.messageSetExtension);
@@ -548,12 +548,12 @@ public class WireFormatTest extends TestCase {
         TestMessageSetExtension1
             .getDescriptor().getExtensions().get(0).getNumber();
     RawMessageSet raw =
-      RawMessageSet.newBuilder()
+    RawMessageSet.newBuilder()
         .addItem(
-          RawMessageSet.Item.newBuilder()
+        RawMessageSet.Item.newBuilder()
             .setTypeId(TYPE_ID_1)
             .setMessage(
-              TestMessageSetExtension1.newBuilder()
+            TestMessageSetExtension1.newBuilder()
                 .setI(123)
                 .build().toByteString())
             .build())
@@ -565,11 +565,11 @@ public class WireFormatTest extends TestCase {
     CodedOutputStream output = out.getCodedOutput();
     List<RawMessageSet.Item> items = raw.getItemList();
     for (int i = 0; i < items.size(); i++) {
-      RawMessageSet.Item item = items.get(i);
-      output.writeTag(1, WireFormat.WIRETYPE_START_GROUP);
-      output.writeBytes(3, item.getMessage());
-      output.writeInt32(2, item.getTypeId());
-      output.writeTag(1, WireFormat.WIRETYPE_END_GROUP);
+    RawMessageSet.Item item = items.get(i);
+    output.writeTag(1, WireFormat.WIRETYPE_START_GROUP);
+    output.writeBytes(3, item.getMessage());
+    output.writeInt32(2, item.getTypeId());
+    output.writeTag(1, WireFormat.WIRETYPE_END_GROUP);
     }
     ByteString data = out.build();
 

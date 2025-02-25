@@ -31,7 +31,7 @@ class CReplayBrowserPanel : public vgui::PropertyDialog,
 {
     DECLARE_CLASS_SIMPLE( CReplayBrowserPanel, vgui::PropertyDialog );
 
-   public:
+    public:
     CReplayBrowserPanel( Panel *parent );
     virtual ~CReplayBrowserPanel();
 
@@ -73,7 +73,7 @@ class CReplayBrowserPanel : public vgui::PropertyDialog,
         return m_flTimeOpened;
     }
 
-   private:
+    private:
     void ShowDeleteReplayDenialDlg();
     void ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager, int iPerformance );
 

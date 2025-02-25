@@ -107,7 +107,7 @@ class CSound
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     bool DoesSoundExpire() const;
     float SoundExpirationTime() const;
     void SetSoundOrigin( const Vector &vecOrigin )
@@ -142,7 +142,7 @@ class CSound
     int m_iType;               // what type of sound this is
     int m_iNextAudible;        // temporary link that NPCs use to build a list of audible sounds
 
-   private:
+    private:
     void Clear( void );
 
     float m_flExpireTime;  // when the sound should be purged from the list
@@ -223,7 +223,7 @@ class CSoundEnt : public CPointEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CSoundEnt, CPointEntity );
 
     // Construction, destruction
@@ -256,7 +256,7 @@ class CSoundEnt : public CPointEntity
     int IAllocSound( void );
     int FindOrAllocateSound( CBaseEntity *pOwner, int soundChannelIndex );
 
-   private:
+    private:
     int m_iFreeSound;         // index of the first sound in the free sound list
     int m_iActiveSound;       // indes of the first sound in the active sound list
     int m_cLastActiveSounds;  // keeps track of the number of active sounds at the last update. (for diagnostic work)

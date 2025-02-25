@@ -83,12 +83,12 @@ bool CppGenerator::Generate(const FileDescriptor* file,
 
   for (int i = 0; i < options.size(); i++) {
     if (options[i].first == "dllexport_decl") {
-      file_options.dllexport_decl = options[i].second;
+    file_options.dllexport_decl = options[i].second;
     } else if (options[i].first == "safe_boundary_check") {
-      file_options.safe_boundary_check = true;
+    file_options.safe_boundary_check = true;
     } else {
-      *error = "Unknown generator option: " + options[i].first;
-      return false;
+    *error = "Unknown generator option: " + options[i].first;
+    return false;
     }
   }
 

@@ -107,7 +107,7 @@ int main(int argc, char **argv)
     spng_set_crc_action(ctx, SPNG_CRC_USE, SPNG_CRC_USE);
 
     /* Set memory usage limits for storing standard and unknown chunks,
-       this is important when reading untrusted files! */
+        this is important when reading untrusted files! */
     size_t limit = 1024 * 1024 * 64;
     spng_set_chunk_limits(ctx, limit, limit);
 
@@ -126,15 +126,15 @@ int main(int argc, char **argv)
     const char *color_name = color_type_str(ihdr.color_type);
 
     printf("width: %u\n"
-           "height: %u\n"
-           "bit depth: %u\n"
-           "color type: %u - %s\n",
-           ihdr.width, ihdr.height, ihdr.bit_depth, ihdr.color_type, color_name);
+            "height: %u\n"
+            "bit depth: %u\n"
+            "color type: %u - %s\n",
+            ihdr.width, ihdr.height, ihdr.bit_depth, ihdr.color_type, color_name);
 
     printf("compression method: %u\n"
-           "filter method: %u\n"
-           "interlace method: %u\n",
-           ihdr.compression_method, ihdr.filter_method, ihdr.interlace_method);
+            "filter method: %u\n"
+            "interlace method: %u\n",
+            ihdr.compression_method, ihdr.filter_method, ihdr.interlace_method);
 
     struct spng_plte plte = {0};
     ret = spng_get_plte(ctx, &plte);
@@ -151,13 +151,13 @@ int main(int argc, char **argv)
     size_t image_size, image_width;
 
     /* Output format, does not depend on source PNG format except for
-       SPNG_FMT_PNG, which is the PNG's format in host-endian or
-       big-endian for SPNG_FMT_RAW.
-       Note that for these two formats <8-bit images are left byte-packed */
+        SPNG_FMT_PNG, which is the PNG's format in host-endian or
+        big-endian for SPNG_FMT_RAW.
+        Note that for these two formats <8-bit images are left byte-packed */
     int fmt = SPNG_FMT_PNG;
 
     /* With SPNG_FMT_PNG indexed color images are output as palette indices,
-       pick another format to expand them. */
+        pick another format to expand them. */
     if(ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) fmt = SPNG_FMT_RGB8;
 
     ret = spng_decoded_image_size(ctx, fmt, &image_size);
@@ -178,7 +178,7 @@ int main(int argc, char **argv)
     }*/
 
     /* Alternatively you can decode the image progressively,
-       this requires an initialization step. */
+        this requires an initialization step. */
     ret = spng_decode_image(ctx, NULL, 0, fmt, SPNG_DECODE_PROGRESSIVE);
 
     if(ret)

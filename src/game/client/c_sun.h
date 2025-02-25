@@ -41,13 +41,13 @@ class C_SunGlowOverlay : public CGlowOverlay
         }
     }
 
-   public:
+    public:
     void SetModulateByDot( bool state = true )
     {
         m_bModulateByDot = state;
     }
 
-   protected:
+    protected:
     bool m_bModulateByDot;
 };
 
@@ -57,7 +57,7 @@ class C_SunGlowOverlay : public CGlowOverlay
 
 class C_Sun : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_Sun, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -66,7 +66,7 @@ class C_Sun : public C_BaseEntity
 
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   public:
+    public:
     C_SunGlowOverlay m_Overlay;
     C_SunGlowOverlay m_GlowOverlay;
 

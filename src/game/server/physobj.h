@@ -44,7 +44,7 @@ class CPhysBox : public CBreakable
 {
     DECLARE_CLASS( CPhysBox, CBreakable );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     void Spawn( void );
@@ -82,7 +82,7 @@ class CPhysBox : public CBreakable
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     int m_damageType;
     float m_massScale;
     string_t m_iszOverrideScript;
@@ -111,7 +111,7 @@ class CPhysBox : public CBreakable
 // ---------------------------------------------------------------------
 class CPhysExplosion : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysExplosion, CPointEntity );
 
     void Spawn( void );
@@ -126,7 +126,7 @@ class CPhysExplosion : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     float GetRadius( void );
 
     float m_damage;
@@ -143,7 +143,7 @@ class CPhysExplosion : public CPointEntity
 
 class CPhysImpact : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysImpact, CPointEntity );
 
     void Spawn( void );
@@ -154,7 +154,7 @@ class CPhysImpact : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     void PointAtEntity( void );
 
     float m_damage;
@@ -178,7 +178,7 @@ class CPhysMagnet : public CBaseAnimating, public IPhysicsConstraintEvent
 {
     DECLARE_CLASS( CPhysMagnet, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -220,10 +220,10 @@ class CPhysMagnet : public CBaseAnimating, public IPhysicsConstraintEvent
     void DetachAll( void );
 
     // IPhysicsConstraintEvent
-   public:
+    public:
     void ConstraintBroken( IPhysicsConstraint *pConstraint );
 
-   protected:
+    protected:
     // Outputs
     COutputEvent m_OnMagnetAttach;
     COutputEvent m_OnMagnetDetach;

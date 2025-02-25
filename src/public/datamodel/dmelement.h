@@ -27,8 +27,8 @@ typedef bool ( CDmElement::*pfnCommandMethod )( const char *command, const char 
 struct ElementPathItem_t
 {
     ElementPathItem_t( DmElementHandle_t hElem = DMELEMENT_HANDLE_INVALID,
-                       DmAttributeHandle_t hAttr = DMATTRIBUTE_HANDLE_INVALID,
-                       int idx = -1 )
+                        DmAttributeHandle_t hAttr = DMATTRIBUTE_HANDLE_INVALID,
+                        int idx = -1 )
         : hElement( hElem ), hAttribute( hAttr ), nIndex( idx )
     {
     }
@@ -60,7 +60,7 @@ struct DmAttributeList_t
 //-----------------------------------------------------------------------------
 class CDmeElementRefHelper
 {
-   protected:
+    protected:
     void Ref( DmElementHandle_t hElement, bool bStrong );
     void Unref( DmElementHandle_t hElement, bool bStrong );
 };
@@ -126,7 +126,7 @@ struct DmElementReference_t
 //-----------------------------------------------------------------------------
 class CDmElement
 {
-   public:
+    public:
     // Can be overridden by derived classes
     virtual void OnAttributeChanged( CDmAttribute *pAttribute ) {}
     virtual void PreAttributeChanged( CDmAttribute *pAttribute ) {}
@@ -240,7 +240,7 @@ class CDmElement
     // Estimates the memory usage of the element, its attributes, and child elements
     int EstimateMemoryUsage( TraversalDepth_t depth = TD_DEEP );
 
-   protected:
+    protected:
     // NOTE: These are protected to ensure that the factory is the only thing that can create these
     CDmElement( DmElementHandle_t handle, const char *objectType, const DmObjectId_t &id, const char *objectName, DmFileId_t fileid );
     virtual ~CDmElement();
@@ -263,7 +263,7 @@ class CDmElement
     template < class T >
     static void DeleteAttributeVarElementArray( T &array );
 
-   private:
+    private:
     typedef CUtlMap< DmElementHandle_t, DmElementHandle_t, int > CRefMap;
 
     // Bogus constructor
@@ -306,10 +306,10 @@ class CDmElement
     // Estimates memory usage
     int EstimateMemoryUsage( CUtlHash< DmElementHandle_t > &visited, TraversalDepth_t depth, int *pCategories );
 
-   protected:
+    protected:
     CDmaString m_Name;
 
-   private:
+    private:
     CDmAttribute *m_pAttributes;
     DmElementReference_t m_ref;
     UtlSymId_t m_Type;
@@ -508,7 +508,7 @@ int DmeEstimateMemorySize( T *pElement )
 // Helper macro to create an element; this is used for elements that are helper base classes
 //-----------------------------------------------------------------------------
 #define DEFINE_UNINSTANCEABLE_ELEMENT( className, baseClassName )                                                                                                                                                  \
-   protected:                                                                                                                                                                                                      \
+    protected:                                                                                                                                                                                                      \
     className( DmElementHandle_t handle, const char *pElementTypeName, const DmObjectId_t &id, const char *pElementName, DmFileId_t fileid ) : baseClassName( handle, pElementTypeName, id, pElementName, fileid ) \
     {                                                                                                                                                                                                              \
     }                                                                                                                                                                                                              \
@@ -531,48 +531,48 @@ int DmeEstimateMemorySize( T *pElement )
     {                                                                                                                                                                                                              \
         return DmeEstimateMemorySize( this );                                                                                                                                                                      \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
-   private:                                                                                                                                                                                                        \
+                                                                                                                                                                                                                    \
+    private:                                                                                                                                                                                                        \
     typedef baseClassName BaseClass;
 
 //-----------------------------------------------------------------------------
 // Helper macro to create the class factory
 //-----------------------------------------------------------------------------
 #define DEFINE_ELEMENT( className, baseClassName )                                                                                                                                                                 \
-   public:                                                                                                                                                                                                         \
+    public:                                                                                                                                                                                                         \
     virtual bool IsA( UtlSymId_t typeSymbol ) const                                                                                                                                                                \
     {                                                                                                                                                                                                              \
         return IsA_Implementation( typeSymbol );                                                                                                                                                                   \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     bool IsA( const char *pTypeName ) const                                                                                                                                                                        \
     {                                                                                                                                                                                                              \
         CUtlSymbol typeSymbol = g_pDataModel->GetSymbol( pTypeName );                                                                                                                                              \
         return IsA( typeSymbol );                                                                                                                                                                                  \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     template < class T >                                                                                                                                                                                           \
     bool IsA() const                                                                                                                                                                                               \
     {                                                                                                                                                                                                              \
         return IsA( T::GetStaticTypeSymbol() );                                                                                                                                                                    \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     virtual int GetInheritanceDepth( UtlSymId_t typeSymbol ) const                                                                                                                                                 \
     {                                                                                                                                                                                                              \
         return GetInheritanceDepth_Implementation( typeSymbol, 0 );                                                                                                                                                \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     static CUtlSymbol GetStaticTypeSymbol()                                                                                                                                                                        \
     {                                                                                                                                                                                                              \
         return m_classType;                                                                                                                                                                                        \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     className *Copy( TraversalDepth_t depth = TD_DEEP ) const                                                                                                                                                      \
     {                                                                                                                                                                                                              \
         return static_cast< className * >( CopyInternal( depth ) );                                                                                                                                                \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
-   protected:                                                                                                                                                                                                      \
+                                                                                                                                                                                                                    \
+    protected:                                                                                                                                                                                                      \
     className( DmElementHandle_t handle, const char *pElementTypeName, const DmObjectId_t &id, const char *pElementName, DmFileId_t fileid ) : baseClassName( handle, pElementTypeName, id, pElementName, fileid ) \
     {                                                                                                                                                                                                              \
     }                                                                                                                                                                                                              \
@@ -595,14 +595,14 @@ int DmeEstimateMemorySize( T *pElement )
     {                                                                                                                                                                                                              \
         m_classType = typeSymbol;                                                                                                                                                                                  \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     static bool IsA_Implementation( CUtlSymbol typeSymbol )                                                                                                                                                        \
     {                                                                                                                                                                                                              \
         if ( typeSymbol == m_classType )                                                                                                                                                                           \
             return true;                                                                                                                                                                                           \
         return BaseClass::IsA_Implementation( typeSymbol );                                                                                                                                                        \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
+                                                                                                                                                                                                                    \
     static int GetInheritanceDepth_Implementation( CUtlSymbol typeSymbol, int nCurrentDepth )                                                                                                                      \
     {                                                                                                                                                                                                              \
         if ( typeSymbol == m_classType )                                                                                                                                                                           \
@@ -613,8 +613,8 @@ int DmeEstimateMemorySize( T *pElement )
     {                                                                                                                                                                                                              \
         return DmeEstimateMemorySize( this );                                                                                                                                                                      \
     }                                                                                                                                                                                                              \
-                                                                                                                                                                                                                   \
-   private:                                                                                                                                                                                                        \
+                                                                                                                                                                                                                    \
+    private:                                                                                                                                                                                                        \
     typedef baseClassName BaseClass;                                                                                                                                                                               \
     template < class T >                                                                                                                                                                                           \
     friend class CDmElementFactory;                                                                                                                                                                                \

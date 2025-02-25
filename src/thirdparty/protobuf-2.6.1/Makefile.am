@@ -17,8 +17,8 @@ DIST_SUBDIRS = $(subdirs) src
 # want "make install" to recurse into gtest since we don't want to overwrite
 # the installed version of gtest if there is one.
 check-local:
-	@echo "Making lib/libgtest.a lib/libgtest_main.a in gtest"
-	@cd gtest && $(MAKE) $(AM_MAKEFLAGS) lib/libgtest.la lib/libgtest_main.la
+    @echo "Making lib/libgtest.a lib/libgtest_main.a in gtest"
+    @cd gtest && $(MAKE) $(AM_MAKEFLAGS) lib/libgtest.la lib/libgtest_main.la
 
 # We would like to clean gtest when "make clean" is invoked.  But we have to
 # be careful because clean-local is also invoked during "make distclean", but
@@ -27,10 +27,10 @@ check-local:
 # cd to the directory again and "make clean" it will fail.  So, check that the
 # Makefile exists before recursing.
 clean-local:
-	@if test -e gtest/Makefile; then \
-	  echo "Making clean in gtest"; \
-	  cd gtest && $(MAKE) $(AM_MAKEFLAGS) clean; \
-	fi
+    @if test -e gtest/Makefile; then \
+    echo "Making clean in gtest"; \
+    cd gtest && $(MAKE) $(AM_MAKEFLAGS) clean; \
+    fi
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = protobuf.pc protobuf-lite.pc

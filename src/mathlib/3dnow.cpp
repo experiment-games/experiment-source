@@ -35,13 +35,13 @@ float _3DNow_Sqrt( float x )
 #ifdef _WIN32
     _asm
     {
-		femms
-		movd		mm0, x
-		PFRSQRT		(mm1,mm0)
-		punpckldq	mm0, mm0
-		PFMUL		(mm0, mm1)
-		movd		root, mm0
-		femms
+        femms
+        movd		mm0, x
+        PFRSQRT		(mm1,mm0)
+        punpckldq	mm0, mm0
+        PFMUL		(mm0, mm1)
+        movd		root, mm0
+        femms
     }
 #elif LINUX
     __asm __volatile__( "femms" );
@@ -79,25 +79,25 @@ float FASTCALL _3DNow_VectorNormalize( Vector& vec )
 #ifdef _WIN32
         _asm
         {
-			mov			eax, v
-			femms
-			movq		mm0, QWORD PTR [eax]
-			movd		mm1, DWORD PTR [eax+8]
-			movq		mm2, mm0
-			movq		mm3, mm1
-			PFMUL		(mm0, mm0)
-			PFMUL		(mm1, mm1)
-			PFACC		(mm0, mm0)
-			PFADD		(mm1, mm0)
-			PFRSQRT		(mm0, mm1)
-			punpckldq	mm1, mm1
-			PFMUL		(mm1, mm0)
-			PFMUL		(mm2, mm0)
-			PFMUL		(mm3, mm0)
-			movq		QWORD PTR [eax], mm2
-			movd		DWORD PTR [eax+8], mm3
-			movd		radius, mm1
-			femms
+            mov			eax, v
+            femms
+            movq		mm0, QWORD PTR [eax]
+            movd		mm1, DWORD PTR [eax+8]
+            movq		mm2, mm0
+            movq		mm3, mm1
+            PFMUL		(mm0, mm0)
+            PFMUL		(mm1, mm1)
+            PFACC		(mm0, mm0)
+            PFADD		(mm1, mm0)
+            PFRSQRT		(mm0, mm1)
+            punpckldq	mm1, mm1
+            PFMUL		(mm1, mm0)
+            PFMUL		(mm2, mm0)
+            PFMUL		(mm3, mm0)
+            movq		QWORD PTR [eax], mm2
+            movd		DWORD PTR [eax+8], mm3
+            movd		radius, mm1
+            femms
         }
 #elif LINUX
         long long a, c;
@@ -145,19 +145,19 @@ float _3DNow_InvRSquared( const float* v )
     float r2 = 1.f;
 #ifdef _WIN32
     _asm {  // AMD 3DNow only routine
-		mov			eax, v
-		femms
-		movq		mm0, QWORD PTR [eax]
-		movd		mm1, DWORD PTR [eax+8]
-		movd		mm2, [r2]
-		PFMUL		(mm0, mm0)
-		PFMUL		(mm1, mm1)
-		PFACC		(mm0, mm0)
-		PFADD		(mm1, mm0)
-		PFMAX		(mm1, mm2)
-		PFRCP		(mm0, mm1)
-		movd		[r2], mm0
-		femms
+        mov			eax, v
+        femms
+        movq		mm0, QWORD PTR [eax]
+        movd		mm1, DWORD PTR [eax+8]
+        movd		mm2, [r2]
+        PFMUL		(mm0, mm0)
+        PFMUL		(mm1, mm1)
+        PFACC		(mm0, mm0)
+        PFADD		(mm1, mm0)
+        PFMAX		(mm1, mm2)
+        PFRCP		(mm0, mm1)
+        movd		[r2], mm0
+        femms
     }
 #elif LINUX
     long long a, c;

@@ -372,7 +372,7 @@ winding_t *ClipToSeperators( winding_t *source, winding_t *pass, winding_t *targ
 
 class CPortalTrace
 {
-   public:
+    public:
     CUtlVector< Vector > m_list;
     CThreadFastMutex m_mutex;
 } g_PortalTrace;
@@ -646,10 +646,10 @@ void PortalFlow( int iThread, int portalnum )
     c_can = CountBits( p->portalvis, g_numportals * 2 );
 
     qprintf( "portal:%4i  mightsee:%4i  cansee:%4i (%i chains)\n",
-             ( int )( p - portals ),
-             c_might,
-             c_can,
-             data.c_chains );
+            ( int )( p - portals ),
+            c_might,
+            c_can,
+            data.c_chains );
 }
 
 /*

@@ -14,7 +14,7 @@ struct dlight_t;
 
 class CFlashlightEffect
 {
-   public:
+    public:
     CFlashlightEffect( int nEntIndex = 0 );
     virtual ~CFlashlightEffect();
 
@@ -35,7 +35,7 @@ class CFlashlightEffect
         m_FlashlightHandle = Handle;
     }
 
-   protected:
+    protected:
     void LightOff();
     void LightOffOld();
     void LightOffNew();
@@ -57,7 +57,7 @@ class CFlashlightEffect
 
 class CHeadlightEffect : public CFlashlightEffect
 {
-   public:
+    public:
     CHeadlightEffect();
     ~CHeadlightEffect();
 

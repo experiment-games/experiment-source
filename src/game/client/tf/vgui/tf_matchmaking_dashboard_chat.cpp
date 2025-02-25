@@ -251,7 +251,7 @@ void CPartyChatPanel::FireGameEvent( IGameEvent *event )
             {
                 DECLARE_CLASS_SIMPLE( CChatPopup, CTFDashboardNotification );
 
-               public:
+                public:
                 CChatPopup( float flLifeTime )
                     : CTFDashboardNotification( CTFDashboardNotification::TYPE_CHAT,
                                                 CTFDashboardNotification::LEFT,

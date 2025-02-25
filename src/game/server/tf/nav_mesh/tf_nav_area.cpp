@@ -385,7 +385,7 @@ bool CTFNavArea::IsBottleneck( void ) const
     const float narrow = 2.1f * GenerationStepSize;
 
     if ( GetAdjacentCount( NORTH ) == 0 && GetAdjacentCount( SOUTH ) == 0 &&
-         GetAdjacentCount( EAST ) > 0 && GetAdjacentCount( WEST ) > 0 )
+        GetAdjacentCount( EAST ) > 0 && GetAdjacentCount( WEST ) > 0 )
     {
         if ( GetSizeY() < narrow )
         {
@@ -393,7 +393,7 @@ bool CTFNavArea::IsBottleneck( void ) const
         }
     }
     else if ( GetAdjacentCount( NORTH ) > 0 && GetAdjacentCount( SOUTH ) > 0 &&
-              GetAdjacentCount( EAST ) == 0 && GetAdjacentCount( WEST ) == 0 )
+            GetAdjacentCount( EAST ) == 0 && GetAdjacentCount( WEST ) == 0 )
     {
         if ( GetSizeX() < narrow )
         {
@@ -617,7 +617,7 @@ bool CTFNavArea::IsAwayFromInvasionAreas( int myTeam, float safetyRange ) const
 //-----------------------------------------------------------------------------
 class MarkVisibleSet
 {
-   public:
+    public:
     MarkVisibleSet( unsigned int marker )
     {
         m_marker = marker;
@@ -636,7 +636,7 @@ class MarkVisibleSet
 //-----------------------------------------------------------------------------
 class CollectInvasionAreas
 {
-   public:
+    public:
     CollectInvasionAreas( unsigned int marker, CTFNavArea *homeArea, CUtlVector< CTFNavArea * > *redInvasionAreaVector, CUtlVector< CTFNavArea * > *blueInvasionAreaVector )
     {
         m_homeArea = homeArea;

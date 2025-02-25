@@ -73,7 +73,7 @@ class CNewNPC : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNewNPC, CAI_BaseNPC );
 
-   public:
+    public:
     void Precache( void );
     void Spawn( void );
     Class_T Classify( void );

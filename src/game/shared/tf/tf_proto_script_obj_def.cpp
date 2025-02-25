@@ -33,18 +33,18 @@ const char* g_pszProtoLocFileName = "resource/tf_proto_obj_defs_english.txt";
 
 #ifdef CLIENT_DLL
 ProtoDefTypeDesc_t g_ProtoDefTypeDescs[] = { { "Quest Map Node", false, NULL },
-                                             { "Quest Map", false, NULL },
-                                             { "Quest Theme", false, NULL },
-                                             { "Quest Map Region", false, NULL },
-                                             { "Quest", false, NULL },
-                                             { "Quest Objective", false, NULL },
-                                             { "Paintkit Variable", false, NULL },
-                                             { "Paintkit Operation", false, NULL },
-                                             { "Paintkit Item Def", false, NULL },
-                                             { "Paintkit Def", false, NULL },
-                                             { "Header", false, NULL },
-                                             { "Quest Map Store Item", false, NULL },
-                                             { "Quest Map Star Type", false, NULL } };
+                                            { "Quest Map", false, NULL },
+                                            { "Quest Theme", false, NULL },
+                                            { "Quest Map Region", false, NULL },
+                                            { "Quest", false, NULL },
+                                            { "Quest Objective", false, NULL },
+                                            { "Paintkit Variable", false, NULL },
+                                            { "Paintkit Operation", false, NULL },
+                                            { "Paintkit Item Def", false, NULL },
+                                            { "Paintkit Def", false, NULL },
+                                            { "Header", false, NULL },
+                                            { "Quest Map Store Item", false, NULL },
+                                            { "Quest Map Star Type", false, NULL } };
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_ProtoDefTypeDescs ) == ProtoDefTypes_ARRAYSIZE );
 #endif
@@ -194,7 +194,7 @@ void GetMessageFromFieldID( const CMsgFieldID& startingFieldID, const google::pr
 
             // Keep going!
             ( *pOuterMsg ) = pFieldDesc->is_repeated() ? &( *pOuterMsg )->GetReflection()->GetRepeatedMessage( *( *pOuterMsg ), pFieldDesc, outerFieldID.repeated_index() )
-                                                       : &( *pOuterMsg )->GetReflection()->GetMessage( *( *pOuterMsg ), pFieldDesc );
+                                                        : &( *pOuterMsg )->GetReflection()->GetMessage( *( *pOuterMsg ), pFieldDesc );
         }
     }
 }
@@ -260,7 +260,7 @@ void GetMutableMessageFromFieldID( const CMsgFieldID& startingFieldID, google::p
 
             // Keep going!
             ( *pOuterMsg ) = pFieldDesc->is_repeated() ? ( *pOuterMsg )->GetReflection()->MutableRepeatedMessage( ( *pOuterMsg ), pFieldDesc, outerFieldID.repeated_index() )
-                                                       : ( *pOuterMsg )->GetReflection()->MutableMessage( ( *pOuterMsg ), pFieldDesc );
+                                                        : ( *pOuterMsg )->GetReflection()->MutableMessage( ( *pOuterMsg ), pFieldDesc );
         }
     }
 }
@@ -308,7 +308,7 @@ void GetMessageHierarchyFromFieldID( const CMsgFieldID& startingFieldID, const g
 
             // Keep going!
             pNextMsg = pMsgNode->m_pFieldDesc->is_repeated() ? &pNextMsg->GetReflection()->GetRepeatedMessage( *pNextMsg, pMsgNode->m_pFieldDesc, pMsgNode->m_msgField.repeated_index() )
-                                                             : &pNextMsg->GetReflection()->GetMessage( *pNextMsg, pMsgNode->m_pFieldDesc );
+                                                            : &pNextMsg->GetReflection()->GetMessage( *pNextMsg, pMsgNode->m_pFieldDesc );
 
             pMsgNode->m_pMsg = pNextMsg;
         }
@@ -505,8 +505,8 @@ void ClearNonInheritedFields( ::google::protobuf::Message* pMsgPrefab )
 }
 
 int GetRepeatedIndexForInheritedMessage( const google::protobuf::Message* pMsgToSearch,
-                                         const google::protobuf::Message* pMsgToInherit,
-                                         const google::protobuf::FieldDescriptor* pField )
+                                        const google::protobuf::Message* pMsgToInherit,
+                                        const google::protobuf::FieldDescriptor* pField )
 {
     const google::protobuf::FieldDescriptor* pKeyField = GetMergingKeyField( pMsgToInherit->GetDescriptor() );
     if ( !pKeyField )
@@ -523,7 +523,7 @@ int GetRepeatedIndexForInheritedMessage( const google::protobuf::Message* pMsgTo
 
         // If we're both not less than each other, then we're equal.
         if ( !GCSDK::IsProtoBufFieldLess( *pMsgToInherit, *pMsgSearchRepeatedMessage, pKeyField, pKeyField ) &&
-             !GCSDK::IsProtoBufFieldLess( *pMsgSearchRepeatedMessage, *pMsgToInherit, pKeyField, pKeyField ) )
+            !GCSDK::IsProtoBufFieldLess( *pMsgSearchRepeatedMessage, *pMsgToInherit, pKeyField, pKeyField ) )
         {
             // If we're equal, then THIS is the matching message that we want to merge with.
             return i;
@@ -548,7 +548,7 @@ CProtoBufScriptObjectDefinitionManager* GetProtoScriptObjDefManager()
 void ProtoLogHandler( google::protobuf::LogLevel level, const char* filename, int line, const std::string& message )
 {
     if ( level == google::protobuf::LOGLEVEL_DFATAL ||
-         level == google::protobuf::LOGLEVEL_ERROR )
+        level == google::protobuf::LOGLEVEL_ERROR )
     {
         AssertMsg( !"Protobuf Error", "%s", message.c_str() );
     }
@@ -795,8 +795,8 @@ void CProtoBufScriptObjectDefinitionManager::RegisterTypeFactory( const IProtoBu
 //
 
 const ::google::protobuf::Message* GetSubMessage( const ::google::protobuf::Message* pMsg,
-                                                  const ::google::protobuf::FieldDescriptor* pField,
-                                                  int nIndex )
+                                                const ::google::protobuf::FieldDescriptor* pField,
+                                                int nIndex )
 {
     if ( pMsg )
     {
@@ -817,8 +817,8 @@ const ::google::protobuf::Message* GetSubMessage( const ::google::protobuf::Mess
 }
 
 ::google::protobuf::Message* GetMutableSubMessage( ::google::protobuf::Message* pMsg,
-                                                   const ::google::protobuf::FieldDescriptor* pField,
-                                                   int nIndex )
+                                                    const ::google::protobuf::FieldDescriptor* pField,
+                                                    int nIndex )
 {
     if ( pMsg )
     {
@@ -840,14 +840,14 @@ const ::google::protobuf::Message* GetSubMessage( const ::google::protobuf::Mess
 ::google::protobuf::Message* AddSubMessage( ::google::protobuf::Message* pMsg, const ::google::protobuf::FieldDescriptor* pField )
 {
     ::google::protobuf::Message* pSubMsg = pField->is_repeated() ? pMsg->GetReflection()->AddMessage( pMsg, pField )
-                                                                 : pMsg->GetReflection()->MutableMessage( pMsg, pField );
+                                                                : pMsg->GetReflection()->MutableMessage( pMsg, pField );
 
     return pSubMsg;
 }
 
 class CHeaderOnlyDef : public CTypedProtoBufScriptObjectDefinition< CMsgHeaderOnly, DEF_TYPE_HEADER_ONLY >
 {
-   public:
+    public:
     CHeaderOnlyDef() {}
     virtual ~CHeaderOnlyDef() {}
 };

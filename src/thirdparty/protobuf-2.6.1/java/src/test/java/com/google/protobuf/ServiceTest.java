@@ -89,9 +89,9 @@ public class ServiceTest extends TestCase {
     control.replay();
 
     mockService.callMethod(fooDescriptor, mockController,
-                           fooRequest, fooCallback);
+                            fooRequest, fooCallback);
     mockService.callMethod(barDescriptor, mockController,
-                           barRequest, barCallback);
+                            barRequest, barCallback);
     control.verify();
   }
 
@@ -100,13 +100,13 @@ public class ServiceTest extends TestCase {
     TestService mockService = control.createMock(TestService.class);
 
     assertSame(mockService.getRequestPrototype(fooDescriptor),
-               FooRequest.getDefaultInstance());
+                FooRequest.getDefaultInstance());
     assertSame(mockService.getResponsePrototype(fooDescriptor),
-               FooResponse.getDefaultInstance());
+                FooResponse.getDefaultInstance());
     assertSame(mockService.getRequestPrototype(barDescriptor),
-               BarRequest.getDefaultInstance());
+                BarRequest.getDefaultInstance());
     assertSame(mockService.getResponsePrototype(barDescriptor),
-               BarResponse.getDefaultInstance());
+                BarResponse.getDefaultInstance());
   }
 
   /** Tests generated stubs. */
@@ -119,17 +119,17 @@ public class ServiceTest extends TestCase {
     TestService stub = TestService.newStub(mockChannel);
 
     mockChannel.callMethod(
-      EasyMock.same(fooDescriptor),
-      EasyMock.same(mockController),
-      EasyMock.same(fooRequest),
-      EasyMock.same(FooResponse.getDefaultInstance()),
-      this.<Message>wrapsCallback(fooCallback));
+    EasyMock.same(fooDescriptor),
+    EasyMock.same(mockController),
+    EasyMock.same(fooRequest),
+    EasyMock.same(FooResponse.getDefaultInstance()),
+    this.<Message>wrapsCallback(fooCallback));
     mockChannel.callMethod(
-      EasyMock.same(barDescriptor),
-      EasyMock.same(mockController),
-      EasyMock.same(barRequest),
-      EasyMock.same(BarResponse.getDefaultInstance()),
-      this.<Message>wrapsCallback(barCallback));
+    EasyMock.same(barDescriptor),
+    EasyMock.same(mockController),
+    EasyMock.same(barRequest),
+    EasyMock.same(BarResponse.getDefaultInstance()),
+    this.<Message>wrapsCallback(barCallback));
     control.replay();
 
     stub.foo(mockController, fooRequest, fooCallback);
@@ -150,15 +150,15 @@ public class ServiceTest extends TestCase {
     BarResponse barResponse = BarResponse.newBuilder().build();
 
     EasyMock.expect(mockChannel.callBlockingMethod(
-      EasyMock.same(fooDescriptor),
-      EasyMock.same(mockController),
-      EasyMock.same(fooRequest),
-      EasyMock.same(FooResponse.getDefaultInstance()))).andReturn(fooResponse);
+    EasyMock.same(fooDescriptor),
+    EasyMock.same(mockController),
+    EasyMock.same(fooRequest),
+    EasyMock.same(FooResponse.getDefaultInstance()))).andReturn(fooResponse);
     EasyMock.expect(mockChannel.callBlockingMethod(
-      EasyMock.same(barDescriptor),
-      EasyMock.same(mockController),
-      EasyMock.same(barRequest),
-      EasyMock.same(BarResponse.getDefaultInstance()))).andReturn(barResponse);
+    EasyMock.same(barDescriptor),
+    EasyMock.same(mockController),
+    EasyMock.same(barRequest),
+    EasyMock.same(BarResponse.getDefaultInstance()))).andReturn(barResponse);
     control.replay();
 
     assertSame(fooResponse, stub.foo(mockController, fooRequest));
@@ -176,10 +176,10 @@ public class ServiceTest extends TestCase {
         ServiceWithNoOuter.getDescriptor().findMethodByName("Foo");
     MessageWithNoOuter request = MessageWithNoOuter.getDefaultInstance();
     RpcCallback<Message> callback = new RpcCallback<Message>() {
-      public void run(Message parameter) {
+    public void run(Message parameter) {
         // No reason this should be run.
         fail();
-      }
+    }
     };
     RpcCallback<TestAllTypes> specializedCallback =
         RpcUtil.specializeCallback(callback);
@@ -222,7 +222,7 @@ public class ServiceTest extends TestCase {
   public void testNoGenericServices() throws Exception {
     // Non-services should be usable.
     UnittestNoGenericServices.TestMessage message =
-      UnittestNoGenericServices.TestMessage.newBuilder()
+    UnittestNoGenericServices.TestMessage.newBuilder()
         .setA(123)
         .setExtension(UnittestNoGenericServices.testExtension, 456)
         .build();
@@ -231,28 +231,28 @@ public class ServiceTest extends TestCase {
 
     // Build a list of the class names nested in UnittestNoGenericServices.
     String outerName = "google.protobuf.no_generic_services_test." +
-                       "UnittestNoGenericServices";
+                        "UnittestNoGenericServices";
     Class<?> outerClass = Class.forName(outerName);
 
     Set<String> innerClassNames = new HashSet<String>();
     for (Class<?> innerClass : outerClass.getClasses()) {
-      String fullName = innerClass.getName();
-      // Figure out the unqualified name of the inner class.
-      // Note:  Surprisingly, the full name of an inner class will be separated
-      //   from the outer class name by a '$' rather than a '.'.  This is not
-      //   mentioned in the documentation for java.lang.Class.  I don't want to
-      //   make assumptions, so I'm just going to accept any character as the
-      //   separator.
-      assertTrue(fullName.startsWith(outerName));
+    String fullName = innerClass.getName();
+    // Figure out the unqualified name of the inner class.
+    // Note:  Surprisingly, the full name of an inner class will be separated
+    //   from the outer class name by a '$' rather than a '.'.  This is not
+    //   mentioned in the documentation for java.lang.Class.  I don't want to
+    //   make assumptions, so I'm just going to accept any character as the
+    //   separator.
+    assertTrue(fullName.startsWith(outerName));
 
-      if (!Service.class.isAssignableFrom(innerClass) &&
-          !Message.class.isAssignableFrom(innerClass) &&
-          !ProtocolMessageEnum.class.isAssignableFrom(innerClass)) {
+    if (!Service.class.isAssignableFrom(innerClass) &&
+        !Message.class.isAssignableFrom(innerClass) &&
+        !ProtocolMessageEnum.class.isAssignableFrom(innerClass)) {
         // Ignore any classes not generated by the base code generator.
         continue;
-      }
+    }
 
-      innerClassNames.add(fullName.substring(outerName.length() + 1));
+    innerClassNames.add(fullName.substring(outerName.length() + 1));
     }
 
     // No service class should have been generated.
@@ -272,19 +272,19 @@ public class ServiceTest extends TestCase {
   // =================================================================
 
   /**
-   * wrapsCallback() is an EasyMock argument predicate.  wrapsCallback(c)
-   * matches a callback if calling that callback causes c to be called.
-   * In other words, c wraps the given callback.
-   */
+    * wrapsCallback() is an EasyMock argument predicate.  wrapsCallback(c)
+    * matches a callback if calling that callback causes c to be called.
+    * In other words, c wraps the given callback.
+    */
   private <Type extends Message> RpcCallback<Type> wrapsCallback(
-      MockCallback<?> callback) {
+    MockCallback<?> callback) {
     EasyMock.reportMatcher(new WrapsCallback(callback));
     return null;
   }
 
   /** The parameter to wrapsCallback() must be a MockCallback. */
   private static class MockCallback<Type extends Message>
-      implements RpcCallback<Type> {
+    implements RpcCallback<Type> {
     private boolean called = false;
 
     public boolean isCalled() { return called; }
@@ -298,23 +298,23 @@ public class ServiceTest extends TestCase {
     private MockCallback<?> callback;
 
     public WrapsCallback(MockCallback<?> callback) {
-      this.callback = callback;
+    this.callback = callback;
     }
 
     @SuppressWarnings("unchecked")
     public boolean matches(Object actual) {
-      if (!(actual instanceof RpcCallback)) {
+    if (!(actual instanceof RpcCallback)) {
         return false;
-      }
-      RpcCallback actualCallback = (RpcCallback)actual;
+    }
+    RpcCallback actualCallback = (RpcCallback)actual;
 
-      callback.reset();
-      actualCallback.run(null);
-      return callback.isCalled();
+    callback.reset();
+    actualCallback.run(null);
+    return callback.isCalled();
     }
 
     public void appendTo(StringBuffer buffer) {
-      buffer.append("wrapsCallback(mockCallback)");
+    buffer.append("wrapsCallback(mockCallback)");
     }
   }
 }

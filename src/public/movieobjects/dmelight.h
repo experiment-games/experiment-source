@@ -24,7 +24,7 @@ class CDmeLight : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeLight, CDmeDag );
 
-   public:
+    public:
     // Sets the color and intensity
     // NOTE: Color is specified 0-255 floating point.
     void SetColor( const Color &color );
@@ -37,7 +37,7 @@ class CDmeLight : public CDmeDag
         return false;
     }
 
-   protected:
+    protected:
     // Sets up render state in the material system for rendering
     void SetupRenderStateInternal( LightDesc_t &desc, float flAtten0, float flAtten1, float flAtten2 );
 
@@ -52,7 +52,7 @@ class CDmeDirectionalLight : public CDmeLight
 {
     DEFINE_ELEMENT( CDmeDirectionalLight, CDmeLight );
 
-   public:
+    public:
     void SetDirection( const Vector &direction );
     const Vector &GetDirection() const
     {
@@ -62,7 +62,7 @@ class CDmeDirectionalLight : public CDmeLight
     // Sets up render state in the material system for rendering
     virtual bool GetLightDesc( LightDesc_t *pDesc );
 
-   private:
+    private:
     CDmaVar< Vector > m_Direction;
 };
 
@@ -73,7 +73,7 @@ class CDmePointLight : public CDmeLight
 {
     DEFINE_ELEMENT( CDmePointLight, CDmeLight );
 
-   public:
+    public:
     void SetPosition( const Vector &pos )
     {
         m_Position = pos;
@@ -92,7 +92,7 @@ class CDmePointLight : public CDmeLight
     // Sets up render state in the material system for rendering
     virtual bool GetLightDesc( LightDesc_t *pDesc );
 
-   protected:
+    protected:
     CDmaVar< Vector > m_Position;
     CDmaVar< float > m_flAttenuation0;
     CDmaVar< float > m_flAttenuation1;
@@ -107,7 +107,7 @@ class CDmeSpotLight : public CDmePointLight
 {
     DEFINE_ELEMENT( CDmeSpotLight, CDmePointLight );
 
-   public:
+    public:
     // Sets the spotlight direction
     void SetDirection( const Vector &direction );
 
@@ -118,7 +118,7 @@ class CDmeSpotLight : public CDmePointLight
     // Sets up render state in the material system for rendering
     virtual bool GetLightDesc( LightDesc_t *pDesc );
 
-   private:
+    private:
     CDmaVar< Vector > m_Direction;
     CDmaVar< float > m_flSpotInnerAngle;
     CDmaVar< float > m_flSpotOuterAngle;
@@ -132,7 +132,7 @@ class CDmeAmbientLight : public CDmeLight
 {
     DEFINE_ELEMENT( CDmeAmbientLight, CDmeLight );
 
-   public:
+    public:
     // Sets up render state in the material system for rendering
     virtual void SetupRenderState( int nLightIndex );
 };

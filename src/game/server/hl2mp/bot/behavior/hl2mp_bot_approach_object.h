@@ -7,7 +7,7 @@
 
 class CHL2MPBotApproachObject : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotApproachObject( CBaseEntity *loot, float range = 10.0f );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -18,7 +18,7 @@ class CHL2MPBotApproachObject : public Action< CHL2MPBot >
         return "ApproachObject";
     };
 
-   private:
+    private:
     CHandle< CBaseEntity > m_loot;  // what we are collecting
     float m_range;                  // how close should we get
     PathFollower m_path;            // how we get to the loot

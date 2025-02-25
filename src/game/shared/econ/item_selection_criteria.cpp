@@ -151,8 +151,8 @@ bool CItemSelectionCriteria::BInitFromKV( KeyValues *pKVCriteria )
     {
         // Check for required fields
         if ( !pKVElement->FindKey( "field" ) ||
-             !pKVElement->FindKey( "operator" ) ||
-             !pKVElement->FindKey( "value" ) )
+            !pKVElement->FindKey( "operator" ) ||
+            !pKVElement->FindKey( "value" ) )
             return false;
 
         const char *pszField = pKVElement->GetString( "field" );
@@ -306,7 +306,7 @@ bool CItemSelectionCriteria::BEvaluate( const CEconItemDefinition *pItemDef ) co
 
     // Filter against level
     if ( BItemLevelSet() && ( GetItemLevel() != AE_USE_SCRIPT_VALUE ) &&
-         ( GetItemLevel() < pItemDef->GetMinLevel() || GetItemLevel() > pItemDef->GetMaxLevel() ) )
+        ( GetItemLevel() < pItemDef->GetMinLevel() || GetItemLevel() > pItemDef->GetMaxLevel() ) )
         return false;
 
     // Filter against quality

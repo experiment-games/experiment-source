@@ -21,7 +21,7 @@ vs.1.1
 #include "macros.vsh"
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldPos );
 &AllocateRegister( \$worldNormal );

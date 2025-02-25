@@ -13,7 +13,7 @@
 template < typename Actor, typename PathCost >
 class BehaviorMoveTo : public Action< Actor >
 {
-   public:
+    public:
     BehaviorMoveTo( const Vector &goal, Action< Actor > *successAction = NULL, Action< Actor > *failAction = NULL );
 
     virtual ActionResult< Actor > OnStart( Actor *me, Action< Actor > *priorAction );
@@ -29,7 +29,7 @@ class BehaviorMoveTo : public Action< Actor >
         return "BehaviorMoveTo";
     }
 
-   private:
+    private:
     Vector m_goal;
     PathFollower m_path;
     Action< Actor > *m_successAction;

@@ -64,7 +64,7 @@ namespace
 {
 class CYouTubeSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CYouTubeSystem();
     ~CYouTubeSystem();
 
@@ -106,7 +106,7 @@ class CYouTubeSystem : public CAutoGameSystemPerFrame
     const char *GetAuthToken() const;
     void SetAuthToken( const char *pAuthToken );
 
-   private:
+    private:
     struct uploadstatus_t
     {
         bool bFinished;
@@ -152,7 +152,7 @@ static ISteamHTTP *GetISteamHTTP()
 // Base class for all YouTube jobs
 class CYouTubeJob : public CJob
 {
-   public:
+    public:
     CYouTubeJob( CYouTubeSystem *pSystem )
     {
         SetFlags( JF_IO );
@@ -175,7 +175,7 @@ class CYouTubeJob : public CJob
         return m_bCancelled;
     }
 
-   protected:
+    protected:
     void OnHTTPRequestCompleted( HTTPRequestCompleted_t *pParam, bool bIOFailure )
     {
         m_bHTTPRequestPending = false;
@@ -228,13 +228,13 @@ class CYouTubeJob : public CJob
 
 class CYouTubeRetrieveUserProfile : public CYouTubeJob
 {
-   public:
+    public:
     CYouTubeRetrieveUserProfile( CYouTubeSystem *pSystem )
         : CYouTubeJob( pSystem )
     {
     }
 
-   private:
+    private:
     void OnHTTPRequestCompleted( HTTPRequestCompleted_t *pParam ) OVERRIDE
     {
         uint32 unBodySize;
@@ -269,7 +269,7 @@ class CYouTubeRetrieveUserProfile : public CYouTubeJob
 
 class CYouTubeRetrieveInfoJob : public CYouTubeJob
 {
-   public:
+    public:
     CYouTubeRetrieveInfoJob( CYouTubeSystem *pSystem, const char *pVideoURL, CYouTubeResponseHandler &responseHandler )
         : CYouTubeJob( pSystem ), m_strURL( pVideoURL ), m_responseHandler( responseHandler )
     {
@@ -280,7 +280,7 @@ class CYouTubeRetrieveInfoJob : public CYouTubeJob
         m_responseHandler.HandleResponse( 200, m_strResponse.Get() );
     }
 
-   private:
+    private:
     void OnHTTPRequestCompleted( HTTPRequestCompleted_t *pParam ) OVERRIDE
     {
         uint32 unBodySize;
@@ -312,13 +312,13 @@ class CYouTubeRetrieveInfoJob : public CYouTubeJob
 
 class CYouTubeLoginJob : public CYouTubeJob
 {
-   public:
+    public:
     CYouTubeLoginJob( CYouTubeSystem *pSystem, const char *pUserName, const char *pPassword, const char *pSource )
         : CYouTubeJob( pSystem ), m_strUserName( pUserName ), m_strPassword( pPassword ), m_strSource( pSource )
     {
     }
 
-   private:
+    private:
     void SetLoginResults( const char *pLoginResults )
     {
         const char *pStart = strstr( pLoginResults, "Auth=" );
@@ -410,7 +410,7 @@ class CYouTubeLoginJob : public CYouTubeJob
 // Job for uploading a file
 class CYouTubeUploadJob : public CYouTubeJob
 {
-   public:
+    public:
     CYouTubeUploadJob( CYouTubeSystem *pSystem, const char *pFilePath, const char *pMimeType, const char *pTitle, const char *pDescription, const char *pCategory, const char *pKeywords, eYouTubeAccessControl access )
         : CYouTubeJob( pSystem ), m_strFilePath( pFilePath ), m_strMimeType( pMimeType ), m_strTitle( pTitle ), m_strDesc( pDescription ), m_strCategory( pCategory ), m_strKeywords( pKeywords ), m_eAccess( access )
     {
@@ -422,7 +422,7 @@ class CYouTubeUploadJob : public CYouTubeJob
         ulnow = 0;
     }
 
-   private:
+    private:
     virtual JobStatus_t DoExecute()
     {
         m_bAllowRequestFailure = true;

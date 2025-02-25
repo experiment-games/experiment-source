@@ -97,7 +97,7 @@ class CAchievementTFDemoman_DestroyBuildingsWithMedic : public CBaseTFAchievemen
                 if ( pTFPlayer && pTFPlayer == pAttacker )
                 {
                     if ( pTFPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) || pTFPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED ) ||
-                         pTFPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+                        pTFPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
                     {
                         m_iBuildingsDestroyed++;
                         if ( m_iBuildingsDestroyed >= 5 )
@@ -114,7 +114,7 @@ class CAchievementTFDemoman_DestroyBuildingsWithMedic : public CBaseTFAchievemen
         }
     }
 
-   private:
+    private:
     int m_iBuildingsDestroyed;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDemoman_DestroyBuildingsWithMedic, ACHIEVEMENT_TF_DEMOMAN_DESTROY_BUILDINGS_WITH_MEDIC, "TF_DEMOMAN_DESTROY_BUILDINGS_WITH_MEDIC", 5 );
@@ -186,7 +186,7 @@ class CAchievementTFDemoman_BounceAndKill : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_BouncedPlayers.RemoveAll();
         }
@@ -296,7 +296,7 @@ class CAchievementTFDemoman_DecapitatePlayersFast : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_iTimelyDecapitations = 0;
         }
@@ -412,7 +412,7 @@ class CAchievementTFDemoman_KillTwoDuringStickyJump : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_iKilledDuringStickyJump = 0;
             m_bStickyJumping = false;
@@ -470,7 +470,7 @@ class CAchievementTFDemoman_KillTwoDuringStickyJump : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     bool m_bStickyJumping;
     int m_iKilledDuringStickyJump;
 };
@@ -579,7 +579,7 @@ class CAchievementTFDemoman_MeleeKillWhileJumping : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_bStickyJumping = false;
         }
@@ -632,7 +632,7 @@ class CAchievementTFDemoman_MeleeKillWhileJumping : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     bool m_bStickyJumping;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDemoman_MeleeKillWhileJumping, ACHIEVEMENT_TF_DEMOMAN_MELEE_KILL_WHILE_STICKYJUMPING, "TF_DEMOMAN_MELEE_KILL_WHILE_STICKYJUMPING", 5 );
@@ -663,7 +663,7 @@ class CAchievementTFDemoman_KillEngiSentryDispenser : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             ResetTracking();
         }
@@ -765,8 +765,8 @@ class CAchievementTFDemoman_KillEngiSentryDispenser : public CBaseTFAchievement
                     // 					if ( ( m_Engineers[numEngineers] == m_SentryDestroyed[iSentry] ) &&
                     // 						( m_Engineers[numEngineers] == m_DispenserDestroyed[iDispenser] ) )
                     if ( ( gpGlobals->curtime < m_SentryDestroyed[iSentry] + 0.1f ) &&
-                         ( gpGlobals->curtime < m_DispenserDestroyed[iDispenser] + 0.1f ) &&
-                         ( gpGlobals->curtime < m_Engineers[numEngineers] + 0.1f ) )
+                        ( gpGlobals->curtime < m_DispenserDestroyed[iDispenser] + 0.1f ) &&
+                        ( gpGlobals->curtime < m_Engineers[numEngineers] + 0.1f ) )
                     {
                         IncrementCount();
                     }
@@ -775,7 +775,7 @@ class CAchievementTFDemoman_KillEngiSentryDispenser : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlMap< int, float > m_SentryDestroyed;     // Engineer userID and time sentry was destroyed
     CUtlMap< int, float > m_DispenserDestroyed;  // Engineer userID and time dispenser was destroyed
     CUtlMap< int, float > m_Engineers;           // Engineers we've killed and the time
@@ -1200,7 +1200,7 @@ class CAchievementTFDemoman_StickyJumpCap : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     float m_fLandTime;
     float m_fCapStartTime;
     bool m_bCapped;
@@ -1260,11 +1260,11 @@ class CAchievementTFDemoman_EnvironmentalKill : public CBaseTFAchievement
             int custom = event->GetInt( "customkill" );
             int damagebits = event->GetInt( "damagebits" );
             if ( ( damagebits & DMG_VEHICLE ) ||                // They were hit by a freakin' train!
-                 ( pAttacker && pAttacker->IsBrushModel() ) ||  // They were smashed by the world! Gah!
-                 ( !pAttacker || ( pAttacker == pVictim ) ) ||  // He killed himself!
-                 ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
-                 ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ||  // A trigger-hurt got him!
-                 ( custom == TF_DMG_CUSTOM_CROC ) )           // a croc got him!
+                ( pAttacker && pAttacker->IsBrushModel() ) ||  // They were smashed by the world! Gah!
+                ( !pAttacker || ( pAttacker == pVictim ) ) ||  // He killed himself!
+                ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
+                ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ||  // A trigger-hurt got him!
+                ( custom == TF_DMG_CUSTOM_CROC ) )           // a croc got him!
             {
                 IncrementCount();
             }
@@ -1346,7 +1346,7 @@ class CAchievementTFDemoman_StickyJumpDistance : public CBaseTFAchievement
         const char *pszEvent = event->GetName();
 
         if ( FStrEq( pszEvent, "teamplay_round_active" ) ||
-             FStrEq( pszEvent, "localplayer_respawn" ) )
+            FStrEq( pszEvent, "localplayer_respawn" ) )
         {
             ResetTracking();
         }
@@ -1392,7 +1392,7 @@ class CAchievementTFDemoman_StickyJumpDistance : public CBaseTFAchievement
         SetNextThink( 0.1 );
     }
 
-   private:
+    private:
     Vector m_vecStartJump;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDemoman_StickyJumpDistance, ACHIEVEMENT_TF_DEMOMAN_STICKJUMP_DISTANCE, "TF_DEMOMAN_STICKJUMP_DISTANCE", 5 );
@@ -1478,7 +1478,7 @@ class CAchievementTFDemoman_KillXSappingSpies : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         int nSpyUserID;
@@ -1559,7 +1559,7 @@ class CAchievementTFDemoman_Kill3WithPipeSetup : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iPipebombCount;
     int m_iConsecutiveKillsWithoutRefiring;
     float m_flPrevKillTime;
@@ -1569,7 +1569,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_Kill3WithPipeSetup, ACHIEVEMENT_TF_DE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFDemoman_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1582,7 +1582,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_AchieveProgress1, ACHIEVEMENT_TF_DEMO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFDemoman_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1595,7 +1595,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_AchieveProgress2, ACHIEVEMENT_TF_DEMO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFDemoman_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {
@@ -1608,7 +1608,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_AchieveProgress3, ACHIEVEMENT_TF_DEMO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_ParachuteKillGroup : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
@@ -1672,7 +1672,7 @@ class CAchievementTFDemoman_ParachuteKillGroup : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_nKills;
     bool m_bParachuteDeployed;
 };
@@ -1681,7 +1681,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_ParachuteKillGroup, ACHIEVEMENT_TF_DE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_ParachuteDistance : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
@@ -1760,7 +1760,7 @@ class CAchievementTFDemoman_ParachuteDistance : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     float m_flLastZ;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDemoman_ParachuteDistance, ACHIEVEMENT_TF_DEMOMAN_PARACHUTE_DISTANCE, "TF_DEMOMAN_PARACHUTE_DISTANCE", 5 );
@@ -1768,7 +1768,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_ParachuteDistance, ACHIEVEMENT_TF_DEM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_ParachuteKillParachute : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1793,7 +1793,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_ParachuteKillParachute, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_KillPlayerYouDidntSee : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1807,7 +1807,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_KillPlayerYouDidntSee, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_QuickKills : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1845,7 +1845,7 @@ class CAchievementTFDemoman_QuickKills : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlVector< float > m_Times;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDemoman_QuickKills, ACHIEVEMENT_TF_DEMOMAN_QUICK_KILLS, "TF_DEMOMAN_QUICK_KILLS", 5 );
@@ -1853,7 +1853,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_QuickKills, ACHIEVEMENT_TF_DEMOMAN_QU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_ChargeKillChargingDemo : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );

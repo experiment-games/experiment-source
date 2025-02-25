@@ -14,7 +14,7 @@ extern ConVar npc_alyx_readiness;
 
 class CNPC_Alyx : public CNPC_PlayerCompanion
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Alyx, CNPC_PlayerCompanion );
 
     // fast class list
@@ -200,7 +200,7 @@ class CNPC_Alyx : public CNPC_PlayerCompanion
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
     bool PlayerInSpread( const Vector &sourcePos, const Vector &targetPos, float flSpread, float maxDistOffCenter, bool ignoreHatedPlayers );
 
-   private:
+    private:
     EHANDLE m_hEmpTool;
     EHANDLE m_hHackTarget;
     CHandle< CAI_Hint > m_hStealthLookTarget;
@@ -277,7 +277,7 @@ class CNPC_Alyx : public CNPC_PlayerCompanion
         return ( m_WeaponType == WT_AR2 );
     }
 
-   private:
+    private:
     enum
     {
         COND_ALYX_HAS_INTERACT_TARGET = BaseClass::NEXT_CONDITION,

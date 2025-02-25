@@ -5,7 +5,7 @@
 -- Modified by Diego Nehab, but David is in charge
 -----------------------------------------------------------------------------
 --[[
-     if you have any questions: RFC 1179
+    if you have any questions: RFC 1179
 ]]
 -- make sure LuaSocket is loaded
 local io = require("io")
@@ -51,37 +51,37 @@ end
 RFC 1179
 5.3 03 - Send queue state (short)
 
-      +----+-------+----+------+----+
-      | 03 | Queue | SP | List | LF |
-      +----+-------+----+------+----+
-      Command code - 3
-      Operand 1 - Printer queue name
-      Other operands - User names or job numbers
+    +----+-------+----+------+----+
+    | 03 | Queue | SP | List | LF |
+    +----+-------+----+------+----+
+    Command code - 3
+    Operand 1 - Printer queue name
+    Other operands - User names or job numbers
 
-   If the user names or job numbers or both are supplied then only those
-   jobs for those users or with those numbers will be sent.
+    If the user names or job numbers or both are supplied then only those
+    jobs for those users or with those numbers will be sent.
 
-   The response is an ASCII stream which describes the printer queue.
-   The stream continues until the connection closes.  Ends of lines are
-   indicated with ASCII LF control characters.  The lines may also
-   contain ASCII HT control characters.
+    The response is an ASCII stream which describes the printer queue.
+    The stream continues until the connection closes.  Ends of lines are
+    indicated with ASCII LF control characters.  The lines may also
+    contain ASCII HT control characters.
 
 5.4 04 - Send queue state (long)
 
-      +----+-------+----+------+----+
-      | 04 | Queue | SP | List | LF |
-      +----+-------+----+------+----+
-      Command code - 4
-      Operand 1 - Printer queue name
-      Other operands - User names or job numbers
+    +----+-------+----+------+----+
+    | 04 | Queue | SP | List | LF |
+    +----+-------+----+------+----+
+    Command code - 4
+    Operand 1 - Printer queue name
+    Other operands - User names or job numbers
 
-   If the user names or job numbers or both are supplied then only those
-   jobs for those users or with those numbers will be sent.
+    If the user names or job numbers or both are supplied then only those
+    jobs for those users or with those numbers will be sent.
 
-   The response is an ASCII stream which describes the printer queue.
-   The stream continues until the connection closes.  Ends of lines are
-   indicated with ASCII LF control characters.  The lines may also
-   contain ASCII HT control characters.
+    The response is an ASCII stream which describes the printer queue.
+    The stream continues until the connection closes.  Ends of lines are
+    indicated with ASCII LF control characters.  The lines may also
+    contain ASCII HT control characters.
 ]]
 
 -- gets server acknowledement
@@ -187,10 +187,10 @@ local function send_data(con,fh,size)
   while size > 0 do
     buf,message = fh:read(8192)
     if buf then
-      st = con.try(con.skt:send(buf))
-      size = size - st
+    st = con.try(con.skt:send(buf))
+    size = size - st
     else
-      con.try(size == 0, "file size mismatch")
+    con.try(size == 0, "file size mismatch")
     end
   end
   recv_ack(con) -- note the double acknowledgement
@@ -268,10 +268,10 @@ send = socket.protect(function(option)
   local _,_,ctlfn = string.find(file,".*[%/%\\](.*)")
   ctlfn = string.sub(ctlfn  or file,1,131)
     local cfile =
-      string.format("H%-s\nC%-s\nJ%-s\nP%-s\n%.1s%-s\nU%-s\nN%-s\n",
-      localhost,
+    string.format("H%-s\nC%-s\nJ%-s\nP%-s\n%.1s%-s\nU%-s\nN%-s\n",
+    localhost,
     class,
-      option.job or "LuaSocket",
+    option.job or "LuaSocket",
     user,
     fmt, lpfile,
     lpfile,

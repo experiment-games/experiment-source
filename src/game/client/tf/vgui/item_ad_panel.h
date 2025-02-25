@@ -22,7 +22,7 @@ class CBaseAdPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseAdPanel, EditablePanel );
 
-   public:
+    public:
     CBaseAdPanel( Panel *parent, const char *panelName );
     virtual ~CBaseAdPanel() {}
 
@@ -35,7 +35,7 @@ class CBaseAdPanel : public EditablePanel
 
     static bool CheckForRequiredSteamComponents( const char *pszSteamRequried, const char *pszOverlayRequired );
 
-   private:
+    private:
     float m_flPresentTime;
 };
 
@@ -43,7 +43,7 @@ class CItemAdPanel : public CBaseAdPanel
 {
     DECLARE_CLASS_SIMPLE( CItemAdPanel, CBaseAdPanel );
 
-   public:
+    public:
     CItemAdPanel( Panel *parent, const char *panelName, item_definition_index_t itemDefIndex );
     virtual ~CItemAdPanel() {}
 
@@ -60,10 +60,10 @@ class CItemAdPanel : public CBaseAdPanel
     }
     void SetItemTooltip( CItemModelPanelToolTip *pItemToolTip );
 
-   protected:
+    protected:
     CEconItemView m_item;
 
-   private:
+    private:
     virtual void SetupItemPanel();
 
     bool m_bShowMarketButton;
@@ -77,7 +77,7 @@ class CCyclingAdContainerPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCyclingAdContainerPanel, EditablePanel );
 
-   public:
+    public:
     CCyclingAdContainerPanel( Panel *parent, const char *panelName );
     virtual ~CCyclingAdContainerPanel();
 
@@ -89,7 +89,7 @@ class CCyclingAdContainerPanel : public EditablePanel
 
     bool BSetItemKVs( KeyValues *pKVItems );
 
-   private:
+    private:
     void CreatePanels();
     void PresentIndex( int nIndex );
     void UpdateAdPanelPositions();

@@ -3,83 +3,83 @@
 /* Example how to plug this into an existing shader:
 
     In the VMT:
-      // Emissive Scroll Pass
-      "$emissiveBlendEnabled"      "1" // Enables effect
-      "$emissiveBlendTexture"      "models/vortigaunt/vortigaunt_illum"
-      "$emissiveBlendBaseTexture"  "Models/Vortigaunt/vortigaunt_blue"
-      "$emissiveBlendFlowTexture"  "models/vortigaunt/vortigaunt_flow"
-      "$emissiveBlendTint"         "[10 10 10]"
-      "$emissiveBlendStrength"     "1.0" // Set by game code
-      "$emissiveBlendScrollVector" "[0.11 0.124]"
-      "Proxies"
-      {
+    // Emissive Scroll Pass
+    "$emissiveBlendEnabled"      "1" // Enables effect
+    "$emissiveBlendTexture"      "models/vortigaunt/vortigaunt_illum"
+    "$emissiveBlendBaseTexture"  "Models/Vortigaunt/vortigaunt_blue"
+    "$emissiveBlendFlowTexture"  "models/vortigaunt/vortigaunt_flow"
+    "$emissiveBlendTint"         "[10 10 10]"
+    "$emissiveBlendStrength"     "1.0" // Set by game code
+    "$emissiveBlendScrollVector" "[0.11 0.124]"
+    "Proxies"
+    {
         "VortEmissive" // For setting $selfillumstrength
         {
         }
-      }
+    }
 
     #include "emissive_scroll_blended_pass_helper.h"
 
     In BEGIN_SHADER_PARAMS:
-      // Emissive Scroll Pass
-      SHADER_PARAM( EMISSIVEBLENDENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enable emissive blend pass" )
-      SHADER_PARAM( EMISSIVEBLENDBASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "self-illumination map" )
-      SHADER_PARAM( EMISSIVEBLENDSCROLLVECTOR, SHADER_PARAM_TYPE_VEC2, "[0.11 0.124]", "Emissive scroll vec" )
-      SHADER_PARAM( EMISSIVEBLENDSTRENGTH, SHADER_PARAM_TYPE_FLOAT, "1.0", "Emissive blend strength" )
-      SHADER_PARAM( EMISSIVEBLENDTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "self-illumination map" )
-      SHADER_PARAM( EMISSIVEBLENDTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
+    // Emissive Scroll Pass
+    SHADER_PARAM( EMISSIVEBLENDENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enable emissive blend pass" )
+    SHADER_PARAM( EMISSIVEBLENDBASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "self-illumination map" )
+    SHADER_PARAM( EMISSIVEBLENDSCROLLVECTOR, SHADER_PARAM_TYPE_VEC2, "[0.11 0.124]", "Emissive scroll vec" )
+    SHADER_PARAM( EMISSIVEBLENDSTRENGTH, SHADER_PARAM_TYPE_FLOAT, "1.0", "Emissive blend strength" )
+    SHADER_PARAM( EMISSIVEBLENDTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "self-illumination map" )
+    SHADER_PARAM( EMISSIVEBLENDTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
 
     Add this above SHADER_INIT_PARAMS()
-      // Emissive Scroll Pass
-      void SetupVarsEmissiveScrollBlendedPass( EmissiveScrollBlendedPassVars_t &info )
-      {
+    // Emissive Scroll Pass
+    void SetupVarsEmissiveScrollBlendedPass( EmissiveScrollBlendedPassVars_t &info )
+    {
         info.m_nBlendStrength = EMISSIVEBLENDSTRENGTH;
         info.m_nBaseTexture = EMISSIVEBLENDBASETEXTURE;
         info.m_nFlowTexture = -1; // Not used in DX8
         info.m_nEmissiveTexture = EMISSIVEBLENDTEXTURE;
         info.m_nEmissiveTint = EMISSIVEBLENDTINT;
         info.m_nEmissiveScrollVector = EMISSIVEBLENDSCROLLVECTOR;
-      }
+    }
 
     In SHADER_INIT_PARAMS()
-      // Emissive Scroll Pass
-      if ( !params[EMISSIVEBLENDENABLED]->IsDefined() )
-      {
+    // Emissive Scroll Pass
+    if ( !params[EMISSIVEBLENDENABLED]->IsDefined() )
+    {
         params[EMISSIVEBLENDENABLED]->SetIntValue( 0 );
-      }
-      else if ( params[EMISSIVEBLENDENABLED]->GetIntValue() )
-      {
+    }
+    else if ( params[EMISSIVEBLENDENABLED]->GetIntValue() )
+    {
         EmissiveScrollBlendedPassVars_t info;
         SetupVarsEmissiveScrollBlendedPass( info );
         InitParamsEmissiveScrollBlendedPass( this, params, pMaterialName, info );
-      }
+    }
 
     In SHADER_INIT
-      // Emissive Scroll Pass
-      if ( params[EMISSIVEBLENDENABLED]->GetIntValue() )
-      {
+    // Emissive Scroll Pass
+    if ( params[EMISSIVEBLENDENABLED]->GetIntValue() )
+    {
         EmissiveScrollBlendedPassVars_t info;
         SetupVarsEmissiveScrollBlendedPass( info );
         InitEmissiveScrollBlendedPass( this, params, info );
-      }
+    }
 
     At the very end of SHADER_DRAW
-      // Emissive Scroll Pass
-      if ( params[EMISSIVEBLENDENABLED]->GetIntValue() )
-      {
+    // Emissive Scroll Pass
+    if ( params[EMISSIVEBLENDENABLED]->GetIntValue() )
+    {
         // If ( snapshotting ) or ( we need to draw this frame )
         if ( ( pShaderShadow != NULL ) || ( params[EMISSIVEBLENDSTRENGTH]->GetFloatValue() > 0.0f ) )
         {
-          EmissiveScrollBlendedPassVars_t info;
-          SetupVarsEmissiveScrollBlendedPass( info );
-          DrawEmissiveScrollBlendedPass( this, params, pShaderAPI, pShaderShadow, info );
+        EmissiveScrollBlendedPassVars_t info;
+        SetupVarsEmissiveScrollBlendedPass( info );
+        DrawEmissiveScrollBlendedPass( this, params, pShaderAPI, pShaderShadow, info );
         }
         else // We're not snapshotting and we don't need to draw this frame
         {
-          // Skip this pass!
-          Draw( false );
+        // Skip this pass!
+        Draw( false );
         }
-      }
+    }
 
 ==================================================================================================== */
 

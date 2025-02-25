@@ -27,16 +27,16 @@ class CHudVguiScreenCursor : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudVguiScreenCursor, vgui::Panel );
 
-   public:
+    public:
     CHudVguiScreenCursor( const char *pElementName );
 
     virtual bool ShouldDraw();
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint();
 
-   private:
+    private:
     // Cursor sprite and color
     CHudTexture *m_pCursor;
     Color m_clrCrosshair;

@@ -12,13 +12,13 @@
 
 class CMvMMatchGroupDescription : public IMatchGroupDescription
 {
-   public:
+    public:
     CMvMMatchGroupDescription( ETFMatchGroup eMatchGroup,
-                               const char* pszConfig,
-                               bool bTrustedOnly,
-                               const char* pszLocName,
-                               const char* pszRichPresenceLocToken,
-                               bool bStrictAbandons )
+                                const char* pszConfig,
+                                bool bTrustedOnly,
+                                const char* pszLocName,
+                                const char* pszRichPresenceLocToken,
+                                bool bStrictAbandons )
         : IMatchGroupDescription( eMatchGroup )
     {
         // MvM settings
@@ -110,8 +110,8 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 
             case GR_STATE_RND_RUNNING:
                 if ( TFObjectiveResource() &&
-                     !TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() &&
-                     TFObjectiveResource()->GetMannVsMachineWaveCount() == TFObjectiveResource()->GetMannVsMachineMaxWaveCount() )
+                    !TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() &&
+                    TFObjectiveResource()->GetMannVsMachineWaveCount() == TFObjectiveResource()->GetMannVsMachineMaxWaveCount() )
                 {
                     int nMaxEnemyCountNoSupport = TFObjectiveResource()->GetMannVsMachineWaveEnemyCount();
                     if ( nMaxEnemyCountNoSupport <= 0 )
@@ -179,14 +179,14 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 };
 
 REGISTER_MATCH_GROUP_TYPE( k_eTFMatchGroup_MvM_Practice,
-                           new CMvMMatchGroupDescription( k_eTFMatchGroup_MvM_Practice, "server_bootcamp.cfg",
-                                                          /* bTrustedOnly */ false,
-                                                          "#TF_MvM_BootCamp",
-                                                          "BootCamp",
-                                                          /* bStrictAbandons */ false ) );
+                            new CMvMMatchGroupDescription( k_eTFMatchGroup_MvM_Practice, "server_bootcamp.cfg",
+                                                        /* bTrustedOnly */ false,
+                                                        "#TF_MvM_BootCamp",
+                                                        "BootCamp",
+                                                        /* bStrictAbandons */ false ) );
 REGISTER_MATCH_GROUP_TYPE( k_eTFMatchGroup_MvM_MannUp,
-                           new CMvMMatchGroupDescription( k_eTFMatchGroup_MvM_Practice, "server_mannup.cfg",
-                                                          /* bTrustedOnly */ true,
-                                                          "#TF_MvM_MannUp",
-                                                          "MannUp",
-                                                          /* bStrictAbandons */ true ) );
+                            new CMvMMatchGroupDescription( k_eTFMatchGroup_MvM_Practice, "server_mannup.cfg",
+                                                        /* bTrustedOnly */ true,
+                                                        "#TF_MvM_MannUp",
+                                                        "MannUp",
+                                                        /* bStrictAbandons */ true ) );

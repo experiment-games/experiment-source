@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( ShatteredGlass, ShatteredGlass_DX7 )
 
 BEGIN_SHADER( ShatteredGlass_DX7,
-              "Help for ShatteredGlass_DX7" )
+            "Help for ShatteredGlass_DX7" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/Detail", "detail" )

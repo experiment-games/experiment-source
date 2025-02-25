@@ -648,10 +648,10 @@ using ::std::tuple_size;
 // abort() in a VC 7.1 application compiled as GUI in debug config
 // pops up a dialog window that cannot be suppressed programmatically.
 #if ( GTEST_OS_LINUX || GTEST_OS_CYGWIN || GTEST_OS_SOLARIS ||       \
-      ( GTEST_OS_MAC && !GTEST_OS_IOS ) || GTEST_OS_IOS_SIMULATOR || \
-      ( GTEST_OS_WINDOWS_DESKTOP && _MSC_VER >= 1400 ) ||            \
-      GTEST_OS_WINDOWS_MINGW || GTEST_OS_AIX || GTEST_OS_HPUX ||     \
-      GTEST_OS_OPENBSD || GTEST_OS_QNX )
+    ( GTEST_OS_MAC && !GTEST_OS_IOS ) || GTEST_OS_IOS_SIMULATOR || \
+    ( GTEST_OS_WINDOWS_DESKTOP && _MSC_VER >= 1400 ) ||            \
+    GTEST_OS_WINDOWS_MINGW || GTEST_OS_AIX || GTEST_OS_HPUX ||     \
+    GTEST_OS_OPENBSD || GTEST_OS_QNX )
 #define GTEST_HAS_DEATH_TEST 1
 #include <vector>  // NOLINT
 #endif
@@ -897,7 +897,7 @@ GTEST_API_ bool IsTrue( bool condition );
 template < typename T >
 class scoped_ptr
 {
-   public:
+    public:
     typedef T element_type;
 
     explicit scoped_ptr( T* p = NULL )
@@ -939,7 +939,7 @@ class scoped_ptr
         }
     }
 
-   private:
+    private:
     T* ptr_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( scoped_ptr );
@@ -951,7 +951,7 @@ class scoped_ptr
 // Regular Expression syntax.
 class GTEST_API_ RE
 {
-   public:
+    public:
     // A copy constructor is required by the Standard to initialize object
     // references from r-values.
     RE( const RE& other )
@@ -1018,7 +1018,7 @@ class GTEST_API_ RE
     static bool FullMatch( const char* str, const RE& re );
     static bool PartialMatch( const char* str, const RE& re );
 
-   private:
+    private:
     void Init( const char* regex );
 
     // We use a const char* instead of an std::string, as Google Test used to be
@@ -1070,7 +1070,7 @@ enum GTestLogSeverity
 // scope.
 class GTEST_API_ GTestLog
 {
-   public:
+    public:
     GTestLog( GTestLogSeverity severity, const char* file, int line );
 
     // Flushes the buffers and, if severity is GTEST_FATAL, aborts the program.
@@ -1081,7 +1081,7 @@ class GTEST_API_ GTestLog
         return ::std::cerr;
     }
 
-   private:
+    private:
     const GTestLogSeverity severity_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( GTestLog );
@@ -1089,8 +1089,8 @@ class GTEST_API_ GTestLog
 
 #define GTEST_LOG_( severity )                                            \
     ::testing::internal::GTestLog( ::testing::internal::GTEST_##severity, \
-                                   __FILE__,                              \
-                                   __LINE__ )                             \
+                                    __FILE__,                              \
+                                    __LINE__ )                             \
         .GetStream()
 
 inline void LogToStderr() {}
@@ -1232,7 +1232,7 @@ GTEST_API_ std::string GetCapturedStderr();
 
 const ::std::vector< testing::internal::string >& GetInjectableArgvs();
 void SetInjectableArgvs( const ::std::vector< testing::internal::string >*
-                             new_argvs );
+                            new_argvs );
 
 // A copy of all command line arguments.  Set by InitGoogleTest().
 extern ::std::vector< testing::internal::string > g_argvs;
@@ -1263,7 +1263,7 @@ inline void SleepMilliseconds( int n )
 // use it in user tests, either directly or indirectly.
 class Notification
 {
-   public:
+    public:
     Notification()
         : notified_( false )
     {
@@ -1298,7 +1298,7 @@ class Notification
         }
     }
 
-   private:
+    private:
     pthread_mutex_t mutex_;
     bool notified_;
 
@@ -1312,7 +1312,7 @@ class Notification
 // problem.
 class ThreadWithParamBase
 {
-   public:
+    public:
     virtual ~ThreadWithParamBase() {}
     virtual void Run() = 0;
 };
@@ -1344,7 +1344,7 @@ extern "C" inline void* ThreadFuncWithCLinkage( void* thread )
 template < typename T >
 class ThreadWithParam : public ThreadWithParamBase
 {
-   public:
+    public:
     typedef void ( *UserThreadFunc )( T );
 
     ThreadWithParam(
@@ -1352,9 +1352,9 @@ class ThreadWithParam : public ThreadWithParamBase
         T param,
         Notification* thread_can_start )
         : func_( func ),
-          param_( param ),
-          thread_can_start_( thread_can_start ),
-          finished_( false )
+        param_( param ),
+        thread_can_start_( thread_can_start ),
+        finished_( false )
     {
         ThreadWithParamBase* const base = this;
         // The thread can be created only after all fields except thread_
@@ -1383,7 +1383,7 @@ class ThreadWithParam : public ThreadWithParamBase
         func_( param_ );
     }
 
-   private:
+    private:
     const UserThreadFunc func_;  // User-supplied thread function.
     const T param_;              // User-supplied parameter to the thread function.
     // When non-NULL, used to block execution until the controller thread
@@ -1416,7 +1416,7 @@ class ThreadWithParam : public ThreadWithParamBase
 // To create a dynamic mutex, just define an object of type Mutex.
 class MutexBase
 {
-   public:
+    public:
     // Acquires this mutex.
     void Lock()
     {
@@ -1449,7 +1449,7 @@ class MutexBase
     // must be able to initialize a static mutex object at link time.
     // This means MutexBase has to be a POD and its member variables
     // have to be public.
-   public:
+    public:
     pthread_mutex_t mutex_;  // The underlying pthread mutex.
     // has_owner_ indicates whether the owner_ field below contains a valid thread
     // ID and is therefore safe to inspect (e.g., to use in pthread_equal()). All
@@ -1478,7 +1478,7 @@ class MutexBase
 // shares its API with MutexBase otherwise.
 class Mutex : public MutexBase
 {
-   public:
+    public:
     Mutex()
     {
         GTEST_CHECK_POSIX_SUCCESS_( pthread_mutex_init( &mutex_, NULL ) );
@@ -1489,7 +1489,7 @@ class Mutex : public MutexBase
         GTEST_CHECK_POSIX_SUCCESS_( pthread_mutex_destroy( &mutex_ ) );
     }
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( Mutex );
 };
 
@@ -1498,7 +1498,7 @@ class Mutex : public MutexBase
 // platforms.  Hence the typedef trick below.
 class GTestMutexLock
 {
-   public:
+    public:
     explicit GTestMutexLock( MutexBase* mutex )
         : mutex_( mutex )
     {
@@ -1510,7 +1510,7 @@ class GTestMutexLock
         mutex_->Unlock();
     }
 
-   private:
+    private:
     MutexBase* const mutex_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( GTestMutexLock );
@@ -1526,7 +1526,7 @@ typedef GTestMutexLock MutexLock;
 // ThreadLocalValueHolderBase.
 class ThreadLocalValueHolderBase
 {
-   public:
+    public:
     virtual ~ThreadLocalValueHolderBase() {}
 };
 
@@ -1569,13 +1569,13 @@ extern "C" inline void DeleteThreadLocalValue( void* value_holder )
 template < typename T >
 class ThreadLocal
 {
-   public:
+    public:
     ThreadLocal()
         : key_( CreateKey() ),
-          default_() {}
+        default_() {}
     explicit ThreadLocal( const T& value )
         : key_( CreateKey() ),
-          default_( value ) {}
+        default_( value ) {}
 
     ~ThreadLocal()
     {
@@ -1604,11 +1604,11 @@ class ThreadLocal
         *pointer() = value;
     }
 
-   private:
+    private:
     // Holds a value of type T.
     class ValueHolder : public ThreadLocalValueHolderBase
     {
-       public:
+        public:
         explicit ValueHolder( const T& value )
             : value_( value ) {}
 
@@ -1617,7 +1617,7 @@ class ThreadLocal
             return &value_;
         }
 
-       private:
+        private:
         T value_;
         GTEST_DISALLOW_COPY_AND_ASSIGN_( ValueHolder );
     };
@@ -1665,7 +1665,7 @@ class ThreadLocal
 
 class Mutex
 {
-   public:
+    public:
     Mutex() {}
     void Lock() {}
     void Unlock() {}
@@ -1679,7 +1679,7 @@ class Mutex
 
 class GTestMutexLock
 {
-   public:
+    public:
     explicit GTestMutexLock( Mutex* ) {}  // NOLINT
 };
 
@@ -1688,7 +1688,7 @@ typedef GTestMutexLock MutexLock;
 template < typename T >
 class ThreadLocal
 {
-   public:
+    public:
     ThreadLocal()
         : value_() {}
     explicit ThreadLocal( const T& value )
@@ -1710,7 +1710,7 @@ class ThreadLocal
         value_ = value;
     }
 
-   private:
+    private:
     T value_;
 };
 
@@ -2098,7 +2098,7 @@ const BiggestInt kMaxBiggestInt =
 template < size_t size >
 class TypeWithSize
 {
-   public:
+    public:
     // This prevents the user from using TypeWithSize<N> with incorrect
     // values of N.
     typedef void UInt;
@@ -2108,7 +2108,7 @@ class TypeWithSize
 template <>
 class TypeWithSize< 4 >
 {
-   public:
+    public:
     // unsigned int has size 4 in both gcc and MSVC.
     //
     // As base/basictypes.h doesn't compile on Windows, we cannot use
@@ -2121,7 +2121,7 @@ class TypeWithSize< 4 >
 template <>
 class TypeWithSize< 8 >
 {
-   public:
+    public:
 #if GTEST_OS_WINDOWS
     typedef __int64 Int;
     typedef unsigned __int64 UInt;

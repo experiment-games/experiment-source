@@ -10,7 +10,7 @@
 
 class CTFBotDead : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -19,7 +19,7 @@ class CTFBotDead : public Action< CTFBot >
         return "Dead";
     };
 
-   private:
+    private:
     IntervalTimer m_deadTimer;
 };
 

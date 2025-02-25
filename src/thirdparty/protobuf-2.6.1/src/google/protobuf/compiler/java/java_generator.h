@@ -55,17 +55,17 @@ namespace java
 // CommandLineInterface in your main() function.
 class LIBPROTOC_EXPORT JavaGenerator : public CodeGenerator
 {
-   public:
+    public:
     JavaGenerator();
     ~JavaGenerator();
 
     // implements CodeGenerator ----------------------------------------
     bool Generate( const FileDescriptor* file,
-                   const string& parameter,
-                   GeneratorContext* context,
-                   string* error ) const;
+                    const string& parameter,
+                    GeneratorContext* context,
+                    string* error ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( JavaGenerator );
 };
 

@@ -12,19 +12,19 @@ local message = smtp.message{
   body = {
     preamble = "Hope you can see the attachment" .. CRLF,
     [1] = {
-      body = "Here is our logo" .. CRLF},
+    body = "Here is our logo" .. CRLF},
     [2] = {
-      headers = {
+    headers = {
         ["content-type"] = 'image/png; name="luasocket.png"',
         ["content-disposition"] =
-          'attachment; filename="luasocket.png"',
+        'attachment; filename="luasocket.png"',
         ["content-description"] = 'LuaSocket logo',
         ["content-transfer-encoding"] = "BASE64"},
-      body = ltn12.source.chain(
+    body = ltn12.source.chain(
         ltn12.source.file(io.open("luasocket.png", "rb")),
         ltn12.filter.chain(
-          mime.encode("base64"),
-          mime.wrap()))}}}
+        mime.encode("base64"),
+        mime.wrap()))}}}
 
 assert(smtp.send{
   rcpt = "<diego@cs.princeton.edu>",

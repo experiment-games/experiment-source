@@ -154,4 +154,3 @@ message TestConflictingFieldNames {
     optional int64 int64_field_list = 1002;
   }
 }
-

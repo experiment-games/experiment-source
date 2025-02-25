@@ -18,14 +18,14 @@
 //-----------------------------------------------------------------------------
 class CHL2MPClientScoreBoardDialog : public CClientScoreBoardDialog
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CHL2MPClientScoreBoardDialog, CClientScoreBoardDialog );
 
-   public:
+    public:
     CHL2MPClientScoreBoardDialog( IViewPort *pViewPort );
     ~CHL2MPClientScoreBoardDialog();
 
-   protected:
+    protected:
     // scoreboard overrides
     virtual void InitScoreboardSections();
     virtual void UpdateTeamInfo();
@@ -37,7 +37,7 @@ class CHL2MPClientScoreBoardDialog : public CClientScoreBoardDialog
     virtual void PaintBorder();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     virtual void AddHeader();                                 // add the start header of the scoreboard
     virtual void AddSection( int teamType, int teamNumber );  // add a new section header for a team
 

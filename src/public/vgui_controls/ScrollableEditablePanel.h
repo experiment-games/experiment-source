@@ -32,7 +32,7 @@ class ScrollableEditablePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( ScrollableEditablePanel, vgui::EditablePanel );
 
-   public:
+    public:
     ScrollableEditablePanel( vgui::Panel *pParent, vgui::EditablePanel *pChild, const char *pName );
     virtual ~ScrollableEditablePanel() {}
 
@@ -47,7 +47,7 @@ class ScrollableEditablePanel : public vgui::EditablePanel
     MESSAGE_FUNC( OnScrollBarSliderMoved, "ScrollBarSliderMoved" );
     virtual void OnMouseWheeled( int delta );  // respond to mouse wheel events
 
-   private:
+    private:
     vgui::ScrollBar *m_pScrollBar;
     vgui::EditablePanel *m_pChild;
 };

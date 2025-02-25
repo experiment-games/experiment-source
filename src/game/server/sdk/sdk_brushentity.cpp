@@ -8,7 +8,7 @@
 
 class CMyBrushEntity : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CMyBrushEntity, CBaseToggle );
     DECLARE_DATADESC();
 

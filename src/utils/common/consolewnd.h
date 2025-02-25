@@ -13,7 +13,7 @@
 
 class IConsoleWnd
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     // Print a message to the console.

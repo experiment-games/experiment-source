@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEProjectedDecal : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEProjectedDecal, CBaseTempEntity );
 
     CTEProjectedDecal( const char* name );
@@ -31,7 +31,7 @@ class CTEProjectedDecal : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVar( int, m_nIndex );
     CNetworkVar( float, m_flDistance );

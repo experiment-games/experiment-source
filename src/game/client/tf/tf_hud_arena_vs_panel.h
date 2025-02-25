@@ -24,7 +24,7 @@ class CHudArenaVsPanel : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudArenaVsPanel, EditablePanel );
 
-   public:
+    public:
     CHudArenaVsPanel( const char *pElementName );
 
     virtual void Init( void );
@@ -33,7 +33,7 @@ class CHudArenaVsPanel : public CHudElement, public EditablePanel
     virtual void OnTick( void );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     bool m_bVisible;
     float m_flHideTime;
 

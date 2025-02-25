@@ -33,7 +33,7 @@ extern CItemEffectMeterManager g_ItemEffectMeterManager;
 //-----------------------------------------------------------------------------
 class CItemEffectMeterManager : public CGameEventListener
 {
-   public:
+    public:
     ~CItemEffectMeterManager();
 
     void ClearExistingMeters();
@@ -42,7 +42,7 @@ class CItemEffectMeterManager : public CGameEventListener
     virtual void FireGameEvent( IGameEvent *event );
     int GetNumEnabled( void );
 
-   private:
+    private:
     CUtlVector< vgui::DHANDLE< CHudItemEffectMeter > > m_Meters;
 };
 
@@ -54,7 +54,7 @@ class CHudItemEffectMeter : public CHudElement, public EditablePanel, public IHu
 {
     DECLARE_CLASS_SIMPLE( CHudItemEffectMeter, EditablePanel );
 
-   public:
+    public:
     CHudItemEffectMeter( const char *pszElementName, C_TFPlayer *pPlayer );
     ~CHudItemEffectMeter();
 
@@ -140,7 +140,7 @@ class CHudItemEffectMeter : public CHudElement, public EditablePanel, public IHu
         return true;
     }
 
-   protected:
+    protected:
     vgui::Label *m_pLabel;
     CUtlVector< vgui::ContinuousProgressBar * > m_vecProgressBars;
     float m_flOldProgress;
@@ -161,7 +161,7 @@ class CHudItemEffectMeter : public CHudElement, public EditablePanel, public IHu
 template < class T >
 class CHudItemEffectMeter_Weapon : public CHudItemEffectMeter
 {
-   public:
+    public:
     CHudItemEffectMeter_Weapon( const char *pszElementName, C_TFPlayer *pPlayer, int iWeaponID, bool bBeeps = true, const char *pszResFile = NULL );
 
     T *GetWeapon( void );
@@ -234,7 +234,7 @@ class CHudItemEffectMeter_Weapon : public CHudItemEffectMeter
         return true;
     }
 
-   private:
+    private:
     CHandle< T > m_hWeapon;
     int m_iWeaponID;
     bool m_bBeeps;
@@ -243,7 +243,7 @@ class CHudItemEffectMeter_Weapon : public CHudItemEffectMeter
 
 class CHudItemEffectMeter_Rune : public CHudItemEffectMeter
 {
-   public:
+    public:
     CHudItemEffectMeter_Rune( const char *pszElementName, C_TFPlayer *pPlayer );
 
     // Effect Meter Logic
@@ -265,7 +265,7 @@ class CHudItemEffectMeter_Rune : public CHudItemEffectMeter
 
 class CHudItemEffectMeter_ItemAttribute : public CHudItemEffectMeter
 {
-   public:
+    public:
     CHudItemEffectMeter_ItemAttribute( const char *pszElementName, C_TFPlayer *pPlayer, loadout_positions_t iLoadoutSlot, const char *pszLabelText = NULL, bool bBeeps = true );
 
     const IHasGenericMeter *GetItem();
@@ -283,7 +283,7 @@ class CHudItemEffectMeter_ItemAttribute : public CHudItemEffectMeter
     virtual bool ShouldDraw( void ) OVERRIDE;
     virtual void OnTick( void ) OVERRIDE;
 
-   private:
+    private:
     CHandle< CBaseEntity > m_hEntity;
     const IHasGenericMeter *m_pMeterEntity;
     loadout_positions_t m_iLoadoutSlot;

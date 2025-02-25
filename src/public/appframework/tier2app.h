@@ -29,7 +29,7 @@ class CTier2SteamApp : public CSteamAppSystemGroup
 {
     typedef CSteamAppSystemGroup BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool PreInit()
     {
@@ -55,7 +55,7 @@ class CTier2DmSteamApp : public CTier2SteamApp
 {
     typedef CTier2SteamApp BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool PreInit()
     {

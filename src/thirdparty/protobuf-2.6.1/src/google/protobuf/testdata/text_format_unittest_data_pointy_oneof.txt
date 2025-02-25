@@ -14,16 +14,16 @@ optional_bool: true
 optional_string: "115"
 optional_bytes: "116"
 OptionalGroup <
-  a: 117
+	a: 117
 >
 optional_nested_message <
-  bb: 118
+	bb: 118
 >
 optional_foreign_message <
-  c: 119
+	c: 119
 >
 optional_import_message <
-  d: 120
+	d: 120
 >
 optional_nested_enum: BAZ
 optional_foreign_enum: FOREIGN_BAZ
@@ -31,10 +31,10 @@ optional_import_enum: IMPORT_BAZ
 optional_string_piece: "124"
 optional_cord: "125"
 optional_public_import_message <
-  e: 126
+	e: 126
 >
 optional_lazy_message <
-  bb: 127
+	bb: 127
 >
 repeated_int32: 201
 repeated_int32: 301
@@ -67,28 +67,28 @@ repeated_string: "315"
 repeated_bytes: "216"
 repeated_bytes: "316"
 RepeatedGroup <
-  a: 217
+	a: 217
 >
 RepeatedGroup <
-  a: 317
+	a: 317
 >
 repeated_nested_message <
-  bb: 218
+	bb: 218
 >
 repeated_nested_message <
-  bb: 318
+	bb: 318
 >
 repeated_foreign_message <
-  c: 219
+	c: 219
 >
 repeated_foreign_message <
-  c: 319
+	c: 319
 >
 repeated_import_message <
-  d: 220
+	d: 220
 >
 repeated_import_message <
-  d: 320
+	d: 320
 >
 repeated_nested_enum: BAR
 repeated_nested_enum: BAZ
@@ -101,10 +101,10 @@ repeated_string_piece: "324"
 repeated_cord: "225"
 repeated_cord: "325"
 repeated_lazy_message <
-  bb: 227
+	bb: 227
 >
 repeated_lazy_message <
-  bb: 327
+	bb: 327
 >
 default_int32: 401
 default_int64: 402

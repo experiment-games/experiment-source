@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: This abstracts the various hardware dependent implementations of sound
 //			At the time of this writing there are Windows WAVEOUT, Direct Sound,
@@ -13,7 +13,7 @@
 #include "utlvector.h"
 
 #define SOUND_DEVICE_MAX_CHANNELS 8  // we support 2, 4, 6, & 8 channels currently.
-                                     // Long term we may build 4 & 8 as matrix mix-downs of 6 channels
+                                    // Long term we may build 4 & 8 as matrix mix-downs of 6 channels
 #define MIX_BUFFER_SIZE 512
 
 class IAudioDevice2;
@@ -21,7 +21,7 @@ struct audio_device_init_params_t;
 
 class ALIGN16 CAudioMixBuffer
 {
-   public:
+    public:
     float m_flData[MIX_BUFFER_SIZE];
 } ALIGN16_POST;
 
@@ -68,7 +68,7 @@ struct audio_device_description_t
 
 class CAudioDeviceList
 {
-   public:
+    public:
     eSubSystems_t m_nSubsystem;
     CUtlVector< audio_device_description_t > m_list;
     int m_nDefaultDevice;
@@ -85,7 +85,7 @@ class CAudioDeviceList
     IAudioDevice2 *CreateDevice( audio_device_init_params_t &params );
     const wchar_t *GetDeviceToCreate( audio_device_init_params_t &params );
 
-   private:
+    private:
     uint m_nDeviceStamp;
     void UpdateDefaultDevice();
     enum finddevice_t
@@ -154,7 +154,7 @@ extern bool Audio_PollErrorEvents();
 
 class IAudioDevice2
 {
-   public:
+    public:
     virtual ~IAudioDevice2() {}
     virtual void OutputBuffer( int nChannels, CAudioMixBuffer *pChannelArray ) = 0;
     virtual void Shutdown( void ) = 0;
@@ -224,7 +224,7 @@ class IAudioDevice2
     void UnPause() {}
     void TransferSamples( uint32 nEndTimeIgnored );
 
-   protected:
+    protected:
     // NOTE: Derived classes MUST initialize these before returning a device from a factory
     const char *m_pName;
     int m_nChannels;

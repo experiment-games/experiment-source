@@ -26,7 +26,7 @@ ConVar FishDebug( "fish_debug", "0", FCVAR_CHEAT, "Show debug info for fish" );
  */
 class C_Fish : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( C_Fish, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
 
@@ -35,7 +35,7 @@ class C_Fish : public C_BaseAnimating
 
     virtual void OnDataChanged( DataUpdateType_t type );
 
-   private:
+    private:
     friend void RecvProxy_FishOriginX( const CRecvProxyData *pData, void *pStruct, void *pOut );
     friend void RecvProxy_FishOriginY( const CRecvProxyData *pData, void *pStruct, void *pOut );
 

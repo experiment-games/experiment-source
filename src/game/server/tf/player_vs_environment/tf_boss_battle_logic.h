@@ -17,7 +17,7 @@ class CBossBattleLogic : public CPointEntity, public CGameEventListener
 {
     DECLARE_CLASS( CBossBattleLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CBossBattleLogic();

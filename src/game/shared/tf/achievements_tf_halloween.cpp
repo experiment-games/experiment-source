@@ -84,9 +84,9 @@ class CAchievementTFHalloweenDominateForHat : public CBaseTFAchievementSimple
                     if ( pItem && pItem->IsValid() )
                     {
                         if ( ( pItem->GetItemDefIndex() == 116 ) ||  // Ghastly Gibus
-                             ( pItem->GetItemDefIndex() == 279 ) ||  // Ghastly Gibus 2010
-                             ( pItem->GetItemDefIndex() == 584 ) ||  // Ghastly Gibus 2011
-                             ( pItem->GetItemDefIndex() == 940 ) )   // Ghostly Gibus
+                            ( pItem->GetItemDefIndex() == 279 ) ||  // Ghastly Gibus 2010
+                            ( pItem->GetItemDefIndex() == 584 ) ||  // Ghastly Gibus 2011
+                            ( pItem->GetItemDefIndex() == 940 ) )   // Ghostly Gibus
                         {
                             IncrementCount();
                         }
@@ -452,7 +452,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenHelltowerKillBrothers, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerMilestone : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFHalloweenHelltowerMilestone, CAchievement_AchievedCount );
     void Init()
     {
@@ -578,7 +578,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenDoomsdayWinMinigames, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenDoomsdayMilestone : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFHalloweenDoomsdayMilestone, CAchievement_AchievedCount );
     void Init()
     {

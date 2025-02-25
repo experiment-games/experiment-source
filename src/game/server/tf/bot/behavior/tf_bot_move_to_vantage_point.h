@@ -10,7 +10,7 @@
 
 class CTFBotMoveToVantagePoint : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMoveToVantagePoint( float maxTravelDistance = 2000.0f );
     virtual ~CTFBotMoveToVantagePoint() {}
 
@@ -26,7 +26,7 @@ class CTFBotMoveToVantagePoint : public Action< CTFBot >
         return "MoveToVantagePoint";
     };
 
-   private:
+    private:
     float m_maxTravelDistance;
     PathFollower m_path;
     CountdownTimer m_repathTimer;

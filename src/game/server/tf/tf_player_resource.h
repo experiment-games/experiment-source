@@ -17,7 +17,7 @@ class CTFPlayerResource : public CPlayerResource, public CGameEventListener
 {
     DECLARE_CLASS( CTFPlayerResource, CPlayerResource );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CTFPlayerResource();
@@ -43,7 +43,7 @@ class CTFPlayerResource : public CPlayerResource, public CGameEventListener
 
     void SetPlayerClassWhenKilled( int iIndex, int iClass );
 
-   protected:
+    protected:
     virtual void UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer ) OVERRIDE;
     virtual void UpdateDisconnectedPlayer( int iIndex ) OVERRIDE;
 

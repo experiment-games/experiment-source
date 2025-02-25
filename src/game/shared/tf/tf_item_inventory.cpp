@@ -828,7 +828,7 @@ void CTFInventoryManager::AddBaseItemCriteria( baseitemcriteria_t *pCriteria, CI
 // Used to sort the inventory items into their positions.
 class CTFInventoryListLess
 {
-   public:
+    public:
     bool Less( const CEconItemView &src1, const CEconItemView &src2, void *pCtx )
     {
         if ( src1.GetInventoryPosition() > src2.GetInventoryPosition() )
@@ -1216,7 +1216,7 @@ void CTFPlayerInventory::ValidateInventoryPositions( void )
         for ( int j = TF_FIRST_NORMAL_CLASS; j <= TF_LAST_NORMAL_CLASS; j++ )
         {
             if ( !pEconItemView->GetStaticData()->CanBeUsedByClass( j ) &&
-                 pEconItemView->IsEquippedForClass( j ) )
+                pEconItemView->IsEquippedForClass( j ) )
             {
                 // Unequip this item from this class.
                 InventoryManager()->UpdateInventoryEquippedState( this, INVALID_ITEM_ID, j, pEconItemView->GetEquippedPositionForClass( j ) );
@@ -2047,27 +2047,27 @@ CON_COMMAND( clear_loadout, "Clear local loadout back to defaults" )
 CON_COMMAND( reset_loadout_ui, "Reset local loadout to what is active on TF2 (show confirmation)" )
 {
     ShowConfirmDialog( "#TF_SDK_ResetLoadout_Title",
-                       "#TF_SDK_ResetLoadout_Desc",
-                       "#MessageBox_OK",
-                       "#cancel",
-                       []( bool bConfirmed, void *pContext )
-                       {
-                           if ( bConfirmed )
-                               engine->ClientCmd_Unrestricted( "reset_loadout\n" );
-                       } );
+                        "#TF_SDK_ResetLoadout_Desc",
+                        "#MessageBox_OK",
+                        "#cancel",
+                        []( bool bConfirmed, void *pContext )
+                        {
+                            if ( bConfirmed )
+                                engine->ClientCmd_Unrestricted( "reset_loadout\n" );
+                        } );
 }
 
 CON_COMMAND( clear_loadout_ui, "Clear local loadout back to stock defaults (show confirmation)" )
 {
     ShowConfirmDialog( "#TF_SDK_ClearLoadout_Title",
-                       "#TF_SDK_ClearLoadout_Desc",
-                       "#MessageBox_OK",
-                       "#cancel",
-                       []( bool bConfirmed, void *pContext )
-                       {
-                           if ( bConfirmed )
-                               engine->ClientCmd_Unrestricted( "clear_loadout\n" );
-                       } );
+                        "#TF_SDK_ClearLoadout_Desc",
+                        "#MessageBox_OK",
+                        "#cancel",
+                        []( bool bConfirmed, void *pContext )
+                        {
+                            if ( bConfirmed )
+                                engine->ClientCmd_Unrestricted( "clear_loadout\n" );
+                        } );
 }
 #endif  // TF_CLIENT_DLL
 

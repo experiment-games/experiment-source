@@ -77,7 +77,7 @@ enum propdata_interactions_t
 // Entities using COLLISION_GROUP_SPECIAL_PHYSICS should support this interface.
 abstract_class IMultiplayerPhysics
 {
-   public:
+    public:
     virtual int GetMultiplayerPhysicsMode() = 0;
     virtual float GetMass() = 0;
     virtual bool IsAsleep() = 0;
@@ -112,7 +112,7 @@ enum PerformanceMode_t
 //-----------------------------------------------------------------------------
 abstract_class IBreakableWithPropData
 {
-   public:
+    public:
     // Damage modifiers
     virtual void SetDmgModBullet( float flDmgMod ) = 0;
     virtual void SetDmgModClub( float flDmgMod ) = 0;
@@ -167,7 +167,7 @@ abstract_class IBreakableWithPropData
 //-----------------------------------------------------------------------------
 class CPropData : public CAutoGameSystem
 {
-   public:
+    public:
     CPropData( void );
 
     // Inherited from IAutoServerSystem
@@ -186,7 +186,7 @@ class CPropData : public CAutoGameSystem
     // Get a random chunk in the specified breakable section
     const char *GetRandomChunkModel( const char *pszBreakableSection, int iMaxSize = -1 );
 
-   protected:
+    protected:
     KeyValues *m_pKVPropData;
     bool m_bPropDataLoaded;
 

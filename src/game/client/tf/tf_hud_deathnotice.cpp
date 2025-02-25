@@ -81,7 +81,7 @@ class CTFStreakNotice : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFStreakNotice, vgui::EditablePanel );
 
-   public:
+    public:
     CTFStreakNotice( const char *pName );
 
     virtual bool ShouldDraw( void ) OVERRIDE;
@@ -94,7 +94,7 @@ class CTFStreakNotice : public CHudElement, public vgui::EditablePanel
     bool IsCurrentStreakHigherPriority( CTFPlayerShared::ETFStreak eStreakType, int iStreak );
     HFont GetStreakFont( void );
 
-   private:
+    private:
     CExLabel *m_pLabel;
     EditablePanel *m_pBackground;
 
@@ -604,7 +604,7 @@ class CTFHudDeathNotice : public CHudBaseDeathNotice
 {
     DECLARE_CLASS_SIMPLE( CTFHudDeathNotice, CHudBaseDeathNotice );
 
-   public:
+    public:
     CTFHudDeathNotice( const char *pElementName )
         : CHudBaseDeathNotice( pElementName ){};
     virtual void Init( void );
@@ -616,7 +616,7 @@ class CTFHudDeathNotice : public CHudBaseDeathNotice
     void PlayRivalrySounds( int iKillerIndex, int iVictimIndex, int iType );
     virtual bool ShouldShowDeathNotice( IGameEvent *event );
 
-   protected:
+    protected:
     virtual void OnGameEvent( IGameEvent *event, int iDeathNoticeMsg );
     virtual Color GetTeamColor( int iTeamNumber, bool bLocalPlayerInvolved = false );
     virtual Color GetInfoTextColor( int iDeathNoticeMsg );
@@ -625,7 +625,7 @@ class CTFHudDeathNotice : public CHudBaseDeathNotice
 
     virtual int UseExistingNotice( IGameEvent *event );
 
-   private:
+    private:
     void AddAdditionalMsg( int iKillerID, int iVictimID, const char *pMsgKey );
     void AddStreakMsg( CTFPlayerShared::ETFStreak eStreakType, int iKillerID, int iKillerStreak, int iStreakIncrement, int iVictimID, int iDeathNoticeMsg );
     void AddStreakEndedMsg( CTFPlayerShared::ETFStreak eStreakType, int iKillerID, int iVictimID, int iVictimStreak, int iDeathNoticeMsg );
@@ -715,7 +715,7 @@ bool CTFHudDeathNotice::ShouldShowDeathNotice( IGameEvent *event )
         int iLocalPlayerIndex = GetLocalPlayerIndex();
 
         if ( iLocalPlayerIndex != engine->GetPlayerForUserID( event->GetInt( "attacker" ) ) &&
-             iLocalPlayerIndex != engine->GetPlayerForUserID( event->GetInt( "assister" ) ) )
+            iLocalPlayerIndex != engine->GetPlayerForUserID( event->GetInt( "assister" ) ) )
         {
             C_TFPlayer *pVictim = ToTFPlayer( UTIL_PlayerByIndex( engine->GetPlayerForUserID( event->GetInt( "userid" ) ) ) );
             if ( pVictim && pVictim->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
@@ -780,8 +780,8 @@ void CTFHudDeathNotice::FireGameEvent( IGameEvent *event )
 bool CTFHudDeathNotice::EventIsPlayerDeath( const char *eventName )
 {
     return FStrEq( eventName, "fish_notice" ) || FStrEq( eventName, "fish_notice__arm" ) || FStrEq( eventName, "slap_notice" )
-           //|| FStrEq( eventName, "throwable_hit" )
-           || BaseClass::EventIsPlayerDeath( eventName );
+            //|| FStrEq( eventName, "throwable_hit" )
+            || BaseClass::EventIsPlayerDeath( eventName );
 }
 
 //-----------------------------------------------------------------------------
@@ -868,7 +868,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
             // Check to see if we're swapping the killer and the assister. We use this so the brain slug can get the kill
             // credit for the HUD death notices, with the player being the assister.
             if ( pszAssisterName && ( ePyroVisionHack == kHorriblePyroVisionHack_KillAssisterType_CustomName_First ||
-                                      ePyroVisionHack == kHorriblePyroVisionHack_KillAssisterType_LocalizationString_First ) )
+                                    ePyroVisionHack == kHorriblePyroVisionHack_KillAssisterType_LocalizationString_First ) )
             {
                 std::swap( pszKillerName, pszAssisterName );
             }
@@ -1257,11 +1257,11 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
         // If Local Player killed someone and they have an item waiting, let them know
     }
     else if ( FStrEq( "teamplay_point_captured", pszEventName ) ||
-              FStrEq( "teamplay_capture_blocked", pszEventName ) ||
-              FStrEq( "teamplay_flag_event", pszEventName ) )
+            FStrEq( "teamplay_capture_blocked", pszEventName ) ||
+            FStrEq( "teamplay_flag_event", pszEventName ) )
     {
         bool bDefense = ( FStrEq( "teamplay_capture_blocked", pszEventName ) || ( FStrEq( "teamplay_flag_event", pszEventName ) &&
-                                                                                  TF_FLAGEVENT_DEFEND == event->GetInt( "eventtype" ) ) );
+                                                                                TF_FLAGEVENT_DEFEND == event->GetInt( "eventtype" ) ) );
 
         DeathNoticeItem &msg = m_DeathNotices[iDeathNoticeMsg];
         const char *szCaptureIcons[] = { "d_redcapture", "d_bluecapture" };
@@ -1439,8 +1439,8 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 
         // icon
         const char *const icon = ( msg.Killer.iTeam == TF_TEAM_RED )
-                                     ? "d_passtime_score_red"
-                                     : "d_passtime_score_blue";
+                                    ? "d_passtime_score_red"
+                                    : "d_passtime_score_blue";
         Q_strncpy( msg.szIcon, icon, ARRAYSIZE( msg.szIcon ) );
     }
     else if ( FStrEq( PasstimeGameEvents::PassCaught::s_eventName, pszEventName ) )  // passtime pass

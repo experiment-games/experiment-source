@@ -162,8 +162,8 @@ TYPED_TEST_P(TypeParameterizedTestCase, HasTypeParamAttribute) {}
 REGISTER_TYPED_TEST_CASE_P(TypeParameterizedTestCase, HasTypeParamAttribute);
 typedef testing::Types<int, long> TypeParameterizedTestCaseTypes;
 INSTANTIATE_TYPED_TEST_CASE_P(Single,
-                              TypeParameterizedTestCase,
-                              TypeParameterizedTestCaseTypes);
+                            TypeParameterizedTestCase,
+                            TypeParameterizedTestCaseTypes);
 #endif
 
 int main(int argc, char** argv) {

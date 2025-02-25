@@ -23,7 +23,7 @@ typedef struct netadr_s netadr_t;
 
 abstract_class INetChannel : public INetChannelInfo
 {
-   public:
+    public:
     virtual ~INetChannel( void ){};
 
     virtual void SetDataRate( float rate ) = 0;

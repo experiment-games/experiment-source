@@ -281,7 +281,7 @@ int IVision::GetKnownCount( int team, bool onlyVisible, float rangeLimit ) const
 //------------------------------------------------------------------------------------------
 class PopulateVisibleVector
 {
-   public:
+    public:
     PopulateVisibleVector( CUtlVector< CBaseEntity * > *potentiallyVisible )
     {
         m_potentiallyVisible = potentiallyVisible;
@@ -313,7 +313,7 @@ void IVision::CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * > *po
 //------------------------------------------------------------------------------------------
 class CollectVisible
 {
-   public:
+    public:
     CollectVisible( IVision *vision )
     {
         m_vision = vision;
@@ -322,10 +322,10 @@ class CollectVisible
     bool operator()( CBaseEntity *entity )
     {
         if ( entity &&
-             !m_vision->IsIgnored( entity ) &&
-             entity->IsAlive() &&
-             entity != m_vision->GetBot()->GetEntity() &&
-             m_vision->IsAbleToSee( entity, IVision::USE_FOV ) )
+            !m_vision->IsIgnored( entity ) &&
+            entity->IsAlive() &&
+            entity != m_vision->GetBot()->GetEntity() &&
+            m_vision->IsAbleToSee( entity, IVision::USE_FOV ) )
         {
             m_recognized.AddToTail( entity );
         }
@@ -393,7 +393,7 @@ void IVision::UpdateKnownEntities( void )
 
                 // has our reaction time just elapsed?
                 if ( gpGlobals->curtime - known.GetTimeWhenBecameVisible() >= GetMinRecognizeTime() &&
-                     m_lastVisionUpdateTimestamp - known.GetTimeWhenBecameVisible() < GetMinRecognizeTime() )
+                    m_lastVisionUpdateTimestamp - known.GetTimeWhenBecameVisible() < GetMinRecognizeTime() )
                 {
                     if ( GetBot()->IsDebugging( NEXTBOT_VISION ) )
                     {
@@ -522,13 +522,13 @@ void IVision::Update( void )
     VPROF_BUDGET( "IVision::Update", "NextBotExpensive" );
 
     /* This adds significantly to bot's reaction times
-      // throttle update rate
-      if ( !m_scanTimer.IsElapsed() )
-      {
+    // throttle update rate
+    if ( !m_scanTimer.IsElapsed() )
+    {
         return;
-      }
+    }
 
-      m_scanTimer.Start( 0.5f * GetMinRecognizeTime() );
+    m_scanTimer.Start( 0.5f * GetMinRecognizeTime() );
     */
 
     if ( nb_blind.GetBool() )
@@ -697,14 +697,14 @@ bool IVision::IsLineOfSightClearToEntity( const CBaseEntity *subject, Vector *vi
     {
         UTIL_TraceLine( GetBot()->GetBodyInterface()->GetEyePosition(), subject->EyePosition(), MASK_BLOCKLOS_AND_NPCS | CONTENTS_IGNORE_NODRAW_OPAQUE, &filter, &result );
         bClear = IsLineOfSightBetweenTwoEntitiesClear( GetBot()->GetEntity(),
-                                                       EOFFSET_MODE_EYEPOSITION,
-                                                       subject,
-                                                       EOFFSET_MODE_EYEPOSITION,
-                                                       subject,
-                                                       COLLISION_GROUP_NONE,
-                                                       MASK_BLOCKLOS_AND_NPCS | CONTENTS_IGNORE_NODRAW_OPAQUE,
-                                                       IgnoreActorsTraceFilterFunction,
-                                                       1.0 );
+                                                        EOFFSET_MODE_EYEPOSITION,
+                                                        subject,
+                                                        EOFFSET_MODE_EYEPOSITION,
+                                                        subject,
+                                                        COLLISION_GROUP_NONE,
+                                                        MASK_BLOCKLOS_AND_NPCS | CONTENTS_IGNORE_NODRAW_OPAQUE,
+                                                        IgnoreActorsTraceFilterFunction,
+                                                        1.0 );
 
         // this WILL assert - the query interface happens at a different time, and has hysteresis.
         Assert( result.DidHit() != bClear );

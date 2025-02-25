@@ -17,10 +17,10 @@ typedef void ( *ClientEffectCallback )( const CEffectData &data );
 
 class CClientEffectRegistration
 {
-   public:
+    public:
     CClientEffectRegistration( const char *pEffectName, ClientEffectCallback fn );
 
-   public:
+    public:
     const char *m_pEffectName;
     ClientEffectCallback m_pFunction;
     CClientEffectRegistration *m_pNext;

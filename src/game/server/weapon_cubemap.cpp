@@ -11,7 +11,7 @@
 
 class CWeaponCubemap : public CBaseCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponCubemap, CBaseCombatWeapon );
 
     void Precache( void );

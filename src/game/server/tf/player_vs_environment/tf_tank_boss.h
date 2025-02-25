@@ -10,7 +10,7 @@
 //----------------------------------------------------------------------------
 class CTFTankBoss : public CTFBaseBoss
 {
-   public:
+    public:
     DECLARE_CLASS( CTFTankBoss, CTFBaseBoss );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -58,13 +58,13 @@ class CTFTankBoss : public CTFBaseBoss
 
     void UpdatePingSound( void );
 
-   protected:
+    protected:
     virtual void ModifyDamage( CTakeDamageInfo *info ) const;
 
-   private:
+    private:
     void Explode();
 
-   private:
+    private:
     CTFTankBossBody *m_body;
 
     CHandle< CPathTrack > m_startNode;

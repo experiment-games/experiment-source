@@ -24,7 +24,7 @@ DEFINE_FALLBACK_SHADER( WorldVertexTransition, WorldVertexTransition_DX8 )
 ConVar mat_fullbright( "mat_fullbright", "0", FCVAR_CHEAT );
 
 BEGIN_VS_SHADER( WorldVertexTransition_DX8,
-                 "Help for WorldVertexTransition_DX8" )
+                "Help for WorldVertexTransition_DX8" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( BASETEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture2", "base texture2 help" )

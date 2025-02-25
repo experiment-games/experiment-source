@@ -19,7 +19,7 @@ class CBaseGrenadeContact : public CBaseGrenade
 {
     DECLARE_CLASS( CBaseGrenadeContact, CBaseGrenade );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 };

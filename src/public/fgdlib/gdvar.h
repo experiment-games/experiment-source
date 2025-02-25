@@ -69,7 +69,7 @@ typedef struct
 
 class GDinputvariable
 {
-   public:
+    public:
     GDinputvariable();
     GDinputvariable( const char *szType, const char *szName );
     ~GDinputvariable();
@@ -138,7 +138,7 @@ class GDinputvariable
 
     static const char *GetVarTypeName( GDIV_TYPE eType );
 
-   private:
+    private:
     // for choices/flags:
     CUtlVector< GDIVITEM > m_Items;
 

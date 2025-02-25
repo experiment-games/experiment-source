@@ -17,7 +17,7 @@
 //--------------------------------------------------------------------------------------------------------
 class CSDKPlayerClassInfo final : public FilePlayerClassInfo_t
 {
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CSDKPlayerClassInfo, FilePlayerClassInfo_t );
 
     CSDKPlayerClassInfo();

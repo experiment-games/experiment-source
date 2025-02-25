@@ -17,7 +17,7 @@
 
 class CTFBreakableMelee : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBreakableMelee, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS_OVERRIDE();
     DECLARE_PREDICTABLE_OVERRIDE();
@@ -42,7 +42,7 @@ class CTFBreakableMelee : public CTFWeaponBaseMelee
     static void RecvProxy_Broken( const CRecvProxyData *pData, void *pStruct, void *pOut );
 #endif
 
-   protected:
+    protected:
     CNetworkVar( bool, m_bBroken );
 };
 
@@ -52,7 +52,7 @@ class CTFBreakableMelee : public CTFWeaponBaseMelee
 //
 class CTFBottle : public CTFBreakableMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBottle, CTFBreakableMelee );
     DECLARE_NETWORKCLASS_OVERRIDE();
     DECLARE_PREDICTABLE_OVERRIDE();
@@ -69,7 +69,7 @@ class CTFBottle : public CTFBreakableMelee
 //
 class CTFBreakableSign : public CTFBreakableMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBreakableSign, CTFBreakableMelee );
     DECLARE_NETWORKCLASS_OVERRIDE();
     DECLARE_PREDICTABLE_OVERRIDE();
@@ -86,7 +86,7 @@ class CTFBreakableSign : public CTFBreakableMelee
 //
 class CTFStickBomb : public CTFBreakableMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFStickBomb, CTFBreakableMelee );
     DECLARE_NETWORKCLASS_OVERRIDE();
     DECLARE_PREDICTABLE_OVERRIDE();
@@ -116,7 +116,7 @@ class CTFStickBomb : public CTFBreakableMelee
         return m_iDetonated;
     }
 
-   private:
+    private:
     CNetworkVar( int, m_iDetonated );  // int, not bool so we can use a recv proxy
 };
 

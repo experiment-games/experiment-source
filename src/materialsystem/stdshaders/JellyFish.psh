@@ -14,4 +14,3 @@ tex t1
 
 add r0, t0, t1
 ;mov r0, t1
-

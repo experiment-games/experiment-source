@@ -86,7 +86,7 @@ class IRestore;
 
 abstract_class IVPhysicsDebugOverlay
 {
-   public:
+    public:
     virtual void AddEntityTextOverlay( int ent_index, int line_offset, float duration, int r, int g, int b, int a, PRINTF_FORMAT_STRING const char *format, ... ) = 0;
     virtual void AddBoxOverlay( const Vector &origin, const Vector &mins, const Vector &max, QAngle const &orientation, int r, int g, int b, int a, float duration ) = 0;
     virtual void AddTriangleOverlay( const Vector &p1, const Vector &p2, const Vector &p3, int r, int g, int b, int a, bool noDepthTest, float duration ) = 0;
@@ -102,7 +102,7 @@ abstract_class IVPhysicsDebugOverlay
 
 abstract_class IPhysics
 {
-   public:
+    public:
     virtual IPhysicsEnvironment *CreateEnvironment( void ) = 0;
     virtual void DestroyEnvironment( IPhysicsEnvironment * ) = 0;
     virtual IPhysicsEnvironment *GetActiveEnvironmentByIndex( int index ) = 0;
@@ -141,7 +141,7 @@ struct truncatedcone_t
 
 abstract_class IPhysicsCollision
 {
-   public:
+    public:
     virtual ~IPhysicsCollision( void ) {}
 
     // produce a convex element from verts (convex hull around verts)
@@ -252,7 +252,7 @@ abstract_class IPhysicsCollision
 // this can be used to post-process a collision model
 abstract_class ICollisionQuery
 {
-   public:
+    public:
     virtual ~ICollisionQuery() {}
     // number of convex pieces in the whole solid
     virtual int ConvexCount( void ) = 0;
@@ -277,7 +277,7 @@ abstract_class ICollisionQuery
 //-----------------------------------------------------------------------------
 abstract_class IPhysicsGameTrace
 {
-   public:
+    public:
     virtual void VehicleTraceRay( const Ray_t &ray, void *pVehicle, trace_t *pTrace ) = 0;
     virtual void VehicleTraceRayWithWater( const Ray_t &ray, void *pVehicle, trace_t *pTrace ) = 0;
     virtual bool VehiclePointInWater( const Vector &vecPoint ) = 0;
@@ -286,14 +286,14 @@ abstract_class IPhysicsGameTrace
 // The caller should implement this to return contents masks per convex on a collide
 abstract_class IConvexInfo
 {
-   public:
+    public:
     virtual unsigned int GetContents( int convexGameData ) = 0;
 };
 
 class CPhysicsEventHandler;
 abstract_class IPhysicsCollisionData
 {
-   public:
+    public:
     virtual void GetSurfaceNormal( Vector & out ) = 0;  // normal points toward second object (object index 1)
     virtual void GetContactPoint( Vector & out ) = 0;   // contact point of collision (in world space)
     virtual void GetContactSpeed( Vector & out ) = 0;   // speed of surface 1 relative to surface 0 (in world space)
@@ -313,7 +313,7 @@ struct vcollisionevent_t
 
 abstract_class IPhysicsCollisionEvent
 {
-   public:
+    public:
     // returns the two objects that collided, time between last collision of these objects
     // and an opaque data block of collision information
     // NOTE: PreCollision/PostCollision ALWAYS come in matched pairs!!!
@@ -337,7 +337,7 @@ abstract_class IPhysicsCollisionEvent
 
 abstract_class IPhysicsObjectEvent
 {
-   public:
+    public:
     // these can be used to optimize out queries on sleeping objects
     // Called when an object is woken after sleeping
     virtual void ObjectWake( IPhysicsObject * pObject ) = 0;
@@ -347,7 +347,7 @@ abstract_class IPhysicsObjectEvent
 
 class IPhysicsConstraintEvent
 {
-   public:
+    public:
     // the constraint is now inactive, the game code is required to delete it or re-activate it.
     virtual void ConstraintBroken( IPhysicsConstraint * ) = 0;
 };
@@ -368,7 +368,7 @@ struct hlshadowcontrol_params_t
 // All of the infrastructure is in place to do that.
 abstract_class IPhysicsShadowController
 {
-   public:
+    public:
     virtual ~IPhysicsShadowController( void ) {}
 
     virtual void Update( const Vector &position, const QAngle &angles, float timeOffset ) = 0;
@@ -397,7 +397,7 @@ class IPhysicsMotionController;
 // Callback for simulation
 class IMotionEvent
 {
-   public:
+    public:
     // These constants instruct the simulator as to how to apply the values copied to linear & angular
     // GLOBAL/LOCAL refer to the coordinate system of the values, whereas acceleration/force determine whether or not
     // mass is divided out (forces must be divided by mass to compute acceleration)
@@ -414,7 +414,7 @@ class IMotionEvent
 
 abstract_class IPhysicsMotionController
 {
-   public:
+    public:
     virtual ~IPhysicsMotionController( void ) {}
     virtual void SetEventHandler( IMotionEvent * handler ) = 0;
     virtual void AttachObject( IPhysicsObject * pObject, bool checkIfAlreadyAttached ) = 0;
@@ -444,7 +444,7 @@ abstract_class IPhysicsMotionController
 // -------------------
 abstract_class IPhysicsCollisionSolver
 {
-   public:
+    public:
     virtual int ShouldCollide( IPhysicsObject * pObj0, IPhysicsObject * pObj1, void *pGameData0, void *pGameData1 ) = 0;
     virtual int ShouldSolvePenetration( IPhysicsObject * pObj0, IPhysicsObject * pObj1, void *pGameData0, void *pGameData1, float dt ) = 0;
 
@@ -467,14 +467,14 @@ enum PhysicsTraceType_t
 
 abstract_class IPhysicsTraceFilter
 {
-   public:
+    public:
     virtual bool ShouldHitObject( IPhysicsObject * pObject, int contentsMask ) = 0;
     virtual PhysicsTraceType_t GetTraceType() const = 0;
 };
 
 abstract_class IPhysicsEnvironment
 {
-   public:
+    public:
     virtual ~IPhysicsEnvironment( void ) {}
 
     virtual void SetDebugOverlay( CreateInterfaceFn debugOverlayFactory ) = 0;
@@ -598,9 +598,9 @@ enum callbackflags
     CALLBACK_FLUID_TOUCH = 0x0100,
     CALLBACK_NEVER_DELETED = 0x0200,         // HACKHACK: This means this object will never be deleted (set on the world)
     CALLBACK_MARKED_FOR_DELETE = 0x0400,     // This allows vphysics to skip some work for this object since it will be
-                                             // deleted later this frame. (Set automatically by destroy calls)
+                                            // deleted later this frame. (Set automatically by destroy calls)
     CALLBACK_ENABLING_COLLISION = 0x0800,    // This is active during the time an object is enabling collisions
-                                             // allows us to skip collisions between "new" objects and objects marked for delete
+                                            // allows us to skip collisions between "new" objects and objects marked for delete
     CALLBACK_DO_FLUID_SIMULATION = 0x1000,   // remove this to opt out of fluid simulations
     CALLBACK_IS_PLAYER_CONTROLLER = 0x2000,  // HACKHACK: Set this on players until player cotrollers are unified with shadow controllers
     CALLBACK_CHECK_COLLISION_DISABLE = 0x4000,
@@ -609,7 +609,7 @@ enum callbackflags
 
 abstract_class IPhysicsObject
 {
-   public:
+    public:
     virtual ~IPhysicsObject( void ) {}
 
     // returns true if this object is static/unmoveable
@@ -781,7 +781,7 @@ abstract_class IPhysicsObject
 
 abstract_class IPhysicsSpring
 {
-   public:
+    public:
     virtual ~IPhysicsSpring( void ) {}
     virtual void GetEndpoints( Vector * worldPositionStart, Vector * worldPositionEnd ) = 0;
     virtual void SetSpringConstant( float flSpringContant ) = 0;
@@ -820,7 +820,7 @@ struct surfaceaudioparams_t
     float roughThreshold;         // surface roughness > this causes "rough" scrapes, < this causes "smooth" scrapes
     float hardThreshold;          // surface hardness > this causes "hard" impacts, < this causes "soft" impacts
     float hardVelocityThreshold;  // collision velocity > this causes "hard" impacts, < this causes "soft" impacts
-                                  // NOTE: Hard impacts must meet both hardnessFactor AND velocity thresholds
+                                // NOTE: Hard impacts must meet both hardnessFactor AND velocity thresholds
 };
 
 struct surfacesoundnames_t
@@ -846,7 +846,7 @@ struct surfacegameprops_t
     // game movement data
     float maxSpeedFactor;  // Modulates player max speed when walking on this surface
     float jumpFactor;      // Indicates how much higher the player should jump when on the surface
-                           // Game-specific data
+                            // Game-specific data
     unsigned short material;
     // Indicates whether or not the player is on a ladder.
     unsigned char climbable;
@@ -867,7 +867,7 @@ struct surfacedata_t
 #define VPHYSICS_SURFACEPROPS_INTERFACE_VERSION_1 "VPhysicsSurfaceProps001"
 abstract_class IPhysicsSurfaceProps
 {
-   public:
+    public:
     virtual ~IPhysicsSurfaceProps( void ) {}
 
     // parses a text file containing surface prop keys
@@ -892,7 +892,7 @@ abstract_class IPhysicsSurfaceProps
 
 abstract_class IPhysicsFluidController
 {
-   public:
+    public:
     virtual ~IPhysicsFluidController( void ) {}
 
     virtual void SetGameData( void *pGameData ) = 0;

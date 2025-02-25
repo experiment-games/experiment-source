@@ -93,12 +93,12 @@ void CPvPRankPanel::RatingState_t::UpdateRating( bool bInitial )
 
         // Starting rating
         CTFRatingData* pRating = CTFRatingData::YieldingGetPlayerRatingDataBySteamID( steamapicontext->SteamUser()->GetSteamID(),
-                                                                                      pMatchDesc->GetLastAckdDisplayRating() );
+                                                                                    pMatchDesc->GetLastAckdDisplayRating() );
         nStartRating = pRating ? pRating->Obj().rating_primary() : 0u;
 
         // Actual, new rating
         pRating = CTFRatingData::YieldingGetPlayerRatingDataBySteamID( steamapicontext->SteamUser()->GetSteamID(),
-                                                                       pMatchDesc->GetCurrentDisplayRating() );
+                                                                        pMatchDesc->GetCurrentDisplayRating() );
         nNewRating = pRating ? pRating->Obj().rating_primary() : 0u;
     }
 
@@ -202,7 +202,7 @@ void CPvPRankPanel::RatingState_t::SOUpdated( const CSteamID& steamIDOwner, cons
 
         CTFRatingData* pRatingObject = ( CTFRatingData* )pObject;
         if ( pRatingObject->Obj().rating_type() == pMatchDesc->GetLastAckdDisplayRating() ||
-             pRatingObject->Obj().rating_type() == pMatchDesc->GetCurrentDisplayRating() )
+            pRatingObject->Obj().rating_type() == pMatchDesc->GetCurrentDisplayRating() )
             UpdateRating( eEvent == eSOCacheEvent_Subscribed );
     }
 
@@ -218,13 +218,13 @@ void CPvPRankPanel::RatingState_t::SOUpdated( const CSteamID& steamIDOwner, cons
 
 class CMiniPvPRankPanel : public CPvPRankPanel
 {
-   public:
+    public:
     CMiniPvPRankPanel( Panel* pParent, const char* pszPanelName )
         : CPvPRankPanel( pParent, pszPanelName )
     {
     }
 
-   private:
+    private:
     virtual KeyValues* GetConditions() const OVERRIDE
     {
         KeyValues* pConditions = new KeyValues( "conditions" );
@@ -346,9 +346,9 @@ const LevelInfo_t& CPvPRankPanel::GetLevel( bool bCurrent ) const
     if ( m_pMatchDesc->BUsesStickyRanks() )
     {
         EMMRating eRating = bCurrent ? m_pMatchDesc->GetCurrentDisplayRank()
-                                     : m_pMatchDesc->GetLastAckdDisplayRank();
+                                    : m_pMatchDesc->GetLastAckdDisplayRank();
         CTFRatingData* pRatingData = SteamUser() ? CTFRatingData::YieldingGetPlayerRatingDataBySteamID( SteamUser()->GetSteamID(), eRating )
-                                                 : NULL;
+                                                : NULL;
         uint32 nCurrentRank = pRatingData ? pRatingData->GetRatingData().unRatingPrimary : 0;
         return m_pProgressionDesc->GetLevelByNumber( nCurrentRank );
     }
@@ -393,7 +393,7 @@ void CPvPRankPanel::OnThink()
     {
         uint32 nPrevXP = ratingState.GetStartRating();
         const LevelInfo_t& levelCur = m_pMatchDesc->BUsesStickyRanks() ? GetLevel( true )
-                                                                       : m_pProgressionDesc->GetLevelForRating( nCurrentRating );
+                                                                        : m_pProgressionDesc->GetLevelForRating( nCurrentRating );
 
         UpdateRatingControls( nPrevXP, nCurrentRating, levelCur );
         UpdateRankControls( levelCur );
@@ -402,7 +402,7 @@ void CPvPRankPanel::OnThink()
         if ( m_nLastLerpRating != ratingState.GetStartRating() && !m_pMatchDesc->BLocalPlayerIsInPlacement() )
         {
             const LevelInfo_t& levelPrevThink = m_pMatchDesc->BUsesStickyRanks() ? GetLevel( false )
-                                                                                 : m_pProgressionDesc->GetLevelForRating( m_nLastLerpRating );
+                                                                                : m_pProgressionDesc->GetLevelForRating( m_nLastLerpRating );
             if ( levelCur.m_nLevelNum > levelPrevThink.m_nLevelNum )  // Level up :)
             {
                 PlayLevelUpEffects( levelCur );
@@ -491,9 +491,9 @@ void CPvPRankPanel::UpdateRankControls( const LevelInfo_t& levelCurrent )
             const wchar_t* wpszFormat = g_pVGuiLocalize->Find( nPlacementsToGo == 1 ? "#TF_Competitive_Placements_Singular"
                                                                                     : "#TF_Competitive_Placements_Multiple" );
             g_pVGuiLocalize->ConstructString_safe( wszOutString,
-                                                   wpszFormat,
-                                                   1,
-                                                   CStrAutoEncode( CFmtStr( "%d", nPlacementsToGo ) ).ToWString() );
+                                                    wpszFormat,
+                                                    1,
+                                                    CStrAutoEncode( CFmtStr( "%d", nPlacementsToGo ) ).ToWString() );
 
             m_pBGPanel->SetDialogVariable( pszLevelVar, wszOutString );
         }
@@ -595,8 +595,8 @@ void CPvPRankPanel::FireGameEvent( IGameEvent* pEvent )
 {
     // This is really only for tf_test_pvp_rank_xp_change
     if ( FStrEq( pEvent->GetName(), "begin_xp_lerp" ) ||
-         FStrEq( pEvent->GetName(), "gc_new_session" ) ||
-         FStrEq( pEvent->GetName(), "mainmenu_stabilized" ) )
+        FStrEq( pEvent->GetName(), "gc_new_session" ) ||
+        FStrEq( pEvent->GetName(), "mainmenu_stabilized" ) )
     {
         if ( !m_bInitializedBaseState )
         {
@@ -715,7 +715,7 @@ void CPvPRankPanel::BeginRatingLerp()
 
             // Sort them so users get a consistent experience
             vecSources.SortPredicate( []( const CXPSource* pLeft, const CXPSource* pRight )
-                                      { return pLeft->Obj().type() < pRight->Obj().type(); } );
+                                    { return pLeft->Obj().type() < pRight->Obj().type(); } );
 
             // Show the sources
             FOR_EACH_VEC( vecSources, i )
@@ -728,11 +728,11 @@ void CPvPRankPanel::BeginRatingLerp()
                 _snwprintf( wszCount, ARRAYSIZE( wszCount ), L"%d", source.amount() );
                 const wchar_t* wpszFormat = g_pVGuiLocalize->Find( g_XPSourceDefs[source.type()].m_pszFormattingLocToken );
                 g_pVGuiLocalize->ConstructString_safe( wszOutString,
-                                                       wpszFormat,
-                                                       3,
-                                                       g_pVGuiLocalize->Find( g_XPSourceDefs[source.type()].m_pszTypeLocToken ),
-                                                       wszCount,
-                                                       g_pVGuiLocalize->Find( m_pProgressionDesc->GetRankUnitsLocToken() ) );
+                                                        wpszFormat,
+                                                        3,
+                                                        g_pVGuiLocalize->Find( g_XPSourceDefs[source.type()].m_pszTypeLocToken ),
+                                                        wszCount,
+                                                        g_pVGuiLocalize->Find( m_pProgressionDesc->GetRankUnitsLocToken() ) );
 
                 int nX, nY;
                 m_pXPBar->GetPos( nX, nY );
@@ -741,13 +741,13 @@ void CPvPRankPanel::BeginRatingLerp()
                 m_pXPBar->ParentLocalToScreen( nX, nY );
 
                 CreateScrollingIndicator( nX,
-                                          nY,
-                                          wszOutString,
-                                          g_XPSourceDefs[source.type()].m_pszSoundName,
-                                          i * tf_xp_breakdown_interval.GetFloat(),
-                                          0,
-                                          m_pMatchDesc->BUsesStickyRanks() ? 0 : -25,
-                                          source.amount() >= 0 );
+                                        nY,
+                                        wszOutString,
+                                        g_XPSourceDefs[source.type()].m_pszSoundName,
+                                        i * tf_xp_breakdown_interval.GetFloat(),
+                                        0,
+                                        m_pMatchDesc->BUsesStickyRanks() ? 0 : -25,
+                                        source.amount() >= 0 );
             }
         }
     }
@@ -814,7 +814,7 @@ void CPvPRankPanel::OnAnimEvent( KeyValues* pParams )
     {
         const RatingState_t& ratingState = GetRatingState();
         const LevelInfo_t& levelCur = m_pMatchDesc->BUsesStickyRanks() ? GetLevel( true )
-                                                                       : m_pProgressionDesc->GetLevelForRating( ratingState.GetCurrentRating() );
+                                                                        : m_pProgressionDesc->GetLevelForRating( ratingState.GetCurrentRating() );
         m_pMatchDesc->SetupBadgePanel( m_pModelPanel, levelCur, ClientSteamContext().GetLocalPlayerSteamID(), BIsInPlacement() );
     }
 }
@@ -990,6 +990,6 @@ KeyValues* CPvPRankPanel::GetConditions() const
 bool CPvPRankPanel::BIsInPlacement() const
 {
     return m_pMatchDesc &&
-           m_pMatchDesc->BUsesPlacementMatches() &&
-           s_rankReavealState[m_eMatchGroup].m_bLastSeenInPlacement;
+            m_pMatchDesc->BUsesPlacementMatches() &&
+            s_rankReavealState[m_eMatchGroup].m_bLastSeenInPlacement;
 }

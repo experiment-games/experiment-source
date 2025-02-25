@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose:
 //
@@ -38,7 +38,7 @@ typedef enum
 
 class IG15
 {
-   public:
+    public:
     virtual void GetLCDSize( int &w, int &h ) = 0;
 
     // w, h should match the return value from GetLCDSize!!!

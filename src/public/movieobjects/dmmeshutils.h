@@ -24,7 +24,7 @@ class CDmMeshComp::CEdge;
 //-----------------------------------------------------------------------------
 class CDmMeshUtils
 {
-   public:
+    public:
     static bool RemoveLargeAxisAlignedPlanarFaces( CDmeMesh *pMesh );
 
     static bool RemoveFacesWithMaterial( CDmeMesh *pMesh, const char *pMaterialName );
@@ -67,7 +67,7 @@ class CDmMeshUtils
 
     static bool Merge( CDmMeshComp &srcComp, const CUtlVector< CDmMeshComp::CEdge * > &edgeList, CDmeMesh *pDstMesh );
 
-   protected:
+    protected:
     static const int *BuildDataMirrorMap( CDmeVertexData *pBase, int axis, CDmeVertexData::StandardFields_t standardField, CUtlVector< int > &dataMirrorMap );
 
     static bool MirrorVertices( CDmeMesh *pMesh, CDmeVertexData *pBase, int axis, CUtlVector< int > &mirrorMap );
@@ -94,7 +94,7 @@ class CDmMeshUtils
 //-----------------------------------------------------------------------------
 class CDmMeshFaceIt
 {
-   public:
+    public:
     // Constructs a new face iterator for the specified mesh
     CDmMeshFaceIt( const CDmeMesh *pMesh, const CDmeVertexData *pVertexData = NULL );
 
@@ -154,7 +154,7 @@ class CDmMeshFaceIt
         CDmeVertexDataBase::StandardFields_t nStandardField,
         CDmeVertexData *pPassedBase = NULL ) const;
 
-   protected:
+    protected:
     bool SetFaceSet();
 
     const CDmeMesh *m_pMesh;              // Current Mesh

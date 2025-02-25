@@ -38,7 +38,7 @@ class CTFReviveMarker : public CBaseAnimating
     DECLARE_NETWORKCLASS();
     DECLARE_CLASS( CTFReviveMarker, CBaseAnimating );
 
-   public:
+    public:
     CTFReviveMarker();
 
     virtual void Precache() OVERRIDE;
@@ -99,7 +99,7 @@ class CTFReviveMarker : public CBaseAnimating
     }
 #endif  // GAME_DLL
 
-   private:
+    private:
     CNetworkHandle( CTFPlayer, m_hOwner );
     CTFPlayer *m_pReviver;
     CNetworkVar( uint16, m_nRevives );

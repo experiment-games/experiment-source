@@ -277,9 +277,9 @@ void CTFRobotDestruction_Robot::UpdateDamagedEffects()
     if ( bLowHealth && !m_hDamagedParticleEffect )
     {
         m_hDamagedParticleEffect = ParticleProp()->Create( DAMAGED_ROBOT_PARTICLE_EFFECT,
-                                                           PATTACH_ABSORIGIN_FOLLOW,
-                                                           INVALID_PARTICLE_ATTACHMENT,
-                                                           Vector( 0, 0, 50 ) );
+                                                            PATTACH_ABSORIGIN_FOLLOW,
+                                                            INVALID_PARTICLE_ATTACHMENT,
+                                                            Vector( 0, 0, 50 ) );
     }
     else if ( !bLowHealth && m_hDamagedParticleEffect )
     {
@@ -363,36 +363,36 @@ void CTFRobotDestruction_Robot::HandleAnimEvent( animevent_t *pEvent )
     if ( ( pEvent->type & AE_TYPE_NEWEVENTSYSTEM ) && ( pEvent->type & AE_TYPE_SERVER ) )
     {
         /*	if ( pEvent->event == AE_RD_ROBOT_POP_PANELS_OFF )
-          {
+        {
             CUtlVector<breakmodel_t> vecProp;
             FOR_EACH_VEC( m_aSpawnProps, i )
             {
-              char pstrLowerName[ MAX_PATH ];
-              memset( pstrLowerName, 0, sizeof(pstrLowerName) );
-              Q_snprintf( pstrLowerName, sizeof(pstrLowerName), "%s", pEvent->options );
-              Q_strlower( pstrLowerName );
-              if ( Q_strstr( m_aSpawnProps[i].modelName, pstrLowerName ) )
-              {
+            char pstrLowerName[ MAX_PATH ];
+            memset( pstrLowerName, 0, sizeof(pstrLowerName) );
+            Q_snprintf( pstrLowerName, sizeof(pstrLowerName), "%s", pEvent->options );
+            Q_strlower( pstrLowerName );
+            if ( Q_strstr( m_aSpawnProps[i].modelName, pstrLowerName ) )
+            {
                 vecProp.AddToTail( m_aSpawnProps[i] );
-              }
+            }
             }
 
             if ( vecProp.Count() )
             {
-              Vector vForward, vRight, vUp;
-              AngleVectors( GetAbsAngles(), &vForward, &vRight, &vUp );
+            Vector vForward, vRight, vUp;
+            AngleVectors( GetAbsAngles(), &vForward, &vRight, &vUp );
 
-              Vector vecBreakVelocity = Vector(0,0,200);
-              AngularImpulse angularImpulse( RandomFloat( 0.0f, 120.0f ), RandomFloat( 0.0f, 120.0f ), 0.0 );
-              Vector vecOrigin = GetAbsOrigin() + vForward*70 + vUp*10;
-              QAngle vecAngles = GetAbsAngles();
-              breakablepropparams_t breakParams( vecOrigin, vecAngles, vecBreakVelocity, angularImpulse );
-              breakParams.impactEnergyScale = 1.0f;
+            Vector vecBreakVelocity = Vector(0,0,200);
+            AngularImpulse angularImpulse( RandomFloat( 0.0f, 120.0f ), RandomFloat( 0.0f, 120.0f ), 0.0 );
+            Vector vecOrigin = GetAbsOrigin() + vForward*70 + vUp*10;
+            QAngle vecAngles = GetAbsAngles();
+            breakablepropparams_t breakParams( vecOrigin, vecAngles, vecBreakVelocity, angularImpulse );
+            breakParams.impactEnergyScale = 1.0f;
 
-              int nModelIndex = modelinfo->GetModelIndex( STRING(GetModelName()) );
-              CreateGibsFromList( vecProp, nModelIndex, NULL, breakParams, NULL, -1 , false, true );
+            int nModelIndex = modelinfo->GetModelIndex( STRING(GetModelName()) );
+            CreateGibsFromList( vecProp, nModelIndex, NULL, breakParams, NULL, -1 , false, true );
             }
-          }*/
+        }*/
     }
 }
 
@@ -834,7 +834,7 @@ void CTFRobotDestruction_Robot::SetNewActivity( Activity activity )
 //---------------------------------------------------------------------------------------------
 class CRobotPatrol : public Action< CTFRobotDestruction_Robot >
 {
-   public:
+    public:
     void PlayIdleActivity( CTFRobotDestruction_Robot *pMe )
     {
         pMe->SetNewActivity( ACT_BOT_PRIMARY_MOVEMENT );
@@ -920,7 +920,7 @@ class CRobotSpawn : public Action< CTFRobotDestruction_Robot >
 
 class CRobotMaterialize : public Action< CTFRobotDestruction_Robot >
 {
-   public:
+    public:
     virtual ActionResult< CTFRobotDestruction_Robot > OnStart( CTFRobotDestruction_Robot *pMe, Action< CTFRobotDestruction_Robot > *priorAction )
     {
         // TODO: Play the materialize anim and effects
@@ -951,7 +951,7 @@ class CRobotMaterialize : public Action< CTFRobotDestruction_Robot >
 
 class CRobotPanic : public Action< CTFRobotDestruction_Robot >
 {
-   public:
+    public:
     virtual ActionResult< CTFRobotDestruction_Robot > OnStart( CTFRobotDestruction_Robot *pMe, Action< CTFRobotDestruction_Robot > *priorAction );
     virtual ActionResult< CTFRobotDestruction_Robot > Update( CTFRobotDestruction_Robot *pMe, float interval );
     virtual EventDesiredResult< CTFRobotDestruction_Robot > OnInjured( CTFRobotDestruction_Robot *pMe, const CTakeDamageInfo &info );
@@ -962,7 +962,7 @@ class CRobotPanic : public Action< CTFRobotDestruction_Robot >
         return "Panic";
     }
 
-   private:
+    private:
     CountdownTimer m_SpeakTimer;
     CountdownTimer m_attackedTimer;
     CountdownTimer m_spinTimer;

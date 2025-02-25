@@ -133,11 +133,11 @@ void CTFHudSpectatorExtras::OnTick()
     }
 
     if ( bIsHLTV ||
-         ( tf_spec_xray.GetBool() && ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) || ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) || ( pLocalPlayer->m_Shared.InCond( TF_COND_TEAM_GLOWS ) && tf_enable_glows_after_respawn.GetBool() ) ) ) )
+        ( tf_spec_xray.GetBool() && ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) || ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) || ( pLocalPlayer->m_Shared.InCond( TF_COND_TEAM_GLOWS ) && tf_enable_glows_after_respawn.GetBool() ) ) ) )
     {
         bool bShowEveryone = ( bIsHLTV ||
-                               ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) && tf_spec_xray.GetBool() ) ||
-                               ( ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) && ( tf_spec_xray.GetInt() > 1 ) ) );
+                                ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) && tf_spec_xray.GetBool() ) ||
+                                ( ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) && ( tf_spec_xray.GetInt() > 1 ) ) );
 
         // loop through the players
         for ( int i = 1; i <= gpGlobals->maxClients; i++ )
@@ -159,12 +159,12 @@ void CTFHudSpectatorExtras::OnTick()
 
             // remove the entities we don't want to draw anymore
             if ( pPlayer->IsDormant() ||
-                 ( nPlayerTeamNumber < FIRST_GAME_TEAM ) ||
-                 ( !pPlayer->IsAlive() ) ||
-                 ( pPlayer->m_Shared.IsStealthed() && ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
-                 ( !bShowEveryone && !pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
-                 ( !bShowEveryone && pPlayer->IsPlayerClass( TF_CLASS_SPY ) && !pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
-                 ( !bShowEveryone && pPlayer->IsPlayerClass( TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) && ( pPlayer->m_Shared.GetDisguiseTeam() != nLocalPlayerTeam ) ) )
+                ( nPlayerTeamNumber < FIRST_GAME_TEAM ) ||
+                ( !pPlayer->IsAlive() ) ||
+                ( pPlayer->m_Shared.IsStealthed() && ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
+                ( !bShowEveryone && !pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
+                ( !bShowEveryone && pPlayer->IsPlayerClass( TF_CLASS_SPY ) && !pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
+                ( !bShowEveryone && pPlayer->IsPlayerClass( TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) && ( pPlayer->m_Shared.GetDisguiseTeam() != nLocalPlayerTeam ) ) )
             {
                 if ( pPlayer->IsClientSideGlowEnabled() )
                 {

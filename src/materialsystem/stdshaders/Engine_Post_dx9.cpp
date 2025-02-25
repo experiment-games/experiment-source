@@ -172,9 +172,9 @@ SHADER_DRAW
         // Upload AA UV transform (converts bloom texture UVs to framebuffer texture UVs)
         // NOTE: we swap the order of the z and w components since 'wz' is an allowed ps20 swizzle, but 'zw' is not:
         float uvTrans[4] = { params[AAINTERNAL2]->GetVecValue()[0],
-                             params[AAINTERNAL2]->GetVecValue()[1],
-                             params[AAINTERNAL2]->GetVecValue()[3],
-                             params[AAINTERNAL2]->GetVecValue()[2] };
+                            params[AAINTERNAL2]->GetVecValue()[1],
+                            params[AAINTERNAL2]->GetVecValue()[3],
+                            params[AAINTERNAL2]->GetVecValue()[2] };
         pShaderAPI->SetPixelShaderConstant( 2, &uvTrans[0], 1 );
 
         // Upload color-correction weights:

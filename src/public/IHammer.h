@@ -28,7 +28,7 @@ enum RequestRetval_t
 #define INTERFACEVERSION_HAMMER "Hammer001"
 class IHammer : public IAppSystem
 {
-   public:
+    public:
     virtual bool HammerPreTranslateMessage( MSG *pMsg ) = 0;
     virtual bool HammerIsIdleMessage( MSG *pMsg ) = 0;
     virtual bool HammerOnIdle( long count ) = 0;

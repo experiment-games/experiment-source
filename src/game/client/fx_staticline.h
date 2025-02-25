@@ -24,7 +24,7 @@ class IMaterial;
 
 class CFXStaticLine : public CClientSideEffect
 {
-   public:
+    public:
     CFXStaticLine( const char *name, const Vector &start, const Vector &end, float scale, float life, const char *shader, unsigned int flags );
     ~CFXStaticLine( void );
 
@@ -33,7 +33,7 @@ class CFXStaticLine : public CClientSideEffect
     virtual void Destroy( void );
     virtual void Update( double frametime );
 
-   protected:
+    protected:
     IMaterial *m_pMaterial;
     Vector m_vecStart, m_vecEnd;
     unsigned int m_uiFlags;

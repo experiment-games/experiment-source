@@ -7,16 +7,16 @@
 
 $Configuration
 {
-	$Compiler
-	{
-		$PreprocessorDefinitions		"$BASE;REPLAY_ENABLED"
-	}
+    $Compiler
+    {
+        $PreprocessorDefinitions		"$BASE;REPLAY_ENABLED"
+    }
 }
 
 $Project
 {
-	$Folder	"Link libraries"
-	{
-		$Lib "$LIBCOMMON/replay_common"
-	}
+    $Folder	"Link libraries"
+    {
+        $Lib "$LIBCOMMON/replay_common"
+    }
 }

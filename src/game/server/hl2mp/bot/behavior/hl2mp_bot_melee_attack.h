@@ -7,7 +7,7 @@
 
 class CHL2MPBotMeleeAttack : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotMeleeAttack( float giveUpRange = -1.0f );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -18,7 +18,7 @@ class CHL2MPBotMeleeAttack : public Action< CHL2MPBot >
         return "MeleeAttack";
     };
 
-   private:
+    private:
     float m_giveUpRange;  // if non-negative and if threat is farther than this, give up our melee attack
     ChasePath m_path;
 };

@@ -31,7 +31,7 @@ class PanelListPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( PanelListPanel, Panel );
 
-   public:
+    public:
     PanelListPanel( vgui::Panel *parent, char const *panelName );
     ~PanelListPanel();
 
@@ -72,9 +72,9 @@ class PanelListPanel : public EditablePanel
     void SetSelectedPanel( Panel *panel );
     Panel *GetSelectedPanel();
     /*
-      On a panel being selected, a message gets sent to it
+    On a panel being selected, a message gets sent to it
         "PanelSelected"		int "state"
-      where state is 1 on selection, 0 on deselection
+    where state is 1 on selection, 0 on deselection
     */
 
     void SetVerticalBufferPixels( int buffer );
@@ -88,7 +88,7 @@ class PanelListPanel : public EditablePanel
 
     int ComputeVPixelsNeeded();
 
-   protected:
+    protected:
     // overrides
     virtual void OnSizeChanged( int wide, int tall );
     MESSAGE_FUNC_INT( OnSliderMoved, "ScrollBarSliderMoved", position );
@@ -96,7 +96,7 @@ class PanelListPanel : public EditablePanel
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnMouseWheeled( int delta );
 
-   private:
+    private:
     enum
     {
         DEFAULT_HEIGHT = 24,

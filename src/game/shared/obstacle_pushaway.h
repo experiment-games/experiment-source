@@ -29,7 +29,7 @@ bool IsBreakableEntity( CBaseEntity *pEnt );
 //--------------------------------------------------------------------------------------------------------------
 class CPushAwayEnumerator : public IPartitionEnumerator
 {
-   public:
+    public:
     // Forced constructor
     CPushAwayEnumerator( CBaseEntity **ents, int nMaxEnts )
     {
@@ -58,7 +58,7 @@ class CPushAwayEnumerator : public IPartitionEnumerator
         return ITERATION_CONTINUE;
     }
 
-   public:
+    public:
     CBaseEntity **m_AlreadyHit;
     int m_nAlreadyHit;
     int m_nMaxHits;
@@ -72,7 +72,7 @@ class CPushAwayEnumerator : public IPartitionEnumerator
  */
 class CBotBreakableEnumerator : public CPushAwayEnumerator
 {
-   public:
+    public:
     CBotBreakableEnumerator( CBaseEntity **ents, int nMaxEnts )
         : CPushAwayEnumerator( ents, nMaxEnts )
     {
@@ -87,8 +87,8 @@ class CBotBreakableEnumerator : public CPushAwayEnumerator
 
         // ignore breakables parented to doors
         if ( pEnt->GetParent() &&
-             ( FClassnameIs( pEnt->GetParent(), "func_door*" ) ||
-               FClassnameIs( pEnt, "prop_door*" ) ) )
+            ( FClassnameIs( pEnt->GetParent(), "func_door*" ) ||
+                FClassnameIs( pEnt, "prop_door*" ) ) )
             return ITERATION_CONTINUE;
 
         if ( m_nAlreadyHit < m_nMaxHits )
@@ -107,7 +107,7 @@ class CBotBreakableEnumerator : public CPushAwayEnumerator
  */
 class CBotDoorEnumerator : public CPushAwayEnumerator
 {
-   public:
+    public:
     CBotDoorEnumerator( CBaseEntity **ents, int nMaxEnts )
         : CPushAwayEnumerator( ents, nMaxEnts )
     {

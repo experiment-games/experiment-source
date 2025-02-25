@@ -20,7 +20,7 @@
 
 class CTFImagePanel : public vgui::ScalableImagePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFImagePanel, vgui::ScalableImagePanel );
 
     CTFImagePanel( vgui::Panel *parent, const char *name );
@@ -32,10 +32,10 @@ class CTFImagePanel : public vgui::ScalableImagePanel, public CGameEventListener
         m_iBGTeam = iTeam;
     }
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 
-   public:
+    public:
     char m_szTeamBG[TF_TEAM_COUNT][MAX_BG_LENGTH];
     int m_iBGTeam;
 };

@@ -31,29 +31,29 @@ CXXFLAGS += -g
 all : sample1_unittest
 
 check : all
-	./sample1_unittest
+    ./sample1_unittest
 
 clean :
-	rm -rf $(FUSED_GTEST_DIR) sample1_unittest *.o
+    rm -rf $(FUSED_GTEST_DIR) sample1_unittest *.o
 
 $(FUSED_GTEST_H) :
-	../fuse_gtest_files.py $(FUSED_GTEST_DIR)
+    ../fuse_gtest_files.py $(FUSED_GTEST_DIR)
 
 $(FUSED_GTEST_ALL_CC) :
-	../fuse_gtest_files.py $(FUSED_GTEST_DIR)
+    ../fuse_gtest_files.py $(FUSED_GTEST_DIR)
 
 gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc
+    $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc
 
 gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC)
+    $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC)
 
 sample1.o : $(SAMPLE_DIR)/sample1.cc $(SAMPLE_DIR)/sample1.h
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SAMPLE_DIR)/sample1.cc
+    $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SAMPLE_DIR)/sample1.cc
 
 sample1_unittest.o : $(SAMPLE_DIR)/sample1_unittest.cc \
-                     $(SAMPLE_DIR)/sample1.h $(FUSED_GTEST_H)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SAMPLE_DIR)/sample1_unittest.cc
+                    $(SAMPLE_DIR)/sample1.h $(FUSED_GTEST_H)
+    $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SAMPLE_DIR)/sample1_unittest.cc
 
 sample1_unittest : sample1.o sample1_unittest.o gtest-all.o gtest_main.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
+    $(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@

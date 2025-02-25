@@ -108,10 +108,10 @@ void CCvarToggleCheckButton::SetSelected( bool state )
     if ( !m_pszCvarName || !m_pszCvarName[0] )
         return;
     /*
-      // Look up current value
-      bool value = state;
+    // Look up current value
+    bool value = state;
 
-      engine->Cvar_SetValue( m_pszCvarName, value ? 1.0f : 0.0f );*/
+    engine->Cvar_SetValue( m_pszCvarName, value ? 1.0f : 0.0f );*/
 }
 
 //-----------------------------------------------------------------------------

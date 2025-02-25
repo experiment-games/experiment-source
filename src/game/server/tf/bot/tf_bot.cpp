@@ -313,9 +313,9 @@ void CreateBotName( int iTeam, int iClassIndex, CTFBot::DifficultyType skill, ch
 
     // we use this as our formatting, because we don't know the language of the downstream clients
     CFmtStr name( "%s%s%s",
-                  pDifficultyString,
-                  pFriendlyOrEnemyTitle,
-                  pBotName );
+                pDifficultyString,
+                pFriendlyOrEnemyTitle,
+                pBotName );
     Q_strncpy( pBuffer, name.Access(), iBufferSize );
 }
 
@@ -497,9 +497,9 @@ CON_COMMAND_F( tf_bot_kick, "Remove a TFBot by name, or all bots (\"all\").", FC
         if ( player->MyNextBotPointer() )
         {
             if ( iTeam == TEAM_ANY ||
-                 FStrEq( pPlayerName, player->GetPlayerName() ) ||
-                 ( player->GetTeamNumber() == iTeam ) ||
-                 ( player->GetTeamNumber() == iTeam ) )
+                FStrEq( pPlayerName, player->GetPlayerName() ) ||
+                ( player->GetTeamNumber() == iTeam ) ||
+                ( player->GetTeamNumber() == iTeam ) )
             {
                 if ( bMoveToSpectatorTeam )
                 {
@@ -574,9 +574,9 @@ CON_COMMAND_F( tf_bot_kill, "Kill a TFBot by name, or all bots (\"all\").", FCVA
         if ( player->MyNextBotPointer() )
         {
             if ( iTeam == TEAM_ANY ||
-                 FStrEq( pPlayerName, player->GetPlayerName() ) ||
-                 ( player->GetTeamNumber() == iTeam ) ||
-                 ( player->GetTeamNumber() == iTeam ) )
+                FStrEq( pPlayerName, player->GetPlayerName() ) ||
+                ( player->GetTeamNumber() == iTeam ) ||
+                ( player->GetTeamNumber() == iTeam ) )
             {
                 CTakeDamageInfo info( player, player, 9999999.9f, DMG_ENERGYBEAM, TF_DMG_CUSTOM_NONE );
                 player->TakeDamage( info );
@@ -763,7 +763,7 @@ void CTFBot::PressSpecialFireButton( float duration )
 //-----------------------------------------------------------------------------------------------------
 class CCountClassMembers
 {
-   public:
+    public:
     CCountClassMembers( const CTFBot *me, int teamID )
     {
         m_me = me;
@@ -1144,7 +1144,7 @@ bool CTFBot::CanChangeClass() const
     if ( IsPlayerClass( TF_CLASS_ENGINEER ) )
     {
         if ( const_cast< CTFBot * >( this )->GetObjectOfType( OBJ_SENTRYGUN ) ||
-             const_cast< CTFBot * >( this )->GetObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_EXIT ) )
+            const_cast< CTFBot * >( this )->GetObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_EXIT ) )
         {
             return false;
         }
@@ -2470,7 +2470,7 @@ void CTFBot::ClearSniperSpots( void )
 //---------------------------------------------------------------------------------------------
 class CCollectReachableObjects : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CCollectReachableObjects( const CTFBot *me, float maxRange, const CUtlVector< CHandle< CBaseEntity > > &potentialVector, CUtlVector< CHandle< CBaseEntity > > *collectionVector )
         : m_potentialVector( potentialVector )
     {
@@ -2525,10 +2525,10 @@ class CCollectReachableObjects : public ISearchSurroundingAreasFunctor
 // Items in selectedObjectVector will be approximately sorted in nearest-to-farthest order (because of SearchSurroundingAreas)
 //
 void CTFBot::SelectReachableObjects( const CUtlVector< CHandle< CBaseEntity > > &candidateObjectVector,
-                                     CUtlVector< CHandle< CBaseEntity > > *selectedObjectVector,
-                                     const INextBotFilter &filter,
-                                     CNavArea *startSearchArea,
-                                     float maxRange ) const
+                                    CUtlVector< CHandle< CBaseEntity > > *selectedObjectVector,
+                                    const INextBotFilter &filter,
+                                    CNavArea *startSearchArea,
+                                    float maxRange ) const
 {
     if ( startSearchArea == NULL || selectedObjectVector == NULL )
         return;
@@ -2611,44 +2611,44 @@ bool CTFBot::IsAmmoFull( void ) const
     return isPrimaryFull && isSecondaryFull;
 
     /*
-      CTFWeaponBase *myWeapon = m_Shared.GetActiveTFWeapon();
-      if ( myWeapon )
-      {
+    CTFWeaponBase *myWeapon = m_Shared.GetActiveTFWeapon();
+    if ( myWeapon )
+    {
         if ( IsPlayerClass( TF_CLASS_ENGINEER ) )
         {
-          // wrench is special. it's a melee weapon that wants ammo - metal
-          return ( GetAmmoCount( TF_AMMO_METAL ) >= 200 );
+        // wrench is special. it's a melee weapon that wants ammo - metal
+        return ( GetAmmoCount( TF_AMMO_METAL ) >= 200 );
         }
 
         if ( myWeapon->IsMeleeWeapon() )
         {
-          // we never run out of ammo with a melee weapon
-          return true;
+        // we never run out of ammo with a melee weapon
+        return true;
         }
 
         // no projectile, no ammo needed
         const char *weaponAlias = WeaponIdToAlias( myWeapon->GetWeaponID() );
         if ( weaponAlias )
         {
-          WEAPON_FILE_INFO_HANDLE	weaponInfoHandle = LookupWeaponInfoSlot( weaponAlias );
-          if ( weaponInfoHandle != GetInvalidWeaponInfoHandle() )
-          {
+        WEAPON_FILE_INFO_HANDLE	weaponInfoHandle = LookupWeaponInfoSlot( weaponAlias );
+        if ( weaponInfoHandle != GetInvalidWeaponInfoHandle() )
+        {
             CTFWeaponInfo *weaponInfo = static_cast< CTFWeaponInfo * >( GetFileWeaponInfoFromHandle( weaponInfoHandle ) );
             if ( weaponInfo && weaponInfo->GetWeaponData( TF_WEAPON_PRIMARY_MODE ).m_iProjectile == TF_PROJECTILE_NONE )
             {
-              // we don't shoot anything, so we don't need ammo
-              return true;
+            // we don't shoot anything, so we don't need ammo
+            return true;
             }
-          }
+        }
         }
 
         bool isPrimaryFull = GetAmmoCount( TF_AMMO_PRIMARY ) >= const_cast< CTFBot * >( this )->GetMaxAmmo( TF_AMMO_PRIMARY );
         bool isSecondaryFull = GetAmmoCount( TF_AMMO_SECONDARY ) >= const_cast< CTFBot * >( this )->GetMaxAmmo( TF_AMMO_SECONDARY );
 
         return isPrimaryFull && isSecondaryFull;
-      }
+    }
 
-      return false;
+    return false;
     */
 }
 
@@ -2740,7 +2740,7 @@ bool CTFBot::IsDebugFilterMatch( const char *name ) const
 //-----------------------------------------------------------------------------------------------------
 class CFindClosestPotentiallyVisibleAreaToPos
 {
-   public:
+    public:
     CFindClosestPotentiallyVisibleAreaToPos( const Vector &pos )
     {
         m_pos = pos;
@@ -2840,9 +2840,9 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
         if ( known->IsVisibleInFOVNow() )
         {
             if ( IsPlayerClass( TF_CLASS_SPY ) &&
-                 GetDifficulty() >= CTFBot::HARD &&
-                 m_Shared.InCond( TF_COND_DISGUISED ) &&
-                 !m_Shared.IsStealthed() )
+                GetDifficulty() >= CTFBot::HARD &&
+                m_Shared.InCond( TF_COND_DISGUISED ) &&
+                !m_Shared.IsStealthed() )
             {
                 // smart Spies don't look at their victims until it's too late...
                 // look around at where *teammates* will be coming from to fool the enemy
@@ -2858,9 +2858,9 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
         /* apparently sounds update last known position...
             if ( known->WasEverVisible() && known->GetTimeSinceLastSeen() < 3.0f )
             {
-              // I saw you just a moment ago...
-              GetBodyInterface()->AimHeadTowards( known->GetLastKnownPosition() + GetClassEyeHeight(), IBody::IMPORTANT, 1.0f, NULL, "Aiming at a last known threat position" );
-              return;
+            // I saw you just a moment ago...
+            GetBodyInterface()->AimHeadTowards( known->GetLastKnownPosition() + GetClassEyeHeight(), IBody::IMPORTANT, 1.0f, NULL, "Aiming at a last known threat position" );
+            return;
             }
         */
 
@@ -2937,7 +2937,7 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
 //---------------------------------------------------------------------------------------------
 class CFindVantagePoint : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CFindVantagePoint( int enemyTeamIndex )
     {
         m_enemyTeamIndex = enemyTeamIndex;
@@ -3367,9 +3367,9 @@ bool CTFBot::EquipLongRangeWeapon( void )
         return false;
 
     if ( IsPlayerClass( TF_CLASS_SOLDIER ) ||
-         IsPlayerClass( TF_CLASS_DEMOMAN ) ||
-         IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) ||
-         IsPlayerClass( TF_CLASS_SNIPER ) )
+        IsPlayerClass( TF_CLASS_DEMOMAN ) ||
+        IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) ||
+        IsPlayerClass( TF_CLASS_SNIPER ) )
     {
         CBaseCombatWeapon *primary = Weapon_GetSlot( TF_WPN_TYPE_PRIMARY );
         if ( primary )

@@ -24,11 +24,11 @@
 //-----------------------------------------------------------------------------
 class CNewParticleEffect : public IParticleEffect, public CParticleCollection, public CDefaultClientRenderable
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CNewParticleEffect );
     DECLARE_REFERENCED_CLASS( CNewParticleEffect );
 
-   public:
+    public:
     friend class CRefCountAccessor;
 
     // list management
@@ -83,7 +83,7 @@ class CNewParticleEffect : public IParticleEffect, public CParticleCollection, p
     void DebugDrawBbox( bool bCulled );
 
     // CParticleCollection overrides
-   public:
+    public:
     void StopEmission( bool bInfiniteOnly = false, bool bRemoveAllParticles = false, bool bWakeOnStop = false );
     void SetDormant( bool bDormant );
     void SetControlPoint( int nWhichPoint, const Vector &v );
@@ -109,7 +109,7 @@ class CNewParticleEffect : public IParticleEffect, public CParticleCollection, p
     }
 
     // IParticleEffect overrides
-   public:
+    public:
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator )
     {
     }
@@ -143,7 +143,7 @@ class CNewParticleEffect : public IParticleEffect, public CParticleCollection, p
     CNewParticleEffect( CBaseEntity *pOwner, CParticleSystemDefinition *pEffect );
     virtual ~CNewParticleEffect();
 
-   protected:
+    protected:
     // Returns nonzero if Release() has been called.
     int IsReleased();
 
@@ -171,7 +171,7 @@ class CNewParticleEffect : public IParticleEffect, public CParticleCollection, p
 
     bool m_bViewModelEffect;
 
-   private:
+    private:
     // Update the reference count.
     void AddRef();
     void Release();
@@ -179,7 +179,7 @@ class CNewParticleEffect : public IParticleEffect, public CParticleCollection, p
     void Construct();
 
     int m_RefCount;  // When this goes to zero and the effect has no more active
-                     // particles, (and it's dynamically allocated), it will delete itself.
+                    // particles, (and it's dynamically allocated), it will delete itself.
 
     CNewParticleEffect( const CNewParticleEffect & );  // not defined, not accessible
 };

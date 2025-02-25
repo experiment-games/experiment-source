@@ -58,13 +58,13 @@ class CDucksLeaderboard : public CTFLeaderboardPanel
 {
     DECLARE_CLASS_SIMPLE( CDucksLeaderboard, CTFLeaderboardPanel );
 
-   public:
+    public:
     CDucksLeaderboard( Panel *parent, const char *panelName, const char *pszDuckLeaderboardname );
     virtual ~CDucksLeaderboard();
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
 
-   private:
+    private:
     virtual bool UpdateLeaderboards() OVERRIDE;
     virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t * > &scores ) OVERRIDE;
 
@@ -77,7 +77,7 @@ class CDucksLeaderboardManager : public EditablePanel, CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CDucksLeaderboardManager, EditablePanel );
 
-   public:
+    public:
     CDucksLeaderboardManager( Panel *parent, const char *panelName );
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
@@ -87,7 +87,7 @@ class CDucksLeaderboardManager : public EditablePanel, CGameEventListener
 
     virtual void OnThink();
 
-   private:
+    private:
     void NextPage();
     void PrevPage();
     void ShowPage( int nPage );

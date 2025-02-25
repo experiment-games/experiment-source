@@ -21,7 +21,7 @@ class CHangRope : public CRopePhysics< 512 >
     DECLARE_CLASS( CHangRope, CRopePhysics< 512 > );
 
     // CRopePhysics overrides.
-   public:
+    public:
     virtual void GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel )
     {
         pAccel->Init( ROPE_GRAVITY );
@@ -55,14 +55,14 @@ class CHangRope : public CRopePhysics< 512 >
     }
 
     // Helpers.
-   public:
+    public:
     void ApplyNewSpringLength()
     {
         ResetSpringLength( ( m_flRopeLength + m_flCurSlack + ROPESLACK_FUDGEFACTOR ) / ( NumNodes() - 1 ) );
     }
 
     // Variables used to adjust the rope slack.
-   public:
+    public:
     Vector m_vEndPoints[2];
     bool m_bAdjustSlack;
 
@@ -102,7 +102,7 @@ void CalcRopeStartingConditions(
     rope.m_flWantedHangDist = desiredHang;
 
     rope.m_flStartZ = MIN( vStartPos.z, vEndPos.z );  // Calculate hang as the Z distance from the
-                                                      // lowest endpoint to the bottom of the rope.
+                                                    // lowest endpoint to the bottom of the rope.
 
     rope.SetNumNodes( nNodes );
 

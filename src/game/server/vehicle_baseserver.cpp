@@ -1472,9 +1472,9 @@ void CBaseServerVehicle::HandleEntryExitFinish( bool bExitAnimOn, bool bResetAni
             UTIL_TraceHull( vecEyes, vecEyes, VEC_HULL_MIN, VEC_HULL_MAX, MASK_SOLID, NULL, COLLISION_GROUP_NONE, &tr );
             if ( tr.startsolid && tr.fraction < 1.0 )
             {
-              pPlayer->LeaveVehicle( vecEyes, vecEyeAng );
-              m_pVehicle->Use( pPlayer, pPlayer, USE_TOGGLE, 1 );
-              return;
+            pPlayer->LeaveVehicle( vecEyes, vecEyeAng );
+            m_pVehicle->Use( pPlayer, pPlayer, USE_TOGGLE, 1 );
+            return;
             }
             */
 

@@ -40,7 +40,7 @@ enum
 //
 class CTFShotgun : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShotgun, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -61,11 +61,11 @@ class CTFShotgun : public CTFWeaponBaseGun
     }
 #endif  // GAME_DLL
 
-   protected:
+    protected:
     void Fire( CTFPlayer *pPlayer );
     void UpdatePunchAngles( CTFPlayer *pPlayer );
 
-   private:
+    private:
     CTFShotgun( const CTFShotgun & ) {}
 
 #ifdef GAME_DLL
@@ -76,7 +76,7 @@ class CTFShotgun : public CTFWeaponBaseGun
 // Engineer's revenge shotgun.
 class CTFShotgun_Revenge : public CTFShotgun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShotgun_Revenge, CTFShotgun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -115,7 +115,7 @@ class CTFShotgun_Revenge : public CTFShotgun
 // Scout version. Different models, possibly different behaviour later on
 class CTFScatterGun : public CTFShotgun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFScatterGun, CTFShotgun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -138,7 +138,7 @@ class CTFScatterGun : public CTFShotgun
 
 class CTFShotgun_Soldier : public CTFShotgun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShotgun_Soldier, CTFShotgun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -152,7 +152,7 @@ class CTFShotgun_Soldier : public CTFShotgun
 // Secondary version. Different weapon slot, different ammo
 class CTFShotgun_HWG : public CTFShotgun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShotgun_HWG, CTFShotgun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -165,7 +165,7 @@ class CTFShotgun_HWG : public CTFShotgun
 
 class CTFShotgun_Pyro : public CTFShotgun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShotgun_Pyro, CTFShotgun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -178,7 +178,7 @@ class CTFShotgun_Pyro : public CTFShotgun
 
 class CTFSodaPopper : public CTFScatterGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSodaPopper, CTFScatterGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -200,7 +200,7 @@ class CTFSodaPopper : public CTFScatterGun
 
 class CTFPEPBrawlerBlaster : public CTFScatterGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPEPBrawlerBlaster, CTFScatterGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -219,7 +219,7 @@ class CTFPEPBrawlerBlaster : public CTFScatterGun
 
 class CTFShotgunBuildingRescue : public CTFShotgun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFShotgunBuildingRescue, CTFShotgun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

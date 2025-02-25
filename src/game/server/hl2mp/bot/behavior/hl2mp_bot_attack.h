@@ -8,7 +8,7 @@
 //-------------------------------------------------------------------------------
 class CHL2MPBotAttack : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotAttack( void );
     virtual ~CHL2MPBotAttack() {}
 
@@ -27,7 +27,7 @@ class CHL2MPBotAttack : public Action< CHL2MPBot >
         return "Attack";
     };
 
-   private:
+    private:
     PathFollower m_path;
     ChasePath m_chasePath;
     CountdownTimer m_repathTimer;

@@ -84,8 +84,8 @@ void SOTrackerSpewTypeToggle( const CCommand& args )
 
 ConCommand tf_so_tracker_spew_type_toggle( "tf_so_tracker_spew_type_toggle", SOTrackerSpewTypeToggle, NULL
 #ifdef CLIENT_DLL
-                                           ,
-                                           FCVAR_CHEAT
+                                            ,
+                                            FCVAR_CHEAT
 #endif
 );
 
@@ -114,8 +114,8 @@ void CBaseSOTracker::OnRemove()
 CSOTrackerManager::CSOTrackerManager()
     : m_mapItemTrackers( DefLessFunc( SOTrackerMap_t::KeyType_t ) ), m_mapUnacknowledgedCommits( DefLessFunc( CommitsMap_t::KeyType_t ) )
 #ifdef GAME_DLL
-      ,
-      CAutoGameSystemPerFrame( "CSOTrackerManager" )
+    ,
+    CAutoGameSystemPerFrame( "CSOTrackerManager" )
 #endif
 {
 }
@@ -330,7 +330,7 @@ void CSOTrackerManager::EnsureTrackersForPlayer( const CSteamID& steamIDPlayer )
     {
         // If we didn't find the object in our cache, remove the tracker
         if ( m_mapItemTrackers[i]->GetOwnerSteamID() == steamIDPlayer &&
-             pSOTypeCache->FindSharedObject( *m_mapItemTrackers[i]->GetSObject() ) == NULL )
+            pSOTypeCache->FindSharedObject( *m_mapItemTrackers[i]->GetSObject() ) == NULL )
         {
             RemoveAndDeleteTrackerAtIndex( i );
             i = -1;

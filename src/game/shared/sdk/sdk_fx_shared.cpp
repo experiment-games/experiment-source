@@ -38,7 +38,7 @@ void FX_WeaponSound(
 
 class CGroupedSound
 {
-   public:
+    public:
     string_t m_SoundName;
     Vector m_vPos;
 };
@@ -90,9 +90,9 @@ void EndGroupingSounds()
 void StartGroupingSounds() {}
 void EndGroupingSounds() {}
 void FX_WeaponSound( int iPlayerIndex,
-                     WeaponSound_t sound_type,
-                     const Vector &vOrigin,
-                     CSDKWeaponInfo *pWeaponInfo ){};
+                    WeaponSound_t sound_type,
+                    const Vector &vOrigin,
+                    CSDKWeaponInfo *pWeaponInfo ){};
 
 #endif
 

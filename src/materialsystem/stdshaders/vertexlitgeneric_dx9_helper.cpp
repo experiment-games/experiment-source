@@ -129,7 +129,7 @@ void InitParamsVertexLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **para
 
     // Write over $basetexture with $info.m_nBumpmap if we are going to be using diffuse normal mapping.
     if ( info.m_nAlbedo != -1 && g_pConfig->UseBumpmapping() && info.m_nBumpmap != -1 && params[info.m_nBumpmap]->IsDefined() && params[info.m_nAlbedo]->IsDefined() &&
-         params[info.m_nBaseTexture]->IsDefined() )
+        params[info.m_nBaseTexture]->IsDefined() )
     {
         params[info.m_nBaseTexture]->SetStringValue( params[info.m_nAlbedo]->GetStringValue() );
     }
@@ -171,8 +171,8 @@ void InitParamsVertexLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **para
     }
 
     if ( ( ( info.m_nBumpmap != -1 ) && g_pConfig->UseBumpmapping() && params[info.m_nBumpmap]->IsDefined() )
-         // we don't need a tangent space if we have envmap without bumpmap
-         //		|| ( info.m_nEnvmap != -1 && params[info.m_nEnvmap]->IsDefined() )
+        // we don't need a tangent space if we have envmap without bumpmap
+        //		|| ( info.m_nEnvmap != -1 && params[info.m_nEnvmap]->IsDefined() )
     )
     {
         SET_FLAGS2( MATERIAL_VAR2_NEEDS_TANGENT_SPACES );
@@ -194,7 +194,7 @@ void InitParamsVertexLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **para
     }
 
     if ( IS_FLAG_SET( MATERIAL_VAR_BASEALPHAENVMAPMASK ) && info.m_nBumpmap != -1 &&
-         params[info.m_nBumpmap]->IsDefined() && !hasNormalMapAlphaEnvmapMask )
+        params[info.m_nBumpmap]->IsDefined() && !hasNormalMapAlphaEnvmapMask )
     {
         Warning( "material %s has a normal map and $basealphaenvmapmask.  Must use $normalmapalphaenvmapmask to get specular.\n\n", pMaterialName );
         params[info.m_nEnvmap]->SetUndefined();
@@ -260,9 +260,9 @@ void InitVertexLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **params, bo
     // }
 
     if ( bNeedsSkinBecauseOfDetail ||
-         ( info.m_nPhong != -1 &&
-           params[info.m_nPhong]->GetIntValue() &&
-           g_pHardwareConfig->SupportsPixelShaders_2_b() ) )
+        ( info.m_nPhong != -1 &&
+            params[info.m_nPhong]->GetIntValue() &&
+            g_pHardwareConfig->SupportsPixelShaders_2_b() ) )
     {
         InitSkin_DX9( pShader, params, info );
         return;
@@ -362,7 +362,7 @@ void InitVertexLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **params, bo
 
 class CVertexLitGeneric_DX9_Context : public CBasePerMaterialContextData
 {
-   public:
+    public:
     CCommandBufferBuilder< CFixedCommandStorageBuffer< 800 > > m_SemiStaticCmdsOut;
 };
 
@@ -1414,7 +1414,7 @@ static void DrawVertexLitGeneric_DX9_Internal( CBaseVSShader *pShader, IMaterial
                 SET_DYNAMIC_VERTEX_SHADER_COMBO( DOWATERFOG, fogIndex );
                 SET_DYNAMIC_VERTEX_SHADER_COMBO( SKINNING, numBones > 0 );
                 SET_DYNAMIC_VERTEX_SHADER_COMBO( LIGHTING_PREVIEW,
-                                                 pShaderAPI->GetIntRenderingParameter( INT_RENDERPARM_ENABLE_FIXED_LIGHTING ) != 0 );
+                                                pShaderAPI->GetIntRenderingParameter( INT_RENDERPARM_ENABLE_FIXED_LIGHTING ) != 0 );
                 SET_DYNAMIC_VERTEX_SHADER_COMBO( MORPHING, pShaderAPI->IsHWMorphingEnabled() && !bTreeSway );
                 SET_DYNAMIC_VERTEX_SHADER_COMBO( COMPRESSED_VERTS, ( int )vertexCompression );
                 SET_DYNAMIC_VERTEX_SHADER_CMD( DynamicCmdsOut, vertexlit_and_unlit_generic_vs30 );

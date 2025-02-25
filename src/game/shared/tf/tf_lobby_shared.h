@@ -22,7 +22,7 @@ class ConstTFLobbyPlayer;
 // On the GC, this is the base type that access's the parent's shared object. Elsewhere, it is the SO.
 class CTFLobbyShared : public GCSDK::ILobby
 {
-   public:
+    public:
     virtual ~CTFLobbyShared() {}
 
     //
@@ -53,7 +53,7 @@ class CTFLobbyShared : public GCSDK::ILobby
     {
         friend class CTFLobbyShared;
 
-       public:
+        public:
         MatchPlayers_t::index GetIndexBySteamID( CSteamID steamID ) const;
         ConstTFLobbyPlayer GetDetails( MatchPlayers_t::index idxMatchPlayer ) const;
         bool BIsMember( MatchPlayers_t::index idx ) const
@@ -69,7 +69,7 @@ class CTFLobbyShared : public GCSDK::ILobby
             return end().value;
         }
 
-       private:
+        private:
         MatchPlayers_t( const CTFLobbyShared &lobby, ValueType_t nMemberCount, ValueType_t nCount )
             : CUtlIndexRange( 0, nCount ), m_nMemberCount( nMemberCount ), m_lobby( lobby ) {}
         ValueType_t m_nMemberCount;
@@ -159,7 +159,7 @@ class CTFLobbyShared : public GCSDK::ILobby
     bool BAssertValidPendingPlayerIndex( int iPendingPlayerIndex ) const;
     ConstTFLobbyPlayer GetPendingPlayerDetails( int i ) const;
 
-   private:
+    private:
     // Ugly version of the Count*Players calls
     int InternalCountPlayers( bool bOnlyMatchPlayers, bool bIncludePending, int *pOutNumMember = nullptr ) const;
 
@@ -171,7 +171,7 @@ class CTFLobbyShared : public GCSDK::ILobby
 // Provides non-mutable TFLobbyPlayer functions
 class ITFLobbyPlayer
 {
-   public:
+    public:
     const char *GetName() const
     {
         return Proto().name().c_str();
@@ -232,7 +232,7 @@ class ITFLobbyPlayer
 // ITFLobbyPlayer that references a proto object elsewhere
 class ConstTFLobbyPlayer : public ITFLobbyPlayer
 {
-   public:
+    public:
     ConstTFLobbyPlayer( const CTFLobbyPlayerProto &proto )
         : m_proto( proto ) {}
     ConstTFLobbyPlayer( const ITFLobbyPlayer &other )
@@ -243,14 +243,14 @@ class ConstTFLobbyPlayer : public ITFLobbyPlayer
         return m_proto;
     }
 
-   private:
+    private:
     const CTFLobbyPlayerProto &m_proto;
 };
 
 class CTFLobbyInvite : public GCSDK::CProtoBufSharedObject< CTFLobbyInviteProto, k_EProtoObjectTFLobbyInvite >,
-                       public GCSDK::IPlayerGroupInvite
+                        public GCSDK::IPlayerGroupInvite
 {
-   public:
+    public:
     typedef GCSDK::CProtoBufSharedObject< CTFLobbyInviteProto, k_EProtoObjectTFLobbyInvite > BaseClass;
 
     const static int k_nTypeID = k_EProtoObjectTFLobbyInvite;

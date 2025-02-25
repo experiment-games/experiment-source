@@ -374,14 +374,14 @@ void NextBotGroundLocomotion::ApplyAccumulatedApproach( void )
     }
 
     /*
-      // lean forward/backward based on acceleration
-      float desiredLean = m_acceleration / NextBotLeanForwardAccel.GetFloat();
+    // lean forward/backward based on acceleration
+    float desiredLean = m_acceleration / NextBotLeanForwardAccel.GetFloat();
 
-      QAngle lean = GetDesiredLean();
+    QAngle lean = GetDesiredLean();
 
-      lean.x = NextBotLeanMaxAngle.GetFloat() * clamp( desiredLean, -1.0f, 1.0f );
+    lean.x = NextBotLeanMaxAngle.GetFloat() * clamp( desiredLean, -1.0f, 1.0f );
 
-      SetDesiredLean( lean );
+    SetDesiredLean( lean );
     */
 
     Vector newPos;
@@ -444,7 +444,7 @@ void NextBotGroundLocomotion::DriveTo( const Vector &pos )
  */
 class GroundLocomotionCollisionTraceFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     GroundLocomotionCollisionTraceFilter( INextBot *me, const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -702,8 +702,8 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
 
         // obey climbing slope limit
         if ( !body->HasActivityType( IBody::MOTION_CONTROLLED_Z ) &&
-             trace.plane.normal.z < GetTraversableSlopeLimit() &&
-             fullMove.z > 0.0f )
+            trace.plane.normal.z < GetTraversableSlopeLimit() &&
+            fullMove.z > 0.0f )
         {
             fullMove.z = 0.0f;
             trace.plane.normal.z = 0.0f;
@@ -717,12 +717,12 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
         if ( GetBot()->IsDebugging( NEXTBOT_LOCOMOTION ) )
         {
             NDebugOverlay::Line( trace.endpos,
-                                 trace.endpos + 20.0f * trace.plane.normal,
-                                 255,
-                                 0,
-                                 150,
-                                 true,
-                                 15.0f );
+                                trace.endpos + 20.0f * trace.plane.normal,
+                                255,
+                                0,
+                                150,
+                                true,
+                                15.0f );
         }
 
         // check for collisions along remainder of move
@@ -761,7 +761,7 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
  */
 class ClosestActorsScan
 {
-   public:
+    public:
     ClosestActorsScan( const Vector &spot, int team, float maxRange = 0.0f, CBaseCombatCharacter *ignore = NULL )
     {
         m_spot = spot;
@@ -941,12 +941,12 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
     NextBotTraceFilterIgnoreActors filter( m_nextBot, body->GetCollisionGroup() );
 
     TraceHull( m_nextBot->GetPosition() + Vector( 0, 0, GetStepHeight() + 0.001f ),
-               m_nextBot->GetPosition() + Vector( 0, 0, -stickToGroundTolerance ),
-               Vector( -halfWidth, -halfWidth, 0 ),
-               Vector( halfWidth, halfWidth, hullHeight ),
-               body->GetSolidMask(),
-               &filter,
-               &ground );
+                m_nextBot->GetPosition() + Vector( 0, 0, -stickToGroundTolerance ),
+                Vector( -halfWidth, -halfWidth, 0 ),
+                Vector( halfWidth, halfWidth, hullHeight ),
+                body->GetSolidMask(),
+                &filter,
+                &ground );
 
     if ( ground.startsolid )
     {

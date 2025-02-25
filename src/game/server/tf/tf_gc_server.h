@@ -38,7 +38,7 @@ class CReliableMessageQueue;
 
 class CMvMVictoryInfo
 {
-   public:
+    public:
     int m_nLobbyId;
     CUtlString m_sChallengeName;
 #ifdef USE_MVM_TOUR
@@ -55,7 +55,7 @@ class CMatchInfo
 {
     friend class CTFGCServerSystem;
 
-   public:
+    public:
     CMatchInfo( const CTFGSLobby *pLobby );
     ~CMatchInfo();
 
@@ -201,7 +201,7 @@ class CMatchInfo
             float m_flMultiplier;
         };
 
-       private:
+        private:
         void OnConnected( int nEntindex );
         void OnActive();
 
@@ -291,9 +291,9 @@ class CMatchInfo
     void GiveXPDirectly( CSteamID steamID, CMsgTFXPSource::XPSourceType eType, int nAmount, bool bCanAwardBonusXP = true );
     // Give an XP bonus that increases
     void GiveXPBonus( CSteamID steamID,
-                      CMsgTFXPSource_XPSourceType eType,
-                      float flMultipler,
-                      int nBonusPool );
+                    CMsgTFXPSource_XPSourceType eType,
+                    float flMultipler,
+                    int nBonusPool );
 
     // Is this player allowed to leave the match without incurring an abandon right now
 
@@ -303,11 +303,11 @@ class CMatchInfo
     //              there)
     bool BPlayerSafeToLeaveMatch( CSteamID steamID );
 
-   protected:
+    protected:
     int GetRankForStat( RankStatType_t statType, int nRankIndex, uint32 nValue );
     float NormalDistributionCDF( float flValue, float flMu, float flSigma );
 
-   private:
+    private:
     CMatchInfo();
     CMatchInfo( const CMatchInfo &otherinfo );
 
@@ -345,7 +345,7 @@ class CTFGCServerSystem : public CGCClientSystem, public GCSDK::ISharedObjectLis
     friend class ReliableMsgVoteKickPlayerRequest;
     friend class ReliableMsgProcessMatchVoteKick;
 
-   public:
+    public:
     CTFGCServerSystem( void );
     ~CTFGCServerSystem( void );
 
@@ -428,7 +428,7 @@ class CTFGCServerSystem : public CGCClientSystem, public GCSDK::ISharedObjectLis
         eVoteKick_Allow,   // -> Clear to perform a votekick
         eVoteKick_Deny,    // -> Tell them no
         eVoteKick_Handled  // -> We'll take it from here (e.g. need to go talk to the GC, we'll start a vote or tell them no
-                           //    later when that resolves)
+                            //    later when that resolves)
     };
     EVoteKickRequest PlayerRequestVoteKick( const CSteamID &steamID, const CSteamID &steamIDKickTarget, TFVoteKickReason eReason );
 
@@ -547,12 +547,12 @@ class CTFGCServerSystem : public CGCClientSystem, public GCSDK::ISharedObjectLis
 
     void ProcessPlayerInventoryRequest( CSteamID steamID, KeyValues *pKVRequest );
 
-   protected:
+    protected:
     // CGCClientSystem
     virtual void PreInitGC() OVERRIDE;
     virtual void PostInitGC() OVERRIDE;
 
-   private:
+    private:
     void SendPlayerLeftMatch( CSteamID steamID, TFMatchLeaveReason eReason, bool bAbandoned );
 
     // Send a kick-lobby message for a stale or unexpected lobby

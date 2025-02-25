@@ -10,7 +10,7 @@
 // Declare the sparkler entity for the server-side
 class CSparkler : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_CLASS( CSparkler, CBaseEntity );
 
@@ -19,7 +19,7 @@ class CSparkler : public CBaseEntity
     void InputToggle( inputdata_t &input );  // Input function for toggling our effect's state
     void InputScale( inputdata_t &input );
 
-   private:
+    private:
     CNetworkVar( bool, m_bEmit );     // Marks whether the effect should be active or not
     CNetworkVar( float, m_flScale );  // The size and speed of the effect
 

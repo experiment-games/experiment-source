@@ -38,7 +38,7 @@ class CTFPipebombLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon, p
 class CTFPipebombLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
 #endif
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPipebombLauncher, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -69,7 +69,7 @@ class CTFPipebombLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
     virtual bool Reload( void );
     virtual void WeaponReset( void );
 
-   public:
+    public:
     // ITFChargeUpWeapon
     virtual bool CanCharge()
     {
@@ -125,7 +125,7 @@ class CTFPipebombLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
     void UpdateOnRemove( void );
     virtual void ApplyPostHitEffects( const CTakeDamageInfo &inputInfo, CTFPlayer *pPlayer );
 
-   protected:
+    protected:
     // This is here so we can network the pipebomb count for prediction purposes
     CNetworkVar( int, m_iPipebombCount );
 #endif
@@ -152,7 +152,7 @@ class CTFPipebombLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
     bool m_bNoAutoRelease;
     bool m_bWantsToShoot;
 
-   private:
+    private:
     CNetworkVar( float, m_flChargeBeginTime );
     CTFPipebombLauncher( const CTFPipebombLauncher & ) {}
 };

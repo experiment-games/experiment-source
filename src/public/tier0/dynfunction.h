@@ -31,7 +31,7 @@ DLL_EXPORT void *VoidFnPtrLookup_Tier0( const char *libname, const char *fn, voi
 template < class FunctionType >
 class CDynamicFunction
 {
-   public:
+    public:
     // Construct with a NULL function pointer. You must manually call
     //  Lookup() before you can call a dynamic function through this interface.
     CDynamicFunction()
@@ -124,7 +124,7 @@ class CDynamicFunction
         return m_pFn == NULL;
     }
 
-   protected:
+    protected:
     FunctionType m_pFn;
 };
 
@@ -137,10 +137,10 @@ class CDynamicFunction
 template < class FunctionType >
 class CDynamicFunctionMustInit : public CDynamicFunction< FunctionType >
 {
-   private:  // forbid default constructor.
+    private:  // forbid default constructor.
     CDynamicFunctionMustInit() {}
 
-   public:
+    public:
     CDynamicFunctionMustInit( const char *libname, const char *fn, FunctionType fallback = NULL )
         : CDynamicFunction< FunctionType >( libname, fn, fallback )
     {

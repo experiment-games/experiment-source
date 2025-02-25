@@ -24,7 +24,7 @@ class CHudEurekaEffectTeleportMenu : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudEurekaEffectTeleportMenu, EditablePanel );
 
-   public:
+    public:
     CHudEurekaEffectTeleportMenu( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
@@ -43,7 +43,7 @@ class CHudEurekaEffectTeleportMenu : public CHudElement, public EditablePanel
         return IsActive() ? GAME_ACTION_SET_IN_GAME_HUD : GAME_ACTION_SET_NONE;
     }
 
-   private:
+    private:
     void SetSelectedItem( eEurekaTeleportTargets eSelectedTeleportTarget );
     void SendTeleportMessage( eEurekaTeleportTargets eTeleportTarget );
     bool CanTeleport() const;

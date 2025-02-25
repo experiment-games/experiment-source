@@ -57,10 +57,10 @@ PASSTIME_CONVAR( tf_passtime_throwspeed_velocity_scale, 0.33f, "How much player 
 PASSTIME_CONVAR( tf_passtime_save_stats, 0, "" );
 
 PASSTIME_CONVAR( tf_passtime_experiment_telepass, 0,
-                 "None,\
-	TeleportToCatcher,\
-	SwapWithCatcher,\
-	TeleportToCatcherMaintainPossession," );
+                "None,\
+    TeleportToCatcher,\
+    SwapWithCatcher,\
+    TeleportToCatcherMaintainPossession," );
 PASSTIME_CONVAR( tf_passtime_experiment_instapass_charge, 0, "" );
 PASSTIME_CONVAR( tf_passtime_experiment_autopass, 0, "" );
 PASSTIME_CONVAR( tf_passtime_experiment_instapass, 0, "" );

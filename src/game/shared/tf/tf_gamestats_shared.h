@@ -260,7 +260,7 @@ struct TF_Gamestats_WeaponStats_t
 //
 struct TF_Gamestats_LevelStats_t
 {
-   public:
+    public:
     TF_Gamestats_LevelStats_t();
     ~TF_Gamestats_LevelStats_t();
     TF_Gamestats_LevelStats_t( const TF_Gamestats_LevelStats_t &stats );
@@ -285,7 +285,7 @@ struct TF_Gamestats_LevelStats_t
         }
     }
 
-   public:
+    public:
     // Level header data.
     struct LevelHeader_t
     {
@@ -363,14 +363,14 @@ struct TF_Gamestats_LevelStats_t
 
 struct TF_Gamestats_RoundStats_t
 {
-   public:
+    public:
     TF_Gamestats_RoundStats_t();
     ~TF_Gamestats_RoundStats_t();
 
-   private:
+    private:
     TF_Gamestats_RoundStats_t( const TF_Gamestats_RoundStats_t &stats ) {}
 
-   public:
+    public:
     void Reset();
     void ResetSummary();
 
@@ -406,14 +406,14 @@ struct TF_Gamestats_RoundStats_t
 
 struct TF_Gamestats_KillStats_t
 {
-   public:
+    public:
     TF_Gamestats_KillStats_t();
     ~TF_Gamestats_KillStats_t();
 
-   private:
+    private:
     TF_Gamestats_KillStats_t( const TF_Gamestats_KillStats_t &stats ) {}
 
-   public:
+    public:
     void Reset();
 };
 

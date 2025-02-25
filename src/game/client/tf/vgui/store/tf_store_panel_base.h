@@ -23,11 +23,11 @@ class CTFBaseStorePanel : public CStorePanel
 {
     DECLARE_CLASS_SIMPLE( CTFBaseStorePanel, CStorePanel );
 
-   protected:
+    protected:
     // CTFBaseStorePanel should not be instantiated directly
     CTFBaseStorePanel( Panel *parent );
 
-   public:
+    public:
     // UI Layout
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnThink();
@@ -50,7 +50,7 @@ class CTFBaseStorePanel : public CStorePanel
     MESSAGE_FUNC_PARAMS( OnArmoryOpened, "ArmoryOpened", data );
     MESSAGE_FUNC( OnArmoryClosed, "ArmoryClosed" );
 
-   private:
+    private:
     CArmoryPanel *m_pArmoryPanel;
     vgui::Panel *m_pNotificationsPresentPanel;
 };

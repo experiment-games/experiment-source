@@ -32,7 +32,7 @@ struct channel_t;
 //-----------------------------------------------------------------------------
 abstract_class CAudioMixer
 {
-   public:
+    public:
     virtual ~CAudioMixer( void ) {}
 
     // UNDONE: time compress
@@ -73,7 +73,7 @@ class CSentence;
 
 abstract_class CAudioSource
 {
-   public:
+    public:
     CAudioSource( void );
     virtual ~CAudioSource( void );
 

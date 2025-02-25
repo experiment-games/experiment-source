@@ -21,7 +21,7 @@ typedef void ( *TextStatFileFn )();
 // The CTextStatsMgr is just a collection of CTextStat's that go into the same file.
 class CTextStatsMgr
 {
-   public:
+    public:
     CTextStatsMgr( void );
 
     // Write a file with all the registered stats.
@@ -33,7 +33,7 @@ class CTextStatsMgr
     // Set the filename to write stats to, if none is specified when writing
     void SetStatsFilename( char *sFilename );
 
-   private:
+    private:
     char m_szStatFilename[MAX_PATH];
 };
 
@@ -45,7 +45,7 @@ class CTextStat
 {
     friend class CTextStatsMgr;
 
-   public:
+    public:
     CTextStat();
     CTextStat( TextStatPrintFn fn, void *pUserData, CTextStatsMgr *pMgr = &g_TextStatsMgr );
     ~CTextStat();
@@ -54,7 +54,7 @@ class CTextStat
     void Init( TextStatPrintFn printFn, void *pUserData, CTextStatsMgr *pMgr = &g_TextStatsMgr );
     void Term();
 
-   private:
+    private:
     // Special constructor to just tie off the linked list.
     CTextStat( bool bGlobalListHead );
 
@@ -77,7 +77,7 @@ class CTextStat
 // its value will be saved in the stats file along with its name.s
 class CTextStatInt
 {
-   public:
+    public:
     CTextStatInt( const char *pName, int initialValue = 0, CTextStatsMgr *pMgr = &g_TextStatsMgr );
 
     operator int() const
@@ -121,10 +121,10 @@ class CTextStatInt
         return m_Value;
     }
 
-   private:
+    private:
     static void PrintFn( IFileSystem *pFileSys, FileHandle_t hFile, void *pUserData );
 
-   private:
+    private:
     const char *m_pName;
     int m_Value;
 
@@ -135,10 +135,10 @@ class CTextStatInt
 // You can write data out to your own file in here.
 class CTextStatFile
 {
-   public:
+    public:
     CTextStatFile( TextStatFileFn fn );
 
-   private:
+    private:
     friend class CTextStatsMgr;
 
     static CTextStatFile *s_pHead;

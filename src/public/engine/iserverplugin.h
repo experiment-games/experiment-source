@@ -50,7 +50,7 @@ typedef int QueryCvarCookie_t;
 //-----------------------------------------------------------------------------
 abstract_class IServerPluginCallbacks
 {
-   public:
+    public:
     // Initialize the plugin to run
     // Return false if there is an error during startup.
     virtual bool Load( CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory ) = 0;
@@ -130,7 +130,7 @@ typedef enum
 //-----------------------------------------------------------------------------
 abstract_class IServerPluginHelpers
 {
-   public:
+    public:
     // creates an onscreen menu with various option buttons
     //	The keyvalues param can contain these fields:
     //	"title" - (string) the title to show in the hud and in the title bar

@@ -20,8 +20,8 @@ void DebugCheckEHandleAccess( void *pEnt )
     if ( g_bDisableEhandleAccess )
     {
         Msg( "Access of EHANDLE/CHandle for class %s:%p in destructor!\n",
-             STRING( ( ( CBaseEntity * )pEnt )->m_iClassname ),
-             pEnt );
+            STRING( ( ( CBaseEntity * )pEnt )->m_iClassname ),
+            pEnt );
     }
 }
 

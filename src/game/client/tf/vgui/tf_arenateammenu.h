@@ -20,10 +20,10 @@
 //-----------------------------------------------------------------------------
 class CTFArenaTeamMenu : public CTeamMenu
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFArenaTeamMenu, CTeamMenu );
 
-   public:
+    public:
     CTFArenaTeamMenu( IViewPort *pViewPort );
     ~CTFArenaTeamMenu();
 
@@ -34,7 +34,7 @@ class CTFArenaTeamMenu : public CTeamMenu
     CON_COMMAND_MEMBER_F( CTFTeamMenu, "join_team", Join_Team, "Send a jointeam command", 0 );
 #endif
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnKeyCodePressed( vgui::KeyCode code );
 
@@ -50,7 +50,7 @@ class CTFArenaTeamMenu : public CTeamMenu
         return PANEL_ARENA_TEAM;
     }
 
-   private:
+    private:
     CTFTeamButton *m_pAutoTeamButton;
     CTFTeamButton *m_pSpecTeamButton;
     CExLabel *m_pSpecLabel;
@@ -68,7 +68,7 @@ class CTFArenaTeamMenu : public CTeamMenu
     bool m_bRedDisabled;
     bool m_bBlueDisabled;
 
-   private:
+    private:
     enum
     {
         NUM_TEAMS = 3

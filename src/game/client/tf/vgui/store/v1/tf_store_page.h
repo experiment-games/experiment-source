@@ -20,7 +20,7 @@ class CTFStorePage1 : public CTFStorePageBase
 {
     DECLARE_CLASS_SIMPLE( CTFStorePage1, CTFStorePageBase );
 
-   public:
+    public:
     CTFStorePage1( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
 
     virtual const char *GetPageResFile( void );

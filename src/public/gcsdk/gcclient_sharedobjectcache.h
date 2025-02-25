@@ -55,7 +55,7 @@ enum ESOCacheEvent
 //----------------------------------------------------------------------------
 class ISharedObjectListener
 {
-   public:
+    public:
     /// Called when a new object is created in a cache we are currently subscribed to, or when we are added
     /// as a listener to a cache which already has objects in it
     ///
@@ -127,7 +127,7 @@ class ISharedObjectListener
 //----------------------------------------------------------------------------
 class CGCClientSharedObjectContext
 {
-   public:
+    public:
     CGCClientSharedObjectContext( const CSteamID &steamIDOwner );
 
     bool BAddListener( ISharedObjectListener *pListener );
@@ -150,7 +150,7 @@ class CGCClientSharedObjectContext
         return m_vecListeners;
     }
 
-   private:
+    private:
     CSteamID m_steamIDOwner;
     CUtlVector< ISharedObjectListener * > m_vecListeners;
 };
@@ -161,7 +161,7 @@ class CGCClientSharedObjectContext
 //----------------------------------------------------------------------------
 class CGCClientSharedObjectTypeCache : public CSharedObjectTypeCache
 {
-   public:
+    public:
     CGCClientSharedObjectTypeCache( int nTypeID, const CGCClientSharedObjectContext &context );
     virtual ~CGCClientSharedObjectTypeCache();
 
@@ -173,7 +173,7 @@ class CGCClientSharedObjectTypeCache : public CSharedObjectTypeCache
 
     void RemoveAllObjects( CUtlVector< CSharedObject * > &vecObjects );
 
-   private:
+    private:
     const CGCClientSharedObjectContext &m_context;
 };
 
@@ -187,7 +187,7 @@ class CGCClientSharedObjectCache : public CSharedObjectCache
 {
     friend class CGCSOUpdateMultipleJob;
 
-   public:
+    public:
     CGCClientSharedObjectCache( const CSteamID &steamIDOwner = CSteamID() );
     virtual ~CGCClientSharedObjectCache();
 
@@ -251,8 +251,8 @@ class CGCClientSharedObjectCache : public CSharedObjectCache
         return m_bLocal;
     }
 
-   protected:
-   private:
+    protected:
+    private:
     virtual CSharedObjectTypeCache *AllocateTypeCache( int nClassID ) const OVERRIDE
     {
         return new CGCClientSharedObjectTypeCache( nClassID, m_context );

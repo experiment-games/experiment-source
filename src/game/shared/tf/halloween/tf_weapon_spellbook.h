@@ -56,7 +56,7 @@ class CHudSpellMenu : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudSpellMenu, EditablePanel );
 
-   public:
+    public:
     CHudSpellMenu( const char *pElementName );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual bool ShouldDraw( void );
@@ -65,7 +65,7 @@ class CHudSpellMenu : public CHudElement, public vgui::EditablePanel
 
     void UpdateSpellText( int iSpellIndex, int iCharges );
 
-   private:
+    private:
     vgui::ImagePanel *m_pSpellIcon;
     CExLabel *m_pKeyBinding;
 
@@ -80,7 +80,7 @@ class CHudSpellMenu : public CHudElement, public vgui::EditablePanel
 //=============================================================================
 class CEquipSpellbookNotification : public CEconNotification
 {
-   public:
+    public:
     CEquipSpellbookNotification()
         : CEconNotification()
     {
@@ -126,7 +126,7 @@ class CEquipSpellbookNotification : public CEconNotification
         return dynamic_cast< CEquipSpellbookNotification * >( pNotification ) != NULL;
     }
 
-   private:
+    private:
     bool m_bHasTriggered;
 };
 #endif  // CLIENT_DLL
@@ -141,7 +141,7 @@ void RemoveAll2013HalloweenTeleportSpellsInMidFlight( void );
 //
 class CTFSpellBook : public CTFThrowable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSpellBook, CTFThrowable );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

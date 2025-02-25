@@ -20,10 +20,10 @@ class Panel;
 
 class SDKViewport : public CBaseViewport
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( SDKViewport, CBaseViewport );
 
-   public:
+    public:
     IViewPortPanel *CreatePanelByName( const char *szPanelName );
     void CreateDefaultPanels( void );
 

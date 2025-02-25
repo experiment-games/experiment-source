@@ -15,6 +15,5 @@ vs.1.1
 
 #include "LightmappedGeneric_inc.vsh"
 
-&LightmappedGeneric( $DETAIL, $ENVMAP, $ENVMAPCAMERASPACE, $ENVMAPSPHERE, 
-				$VERTEXCOLOR );
-
+&LightmappedGeneric( $DETAIL, $ENVMAP, $ENVMAPCAMERASPACE, $ENVMAPSPHERE,
+                $VERTEXCOLOR );

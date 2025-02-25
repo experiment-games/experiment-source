@@ -23,7 +23,7 @@
 //------------------------------------------------------------------------------
 class C_ColorCorrectionVolume : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_ColorCorrectionVolume, C_BaseEntity );
 
     DECLARE_CLIENTCLASS();
@@ -37,7 +37,7 @@ class C_ColorCorrectionVolume : public C_BaseEntity
 
     void ClientThink();
 
-   private:
+    private:
     float m_Weight;
     char m_lookupFilename[MAX_PATH];
 

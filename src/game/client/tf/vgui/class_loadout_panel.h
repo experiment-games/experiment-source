@@ -26,7 +26,7 @@ class CLoadoutItemOptionsPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CLoadoutItemOptionsPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CLoadoutItemOptionsPanel( Panel *parent, const char *pName );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void PerformLayout( void );
@@ -41,7 +41,7 @@ class CLoadoutItemOptionsPanel : public vgui::EditablePanel
     }
     void UpdateItemOptionsUI();
 
-   private:
+    private:
     void AddControlsParticleEffect( void ) const;
     void AddControlsSetStyle( void ) const;
     CEconItemView *GetItem( void ) const;
@@ -62,7 +62,7 @@ class CClassLoadoutPanel : public CBaseLoadoutPanel
 {
     DECLARE_CLASS_SIMPLE( CClassLoadoutPanel, CBaseLoadoutPanel );
 
-   public:
+    public:
     CClassLoadoutPanel( vgui::Panel *parent );
     ~CClassLoadoutPanel();
 
@@ -123,7 +123,7 @@ class CClassLoadoutPanel : public CBaseLoadoutPanel
     };
     void SetLoadoutPage( classloadoutpage_t loadoutPage );
 
-   protected:
+    protected:
     virtual void SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver );
     void AddAttribPassiveText( const class CEconAttributeDescription &AttrDesc, INOUT_Z_CAP( iNumPassiveChars ) wchar_t *out_wszPassiveDesc, int iNumPassiveChars );
     void RespawnPlayer();
@@ -158,7 +158,7 @@ class CClassLoadoutPanel : public CBaseLoadoutPanel
     CUtlVector< CExButton * > m_vecItemOptionButtons;
     CLoadoutItemOptionsPanel *m_pItemOptionPanel;
 
-   private:
+    private:
     void UpdatePageButtonColor( CExImageButton *pPageButton, bool bIsActive );
 
     enum PageButtonColors_t

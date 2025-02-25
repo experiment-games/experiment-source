@@ -7,7 +7,7 @@
 
 class CHL2MPBotGetProp : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotGetProp( void );
     ~CHL2MPBotGetProp( void );
 
@@ -32,7 +32,7 @@ class CHL2MPBotGetProp : public Action< CHL2MPBot >
         return "GetProp";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CHandle< CBaseEntity > m_prop;
 

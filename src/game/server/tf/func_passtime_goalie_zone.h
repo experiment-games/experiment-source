@@ -18,7 +18,7 @@ class CTFPlayer;
 
 class CFuncPasstimeGoalieZone : public CBaseTrigger, public IFuncPasstimeGoalieZoneAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncPasstimeGoalieZone, CBaseTrigger );
     DECLARE_DATADESC();
     virtual void Spawn() OVERRIDE;

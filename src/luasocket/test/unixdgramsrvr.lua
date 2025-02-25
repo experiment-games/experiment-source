@@ -3,7 +3,7 @@
     u = assert(socket.unix.dgram())
     assert(u:bind("/tmp/foo"))
     while 1 do
-		x, r = assert(u:receivefrom())
-		print(x, r)
-		assert(u:sendto(">" .. x, r))
+        x, r = assert(u:receivefrom())
+        print(x, r)
+        assert(u:sendto(">" .. x, r))
     end

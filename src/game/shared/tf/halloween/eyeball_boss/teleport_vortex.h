@@ -36,7 +36,7 @@ class CTeleportVortex : public CBaseAnimating
     DECLARE_NETWORKCLASS();
     DECLARE_CLASS( CTeleportVortex, CBaseAnimating );
 
-   public:
+    public:
     CTeleportVortex();
     virtual ~CTeleportVortex();
 
@@ -63,7 +63,7 @@ class CTeleportVortex : public CBaseAnimating
     void SetAdvantageTeam( inputdata_t &inputdata );
 #endif
 
-   protected:
+    protected:
     float GetRampTime();
     bool ShouldDoBookRampIn();
     bool ShouldDoBookRampOut();

@@ -38,7 +38,7 @@ enum lunchbox_weapontypes_t
 //
 class CTFLunchBox : public CTFWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFLunchBox, CTFWeaponBase );
     DECLARE_NETWORKCLASS_OVERRIDE();
     DECLARE_PREDICTABLE_OVERRIDE();
@@ -91,7 +91,7 @@ class CTFLunchBox : public CTFWeaponBase
     static void RecvProxy_Broken( const CRecvProxyData *pData, void *pStruct, void *pOut );
 #endif
 
-   private:
+    private:
     CTFLunchBox( const CTFLunchBox & ) {}
 
     // Prevent spamming with resupply cabinets: only 1 thrown at a time
@@ -106,7 +106,7 @@ class CTFLunchBox : public CTFWeaponBase
 //
 class CTFLunchBox_Drink : public CTFLunchBox
 {
-   public:
+    public:
     DECLARE_CLASS( CTFLunchBox_Drink, CTFLunchBox );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

@@ -7,7 +7,7 @@
 
 class C_TFBaseBoss : public C_NextBotCombatCharacter, public C_TFMvMBossProgressUser
 {
-   public:
+    public:
     DECLARE_CLASS( C_TFBaseBoss, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
@@ -26,7 +26,7 @@ class C_TFBaseBoss : public C_NextBotCombatCharacter, public C_TFMvMBossProgress
         return WorldSpaceCenter();
     }
 
-   private:
+    private:
     float m_lastHealthPercentage;
 };
 

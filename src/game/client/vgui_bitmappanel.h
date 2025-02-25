@@ -29,7 +29,7 @@ class CBitmapPanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     // constructor
     CBitmapPanel();
     CBitmapPanel( vgui::Panel *pParent, const char *pName );
@@ -55,7 +55,7 @@ class CBitmapPanel : public vgui::Panel
 
     const char *GetMouseOverText( void );
 
-   private:
+    private:
     enum
     {
         MAX_ENTITY_MOUSEOVER = 256

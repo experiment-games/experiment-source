@@ -50,7 +50,7 @@ dp4 $texturePos.z, $worldPos, $SHADER_SPECIFIC_CONST_2
 &AllocateRegister( \$shadowFade );
 sub $shadowFade, $texturePos.z, $SHADER_SPECIFIC_CONST_5.x
 mul $shadowFade, $shadowFade, $SHADER_SPECIFIC_CONST_5.y
-  
+
 ;------------------------------------------------------------------------------
 ; Offset it into the texture
 ;------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ add oT0.xyz, $actualTextureCoord, $SHADER_SPECIFIC_CONST_3
 ;------------------------------------------------------------------------------
 mov oT1.xyz, $texturePos		; also clips when shadow z < 0 !
 sub oT2.xyz, $cOne, $texturePos
-sub oT2.z, $cOne, $shadowFade.z	; clips when shadow z > shadow distance	
+sub oT2.z, $cOne, $shadowFade.z	; clips when shadow z > shadow distance
 &FreeRegister( \$texturePos );
 
 ;------------------------------------------------------------------------------
@@ -82,4 +82,3 @@ dp3 oT3, $worldNormal, -$SHADER_SPECIFIC_CONST_2
 mov oD0, $cModulationColor
 mul oD0.w, $shadowFade.x, $SHADER_SPECIFIC_CONST_5.z
 &FreeRegister( \$shadowFade );
-

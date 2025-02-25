@@ -18,10 +18,10 @@
 #define DO16(buf)   DO8(buf,0); DO8(buf,8);
 
 /* use NO_DIVIDE if your processor does not do division in hardware --
-   try it both ways to see which is faster */
+    try it both ways to see which is faster */
 #ifdef NO_DIVIDE
 /* note that this assumes BASE is 65521, where 65536 % 65521 == 15
-   (thank you to John Reiser for pointing this out) */
+    (thank you to John Reiser for pointing this out) */
 #  define CHOP(a) \
     do { \
         unsigned long tmp = a >> 16; \

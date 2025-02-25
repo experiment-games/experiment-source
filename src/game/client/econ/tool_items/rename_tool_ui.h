@@ -17,12 +17,12 @@ class CNameToolUsageDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CNameToolUsageDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CNameToolUsageDialog( vgui::Panel *pParent, const char *pszName, CEconItemView *pTool, CEconItemView *pToolSubject, bool bDescription );
     virtual int GetMaxLength();
     virtual int GetMaxDBSize();
 
-   protected:
+    protected:
     bool m_bDescription;
 };
 
@@ -33,7 +33,7 @@ class CRequestNameDialog : public CNameToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CRequestNameDialog, CNameToolUsageDialog );
 
-   public:
+    public:
     CRequestNameDialog( vgui::Panel *pParent, const char *pszName, CEconItemView *pTool, CEconItemView *pToolSubject, bool bDescription );
 
     virtual void MoveToFront();
@@ -42,7 +42,7 @@ class CRequestNameDialog : public CNameToolUsageDialog
 
     MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
 
-   private:
+    private:
     vgui::TextEntry *m_pCustomNameEntry;
     vgui::Label *m_pOldNameLabel;
     vgui::Label *m_pOldName;
@@ -56,14 +56,14 @@ class CConfirmNameDialog : public CNameToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmNameDialog, CNameToolUsageDialog );
 
-   public:
+    public:
     CConfirmNameDialog( vgui::Panel *pParent, const char *pszName, CEconItemView *pTool, CEconItemView *pToolSubject, const wchar_t *name, bool bDescription );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Apply( void );
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     wchar_t m_name[MAX_ITEM_CUSTOM_DESC_LENGTH + 1];
 
     bool IsNameValid( void ) const;

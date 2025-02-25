@@ -72,7 +72,7 @@ void CUtlSymbol::Initialize()
 //-----------------------------------------------------------------------------
 class CCleanupUtlSymbolTable
 {
-   public:
+    public:
     ~CCleanupUtlSymbolTable()
     {
         delete CUtlSymbol::s_pSymbolTable;

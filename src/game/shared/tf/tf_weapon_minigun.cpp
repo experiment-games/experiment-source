@@ -341,7 +341,7 @@ void CTFMinigun::SharedAttack()
 #ifdef CLIENT_DLL
                 int nAmmo = 0;
                 if ( prediction->IsFirstTimePredicted() &&
-                     C_BasePlayer::GetLocalPlayer() == pPlayer )
+                    C_BasePlayer::GetLocalPlayer() == pPlayer )
                 {
                     nAmmo = pPlayer->GetAmmoCount( m_iPrimaryAmmoType );
                 }
@@ -352,8 +352,8 @@ void CTFMinigun::SharedAttack()
 
 #ifdef CLIENT_DLL
                 if ( prediction->IsFirstTimePredicted() &&
-                     C_BasePlayer::GetLocalPlayer() == pPlayer &&
-                     nAmmo != pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) )  // did PrimaryAttack() fire a shot? (checking our ammo to find out)
+                    C_BasePlayer::GetLocalPlayer() == pPlayer &&
+                    nAmmo != pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) )  // did PrimaryAttack() fire a shot? (checking our ammo to find out)
                 {
                     m_nShotsFired++;
                     if ( m_nShotsFired == 1000 )  // == and not >= so we don't keep awarding this every shot after it's achieved
@@ -927,7 +927,7 @@ void CTFMinigun::FireGameEvent( IGameEvent *event )
     if ( pLocalPlayer && GetOwner() == pLocalPlayer )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_nShotsFired = 0;
         }
@@ -1124,7 +1124,7 @@ void CTFMinigun::OnDataChanged( DataUpdateType_t updateType )
 
     // Turn off the firing sound here for the Tomislav
     if ( m_iPrevMinigunState == AC_STATE_FIRING &&
-         ( m_iWeaponState == AC_STATE_SPINNING || m_iWeaponState == AC_STATE_IDLE ) )
+        ( m_iWeaponState == AC_STATE_SPINNING || m_iWeaponState == AC_STATE_IDLE ) )
     {
         if ( !HasSpinSounds() )
         {

@@ -301,28 +301,28 @@ void CNPC_Hydra::RunAI( void )
         m_vecChain.Set( i, m_body[i].vecPos );
 
 #if 0
-		if (m_body[i].bStuck)
-		{
-			NDebugOverlay::Box(m_body[i].vecPos, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255, 0, 0, 20, .1);
-		}
-		else
-		{
-			NDebugOverlay::Box(m_body[i].vecPos, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0, 255, 0, 20, .1);
-		}
-		NDebugOverlay::Line( m_body[i].vecPos, m_body[i].vecPos + m_body[i].vecDelta, 0, 255, 0, true, .1);
-		NDebugOverlay::Line( m_body[i-1].vecPos, m_body[i].vecPos, 255, 255, 255, true, .1);
+        if (m_body[i].bStuck)
+        {
+            NDebugOverlay::Box(m_body[i].vecPos, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255, 0, 0, 20, .1);
+        }
+        else
+        {
+            NDebugOverlay::Box(m_body[i].vecPos, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0, 255, 0, 20, .1);
+        }
+        NDebugOverlay::Line( m_body[i].vecPos, m_body[i].vecPos + m_body[i].vecDelta, 0, 255, 0, true, .1);
+        NDebugOverlay::Line( m_body[i-1].vecPos, m_body[i].vecPos, 255, 255, 255, true, .1);
 #endif
 
 #if 0
-		char text[128];
-		Q_snprintf( text, sizeof( text ), "%d", i );
-		NDebugOverlay::Text( m_body[i].vecPos, text, false, 0.1 );
+        char text[128];
+        Q_snprintf( text, sizeof( text ), "%d", i );
+        NDebugOverlay::Text( m_body[i].vecPos, text, false, 0.1 );
 #endif
 
 #if 0
-		char text[128];
-		Q_snprintf( text, sizeof( text ), "%4.0f", (m_body[i].vecPos - m_body[i-1].vecPos).Length() * 100 / m_idealSegmentLength - 100);
-		NDebugOverlay::Text( 0.5*(m_body[i-1].vecPos + m_body[i].vecPos), text, false, 0.1 );
+        char text[128];
+        Q_snprintf( text, sizeof( text ), "%4.0f", (m_body[i].vecPos - m_body[i-1].vecPos).Length() * 100 / m_idealSegmentLength - 100);
+        NDebugOverlay::Text( 0.5*(m_body[i-1].vecPos + m_body[i].vecPos), text, false, 0.1 );
 #endif
     }
     // NDebugOverlay::Box(m_body[i].vecPos, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0, 255, 0, 20, .1);
@@ -472,14 +472,14 @@ void CNPC_Hydra::CalcGoalForces()
     }
 
 #if 0
-	// move delta's back toward the root
-	for (i = iLast; i > iFirst; i--)
-	{
-		Vector tmp = m_body[i].vecDelta;
+    // move delta's back toward the root
+    for (i = iLast; i > iFirst; i--)
+    {
+        Vector tmp = m_body[i].vecDelta;
 
-		m_body[i].vecDelta = tmp * 0.8;
-		m_body[i-1].vecDelta += tmp * 0.2;
-	}
+        m_body[i].vecDelta = tmp * 0.8;
+        m_body[i-1].vecDelta += tmp * 0.2;
+    }
 #endif
 
     // prevent stretching
@@ -816,10 +816,10 @@ void CNPC_Hydra::AdjustLength()
             /*
             if (!ContractBetweenStuckSegments())
             {
-              if (!ContractFromHead())
-              {
+            if (!ContractFromHead())
+            {
 
-              }
+            }
             }
             */
         }
@@ -1321,11 +1321,11 @@ void CNPC_Hydra::RunTask( const Task_t *pTask )
                 /*
                 if ( (pEnemy->EyePosition( ) - m_body[i].vecPos).Length() < distBackFromHead)
                 {
-                  if ( gpGlobals->curtime - m_flLastAttackTime > 4.0)
-                  {
+                if ( gpGlobals->curtime - m_flLastAttackTime > 4.0)
+                {
                     TaskComplete();
-                  }
-                  return;
+                }
+                return;
                 }
                 */
             }
@@ -1400,10 +1400,10 @@ void CNPC_Hydra::RunTask( const Task_t *pTask )
             /*
             if (distToTarget < 20)
             {
-              m_vecHeadGoal = m_vecTarget;
-              SetLastAttackTime( gpGlobals->curtime );
-              TaskComplete();
-              return;
+            m_vecHeadGoal = m_vecTarget;
+            SetLastAttackTime( gpGlobals->curtime );
+            TaskComplete();
+            return;
             }
             else
             */
@@ -1546,7 +1546,7 @@ class CHydraImpale : public CBaseAnimating
 {
     DECLARE_CLASS( CHydraImpale, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -1556,7 +1556,7 @@ class CHydraImpale : public CBaseAnimating
     IPhysicsConstraint *CreateConstraint( CNPC_Hydra *pHydra, IPhysicsObject *pTargetPhys, IPhysicsConstraintGroup *pGroup );
     static CHydraImpale *Create( CNPC_Hydra *pHydra, CBaseEntity *pObject2 );
 
-   public:
+    public:
     IPhysicsConstraint *m_pConstraint;
     CHandle< CNPC_Hydra > m_hHydra;
 };
@@ -1709,8 +1709,8 @@ void CNPC_Hydra::UpdateStabbedEntity( void )
     CBaseEntity *pEntity = m_grabController.GetAttached();
     if ( !pEntity )
     {
-      DetachStabbedEntity( false );
-      return;
+    DetachStabbedEntity( false );
+    return;
     }
 
     QAngle vecAngles(0,0,1);
@@ -1728,14 +1728,14 @@ void CNPC_Hydra::DetachStabbedEntity( bool playSound )
     CBaseEntity *pObject = m_grabController.GetAttached();
     if ( pObject != NULL )
     {
-      IPhysicsObject *pPhysics = pObject->VPhysicsGetObject();
+    IPhysicsObject *pPhysics = pObject->VPhysicsGetObject();
 
-      // Enable collision with this object again
-      if ( pPhysics != NULL )
-      {
+    // Enable collision with this object again
+    if ( pPhysics != NULL )
+    {
         physenv->EnableCollisions( pPhysics, VPhysicsGetObject() );
         pPhysics->RecheckCollisionFilter();
-      }
+    }
     }
 
     m_grabController.DetachEntity();

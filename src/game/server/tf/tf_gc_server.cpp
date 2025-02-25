@@ -69,134 +69,134 @@ const int k_InvalidState_Timeout_Without_Match = 5;
 /***********************************************************************************************************************
 ////////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-   XXX(JohnS) NOTE The current state of the matchmaking flow through this class is a bit of a mess.  Have been
-                   incrementally cleaning things up, but be careful.
+    XXX(JohnS) NOTE The current state of the matchmaking flow through this class is a bit of a mess.  Have been
+                    incrementally cleaning things up, but be careful.
 
-   UpdateConnectedPlayersAndServerInfo()
-     This is the heug god function that sync's our state with the GC's state via the Lobby shared object:
-     - Our actual connected players
+    UpdateConnectedPlayersAndServerInfo()
+    This is the heug god function that sync's our state with the GC's state via the Lobby shared object:
+    - Our actual connected players
 
-     - m_pMatchInfo (via GetMatch()) - this represents our match in progress, and should generally mirror the GC, but
-       *MIGHT NOT*.  For instance, when the GC is unavailable this object is locked, and when the GC returns we may be
-       desync'd. This function is in charge of managing that.  Outside code should simply look at the MatchInfo object
-       and trust that it is the state of the match.
+    - m_pMatchInfo (via GetMatch()) - this represents our match in progress, and should generally mirror the GC, but
+        *MIGHT NOT*.  For instance, when the GC is unavailable this object is locked, and when the GC returns we may be
+        desync'd. This function is in charge of managing that.  Outside code should simply look at the MatchInfo object
+        and trust that it is the state of the match.
 
-     - m_vecReservationExpiryTime - this should be merged into MatchInfo eventually, but is an array of active
-       reservations and when they expire.  This isn't in MatchInfo because in some modes we operate with reservations
-       but without running a proper Match.  When we're running a match, anyone in this vector should be in the MatchInfo
+    - m_vecReservationExpiryTime - this should be merged into MatchInfo eventually, but is an array of active
+        reservations and when they expire.  This isn't in MatchInfo because in some modes we operate with reservations
+        but without running a proper Match.  When we're running a match, anyone in this vector should be in the MatchInfo
 
-     - CTFGSLobby - This is the shared object from the server that represents the match we are hosting.  However, it is
-       *NOT* the article of record on the match.  This is due to matches being designed to be resilient to GC connection
-       loss.  Essentially, only this function should be looking at CTFGSLobby and negotiating the state of the actual
-       match it believes itself to have in MatchInfo.
+    - CTFGSLobby - This is the shared object from the server that represents the match we are hosting.  However, it is
+        *NOT* the article of record on the match.  This is due to matches being designed to be resilient to GC connection
+        loss.  Essentially, only this function should be looking at CTFGSLobby and negotiating the state of the actual
+        match it believes itself to have in MatchInfo.
 
-   == Gameserver / GC Authority
-      - GC forms matches, adds players to matches, passes them to servers
-      - Servers run matches to completion, have authority on abandons/etc. regardless of GC state
-      - Servers pass result, including any abandons, to GC.  Message is queued if GC is unavailable.
-      - GC takes match results and does ELO calculation and any stats/etc.
-      - GC can request players be kicked from matches or matches be canceled
-      - If more players are needed
+    == Gameserver / GC Authority
+    - GC forms matches, adds players to matches, passes them to servers
+    - Servers run matches to completion, have authority on abandons/etc. regardless of GC state
+    - Servers pass result, including any abandons, to GC.  Message is queued if GC is unavailable.
+    - GC takes match results and does ELO calculation and any stats/etc.
+    - GC can request players be kicked from matches or matches be canceled
+    - If more players are needed
         - Gameserver requests GC attention with appropriate flag (6v6: Stalled, waiting on complete match, 12v12:
-          Non-full match)
+        Non-full match)
         - GC adds players to lobby, making them part of the match
-      - If server state is poor (hypothetically: lag, too many abandons, abnormal something or other)
+    - If server state is poor (hypothetically: lag, too many abandons, abnormal something or other)
         - Game server sends KickLobby to terminate match, sends failed match result
-      - If GC is unavailable
+    - If GC is unavailable
         - Game server still carries out duties, may decide to make changes like end match instead of request late joins
-          if it decides GC wont be able to provide them.
+        if it decides GC wont be able to provide them.
 
-   == Match Start
-      - GC creates a lobby and hands it to us. UpdateConnectedPlayers tick initializes a MatchInfo struct as
+    == Match Start
+    - GC creates a lobby and hands it to us. UpdateConnectedPlayers tick initializes a MatchInfo struct as
         appropriate, accepts players.
 
-   == Adding Players
-      - The GC adds players to the lobby (so, when GC down, matches cannot gain players)
-      - UpdateConnectedPlayersAndServerInfo ensures that makes sense (it should, though, we no longer have legacy match
+    == Adding Players
+    - The GC adds players to the lobby (so, when GC down, matches cannot gain players)
+    - UpdateConnectedPlayersAndServerInfo ensures that makes sense (it should, though, we no longer have legacy match
         types where the GC adds players we shouldn't accept)
-      - UpdateConnectedPlayers calls AcceptGCReservation, player is added to match and put in reservation list
+    - UpdateConnectedPlayers calls AcceptGCReservation, player is added to match and put in reservation list
 
-   == Dropping Players
-      - Case 1: Player is not present, but is in the lobby (GC *might* be down, doesn't matter)
+    == Dropping Players
+    - Case 1: Player is not present, but is in the lobby (GC *might* be down, doesn't matter)
         - Player marked missing in MatchInfo by UpdateConnectedPlayers tick
         - After a grace period, player marked dropped, as an abandoner in MatchInfo
         - PlayerLeftMatch message is sent to tell the GC about their leaving.
-      - Case 2: Player is dropped from GC lobby
+    - Case 2: Player is dropped from GC lobby
         - UpdateConnectedPlayers assumes GC kicked them, marks them dropped from match and kicks them.
         - TODO: Ideally there'd be a KickThisGuy GC message, and we'd respond with PlayerLeftMatch, rather than the GC
-          unilaterally dropping people like this.
-      - Case 3: Votekicked
+        unilaterally dropping people like this.
+    - Case 3: Votekicked
         - Vote system sends us PlayerRequestVoteKick
         - We decide whether or not to allow it, possibly asking the GC
         - Vote system tells us results in SubmitVoteKickResults
         - We tell GC results, it decides whether to drop player from match
         - We see them vanish from the lobby (like Case 2) and get a response indicating what it did for our records.
-      - All cases:
+    - All cases:
         - A reliable GC message player-abandoned (or was kicked or never joined) message queued to reconcile this with
-          the lobby state, but if GC is unavailable it will be informed when it returns.
+        the lobby state, but if GC is unavailable it will be informed when it returns.
         - Player is marked dropped in MatchInfo
 
-   == Team Assignments
-      - The GC delivers an initial team assignment for each player added to the match.  This team assignment does not
+    == Team Assignments
+    - The GC delivers an initial team assignment for each player added to the match.  This team assignment does not
         change when game teams change sides, see TFGameRules::GameTeamToLobbyTeam and its inverse to map these to game
         logic teams (vs TF_GC_TEAM objects)
 
-      - All other team changes have to be initiated by a game server message, in modes that allow it, to prevent
+    - All other team changes have to be initiated by a game server message, in modes that allow it, to prevent
         race-conditions.
 
         - The NewMatchForLobby message expects the GC to shuffle our teams.  We prevent races by not issuing other team
-          change messages while this message is pending.  If we time out waiting for the GC, some modes may start a
-          speculative server-created match (expecting the GC to come back and respond to that message positively).  In
-          this case, we queue a ChangeMatchPlayerTeams message to stomp any assignments back to our known state,
-          allowing us to ignore the temporary de-sync (queued messages always get processed in sequence)
+        change messages while this message is pending.  If we time out waiting for the GC, some modes may start a
+        speculative server-created match (expecting the GC to come back and respond to that message positively).  In
+        this case, we queue a ChangeMatchPlayerTeams message to stomp any assignments back to our known state,
+        allowing us to ignore the temporary de-sync (queued messages always get processed in sequence)
 
         - The ChangeMatchPlayerTeams message allows the gameserver to change match player teams mid-game in match modes
-          that allow it.  The game server is in charge of not queuing this message in parallel with NewMatchForLobby
-          above, or handling the potential race.
+        that allow it.  The game server is in charge of not queuing this message in parallel with NewMatchForLobby
+        above, or handling the potential race.
 
         - When processing either of these messages, the GC cancels any players that are awaiting acceptance by the
-          game-server, and re-tries if necessary.  This prevents team changes from racing with player-joins which may
-          have been predicated on differing team layouts.
-          - The game server does not accept pending players or send any heartbeats until any queued messages have been
+        game-server, and re-tries if necessary.  This prevents team changes from racing with player-joins which may
+        have been predicated on differing team layouts.
+        - The game server does not accept pending players or send any heartbeats until any queued messages have been
             responded to.  See Queued Messages below.
 
-   == Match End
-      - Match result message provides canonical record of match, is queued to send to GC when available.
-      - GameServerKickingLobby message dissolves live match if GC is available/tracking it. Queued similarly.
+    == Match End
+    - Match result message provides canonical record of match, is queued to send to GC when available.
+    - GameServerKickingLobby message dissolves live match if GC is available/tracking it. Queued similarly.
         - ** This can happen before or after the match result.
         - In MvM, we send potentially multiple victory messages per match -- they can cycle missions and keep winning.
         - As of right now, in competitive, we end the match coincident with sending a match result.
-      - Match ended doesn't necessarily kick players, so a dead/finished match will stick around on our end until
+    - Match ended doesn't necessarily kick players, so a dead/finished match will stick around on our end until
         everyone Disconnects, (or the game logic kicks them, e.g. MatchInfo->BEnded + a timeout)
-      - Ended matches have queued a message to dissolve their lobby, though, so further GC interaction with the match is
+    - Ended matches have queued a message to dissolve their lobby, though, so further GC interaction with the match is
         not possible, and players are allowed to leave (since they're now allowed to be put in a new match by the GC)
 
-   == Queued Messages And Match State And Race Conditions
-      - Since queued messages are sent in order until confirmed, the GC will always see (eventually) a coherent
+    == Queued Messages And Match State And Race Conditions
+    - Since queued messages are sent in order until confirmed, the GC will always see (eventually) a coherent
         story. For instance:
         - PlayerLeftMatch - GC marks this player as leaving match
         - KickingLobby - GC marks match as finished, result pending
         - MatchResult (minus the two players who left) - GC finishes match accounting, marks match complete, missing
-          players are already noted as leavers so their absence from the result is expected.
-      - While messages are queued, we do not run the UpdateConnectedPlayers() think. This prevents having to worry about
+        players are already noted as leavers so their absence from the result is expected.
+    - While messages are queued, we do not run the UpdateConnectedPlayers() think. This prevents having to worry about
         a fractal of potential edge cases -- we don't look at updated lobby data or send heartbeats while anything we're
         trying to tell the GC hasn't been confirmed.  This also means we won't send a heartbeat until all such actions
         have been confirmed.
         - GC message handlers for queued messages do have to handle possible races -- if the GC sends us players while
-          we're sending a "Reassign Player Team" message, this behavior means we'll stubbornly wait for a response to
-          the team message before acknowledging any players, allowing the GC to easily resolve the race (in this case,
-          by canceling or retrying any attempted add-player-match actions)
+        we're sending a "Reassign Player Team" message, this behavior means we'll stubbornly wait for a response to
+        the team message before acknowledging any players, allowing the GC to easily resolve the race (in this case,
+        by canceling or retrying any attempted add-player-match actions)
 
-   == Gameserver Crashes
-      - If GC is available, it handles it, otherwise, match is lost.  Gameservers don't currently try to persist this
+    == Gameserver Crashes
+    - If GC is available, it handles it, otherwise, match is lost.  Gameservers don't currently try to persist this
         state.
 
-   == Match empties out
-      - If the match is still going, it should reach ended as everyone in it gets timed out as an abandon.
-      - If the GC is around, it will revoke the lobby once we inform it everyone has dropped.
-      - Once the match is marked ended, and the GC concurs and deletes the lobby, we delete MatchInfo
+    == Match empties out
+    - If the match is still going, it should reach ended as everyone in it gets timed out as an abandon.
+    - If the GC is around, it will revoke the lobby once we inform it everyone has dropped.
+    - Once the match is marked ended, and the GC concurs and deletes the lobby, we delete MatchInfo
         - If the GC is not around, we hang out on the completed match state until it is.  We can't exactly take new
-          matches in the mean time. (but, see k_InvalidState_Timeout_With_Match)
+        matches in the mean time. (but, see k_InvalidState_Timeout_With_Match)
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\////////////////////////////////////////////////////////////
 ***********************************************************************************************************************/
@@ -285,12 +285,12 @@ static uint64 ReliableMsgCheckUpdateMatchID( uint64 nMsgMatchID )
 //-----------------------------------------------------------------------------
 class ReliableMsgNewMatchForLobby
     : public CJobReliableMessageBase< ReliableMsgNewMatchForLobby,
-                                      CMsgGCNewMatchForLobbyRequest,
-                                      k_EMsgGC_NewMatchForLobbyRequest,
-                                      CMsgGCNewMatchForLobbyResponse,
-                                      k_EMsgGC_NewMatchForLobbyResponse >
+                                    CMsgGCNewMatchForLobbyRequest,
+                                    k_EMsgGC_NewMatchForLobbyRequest,
+                                    CMsgGCNewMatchForLobbyResponse,
+                                    k_EMsgGC_NewMatchForLobbyResponse >
 {
-   public:
+    public:
     void OnReply( Reply_t &msgReply )
     {
         GTFGCClientSystem()->NewMatchForLobbyResponse( msgReply.Body().success() );
@@ -308,21 +308,21 @@ class ReliableMsgNewMatchForLobby
     void InitDebugString( CUtlString &dbgStr )
     {
         dbgStr.Format( "Match %llx, Lobby %llx, Next Map %d",
-                       ( unsigned long long )Msg().Body().current_match_id(),
-                       ( unsigned long long )Msg().Body().lobby_id(),
-                       Msg().Body().next_map_id() );
+                        ( unsigned long long )Msg().Body().current_match_id(),
+                        ( unsigned long long )Msg().Body().lobby_id(),
+                        Msg().Body().next_map_id() );
     }
 };
 
 //-----------------------------------------------------------------------------
 class ReliableMsgChangeMatchPlayerTeams
     : public CJobReliableMessageBase< ReliableMsgChangeMatchPlayerTeams,
-                                      CMsgGCChangeMatchPlayerTeamsRequest,
-                                      k_EMsgGC_ChangeMatchPlayerTeamsRequest,
-                                      CMsgGCChangeMatchPlayerTeamsResponse,
-                                      k_EMsgGC_ChangeMatchPlayerTeamsResponse >
+                                    CMsgGCChangeMatchPlayerTeamsRequest,
+                                    k_EMsgGC_ChangeMatchPlayerTeamsRequest,
+                                    CMsgGCChangeMatchPlayerTeamsResponse,
+                                    k_EMsgGC_ChangeMatchPlayerTeamsResponse >
 {
-   public:
+    public:
     void OnReply( Reply_t &msgReply )
     {
         GTFGCClientSystem()->ChangeMatchPlayerTeamsResponse( msgReply.Body().success() );
@@ -341,21 +341,21 @@ class ReliableMsgChangeMatchPlayerTeams
     void InitDebugString( CUtlString &dbgStr )
     {
         dbgStr.Format( "Match %llx, Lobby %llx, %d members",
-                       ( unsigned long long )Msg().Body().match_id(),
-                       ( unsigned long long )Msg().Body().lobby_id(),
-                       Msg().Body().member_size() );
+                        ( unsigned long long )Msg().Body().match_id(),
+                        ( unsigned long long )Msg().Body().lobby_id(),
+                        Msg().Body().member_size() );
     }
 };
 
 //-----------------------------------------------------------------------------
 class ReliableMsgMvMVictory
     : public CJobReliableMessageBase< ReliableMsgMvMVictory,
-                                      CMsgMvMVictory,
-                                      k_EMsgGCMvMVictory,
-                                      CMsgMvMMannUpVictoryReply,
-                                      k_EMsgGCMvMVictoryReply >
+                                    CMsgMvMVictory,
+                                    k_EMsgGCMvMVictory,
+                                    CMsgMvMMannUpVictoryReply,
+                                    k_EMsgGCMvMVictoryReply >
 {
-   public:
+    public:
     const char *MsgName()
     {
         return "MvMVictory";
@@ -369,12 +369,12 @@ class ReliableMsgMvMVictory
 //-----------------------------------------------------------------------------
 class ReliableMsgGameServerKickingLobby
     : public CJobReliableMessageBase< ReliableMsgGameServerKickingLobby,
-                                      CMsgGameServerKickingLobby,
-                                      k_EMsgGCGameServerKickingLobby,
-                                      CMsgGameServerKickingLobbyResponse,
-                                      k_EMsgGCGameServerKickingLobbyResponse >
+                                    CMsgGameServerKickingLobby,
+                                    k_EMsgGCGameServerKickingLobby,
+                                    CMsgGameServerKickingLobbyResponse,
+                                    k_EMsgGCGameServerKickingLobbyResponse >
 {
-   public:
+    public:
     // May have been queued for a pending match
     void OnPrepare()
     {
@@ -387,20 +387,20 @@ class ReliableMsgGameServerKickingLobby
     void InitDebugString( CUtlString &dbgStr )
     {
         dbgStr.Format( "Match %llx, Lobby %llx",
-                       ( unsigned long long )Msg().Body().match_id(),
-                       ( unsigned long long )Msg().Body().lobby_id() );
+                        ( unsigned long long )Msg().Body().match_id(),
+                        ( unsigned long long )Msg().Body().lobby_id() );
     }
 };
 
 //-----------------------------------------------------------------------------
 class ReliableMsgPlayerLeftMatch
     : public CJobReliableMessageBase< ReliableMsgPlayerLeftMatch,
-                                      CMsgPlayerLeftMatch,
-                                      k_EMsgGCPlayerLeftMatch,
-                                      CMsgPlayerLeftMatchResponse,
-                                      k_EMsgGCPlayerLeftMatchResponse >
+                                    CMsgPlayerLeftMatch,
+                                    k_EMsgGCPlayerLeftMatch,
+                                    CMsgPlayerLeftMatchResponse,
+                                    k_EMsgGCPlayerLeftMatchResponse >
 {
-   public:
+    public:
     // May have been queued for a pending match
     void OnPrepare()
     {
@@ -413,21 +413,21 @@ class ReliableMsgPlayerLeftMatch
     void InitDebugString( CUtlString &dbgStr )
     {
         dbgStr.Format( "Player %s, Match %llx, Lobby %llx",
-                       CSteamID( Msg().Body().steam_id() ).Render(),
-                       ( unsigned long long )Msg().Body().match_id(),
-                       ( unsigned long long )Msg().Body().lobby_id() );
+                        CSteamID( Msg().Body().steam_id() ).Render(),
+                        ( unsigned long long )Msg().Body().match_id(),
+                        ( unsigned long long )Msg().Body().lobby_id() );
     }
 };
 
 //-----------------------------------------------------------------------------
 class ReliableMsgVoteKickPlayerRequest
     : public CJobReliableMessageBase< ReliableMsgVoteKickPlayerRequest,
-                                      CMsgGC_TFVoteKickPlayerRequest,
-                                      k_EMsgGCVoteKickPlayerRequest,
-                                      CMsgGC_VoteKickPlayerRequestResponse,
-                                      k_EMsgGCVoteKickPlayerRequestResponse >
+                                    CMsgGC_TFVoteKickPlayerRequest,
+                                    k_EMsgGCVoteKickPlayerRequest,
+                                    CMsgGC_VoteKickPlayerRequestResponse,
+                                    k_EMsgGCVoteKickPlayerRequestResponse >
 {
-   public:
+    public:
     // May have been queued for a pending match
     void OnPrepare()
     {
@@ -449,21 +449,21 @@ class ReliableMsgVoteKickPlayerRequest
     void InitDebugString( CUtlString &dbgStr )
     {
         dbgStr.Format( "Player %s, Target %s, Match %llx",
-                       CSteamID( Msg().Body().voter_id() ).Render(),
-                       CSteamID( Msg().Body().target_id() ).Render(),
-                       ( unsigned long long )Msg().Body().match_id() );
+                        CSteamID( Msg().Body().voter_id() ).Render(),
+                        CSteamID( Msg().Body().target_id() ).Render(),
+                        ( unsigned long long )Msg().Body().match_id() );
     }
 };
 
 //-----------------------------------------------------------------------------
 class ReliableMsgProcessMatchVoteKick
     : public CJobReliableMessageBase< ReliableMsgProcessMatchVoteKick,
-                                      CMsgProcessMatchVoteKick,
-                                      k_EMsgGC_ProcessMatchVoteKick,
-                                      CMsgProcessMatchVoteKickResponse,
-                                      k_EMsgGC_ProcessMatchVoteKickResponse >
+                                    CMsgProcessMatchVoteKick,
+                                    k_EMsgGC_ProcessMatchVoteKick,
+                                    CMsgProcessMatchVoteKickResponse,
+                                    k_EMsgGC_ProcessMatchVoteKickResponse >
 {
-   public:
+    public:
     // May have been queued for a pending match
     void OnPrepare()
     {
@@ -472,8 +472,8 @@ class ReliableMsgProcessMatchVoteKick
     void OnReply( Reply_t &msgReply )
     {
         GTFGCClientSystem()->ProcessMatchVoteKickResponse( CSteamID( Msg().Body().initiator_steam_id() ),
-                                                           CSteamID( Msg().Body().target_steam_id() ),
-                                                           msgReply.Body().rip() );
+                                                            CSteamID( Msg().Body().target_steam_id() ),
+                                                            msgReply.Body().rip() );
     }
     const char *MsgName()
     {
@@ -482,22 +482,22 @@ class ReliableMsgProcessMatchVoteKick
     void InitDebugString( CUtlString &dbgStr )
     {
         dbgStr.Format( "Player %s, Target %s, Match %llx, %d votes",
-                       CSteamID( Msg().Body().initiator_steam_id() ).Render(),
-                       CSteamID( Msg().Body().target_steam_id() ).Render(),
-                       ( unsigned long long )Msg().Body().match_id(),
-                       Msg().Body().votes_size() );
+                        CSteamID( Msg().Body().initiator_steam_id() ).Render(),
+                        CSteamID( Msg().Body().target_steam_id() ).Render(),
+                        ( unsigned long long )Msg().Body().match_id(),
+                        Msg().Body().votes_size() );
     }
 };
 
 //-----------------------------------------------------------------------------
 class ReliableMsgMatchResult
     : public CJobReliableMessageBase< ReliableMsgMatchResult,
-                                      CMsgGC_Match_Result,
-                                      k_EMsgGC_Match_Result,
-                                      CMsgGC_Match_ResultResponse,
-                                      k_EMsgGC_Match_ResultResponse >
+                                    CMsgGC_Match_Result,
+                                    k_EMsgGC_Match_Result,
+                                    CMsgGC_Match_ResultResponse,
+                                    k_EMsgGC_Match_ResultResponse >
 {
-   public:
+    public:
     // May have been queued for a pending match
     void OnPrepare()
     {
@@ -555,18 +555,18 @@ void CMvMVictoryInfo::Init( CTFGSLobby *pLobby )
 //-----------------------------------------------------------------------------
 CMatchInfo::CMatchInfo( const CTFGSLobby *pLobby )
     : m_nMatchID( pLobby->GetMatchID() ), m_nLobbyID( pLobby->GetGroupID() ), m_eMatchGroup( pLobby->GetMatchGroup() ), m_uLobbyFlags( pLobby->GetFlags() ), m_uInitialAverageMMRating( pLobby->Obj().initial_average_mm_rating() ), m_rtMatchCreated( CRTime::RTime32TimeCur() ), m_unEventTeamStatus( pLobby->Obj().is_war_match() ), m_bFirstPersonActive( false ), m_nBotsAdded( 0 )
-      // These two should be filled by our creator when making a chained match
-      ,
-      m_bAwaitingMatchID( false ),
-      m_nPreviousMatchID( 0u ),
-      m_nNextMatchID( 0u ),
-      m_strMapName( pLobby->GetMapName() ),
-      m_bMatchEnded( false ),
-      m_bSentResult( false ),
-      m_nGCMatchSize( pLobby->Obj().has_fixed_match_size() ? pLobby->Obj().fixed_match_size() : 0 ),
-      m_flBronzePercentile( 0.6f ),
-      m_flSilverPercentile( 0.75f ),
-      m_flGoldPercentile( 0.9f )
+    // These two should be filled by our creator when making a chained match
+    ,
+    m_bAwaitingMatchID( false ),
+    m_nPreviousMatchID( 0u ),
+    m_nNextMatchID( 0u ),
+    m_strMapName( pLobby->GetMapName() ),
+    m_bMatchEnded( false ),
+    m_bSentResult( false ),
+    m_nGCMatchSize( pLobby->Obj().has_fixed_match_size() ? pLobby->Obj().fixed_match_size() : 0 ),
+    m_flBronzePercentile( 0.6f ),
+    m_flSilverPercentile( 0.75f ),
+    m_flGoldPercentile( 0.9f )
 {
     uint32 nNumCompLevels = GetMatchGroupDescription( k_eTFMatchGroup_Ladder_6v6 )->m_pProgressionDesc->GetNumLevels();
     m_vDailyStatsRankData.EnsureCapacity( nNumCompLevels );
@@ -642,9 +642,9 @@ void CMatchInfo::PlayerMatchData_t::OnConnected( int nEntindex )
 
     RTime32 now = CRTime::RTime32TimeCur();
     MMLog( "Match player %s reconnected into slot %d, last active %u seconds ago.\n",
-           steamID.Render(),
-           nConnectingButNotActiveIndex,
-           now - rtLastActiveEvent );
+            steamID.Render(),
+            nConnectingButNotActiveIndex,
+            now - rtLastActiveEvent );
 }
 
 //-----------------------------------------------------------------------------
@@ -698,7 +698,7 @@ void CMatchInfo::SetDailyRankData( DailyStatsRankBucket_t vecRankData )
 bool CMatchInfo::RequestGCRankData( void )
 {
     if ( !GetMatchGroupDescription( m_eMatchGroup ) ||
-         !GetMatchGroupDescription( m_eMatchGroup )->BDistributePerformanceMedals() )
+        !GetMatchGroupDescription( m_eMatchGroup )->BDistributePerformanceMedals() )
     {
         return false;
     }
@@ -722,7 +722,7 @@ void CMatchInfo::AddPlayer( CSteamID steamID, ConstTFLobbyPlayer memberData, boo
             // Returning a player that had dropped from the match.  Re-create their entry as a fresh player, so the
             // constructor re-does everything.
             MMLog( "Player %s re-added to match they previously dropped from, replacing existing entry\n",
-                   steamID.Render() );
+                    steamID.Render() );
             m_vMatchRankData.FindAndRemove( pOldPlayerMatchData );
             delete pOldPlayerMatchData;
             pOldPlayerMatchData = nullptr;
@@ -959,9 +959,9 @@ void CMatchInfo::GiveXPDirectly( CSteamID steamID, CMsgTFXPSource::XPSourceType 
 
 //-----------------------------------------------------------------------------
 void CMatchInfo::GiveXPBonus( CSteamID steamID,
-                              CMsgTFXPSource_XPSourceType eType,
-                              float flMultipler,
-                              int nBonusPool )
+                            CMsgTFXPSource_XPSourceType eType,
+                            float flMultipler,
+                            int nBonusPool )
 {
     const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription( m_eMatchGroup );
     if ( !pMatchDesc || !pMatchDesc->BUsesXP() )
@@ -1041,8 +1041,8 @@ bool CMatchInfo::CalculatePlayerMatchRankData( void )
 
     const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription( pMatch->m_eMatchGroup );
     if ( !pMatchDesc ||
-         !pMatchDesc->m_pProgressionDesc ||
-         !pMatchDesc->BDistributePerformanceMedals() )
+        !pMatchDesc->m_pProgressionDesc ||
+        !pMatchDesc->BDistributePerformanceMedals() )
     {
         return false;
     }
@@ -1266,7 +1266,7 @@ float CMatchInfo::NormalDistributionCDF( float flValue, float flMu, float flSigm
 //-----------------------------------------------------------------------------
 class CGCCompetitiveDailyStatsRollupJob : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCompetitiveDailyStatsRollupJob( GCSDK::CGCClient *pGCClient )
         : GCSDK::CGCClientJob( pGCClient ) {}
 
@@ -1308,7 +1308,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCompetitiveDailyStatsRollupJob, "CGCCompetitive
 //-----------------------------------------------------------------------------
 class CGCKickPlayerFromLobbyJob : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCKickPlayerFromLobbyJob( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1542,10 +1542,10 @@ void CTFGCServerSystem::ClientDisconnected( CSteamID steamIDClient )
         pMatchPlayer->nDisconnectedSeconds = Max( 0, ( int )dForgiven );
 
         MMLog( "Client %s was connected for %u seconds, disconnect timer lowered from %i to %i\n",
-               steamIDClient.Render(),
-               timeSpentActive,
-               nOldVal,
-               pMatchPlayer->nDisconnectedSeconds );
+                steamIDClient.Render(),
+                timeSpentActive,
+                nOldVal,
+                pMatchPlayer->nDisconnectedSeconds );
     }
 }
 
@@ -1749,8 +1749,8 @@ void CTFGCServerSystem::MatchPlayerAbandonThink()
             if ( nTimeGone > nAbandonSeconds )
             {
                 MMLog( "Match player %s has been absent for a combined total of %u seconds, dropping from match\n",
-                       pPlayer->steamID.Render(),
-                       nTimeGone );
+                        pPlayer->steamID.Render(),
+                        nTimeGone );
                 SetMatchPlayerDropped( pPlayer->steamID, pPlayer->bEverConnected ? TFMatchLeaveReason_AWOL : TFMatchLeaveReason_NO_SHOW );
                 bDroppedPlayers = true;
             }
@@ -1764,8 +1764,8 @@ void CTFGCServerSystem::MatchPlayerAbandonThink()
 
 //-----------------------------------------------------------------------------
 CTFGCServerSystem::EVoteKickRequest CTFGCServerSystem::PlayerRequestVoteKick( const CSteamID &steamID,
-                                                                              const CSteamID &steamIDKickTarget,
-                                                                              TFVoteKickReason eReason )
+                                                                            const CSteamID &steamIDKickTarget,
+                                                                            TFVoteKickReason eReason )
 {
     // Flag we set when we submit a vote kick back to the vote system ourselves
     if ( m_bCreatingVoteKick )
@@ -1833,10 +1833,10 @@ CTFGCServerSystem::EVoteKickRequest CTFGCServerSystem::PlayerRequestVoteKick( co
 
 //-----------------------------------------------------------------------------
 void CTFGCServerSystem::SubmitVoteKickResults( CSteamID steamIDInitiator,
-                                               CSteamID steamIDTarget,
-                                               TFVoteKickReason eReason,
-                                               const CUtlMap< CSteamID, int > &mapVotesBySteamID,
-                                               bool bDefaultPass )
+                                                CSteamID steamIDTarget,
+                                                TFVoteKickReason eReason,
+                                                const CUtlMap< CSteamID, int > &mapVotesBySteamID,
+                                                bool bDefaultPass )
 {
     CMatchInfo *pMatch = GetLiveMatch();
     if ( !pMatch )
@@ -2155,14 +2155,14 @@ void CTFGCServerSystem::VoteKickPlayerRequestResponse( CSteamID voterSteamID, CS
         if ( bCreated )
         {
             MMLog( "Match system approved vote kick of %s by %s, started vote\n",
-                   targetSteamID.Render(),
-                   voterSteamID.Render() );
+                    targetSteamID.Render(),
+                    voterSteamID.Render() );
         }
         else
         {
             MMLog( "Match system approved vote kick of %s by %s, but vote system is not available\n",
-                   targetSteamID.Render(),
-                   voterSteamID.Render() );
+                    targetSteamID.Render(),
+                    voterSteamID.Render() );
         }
     }
     else
@@ -2208,7 +2208,7 @@ void CTFGCServerSystem::ProcessMatchVoteKickResponse( CSteamID voterSteamID, CSt
         if ( !pPlayer || ( pPlayer && !pPlayer->bDropped ) )
         {
             AssertMsg( !pPlayer || pPlayer->bDropped,
-                       "Player is still part of our match, so EjectMatchPlayer should have succeeded" );
+                        "Player is still part of our match, so EjectMatchPlayer should have succeeded" );
         }
         return;
     }
@@ -2385,7 +2385,7 @@ bool CTFGCServerSystem::ShouldHibernate()
 {
     // We only hibernate if we're just sitting there with a freshly loaded map
     return ( engine->IsDedicatedServer() && tf_allow_server_hibernation.GetBool() && !GetLobby() &&
-             !BPendingReliableMessages() && !m_pMatchInfo );
+            !BPendingReliableMessages() && !m_pMatchInfo );
 }
 
 void CTFGCServerSystem::FireGameEvent( IGameEvent *event )
@@ -2504,8 +2504,8 @@ void CTFGCServerSystem::SOCreated( const CSteamID &steamIDOwner, const GCSDK::CS
         Assert( pLobby == GetLobby() );                                  // There can be only be one...
 
         MMLog( "Lobby %016llx instanced on this server in state %s\n",
-               pLobby->GetGroupID(),
-               CSOTFGameServerLobby_State_Name( pLobby->GetState() ).c_str() );
+                pLobby->GetGroupID(),
+                CSOTFGameServerLobby_State_Name( pLobby->GetState() ).c_str() );
 
         // Check if we need to switch the map or load a pop file.
         CMsgGameServerMatchmakingStatus_Event statusEvent = CMsgGameServerMatchmakingStatus_Event_None;
@@ -2545,7 +2545,7 @@ void CTFGCServerSystem::SOCreated( const CSteamID &steamIDOwner, const GCSDK::CS
             GTFGCClientSystem()->DumpLobby();
 
             if ( eMatchGroup == ETFMatchGroup::k_eTFMatchGroup_Invalid ||
-                 !GetMatchGroupDescription( eMatchGroup )->InitServerSettingsForMatch( pConstLobby ) )
+                !GetMatchGroupDescription( eMatchGroup )->InitServerSettingsForMatch( pConstLobby ) )
             {
                 AbortInvalidMatchState();
             }
@@ -2574,8 +2574,8 @@ void CTFGCServerSystem::SOCreated( const CSteamID &steamIDOwner, const GCSDK::CS
             //   (that is, the lobby's expected state prior to our outstanding NewMatchIDForLobby request being
             //   processed, which we wouldn't expect to have been processed yet if the GC was, in fact, restarting)
             if ( m_pMatchInfo && ( nExistingMatchID == nLobbyMatchID ||
-                                   ( m_pMatchInfo->m_bAwaitingMatchID &&
-                                     m_pMatchInfo->m_nPreviousMatchID == nLobbyMatchID ) ) )
+                                    ( m_pMatchInfo->m_bAwaitingMatchID &&
+                                    m_pMatchInfo->m_nPreviousMatchID == nLobbyMatchID ) ) )
             {
                 MMLog( "GC refreshed lobby for match ID [ %llu ]\n", m_pMatchInfo->m_nMatchID );
             }
@@ -2654,7 +2654,7 @@ void CTFGCServerSystem::SOUpdated( const CSteamID &steamIDOwner, const GCSDK::CS
             // Check if the match ID updated.  If we have a next matchID queued up, we expect the lobby to have already
             // updated to that match, we just haven't launched it on our end yet.
             uint64 nExpectedLobbyMatchID = ( m_pMatchInfo->m_nNextMatchID ? m_pMatchInfo->m_nNextMatchID
-                                                                          : m_pMatchInfo->m_nMatchID );
+                                                                        : m_pMatchInfo->m_nMatchID );
 
             if ( nExpectedLobbyMatchID != pLobby->GetMatchID() )
             {
@@ -2679,7 +2679,7 @@ void CTFGCServerSystem::SOUpdated( const CSteamID &steamIDOwner, const GCSDK::CS
                 {
                     // This match was launched prior to receiving our next match ID, but it is here now.
                     MMLog( "Received new matchID for server-created match. New matchID [ %llu ]\n",
-                           pLobby->GetMatchID() );
+                            pLobby->GetMatchID() );
                     m_pMatchInfo->m_nMatchID = pLobby->GetMatchID();
                     m_pMatchInfo->m_bAwaitingMatchID = false;
                 }
@@ -2993,8 +2993,8 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
             playerSteamID = *pPlayerSteamID;
 
         CMatchInfo::PlayerMatchData_t *pMatchPlayer = ( pMatch && playerSteamID.IsValid() )
-                                                          ? pMatch->GetMatchDataForPlayer( playerSteamID )
-                                                          : NULL;
+                                                        ? pMatch->GetMatchDataForPlayer( playerSteamID )
+                                                        : NULL;
         bool bMatchPlayer = pMatchPlayer && !pMatchPlayer->bDropped;
         if ( bMatchPlayer )
         {
@@ -3108,7 +3108,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
                 {
                     // Player was part of the match, but GC removed them.
                     MMLog( "Removing match player %s -- dropped from lobby, but still in match and game\n",
-                           playerSteamID.Render() );
+                            playerSteamID.Render() );
                     EjectMatchPlayer( playerSteamID, TFMatchLeaveReason_GC_REMOVED );
                     nMatchPlayers--;
                 }
@@ -3174,7 +3174,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
             {
                 // Player was part of the match, but GC removed them.
                 MMLog( "Removing player %s, not present in match and dropped from lobby\n",
-                       pPlayer->steamID.Render() );
+                        pPlayer->steamID.Render() );
                 SetMatchPlayerDropped( pPlayer->steamID, TFMatchLeaveReason_GC_REMOVED );
             }
             else
@@ -3301,18 +3301,18 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
     bool bNewMatch = bLiveMatch && pMatch->GetNumTotalMatchPlayers() == 0;
     // If our current state allows us to accept new match players
     bool bRequestMatchLateJoin = bLiveMatch &&
-                                 nHumans < nMaxMatchPlayers &&
-                                 nClients < gpGlobals->maxClients &&
-                                 pMatchDesc->ShouldRequestLateJoin();
+                                nHumans < nMaxMatchPlayers &&
+                                nClients < gpGlobals->maxClients &&
+                                pMatchDesc->ShouldRequestLateJoin();
 
     //
     // Check if the GC is requesting us to make some more reservations, and accepting them would not exceed
     // desired match size or engine capabilities.
     //
     if ( pLobby && vecReservationRequests.Count() &&
-         ( bNewMatch || bRequestMatchLateJoin ) &&
-         nUnconnectedPlayerReservationRequests + nHumans <= nMaxMatchPlayers &&
-         nUnconnectedPlayerReservationRequests + nClients <= gpGlobals->maxClients )
+        ( bNewMatch || bRequestMatchLateJoin ) &&
+        nUnconnectedPlayerReservationRequests + nHumans <= nMaxMatchPlayers &&
+        nUnconnectedPlayerReservationRequests + nClients <= gpGlobals->maxClients )
     {
         MMLog( "GC is requesting us to reserve %d slots.\n", vecReservationRequests.Count() );
 
@@ -3342,7 +3342,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
     else if ( nUnconnectedPlayerReservationRequests )
     {
         MMLog( "Refused %d reservations -- not accepting match players or exceeds capacity\n",
-               vecReservationRequests.Count() );
+                vecReservationRequests.Count() );
     }
 
     // Check if they think that they are acknowledging some players, make sure
@@ -3363,7 +3363,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
     // new match until it's ready anyway, and the empty-with-lobby below check will kill us if we get stuck in this
     // state.
     if ( vecConnectedPlayers.Count() == 0 &&
-         m_pMatchInfo && !pLobby && m_pMatchInfo->m_bMatchEnded )
+        m_pMatchInfo && !pLobby && m_pMatchInfo->m_bMatchEnded )
     {
         MMLog( "Cleaning out finished match %llu\n", m_pMatchInfo->m_nMatchID );
         delete m_pMatchInfo;
@@ -3386,7 +3386,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         {
             int nSecondsEmptyWithLobby = int( now - m_flTimeBecameEmptyWithLobby );
             int nTimeoutMinutes = ( BPendingReliableMessages() || m_pMatchInfo ) ? k_InvalidState_Timeout_With_Match
-                                                                                 : k_InvalidState_Timeout_Without_Match;
+                                                                                : k_InvalidState_Timeout_Without_Match;
             if ( nSecondsEmptyWithLobby > nTimeoutMinutes * 60 )
             {
                 MMLog( "**** Server has been empty with a lobby for %d seconds.  Quitting\n", nSecondsEmptyWithLobby );
@@ -3444,7 +3444,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         case GR_STATE_GAME_OVER:
             gcState = TF_GC_GAMESTATE_GAME_IN_PROGRESS;
             if ( TFGameRules()->IsMannVsMachineMode() ||
-                 TFGameRules()->IsCompetitiveMode() )  // right?
+                TFGameRules()->IsCompetitiveMode() )  // right?
             {
                 gcState = TF_GC_GAMESTATE_DISCONNECT;
             }
@@ -3493,7 +3493,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
 
             // Unless we're not setup with no actual usable slots or have random unknown humans in strict mode
             if ( nClients >= gpGlobals->maxClients || nMaxHumans < 1 ||
-                 ( nHumans && tf_mm_strict.GetInt() == 1 ) )
+                ( nHumans && tf_mm_strict.GetInt() == 1 ) )
             {
                 eGameServerInfoState = ServerMatchmakingState_NOT_PARTICIPATING;
                 if ( m_eLastGameServerUpdateState != eGameServerInfoState )
@@ -3512,7 +3512,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         {
             // Have a running match.
             eGameServerInfoState = bRequestMatchLateJoin ? ServerMatchmakingState_ACTIVE_MATCH_REQUESTING_LATE_JOIN
-                                                         : ServerMatchmakingState_ACTIVE_MATCH;
+                                                        : ServerMatchmakingState_ACTIVE_MATCH;
         }
         else
         {
@@ -3564,10 +3564,10 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
 
     // Check if we MUST send a message, no matter how recently we sent the last update.
     if ( event == CMsgGameServerMatchmakingStatus_Event_None &&
-         !bForceSendMessages &&
-         ( eGameServerInfoState == m_eLastGameServerUpdateState ) &&
-         // map changes are infrequent, and matter quite a bit, so always send them
-         Q_stricmp( m_sLastGameServerUpdateMap, sGameServerInfoMap ) == 0 )
+        !bForceSendMessages &&
+        ( eGameServerInfoState == m_eLastGameServerUpdateState ) &&
+        // map changes are infrequent, and matter quite a bit, so always send them
+        Q_stricmp( m_sLastGameServerUpdateMap, sGameServerInfoMap ) == 0 )
     {
         // No need to send periodic updates if we're not participating and don't think we have a lobby or match at all.
         if ( eGameServerInfoState == ServerMatchmakingState_NOT_PARTICIPATING && !pLobby && !m_pMatchInfo )
@@ -3576,8 +3576,8 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         // Check for certain rules changes.  When they change, we care about them being
         // eventually correct, but it's not urgent
         if ( ( Q_stricmp( m_sLastGameServerUpdateTags, sGameServerInfoTags ) != 0 ) ||
-             ( nMaxHumans != m_nLastGameServerUpdateMaxHumans ) ||
-             ( nBotCountToSend != m_nLastGameServerUpdateBotCount ) )
+            ( nMaxHumans != m_nLastGameServerUpdateMaxHumans ) ||
+            ( nBotCountToSend != m_nLastGameServerUpdateBotCount ) )
         {
             flSendInterval = Min( flSendInterval, 20.0f );
         }
@@ -3606,7 +3606,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         if ( dbg_spew_connected_players_level.GetInt() >= 2 )
         {
             MMLog( "Sending CMsgGameServerMatchmakingStatus (state=%s)\n",
-                   ServerMatchmakingState_Name( msg.Body().matchmaking_state() ).c_str() );
+                    ServerMatchmakingState_Name( msg.Body().matchmaking_state() ).c_str() );
         }
     }
     else
@@ -3635,13 +3635,13 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         }
 
         if ( ( dbg_spew_connected_players_level.GetInt() >= 2 ) ||
-             ( event != CMsgGameServerMatchmakingStatus_Event_None && dbg_spew_connected_players_level.GetInt() >= 1 ) )
+            ( event != CMsgGameServerMatchmakingStatus_Event_None && dbg_spew_connected_players_level.GetInt() >= 1 ) )
         {
             MMLog( "Sending CMsgGameServerMatchmakingStatus (state=%s, slots_free=%d, event=%s, %s)\n",
-                   ServerMatchmakingState_Name( msg.Body().matchmaking_state() ).c_str(),
-                   msg.Body().slots_free(),
-                   CMsgGameServerMatchmakingStatus_Event_Name( msg.Body().event() ).c_str(),
-                   ( tf_mm_trusted.GetBool() ? ", trusted=true" : "" ) );
+                    ServerMatchmakingState_Name( msg.Body().matchmaking_state() ).c_str(),
+                    msg.Body().slots_free(),
+                    CMsgGameServerMatchmakingStatus_Event_Name( msg.Body().event() ).c_str(),
+                    ( tf_mm_trusted.GetBool() ? ", trusted=true" : "" ) );
         }
 
         if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
@@ -3665,11 +3665,11 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
 
     // Check if we MUST send a message, no matter how recently we sent the last update.
     if ( event == CMsgGameServerMatchmakingStatus_Event_None &&
-         !bForceSendMessages &&
-         ( msg.Body().lobby_mm_version() == m_nLastGameServerUpdateLobbyMMVersion ) &&
-         ( msg.Body().matchmaking_state() == m_eLastGameServerUpdateState ) &&
-         // map changes are infrequent, and matter quite a bit, so always send them
-         Q_stricmp( m_sLastGameServerUpdateMap, msg.Body().map().c_str() ) == 0 )
+        !bForceSendMessages &&
+        ( msg.Body().lobby_mm_version() == m_nLastGameServerUpdateLobbyMMVersion ) &&
+        ( msg.Body().matchmaking_state() == m_eLastGameServerUpdateState ) &&
+        // map changes are infrequent, and matter quite a bit, so always send them
+        Q_stricmp( m_sLastGameServerUpdateMap, msg.Body().map().c_str() ) == 0 )
     {
         // No need to send periodic updates if we're not participating and don't think we have a lobby or match at all.
         if ( msg.Body().matchmaking_state() == ServerMatchmakingState_NOT_PARTICIPATING && !pLobby && !m_pMatchInfo )
@@ -3678,8 +3678,8 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
         // Check for certain rules changes.  When they change, we care about them being
         // eventually correct, but it's not urgent
         if ( ( Q_stricmp( m_sLastGameServerUpdateTags, msg.Body().tags().c_str() ) != 0 ) ||
-             ( msg.Body().max_players() != ( uint32 )m_nLastGameServerUpdateMaxHumans ) ||
-             ( msg.Body().bot_count() != ( uint32 )m_nLastGameServerUpdateBotCount ) )
+            ( msg.Body().max_players() != ( uint32 )m_nLastGameServerUpdateMaxHumans ) ||
+            ( msg.Body().bot_count() != ( uint32 )m_nLastGameServerUpdateBotCount ) )
         {
             flSendInterval = Min( flSendInterval, 20.0f );
         }
@@ -3724,7 +3724,7 @@ void CTFGCServerSystem::UpdateConnectedPlayersAndServerInfo( CMsgGameServerMatch
     else if ( m_flTimeRequestedLateJoin != -1.f )
     {
         MMLog( "Stopped requesting late join for active match after %.02fs\n",
-               CRTime::RTime32TimeCur() - m_flTimeRequestedLateJoin );
+                CRTime::RTime32TimeCur() - m_flTimeRequestedLateJoin );
         m_flTimeRequestedLateJoin = -1.f;
     }
 
@@ -4035,7 +4035,7 @@ void CTFGCServerSystem::LaunchNewMatchForLobby()
     const CTFGSLobby *pLobby = GetLobby();
 
     if ( !pLobby || m_flWaitingForNewMatchTime == 0.f || !m_pMatchInfo ||
-         m_pMatchInfo->BMatchTerminated() || m_pMatchInfo->m_bAwaitingMatchID )
+        m_pMatchInfo->BMatchTerminated() || m_pMatchInfo->m_bAwaitingMatchID )
     {
         // You need to prepare for the switch with RequestNewMatchForLobby first. Should not have gotten here if we have
         // a terminated or server created match -- Must still be managed by the GC in order to roll into a new match.
@@ -4156,7 +4156,7 @@ void CTFGCServerSystem::LaunchNewMatchForLobby()
     GTFGCClientSystem()->DumpLobby();
 
     if ( eMatchGroup == ETFMatchGroup::k_eTFMatchGroup_Invalid ||
-         !GetMatchGroupDescription( eMatchGroup )->InitServerSettingsForMatch( pLobby ) )
+        !GetMatchGroupDescription( eMatchGroup )->InitServerSettingsForMatch( pLobby ) )
     {
         AbortInvalidMatchState();
     }
@@ -4179,20 +4179,20 @@ void OnMMServerModeTrustedChanged( IConVar *pConVar, const char *pOldString, flo
 }
 
 ConVar tf_mm_servermode( "tf_mm_servermode", "0", FCVAR_NOTIFY,
-                         "Activates / deactivates Lobby-based hosting mode.\n"
-                         "   0 = not active\n"
-                         "   1 = Put in matchmaking pool (Lobby will control current map)\n",
-                         true,
-                         0.f,
-                         true,
-                         1.f,
-                         OnMMServerModeChanged );
+                        "Activates / deactivates Lobby-based hosting mode.\n"
+                        "   0 = not active\n"
+                        "   1 = Put in matchmaking pool (Lobby will control current map)\n",
+                        true,
+                        0.f,
+                        true,
+                        1.f,
+                        OnMMServerModeChanged );
 
 ConVar tf_mm_strict( "tf_mm_strict", "0", FCVAR_NOTIFY,
-                     "   0 = Show in server browser, and allow ad-hoc joins\n"
-                     "   1 = Hide from server browser and only allow joins coordinated through GC matchmaking\n"
-                     "   2 = Hide from server browser, but allow ad-hoc joins\n",
-                     OnMMServerModeChanged );
+                    "   0 = Show in server browser, and allow ad-hoc joins\n"
+                    "   1 = Hide from server browser and only allow joins coordinated through GC matchmaking\n"
+                    "   2 = Hide from server browser, but allow ad-hoc joins\n",
+                    OnMMServerModeChanged );
 
 ConVar tf_mm_trusted( "tf_mm_trusted", "0", FCVAR_NOTIFY | FCVAR_HIDDEN, "Set to 1 on Valve servers to requested trusted status.  (Yes, it is authenticated on the backend, and attempts by non-valve servers are logged.)\n", OnMMServerModeTrustedChanged );
 

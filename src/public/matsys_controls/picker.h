@@ -80,7 +80,7 @@ class CPicker : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CPicker, vgui::EditablePanel );
 
-   public:
+    public:
     CPicker( vgui::Panel *pParent, const char *pColumnHeader, const char *pTextType );
     ~CPicker();
 
@@ -98,7 +98,7 @@ class CPicker : public vgui::EditablePanel
     // Returns the index of the selected string
     int GetSelectedIndex();
 
-   private:
+    private:
     void RefreshChoiceList();
     MESSAGE_FUNC( OnTextChanged, "TextChanged" );
 
@@ -121,7 +121,7 @@ class CPickerFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CPickerFrame, vgui::Frame );
 
-   public:
+    public:
     CPickerFrame( vgui::Panel *pParent, const char *pTitle, const char *pColumnHeader, const char *pTextType );
     ~CPickerFrame();
 
@@ -133,7 +133,7 @@ class CPickerFrame : public vgui::Frame
     // You can pass in keyvalues to get added to the message also.
     void DoModal( const PickerList_t &list, KeyValues *pContextKeyValues = NULL );
 
-   private:
+    private:
     void CleanUpMessage();
 
     CPicker *m_pPicker;

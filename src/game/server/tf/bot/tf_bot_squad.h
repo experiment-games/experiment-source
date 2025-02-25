@@ -12,7 +12,7 @@ class CTFBot;
 
 class CTFBotSquad : public INextBotEventResponder
 {
-   public:
+    public:
     CTFBotSquad( void );
     virtual ~CTFBotSquad() {}
 
@@ -31,7 +31,7 @@ class CTFBotSquad : public INextBotEventResponder
 
     class Iterator
     {
-       public:
+        public:
         Iterator( void )
         {
             m_bot = NULL;
@@ -90,7 +90,7 @@ class CTFBotSquad : public INextBotEventResponder
         return m_bShouldPreserveSquad;
     }
 
-   private:
+    private:
     friend class CTFBot;
 
     void Join( CTFBot *bot );

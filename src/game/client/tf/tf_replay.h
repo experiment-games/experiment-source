@@ -19,7 +19,7 @@ class CTFReplay : public CGenericClassBasedReplay
 {
     typedef CGenericClassBasedReplay BaseClass;
 
-   public:
+    public:
     CTFReplay();
     ~CTFReplay();
 
@@ -43,7 +43,7 @@ class CTFReplay : public CGenericClassBasedReplay
     }
     virtual const char *GetMaterialFriendlyPlayerClass() const;
 
-   private:
+    private:
     virtual void Update();
     void MedicUpdate();
     float GetSentryKillScreenshotDelay();

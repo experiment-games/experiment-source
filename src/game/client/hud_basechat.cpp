@@ -1624,7 +1624,7 @@ void CBaseHudChat::Send( void )
 
     // remove the \n
     if ( len > 0 &&
-         ansi[len - 1] == '\n' )
+        ansi[len - 1] == '\n' )
     {
         ansi[len - 1] = '\0';
     }

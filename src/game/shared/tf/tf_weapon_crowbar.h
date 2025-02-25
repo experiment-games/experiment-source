@@ -22,7 +22,7 @@
 //
 class CTFCrowbar : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFCrowbar, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -33,7 +33,7 @@ class CTFCrowbar : public CTFWeaponBaseMelee
         return TF_WEAPON_CROWBAR;
     }
 
-   private:
+    private:
     CTFCrowbar( const CTFCrowbar& ) {}
 };
 

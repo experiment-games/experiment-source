@@ -20,7 +20,7 @@ class CDmaVar
 {
     typedef typename CDmAttributeInfo< T >::StorageType_t D;
 
-   public:
+    public:
     CDmaVar();
 
     // Setup to be used in OnConstruction methods of DmElements
@@ -59,16 +59,16 @@ class CDmaVar
     // Is the attribute dirty?
     bool IsDirty() const;
 
-   protected:
+    protected:
     const T &Value() const;
     T &Value();
     const D &Storage() const;
     D &Storage();
 
-   private:
+    private:
     D m_Storage;
 
-   protected:
+    protected:
     CDmAttribute *m_pAttribute;
 };
 
@@ -77,7 +77,7 @@ class CDmaVar
 //-----------------------------------------------------------------------------
 class CDmaString : public CDmaVar< CUtlString >
 {
-   public:
+    public:
     const char *Get() const;
     operator const char *() const;
 

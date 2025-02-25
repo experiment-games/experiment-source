@@ -15,7 +15,7 @@
 
 class CPlayerVoiceListener : public CAutoGameSystem
 {
-   public:
+    public:
     CPlayerVoiceListener( void );
 
     // Auto-game cleanup
@@ -39,7 +39,7 @@ class CPlayerVoiceListener : public CAutoGameSystem
     float GetPlayerSpeechDuration( CBasePlayer *pPlayer );
     float ScriptGetPlayerSpeechDuration( int nPlayerIndex );
 
-   private:
+    private:
     void InitData( void );
 
     float m_flLastPlayerSpeechTime[MAX_PLAYERS_ARRAY_SAFE];

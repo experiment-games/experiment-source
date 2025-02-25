@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 class CSDKGrenade : public CBaseSDKGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CSDKGrenade, CBaseSDKGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

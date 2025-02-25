@@ -41,7 +41,7 @@ class ISteamNetworkingFakeUDPPort;
 // easier to use, especially when porting existing UDP code.
 class ISteamNetworkingSockets
 {
-   public:
+    public:
     // Creates a "server" socket that listens for clients to connect to by
     // calling ConnectByIPAddress, over ordinary UDP (IPv4 or IPv6)
     //
@@ -910,7 +910,7 @@ class ISteamNetworkingSockets
     // assign a FakeIP from its own locally-controlled namespace.
     virtual ISteamNetworkingFakeUDPPort *CreateFakeUDPPort( int idxFakeServerPort ) = 0;
 
-   protected:
+    protected:
     ~ISteamNetworkingSockets();  // Silence some warnings
 };
 #define STEAMNETWORKINGSOCKETS_INTERFACE_VERSION "SteamNetworkingSockets012"

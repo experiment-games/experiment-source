@@ -19,7 +19,7 @@ class ILocomotion;
  */
 class PathFollower : public Path
 {
-   public:
+    public:
     PathFollower( void );
     virtual ~PathFollower();
 
@@ -44,7 +44,7 @@ class PathFollower : public Path
         return m_result;
     }
 
-   private:
+    private:
     const Path::Segment *m_goal;  // our current goal along the path
     float m_minLookAheadRange;
 

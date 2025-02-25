@@ -24,10 +24,10 @@ using namespace vgui;
 
 class CTFTextWindow : public CTextWindow
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFTextWindow, CTextWindow );
 
-   public:
+    public:
     CTFTextWindow( IViewPort *pViewPort );
     virtual ~CTFTextWindow();
 
@@ -49,14 +49,14 @@ class CTFTextWindow : public CTextWindow
         return GAME_ACTION_SET_IN_GAME_HUD;
     }
 
-   public:
+    public:
     virtual void PaintBackground();
 
-   protected:
+    protected:
     // vgui overrides
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     CExRichText *m_pTFTextMessage;
     bool m_bCustomSvrPage;
 };

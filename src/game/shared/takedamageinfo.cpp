@@ -434,8 +434,8 @@ void CTakeDamageInfo::DebugGetDamageTypeString( unsigned int damageType, char *o
 
     // loop through the other entries in the table
     for ( int i = 0;
-          outbuflength > 0 && i < ( DAMAGE_TYPE_STR_TABLE_ENTRIES - 1 );
-          ++i )
+        outbuflength > 0 && i < ( DAMAGE_TYPE_STR_TABLE_ENTRIES - 1 );
+        ++i )
     {
         if ( damageType & ( 1 << i ) )
         {

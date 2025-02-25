@@ -32,11 +32,11 @@ class IMsgNetPacket;
 
 class CDoNotYieldScope
 {
-   public:
+    public:
     CDoNotYieldScope( const char *pchLocation );
     ~CDoNotYieldScope();
 
-   private:
+    private:
     // Disallow these constructors and operators
     CDoNotYieldScope();
     CDoNotYieldScope( const CDoNotYieldScope &that );
@@ -120,7 +120,7 @@ typedef void ( CJob::*JobThreadFunc_t )();
 //-----------------------------------------------------------------------------
 class CJob
 {
-   public:
+    public:
     // Constructors & destructors, when overriding job name a static string pointer must be used
     explicit CJob( CJobMgr &jobMgr, char const *pchJobName = NULL );
     virtual ~CJob();
@@ -274,7 +274,7 @@ class CJob
     /// mismatched replies!
     void ClearFailedToReceivedMsgType( MsgType_t m );
 
-   protected:
+    protected:
     // main job implementation, in the coroutine.  Every job must implement at least one of these methods.
     virtual bool BYieldingRunJob( void *pvStartParam )
     {
@@ -300,7 +300,7 @@ class CJob
         m_bIsTest : 1,
         m_bIsLongRunning : 1;
 
-   private:
+    private:
     // starts the coroutine that activates the job
     void InitCoroutine();
 
@@ -418,7 +418,7 @@ inline CJob &GJobCur()
 //-----------------------------------------------------------------------------
 class CLock
 {
-   public:
+    public:
     CLock();
     ~CLock();
 
@@ -480,7 +480,7 @@ class CLock
 
     void Dump( const char *pszPrefix = "\t\t", int nPrintMax = 1, bool bPrintWaiting = true ) const;
 
-   private:
+    private:
     enum ENameType
     {
         k_ENameTypeNone = 0,
@@ -516,7 +516,7 @@ class CLock
 
 class CAutoCLock
 {
-   public:
+    public:
     CAutoCLock( CLock &refLock )
         : m_pLock( &refLock )
     {
@@ -536,7 +536,7 @@ class CAutoCLock
         Unlock();
     }
 
-   private:
+    private:
     CLock *m_pLock;
     CJob *m_pJob;
 };

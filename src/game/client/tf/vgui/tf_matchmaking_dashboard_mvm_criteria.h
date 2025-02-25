@@ -21,9 +21,9 @@ class CheckButton;
 }
 
 class CTFDashboardMvMPanel : public CMatchMakingDashboardSidePanel,
-                             public CGameEventListener
+                            public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFDashboardMvMPanel, CMatchMakingDashboardSidePanel );
     CTFDashboardMvMPanel( Panel* parent, const char* panelName );
     virtual ~CTFDashboardMvMPanel();
@@ -38,7 +38,7 @@ class CTFDashboardMvMPanel : public CMatchMakingDashboardSidePanel,
     MESSAGE_FUNC_PARAMS( OnSetNextEnabled, "SetNextEnabled", params );
     MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
 
-   private:
+    private:
     void UpdateNextButton();
     void UpdateFlowControlButtonsVisibility();
 

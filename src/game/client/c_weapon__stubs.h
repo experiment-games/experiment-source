@@ -25,12 +25,12 @@
     {                                                                       \
         DECLARE_CLASS( C_##className, baseClassName );                      \
                                                                             \
-       public:                                                              \
+        public:                                                              \
         DECLARE_PREDICTABLE();                                              \
         DECLARE_CLIENTCLASS();                                              \
         C_##className(){};                                                  \
                                                                             \
-       private:                                                             \
+        private:                                                             \
         C_##className( const C_##className& );                              \
     };                                                                      \
     STUB_WEAPON_CLASS_IMPLEMENT( entityName, C_##className );               \

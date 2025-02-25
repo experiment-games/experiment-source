@@ -218,7 +218,7 @@ REGISTER_TYPED_TEST_CASE_P(
 typedef Types<OnTheFlyPrimeTable, PreCalculatedPrimeTable>
     PrimeTableImplementations;
 INSTANTIATE_TYPED_TEST_CASE_P(OnTheFlyAndPreCalculated,    // Instance name
-                              PrimeTableTest2,             // Test case name
-                              PrimeTableImplementations);  // Type list
+                            PrimeTableTest2,             // Test case name
+                            PrimeTableImplementations);  // Type list
 
 #endif  // GTEST_HAS_TYPED_TEST_P

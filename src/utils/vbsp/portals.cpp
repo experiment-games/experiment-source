@@ -860,8 +860,8 @@ void FloodAreas_r( node_t *node, portal_t *pSeeThrough )
     {
         s = ( p->nodes[1] == node );
 #if 0
-		if (p->nodes[!s]->occupied)
-			continue;
+        if (p->nodes[!s]->occupied)
+            continue;
 #endif
         if ( !Portal_EntityFlood( p, s ) )
             continue;
@@ -1049,7 +1049,7 @@ int Convex2D( Vector2D const *pPoints, int nPoints, int *indices, int nMaxIndice
     for ( i = 1; i < nPoints; i++ )
     {
         if ( pPoints[indexMap[i]].x < pPoints[indexMap[iBest]].x ||
-             ( pPoints[indexMap[i]].x == pPoints[indexMap[iBest]].x && pPoints[indexMap[i]].y < pPoints[indexMap[iBest]].y ) )
+            ( pPoints[indexMap[i]].x == pPoints[indexMap[iBest]].x && pPoints[indexMap[i]].y < pPoints[indexMap[iBest]].y ) )
         {
             iBest = i;
         }
@@ -1159,7 +1159,7 @@ void FindPortalsLeadingToArea_R(
             continue;
 
         if ( p->nodes[1]->area == iDestArea && p->nodes[0]->area == iSrcArea ||
-             p->nodes[0]->area == iDestArea && p->nodes[1]->area == iSrcArea )
+            p->nodes[0]->area == iDestArea && p->nodes[1]->area == iSrcArea )
         {
             // Make sure the plane normals point the same way.
             plane_t *pMapPlane = &g_MainMap->mapplanes[p->onnode->planenum];

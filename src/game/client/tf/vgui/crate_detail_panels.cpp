@@ -122,7 +122,7 @@ void CInputStringForItemBackpackOverlayDialog::CreateItemPanels()
 
     class CItemDefLootListIterator : public IEconLootList::IEconLootListIterator
     {
-       public:
+        public:
         CItemDefLootListIterator( CUtlVector< item_definition_index_t > *pVecItemDefs )
             : m_pVecItemDefs( pVecItemDefs )
         {
@@ -137,7 +137,7 @@ void CInputStringForItemBackpackOverlayDialog::CreateItemPanels()
             }
         }
 
-       private:
+        private:
         CUtlVector< item_definition_index_t > *const m_pVecItemDefs;
     };
 

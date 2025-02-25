@@ -95,9 +95,9 @@ bool netadr_t::IsReservedAdr() const
     if ( type == NA_IP )
     {
         if ( ( ip[0] == 10 ) ||                                 // 10.x.x.x is reserved
-             ( ip[0] == 127 ) ||                                // 127.x.x.x
-             ( ip[0] == 172 && ip[1] >= 16 && ip[1] <= 31 ) ||  // 172.16.x.x  - 172.31.x.x
-             ( ip[0] == 192 && ip[1] >= 168 ) )                 // 192.168.x.x
+            ( ip[0] == 127 ) ||                                // 127.x.x.x
+            ( ip[0] == 172 && ip[1] >= 16 && ip[1] <= 31 ) ||  // 172.16.x.x  - 172.31.x.x
+            ( ip[0] == 192 && ip[1] >= 168 ) )                 // 192.168.x.x
             return true;
     }
     return false;
@@ -244,13 +244,13 @@ bool netadr_t::SetFromSockadr( const struct sockaddr *s )
 bool netadr_t::IsValid() const
 {
     return ( ( port != 0 ) && ( type != NA_NULL ) &&
-             ( ip[0] != 0 || ip[1] != 0 || ip[2] != 0 || ip[3] != 0 ) );
+            ( ip[0] != 0 || ip[1] != 0 || ip[2] != 0 || ip[3] != 0 ) );
 }
 
 bool netadr_t::IsBaseAdrValid() const
 {
     return ( ( type != NA_NULL ) &&
-             ( ip[0] != 0 || ip[1] != 0 || ip[2] != 0 || ip[3] != 0 ) );
+            ( ip[0] != 0 || ip[1] != 0 || ip[2] != 0 || ip[3] != 0 ) );
 }
 
 #ifdef _WIN32
@@ -291,8 +291,8 @@ bool netadr_t::SetFromString( const char *pch, bool bUseDNS )
 
     // Starts with a number and has a dot
     if ( address[0] >= '0' &&
-         address[0] <= '9' &&
-         strchr( address, '.' ) )
+        address[0] <= '9' &&
+        strchr( address, '.' ) )
     {
         int n1 = -1, n2 = -1, n3 = -1, n4 = -1, n5 = 0;  // set port to 0 if we don't parse one
         int nRes = sscanf( address, "%d.%d.%d.%d:%d", &n1, &n2, &n3, &n4, &n5 );

@@ -20,10 +20,10 @@ using namespace vgui;
 
 class CHudGameMessage : public CHudElement, public vgui::Panel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CHudGameMessage, vgui::Panel );
 
-   public:
+    public:
     CHudGameMessage( const char *pElementName )
         : CHudElement( pElementName ), vgui::Panel( NULL, "HudGameMessage" )
     {
@@ -43,7 +43,7 @@ class CHudGameMessage : public CHudElement, public vgui::Panel
     // Callback function for the "GameMessage" user message
     void MsgFunc_GameMessage( bf_read &msg );
 
-   private:
+    private:
     CHudTexture *m_pIcon;  // Icon texture reference
     wchar_t m_pText[256];  // Unicode text buffer
 

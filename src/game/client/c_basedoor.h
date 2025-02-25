@@ -18,14 +18,14 @@
 
 class C_BaseDoor : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_BaseDoor, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_BaseDoor( void );
     ~C_BaseDoor( void );
 
-   public:
+    public:
     float m_flWaveHeight;
 };
 

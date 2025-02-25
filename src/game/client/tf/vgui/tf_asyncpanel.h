@@ -12,7 +12,7 @@ class CBaseASyncPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseASyncPanel, EditablePanel );
 
-   public:
+    public:
     CBaseASyncPanel( Panel *pParent, const char *pszPanelName );
     virtual ~CBaseASyncPanel() {}
 
@@ -23,10 +23,10 @@ class CBaseASyncPanel : public EditablePanel
     virtual void PerformLayout() OVERRIDE;
     virtual void LoadControlSettings( const char *dialogResourceName, const char *pathID = NULL, KeyValues *pPreloadedKeyValues = NULL, KeyValues *pConditions = NULL ) OVERRIDE;
 
-   protected:
+    protected:
     virtual void OnChildSettingsApplied( KeyValues *pInResourceData, Panel *pChild ) OVERRIDE;
 
-   private:
+    private:
     void PresentDataIfReady();
     virtual bool CheckForData_Internal() = 0;
 

@@ -17,9 +17,9 @@ class ClientModeSDKNormal : public ClientModeShared
 {
     DECLARE_CLASS( ClientModeSDKNormal, ClientModeShared );
 
-   private:
+    private:
     // IClientMode overrides.
-   public:
+    public:
     ClientModeSDKNormal();
     virtual ~ClientModeSDKNormal();
 
@@ -31,7 +31,7 @@ class ClientModeSDKNormal : public ClientModeShared
 
     virtual void PostRenderVGui();
 
-   private:
+    private:
     //	void	UpdateSpectatorMode( void );
 };
 

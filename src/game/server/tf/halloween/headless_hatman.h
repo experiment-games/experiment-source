@@ -32,7 +32,7 @@ class CHeadlessHatman;
 //----------------------------------------------------------------------------
 class CHeadlessHatmanLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CHeadlessHatmanLocomotion( INextBot *bot )
         : NextBotGroundLocomotion( bot ) {}
     virtual ~CHeadlessHatmanLocomotion() {}
@@ -42,18 +42,18 @@ class CHeadlessHatmanLocomotion : public NextBotGroundLocomotion
     virtual float GetMaxJumpHeight( void ) const;  // return maximum height of a jump
 
     /**
-     * Should we collide with this entity?
-     */
+    * Should we collide with this entity?
+    */
     virtual bool ShouldCollideWith( const CBaseEntity *object ) const;
 
-   private:
+    private:
     virtual float GetMaxYawRate( void ) const;  // return max rate of yaw rotation
 };
 
 //----------------------------------------------------------------------------
 class CHeadlessHatmanIntention : public IIntention
 {
-   public:
+    public:
     CHeadlessHatmanIntention( CHeadlessHatman *me );
     virtual ~CHeadlessHatmanIntention();
 
@@ -71,14 +71,14 @@ class CHeadlessHatmanIntention : public IIntention
         return NULL;
     }
 
-   private:
+    private:
     Behavior< CHeadlessHatman > *m_behavior;
 };
 
 //----------------------------------------------------------------------------
 class CHeadlessHatman : public CHalloweenBaseBoss
 {
-   public:
+    public:
     DECLARE_CLASS( CHeadlessHatman, CHalloweenBaseBoss );
     DECLARE_SERVERCLASS();
 
@@ -116,7 +116,7 @@ class CHeadlessHatman : public CHalloweenBaseBoss
         return HALLOWEEN_BOSS_HHH;
     }
 
-   private:
+    private:
     const char *GetWeaponModel() const;
 
     CHeadlessHatmanIntention *m_intention;
@@ -146,7 +146,7 @@ inline const Vector &CHeadlessHatman::GetHomePosition( void ) const
 //--------------------------------------------------------------------------------------------------------------
 class CHeadlessHatmanPathCost : public IPathCost
 {
-   public:
+    public:
     CHeadlessHatmanPathCost( CHeadlessHatman *me )
     {
         m_me = me;

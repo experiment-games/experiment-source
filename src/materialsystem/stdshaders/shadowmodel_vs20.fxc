@@ -19,63 +19,63 @@ const float3 cShadowConstants					:  register( SHADER_SPECIFIC_CONST_5 );
 
 struct VS_INPUT
 {
-	float4 vPos				: POSITION;
-	float3 vNormal			: NORMAL;
-	float4 vBoneWeights		: BLENDWEIGHT;
-	float4 vBoneIndices		: BLENDINDICES;
+    float4 vPos				: POSITION;
+    float3 vNormal			: NORMAL;
+    float4 vBoneWeights		: BLENDWEIGHT;
+    float4 vBoneIndices		: BLENDINDICES;
 };
 
 struct VS_OUTPUT
 {
-    float4 projPos			: POSITION;			// Projection-space position	
-	float3 T0				: TEXCOORD0;		// PS wants this to be 4D but VS doesn't? (see original asm sources)
-	float3 T1				: TEXCOORD1;
-	float3 T2				: TEXCOORD2;
-	float  T3				: TEXCOORD3;
-	float4 vColor			: COLOR0;
-	float  fog				: FOG;
+    float4 projPos			: POSITION;			// Projection-space position
+    float3 T0				: TEXCOORD0;		// PS wants this to be 4D but VS doesn't? (see original asm sources)
+    float3 T1				: TEXCOORD1;
+    float3 T2				: TEXCOORD2;
+    float  T3				: TEXCOORD3;
+    float4 vColor			: COLOR0;
+    float  fog				: FOG;
 };
 
 VS_OUTPUT main( const VS_INPUT v )
 {
-	VS_OUTPUT o;
-	
-	// Perform skinning
-	float3 worldNormal, worldPos;
-	SkinPositionAndNormal( g_bSkinning, v.vPos, v.vNormal, v.vBoneWeights, v.vBoneIndices, worldPos, worldNormal );
+    VS_OUTPUT o;
 
-	// Transform into projection space
-	o.projPos = mul( float4( worldPos, 1 ), cViewProj );
+    // Perform skinning
+    float3 worldNormal, worldPos;
+    SkinPositionAndNormal( g_bSkinning, v.vPos, v.vNormal, v.vBoneWeights, v.vBoneIndices, worldPos, worldNormal );
 
-	// Compute fog
-	o.fog = CalcFog( worldPos, o.projPos, g_FogType );
+    // Transform into projection space
+    o.projPos = mul( float4( worldPos, 1 ), cViewProj );
 
-	// Transform position into texture space (from 0 to 1)
-	float3 vTexturePos;
-	vTexturePos.x = dot( worldPos.xyz, cShadowTextureMatrix[0].xyz );
-	vTexturePos.y = dot( worldPos.xyz, cShadowTextureMatrix[1].xyz );
-	vTexturePos.z = dot( worldPos.xyz, cShadowTextureMatrix[2].xyz );
+    // Compute fog
+    o.fog = CalcFog( worldPos, o.projPos, g_FogType );
 
-	// Figure out the shadow fade amount
-	float flShadowFade = ( vTexturePos.z - flShadowFalloffOffset ) * flOneOverShadowDist;
+    // Transform position into texture space (from 0 to 1)
+    float3 vTexturePos;
+    vTexturePos.x = dot( worldPos.xyz, cShadowTextureMatrix[0].xyz );
+    vTexturePos.y = dot( worldPos.xyz, cShadowTextureMatrix[1].xyz );
+    vTexturePos.z = dot( worldPos.xyz, cShadowTextureMatrix[2].xyz );
 
-	// Offset it into the texture
-	o.T0 = vTexturePos * cTexScale + cTexOrigin;
+    // Figure out the shadow fade amount
+    float flShadowFade = ( vTexturePos.z - flShadowFalloffOffset ) * flOneOverShadowDist;
 
-	// We're doing clipping by using texkill
-	o.T1.xyz = vTexturePos.xyz;		// Also clips when shadow z < 0 !
-	o.T2.xyz = float3( 1.0f, 1.0f, 1.0f ) - vTexturePos.xyz;
-	o.T2.z = 1.0f - flShadowFade;	// Clips when shadow z > shadow distance	
+    // Offset it into the texture
+    o.T0 = vTexturePos * cTexScale + cTexOrigin;
 
-	// We're doing backface culling by using texkill also (wow yucky)
-	// --------------------------------------------------------------
-	// Transform z component of normal in texture space
-	// If it's negative, then don't draw the pixel
-	o.T3 = dot( worldNormal, -cShadowTextureMatrix[2] );
+    // We're doing clipping by using texkill
+    o.T1.xyz = vTexturePos.xyz;		// Also clips when shadow z < 0 !
+    o.T2.xyz = float3( 1.0f, 1.0f, 1.0f ) - vTexturePos.xyz;
+    o.T2.z = 1.0f - flShadowFade;	// Clips when shadow z > shadow distance
 
-	// Shadow color, falloff
-	o.vColor.xyz = cModulationColor.xyz;
-	o.vColor.w = flShadowFade * flShadowScale;
+    // We're doing backface culling by using texkill also (wow yucky)
+    // --------------------------------------------------------------
+    // Transform z component of normal in texture space
+    // If it's negative, then don't draw the pixel
+    o.T3 = dot( worldNormal, -cShadowTextureMatrix[2] );
 
-	return o;
+    // Shadow color, falloff
+    o.vColor.xyz = cModulationColor.xyz;
+    o.vColor.w = flShadowFade * flShadowScale;
+
+    return o;
 }

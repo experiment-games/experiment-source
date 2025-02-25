@@ -8,7 +8,7 @@
 
 class CNetworkClient : public INetworkPeerBase
 {
-   public:
+    public:
     CNetworkClient( INetworkSystem *networkSystem );
     virtual ~CNetworkClient();
 

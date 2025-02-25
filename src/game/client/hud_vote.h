@@ -51,7 +51,7 @@ class VoteBarPanel : public vgui::Panel, public CGameEventListener
     virtual void Paint( void );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     int m_nVoteOptionCount[MAX_VOTE_OPTIONS];  // Vote options counter
     int m_nPotentialVotes;                     // If set, draw a line at this point to show the required bar length
 
@@ -70,7 +70,7 @@ class CVoteSetupDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CVoteSetupDialog, vgui::Frame );
 
-   public:
+    public:
     CVoteSetupDialog( vgui::Panel *parent );
     ~CVoteSetupDialog();
 
@@ -88,7 +88,7 @@ class CVoteSetupDialog : public vgui::Frame
     void AddVoteIssueParams_PopFiles( CUtlStringList &m_VoteSetupPopFiles );
 #endif
 
-   private:
+    private:
     // MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
     MESSAGE_FUNC_PTR( OnItemSelected, "ItemSelected", panel );
 
@@ -140,7 +140,7 @@ class CHudVotePanel : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CHudVotePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CHudVotePanel( vgui::Panel *pParent, int nIdx );
 
     void Init();
@@ -161,7 +161,7 @@ class CHudVotePanel : public vgui::EditablePanel, public CGameEventListener
     bool IsShowingVotingUI();
     bool IsFirst();
 
-   protected:
+    protected:
     EditablePanel *m_pVoteActive;
     vgui::Label *m_pVoteActiveIssueLabel;
     CAvatarImagePanel *m_pVoteActiveTargetAvatar;
@@ -199,7 +199,7 @@ class CHudVote : public vgui::EditablePanel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudVote, vgui::EditablePanel );
 
-   public:
+    public:
     CHudVote( const char *pElementName );
 
     virtual void LevelInit( void );
@@ -239,7 +239,7 @@ class CHudVote : public vgui::EditablePanel, public CHudElement
         return m_bVoteSystemActive;
     }
 
-   private:
+    private:
     bool IsPlayingDemo() const;
 
     bool m_bVoteSystemActive;

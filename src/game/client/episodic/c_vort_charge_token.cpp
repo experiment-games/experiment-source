@@ -31,12 +31,12 @@ class C_NPC_Vortigaunt : public C_AI_BaseNPC
     DECLARE_CLASS( C_NPC_Vortigaunt, C_AI_BaseNPC );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ClientThink( void );
     virtual void ReceiveMessage( int classID, bf_read &msg );
 
-   public:
+    public:
     bool m_bIsBlue;             ///< wants to fade to blue
     float m_flBlueEndFadeTime;  ///< when to end fading from one skin to another
 
@@ -194,7 +194,7 @@ class C_VortigauntChargeToken : public C_BaseEntity
     DECLARE_CLASS( C_VortigauntChargeToken, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     virtual void UpdateOnRemove( void );
     virtual void ClientThink( void );
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
@@ -204,7 +204,7 @@ class C_VortigauntChargeToken : public C_BaseEntity
     float m_flFadeOutTime;
     float m_flFadeOutStart;
 
-   private:
+    private:
     bool SetupEmitters( void );
 
     bool m_bFadeOut;
@@ -308,7 +308,7 @@ class C_VortigauntEffectDispel : public C_BaseEntity
     DECLARE_CLASS( C_VortigauntEffectDispel, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     virtual void UpdateOnRemove( void );
     virtual void ClientThink( void );
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
@@ -318,7 +318,7 @@ class C_VortigauntEffectDispel : public C_BaseEntity
     float m_flFadeOutTime;
     float m_flFadeOutStart;
 
-   private:
+    private:
     bool SetupEmitters( void );
 
     CNewParticleEffect *m_hEffect;
@@ -483,14 +483,14 @@ DECLARE_CLIENT_EFFECT( "VortDispel", DispelCallback );
 //-----------------------------------------------------------------------------
 class CVortEmissiveProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CVortEmissiveProxy( void );
     virtual ~CVortEmissiveProxy( void );
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pC_BaseEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pMatEmissiveStrength;
     IMaterialVar *m_pMatDetailBlendStrength;
 };

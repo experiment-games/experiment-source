@@ -4,8 +4,8 @@
  */
 
 /* WARNING: this file should *not* be used by applications. It is
-   part of the implementation of the compression library and is
-   subject to change. Applications should only use zlib.h.
+    part of the implementation of the compression library and is
+    subject to change. Applications should only use zlib.h.
  */
 
 /* @(#) $Id$ */
@@ -16,15 +16,15 @@
 #include "zutil.h"
 
 /* define NO_GZIP when compiling if you want to disable gzip header and
-   trailer creation by deflate().  NO_GZIP would be used to avoid linking in
-   the crc code when it is not needed.  For shared libraries, gzip encoding
-   should be left enabled. */
+    trailer creation by deflate().  NO_GZIP would be used to avoid linking in
+    the crc code when it is not needed.  For shared libraries, gzip encoding
+    should be left enabled. */
 #ifndef NO_GZIP
 #define GZIP
 #endif
 
 /* define LIT_MEM to slightly increase the speed of deflate (order 1% to 2%) at
-   the cost of a larger memory footprint */
+    the cost of a larger memory footprint */
 /* #define LIT_MEM */
 
 /* ===========================================================================
@@ -126,24 +126,24 @@ typedef struct internal_state
 
     Bytef *window;
     /* Sliding window. Input bytes are read into the second half of the window,
-     * and move to the first half later to keep a dictionary of at least wSize
-     * bytes. With this organization, matches are limited to a distance of
-     * wSize-MAX_MATCH bytes, but this ensures that IO is always
-     * performed with a length multiple of the block size. Also, it limits
-     * the window size to 64K, which is quite useful on MSDOS.
-     * To do: use the user input buffer as sliding window.
-     */
+    * and move to the first half later to keep a dictionary of at least wSize
+    * bytes. With this organization, matches are limited to a distance of
+    * wSize-MAX_MATCH bytes, but this ensures that IO is always
+    * performed with a length multiple of the block size. Also, it limits
+    * the window size to 64K, which is quite useful on MSDOS.
+    * To do: use the user input buffer as sliding window.
+    */
 
     ulg window_size;
     /* Actual size of window: 2*wSize, except when the user input buffer
-     * is directly used as sliding window.
-     */
+    * is directly used as sliding window.
+    */
 
     Posf *prev;
     /* Link to older string with same hash index. To limit the size of this
-     * array to 64K, this link is maintained only for the last 32K strings.
-     * An index in this array is thus a window index modulo 32K.
-     */
+    * array to 64K, this link is maintained only for the last 32K strings.
+    * An index in this array is thus a window index modulo 32K.
+    */
 
     Posf *head; /* Heads of the hash chains or NIL. */
 
@@ -154,15 +154,15 @@ typedef struct internal_state
 
     uInt hash_shift;
     /* Number of bits by which ins_h must be shifted at each input
-     * step. It must be such that after MIN_MATCH steps, the oldest
-     * byte no longer takes part in the hash key, that is:
-     *   hash_shift * MIN_MATCH >= hash_bits
-     */
+    * step. It must be such that after MIN_MATCH steps, the oldest
+    * byte no longer takes part in the hash key, that is:
+    *   hash_shift * MIN_MATCH >= hash_bits
+    */
 
     long block_start;
     /* Window position at the beginning of the current output block. Gets
-     * negative when the window is moved backwards.
-     */
+    * negative when the window is moved backwards.
+    */
 
     uInt match_length;   /* length of best match */
     IPos prev_match;     /* previous match */
@@ -173,25 +173,25 @@ typedef struct internal_state
 
     uInt prev_length;
     /* Length of the best match at previous step. Matches not greater than this
-     * are discarded. This is used in the lazy match evaluation.
-     */
+    * are discarded. This is used in the lazy match evaluation.
+    */
 
     uInt max_chain_length;
     /* To speed up deflation, hash chains are never searched beyond this
-     * length.  A higher limit improves compression ratio but degrades the
-     * speed.
-     */
+    * length.  A higher limit improves compression ratio but degrades the
+    * speed.
+    */
 
     uInt max_lazy_match;
     /* Attempt to find a better match only when the current match is strictly
-     * smaller than this value. This mechanism is used only for compression
-     * levels >= 4.
-     */
+    * smaller than this value. This mechanism is used only for compression
+    * levels >= 4.
+    */
 #define max_insert_length max_lazy_match
     /* Insert new strings in the hash table only if the match length is not
-     * greater than this length. This saves time but degrades compression.
-     * max_insert_length is used only for compression levels <= 3.
-     */
+    * greater than this length. This saves time but degrades compression.
+    * max_insert_length is used only for compression levels <= 3.
+    */
 
     int level;    /* compression level (1..9) */
     int strategy; /* favor or force Huffman coding*/
@@ -218,12 +218,12 @@ typedef struct internal_state
     int heap_len;              /* number of elements in the heap */
     int heap_max;              /* element of largest frequency */
     /* The sons of heap[n] are heap[2*n] and heap[2*n+1]. heap[0] is not used.
-     * The same heap array is used to build all trees.
-     */
+    * The same heap array is used to build all trees.
+    */
 
     uch depth[2 * L_CODES + 1];
     /* Depth of each subtree used as tie breaker for trees of equal frequency
-     */
+    */
 
 #ifdef LIT_MEM
 #define LIT_BUFS 5
@@ -236,23 +236,23 @@ typedef struct internal_state
 
     uInt lit_bufsize;
     /* Size of match buffer for literals/lengths.  There are 4 reasons for
-     * limiting lit_bufsize to 64K:
-     *   - frequencies can be kept in 16 bit counters
-     *   - if compression is not successful for the first block, all input
-     *     data is still in the window so we can still emit a stored block even
-     *     when input comes from standard input.  (This can also be done for
-     *     all blocks if lit_bufsize is not greater than 32K.)
-     *   - if compression is not successful for a file smaller than 64K, we can
-     *     even emit a stored file instead of a stored block (saving 5 bytes).
-     *     This is applicable only for zip (not gzip or zlib).
-     *   - creating new Huffman trees less frequently may not provide fast
-     *     adaptation to changes in the input data statistics. (Take for
-     *     example a binary file with poorly compressible code followed by
-     *     a highly compressible string table.) Smaller buffer sizes give
-     *     fast adaptation but have of course the overhead of transmitting
-     *     trees more frequently.
-     *   - I can't count above 4
-     */
+    * limiting lit_bufsize to 64K:
+    *   - frequencies can be kept in 16 bit counters
+    *   - if compression is not successful for the first block, all input
+    *     data is still in the window so we can still emit a stored block even
+    *     when input comes from standard input.  (This can also be done for
+    *     all blocks if lit_bufsize is not greater than 32K.)
+    *   - if compression is not successful for a file smaller than 64K, we can
+    *     even emit a stored file instead of a stored block (saving 5 bytes).
+    *     This is applicable only for zip (not gzip or zlib).
+    *   - creating new Huffman trees less frequently may not provide fast
+    *     adaptation to changes in the input data statistics. (Take for
+    *     example a binary file with poorly compressible code followed by
+    *     a highly compressible string table.) Smaller buffer sizes give
+    *     fast adaptation but have of course the overhead of transmitting
+    *     trees more frequently.
+    *   - I can't count above 4
+    */
 
     uInt sym_next; /* running index in symbol buffer */
     uInt sym_end;  /* symbol table full when sym_next reaches this */
@@ -269,19 +269,19 @@ typedef struct internal_state
 
     ush bi_buf;
     /* Output buffer. bits are inserted starting at the bottom (least
-     * significant bits).
-     */
+    * significant bits).
+    */
     int bi_valid;
     /* Number of valid bits in bi_buf.  All bits above the last valid bit
-     * are always zero.
-     */
+    * are always zero.
+    */
 
     ulg high_water;
     /* High water mark offset in window for initialized bytes -- bytes above
-     * this are set to zero in order to avoid memory check warnings when
-     * longest match routines access bytes past the input.  This is then
-     * updated to the new high water mark.
-     */
+    * this are set to zero in order to avoid memory check warnings when
+    * longest match routines access bytes past the input.  This is then
+    * updated to the new high water mark.
+    */
 
 } FAR deflate_state;
 
@@ -305,7 +305,7 @@ typedef struct internal_state
 
 #define WIN_INIT MAX_MATCH
 /* Number of bytes after end of data in window to initialize in order to avoid
-   memory checker errors from longest match routines */
+    memory checker errors from longest match routines */
 
 /* in trees.c */
 void ZLIB_INTERNAL _tr_init( deflate_state *s );

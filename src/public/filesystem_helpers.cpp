@@ -74,7 +74,7 @@ skipwhite:
         while ( *pFileBytes )
         {
             if ( *pFileBytes == '*' &&
-                 pFileBytes[1] == '/' )
+                pFileBytes[1] == '/' )
             {
                 pFileBytes += 2;
                 break;

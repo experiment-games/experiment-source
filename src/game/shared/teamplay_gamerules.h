@@ -39,7 +39,7 @@
 
 class CTeamplayRules : public CMultiplayRules
 {
-   public:
+    public:
     DECLARE_CLASS( CTeamplayRules, CMultiplayRules );
 
     // Return the value of this player towards capturing a point
@@ -153,10 +153,10 @@ class CTeamplayRules : public CMultiplayRules
         return false;
     }
 
-   protected:
+    protected:
     bool m_DisableDeathMessages;
 
-   private:
+    private:
     void RecountTeams( void );
     const char *TeamWithFewestPlayers( void );
 

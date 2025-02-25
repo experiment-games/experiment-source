@@ -24,7 +24,7 @@ typedef void ( *pfnUserMsgHook )( bf_read &msg );
 //-----------------------------------------------------------------------------
 class CUserMessage
 {
-   public:
+    public:
     // byte size of message, or -1 for variable sized
     int size;
     const char *name;
@@ -38,7 +38,7 @@ class CUserMessage
 //-----------------------------------------------------------------------------
 class CUserMessages
 {
-   public:
+    public:
     CUserMessages();
     ~CUserMessages();
 
@@ -55,7 +55,7 @@ class CUserMessages
     void HookMessage( const char *name, pfnUserMsgHook hook );
     bool DispatchUserMessage( int msg_type, bf_read &msg_data );
 
-   private:
+    private:
     CUtlDict< CUserMessage *, int > m_UserMessages;
 };
 

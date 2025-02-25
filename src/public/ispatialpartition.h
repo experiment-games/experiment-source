@@ -76,7 +76,7 @@ typedef int SpatialTempHandle_t;
 
 class IPartitionEnumerator
 {
-   public:
+    public:
     virtual IterationRetval_t EnumElement( IHandleEntity* pHandleEntity ) = 0;
     // XXX(johns): This should have a virtual destructor, but would be ABI breaking (non-versioned interface implemented
     //             by the game)
@@ -88,7 +88,7 @@ class IPartitionEnumerator
 //-----------------------------------------------------------------------------
 class IPartitionQueryCallback
 {
-   public:
+    public:
     virtual void OnPreQuery_V1() = 0;
     virtual void OnPreQuery( SpatialPartitionListMask_t listMask ) = 0;
     virtual void OnPostQuery( SpatialPartitionListMask_t listMask ) = 0;
@@ -104,7 +104,7 @@ enum
 
 abstract_class ISpatialPartition
 {
-   public:
+    public:
     // Add a virtual destructor to silence the clang warning.
     // This is harmless but not important since the only derived class
     // doesn't have a destructor.
@@ -116,18 +116,18 @@ abstract_class ISpatialPartition
 
     // A fast method of creating a handle + inserting into the tree in the right place
     virtual SpatialPartitionHandle_t CreateHandle( IHandleEntity * pHandleEntity,
-                                                   SpatialPartitionListMask_t listMask,
-                                                   const Vector& mins,
-                                                   const Vector& maxs ) = 0;
+                                                    SpatialPartitionListMask_t listMask,
+                                                    const Vector& mins,
+                                                    const Vector& maxs ) = 0;
 
     virtual void DestroyHandle( SpatialPartitionHandle_t handle ) = 0;
 
     // Adds, removes an handle from a particular spatial partition list
     // There can be multiple partition lists; each has a unique id
     virtual void Insert( SpatialPartitionListMask_t listMask,
-                         SpatialPartitionHandle_t handle ) = 0;
+                        SpatialPartitionHandle_t handle ) = 0;
     virtual void Remove( SpatialPartitionListMask_t listMask,
-                         SpatialPartitionHandle_t handle ) = 0;
+                        SpatialPartitionHandle_t handle ) = 0;
 
     // Same as calling Remove() then Insert(). For performance-sensitive areas where you want to save a call.
     virtual void RemoveAndInsert( SpatialPartitionListMask_t removeMask, SpatialPartitionListMask_t insertMask, SpatialPartitionHandle_t handle ) = 0;
@@ -137,8 +137,8 @@ abstract_class ISpatialPartition
 
     // Call this when an entity moves...
     virtual void ElementMoved( SpatialPartitionHandle_t handle,
-                               const Vector& mins,
-                               const Vector& maxs ) = 0;
+                                const Vector& mins,
+                                const Vector& maxs ) = 0;
 
     // A fast method to insert + remove a handle from the tree...
     // This is used to suppress collision of a single model..

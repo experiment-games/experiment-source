@@ -75,7 +75,7 @@ const client_market_data_t *GetClientMarketData( item_definition_index_t iItemDe
 //-----------------------------------------------------------------------------
 class CGCClientRequestMarketDataResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientRequestMarketDataResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

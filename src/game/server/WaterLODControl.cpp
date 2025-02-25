@@ -19,7 +19,7 @@
 //------------------------------------------------------------------------------
 class CWaterLODControl : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CWaterLODControl, CBaseEntity );
 
     CWaterLODControl();
@@ -38,7 +38,7 @@ class CWaterLODControl : public CBaseEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     CNetworkVar( float, m_flCheapWaterStartDistance );
     CNetworkVar( float, m_flCheapWaterEndDistance );
 };

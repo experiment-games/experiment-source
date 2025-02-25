@@ -55,31 +55,31 @@ SHADER_DRAW
         pShaderShadow->EnableCustomPixelPipe( true );
         pShaderShadow->CustomTextureStages( 2 );
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_VERTEXCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_VERTEXCOLOR );
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SUBTRACT,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_VERTEXCOLOR );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SUBTRACT,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_VERTEXCOLOR );
 
         // Blend between white and the vertex color...
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_BLEND_PREVIOUSSTAGEALPHA,
-                                               SHADER_TEXARG_CONSTANTCOLOR,
-                                               SHADER_TEXARG_TEXTURE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_BLEND_PREVIOUSSTAGEALPHA,
+                                                SHADER_TEXARG_CONSTANTCOLOR,
+                                                SHADER_TEXARG_TEXTURE );
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_VERTEXCOLOR );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_VERTEXCOLOR );
 
         EnableAlphaBlending( SHADER_BLEND_DST_COLOR, SHADER_BLEND_ZERO );
         pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_COLOR |
-                                  SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 );
+                                SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 );
         // We need to fog to *white* regardless of overbrighting...
         FogToWhite();
     }

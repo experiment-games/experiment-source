@@ -32,7 +32,7 @@ extern float PackRatios[POWERUP_SIZES];
 
 class CTFPowerup : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPowerup, CItem );
 
     CTFPowerup();
@@ -74,7 +74,7 @@ class CTFPowerup : public CItem
         return TF_POWERUP_LIFETIME;
     }
 
-   protected:
+    protected:
     void Materialize_Internal( void );
 
     bool m_bDisabled;

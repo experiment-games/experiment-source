@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEBSPDecal : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBSPDecal, CBaseTempEntity );
 
     CTEBSPDecal( const char* name );
@@ -31,7 +31,7 @@ class CTEBSPDecal : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVar( int, m_nEntity );
     CNetworkVar( int, m_nIndex );

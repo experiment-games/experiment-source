@@ -31,7 +31,7 @@ class CLadderLobbyLeaderboard : public CTFLeaderboardPanel, public CLocalSteamSh
 {
     DECLARE_CLASS_SIMPLE( CLadderLobbyLeaderboard, CTFLeaderboardPanel );
 
-   public:
+    public:
     CLadderLobbyLeaderboard( Panel *pParent, const char *pszPanelName );
     virtual ~CLadderLobbyLeaderboard();
 
@@ -53,7 +53,7 @@ class CLadderLobbyLeaderboard : public CTFLeaderboardPanel, public CLocalSteamSh
     virtual void SOCreated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
     virtual void SOUpdated( const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
 
-   private:
+    private:
     const char *m_pszLeaderboardName;
     bool m_bIsDataValid;
     bool m_bDataDirty = true;
@@ -69,7 +69,7 @@ class CCompStatsPanel : public EditablePanel, public CLocalSteamSharedObjectList
 {
     DECLARE_CLASS_SIMPLE( CCompStatsPanel, EditablePanel );
 
-   public:
+    public:
     CCompStatsPanel( vgui::Panel *pParent, const char *pszName );
     virtual ~CCompStatsPanel();
 
@@ -92,7 +92,7 @@ class CCompStatsPanel : public EditablePanel, public CLocalSteamSharedObjectList
     //
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     CPanelAnimationVarAliasType( int, m_iStatMedalWidth, "stat_medal_width", "14", "proportional_int" );
     CPanelAnimationVarAliasType( int, m_iMedalCountWidth, "stat_medal_count_width", "20", "proportional_int" );
     CPanelAnimationVarAliasType( int, m_iHasPassWidth, "has_pass_width", "12", "proportional_int" );

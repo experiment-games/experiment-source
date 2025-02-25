@@ -20,10 +20,10 @@
 //-----------------------------------------------------------------------------
 class CTFTeamButton : public CExButton
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFTeamButton, CExButton );
 
-   public:
+    public:
     CTFTeamButton( vgui::Panel *parent, const char *panelName );
 
     void ApplySettings( KeyValues *inResourceData );
@@ -36,12 +36,12 @@ class CTFTeamButton : public CExButton
 
     void SetDefaultAnimation( const char *pszName );
 
-   private:
+    private:
     bool IsTeamFull();
     void SendAnimation( const char *pszAnimation );
     void SetMouseEnteredState( bool state );
 
-   private:
+    private:
     char m_szModelPanel[64];  // the panel we'll send messages to
     int m_iTeam;              // the team we're associated with (if any)
 
@@ -56,10 +56,10 @@ class CTFTeamButton : public CExButton
 //-----------------------------------------------------------------------------
 class CTFTeamMenu : public CTeamMenu, public CGameEventListener
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFTeamMenu, CTeamMenu );
 
-   public:
+    public:
     CTFTeamMenu( IViewPort *pViewPort );
     ~CTFTeamMenu();
 
@@ -82,7 +82,7 @@ class CTFTeamMenu : public CTeamMenu, public CGameEventListener
     // IGameEventListener interface:
     virtual void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnKeyCodePressed( vgui::KeyCode code );
 
@@ -96,11 +96,11 @@ class CTFTeamMenu : public CTeamMenu, public CGameEventListener
 
     virtual void OnThink() OVERRIDE;
 
-   private:
+    private:
     void SetHighlanderTeamsFullPanels( bool bTeamsFull, bool bForce = false );
     void ActivateSelectIconHint( int focus_group_number );
 
-   private:
+    private:
     CTFTeamButton *m_pBlueTeamButton;
     CTFTeamButton *m_pRedTeamButton;
     CTFTeamButton *m_pAutoTeamButton;
@@ -129,7 +129,7 @@ class CTFTeamMenu : public CTeamMenu, public CGameEventListener
     bool m_bRedDisabled;
     bool m_bBlueDisabled;
 
-   private:
+    private:
     enum
     {
         NUM_TEAMS = 3

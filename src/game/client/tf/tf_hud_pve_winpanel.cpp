@@ -69,9 +69,9 @@ void CTFPVEWinPanel::FireGameEvent( IGameEvent *event )
     const char *pEventName = event->GetName();
 
     if ( Q_strcmp( "teamplay_round_start", pEventName ) == 0 ||
-         Q_strcmp( "teamplay_game_over", pEventName ) == 0 ||
-         Q_strcmp( "tf_game_over", pEventName ) == 0 ||
-         Q_strcmp( "training_complete", pEventName ) == 0 )
+        Q_strcmp( "teamplay_game_over", pEventName ) == 0 ||
+        Q_strcmp( "tf_game_over", pEventName ) == 0 ||
+        Q_strcmp( "training_complete", pEventName ) == 0 )
     {
         m_bShouldBeVisible = false;
     }

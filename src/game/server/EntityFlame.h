@@ -21,7 +21,7 @@
 
 class CEntityFlame : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_CLASS( CEntityFlame, CBaseEntity );
 
@@ -49,7 +49,7 @@ class CEntityFlame : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     void InputIgnite( inputdata_t &inputdata );
 
     void FlameThink( void );

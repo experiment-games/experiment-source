@@ -14,7 +14,7 @@
 
 abstract_class IEntityInfo
 {
-   public:
+    public:
     // returns true if entity is a player
     virtual const int EntityIndex() = 0;
     virtual const char *GetEntityName() = 0;
@@ -106,7 +106,7 @@ abstract_class IEntityInfo
 #define INTERFACEVERSION_ENTITYINFOMANAGER "EntityInfoManager001"
 abstract_class IEntityInfoManager
 {
-   public:
+    public:
     virtual IEntityInfo *GetEntityInfo( edict_t * pEdict ) = 0;
     virtual IEntityInfo *GetEntityInfo( int index ) = 0;  // Retrieves the info
 

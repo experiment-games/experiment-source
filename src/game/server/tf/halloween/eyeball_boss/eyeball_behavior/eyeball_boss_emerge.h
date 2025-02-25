@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossEmerge : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
     virtual const char *GetName( void ) const
@@ -18,7 +18,7 @@ class CEyeballBossEmerge : public Action< CEyeballBoss >
         return "Emerge";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_riseTimer;
     CountdownTimer m_rumbleTimer;
     CountdownTimer m_killTimer;

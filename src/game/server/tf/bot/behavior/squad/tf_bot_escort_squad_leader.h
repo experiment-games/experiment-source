@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotEscortSquadLeader : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotEscortSquadLeader( Action< CTFBot > *actionToDoAfterSquadDisbands = NULL );
     virtual ~CTFBotEscortSquadLeader() {}
 
@@ -25,7 +25,7 @@ class CTFBotEscortSquadLeader : public Action< CTFBot >
         return "EscortSquadLeader";
     };
 
-   private:
+    private:
     Action< CTFBot > *m_actionToDoAfterSquadDisbands;
     CTFBotMeleeAttack m_meleeAttackAction;
 
@@ -39,7 +39,7 @@ class CTFBotEscortSquadLeader : public Action< CTFBot >
 //-----------------------------------------------------------------------------
 class CTFBotWaitForOutOfPositionSquadMember : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ~CTFBotWaitForOutOfPositionSquadMember() {}
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -50,7 +50,7 @@ class CTFBotWaitForOutOfPositionSquadMember : public Action< CTFBot >
         return "WaitForOutOfPositionSquadMember";
     };
 
-   private:
+    private:
     CountdownTimer m_waitTimer;
 };
 

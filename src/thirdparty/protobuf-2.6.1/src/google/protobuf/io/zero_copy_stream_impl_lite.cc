@@ -54,7 +54,7 @@ static const int kDefaultBlockSize = 8192;
 // ===================================================================
 
 ArrayInputStream::ArrayInputStream(const void* data, int size,
-                                   int block_size)
+                                    int block_size)
   : data_(reinterpret_cast<const uint8*>(data)),
     size_(size),
     block_size_(block_size > 0 ? block_size : size),
@@ -81,7 +81,7 @@ bool ArrayInputStream::Next(const void** data, int* size) {
 
 void ArrayInputStream::BackUp(int count) {
   GOOGLE_CHECK_GT(last_returned_size_, 0)
-      << "BackUp() can only be called after a successful Next().";
+    << "BackUp() can only be called after a successful Next().";
   GOOGLE_CHECK_LE(count, last_returned_size_);
   GOOGLE_CHECK_GE(count, 0);
   position_ -= count;
@@ -134,7 +134,7 @@ bool ArrayOutputStream::Next(void** data, int* size) {
 
 void ArrayOutputStream::BackUp(int count) {
   GOOGLE_CHECK_GT(last_returned_size_, 0)
-      << "BackUp() can only be called after a successful Next().";
+    << "BackUp() can only be called after a successful Next().";
   GOOGLE_CHECK_LE(count, last_returned_size_);
   GOOGLE_CHECK_GE(count, 0);
   position_ -= count;
@@ -165,18 +165,18 @@ bool StringOutputStream::Next(void** data, int* size) {
   } else {
     // Size has reached capacity, try to double the size.
     if (old_size > std::numeric_limits<int>::max() / 2) {
-      // Can not double the size otherwise it is going to cause integer
-      // overflow in the expression below: old_size * 2 ";
-      GOOGLE_LOG(ERROR) << "Cannot allocate buffer larger than kint32max for "
-                 << "StringOutputStream.";
-      return false;
+    // Can not double the size otherwise it is going to cause integer
+    // overflow in the expression below: old_size * 2 ";
+    GOOGLE_LOG(ERROR) << "Cannot allocate buffer larger than kint32max for "
+                << "StringOutputStream.";
+    return false;
     }
     // Double the size, also make sure that the new size is at least
     // kMinimumSize.
     STLStringResizeUninitialized(
-      target_,
-      max(old_size * 2,
-          kMinimumSize + 0));  // "+ 0" works around GCC4 weirdness.
+    target_,
+    max(old_size * 2,
+        kMinimumSize + 0));  // "+ 0" works around GCC4 weirdness.
   }
 
   *data = mutable_string_data(target_) + old_size;
@@ -203,10 +203,10 @@ int CopyingInputStream::Skip(int count) {
   int skipped = 0;
   while (skipped < count) {
     int bytes = Read(junk, min(count - skipped,
-                               implicit_cast<int>(sizeof(junk))));
+                                implicit_cast<int>(sizeof(junk))));
     if (bytes <= 0) {
-      // EOF or read error.
-      return skipped;
+    // EOF or read error.
+    return skipped;
     }
     skipped += bytes;
   }
@@ -251,8 +251,8 @@ bool CopyingInputStreamAdaptor::Next(const void** data, int* size) {
   if (buffer_used_ <= 0) {
     // EOF or read error.  We don't need the buffer anymore.
     if (buffer_used_ < 0) {
-      // Read error (not EOF).
-      failed_ = true;
+    // Read error (not EOF).
+    failed_ = true;
     }
     FreeBuffer();
     return false;
@@ -269,7 +269,7 @@ void CopyingInputStreamAdaptor::BackUp(int count) {
     << " BackUp() can only be called after Next().";
   GOOGLE_CHECK_LE(count, buffer_used_)
     << " Can't back up over more bytes than were returned by the last call"
-       " to Next().";
+        " to Next().";
   GOOGLE_CHECK_GE(count, 0)
     << " Parameter to BackUp() can't be negative.";
 
@@ -359,7 +359,7 @@ void CopyingOutputStreamAdaptor::BackUp(int count) {
     << " BackUp() can only be called after Next().";
   GOOGLE_CHECK_LE(count, buffer_used_)
     << " Can't back up over more bytes than were returned by the last call"
-       " to Next().";
+        " to Next().";
 
   buffer_used_ -= count;
 }

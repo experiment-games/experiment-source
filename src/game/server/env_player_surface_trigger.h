@@ -20,7 +20,7 @@ class CEnvPlayerSurfaceTrigger : public CPointEntity
 {
     DECLARE_CLASS( CEnvPlayerSurfaceTrigger, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     ~CEnvPlayerSurfaceTrigger( void );
@@ -32,12 +32,12 @@ class CEnvPlayerSurfaceTrigger : public CPointEntity
 
     void UpdateMaterialThink( void );
 
-   private:
+    private:
     void PlayerSurfaceChanged( CBasePlayer *pPlayer, char gameMaterial );
     void InputDisable( inputdata_t &inputdata );
     void InputEnable( inputdata_t &inputdata );
 
-   private:
+    private:
     int m_iTargetGameMaterial;
     int m_iCurrentGameMaterial;
     bool m_bDisabled;

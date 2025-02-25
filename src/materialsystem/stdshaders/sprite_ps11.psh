@@ -7,7 +7,7 @@ tex t0
 mov r0, t0
 
 #if VERTEXCOLOR
-mul r0, r0, v0 
+mul r0, r0, v0
 #endif
 
 #if CONSTANTCOLOR

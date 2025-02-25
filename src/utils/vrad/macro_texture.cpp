@@ -15,7 +15,7 @@
 
 class CMacroTextureData
 {
-   public:
+    public:
     int m_Width, m_Height;
     CUtlMemory< unsigned char > m_ImageData;
 };

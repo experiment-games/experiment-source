@@ -176,9 +176,9 @@ void CTFWrench::Smack( void )
 
     // We hit, setup the smack.
     if ( trace.fraction < 1.0f &&
-         trace.m_pEnt &&
-         trace.m_pEnt->IsBaseObject() &&
-         trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
+        trace.m_pEnt &&
+        trace.m_pEnt->IsBaseObject() &&
+        trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
     {
 #ifdef GAME_DLL
         OnFriendlyBuildingHit( dynamic_cast< CBaseObject * >( trace.m_pEnt ), pPlayer, trace.endpos );
@@ -496,7 +496,7 @@ void CTFRobotArm::Smack( void )
     trace_t trace;
     bool btrace = DoSwingTrace( trace );
     if ( btrace && trace.DidHitNonWorldEntity() && trace.m_pEnt && trace.m_pEnt->IsPlayer() &&
-         trace.m_pEnt->GetTeamNumber() != pPlayer->GetTeamNumber() )
+        trace.m_pEnt->GetTeamNumber() != pPlayer->GetTeamNumber() )
     {
         m_iComboCount++;
         m_flLastComboHit = gpGlobals->curtime;

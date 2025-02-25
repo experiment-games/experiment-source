@@ -21,7 +21,7 @@ class CFileRead;
 class CScratchPad3D : public IScratchPad3D
 {
     // Commands that can go in the file.
-   public:
+    public:
     enum
     {
         COMMAND_POINT = 0,
@@ -35,13 +35,13 @@ class CScratchPad3D : public IScratchPad3D
 
     class ICachedRenderData
     {
-       public:
+        public:
         virtual void Release() = 0;
     };
 
     class CBaseCommand
     {
-       public:
+        public:
         CBaseCommand( unsigned char iCommand )
         {
             m_iCommand = ( unsigned char )iCommand;
@@ -67,7 +67,7 @@ class CScratchPad3D : public IScratchPad3D
             }
         }
 
-       public:
+        public:
         unsigned char m_iCommand;  // One of the COMMAND_ defines.
 
         // The renderer can cache data with the commands to speedup the rendering after
@@ -77,7 +77,7 @@ class CScratchPad3D : public IScratchPad3D
 
     class CCommand_Point : public CBaseCommand
     {
-       public:
+        public:
         CCommand_Point()
             : CBaseCommand( COMMAND_POINT ) {}
 
@@ -90,7 +90,7 @@ class CScratchPad3D : public IScratchPad3D
 
     class CCommand_Line : public CBaseCommand
     {
-       public:
+        public:
         CCommand_Line()
             : CBaseCommand( COMMAND_LINE ) {}
 
@@ -102,7 +102,7 @@ class CScratchPad3D : public IScratchPad3D
 
     class CCommand_Polygon : public CBaseCommand
     {
-       public:
+        public:
         CCommand_Polygon()
             : CBaseCommand( COMMAND_POLYGON ) {}
 
@@ -114,7 +114,7 @@ class CScratchPad3D : public IScratchPad3D
 
     class CCommand_Matrix : public CBaseCommand
     {
-       public:
+        public:
         CCommand_Matrix()
             : CBaseCommand( COMMAND_MATRIX ) {}
 
@@ -126,7 +126,7 @@ class CScratchPad3D : public IScratchPad3D
 
     class CCommand_RenderState : public CBaseCommand
     {
-       public:
+        public:
         CCommand_RenderState()
             : CBaseCommand( COMMAND_RENDERSTATE ) {}
 
@@ -139,7 +139,7 @@ class CScratchPad3D : public IScratchPad3D
 
     class CCommand_Text : public CBaseCommand
     {
-       public:
+        public:
         CCommand_Text()
             : CBaseCommand( COMMAND_TEXT ) {}
 
@@ -150,7 +150,7 @@ class CScratchPad3D : public IScratchPad3D
         CTextParams m_TextParams;
     };
 
-   public:
+    public:
     CScratchPad3D( char const *pFilename, IFileSystem *pFileSystem, bool bAutoClear );
 
     void AutoFlush();
@@ -160,7 +160,7 @@ class CScratchPad3D : public IScratchPad3D
     // Load a file...
     bool LoadCommandsFromFile();
 
-   public:
+    public:
     virtual void Release();
 
     virtual void SetMapping(
@@ -208,7 +208,7 @@ class CScratchPad3D : public IScratchPad3D
         int pitchInBytes,
         Vector *vCorners );
 
-   public:
+    public:
     IFileSystem *m_pFileSystem;
     char const *m_pFilename;
     CUtlVector< CBaseCommand * > m_Commands;

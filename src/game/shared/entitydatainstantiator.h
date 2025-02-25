@@ -22,7 +22,7 @@ class CBaseEntity;
 //-----------------------------------------------------------------------------
 abstract_class IEntityDataInstantiator
 {
-   public:
+    public:
     virtual ~IEntityDataInstantiator(){};
 
     virtual void *GetDataObject( const CBaseEntity *instance ) = 0;
@@ -36,7 +36,7 @@ abstract_class IEntityDataInstantiator
 template < class T >
 class CEntityDataInstantiator : public IEntityDataInstantiator
 {
-   public:
+    public:
     CEntityDataInstantiator()
         : m_HashTable( 64, 0, 0, CompareFunc, KeyFunc )
     {
@@ -92,7 +92,7 @@ class CEntityDataInstantiator : public IEntityDataInstantiator
         }
     }
 
-   private:
+    private:
     struct HashEntry
     {
         HashEntry()

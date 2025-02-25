@@ -33,7 +33,7 @@ class CMvMMissionSet;
 //    - Wrapper classes that reference a proto object elsewhere, and can be constructed on the fly as a helper
 class ITFPerPlayerMatchCriteriaReader
 {
-   public:
+    public:
     virtual ~ITFPerPlayerMatchCriteriaReader(){};
 
     // Check if the local player is doubling down
@@ -45,7 +45,7 @@ class ITFPerPlayerMatchCriteriaReader
 
 class ITFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteriaReader
 {
-   public:
+    public:
     virtual ~ITFPerPlayerMatchCriteria(){};
 
     // Check if the local player is doubling down
@@ -70,7 +70,7 @@ class ITFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteriaReader
         return *this;
     }
 
-   protected:
+    protected:
     // Implementor provides
     virtual CTFPerPlayerMatchCriteriaProto &MutProto() = 0;
 };
@@ -96,7 +96,7 @@ class ITFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteriaReader
 //    - Wrapper classes that reference a proto object elsewhere, and can be constructed on the fly as a helper
 class ITFGroupMatchCriteriaReader
 {
-   public:
+    public:
     virtual ~ITFGroupMatchCriteriaReader(){};
 
     void GetMvMMissionSet( CMvMMissionSet &challenges, bool bMannup ) const;
@@ -122,7 +122,7 @@ class ITFGroupMatchCriteriaReader
 // Superset of the reader with setter functions, implementors need to additionally provide MutProto()
 class ITFGroupMatchCriteria : public ITFGroupMatchCriteriaReader
 {
-   public:
+    public:
     virtual ~ITFGroupMatchCriteria(){};
 
     void SetMvMMissionSet( const CMvMMissionSet &challenges, bool bMannup );
@@ -167,7 +167,7 @@ class ITFGroupMatchCriteria : public ITFGroupMatchCriteriaReader
     // Implementor provides these so we can can wrap non-owned
     virtual const CTFGroupMatchCriteriaProto &Proto() const = 0;
 
-   protected:
+    protected:
     virtual CTFGroupMatchCriteriaProto &MutProto() = 0;
 };
 
@@ -195,7 +195,7 @@ class ITFGroupMatchCriteria : public ITFGroupMatchCriteriaReader
         return *this;                                                           \
     }                                                                           \
                                                                                 \
-   protected:                                                                   \
+    protected:                                                                   \
     virtual CTF##criterianame##MatchCriteriaProto &MutProto() final override    \
     {                                                                           \
         return m_proto;                                                         \
@@ -207,9 +207,9 @@ class ITFGroupMatchCriteria : public ITFGroupMatchCriteriaReader
 // Basic implementor that just owns the proto
 class CTFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteria
 {
-   public:
+    public:
     _MATCHCRITERIA_IMPL_MUTABLE( CTFPerPlayerMatchCriteria, PerPlayer )
-   private:
+    private:
     CTFPerPlayerMatchCriteriaProto m_proto;
 };
 
@@ -217,11 +217,11 @@ class CTFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteria
 // Wrapper implementor that holds a reference
 class RefTFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteria
 {
-   public:
+    public:
     RefTFPerPlayerMatchCriteria( CTFPerPlayerMatchCriteriaProto &proto )
         : m_proto( proto ){};
     _MATCHCRITERIA_IMPL_MUTABLE( RefTFPerPlayerMatchCriteria, PerPlayer )
-   private:
+    private:
     CTFPerPlayerMatchCriteriaProto &m_proto;
 };
 
@@ -229,11 +229,11 @@ class RefTFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteria
 // Const version of ref implementor, only exposes reader interfaces
 class ConstRefTFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteriaReader
 {
-   public:
+    public:
     ConstRefTFPerPlayerMatchCriteria( const CTFPerPlayerMatchCriteriaProto &proto )
         : m_proto( proto ){};
     _MATCHCRITERIA_IMPL( ConstRefTFPerPlayerMatchCriteria, PerPlayer )
-   private:
+    private:
     const CTFPerPlayerMatchCriteriaProto &m_proto;
 };
 
@@ -243,9 +243,9 @@ class ConstRefTFPerPlayerMatchCriteria : public ITFPerPlayerMatchCriteriaReader
 // Basic implementor that just owns the proto
 class CTFGroupMatchCriteria : public ITFGroupMatchCriteria
 {
-   public:
+    public:
     _MATCHCRITERIA_IMPL_MUTABLE( CTFGroupMatchCriteria, Group )
-   private:
+    private:
     CTFGroupMatchCriteriaProto m_proto;
 };
 
@@ -253,11 +253,11 @@ class CTFGroupMatchCriteria : public ITFGroupMatchCriteria
 // Wrapper implementor that holds a reference
 class RefTFGroupMatchCriteria : public ITFGroupMatchCriteria
 {
-   public:
+    public:
     RefTFGroupMatchCriteria( CTFGroupMatchCriteriaProto &proto )
         : m_proto( proto ){};
     _MATCHCRITERIA_IMPL_MUTABLE( RefTFGroupMatchCriteria, Group )
-   private:
+    private:
     CTFGroupMatchCriteriaProto &m_proto;
 };
 
@@ -265,13 +265,13 @@ class RefTFGroupMatchCriteria : public ITFGroupMatchCriteria
 // Const version of ref implementor, only exposes reader interfaces
 class ConstRefTFGroupMatchCriteria : public ITFGroupMatchCriteriaReader
 {
-   public:
+    public:
     ConstRefTFGroupMatchCriteria( const CTFGroupMatchCriteriaProto &proto )
         : m_proto( proto ){};
     ConstRefTFGroupMatchCriteria( const CTFGroupMatchCriteria &other )
         : m_proto( other.Proto() ){};
     _MATCHCRITERIA_IMPL( ConstRefTFGroupMatchCriteria, Group )
-   private:
+    private:
     const CTFGroupMatchCriteriaProto &m_proto;
 };
 

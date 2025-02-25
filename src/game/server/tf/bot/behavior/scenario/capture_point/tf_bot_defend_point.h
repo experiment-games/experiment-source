@@ -11,7 +11,7 @@
 
 class CTFBotDefendPoint : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual ActionResult< CTFBot > OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
@@ -31,7 +31,7 @@ class CTFBotDefendPoint : public Action< CTFBot >
         return "DefendPoint";
     };
 
-   private:
+    private:
     PathFollower m_path;    // for moving to a defense position
     ChasePath m_chasePath;  // for chasing enemies
 

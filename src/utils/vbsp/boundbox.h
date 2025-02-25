@@ -24,7 +24,7 @@ enum
 
 class BoundBox
 {
-   public:
+    public:
     BoundBox( void );
     BoundBox( const Vector& mins, const Vector& maxs );
 

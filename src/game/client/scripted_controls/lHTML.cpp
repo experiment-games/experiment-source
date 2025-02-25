@@ -437,10 +437,10 @@ LUA_BINDING_BEGIN( Panels, Html, "library", "Creates a new HTML panel" )
 
     lua_HTML *pPanel =
         new lua_HTML( parent,
-                      name,
-                      shouldAllowJavaScript,
-                      popupWindow,
-                      L );
+                    name,
+                    shouldAllowJavaScript,
+                    popupWindow,
+                    L );
     LHTML::PushLuaInstanceSafe( L, pPanel );
     return 1;
 }

@@ -49,7 +49,7 @@ enum
 
 class CGrubNugget : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CGrubNugget, CItem );
 
     virtual void Spawn( void );
@@ -67,7 +67,7 @@ class CGrubNugget : public CItem
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     int m_nDenomination;  // Denotes size and health amount given
 };
 
@@ -83,7 +83,7 @@ DEFINE_FIELD( m_nDenomination, FIELD_INTEGER ),
 
 class CAntlionGrub : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CAntlionGrub, CBaseAnimating );
 
     virtual void Activate( void );
@@ -102,7 +102,7 @@ class CAntlionGrub : public CBaseAnimating
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     inline bool InPVS( void );
     void SetNextThinkByDistance( void );
 

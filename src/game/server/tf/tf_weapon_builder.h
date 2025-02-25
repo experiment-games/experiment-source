@@ -22,7 +22,7 @@ class CTFWeaponBuilder : public CTFWeaponBase
 {
     DECLARE_CLASS( CTFWeaponBuilder, CTFWeaponBase );
 
-   public:
+    public:
     CTFWeaponBuilder();
     ~CTFWeaponBuilder();
 
@@ -100,7 +100,7 @@ class CTFWeaponBuilder : public CTFWeaponBase
         return TF_AMMO_GRENADES2;
     }
 
-   public:
+    public:
     CNetworkVar( int, m_iBuildState );
     CNetworkVar( unsigned int, m_iObjectType );
     CNetworkVar( unsigned int, m_iObjectMode );
@@ -127,7 +127,7 @@ class CTFWeaponBuilder : public CTFWeaponBase
     EHANDLE m_hLastSappedBuilding;
     Vector m_vLastKnownSapPos;
 
-   private:
+    private:
     bool m_bAttack3Down;
 };
 
@@ -150,7 +150,7 @@ enum
 //-----------------------------------------------------------------------------
 class CTFWeaponSapper : public CTFWeaponBuilder, public ITFChargeUpWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponSapper, CTFWeaponBuilder );
     DECLARE_SERVERCLASS();
     // DECLARE_PREDICTABLE();
@@ -180,7 +180,7 @@ class CTFWeaponSapper : public CTFWeaponBuilder, public ITFChargeUpWeapon
 
     virtual Activity TranslateViewmodelHandActivity( Activity actBase );
 
-   private:
+    private:
     // float	m_flChargeBeginTime;
     bool m_bAttackDown;
 

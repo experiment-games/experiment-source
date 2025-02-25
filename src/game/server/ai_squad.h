@@ -33,7 +33,7 @@ DECLARE_POINTER_HANDLE( AISquadIter_t );
 
 class CAI_SquadManager
 {
-   public:
+    public:
     CAI_SquadManager()
     {
         m_pSquads = NULL;
@@ -51,7 +51,7 @@ class CAI_SquadManager
     void DeleteSquad( CAI_Squad *pSquad );
     void DeleteAllSquads( void );
 
-   private:
+    private:
     CAI_Squad *m_pSquads;  // A linked list of all squads
 };
 
@@ -82,7 +82,7 @@ struct AISquadEnemyInfo_t
 
 class CAI_Squad
 {
-   public:
+    public:
     const char *GetName() const
     {
         return STRING( m_Name );
@@ -151,12 +151,12 @@ class CAI_Squad
         }
     }
 
-   private:
+    private:
     void OccupySlot( CBaseEntity *pEnemy, int i );
     void VacateSlot( CBaseEntity *pEnemy, int i );
     bool IsSlotOccupied( CBaseEntity *pEnemy, int i ) const;
 
-   private:
+    private:
     friend class CAI_SaveRestoreBlockHandler;
     friend class CAI_SquadManager;
 
@@ -203,7 +203,7 @@ class CAI_Squad
 #endif
 
     //---------------------------------
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 };
 

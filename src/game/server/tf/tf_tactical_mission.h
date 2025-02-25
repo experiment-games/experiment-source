@@ -12,12 +12,12 @@
 
 class CTFDefendSetupGatesDeployZone : public CTacticalMissionZone
 {
-   public:
+    public:
 };
 
 class CTFDefendSetupGatesMission : public CTacticalMission
 {
-   public:
+    public:
     CTFDefendSetupGatesMission( void );
 
     virtual const CTacticalMissionZone *GetDeployZone( CBasePlayer *who ) const;  // where give player should be during this mission
@@ -33,20 +33,20 @@ class CTFDefendSetupGatesMission : public CTacticalMission
 //---------------------------------------------------------------------------------------------
 class CTFDefendPointZone : public CTacticalMissionZone
 {
-   public:
+    public:
     CTFDefendPointZone( CTeamControlPoint *point );
 };
 
 class CTFDefendPointSniperZone : public CTacticalMissionZone
 {
-   public:
+    public:
     CTFDefendPointSniperZone( CTeamControlPoint *point );
     virtual ~CTFDefendPointSniperZone( void ) {}
 };
 
 class CTFDefendPointMission : public CTacticalMission
 {
-   public:
+    public:
     CTFDefendPointMission( CTeamControlPoint *point );
     ~CTFDefendPointMission( void );
 
@@ -59,7 +59,7 @@ class CTFDefendPointMission : public CTacticalMission
         return m_name;
     }  // return name of this mission
 
-   private:
+    private:
     CTeamControlPoint *m_point;
 
     CTFDefendPointZone *m_defenseZone;
@@ -74,7 +74,7 @@ class CTFDefendPointMission : public CTacticalMission
  */
 class CTFTacticalMissionManager : public CTacticalMissionManager
 {
-   public:
+    public:
     virtual void OnServerActivate( void );  // Invoked when server loads a new map, after everything has been created/spawned
     virtual void OnRoundRestart( void );    // invoked when a game round restarts
 };

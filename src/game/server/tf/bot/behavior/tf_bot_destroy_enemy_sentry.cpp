@@ -152,10 +152,10 @@ bool FindStickybombAim( CTFBot *me, CBaseEntity *target, float *aimYaw, float *a
 bool CTFBotDestroyEnemySentry::IsPossible( CTFBot *me )
 {
     if ( me->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) ||
-         me->IsPlayerClass( TF_CLASS_SNIPER ) ||
-         me->IsPlayerClass( TF_CLASS_MEDIC ) ||
-         me->IsPlayerClass( TF_CLASS_ENGINEER ) ||
-         me->IsPlayerClass( TF_CLASS_PYRO ) )
+        me->IsPlayerClass( TF_CLASS_SNIPER ) ||
+        me->IsPlayerClass( TF_CLASS_MEDIC ) ||
+        me->IsPlayerClass( TF_CLASS_ENGINEER ) ||
+        me->IsPlayerClass( TF_CLASS_PYRO ) )
     {
         // these classes have no way to kill a sentry at long range
         return false;
@@ -197,7 +197,7 @@ bool CTFBotDestroyEnemySentry::IsPossible( CTFBot *me )
 //---------------------------------------------------------------------------------------------
 class CFindSafeAttackArea : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CFindSafeAttackArea( CTFBot *me )
     {
         m_me = me;
@@ -359,7 +359,7 @@ void CTFBotDestroyEnemySentry::ComputeSafeAttackSpot( CTFBot *me )
 //---------------------------------------------------------------------------------------------
 class FindSafeSentryApproachAreaScan : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     FindSafeSentryApproachAreaScan( CTFBot *me )
     {
         m_me = me;
@@ -492,7 +492,7 @@ void CTFBotDestroyEnemySentry::ComputeCornerAttackSpot( CTFBot *me )
             m_safeAttackSpot = safeArea->GetRandomPoint();
 
             if ( ( sentry->WorldSpaceCenter() - m_safeAttackSpot ).IsLengthGreaterThan( SENTRY_MAX_RANGE ) ||
-                 !me->IsLineOfFireClear( sentry->WorldSpaceCenter(), m_safeAttackSpot ) )
+                !me->IsLineOfFireClear( sentry->WorldSpaceCenter(), m_safeAttackSpot ) )
             {
                 break;
             }
@@ -520,12 +520,12 @@ ActionResult< CTFBot > CTFBotDestroyEnemySentry::OnStart( CTFBot *me, Action< CT
     m_wasUber = false;
 
     /*
-      // find a spot to attack the sentry out of its range
-      CFindSafeAttackArea find( me );
-      SearchSurroundingAreas( me->GetLastKnownArea(), find, 1.5f * SENTRY_MAX_RANGE );
+    // find a spot to attack the sentry out of its range
+    CFindSafeAttackArea find( me );
+    SearchSurroundingAreas( me->GetLastKnownArea(), find, 1.5f * SENTRY_MAX_RANGE );
 
-      m_hasSafeAttackSpot = find.m_foundAttackSpot;
-      m_safeAttackSpot = find.m_attackSpot;
+    m_hasSafeAttackSpot = find.m_foundAttackSpot;
+    m_safeAttackSpot = find.m_attackSpot;
     */
 
     if ( me->IsPlayerClass( TF_CLASS_DEMOMAN ) )
@@ -538,10 +538,10 @@ ActionResult< CTFBot > CTFBotDestroyEnemySentry::OnStart( CTFBot *me, Action< CT
     }
 
     /*
-      if ( !m_hasSafeAttackSpot )
-      {
+    if ( !m_hasSafeAttackSpot )
+    {
         return Done( "No safe attack spot found" );
-      }
+    }
     */
 
     m_targetSentry = me->GetEnemySentry();
@@ -573,9 +573,9 @@ ActionResult< CTFBot > CTFBotDestroyEnemySentry::Update( CTFBot *me, float inter
             const float maxRushDistance = 500.0f;
             CTFBotPathCost cost( me, FASTEST_ROUTE );
             float travelDistance = NavAreaTravelDistance( me->GetLastKnownArea(),
-                                                          m_targetSentry->GetLastKnownArea(),
-                                                          cost,
-                                                          maxRushDistance );
+                                                        m_targetSentry->GetLastKnownArea(),
+                                                        cost,
+                                                        maxRushDistance );
 
             if ( travelDistance >= 0.0f )
             {
@@ -653,8 +653,8 @@ ActionResult< CTFBot > CTFBotDestroyEnemySentry::Update( CTFBot *me, float inter
         }
 
         if ( ( me->IsRangeLessThan( attackSpot, 50.0f ) &&
-               ( me->GetAbsOrigin() - attackSpot ).AsVector2D().IsLengthLessThan( 25.0f ) ) ||
-             ( me->IsLineOfFireClear( me->GetEnemySentry() ) && me->IsRangeLessThan( m_targetSentry, 1000.0f ) ) )  // opportunistic shot
+                ( me->GetAbsOrigin() - attackSpot ).AsVector2D().IsLengthLessThan( 25.0f ) ) ||
+            ( me->IsLineOfFireClear( me->GetEnemySentry() ) && me->IsRangeLessThan( m_targetSentry, 1000.0f ) ) )  // opportunistic shot
         {
             // reached attack spot
             return ChangeTo( new CTFBotStickybombSentrygun( me->GetEnemySentry() ), "Destroying sentry with stickies" );

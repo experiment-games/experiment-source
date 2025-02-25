@@ -17,7 +17,7 @@ struct RenderMovieParams_t;
 
 abstract_class IReplayMovieRenderer : public IBaseInterface
 {
-   public:
+    public:
     virtual bool SetupRenderer( RenderMovieParams_t & params, IReplayMovie * pMovie ) = 0;
     virtual void ShutdownRenderer() = 0;
     virtual void RenderVideo() = 0;

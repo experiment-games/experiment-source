@@ -38,7 +38,7 @@ void SOTrackerSpew( const char* pszBuff, int nType );
 
 class CBaseSOTracker
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CBaseSOTracker )
 
     CBaseSOTracker( const CSharedObject* pSObject, CSteamID steamIDOwner, CSOTrackerManager* pManager );
@@ -62,7 +62,7 @@ class CBaseSOTracker
     virtual void OnUpdate() = 0;
     virtual void OnRemove();
 
-   protected:
+    protected:
     const CSharedObject* m_pSObject;
     CSteamID m_steamIDOwner;
     CSOTrackerManager* m_pManager;
@@ -85,7 +85,7 @@ struct CommitRecord_t
     double m_flReportedTime;
     ::google::protobuf::Message* m_pProtoMsg;
 
-   private:
+    private:
     CommitRecord_t();  // Nope
 };
 typedef CUtlMap< uint64, CommitRecord_t* > CommitsMap_t;
@@ -99,7 +99,7 @@ class CSOTrackerManager : public ISharedObjectListener, public CGameEventListene
 class CSOTrackerManager : public CLocalSteamSharedObjectListener, public CGameEventListener, public CAutoGameSystemPerFrame
 #endif
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CSOTrackerManager )
 
     typedef CUtlMap< uint64, CBaseSOTracker* > SOTrackerMap_t;
@@ -139,7 +139,7 @@ class CSOTrackerManager : public CLocalSteamSharedObjectListener, public CGameEv
     }
     CommitRecord_t* GetCommitRecord( CommitsMap_t::KeyType_t );
 
-   protected:
+    protected:
     enum ETrackerHandling_t
     {
         TRACKER_CREATE_OR_UPDATE = 0,
@@ -148,7 +148,7 @@ class CSOTrackerManager : public CLocalSteamSharedObjectListener, public CGameEv
 
     void UpdateTrackerForItem( const CSharedObject* pItem, ETrackerHandling_t eHandling, CSteamID steamIDOwner );
 
-   private:
+    private:
     virtual int GetType() const = 0;
     virtual const char* GetName() const = 0;
     virtual CFmtStr GetDebugObjectDescription( const CSharedObject* pItem ) const = 0;

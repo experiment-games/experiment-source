@@ -24,7 +24,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 // $textureScrollAngle
 class CTextureScrollMaterialProxy : public IMaterialProxy
 {
-   public:
+    public:
     CTextureScrollMaterialProxy();
     virtual ~CTextureScrollMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -35,7 +35,7 @@ class CTextureScrollMaterialProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pTextureScrollVar;
     CFloatInput m_TextureScrollRate;
     CFloatInput m_TextureScrollAngle;

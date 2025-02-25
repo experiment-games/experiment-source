@@ -22,7 +22,7 @@
 //
 class CTFClub : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFClub, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -33,7 +33,7 @@ class CTFClub : public CTFWeaponBaseMelee
         return TF_WEAPON_CLUB;
     }
 
-   private:
+    private:
     CTFClub( const CTFClub& ) {}
 };
 

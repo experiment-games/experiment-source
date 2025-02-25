@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotFetchFlag : public Action< CTFBot >
 {
-   public:
+    public:
 #define TEMPORARY_FLAG_FETCH true
     CTFBotFetchFlag( bool isTemporary = false );
     virtual ~CTFBotFetchFlag() {}
@@ -27,7 +27,7 @@ class CTFBotFetchFlag : public Action< CTFBot >
         return "FetchFlag";
     };
 
-   private:
+    private:
     bool m_isTemporary;
     PathFollower m_path;
     CountdownTimer m_repathTimer;

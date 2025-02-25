@@ -1789,11 +1789,11 @@ jpeg_UtlBuffer_dest( j_compress_ptr cinfo, CUtlBuffer *pBuffer )
     JPEGDestinationManager_t *dest;
 
     /* The destination object is made permanent so that multiple JPEG images
-     * can be written to the same file without re-executing jpeg_stdio_dest.
-     * This makes it dangerous to use this manager and a different destination
-     * manager serially with the same JPEG object, because their private object
-     * sizes may be different.  Caveat programmer.
-     */
+    * can be written to the same file without re-executing jpeg_stdio_dest.
+    * This makes it dangerous to use this manager and a different destination
+    * manager serially with the same JPEG object, because their private object
+    * sizes may be different.  Caveat programmer.
+    */
     if ( cinfo->dest == NULL )
     { /* first time for this JPEG object? */
         cinfo->dest = ( struct jpeg_destination_mgr * )( *cinfo->mem->alloc_small )( ( j_common_ptr )cinfo, JPOOL_PERMANENT, sizeof( JPEGDestinationManager_t ) );

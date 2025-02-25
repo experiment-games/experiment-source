@@ -299,7 +299,7 @@ message FileOptions {
   // Generated classes can be optimized for speed or code size.
   enum OptimizeMode {
     SPEED = 1;        // Generate complete code for parsing, serialization,
-                      // etc.
+                    // etc.
     CODE_SIZE = 2;    // Use ReflectionOps to implement these methods.
     LITE_RUNTIME = 3; // Generate code using MessageLite and the lite runtime.
   }

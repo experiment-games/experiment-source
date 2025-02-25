@@ -26,7 +26,7 @@ class CHudFilmDemo : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudFilmDemo, vgui::Panel );
 
-   public:
+    public:
     CHudFilmDemo( const char *name );
 
     // vgui overrides
@@ -39,7 +39,7 @@ class CHudFilmDemo : public CHudElement, public vgui::Panel
     void SetLeftStringID( const char *id );
     void SetRightStringID( const char *id );
 
-   private:
+    private:
     bool m_bFilmDemoActive;
 
     char m_pLeftStringID[256];

@@ -19,7 +19,7 @@ class CParticleSystem : public CBaseEntity
 {
     DECLARE_CLASS( CParticleSystem, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -42,7 +42,7 @@ class CParticleSystem : public CBaseEntity
         kMAXCONTROLPOINTS = 63
     };  ///< actually one less than the total number of cpoints since 0 is assumed to be me
 
-   protected:
+    protected:
     /// Load up and resolve the entities that are supposed to be the control points
     void ReadControlPointEnts( void );
 

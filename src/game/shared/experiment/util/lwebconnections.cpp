@@ -252,8 +252,8 @@ LUA_BINDING_BEGIN( WebConnections, RequestHttpMethod, "library", "Performs an HT
                                 : nullptr;
 
     KeyValues *headers = !lua_isnoneornil( L, 5 ) && luaL_checkkeyvalues( L, 5 )
-                             ? LUA_BINDING_ARGUMENT_NILLABLE( lua_tokeyvalues, 5, "headers" )
-                             : nullptr;
+                            ? LUA_BINDING_ARGUMENT_NILLABLE( lua_tokeyvalues, 5, "headers" )
+                            : nullptr;
 
     const char *contentType = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 6, "text/plain; charset=utf-8", "contentType" );
     int timeout = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, 60, "timeout" );

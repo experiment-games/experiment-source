@@ -58,7 +58,7 @@ class CTFWearableCampaignItem : public CTFWearable, public GCSDK::ISharedObjectL
 {
     DECLARE_CLASS( CTFWearableCampaignItem, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -97,7 +97,7 @@ class CTFWearableCampaignItem : public CTFWearable, public GCSDK::ISharedObjectL
     virtual void ReceiveMessage( int classID, bf_read &msg ) OVERRIDE;
 #endif  // GAME_DLL
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     void HandleStateEffects( int nState );
 

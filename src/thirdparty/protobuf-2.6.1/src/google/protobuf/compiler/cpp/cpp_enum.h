@@ -58,7 +58,7 @@ namespace cpp
 
 class EnumGenerator
 {
-   public:
+    public:
     // See generator.cc for the meaning of dllexport_decl.
     explicit EnumGenerator( const EnumDescriptor* descriptor,
                             const Options& options );
@@ -91,7 +91,7 @@ class EnumGenerator
     // Goes in the .cc file.
     void GenerateMethods( io::Printer* printer );
 
-   private:
+    private:
     const EnumDescriptor* descriptor_;
     string classname_;
     Options options_;

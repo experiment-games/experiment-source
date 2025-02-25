@@ -21,7 +21,7 @@
 //=========================================================
 class CExperimentMachineGun : public CWeaponExperimentBase
 {
-   public:
+    public:
     DECLARE_CLASS( CExperimentMachineGun, CWeaponExperimentBase );
     DECLARE_DATADESC();
 
@@ -44,10 +44,10 @@ class CExperimentMachineGun : public CWeaponExperimentBase
     // utility function
     static void DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, float maxVerticleKickAngle, float fireDurationTime, float slideLimitTime );
 
-   private:
+    private:
     CExperimentMachineGun( const CExperimentMachineGun & );
 
-   protected:
+    protected:
     int m_nShotsFired;  // Number of consecutive shots fired
 
     float m_flNextSoundTime;  // real-time clock of when to make next sound

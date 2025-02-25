@@ -11,13 +11,13 @@
 
 class CSDKEventLog : public CEventLog
 {
-   private:
+    private:
     typedef CEventLog BaseClass;
 
-   public:
+    public:
     virtual ~CSDKEventLog(){};
 
-   public:
+    public:
     bool PrintEvent( IGameEvent* event )  // override virtual function
     {
         if ( BaseClass::PrintEvent( event ) )
@@ -33,7 +33,7 @@ class CSDKEventLog : public CEventLog
         return false;
     }
 
-   protected:
+    protected:
     bool PrintSDKEvent( IGameEvent* event )  // print Mod specific logs
     {
         // const char * name = event->GetName() + Q_strlen("sdk_"); // remove prefix

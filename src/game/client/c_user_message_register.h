@@ -20,13 +20,13 @@
 
 class CUserMessageRegister
 {
-   public:
+    public:
     CUserMessageRegister( const char *pMessageName, pfnUserMsgHook pHookFn );
 
     // This is called at startup to register all the user messages.
     static void RegisterAll();
 
-   private:
+    private:
     const char *m_pMessageName;
     pfnUserMsgHook m_pHookFn;
 

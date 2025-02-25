@@ -145,13 +145,13 @@ class CMySQLQuery
 {
     friend class CMySQL;
 
-   public:
+    public:
     // This is like a sprintf, but it will grow the string as necessary.
     void Format( const char *pFormat, ... );
 
     int Execute( IMySQL *pDB );
 
-   private:
+    private:
     CUtlVector< char > m_QueryText;
 };
 
@@ -226,7 +226,7 @@ char *FormatStringForSQL( const char *pText )
 // -------------------------------------------------------------------------------- //
 class CSQLDBCommandBase : public ISQLDBCommand
 {
-   public:
+    public:
     virtual ~CSQLDBCommandBase()
     {
     }
@@ -239,7 +239,7 @@ class CSQLDBCommandBase : public ISQLDBCommand
 
 class CSQLDBCommand_WorkerStats : public CSQLDBCommandBase
 {
-   public:
+    public:
     virtual int RunCommand()
     {
         int nCurConnections = VMPI_GetCurrentNumberOfConnections();
@@ -271,7 +271,7 @@ class CSQLDBCommand_WorkerStats : public CSQLDBCommandBase
 
 class CSQLDBCommand_JobMasterEnd : public CSQLDBCommandBase
 {
-   public:
+    public:
     virtual int RunCommand()
     {
         CMySQLQuery query;
@@ -309,7 +309,7 @@ void UpdateJobWorkerRunningTime()
 
 class CSQLDBCommand_GraphEntry : public CSQLDBCommandBase
 {
-   public:
+    public:
     CSQLDBCommand_GraphEntry( DWORD msTime, DWORD nBytesSent, DWORD nBytesReceived )
     {
         m_msTime = msTime;
@@ -343,7 +343,7 @@ class CSQLDBCommand_GraphEntry : public CSQLDBCommandBase
 
 class CSQLDBCommand_TextMessage : public CSQLDBCommandBase
 {
-   public:
+    public:
     CSQLDBCommand_TextMessage( const char *pText )
     {
         m_pText = FormatStringForSQL( pText );
@@ -583,9 +583,9 @@ bool VMPI_Stats_Init_Worker( const char *pHostName, const char *pDBName, const c
 
     CMySQLQuery query;
     query.Format( "insert into job_worker_start ( JobID, CurrentStage, IsMaster, MachineName ) values ( %lu, \"none\", %d, \"%s\" )",
-                  g_JobPrimaryID,
-                  g_bMaster,
-                  g_MachineName );
+                g_JobPrimaryID,
+                g_bMaster,
+                g_MachineName );
     query.Execute( g_pSQL );
 
     g_JobWorkerID = g_pSQL->InsertID();
@@ -650,7 +650,7 @@ static bool ReadStringFromFile( FILE *fp, char *pStr, int strSize )
     for ( i; i < strSize - 2; i++ )
     {
         if ( fread( &pStr[i], 1, 1, fp ) != 1 ||
-             pStr[i] == '\n' )
+            pStr[i] == '\n' )
         {
             break;
         }
@@ -686,8 +686,8 @@ void GetDBInfo( const char *pDBInfoFilename, CDBInfo *pInfo )
     }
 
     if ( !ReadStringFromFile( fp, pInfo->m_HostName, sizeof( pInfo->m_HostName ) ) ||
-         !ReadStringFromFile( fp, pInfo->m_DBName, sizeof( pInfo->m_DBName ) ) ||
-         !ReadStringFromFile( fp, pInfo->m_UserName, sizeof( pInfo->m_UserName ) ) )
+        !ReadStringFromFile( fp, pInfo->m_DBName, sizeof( pInfo->m_DBName ) ) ||
+        !ReadStringFromFile( fp, pInfo->m_UserName, sizeof( pInfo->m_UserName ) ) )
     {
         Error( "%s is not a valid database info file.\n", dbInfoFilename );
     }
@@ -717,16 +717,16 @@ void RunJobWatchApp( char *pCmdLine )
             s1[0] = 0;
 
             if ( !CreateProcess(
-                     NULL,
-                     pCmdLine,
-                     NULL,  // security
-                     NULL,
-                     TRUE,
-                     0,        // flags
-                     NULL,     // environment
-                     dirName,  // current directory
-                     &si,
-                     &pi ) )
+                    NULL,
+                    pCmdLine,
+                    NULL,  // security
+                    NULL,
+                    TRUE,
+                    0,        // flags
+                    NULL,     // environment
+                    dirName,  // current directory
+                    &si,
+                    &pi ) )
             {
                 Warning( "%s - error launching '%s'\n", VMPI_GetParamString( mpi_Job_Watch ), pCmdLine );
             }

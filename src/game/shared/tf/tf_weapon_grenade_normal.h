@@ -23,7 +23,7 @@
 //
 class CTFGrenadeNormal : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeNormal, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -57,7 +57,7 @@ class CTFGrenadeNormal : public CTFWeaponBaseGrenade
 
 class CTFGrenadeNormalProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeNormalProjectile, CTFWeaponBaseGrenadeProj );
 
     // Unique identifier.

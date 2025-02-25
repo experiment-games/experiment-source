@@ -24,7 +24,7 @@ float CubicBezier( float t, float A, float B, float C, float D )
 }
 
 BEGIN_SHADER( VortWarp_DX7,
-              "Help for VortWarp_DX7" )
+            "Help for VortWarp_DX7" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
@@ -93,25 +93,25 @@ void DrawBaseTimesVertexColor( bool bUnlit, IMaterialVar** params, IShaderDynami
         if ( bUnlit )
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_COLOR,
-                                                   SHADER_TEXOP_SELECTARG1,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_NONE );
+                                                    SHADER_TEXCHANNEL_COLOR,
+                                                    SHADER_TEXOP_SELECTARG1,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_NONE );
         }
         else
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_COLOR,
-                                                   SHADER_TEXOP_MODULATE2X,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_VERTEXCOLOR );
+                                                    SHADER_TEXCHANNEL_COLOR,
+                                                    SHADER_TEXOP_MODULATE2X,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_VERTEXCOLOR );
         }
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_NONE );
 
         pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
         int flags = SHADER_DRAW_POSITION | SHADER_DRAW_NORMAL | SHADER_DRAW_TEXCOORD0;
@@ -121,16 +121,16 @@ void DrawBaseTimesVertexColor( bool bUnlit, IMaterialVar** params, IShaderDynami
         pShaderShadow->CustomTextureStages( 2 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_NONE );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_ADD,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_CONSTANTCOLOR );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_ADD,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_CONSTANTCOLOR );
 
         // for warping in
         pShaderShadow->EnableAlphaTest( true );
@@ -205,16 +205,16 @@ void ScrollySelfIllumPass( IMaterialVar** params, IShaderDynamicAPI* pShaderAPI,
 
         // basetexture * selfillumtint
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_CONSTANTCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_CONSTANTCOLOR );
         // previous * selfillummap
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
 
         // We're always blending
         EnableAlphaBlending( SHADER_BLEND_ONE, SHADER_BLEND_ONE );

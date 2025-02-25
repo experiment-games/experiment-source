@@ -31,7 +31,7 @@ typedef void ( *pfnStringChanged )( void *object, INetworkStringTable *stringTab
 //-----------------------------------------------------------------------------
 class INetworkStringTable
 {
-   public:
+    public:
     virtual ~INetworkStringTable( void ){};
 
     // Table Info
@@ -59,7 +59,7 @@ class INetworkStringTable
 
 class INetworkStringTableContainer
 {
-   public:
+    public:
     virtual ~INetworkStringTableContainer( void ){};
 
     // table creation/destruction

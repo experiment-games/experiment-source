@@ -24,7 +24,7 @@ class CTFPlayerMove : public CPlayerMove
 {
     DECLARE_CLASS( CTFPlayerMove, CPlayerMove );
 
-   public:
+    public:
     virtual void StartCommand( CBasePlayer *player, CUserCmd *cmd );
     virtual void SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
     virtual void FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move );

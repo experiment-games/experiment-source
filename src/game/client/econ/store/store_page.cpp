@@ -41,10 +41,10 @@ DECLARE_BUILD_FACTORY( CStorePreviewItemIcon );
 //-----------------------------------------------------------------------------
 CStoreItemControlsPanel::CStoreItemControlsPanel( vgui::Panel *pParent, const char *pPanelName, CItemModelPanel *pItemModelPanel )
     : vgui::EditablePanel( pParent, pPanelName ),
-      m_pItemModelPanel( pItemModelPanel ),
-      m_pEntry( NULL ),
-      m_bItemPanelEntered( false ),
-      m_bButtonsVisible( false )
+    m_pItemModelPanel( pItemModelPanel ),
+    m_pEntry( NULL ),
+    m_bItemPanelEntered( false ),
+    m_bButtonsVisible( false )
 {
 }
 
@@ -299,7 +299,7 @@ void CStorePricePanel::PerformLayout()
     {
         int iPosX, iPosY;
         Panel *pRefPanel = ( m_pSale && m_pSale->IsVisible() ) ? m_pSale : ( m_pNew && m_pNew->IsVisible() ) ? m_pNew
-                                                                                                             : NULL;
+                                                                                                            : NULL;
         if ( pRefPanel && pRefPanel->IsVisible() )
         {
             pRefPanel->GetPos( iPosX, iPosY );
@@ -379,8 +379,8 @@ void AddItemToCartHelper( const char *pszContext, const econ_store_entry_t *pEnt
     // to the cart then we note that it's a preview item purchase and so we may
     // get a discount.
     ECartItemType eCartItemType = eSelectedCartItemType == kCartItem_Purchase && IsItemPreviewed( pEntry, eCurrency ) && !pCart->ContainsItemDefinition( pEntry->GetItemDefinitionIndex() )
-                                      ? kCartItem_TryOutUpgrade
-                                      : eSelectedCartItemType;
+                                    ? kCartItem_TryOutUpgrade
+                                    : eSelectedCartItemType;
 
     pCart->AddToCart( pEntry, pszContext, eCartItemType );
     EconUI()->GetStorePanel()->OnAddToCart();
@@ -1112,10 +1112,10 @@ void CStorePage::OrderItemsForDisplay( CUtlVector< const econ_store_entry_t * > 
     /*
     // See how I tread upon all the holy concepts of OOP.
     if ( m_pPageData &&
-       !Q_strcmp( m_pPageData->m_pchPageClass, "CStorePage_Bundles" ) &&
-       !ShouldUseNewStore() )
+        !Q_strcmp( m_pPageData->m_pchPageClass, "CStorePage_Bundles" ) &&
+        !ShouldUseNewStore() )
     {
-      vecItems.Sort( &ItemDisplayOrderSort_UseSortOverride );
+    vecItems.Sort( &ItemDisplayOrderSort_UseSortOverride );
     }
     */
 }
@@ -1389,7 +1389,7 @@ int CStorePage::GetNumPages( void )
     static CSchemaAttributeDefHandle pAttribDef_StoreSortOverride( "store sort override" );
 
     const GameItemDefinition_t *pDefA = ItemSystem()->GetStaticDataForItemByDefIndex( ( *ppA )->GetItemDefinitionIndex() ),
-                               *pDefB = ItemSystem()->GetStaticDataForItemByDefIndex( ( *ppB )->GetItemDefinitionIndex() );
+                                *pDefB = ItemSystem()->GetStaticDataForItemByDefIndex( ( *ppB )->GetItemDefinitionIndex() );
 
     // We expect only items with valid definition indices to make it into the list to
     // be sorted.
@@ -1399,11 +1399,11 @@ int CStorePage::GetNumPages( void )
     // Sort based on: our sort key if we have one; otherwise our definition index.
     float flValue;
     int unSortKeyA = ( pAttribDef_StoreSortOverride && FindAttribute_UnsafeBitwiseCast< attrib_value_t >( pDefA, pAttribDef_StoreSortOverride, &flValue ) )
-                         ? ( int )flValue
-                         : pDefA->GetDefinitionIndex(),
+                        ? ( int )flValue
+                        : pDefA->GetDefinitionIndex(),
         unSortKeyB = ( pAttribDef_StoreSortOverride && FindAttribute_UnsafeBitwiseCast< attrib_value_t >( pDefB, pAttribDef_StoreSortOverride, &flValue ) )
-                         ? ( int )flValue
-                         : pDefB->GetDefinitionIndex();
+                        ? ( int )flValue
+                        : pDefB->GetDefinitionIndex();
 
     return unSortKeyA - unSortKeyB;
 }
@@ -2110,7 +2110,7 @@ void CStorePage::UpdateBackpackLabel( void )
     // How many slots do we have free in our current backpack? This won't take into
     // consideration expanders, account upgrades, etc.
     const int iMaxItemCount = InventoryManager()->GetLocalInventory()->GetMaxItemCount(),
-              iCurItemCount = InventoryManager()->GetLocalInventory()->GetItemCount();
+            iCurItemCount = InventoryManager()->GetLocalInventory()->GetItemCount();
     // misyl: This triggers when you have a bunch of pending items to acknowledge from drops, disabling this assert for now.
     // AssertMsg( iMaxItemCount - iCurItemCount >= 0, "You have a negative number of backpack slots available - fix me!" );
     const int iBaseFreeSlots = MAX( 0, iMaxItemCount - iCurItemCount );

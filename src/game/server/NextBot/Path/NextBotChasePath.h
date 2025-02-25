@@ -21,7 +21,7 @@
  */
 class ChasePath : public PathFollower
 {
-   public:
+    public:
     enum SubjectChaseType
     {
         LEAD_SUBJECT,
@@ -42,7 +42,7 @@ class ChasePath : public PathFollower
 
     virtual void Invalidate( void );  // (EXTEND) cause the path to become invalid
 
-   private:
+    private:
     void RefreshPath( INextBot *bot, CBaseEntity *subject, const IPathCost &cost, Vector *pPredictedSubjectPos );
 
     CountdownTimer m_failTimer;      // throttle re-pathing if last path attempt failed
@@ -269,7 +269,7 @@ inline void ChasePath::RefreshPath( INextBot *bot, CBaseEntity *subject, const I
  */
 class DirectChasePath : public ChasePath
 {
-   public:
+    public:
     DirectChasePath( ChasePath::SubjectChaseType chaseHow = ChasePath::DONT_LEAD_SUBJECT )
         : ChasePath( chaseHow )
     {
@@ -347,9 +347,9 @@ class DirectChasePath : public ChasePath
 
     //-------------------------------------------------------------------------------------------------------
     /**
-     * Determine exactly where the path goes between the given two areas
-     * on the path. Return this point in 'crossPos'.
-     */
+    * Determine exactly where the path goes between the given two areas
+    * on the path. Return this point in 'crossPos'.
+    */
     virtual void ComputeAreaCrossing( INextBot *bot, const CNavArea *from, const Vector &fromPos, const CNavArea *to, NavDirType dir, Vector *crossPos ) const
     {
         Vector center;

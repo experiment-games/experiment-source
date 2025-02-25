@@ -66,7 +66,7 @@ class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerP
 {
     DECLARE_CLASS( CNPC_BaseScanner, CAI_BasePhysicsFlyingBot );
 
-   public:
+    public:
     CNPC_BaseScanner();
 
     void Spawn( void );
@@ -132,7 +132,7 @@ class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerP
     void InputSetFlightSpeed( inputdata_t &inputdata );
     void InputSetDistanceOverride( inputdata_t &inputdata );
 
-   protected:
+    protected:
     virtual char *GetEngineSound( void )
     {
         return NULL;
@@ -170,7 +170,7 @@ class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerP
     void MoveToDivebomb( float flInterval );
     void BlendPhyscannonLaunchSpeed();
 
-   private:
+    private:
     bool GetGoalDirection( Vector *vOut );
 
     void StartSmokeTrail( void );
@@ -186,13 +186,13 @@ class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerP
 
     virtual void StopLoopingSounds( void );
 
-   public:
+    public:
     // ------------------------
     //  Death Cleanup
     // ------------------------
     CTakeDamageInfo m_KilledInfo;
 
-   protected:
+    protected:
     ScannerFlyMode_t m_nFlyMode;
 
     // Pose parameters
@@ -218,7 +218,7 @@ class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerP
     float m_flAttackFarDist;
     float m_flAttackRange;
 
-   private:
+    private:
     CSoundPatch *m_pEngineSound;
 
     // physics influence
@@ -228,7 +228,7 @@ class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerP
     // Attacks
     SmokeTrail *m_pSmokeTrail;
 
-   protected:
+    protected:
     DEFINE_CUSTOM_AI;
 
     // Custom interrupt conditions

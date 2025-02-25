@@ -21,7 +21,7 @@
 
 class MDkeyvalue
 {
-   public:
+    public:
     //
     // Constructors/Destructor.
     //
@@ -98,7 +98,7 @@ typedef CUtlVector< MDkeyvalue > KeyValueArray;
 // Used in cases where there can be duplicate key names.
 class WCKVBase_Vector
 {
-   public:
+    public:
     // Iteration helpers.
     inline int GetCount() const
     {
@@ -123,17 +123,17 @@ class WCKVBase_Vector
     // Special function used for non-unique keyvalue lists.
     void AddKeyValue( const char *pszKey, const char *pszValue );
 
-   protected:
+    protected:
     void InsertKeyValue( const MDkeyvalue &kv );
 
-   protected:
+    protected:
     CUtlVector< MDkeyvalue > m_KeyValues;
 };
 
 // Used for most key/value sets because it's fast. Does not allow duplicate key names.
 class WCKVBase_Dict
 {
-   public:
+    public:
     // Iteration helpers. Note that there is no GetCount() because you can't iterate
     // these by incrementing a counter.
     inline int GetFirst() const
@@ -152,10 +152,10 @@ class WCKVBase_Dict
     int FindByKeyName( const char *pKeyName ) const;  // Returns the same value as GetInvalidIndex if not found.
     void RemoveKeyAt( int nIndex );
 
-   protected:
+    protected:
     void InsertKeyValue( const MDkeyvalue &kv );
 
-   protected:
+    protected:
     CUtlDict< MDkeyvalue, unsigned short > m_KeyValues;
 };
 
@@ -163,7 +163,7 @@ class WCKVBase_Dict
 template < class Base >
 class WCKeyValuesT : public Base
 {
-   public:
+    public:
     WCKeyValuesT( void );
     ~WCKeyValuesT( void );
 

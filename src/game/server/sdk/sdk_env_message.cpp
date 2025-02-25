@@ -8,7 +8,7 @@
 
 class CGameMessageEntity : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGameMessageEntity, CLogicalEntity );
     DECLARE_DATADESC();
 

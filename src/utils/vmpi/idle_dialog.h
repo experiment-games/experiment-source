@@ -25,7 +25,7 @@
 
 class CIdleDialog : public CDialog
 {
-   public:
+    public:
     CIdleDialog( int id, CWnd *pParent );
 
     // Call this to start the idle processing.
@@ -33,7 +33,7 @@ class CIdleDialog : public CDialog
 
     virtual void OnIdle() = 0;
 
-   private:
+    private:
     DECLARE_MESSAGE_MAP()
     afx_msg LONG OnStartIdle( UINT, LONG );
 

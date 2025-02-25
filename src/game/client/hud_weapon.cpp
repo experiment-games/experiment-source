@@ -25,14 +25,14 @@ class CHudWeapon : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudWeapon, vgui::Panel );
 
-   public:
+    public:
     CHudWeapon( const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint( void );
     virtual void PerformLayout();
 
-   private:
+    private:
     CHudCrosshair *m_pCrosshair;
 };
 

@@ -20,7 +20,7 @@ class CTakeDamageInfo;
  */
 class INextBotReply
 {
-   public:
+    public:
     virtual void OnSuccess( INextBot *bot ) {}  // invoked when process completed successfully
 
     enum FailureReason
@@ -38,7 +38,7 @@ class INextBotReply
  */
 class INextBotComponent : public INextBotEventResponder
 {
-   public:
+    public:
     INextBotComponent( INextBot *bot );
     virtual ~INextBotComponent();
 
@@ -62,7 +62,7 @@ class INextBotComponent : public INextBotEventResponder
     DECLARE_ENT_SCRIPTDESC();
     HSCRIPT GetScriptInstance();
 
-   private:
+    private:
     float m_lastUpdateTime;
     float m_curInterval;
 

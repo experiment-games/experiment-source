@@ -5,5 +5,5 @@ print(c:bind("/tmp/bar"))
 while 1 do
     local l = io.read("*l")
     assert(c:sendto(l, "/tmp/foo"))
-	print(assert(c:receivefrom()))
+    print(assert(c:receivefrom()))
 end

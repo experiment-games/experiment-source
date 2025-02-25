@@ -86,11 +86,11 @@ void VRAD_SetupMPI( int &argc, char **&argv )
     //
     Msg( "Initializing VMPI...\n" );
     if ( !VMPI_Init(
-             argc,
-             argv,
-             "dependency_info_vrad.txt",
-             HandleMPIDisconnect,
-             mode ) )
+            argc,
+            argv,
+            "dependency_info_vrad.txt",
+            HandleMPIDisconnect,
+            mode ) )
     {
         Error( "MPI_Init failed." );
     }
@@ -304,7 +304,7 @@ void MPI_ReceiveVisLeafsResults( uint64 iWorkUnit, MessageBuffer *pBuf, int iWor
 // should go in a structure and get passed around.
 class CVMPIVisLeafsData
 {
-   public:
+    public:
     MessageBuffer *m_pVisLeafsMB;
     int m_nPatchesInCluster;
     transfer_t *m_pBuildVisLeafsTransfers;

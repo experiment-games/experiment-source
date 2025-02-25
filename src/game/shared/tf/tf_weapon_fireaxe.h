@@ -22,7 +22,7 @@
 //
 class CTFFireAxe : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFFireAxe, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -37,7 +37,7 @@ class CTFFireAxe : public CTFWeaponBaseMelee
     virtual float GetInitialAfterburnDuration() const OVERRIDE;
 #endif
 
-   private:
+    private:
     CTFFireAxe( const CTFFireAxe& ) {}
 };
 

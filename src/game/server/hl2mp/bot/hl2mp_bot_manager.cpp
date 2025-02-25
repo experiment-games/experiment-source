@@ -687,14 +687,14 @@ void CHL2MPBotManager::DrawStuckBotData( float deltaT )
         for ( int j = 0; j < m_stuckBotVector[i]->m_stuckEventVector.Count() - 1; ++j )
         {
             NDebugOverlay::HorzArrow( m_stuckBotVector[i]->m_stuckEventVector[j]->m_stuckSpot,
-                                      m_stuckBotVector[i]->m_stuckEventVector[j + 1]->m_stuckSpot,
-                                      3,
-                                      100,
-                                      0,
-                                      255,
-                                      255,
-                                      true,
-                                      deltaT );
+                                    m_stuckBotVector[i]->m_stuckEventVector[j + 1]->m_stuckSpot,
+                                    3,
+                                    100,
+                                    0,
+                                    255,
+                                    255,
+                                    true,
+                                    deltaT );
         }
 
         NDebugOverlay::Text( m_stuckBotVector[i]->m_stuckEventVector[0]->m_stuckSpot, CFmtStr( "%s(#%d)", m_stuckBotVector[i]->m_name, m_stuckBotVector[i]->m_id ), false, deltaT );

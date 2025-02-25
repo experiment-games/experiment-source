@@ -30,7 +30,7 @@ abstract_class CBaseHudWeaponSelection : public CHudElement
 {
     DECLARE_CLASS( CBaseHudWeaponSelection, CHudElement );
 
-   public:
+    public:
     CBaseHudWeaponSelection( const char *pElementName );
     virtual void Init( void );
     virtual void VidInit( void );
@@ -94,7 +94,7 @@ abstract_class CBaseHudWeaponSelection : public CHudElement
 
     virtual int KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-   protected:
+    protected:
     // returns true if there is a weapon currently visible to select
     virtual bool IsWeaponSelectable()
     {

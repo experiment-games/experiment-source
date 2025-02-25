@@ -24,7 +24,7 @@ class SIMDRandStreamContext
 
     fltx4 *m_pRand_J, *m_pRand_K;
 
-   public:
+    public:
     void Seed( uint32 seed )
     {
         m_pRand_J = m_RandY + 23;

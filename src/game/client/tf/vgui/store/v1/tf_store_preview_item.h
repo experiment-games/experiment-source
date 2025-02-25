@@ -20,7 +20,7 @@ class CTFStorePreviewItemPanel1 : public CTFStorePreviewItemPanelBase
 {
     DECLARE_CLASS_SIMPLE( CTFStorePreviewItemPanel1, CTFStorePreviewItemPanelBase );
 
-   public:
+    public:
     CTFStorePreviewItemPanel1( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -35,7 +35,7 @@ class CTFStorePreviewItemPanel1 : public CTFStorePreviewItemPanelBase
     MESSAGE_FUNC( OnHideClassIconMouseover, "HideClassIconMouseover" );
     MESSAGE_FUNC_PARAMS( OnShowClassIconMouseover, "ShowClassIconMouseover", data );
 
-   private:
+    private:
     virtual void UpdateIcons( void );
 };
 

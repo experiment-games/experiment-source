@@ -32,7 +32,7 @@ enum
 //-----------------------------------------------------------------------------
 abstract_class IProcessUtils : public IAppSystem
 {
-   public:
+    public:
     // Starts, stops a process
     virtual ProcessHandle_t StartProcess( const char *pCommandLine, bool bConnectStdPipes ) = 0;
     virtual ProcessHandle_t StartProcess( int argc, const char **argv, bool bConnectStdPipes ) = 0;

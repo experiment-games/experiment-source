@@ -71,7 +71,7 @@ SendPropDataTable( "sdk_gamerules_data", 0, &REFERENCE_SEND_TABLE( DT_SDKGameRul
 
     class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
 {
-   public:
+    public:
     virtual bool CanPlayerHearPlayer( CBasePlayer *pListener, CBasePlayer *pTalker )
     {
         // Dead players can only be heard by other dead team mates
@@ -280,7 +280,7 @@ void CSDKGameRules::Think()
 
     // Don't stand on COLLISION_GROUP_WEAPON
     if ( collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT &&
-         collisionGroup1 == COLLISION_GROUP_WEAPON )
+        collisionGroup1 == COLLISION_GROUP_WEAPON )
     {
         return false;
     }

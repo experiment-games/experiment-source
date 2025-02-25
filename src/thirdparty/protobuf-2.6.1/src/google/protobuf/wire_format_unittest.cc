@@ -62,9 +62,9 @@ TEST(WireFormatTest, EnumsInSync) {
 
   for (int i = 1; i <= WireFormatLite::MAX_FIELD_TYPE; i++) {
     EXPECT_EQ(
-      implicit_cast<int>(FieldDescriptor::TypeToCppType(
+    implicit_cast<int>(FieldDescriptor::TypeToCppType(
         static_cast<FieldDescriptor::Type>(i))),
-      implicit_cast<int>(WireFormatLite::FieldTypeToCppType(
+    implicit_cast<int>(WireFormatLite::FieldTypeToCppType(
         static_cast<WireFormatLite::FieldType>(i))));
   }
 }
@@ -513,7 +513,7 @@ TEST(WireFormatTest, ParseMessageSet) {
   {
     unittest::RawMessageSet::Item* item = raw.add_item();
     item->set_type_id(
-      unittest::TestMessageSetExtension1::descriptor()->extension(0)->number());
+    unittest::TestMessageSetExtension1::descriptor()->extension(0)->number());
     unittest::TestMessageSetExtension1 message;
     message.set_i(123);
     message.SerializeToString(item->mutable_message());
@@ -522,7 +522,7 @@ TEST(WireFormatTest, ParseMessageSet) {
   {
     unittest::RawMessageSet::Item* item = raw.add_item();
     item->set_type_id(
-      unittest::TestMessageSetExtension2::descriptor()->extension(0)->number());
+    unittest::TestMessageSetExtension2::descriptor()->extension(0)->number());
     unittest::TestMessageSetExtension2 message;
     message.set_str("foo");
     message.SerializeToString(item->mutable_message());
@@ -554,7 +554,7 @@ TEST(WireFormatTest, ParseMessageSet) {
   // Also parse using WireFormat.
   unittest::TestMessageSet dynamic_message_set;
   io::CodedInputStream input(reinterpret_cast<const uint8*>(data.data()),
-                             data.size());
+                            data.size());
   ASSERT_TRUE(WireFormat::ParseAndMergePartial(&input, &dynamic_message_set));
   EXPECT_EQ(message_set.DebugString(), dynamic_message_set.DebugString());
 }
@@ -571,8 +571,8 @@ TEST(WireFormatTest, ParseMessageSetWithReverseTagOrder) {
     coded_output.WriteTag(WireFormatLite::kMessageSetItemStartTag);
     // Write the message content first.
     WireFormatLite::WriteTag(WireFormatLite::kMessageSetMessageNumber,
-                             WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-                             &coded_output);
+                            WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+                            &coded_output);
     coded_output.WriteVarint32(message.ByteSize());
     message.SerializeWithCachedSizes(&coded_output);
     // Write the type id.
@@ -800,17 +800,17 @@ class WireFormatInvalidInputTest : public testing::Test {
   // contains exactly the given bytes, which may be invalid.
   string MakeInvalidEmbeddedMessage(const char* bytes, int size) {
     const FieldDescriptor* field =
-      unittest::TestAllTypes::descriptor()->FindFieldByName(
+    unittest::TestAllTypes::descriptor()->FindFieldByName(
         "optional_nested_message");
     GOOGLE_CHECK(field != NULL);
 
     string result;
 
     {
-      io::StringOutputStream raw_output(&result);
-      io::CodedOutputStream output(&raw_output);
+    io::StringOutputStream raw_output(&result);
+    io::CodedOutputStream output(&raw_output);
 
-      WireFormatLite::WriteBytes(field->number(), string(bytes, size), &output);
+    WireFormatLite::WriteBytes(field->number(), string(bytes, size), &output);
     }
 
     return result;
@@ -821,22 +821,22 @@ class WireFormatInvalidInputTest : public testing::Test {
   // possibly no end tag.
   string MakeInvalidGroup(const char* bytes, int size, bool include_end_tag) {
     const FieldDescriptor* field =
-      unittest::TestAllTypes::descriptor()->FindFieldByName(
+    unittest::TestAllTypes::descriptor()->FindFieldByName(
         "optionalgroup");
     GOOGLE_CHECK(field != NULL);
 
     string result;
 
     {
-      io::StringOutputStream raw_output(&result);
-      io::CodedOutputStream output(&raw_output);
+    io::StringOutputStream raw_output(&result);
+    io::CodedOutputStream output(&raw_output);
 
-      output.WriteVarint32(WireFormat::MakeTag(field));
-      output.WriteString(string(bytes, size));
-      if (include_end_tag) {
+    output.WriteVarint32(WireFormat::MakeTag(field));
+    output.WriteString(string(bytes, size));
+    if (include_end_tag) {
         output.WriteVarint32(WireFormatLite::MakeTag(
-          field->number(), WireFormatLite::WIRETYPE_END_GROUP));
-      }
+        field->number(), WireFormatLite::WIRETYPE_END_GROUP));
+    }
     }
 
     return result;
@@ -980,9 +980,9 @@ TEST_F(Utf8ValidationTest, WriteInvalidUTF8String) {
 #ifdef GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
   ASSERT_EQ(1, errors.size());
   EXPECT_TRUE(StartsWith(errors[0],
-                         "String field 'data' contains invalid UTF-8 data when "
-                         "serializing a protocol buffer. Use the "
-                         "'bytes' type if you intend to send raw bytes."));
+                        "String field 'data' contains invalid UTF-8 data when "
+                        "serializing a protocol buffer. Use the "
+                        "'bytes' type if you intend to send raw bytes."));
 #else
   ASSERT_EQ(0, errors.size());
 #endif  // GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
@@ -1003,9 +1003,9 @@ TEST_F(Utf8ValidationTest, ReadInvalidUTF8String) {
 #ifdef GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
   ASSERT_EQ(1, errors.size());
   EXPECT_TRUE(StartsWith(errors[0],
-                         "String field 'data' contains invalid UTF-8 data when "
-                         "parsing a protocol buffer. Use the "
-                         "'bytes' type if you intend to send raw bytes."));
+                        "String field 'data' contains invalid UTF-8 data when "
+                        "parsing a protocol buffer. Use the "
+                        "'bytes' type if you intend to send raw bytes."));
 
 #else
   ASSERT_EQ(0, errors.size());
@@ -1099,15 +1099,15 @@ TEST_F(Utf8ValidationTest, OldVerifyUTF8String) {
   {
     ScopedMemoryLog log;
     WireFormat::VerifyUTF8String(data.data(), data.size(),
-                                 WireFormat::SERIALIZE);
+                                WireFormat::SERIALIZE);
     errors = log.GetMessages(ERROR);
   }
 #ifdef GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
   ASSERT_EQ(1, errors.size());
   EXPECT_TRUE(StartsWith(errors[0],
-                         "String field contains invalid UTF-8 data when "
-                         "serializing a protocol buffer. Use the "
-                         "'bytes' type if you intend to send raw bytes."));
+                        "String field contains invalid UTF-8 data when "
+                        "serializing a protocol buffer. Use the "
+                        "'bytes' type if you intend to send raw bytes."));
 #else
   ASSERT_EQ(0, errors.size());
 #endif

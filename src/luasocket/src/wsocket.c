@@ -256,9 +256,9 @@ int socket_recv(p_socket ps, char *data, size_t count, size_t *got,
         if (taken == 0) return IO_CLOSED;
         err = WSAGetLastError();
         /* On UDP, a connreset simply means the previous send failed.
-         * So we try again.
-         * On TCP, it means our socket is now useless, so the error passes.
-         * (We will loop again, exiting because the same error will happen) */
+        * So we try again.
+        * On TCP, it means our socket is now useless, so the error passes.
+        * (We will loop again, exiting because the same error will happen) */
         if (err != WSAEWOULDBLOCK) {
             if (err != WSAECONNRESET || prev == WSAECONNRESET) return err;
             prev = err;
@@ -285,9 +285,9 @@ int socket_recvfrom(p_socket ps, char *data, size_t count, size_t *got,
         if (taken == 0) return IO_CLOSED;
         err = WSAGetLastError();
         /* On UDP, a connreset simply means the previous send failed.
-         * So we try again.
-         * On TCP, it means our socket is now useless, so the error passes.
-         * (We will loop again, exiting because the same error will happen) */
+        * So we try again.
+        * On TCP, it means our socket is now useless, so the error passes.
+        * (We will loop again, exiting because the same error will happen) */
         if (err != WSAEWOULDBLOCK) {
             if (err != WSAECONNRESET || prev == WSAECONNRESET) return err;
             prev = err;

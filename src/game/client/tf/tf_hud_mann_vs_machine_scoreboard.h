@@ -34,7 +34,7 @@ class CMvMScoreboardEnemyInfo : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMScoreboardEnemyInfo, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMScoreboardEnemyInfo( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -42,7 +42,7 @@ class CMvMScoreboardEnemyInfo : public vgui::EditablePanel
 
     void UpdateEntry( char *icon, bool bIsGiant );
 
-   private:
+    private:
     CPanelAnimationVar( Color, m_clrNormal, "color_normal", "TanLight" );
     CPanelAnimationVar( Color, m_clrMiniBoss, "color_miniboss", "RedSolid" );
 };
@@ -52,7 +52,7 @@ class CTFHudMannVsMachineScoreboard : public vgui::EditablePanel, public CGameEv
 {
     DECLARE_CLASS_SIMPLE( CTFHudMannVsMachineScoreboard, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudMannVsMachineScoreboard( Panel *parent, const char *pName );
     ~CTFHudMannVsMachineScoreboard();
 
@@ -69,7 +69,7 @@ class CTFHudMannVsMachineScoreboard : public vgui::EditablePanel, public CGameEv
         return m_pPlayerList;
     }
 
-   private:
+    private:
     void InitPlayerList( vgui::IScheme *pScheme );
     void UpdatePlayerList();
     void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );

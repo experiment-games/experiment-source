@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class CStorePricePanel_New : public CStorePricePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStorePricePanel_New, CStorePricePanel );
 
     CStorePricePanel_New( vgui::Panel *pParent, const char *pPanelName );
@@ -44,7 +44,7 @@ class CStorePricePanel_New : public CStorePricePanel
 //-----------------------------------------------------------------------------
 class CStorePricePanel_Bundles : public CStorePricePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStorePricePanel_Bundles, CStorePricePanel );
 
     CStorePricePanel_Bundles( vgui::Panel *pParent, const char *pPanelName );
@@ -59,7 +59,7 @@ class CStorePricePanel_Bundles : public CStorePricePanel
 
     virtual void SetItem( const econ_store_entry_t *pEntry );
 
-   private:
+    private:
     vgui::ImagePanel *m_pLimitedLarge;
 };
 
@@ -68,7 +68,7 @@ class CStorePricePanel_Bundles : public CStorePricePanel
 //-----------------------------------------------------------------------------
 class CStorePricePanel_Jumbo : public CStorePricePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStorePricePanel_Jumbo, CStorePricePanel );
 
     CStorePricePanel_Jumbo( vgui::Panel *pParent, const char *pPanelName );
@@ -84,7 +84,7 @@ class CStorePricePanel_Jumbo : public CStorePricePanel
 //-----------------------------------------------------------------------------
 class CStorePricePanel_Popular : public CStorePricePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStorePricePanel_Popular, CStorePricePanel );
 
     CStorePricePanel_Popular( vgui::Panel *pParent, const char *pPanelName, int iPopularityRank );
@@ -99,7 +99,7 @@ class CStorePricePanel_Popular : public CStorePricePanel
 
     virtual void SetItem( const econ_store_entry_t *pEntry );
 
-   private:
+    private:
     int m_iPopularityRank;
     CExLabel *m_pNewLarge;
 };

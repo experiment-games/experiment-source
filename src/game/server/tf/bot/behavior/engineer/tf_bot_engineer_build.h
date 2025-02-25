@@ -10,7 +10,7 @@ class CTFBotHintTeleporterExit;
 
 class CTFBotEngineerBuild : public Action< CTFBot >
 {
-   public:
+    public:
     virtual Action< CTFBot > *InitialContainedAction( CTFBot *me );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );

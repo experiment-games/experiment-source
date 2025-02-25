@@ -51,7 +51,7 @@ void SetImpactSoundRoute( ImpactSoundRouteFn fn );
 //-----------------------------------------------------------------------------
 class CRagdollEnumerator : public IPartitionEnumerator
 {
-   public:
+    public:
     // Forced constructor
     CRagdollEnumerator( Ray_t &shot, int iDamageType );
 
@@ -63,7 +63,7 @@ class CRagdollEnumerator : public IPartitionEnumerator
         return m_bHit;
     }
 
-   private:
+    private:
     Ray_t m_rayShot;
     int m_iDamageType;
     bool m_bHit;

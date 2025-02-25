@@ -312,11 +312,11 @@ void CHudNotificationPanel::OnTick( void )
 
     if ( flLifeTime >= 1 )
     {
-      SetAlpha( 255 );
+    SetAlpha( 255 );
     }
     else
     {
-      SetAlpha( (float)( 255.0f * flLifeTime ) );
+    SetAlpha( (float)( 255.0f * flLifeTime ) );
     }
     */
 }

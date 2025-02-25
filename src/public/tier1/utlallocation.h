@@ -17,7 +17,7 @@
 
 class CUtlAllocation
 {
-   public:
+    public:
     // constructor, destructor
     CUtlAllocation()
     {
@@ -120,7 +120,7 @@ class CUtlAllocation
         m_pMemory->cub = cub;
     }
 
-   private:
+    private:
     struct ActualMemory_t
     {
         int cub;

@@ -22,13 +22,13 @@ class CDmeGameModelInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeGameModelInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
     virtual void GetOutputAttributes( CUtlVector< CDmAttribute* >& attrs );
 
-   public:
+    public:
     void AddBone( const Vector& pos, const Quaternion& rot );
     void SetBone( uint index, const Vector& pos, const Quaternion& rot );
     void SetRootBone( const Vector& pos, const Quaternion& rot );
@@ -42,13 +42,13 @@ class CDmeGameModelInput : public CDmeInput
 
     void SetFlags( int nFlags );
 
-   public:
+    public:
     CDmaVar< int > m_skin;
     CDmaVar< int > m_body;
     CDmaVar< int > m_sequence;
     CDmaVar< bool > m_visible;
 
-   protected:
+    protected:
     CDmaVar< int > m_flags;
     CDmaArray< float > m_flexWeights;
     CDmaVar< Vector > m_viewTarget;
@@ -62,16 +62,16 @@ class CDmeGameSpriteInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeGameSpriteInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
     virtual void GetOutputAttributes( CUtlVector< CDmAttribute* >& attrs );
 
-   public:
+    public:
     void SetState( bool bVisible, float nFrame, int nRenderMode, int nRenderFX, float flRenderScale, float flProxyRadius, const Vector& pos, const Quaternion& rot, const Color& color );
 
-   protected:
+    protected:
     CDmaVar< bool > m_visible;
     CDmaVar< float > m_frame;
     CDmaVar< int > m_rendermode;
@@ -87,18 +87,18 @@ class CDmeGameCameraInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeGameCameraInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
     virtual void GetOutputAttributes( CUtlVector< CDmAttribute* >& attrs );
 
-   public:
+    public:
     void SetPosition( const Vector& pos );
     void SetOrientation( const Quaternion& rot );
     void SetFOV( float fov );
 
-   protected:
+    protected:
     CDmaVar< Vector > m_position;
     CDmaVar< Quaternion > m_rotation;
     CDmaVar< float > m_fov;

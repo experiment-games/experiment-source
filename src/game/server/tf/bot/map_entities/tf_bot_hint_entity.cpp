@@ -19,7 +19,7 @@ DEFINE_KEYFIELD( m_isDisabled, FIELD_BOOLEAN, "StartDisabled" ),
 //------------------------------------------------------------------------------
 CBaseTFBotHintEntity::CBaseTFBotHintEntity( void )
     : m_isDisabled( false ),
-      m_hintType( HINT_INVALID )
+    m_hintType( HINT_INVALID )
 {
 }
 

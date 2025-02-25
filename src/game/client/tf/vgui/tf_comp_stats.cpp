@@ -32,7 +32,7 @@ class CCompStatsPanel;
 
 class CMatchHistoryEntryPanel : public CExpandablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CMatchHistoryEntryPanel, CExpandablePanel );
     CMatchHistoryEntryPanel( Panel* pParent, const char* pszPanelname )
         : BaseClass( pParent, pszPanelname )
@@ -130,7 +130,7 @@ class CMatchHistoryEntryPanel : public CExpandablePanel
         }
     }
 
-   private:
+    private:
     void SetupMedalForStat( EditablePanel* pParent, int nStat, const char* pszStatName )
     {
         ScalableImagePanel* pMedalImage = pParent->FindControl< ScalableImagePanel >( CFmtStr( "%sMedal", pszStatName ) );
@@ -327,7 +327,7 @@ bool CLadderLobbyLeaderboard::UpdateLeaderboards()
     static int nScrollWidth = m_pScoreListScroller->GetScrollbar()->GetWide();
     m_pScoreListScroller->GetScrollbar()->SetWide( nScrollWidth >> 1 );
     if ( m_pScoreListScroller->GetScrollbar()->GetButton( 0 ) &&
-         m_pScoreListScroller->GetScrollbar()->GetButton( 1 ) )
+        m_pScoreListScroller->GetScrollbar()->GetButton( 1 ) )
     {
         m_pScoreListScroller->GetScrollbar()->GetButton( 0 )->SetVisible( false );
         m_pScoreListScroller->GetScrollbar()->GetButton( 1 )->SetVisible( false );

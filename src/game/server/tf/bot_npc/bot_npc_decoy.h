@@ -18,7 +18,7 @@ class CTFPlayer;
 //----------------------------------------------------------------------------
 class CBotNPCDecoyLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCDecoyLocomotion, NextBotGroundLocomotion );
 
     CBotNPCDecoyLocomotion( INextBot *bot )
@@ -34,7 +34,7 @@ class CBotNPCDecoyLocomotion : public NextBotGroundLocomotion
 //----------------------------------------------------------------------------
 class CBotNPCDecoy : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCDecoy, NextBotCombatCharacter );
 
     CBotNPCDecoy();
@@ -61,7 +61,7 @@ class CBotNPCDecoy : public NextBotCombatCharacter
 
     Activity GetRunActivity( void ) const;
 
-   private:
+    private:
     CBotNPCDecoyLocomotion *m_locomotor;
     CBotNPCBody *m_body;
 

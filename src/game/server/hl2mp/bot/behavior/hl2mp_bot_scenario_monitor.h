@@ -5,7 +5,7 @@
 
 class CHL2MPBotScenarioMonitor : public Action< CHL2MPBot >
 {
-   public:
+    public:
     virtual Action< CHL2MPBot > *InitialContainedAction( CHL2MPBot *me );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -16,7 +16,7 @@ class CHL2MPBotScenarioMonitor : public Action< CHL2MPBot >
         return "ScenarioMonitor";
     }
 
-   private:
+    private:
     CountdownTimer m_ignoreLostFlagTimer;
     CountdownTimer m_lostFlagTimer;
 

@@ -17,7 +17,7 @@
 // FIXME: Need to make a dx9 version so that "CENTROID" works.
 
 BEGIN_VS_SHADER( GooInGlass,
-                 "Help for GooInGlass" )
+                "Help for GooInGlass" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/GooInGlass", "Base texture", 0 )

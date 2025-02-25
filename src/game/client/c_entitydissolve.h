@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 class C_EntityDissolve : public C_BaseEntity, public IMotionEvent
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_EntityDissolve, C_BaseEntity );
 
@@ -69,7 +69,7 @@ class C_EntityDissolve : public C_BaseEntity, public IMotionEvent
 
     bool m_bCoreExplode;
 
-   protected:
+    protected:
     float GetFadeInPercentage( void );        // Fade in amount (entity fading to black)
     float GetFadeOutPercentage( void );       // Fade out amount (particles fading away)
     float GetModelFadeOutPercentage( void );  // Mode fade out amount
@@ -80,7 +80,7 @@ class C_EntityDissolve : public C_BaseEntity, public IMotionEvent
 
     void DoSparks( mstudiohitboxset_t *set, matrix3x4_t *hitboxbones[MAXSTUDIOBONES] );
 
-   private:
+    private:
     CSmartPtr< CSimpleEmitter > m_pEmitter;
 
     bool m_bLinkedToServerEnt;

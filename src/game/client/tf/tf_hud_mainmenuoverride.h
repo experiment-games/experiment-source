@@ -69,7 +69,7 @@ class CHudMainMenuOverride : public vgui::EditablePanel, public IViewPortPanel, 
         NUM_ANIMS
     };
 
-   public:
+    public:
     CHudMainMenuOverride( IViewPort *pViewPort );
     ~CHudMainMenuOverride( void );
 
@@ -187,10 +187,10 @@ class CHudMainMenuOverride : public vgui::EditablePanel, public IViewPortPanel, 
 
     void UpdateRankPanelType();
 
-   protected:
+    protected:
     virtual void PaintTraverse( bool Repaint, bool allowForce = true ) OVERRIDE;
 
-   private:
+    private:
     void SOEvent( const CSharedObject *pObject );
 
     void PerformKeyRebindings( void );
@@ -199,7 +199,7 @@ class CHudMainMenuOverride : public vgui::EditablePanel, public IViewPortPanel, 
     void StopUpdateGlow();
     void UpdateRankPanelVisibility();
 
-   private:
+    private:
     // Notifications
     vgui::EditablePanel *m_pNotificationsShowPanel;
     vgui::EditablePanel *m_pNotificationsPanel;

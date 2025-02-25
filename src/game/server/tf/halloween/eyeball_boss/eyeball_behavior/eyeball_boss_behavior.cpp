@@ -86,7 +86,7 @@ EventDesiredResult< CEyeballBoss > CEyeballBossBehavior::OnKilled( CEyeballBoss 
     for ( int i = 0; i < attackerVector.Count(); ++i )
     {
         if ( attackerVector[i].m_attacker != NULL &&
-             gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
+            gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
         {
             if ( !me->IsSpell() )
             {

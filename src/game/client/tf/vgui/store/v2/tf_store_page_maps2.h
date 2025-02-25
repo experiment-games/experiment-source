@@ -20,7 +20,7 @@ class CTFStorePage_Maps2 : public CTFStorePage2
 {
     DECLARE_CLASS_SIMPLE( CTFStorePage_Maps2, CTFStorePage2 );
 
-   public:
+    public:
     CTFStorePage_Maps2( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
     virtual ~CTFStorePage_Maps2() {}
 
@@ -29,7 +29,7 @@ class CTFStorePage_Maps2 : public CTFStorePage2
         return "Resource/UI/econ/store/v2/StorePage_Maps.res";
     }
 
-   protected:
+    protected:
     virtual void OnCommand( const char *command );
     virtual void OnPageShow( void );
 

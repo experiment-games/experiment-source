@@ -24,7 +24,7 @@ class CBaseAchievement : public CGameEventListener, public IAchievement
 {
     DECLARE_CLASS_NOBASE( CBaseAchievement );
 
-   public:
+    public:
     CBaseAchievement();
     virtual ~CBaseAchievement();
     virtual void Init() {}
@@ -208,7 +208,7 @@ class CBaseAchievement : public CGameEventListener, public IAchievement
         return m_pAchievementMgr;
     }
 
-   protected:
+    protected:
     virtual void FireGameEvent( IGameEvent *event );
     virtual void FireGameEvent_Internal( IGameEvent *event ){};
     void SetVictimFilter( const char *pClassName );
@@ -261,7 +261,7 @@ class CBaseAchievement : public CGameEventListener, public IAchievement
 
     friend class CAchievementMgr;
 
-   public:
+    public:
     DECLARE_DATADESC();
 };
 
@@ -269,7 +269,7 @@ class CFailableAchievement : public CBaseAchievement
 {
     DECLARE_CLASS( CFailableAchievement, CBaseAchievement );
 
-   public:
+    public:
     CFailableAchievement();
     void SetFailed();
 
@@ -298,13 +298,13 @@ class CFailableAchievement : public CBaseAchievement
     virtual const char *GetActivationEventName() = 0;
     virtual const char *GetEvaluationEventName() = 0;
 
-   protected:
+    protected:
     void Activate();
 
     bool m_bActivated;  // are we activated? (If there is a map event that turns us on, has that happened)
     bool m_bFailed;     // has this achievement failed
 
-   public:
+    public:
     DECLARE_DATADESC();
 };
 
@@ -320,7 +320,7 @@ class CMapAchievement : public CBaseAchievement
 //----------------------------------------------------------------------------------------------------------------
 class CAchievement_AchievedCount : public CBaseAchievement
 {
-   public:
+    public:
     void Init();
     virtual void OnSteamUserStatsStored( void );
     virtual bool IsMetaAchievement()
@@ -341,10 +341,10 @@ class CAchievement_AchievedCount : public CBaseAchievement
         return m_iNumRequired;
     }
 
-   protected:
+    protected:
     void SetAchievementsRequired( int iNumRequired, int iLowRange, int iHighRange );
 
-   private:
+    private:
     int m_iNumRequired;
     int m_iLowRange;
     int m_iHighRange;
@@ -357,7 +357,7 @@ class CAchievement_AchievedCount : public CBaseAchievement
 typedef CBaseAchievement *( *achievementCreateFunc )( void );
 class CBaseAchievementHelper
 {
-   public:
+    public:
     CBaseAchievementHelper( achievementCreateFunc createFunc )
     {
         m_pfnCreate = createFunc;

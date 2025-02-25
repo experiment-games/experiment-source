@@ -156,7 +156,7 @@ SendPropDataTable( "hl2mp_gamerules_data", 0, &REFERENCE_SEND_TABLE( DT_HL2MPRul
 
         class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
 {
-   public:
+    public:
     virtual bool CanPlayerHearPlayer( CBasePlayer *pListener, CBasePlayer *pTalker, bool &bProximity )
     {
         return ( pListener->GetTeamNumber() == pTalker->GetTeamNumber() );
@@ -892,7 +892,7 @@ bool CHL2MPRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     }
 
     if ( ( collisionGroup0 == COLLISION_GROUP_PLAYER || collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
-         collisionGroup1 == COLLISION_GROUP_WEAPON )
+        collisionGroup1 == COLLISION_GROUP_WEAPON )
     {
         return false;
     }
@@ -1087,7 +1087,7 @@ void CHL2MPRules::CleanUpMap()
     // Now reload the map entities.
     class CHL2MPMapEntityFilter : public IMapEntityFilter
     {
-       public:
+        public:
         virtual bool ShouldCreateEntity( const char *pClassname )
         {
             // Don't recreate the preserved entities.
@@ -1135,7 +1135,7 @@ void CHL2MPRules::CleanUpMap()
             }
         }
 
-       public:
+        public:
         int m_iIterator;  // Iterator into g_MapEntityRefs.
     };
     CHL2MPMapEntityFilter filter;

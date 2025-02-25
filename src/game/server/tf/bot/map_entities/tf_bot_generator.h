@@ -8,7 +8,7 @@
 
 class CTFBotGenerator : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBotGenerator, CPointEntity );
     DECLARE_DATADESC();
 
@@ -35,7 +35,7 @@ class CTFBotGenerator : public CPointEntity
     // Output
     void OnBotKilled( CTFBot *pBot );
 
-   private:
+    private:
     bool m_bBotChoosesClass;
     bool m_bSuppressFire;
     bool m_bDisableDodge;
@@ -73,7 +73,7 @@ class CTFBotActionPoint : public CPointEntity
 {
     DECLARE_CLASS( CTFBotActionPoint, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTFBotActionPoint( void );

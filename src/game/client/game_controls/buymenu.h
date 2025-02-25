@@ -27,10 +27,10 @@ class Panel;
 //-----------------------------------------------------------------------------
 class CBuyMenu : public vgui::WizardPanel, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CBuyMenu, vgui::WizardPanel );
 
-   public:
+    public:
     CBuyMenu( IViewPort *pViewPort );
     ~CBuyMenu();
 
@@ -73,10 +73,10 @@ class CBuyMenu : public vgui::WizardPanel, public IViewPortPanel
         return GAME_ACTION_SET_MENUCONTROLS;
     }
 
-   public:
+    public:
     virtual void OnClose();
 
-   protected:
+    protected:
     CBuySubMenu *m_pMainMenu;
     IViewPort *m_pViewPort;
 

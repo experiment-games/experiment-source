@@ -24,7 +24,7 @@ class ISQLDBCommand;
 //-----------------------------------------------------------------------------
 class CMySqlDatabase
 {
-   public:
+    public:
     // constructor
     CMySqlDatabase();
     ~CMySqlDatabase();
@@ -47,7 +47,7 @@ class CMySqlDatabase
     // command queues
     void AddCommandToQueue( ISQLDBCommand *cmd, ISQLDBReplyTarget *replyTarget, int returnState = 0 );
 
-   private:
+    private:
     // threading data
     bool m_bRunThread;
     CRITICAL_SECTION m_csThread;
@@ -78,7 +78,7 @@ class Connection;
 //-----------------------------------------------------------------------------
 class ISQLDBCommand
 {
-   public:
+    public:
     // makes the command run (blocking), returning the success code
     virtual int RunCommand() = 0;
 
@@ -103,7 +103,7 @@ class ISQLDBCommand
     // use to delete
     virtual void deleteThis() = 0;
 
-   protected:
+    protected:
     // protected destructor, so that it has to be deleted through deleteThis()
     virtual ~ISQLDBCommand() {}
 };

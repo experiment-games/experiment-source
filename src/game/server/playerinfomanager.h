@@ -16,14 +16,14 @@
 //-----------------------------------------------------------------------------
 class CPlayerInfoManager : public IPlayerInfoManager
 {
-   public:
+    public:
     virtual IPlayerInfo *GetPlayerInfo( edict_t *pEdict );
     virtual CGlobalVars *GetGlobalVars();
 };
 
 class CPluginBotManager : public IBotManager
 {
-   public:
+    public:
     virtual IBotController *GetBotController( edict_t *pEdict );
     virtual edict_t *CreateBot( const char *botname );
 };

@@ -20,7 +20,7 @@ class CDmeCamera : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeCamera, CDmeDag );
 
-   public:
+    public:
     // Sets up render state in the material system for rendering
     // This includes the view matrix and the projection matrix
     void SetupRenderState( int nDisplayWidth, int nDisplayHeight, bool bUseEngineCoordinateSystem = false );
@@ -62,7 +62,7 @@ class CDmeCamera : public CDmeDag
     // Returns the Motion Blur quality level
     int GetMotionBlurQuality() const;
 
-   private:
+    private:
     // Loads the material system view matrix based on the transform
     void LoadViewMatrix( bool bUseEngineCoordinateSystem );
 

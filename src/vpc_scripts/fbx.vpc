@@ -5,7 +5,7 @@
 // for linking.  NOTE that this is expecting to link with the DLL version of
 // the FBX SDK and so the appropriate FBX SDK DLL needs to be distributed
 // in game/bin
-// 
+//
 //=============================================================================
 
 $MacroRequired	SRCDIR
@@ -33,16 +33,16 @@ $Macro	FBXLIB_DEBUG	"$FBXDIR\lib\vs2017\x64\release\libfbxsdk.lib"	[$WIN64 && $V
 
 $Configuration "Release"
 {
-	$Linker
-	{
-		$AdditionalDependencies	"$BASE wininet.lib $FBXLIB_RELEASE" [$WIN32 || $WIN64]
-	}
+    $Linker
+    {
+        $AdditionalDependencies	"$BASE wininet.lib $FBXLIB_RELEASE" [$WIN32 || $WIN64]
+    }
 }
 
 $Configuration "Debug"
 {
-	$Linker
-	{
-		$AdditionalDependencies	"$BASE wininet.lib $FBXLIB_DEBUG" [$WIN32 || $WIN64]
-	}
+    $Linker
+    {
+        $AdditionalDependencies	"$BASE wininet.lib $FBXLIB_DEBUG" [$WIN32 || $WIN64]
+    }
 }

@@ -16,7 +16,7 @@ class CPointNavInterface : public CPointEntity
 {
     DECLARE_CLASS( CPointNavInterface, CPointEntity );
 
-   public:
+    public:
     // Input handlers
     void RecomputeBlockers( inputdata_t &inputdata );
 

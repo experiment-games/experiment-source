@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CMerasmusDisguise : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
     virtual void OnEnd( CMerasmus *me, Action< CMerasmus > *nextAction );
@@ -19,7 +19,7 @@ class CMerasmusDisguise : public Action< CMerasmus >
         return "Disguise";
     }  // return name of this action
 
-   private:
+    private:
     void TryToDisguiseSpawn( CMerasmus *me );
     CountdownTimer m_findPropsFailTimer;
     CountdownTimer m_findSpawnPositionTime;

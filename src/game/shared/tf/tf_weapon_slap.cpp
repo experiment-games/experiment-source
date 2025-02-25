@@ -304,8 +304,8 @@ void CTFSlap::StartFlameEffects( void )
     m_pFlameEffect = m_hEffectOwner->ParticleProp()->Create( pszParticleEffect, PATTACH_POINT_FOLLOW, iAttachment, Vector( 0, 0, 0 ) );
     if ( bIsVM )
     {
-      m_pFlameEffect->SetIsViewModelEffect( true );
-      ClientLeafSystem()->SetRenderGroup( m_pFlameEffect->RenderHandle(), RENDER_GROUP_VIEW_MODEL_TRANSLUCENT );
+    m_pFlameEffect->SetIsViewModelEffect( true );
+    ClientLeafSystem()->SetRenderGroup( m_pFlameEffect->RenderHandle(), RENDER_GROUP_VIEW_MODEL_TRANSLUCENT );
     }
 
     // Create the looping flame sound

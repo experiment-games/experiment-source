@@ -567,7 +567,7 @@ class CFuncNavObstruction : public CBaseEntity, public INavAvoidanceObstacle
     DECLARE_DATADESC();
     DECLARE_CLASS( CFuncNavObstruction, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
     virtual void UpdateOnRemove( void );
 
@@ -602,7 +602,7 @@ class CFuncNavObstruction : public CBaseEntity, public INavAvoidanceObstacle
 
     bool operator()( CNavArea *area );  // functor that obstructs areas in our extent
 
-   private:
+    private:
     void ObstructNavAreas( void );
     bool m_bDisabled;
 };

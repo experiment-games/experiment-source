@@ -21,7 +21,7 @@ class CCrossfadableImagePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCrossfadableImagePanel, EditablePanel );
 
-   public:
+    public:
     CCrossfadableImagePanel( Panel *pParent, const char *pName );
     ~CCrossfadableImagePanel();
 
@@ -48,7 +48,7 @@ class CCrossfadableImagePanel : public EditablePanel
 
     virtual void InstallMouseHandler( Panel *pHandler );
 
-   private:
+    private:
     virtual void OnSizeChanged( int nWide, int nTall );
     virtual void OnTick();
 
@@ -78,7 +78,7 @@ class CSlideshowPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSlideshowPanel, EditablePanel );
 
-   public:
+    public:
     CSlideshowPanel( Panel *pParent, const char *pName );
     ~CSlideshowPanel();
 
@@ -102,7 +102,7 @@ class CSlideshowPanel : public EditablePanel
         return m_vecImages.Count();
     }
 
-   private:
+    private:
     virtual void ApplySettings( KeyValues *pInResourceData );
     virtual void OnSizeChanged( int nWide, int nTall );
     virtual void OnTick();

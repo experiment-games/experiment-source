@@ -26,7 +26,7 @@ class AnalogBar : public Panel
 {
     DECLARE_CLASS_SIMPLE( AnalogBar, Panel );
 
-   public:
+    public:
     AnalogBar( Panel *parent, const char *panelName );
     ~AnalogBar();
 
@@ -80,22 +80,22 @@ class AnalogBar : public Panel
         m_HomeColor = color;
     }
 
-   protected:
+    protected:
     virtual void Paint();
     void PaintSegment( int &x, int &y, int tall, int wide, Color color, bool bHome );
     virtual void PaintBackground();
     virtual void ApplySchemeSettings( IScheme *pScheme );
     MESSAGE_FUNC_PARAMS( OnDialogVariablesChanged, "DialogVariables", dialogVariables );
     /* CUSTOM MESSAGE HANDLING
-      "SetAnalogValue"
+    "SetAnalogValue"
         input:	"analogValue"	- float value of the analogValue to set
     */
 
-   protected:
+    protected:
     int m_iAnalogValueDirection;
     float _analogValue;
 
-   private:
+    private:
     int _segmentCount;
     int _segmentGap;
     int _segmentWide;
@@ -113,7 +113,7 @@ class ContinuousAnalogBar : public AnalogBar
 {
     DECLARE_CLASS_SIMPLE( ContinuousAnalogBar, AnalogBar );
 
-   public:
+    public:
     ContinuousAnalogBar( Panel *parent, const char *panelName );
 
     virtual void Paint();

@@ -44,7 +44,7 @@ ConVar sk_barney_health( "sk_barney_health", "0" );
 
 class CNPC_Barney : public CNPC_PlayerCompanion
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Barney, CNPC_PlayerCompanion );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -222,7 +222,7 @@ void CNPC_Barney::GatherConditions()
 
     // Handle speech AI. Don't do AI speech if we're in scripts unless permitted by the EnableSpeakWhileScripting input.
     if ( m_NPCState == NPC_STATE_IDLE || m_NPCState == NPC_STATE_ALERT || m_NPCState == NPC_STATE_COMBAT ||
-         ( ( m_NPCState == NPC_STATE_SCRIPT ) && CanSpeakWhileScripting() ) )
+        ( ( m_NPCState == NPC_STATE_SCRIPT ) && CanSpeakWhileScripting() ) )
     {
         DoCustomSpeechAI();
     }

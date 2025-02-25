@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CEffectsClient : public IEffects
 {
-   public:
+    public:
     CEffectsClient();
     virtual ~CEffectsClient();
 
@@ -37,7 +37,7 @@ class CEffectsClient : public IEffects
     virtual bool IsServer();
     virtual void SuppressEffectsSounds( bool bSuppress );
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose: Returning true means don't even call TE func
     // Input  : filter -

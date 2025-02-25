@@ -31,20 +31,20 @@ class CEngyDestroyMenuItem : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CEngyDestroyMenuItem, EditablePanel );
 
-   public:
+    public:
     CEngyDestroyMenuItem( Panel *parent, const char *panelName )
         : EditablePanel( parent, panelName )
     {
     }
 
-   private:
+    private:
 };
 
 class CHudMenuEngyDestroy : public CHudBaseBuildMenu
 {
     DECLARE_CLASS_SIMPLE( CHudMenuEngyDestroy, EditablePanel );
 
-   public:
+    public:
     CHudMenuEngyDestroy( const char *pElementName );
 
     virtual void LevelInit( void );
@@ -65,7 +65,7 @@ class CHudMenuEngyDestroy : public CHudBaseBuildMenu
 
     int CalcCustomDestroyMenuLayout( void );
 
-   private:
+    private:
     void InitBuildings();
 
     CEngyDestroyMenuItem *m_pActiveItems[NUM_ENGY_BUILDINGS];

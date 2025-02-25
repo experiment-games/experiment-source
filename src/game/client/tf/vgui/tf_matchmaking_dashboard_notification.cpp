@@ -22,8 +22,8 @@ CTFDashboardNotification::CTFDashboardNotification( ENotificationType eType,
     : BaseClass( NULL, pszName ), m_eType( eType ), m_eAlignment( eAlignment )
 {
     vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ),
-                                                                 "resource/ClientScheme.res",
-                                                                 "ClientScheme" );
+                                                                "resource/ClientScheme.res",
+                                                                "ClientScheme" );
     SetScheme( scheme );
     SetProportional( true );
 

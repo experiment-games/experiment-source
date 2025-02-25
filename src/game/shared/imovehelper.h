@@ -51,7 +51,7 @@ typedef CBaseHandle EntityHandle_t;
 
 abstract_class IMoveHelper
 {
-   public:
+    public:
     // Call this to set the singleton
     static IMoveHelper* GetSingleton()
     {
@@ -87,7 +87,7 @@ abstract_class IMoveHelper
     // sets the entity being moved
     virtual void SetHost( CBasePlayer * host ) = 0;
 
-   protected:
+    protected:
     // Inherited classes can call this to set the singleton
     static void SetSingleton( IMoveHelper * pMoveHelper )
     {

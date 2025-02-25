@@ -32,7 +32,7 @@ CHL2MPBotGetProp::~CHL2MPBotGetProp( void )
 template < bool bOnlyImportant >
 class CPropFilter : public INextBotFilter
 {
-   public:
+    public:
     CPropFilter( CHL2MPBot *me, CWeaponPhysCannon *pPhyscannon )
     {
         m_me = me;

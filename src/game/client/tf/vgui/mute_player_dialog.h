@@ -19,14 +19,14 @@ class CMutePlayerDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CMutePlayerDialog, vgui::Frame );
 
-   public:
+    public:
     CMutePlayerDialog( vgui::Panel *parent );
     ~CMutePlayerDialog();
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void Activate() OVERRIDE;
 
-   private:
+    private:
     MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
     virtual void OnCommand( const char *command ) OVERRIDE;
     virtual void OnThink() OVERRIDE;

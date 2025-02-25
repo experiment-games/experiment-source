@@ -18,7 +18,7 @@
 //
 class CChangeClassZone : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CChangeClassZone, CBaseTrigger );
 
     CChangeClassZone();
@@ -36,7 +36,7 @@ class CChangeClassZone : public CBaseTrigger
     void InputDisable( inputdata_t &inputdata );
     void InputToggle( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bDisabled;
 };
 

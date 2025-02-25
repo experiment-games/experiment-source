@@ -42,20 +42,20 @@ namespace internal
 {
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     return ( Atomic32 )atomic_cas_32( ( volatile uint32_t* )ptr, ( uint32_t )old_value, ( uint32_t )new_value );
 }
 
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     return ( Atomic32 )atomic_swap_32( ( volatile uint32_t* )ptr, ( uint32_t )new_value );
 }
 
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     return ( Atomic32 )atomic_add_32_nv( ( volatile uint32_t* )ptr, ( uint32_t )increment );
 }
@@ -67,7 +67,7 @@ inline void MemoryBarrier( void )
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     MemoryBarrier();
     Atomic32 ret = NoBarrier_AtomicIncrement( ptr, increment );
@@ -131,8 +131,8 @@ inline Atomic32 Release_Load( volatile const Atomic32* ptr )
 
 #ifdef GOOGLE_PROTOBUF_ARCH_64_BIT
 inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
-                                          Atomic64 old_value,
-                                          Atomic64 new_value )
+                                        Atomic64 old_value,
+                                        Atomic64 new_value )
 {
     return atomic_cas_64( ( volatile uint64_t* )ptr, ( uint64_t )old_value, ( uint64_t )new_value );
 }

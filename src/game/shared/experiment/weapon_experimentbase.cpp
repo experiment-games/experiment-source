@@ -120,7 +120,7 @@ bool CWeaponExperimentBase::Reload( void )
 }
 
 void CWeaponExperimentBase::WeaponSound( WeaponSound_t sound_type,
-                                         float soundtime /* = 0.0f */ )
+                                        float soundtime /* = 0.0f */ )
 {
 #ifdef CLIENT_DLL
 
@@ -257,7 +257,7 @@ void CWeaponExperimentBase::FallInit( void )
                     constraint_fixedparams_t fixed;
                     fixed.Defaults();
                     fixed.InitWithCurrentObjectState( pReferenceObject,
-                                                      pAttachedObject );
+                                                    pAttachedObject );
 
                     fixed.constraint.forceLimit = lbs2kg( 10000 );
                     fixed.constraint.torqueLimit = lbs2kg( 10000 );
@@ -313,10 +313,10 @@ void CWeaponExperimentBase::FireBullets( const FireBulletsInfo_t &info )
 #define NUM_MUZZLE_FLASH_TYPES 4
 
 bool CWeaponExperimentBase::OnFireEvent( C_BaseViewModel *pViewModel,
-                                         const Vector &origin,
-                                         const QAngle &angles,
-                                         int event,
-                                         const char *options )
+                                        const Vector &origin,
+                                        const QAngle &angles,
+                                        int event,
+                                        const char *options )
 {
     return BaseClass::OnFireEvent( pViewModel, origin, angles, event, options );
 }

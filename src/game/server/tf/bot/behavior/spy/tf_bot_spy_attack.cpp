@@ -56,8 +56,8 @@ ActionResult< CTFBot > CTFBotSpyAttack::Update( CTFBot *me, float interval )
         }
     }
     else if ( closestThreat &&
-              closestThreat->GetEntity() &&
-              closestThreat != threat )
+            closestThreat->GetEntity() &&
+            closestThreat != threat )
     {
         float rangeToCurrentThreat = me->GetRangeTo( threat->GetLastKnownPosition() );
         float rangeToNewThreat = me->GetRangeTo( closestThreat->GetLastKnownPosition() );
@@ -113,8 +113,8 @@ ActionResult< CTFBot > CTFBotSpyAttack::Update( CTFBot *me, float interval )
     bool isKnifeFight = false;
 
     if ( me->m_Shared.InCond( TF_COND_DISGUISED ) ||
-         me->m_Shared.InCond( TF_COND_DISGUISING ) ||
-         me->m_Shared.IsStealthed() )
+        me->m_Shared.InCond( TF_COND_DISGUISING ) ||
+        me->m_Shared.IsStealthed() )
     {
         isKnifeFight = true;
     }
@@ -173,10 +173,10 @@ ActionResult< CTFBot > CTFBotSpyAttack::Update( CTFBot *me, float interval )
     }
 
     if ( m_isCoverBlown ||
-         me->m_Shared.InCond( TF_COND_BURNING ) ||
-         me->m_Shared.InCond( TF_COND_URINE ) ||
-         me->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-         me->m_Shared.InCond( TF_COND_BLEEDING ) )
+        me->m_Shared.InCond( TF_COND_BURNING ) ||
+        me->m_Shared.InCond( TF_COND_URINE ) ||
+        me->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+        me->m_Shared.InCond( TF_COND_BLEEDING ) )
     {
         isKnifeFight = false;
     }
@@ -262,8 +262,8 @@ ActionResult< CTFBot > CTFBotSpyAttack::Update( CTFBot *me, float interval )
     {
         // pursue the threat. if not visible, go to the last known position
         if ( !threat->IsVisibleRecently() ||
-             me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) ||
-             !me->IsLineOfFireClear( threat->GetEntity()->EyePosition() ) )
+            me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) ||
+            !me->IsLineOfFireClear( threat->GetEntity()->EyePosition() ) )
         {
             // if we're at the threat's last known position and he's still not visible, we lost him
             if ( !threat->IsVisibleRecently() )
@@ -351,10 +351,10 @@ QueryResultType CTFBotSpyAttack::ShouldAttack( const INextBot *meBot, const CKno
     CTFBot *me = ToTFBot( meBot->GetEntity() );
 
     if ( m_isCoverBlown ||
-         me->m_Shared.InCond( TF_COND_BURNING ) ||
-         me->m_Shared.InCond( TF_COND_URINE ) ||
-         me->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-         me->m_Shared.InCond( TF_COND_BLEEDING ) )
+        me->m_Shared.InCond( TF_COND_BURNING ) ||
+        me->m_Shared.InCond( TF_COND_URINE ) ||
+        me->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+        me->m_Shared.InCond( TF_COND_BLEEDING ) )
     {
         // our cover is blown anyway
         return ANSWER_YES;

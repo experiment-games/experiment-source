@@ -249,7 +249,7 @@
 #ifndef PNG_INTEL_SSE_IMPLEMENTATION
 #if defined( __SSE4_1__ ) || defined( __AVX__ )
 /* We are not actually using AVX, but checking for AVX is the best
-   way we can detect SSE4.1 and SSSE3 on MSVC.
+    way we can detect SSE4.1 and SSSE3 on MSVC.
 */
 #define PNG_INTEL_SSE_IMPLEMENTATION 3
 #elif defined( __SSSE3__ )
@@ -692,10 +692,10 @@ typedef png_double **png_doublepp;
 #define PNG_ADD_ALPHA 0x1000000U     /* Added to libpng-1.2.7 */
 #define PNG_EXPAND_tRNS 0x2000000U   /* Added to libpng-1.2.9 */
 #define PNG_SCALE_16_TO_8 0x4000000U /* Added to libpng-1.5.4 */
-                                     /*    0x8000000U unused */
-                                     /*   0x10000000U unused */
-                                     /*   0x20000000U unused */
-                                     /*   0x40000000U unused */
+                                    /*    0x8000000U unused */
+                                    /*   0x10000000U unused */
+                                    /*   0x20000000U unused */
+                                    /*   0x40000000U unused */
 /* Flags for png_create_struct */
 #define PNG_STRUCT_PNG 0x0001U
 #define PNG_STRUCT_INFO 0x0002U
@@ -703,10 +703,10 @@ typedef png_double **png_doublepp;
 /* Flags for the png_ptr->flags rather than declaring a byte for each one */
 #define PNG_FLAG_ZLIB_CUSTOM_STRATEGY 0x0001U
 #define PNG_FLAG_ZSTREAM_INITIALIZED 0x0002U /* Added to libpng-1.6.0 */
-                                             /*      0x0004U    unused */
+                                            /*      0x0004U    unused */
 #define PNG_FLAG_ZSTREAM_ENDED 0x0008U       /* Added to libpng-1.6.0 */
-                                             /*      0x0010U    unused */
-                                             /*      0x0020U    unused */
+                                            /*      0x0010U    unused */
+                                            /*      0x0020U    unused */
 #define PNG_FLAG_ROW_INIT 0x0040U
 #define PNG_FLAG_FILLER_AFTER 0x0080U
 #define PNG_FLAG_CRC_ANCILLARY_USE 0x0100U
@@ -724,20 +724,20 @@ typedef png_double **png_doublepp;
 #define PNG_FLAG_BENIGN_ERRORS_WARN 0x100000U /* Added to libpng-1.4.0 */
 #define PNG_FLAG_APP_WARNINGS_WARN 0x200000U  /* Added to libpng-1.6.0 */
 #define PNG_FLAG_APP_ERRORS_WARN 0x400000U    /* Added to libpng-1.6.0 */
-                                              /*    0x800000U    unused */
-                                              /*   0x1000000U    unused */
-                                              /*   0x2000000U    unused */
-                                              /*   0x4000000U    unused */
-                                              /*   0x8000000U    unused */
-                                              /*  0x10000000U    unused */
-                                              /*  0x20000000U    unused */
-                                              /*  0x40000000U    unused */
+                                            /*    0x800000U    unused */
+                                            /*   0x1000000U    unused */
+                                            /*   0x2000000U    unused */
+                                            /*   0x4000000U    unused */
+                                            /*   0x8000000U    unused */
+                                            /*  0x10000000U    unused */
+                                            /*  0x20000000U    unused */
+                                            /*  0x40000000U    unused */
 
 #define PNG_FLAG_CRC_ANCILLARY_MASK ( PNG_FLAG_CRC_ANCILLARY_USE | \
-                                      PNG_FLAG_CRC_ANCILLARY_NOWARN )
+                                    PNG_FLAG_CRC_ANCILLARY_NOWARN )
 
 #define PNG_FLAG_CRC_CRITICAL_MASK ( PNG_FLAG_CRC_CRITICAL_USE | \
-                                     PNG_FLAG_CRC_CRITICAL_IGNORE )
+                                    PNG_FLAG_CRC_CRITICAL_IGNORE )
 
 #define PNG_FLAG_CRC_MASK ( PNG_FLAG_CRC_ANCILLARY_MASK | \
                             PNG_FLAG_CRC_CRITICAL_MASK )
@@ -745,8 +745,8 @@ typedef png_double **png_doublepp;
 /* Save typing and make code easier to understand */
 
 #define PNG_COLOR_DIST( c1, c2 ) ( abs( ( int )( ( c1 ).red ) - ( int )( ( c2 ).red ) ) +     \
-                                   abs( ( int )( ( c1 ).green ) - ( int )( ( c2 ).green ) ) + \
-                                   abs( ( int )( ( c1 ).blue ) - ( int )( ( c2 ).blue ) ) )
+                                    abs( ( int )( ( c1 ).green ) - ( int )( ( c2 ).green ) ) + \
+                                    abs( ( int )( ( c1 ).blue ) - ( int )( ( c2 ).blue ) ) )
 
 /* Added to libpng-1.6.0: scale a 16-bit value in the range 0..65535 to 0..255
  * by dividing by 257 *with rounding*.  This macro is exact for the given range.
@@ -907,9 +907,9 @@ typedef png_double **png_doublepp;
  */
 #define PNG_STRING_FROM_CHUNK( s, c )                                      \
     ( void )( ( ( char * )( s ) )[0] = ( char )( ( ( c ) >> 24 ) & 0xff ), \
-              ( ( char * )( s ) )[1] = ( char )( ( ( c ) >> 16 ) & 0xff ), \
-              ( ( char * )( s ) )[2] = ( char )( ( ( c ) >> 8 ) & 0xff ),  \
-              ( ( char * )( s ) )[3] = ( char )( ( c & 0xff ) ) )
+            ( ( char * )( s ) )[1] = ( char )( ( ( c ) >> 16 ) & 0xff ), \
+            ( ( char * )( s ) )[2] = ( char )( ( ( c ) >> 8 ) & 0xff ),  \
+            ( ( char * )( s ) )[3] = ( char )( ( c & 0xff ) ) )
 
 /* Do the same but terminate with a null character. */
 #define PNG_CSTRING_FROM_CHUNK( s, c ) \
@@ -940,7 +940,7 @@ typedef png_double **png_doublepp;
  */
 #if PNG_ZLIB_VERNUM != 0 && PNG_ZLIB_VERNUM != ZLIB_VERNUM
 #error ZLIB_VERNUM != PNG_ZLIB_VERNUM \
-      "-I (include path) error: see the notes in pngpriv.h"
+    "-I (include path) error: see the notes in pngpriv.h"
 /* This means that when pnglibconf.h was built the copy of zlib.h that it
  * used is not the same as the one being used here.  Because the build of
  * libpng makes decisions to use inflateInit2 and inflateReset2 based on the
@@ -994,8 +994,8 @@ extern "C"
 #define PNG_UNEXPECTED_ZLIB_RETURN ( -7 )
     PNG_INTERNAL_FUNCTION( void, png_zstream_error, ( png_structrp png_ptr, int ret ), PNG_EMPTY );
     /* Used by the zlib handling functions to ensure that z_stream::msg is always
-     * set before they return.
-     */
+    * set before they return.
+    */
 
 #ifdef PNG_WRITE_SUPPORTED
     PNG_INTERNAL_FUNCTION( void, png_free_buffer_list, ( png_structrp png_ptr, png_compression_bufferp *list ), PNG_EMPTY );
@@ -1005,44 +1005,44 @@ extern "C"
 #if defined( PNG_FLOATING_POINT_SUPPORTED ) &&                                         \
         !defined( PNG_FIXED_POINT_MACRO_SUPPORTED ) &&                                 \
         ( defined( PNG_gAMA_SUPPORTED ) || defined( PNG_cHRM_SUPPORTED ) ||            \
-          defined( PNG_sCAL_SUPPORTED ) || defined( PNG_READ_BACKGROUND_SUPPORTED ) || \
-          defined( PNG_READ_RGB_TO_GRAY_SUPPORTED ) ) ||                               \
+        defined( PNG_sCAL_SUPPORTED ) || defined( PNG_READ_BACKGROUND_SUPPORTED ) || \
+        defined( PNG_READ_RGB_TO_GRAY_SUPPORTED ) ) ||                               \
     ( defined( PNG_sCAL_SUPPORTED ) &&                                                 \
-      defined( PNG_FLOATING_ARITHMETIC_SUPPORTED ) )
+    defined( PNG_FLOATING_ARITHMETIC_SUPPORTED ) )
     PNG_INTERNAL_FUNCTION( png_fixed_point, png_fixed, ( png_const_structrp png_ptr, double fp, png_const_charp text ), PNG_EMPTY );
 #endif
 
     /* Check the user version string for compatibility, returns false if the version
-     * numbers aren't compatible.
-     */
+    * numbers aren't compatible.
+    */
     PNG_INTERNAL_FUNCTION( int, png_user_version_check, ( png_structrp png_ptr, png_const_charp user_png_ver ), PNG_EMPTY );
 
     /* Internal base allocator - no messages, NULL on failure to allocate.  This
-     * does, however, call the application provided allocator and that could call
-     * png_error (although that would be a bug in the application implementation.)
-     */
+    * does, however, call the application provided allocator and that could call
+    * png_error (although that would be a bug in the application implementation.)
+    */
     PNG_INTERNAL_FUNCTION( png_voidp, png_malloc_base, ( png_const_structrp png_ptr, png_alloc_size_t size ), PNG_ALLOCATED );
 
 #if defined( PNG_TEXT_SUPPORTED ) || defined( PNG_sPLT_SUPPORTED ) || \
     defined( PNG_STORE_UNKNOWN_CHUNKS_SUPPORTED )
     /* Internal array allocator, outputs no error or warning messages on failure,
-     * just returns NULL.
-     */
+    * just returns NULL.
+    */
     PNG_INTERNAL_FUNCTION( png_voidp, png_malloc_array, ( png_const_structrp png_ptr, int nelements, size_t element_size ), PNG_ALLOCATED );
 
     /* The same but an existing array is extended by add_elements.  This function
-     * also memsets the new elements to 0 and copies the old elements.  The old
-     * array is not freed or altered.
-     */
+    * also memsets the new elements to 0 and copies the old elements.  The old
+    * array is not freed or altered.
+    */
     PNG_INTERNAL_FUNCTION( png_voidp, png_realloc_array, ( png_const_structrp png_ptr, png_const_voidp array, int old_elements, int add_elements, size_t element_size ), PNG_ALLOCATED );
 #endif /* text, sPLT or unknown chunks */
 
     /* Magic to create a struct when there is no struct to call the user supplied
-     * memory allocators.  Because error handling has not been set up the memory
-     * handlers can't safely call png_error, but this is an obscure and undocumented
-     * restriction so libpng has to assume that the 'free' handler, at least, might
-     * call png_error.
-     */
+    * memory allocators.  Because error handling has not been set up the memory
+    * handlers can't safely call png_error, but this is an obscure and undocumented
+    * restriction so libpng has to assume that the 'free' handler, at least, might
+    * call png_error.
+    */
     PNG_INTERNAL_FUNCTION( png_structp, png_create_png_struct, ( png_const_charp user_png_ver, png_voidp error_ptr, png_error_ptr error_fn, png_error_ptr warn_fn, png_voidp mem_ptr, png_malloc_ptr malloc_fn, png_free_ptr free_fn ), PNG_ALLOCATED );
 
     /* Free memory from internal libpng struct */
@@ -1058,9 +1058,9 @@ extern "C"
     PNG_INTERNAL_FUNCTION( void, png_zfree, ( voidpf png_ptr, voidpf ptr ), PNG_EMPTY );
 
     /* Next four functions are used internally as callbacks.  PNGCBAPI is required
-     * but not PNG_EXPORT.  PNGAPI added at libpng version 1.2.3, changed to
-     * PNGCBAPI at 1.5.0
-     */
+    * but not PNG_EXPORT.  PNGAPI added at libpng version 1.2.3, changed to
+    * PNGCBAPI at 1.5.0
+    */
 
     PNG_INTERNAL_FUNCTION( void PNGCBAPI, png_default_read_data, ( png_structp png_ptr, png_bytep data, size_t length ), PNG_EMPTY );
 
@@ -1101,9 +1101,9 @@ extern "C"
     PNG_INTERNAL_FUNCTION( int, png_crc_error, ( png_structrp png_ptr ), PNG_EMPTY );
 
     /* Calculate the CRC over a section of data.  Note that we are only
-     * passing a maximum of 64K on systems that have this as a memory limit,
-     * since this is the maximum buffer size we can specify.
-     */
+    * passing a maximum of 64K on systems that have this as a memory limit,
+    * since this is the maximum buffer size we can specify.
+    */
     PNG_INTERNAL_FUNCTION( void, png_calculate_crc, ( png_structrp png_ptr, png_const_bytep ptr, size_t length ), PNG_EMPTY );
 
 #ifdef PNG_WRITE_FLUSH_SUPPORTED
@@ -1113,8 +1113,8 @@ extern "C"
     /* Write various chunks */
 
     /* Write the IHDR chunk, and update the png_struct with the necessary
-     * information.
-     */
+    * information.
+    */
     PNG_INTERNAL_FUNCTION( void, png_write_IHDR, ( png_structrp png_ptr, png_uint_32 width, png_uint_32 height, int bit_depth, int color_type, int compression_method, int filter_method, int interlace_method ), PNG_EMPTY );
 
     PNG_INTERNAL_FUNCTION( void, png_write_PLTE, ( png_structrp png_ptr, png_const_colorp palette, png_uint_32 num_pal ), PNG_EMPTY );
@@ -1147,9 +1147,9 @@ extern "C"
 #ifdef PNG_WRITE_iCCP_SUPPORTED
     PNG_INTERNAL_FUNCTION( void, png_write_iCCP, ( png_structrp png_ptr, png_const_charp name, png_const_bytep profile ), PNG_EMPTY );
     /* The profile must have been previously validated for correctness, the
-     * length comes from the first four bytes.  Only the base, deflate,
-     * compression is supported.
-     */
+    * length comes from the first four bytes.  Only the base, deflate,
+    * compression is supported.
+    */
 #endif
 
 #ifdef PNG_WRITE_sPLT_SUPPORTED
@@ -1241,11 +1241,11 @@ extern "C"
 
 #ifdef PNG_READ_INTERLACING_SUPPORTED
     /* Expand an interlaced row: the 'row_info' describes the pass data that has
-     * been read in and must correspond to the pixels in 'row', the pixels are
-     * expanded (moved apart) in 'row' to match the final layout, when doing this
-     * the pixels are *replicated* to the intervening space.  This is essential for
-     * the correct operation of png_combine_row, above.
-     */
+    * been read in and must correspond to the pixels in 'row', the pixels are
+    * expanded (moved apart) in 'row' to match the final layout, when doing this
+    * the pixels are *replicated* to the intervening space.  This is essential for
+    * the correct operation of png_combine_row, above.
+    */
     PNG_INTERNAL_FUNCTION( void, png_do_read_interlace, ( png_row_infop row_info, png_bytep row, int pass, png_uint_32 transformations ), PNG_EMPTY );
 #endif
 
@@ -1257,8 +1257,8 @@ extern "C"
 #endif
 
     /* Unfilter a row: check the filter value before calling this, there is no point
-     * calling it for PNG_FILTER_VALUE_NONE.
-     */
+    * calling it for PNG_FILTER_VALUE_NONE.
+    */
     PNG_INTERNAL_FUNCTION( void, png_read_filter_row, ( png_structrp pp, png_row_infop row_info, png_bytep row, png_const_bytep prev_row, int filter ), PNG_EMPTY );
 
 #if PNG_ARM_NEON_OPT > 0
@@ -1326,14 +1326,14 @@ extern "C"
 #ifdef PNG_SEQUENTIAL_READ_SUPPORTED
     PNG_INTERNAL_FUNCTION( void, png_read_IDAT_data, ( png_structrp png_ptr, png_bytep output, png_alloc_size_t avail_out ), PNG_EMPTY );
     /* Read 'avail_out' bytes of data from the IDAT stream.  If the output buffer
-     * is NULL the function checks, instead, for the end of the stream.  In this
-     * case a benign error will be issued if the stream end is not found or if
-     * extra data has to be consumed.
-     */
+    * is NULL the function checks, instead, for the end of the stream.  In this
+    * case a benign error will be issued if the stream end is not found or if
+    * extra data has to be consumed.
+    */
     PNG_INTERNAL_FUNCTION( void, png_read_finish_IDAT, ( png_structrp png_ptr ), PNG_EMPTY );
     /* This cleans up when the IDAT LZ stream does not end when the last image
-     * byte is read; there is still some pending input.
-     */
+    * byte is read; there is still some pending input.
+    */
 
     PNG_INTERNAL_FUNCTION( void, png_read_finish_row, ( png_structrp png_ptr ), PNG_EMPTY );
     /* Finish a row while reading, dealing with interlacing passes, etc. */
@@ -1380,8 +1380,8 @@ extern "C"
 #endif
 
     /* The following decodes the appropriate chunks, and does error correction,
-     * then calls the appropriate callback for the chunk if it is valid.
-     */
+    * then calls the appropriate callback for the chunk if it is valid.
+    */
 
     /* Decode the IHDR chunk */
     PNG_INTERNAL_FUNCTION( void, png_handle_IHDR, ( png_structrp png_ptr, png_inforp info_ptr, png_uint_32 length ), PNG_EMPTY );
@@ -1466,17 +1466,17 @@ extern "C"
 
     PNG_INTERNAL_FUNCTION( void, png_handle_unknown, ( png_structrp png_ptr, png_inforp info_ptr, png_uint_32 length, int keep ), PNG_EMPTY );
     /* This is the function that gets called for unknown chunks.  The 'keep'
-     * argument is either non-zero for a known chunk that has been set to be
-     * handled as unknown or zero for an unknown chunk.  By default the function
-     * just skips the chunk or errors out if it is critical.
-     */
+    * argument is either non-zero for a known chunk that has been set to be
+    * handled as unknown or zero for an unknown chunk.  By default the function
+    * just skips the chunk or errors out if it is critical.
+    */
 
 #if defined( PNG_READ_UNKNOWN_CHUNKS_SUPPORTED ) || \
     defined( PNG_HANDLE_AS_UNKNOWN_SUPPORTED )
     PNG_INTERNAL_FUNCTION( int, png_chunk_unknown_handling, ( png_const_structrp png_ptr, png_uint_32 chunk_name ), PNG_EMPTY );
     /* Exactly as the API png_handle_as_unknown() except that the argument is a
-     * 32-bit chunk name, not a string.
-     */
+    * 32-bit chunk name, not a string.
+    */
 #endif /* READ_UNKNOWN_CHUNKS || HANDLE_AS_UNKNOWN */
 
 /* Handle the transformations for reading and writing */
@@ -1526,24 +1526,24 @@ extern "C"
 #ifdef PNG_GAMMA_SUPPORTED
     PNG_INTERNAL_FUNCTION( void, png_colorspace_set_gamma, ( png_const_structrp png_ptr, png_colorspacerp colorspace, png_fixed_point gAMA ), PNG_EMPTY );
     /* Set the colorspace gamma with a value provided by the application or by
-     * the gAMA chunk on read.  The value will override anything set by an ICC
-     * profile.
-     */
+    * the gAMA chunk on read.  The value will override anything set by an ICC
+    * profile.
+    */
 
     PNG_INTERNAL_FUNCTION( void, png_colorspace_sync_info, ( png_const_structrp png_ptr, png_inforp info_ptr ), PNG_EMPTY );
     /* Synchronize the info 'valid' flags with the colorspace */
 
     PNG_INTERNAL_FUNCTION( void, png_colorspace_sync, ( png_const_structrp png_ptr, png_inforp info_ptr ), PNG_EMPTY );
     /* Copy the png_struct colorspace to the info_struct and call the above to
-     * synchronize the flags.  Checks for NULL info_ptr and does nothing.
-     */
+    * synchronize the flags.  Checks for NULL info_ptr and does nothing.
+    */
 #endif
 
 /* Added at libpng version 1.4.0 */
 #ifdef PNG_COLORSPACE_SUPPORTED
     /* These internal functions are for maintaining the colorspace structure within
-     * a png_info or png_struct (or, indeed, both).
-     */
+    * a png_info or png_struct (or, indeed, both).
+    */
     PNG_INTERNAL_FUNCTION( int, png_colorspace_set_chromaticities, ( png_const_structrp png_ptr, png_colorspacerp colorspace, const png_xy *xy, int preferred ), PNG_EMPTY );
 
     PNG_INTERNAL_FUNCTION( int, png_colorspace_set_endpoints, ( png_const_structrp png_ptr, png_colorspacerp colorspace, const png_XYZ *XYZ, int preferred ), PNG_EMPTY );
@@ -1551,10 +1551,10 @@ extern "C"
 #ifdef PNG_sRGB_SUPPORTED
     PNG_INTERNAL_FUNCTION( int, png_colorspace_set_sRGB, ( png_const_structrp png_ptr, png_colorspacerp colorspace, int intent ), PNG_EMPTY );
     /* This does set the colorspace gAMA and cHRM values too, but doesn't set the
-     * flags to write them, if it returns false there was a problem and an error
-     * message has already been output (but the colorspace may still need to be
-     * synced to record the invalid flag).
-     */
+    * flags to write them, if it returns false there was a problem and an error
+    * message has already been output (but the colorspace may still need to be
+    * synced to record the invalid flag).
+    */
 #endif /* sRGB */
 
 #ifdef PNG_iCCP_SUPPORTED
@@ -1570,9 +1570,9 @@ extern "C"
 #ifdef PNG_sRGB_SUPPORTED
     PNG_INTERNAL_FUNCTION( void, png_icc_set_sRGB, ( png_const_structrp png_ptr, png_colorspacerp colorspace, png_const_bytep profile, uLong adler ), PNG_EMPTY );
     /* 'adler' is the Adler32 checksum of the uncompressed profile data. It may
-     * be zero to indicate that it is not available.  It is used, if provided,
-     * as a fast check on the profile when checking to see if it is sRGB.
-     */
+    * be zero to indicate that it is not available.  It is used, if provided,
+    * as a fast check on the profile when checking to see if it is sRGB.
+    */
 #endif
 #endif /* iCCP */
 
@@ -1596,9 +1596,9 @@ extern "C"
 #endif
 
     /* Puts 'string' into 'buffer' at buffer[pos], taking care never to overwrite
-     * the end.  Always leaves the buffer nul terminated.  Never errors out (and
-     * there is no error code.)
-     */
+    * the end.  Always leaves the buffer nul terminated.  Never errors out (and
+    * there is no error code.)
+    */
     PNG_INTERNAL_FUNCTION( size_t, png_safecat, ( png_charp buffer, size_t bufsize, size_t pos, png_const_charp string ), PNG_EMPTY );
 
 /* Various internal functions to handle formatted warning messages, currently
@@ -1606,10 +1606,10 @@ extern "C"
  */
 #if defined( PNG_WARNINGS_SUPPORTED ) || defined( PNG_TIME_RFC1123_SUPPORTED )
     /* Utility to dump an unsigned value into a buffer, given a start pointer and
-     * and end pointer (which should point just *beyond* the end of the buffer!)
-     * Returns the pointer to the start of the formatted string.  This utility only
-     * does unsigned values.
-     */
+    * and end pointer (which should point just *beyond* the end of the buffer!)
+    * Returns the pointer to the start of the formatted string.  This utility only
+    * does unsigned values.
+    */
     PNG_INTERNAL_FUNCTION( png_charp, png_format_number, ( png_const_charp start, png_charp end, int format, png_alloc_size_t number ), PNG_EMPTY );
 
 /* Convenience macro that takes an array: */
@@ -1637,51 +1637,51 @@ extern "C"
 #define PNG_WARNING_PARAMETER_COUNT 8 /* Maximum 9; see pngerror.c */
 
     /* An l-value of this type has to be passed to the APIs below to cache the
-     * values of the parameters to a formatted warning message.
-     */
+    * values of the parameters to a formatted warning message.
+    */
     typedef char png_warning_parameters[PNG_WARNING_PARAMETER_COUNT][PNG_WARNING_PARAMETER_SIZE];
 
     PNG_INTERNAL_FUNCTION( void, png_warning_parameter, ( png_warning_parameters p, int number, png_const_charp string ), PNG_EMPTY );
     /* Parameters are limited in size to PNG_WARNING_PARAMETER_SIZE characters,
-     * including the trailing '\0'.
-     */
+    * including the trailing '\0'.
+    */
     PNG_INTERNAL_FUNCTION( void, png_warning_parameter_unsigned, ( png_warning_parameters p, int number, int format, png_alloc_size_t value ), PNG_EMPTY );
     /* Use png_alloc_size_t because it is an unsigned type as big as any we
-     * need to output.  Use the following for a signed value.
-     */
+    * need to output.  Use the following for a signed value.
+    */
     PNG_INTERNAL_FUNCTION( void, png_warning_parameter_signed, ( png_warning_parameters p, int number, int format, png_int_32 value ), PNG_EMPTY );
 
     PNG_INTERNAL_FUNCTION( void, png_formatted_warning, ( png_const_structrp png_ptr, png_warning_parameters p, png_const_charp message ), PNG_EMPTY );
     /* 'message' follows the X/Open approach of using @1, @2 to insert
-     * parameters previously supplied using the above functions.  Errors in
-     * specifying the parameters will simply result in garbage substitutions.
-     */
+    * parameters previously supplied using the above functions.  Errors in
+    * specifying the parameters will simply result in garbage substitutions.
+    */
 #endif
 
 #ifdef PNG_BENIGN_ERRORS_SUPPORTED
     /* Application errors (new in 1.6); use these functions (declared below) for
-     * errors in the parameters or order of API function calls on read.  The
-     * 'warning' should be used for an error that can be handled completely; the
-     * 'error' for one which can be handled safely but which may lose application
-     * information or settings.
-     *
-     * By default these both result in a png_error call prior to release, while in a
-     * released version the 'warning' is just a warning.  However if the application
-     * explicitly disables benign errors (explicitly permitting the code to lose
-     * information) they both turn into warnings.
-     *
-     * If benign errors aren't supported they end up as the corresponding base call
-     * (png_warning or png_error.)
-     */
+    * errors in the parameters or order of API function calls on read.  The
+    * 'warning' should be used for an error that can be handled completely; the
+    * 'error' for one which can be handled safely but which may lose application
+    * information or settings.
+    *
+    * By default these both result in a png_error call prior to release, while in a
+    * released version the 'warning' is just a warning.  However if the application
+    * explicitly disables benign errors (explicitly permitting the code to lose
+    * information) they both turn into warnings.
+    *
+    * If benign errors aren't supported they end up as the corresponding base call
+    * (png_warning or png_error.)
+    */
     PNG_INTERNAL_FUNCTION( void, png_app_warning, ( png_const_structrp png_ptr, png_const_charp message ), PNG_EMPTY );
     /* The application provided invalid parameters to an API function or called
-     * an API function at the wrong time, libpng can completely recover.
-     */
+    * an API function at the wrong time, libpng can completely recover.
+    */
 
     PNG_INTERNAL_FUNCTION( void, png_app_error, ( png_const_structrp png_ptr, png_const_charp message ), PNG_EMPTY );
     /* As above but libpng will ignore the call, or attempt some other partial
-     * recovery from the error.
-     */
+    * recovery from the error.
+    */
 #else
 #define png_app_warning( pp, s ) png_warning( pp, s )
 #define png_app_error( pp, s ) png_error( pp, s )
@@ -1689,14 +1689,14 @@ extern "C"
 
     PNG_INTERNAL_FUNCTION( void, png_chunk_report, ( png_const_structrp png_ptr, png_const_charp message, int error ), PNG_EMPTY );
     /* Report a recoverable issue in chunk data.  On read this is used to report
-     * a problem found while reading a particular chunk and the
-     * png_chunk_benign_error or png_chunk_warning function is used as
-     * appropriate.  On write this is used to report an error that comes from
-     * data set via an application call to a png_set_ API and png_app_error or
-     * png_app_warning is used as appropriate.
-     *
-     * The 'error' parameter must have one of the following values:
-     */
+    * a problem found while reading a particular chunk and the
+    * png_chunk_benign_error or png_chunk_warning function is used as
+    * appropriate.  On write this is used to report an error that comes from
+    * data set via an application call to a png_set_ API and png_app_error or
+    * png_app_warning is used as appropriate.
+    *
+    * The 'error' parameter must have one of the following values:
+    */
 #define PNG_CHUNK_WARNING 0     /* never an error */
 #define PNG_CHUNK_WRITE_ERROR 1 /* an error only on write */
 #define PNG_CHUNK_ERROR 2       /* always an error */
@@ -1795,28 +1795,28 @@ extern "C"
 #define PNG_FP_IS_NEGATIVE( state ) ( ( ( state ) & PNG_FP_NZ_MASK ) == PNG_FP_NZ_MASK )
 
     /* The actual parser.  This can be called repeatedly. It updates
-     * the index into the string and the state variable (which must
-     * be initialized to 0).  It returns a result code, as above.  There
-     * is no point calling the parser any more if it fails to advance to
-     * the end of the string - it is stuck on an invalid character (or
-     * terminated by '\0').
-     *
-     * Note that the pointer will consume an E or even an E+ and then leave
-     * a 'maybe' state even though a preceding integer.fraction is valid.
-     * The PNG_FP_WAS_VALID flag indicates that a preceding substring was
-     * a valid number.  It's possible to recover from this by calling
-     * the parser again (from the start, with state 0) but with a string
-     * that omits the last character (i.e. set the size to the index of
-     * the problem character.)  This has not been tested within libpng.
-     */
+    * the index into the string and the state variable (which must
+    * be initialized to 0).  It returns a result code, as above.  There
+    * is no point calling the parser any more if it fails to advance to
+    * the end of the string - it is stuck on an invalid character (or
+    * terminated by '\0').
+    *
+    * Note that the pointer will consume an E or even an E+ and then leave
+    * a 'maybe' state even though a preceding integer.fraction is valid.
+    * The PNG_FP_WAS_VALID flag indicates that a preceding substring was
+    * a valid number.  It's possible to recover from this by calling
+    * the parser again (from the start, with state 0) but with a string
+    * that omits the last character (i.e. set the size to the index of
+    * the problem character.)  This has not been tested within libpng.
+    */
     PNG_INTERNAL_FUNCTION( int, png_check_fp_number, ( png_const_charp string, size_t size, int *statep, size_t *whereami ), PNG_EMPTY );
 
     /* This is the same but it checks a complete string and returns true
-     * only if it just contains a floating point number.  As of 1.5.4 this
-     * function also returns the state at the end of parsing the number if
-     * it was valid (otherwise it returns 0.)  This can be used for testing
-     * for negative or zero values using the sticky flag.
-     */
+    * only if it just contains a floating point number.  As of 1.5.4 this
+    * function also returns the state at the end of parsing the number if
+    * it was valid (otherwise it returns 0.)  This can be used for testing
+    * for negative or zero values using the sticky flag.
+    */
     PNG_INTERNAL_FUNCTION( int, png_check_fp_string, ( png_const_charp string, size_t size ), PNG_EMPTY );
 #endif /* pCAL || sCAL */
 
@@ -1824,10 +1824,10 @@ extern "C"
     defined( PNG_INCH_CONVERSIONS_SUPPORTED ) || defined( PNG_READ_pHYs_SUPPORTED )
     /* Added at libpng version 1.5.0 */
     /* This is a utility to provide a*times/div (rounded) and indicate
-     * if there is an overflow.  The result is a boolean - false (0)
-     * for overflow, true (1) if no overflow, in which case *res
-     * holds the result.
-     */
+    * if there is an overflow.  The result is a boolean - false (0)
+    * for overflow, true (1) if no overflow, in which case *res
+    * holds the result.
+    */
     PNG_INTERNAL_FUNCTION( int, png_muldiv, ( png_fixed_point_p res, png_fixed_point a, png_int_32 multiplied_by, png_int_32 divided_by ), PNG_EMPTY );
 #endif
 
@@ -1838,16 +1838,16 @@ extern "C"
 
 #ifdef PNG_GAMMA_SUPPORTED
     /* Calculate a reciprocal - used for gamma values.  This returns
-     * 0 if the argument is 0 in order to maintain an undefined value;
-     * there are no warnings.
-     */
+    * 0 if the argument is 0 in order to maintain an undefined value;
+    * there are no warnings.
+    */
     PNG_INTERNAL_FUNCTION( png_fixed_point, png_reciprocal, ( png_fixed_point a ), PNG_EMPTY );
 
 #ifdef PNG_READ_GAMMA_SUPPORTED
     /* The same but gives a reciprocal of the product of two fixed point
-     * values.  Accuracy is suitable for gamma calculations but this is
-     * not exact - use png_muldiv for that.  Only required at present on read.
-     */
+    * values.  Accuracy is suitable for gamma calculations but this is
+    * not exact - use png_muldiv for that.  Only required at present on read.
+    */
     PNG_INTERNAL_FUNCTION( png_fixed_point, png_reciprocal2, ( png_fixed_point a, png_fixed_point b ), PNG_EMPTY );
 #endif
 
@@ -1857,12 +1857,12 @@ extern "C"
 
 #ifdef PNG_READ_GAMMA_SUPPORTED
     /* Internal fixed point gamma correction.  These APIs are called as
-     * required to convert single values - they don't need to be fast,
-     * they are not used when processing image pixel values.
-     *
-     * While the input is an 'unsigned' value it must actually be the
-     * correct bit value - 0..255 or 0..65535 as required.
-     */
+    * required to convert single values - they don't need to be fast,
+    * they are not used when processing image pixel values.
+    *
+    * While the input is an 'unsigned' value it must actually be the
+    * correct bit value - 0..255 or 0..65535 as required.
+    */
     PNG_INTERNAL_FUNCTION( png_uint_16, png_gamma_correct, ( png_structrp png_ptr, unsigned int value, png_fixed_point gamma_value ), PNG_EMPTY );
     PNG_INTERNAL_FUNCTION( png_uint_16, png_gamma_16bit_correct, ( unsigned int value, png_fixed_point gamma_value ), PNG_EMPTY );
     PNG_INTERNAL_FUNCTION( png_byte, png_gamma_8bit_correct, ( unsigned int value, png_fixed_point gamma_value ), PNG_EMPTY );
@@ -1897,9 +1897,9 @@ extern "C"
 #endif
 
     /* Utility to safely execute a piece of libpng code catching and logging any
-     * errors that might occur.  Returns true on success, false on failure (either
-     * of the function or as a result of a png_error.)
-     */
+    * errors that might occur.  Returns true on success, false on failure (either
+    * of the function or as a result of a png_error.)
+    */
     PNG_INTERNAL_CALLBACK( void, png_safe_error, ( png_structp png_ptr, png_const_charp error_message ), PNG_NORETURN );
 
 #ifdef PNG_WARNINGS_SUPPORTED
@@ -1911,8 +1911,8 @@ extern "C"
     PNG_INTERNAL_FUNCTION( int, png_safe_execute, ( png_imagep image, int ( *function )( png_voidp ), png_voidp arg ), PNG_EMPTY );
 
     /* Utility to log an error; this also cleans up the png_image; the function
-     * always returns 0 (false).
-     */
+    * always returns 0 (false).
+    */
     PNG_INTERNAL_FUNCTION( int, png_image_error, ( png_imagep image, png_const_charp error_message ), PNG_EMPTY );
 
 #ifndef PNG_SIMPLIFIED_READ_SUPPORTED
@@ -1960,25 +1960,25 @@ PNG_INTERNAL_FUNCTION( void, png_init_filter_functions_sse2, ( png_structp png_p
 
 #if PNG_ARM_NEON_IMPLEMENTATION == 1
     PNG_INTERNAL_FUNCTION( void,
-                           png_riffle_palette_neon,
-                           ( png_structrp ),
-                           PNG_EMPTY );
+                            png_riffle_palette_neon,
+                            ( png_structrp ),
+                            PNG_EMPTY );
     PNG_INTERNAL_FUNCTION( int,
-                           png_do_expand_palette_rgba8_neon,
-                           ( png_structrp,
-                             png_row_infop,
-                             png_const_bytep,
-                             const png_bytepp,
-                             const png_bytepp ),
-                           PNG_EMPTY );
+                            png_do_expand_palette_rgba8_neon,
+                            ( png_structrp,
+                            png_row_infop,
+                            png_const_bytep,
+                            const png_bytepp,
+                            const png_bytepp ),
+                            PNG_EMPTY );
     PNG_INTERNAL_FUNCTION( int,
-                           png_do_expand_palette_rgb8_neon,
-                           ( png_structrp,
-                             png_row_infop,
-                             png_const_bytep,
-                             const png_bytepp,
-                             const png_bytepp ),
-                           PNG_EMPTY );
+                            png_do_expand_palette_rgb8_neon,
+                            ( png_structrp,
+                            png_row_infop,
+                            png_const_bytep,
+                            const png_bytepp,
+                            const png_bytepp ),
+                            PNG_EMPTY );
 #endif
 
     /* Maintainer: Put new private prototypes here ^ */

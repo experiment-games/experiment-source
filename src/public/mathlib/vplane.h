@@ -27,7 +27,7 @@ typedef int SideType;
 
 class VPlane
 {
-   public:
+    public:
     VPlane() = default;
     VPlane( const Vector &vNormal, vec_t dist );
 
@@ -61,12 +61,12 @@ class VPlane
     Vector SnapPointToPlane( const Vector &vPoint ) const;
 #endif
 
-   public:
+    public:
     Vector m_Normal;
     vec_t m_Dist;
 
 #ifdef VECTOR_NO_SLOW_OPERATIONS
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     VPlane( const VPlane &vOther );
 #endif

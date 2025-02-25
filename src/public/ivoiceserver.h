@@ -16,7 +16,7 @@
 
 abstract_class IVoiceServer
 {
-   public:
+    public:
     virtual ~IVoiceServer() {}
 
     // Use these to setup who can hear whose voice.

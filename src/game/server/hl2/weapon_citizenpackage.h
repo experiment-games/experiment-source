@@ -19,7 +19,7 @@ class CWeaponCitizenPackage : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponCitizenPackage, CBaseHLCombatWeapon );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
     DECLARE_ACTTABLE();

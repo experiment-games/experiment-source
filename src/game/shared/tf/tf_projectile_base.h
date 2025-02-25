@@ -29,18 +29,18 @@ C_LocalTempEntity *ClientsideProjectileCallback( const CEffectData &data, float 
 /*
 CBaseProjectile
   |-  CTFBaseProjectile
-      |- CTFProjectile_Nail
-      |- CTFProjectile_Dart
-      |- CTFProjectile_Syringe
-      |- CTFProjectile_EnergyRing
+    |- CTFProjectile_Nail
+    |- CTFProjectile_Dart
+    |- CTFProjectile_Syringe
+    |- CTFProjectile_EnergyRing
   |-  CTFBaseRocket
-      |- Soldier rocket
-      |- Pyro rocket
-      |- CTFProjectile_Flare
-      |- CTFProjectile_Arrow
+    |- Soldier rocket
+    |- Pyro rocket
+    |- CTFProjectile_Flare
+    |- CTFProjectile_Arrow
   |-  CBaseGrenade
-      |- CTFWeaponBaseGrenadeProj
-          |- CTFGrenadePipebombProjectile
+    |- CTFWeaponBaseGrenadeProj
+        |- CTFGrenadePipebombProjectile
 */
 
 //=============================================================================
@@ -50,10 +50,10 @@ CBaseProjectile
 class CTFBaseProjectile : public CBaseProjectile
 #if !defined( CLIENT_DLL )
     ,
-                          public IScorer
+                        public IScorer
 #endif
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBaseProjectile, CBaseProjectile );
     DECLARE_NETWORKCLASS();
 
@@ -86,11 +86,11 @@ class CTFBaseProjectile : public CBaseProjectile
         return m_hLauncher;
     }
 
-   private:
+    private:
     int m_iWeaponID;
     bool m_bCritical;
 
-   protected:
+    protected:
     // Networked.
     CNetworkVector( m_vInitialVelocity );
 
@@ -104,15 +104,15 @@ class CTFBaseProjectile : public CBaseProjectile
 
 #ifdef CLIENT_DLL
 
-   public:
+    public:
     virtual int DrawModel( int flags );
     virtual void PostDataUpdate( DataUpdateType_t type );
 
-   private:
+    private:
     float m_flSpawnTime;
 #else
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     // IScorer interface
@@ -156,16 +156,16 @@ class CTFBaseProjectile : public CBaseProjectile
         BaseClass::SetLauncher( pLauncher );
     }
 
-   protected:
+    protected:
     void FlyThink( void );
 
-   protected:
+    protected:
     float m_flDamage;
     CBaseHandle m_Scorer;
 
 #endif  // ndef CLIENT_DLL
 
-   protected:
+    protected:
     CNetworkHandle( CBaseEntity, m_hLauncher );
 };
 

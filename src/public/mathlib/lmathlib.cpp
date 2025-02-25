@@ -131,19 +131,19 @@ LUA_BINDING_BEGIN( Matrix3x4, __tostring, "class", "Metatable called when the ob
 {
     lua_matrix3x4_t matrix = LUA_BINDING_ARGUMENT( lua_tomatrix, 1, "Matrix3x4" );
     lua_pushfstring( L,
-                     "Matrix3x4:\n\t%f, %f, %f, %f\n\t%f, %f, %f, %f\n\t%f, %f, %f, %f",
-                     matrix[0][0],
-                     matrix[0][1],
-                     matrix[0][2],
-                     matrix[0][3],
-                     matrix[1][0],
-                     matrix[1][1],
-                     matrix[1][2],
-                     matrix[1][3],
-                     matrix[2][0],
-                     matrix[2][1],
-                     matrix[2][2],
-                     matrix[2][3] );
+                    "Matrix3x4:\n\t%f, %f, %f, %f\n\t%f, %f, %f, %f\n\t%f, %f, %f, %f",
+                    matrix[0][0],
+                    matrix[0][1],
+                    matrix[0][2],
+                    matrix[0][3],
+                    matrix[1][0],
+                    matrix[1][1],
+                    matrix[1][2],
+                    matrix[1][3],
+                    matrix[2][0],
+                    matrix[2][1],
+                    matrix[2][2],
+                    matrix[2][3] );
     return 1;
 }
 LUA_BINDING_END()

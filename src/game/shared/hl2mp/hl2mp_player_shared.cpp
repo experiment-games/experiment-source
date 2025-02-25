@@ -452,27 +452,27 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
         // Or rotated too far
         // FIXME:  Play an in place turning animation
         if ( rotated_too_far ||
-             ( gpGlobals->curtime > m_flLastTurnTime + mp_facefronttime.GetFloat() ) )
+            ( gpGlobals->curtime > m_flLastTurnTime + mp_facefronttime.GetFloat() ) )
         {
             m_flGoalFeetYaw = GetOuter()->GetAnimEyeAngles().y;
             m_flLastTurnTime = gpGlobals->curtime;
 
             /*	float yd = m_flCurrentFeetYaw - m_flGoalFeetYaw;
-              if ( yd > 0 )
-              {
+            if ( yd > 0 )
+            {
                 m_nTurningInPlace = TURN_RIGHT;
-              }
-              else if ( yd < 0 )
-              {
+            }
+            else if ( yd < 0 )
+            {
                 m_nTurningInPlace = TURN_LEFT;
-              }
-              else
-              {
+            }
+            else
+            {
                 m_nTurningInPlace = TURN_NONE;
-              }
+            }
 
-              turning = ConvergeAngles( m_flGoalFeetYaw, turnrate, gpGlobals->frametime, m_flCurrentFeetYaw );
-              yawdelta = GetOuter()->GetAnimEyeAngles().y - m_flCurrentFeetYaw;*/
+            turning = ConvergeAngles( m_flGoalFeetYaw, turnrate, gpGlobals->frametime, m_flCurrentFeetYaw );
+            yawdelta = GetOuter()->GetAnimEyeAngles().y - m_flCurrentFeetYaw;*/
         }
 
         // Snap upper body into position since the delta is already smoothed for the feet
@@ -516,7 +516,7 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 
     if ( body_yaw >= 0 )
     {
-      GetOuter()->SetPoseParameter( body_yaw, 30 );
+    GetOuter()->SetPoseParameter( body_yaw, 30 );
     }
     */
 }
@@ -540,9 +540,9 @@ Activity CPlayerAnimState::BodyYawTranslateActivity( Activity activity )
             return activity;
         /*
         case TURN_RIGHT:
-          return ACT_TURNRIGHT45;
+        return ACT_TURNRIGHT45;
         case TURN_LEFT:
-          return ACT_TURNLEFT45;
+        return ACT_TURNLEFT45;
         */
         case TURN_RIGHT:
         case TURN_LEFT:

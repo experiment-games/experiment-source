@@ -50,7 +50,7 @@ namespace cpp
 
 class MessageFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit MessageFieldGenerator( const FieldDescriptor* descriptor,
                                     const Options& options );
     ~MessageFieldGenerator();
@@ -68,19 +68,19 @@ class MessageFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MessageFieldGenerator );
 };
 
 class MessageOneofFieldGenerator : public MessageFieldGenerator
 {
-   public:
+    public:
     explicit MessageOneofFieldGenerator( const FieldDescriptor* descriptor,
-                                         const Options& options );
+                                        const Options& options );
     ~MessageOneofFieldGenerator();
 
     // implements FieldGenerator ---------------------------------------
@@ -89,13 +89,13 @@ class MessageOneofFieldGenerator : public MessageFieldGenerator
     void GenerateSwappingCode( io::Printer* printer ) const;
     void GenerateConstructorCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MessageOneofFieldGenerator );
 };
 
 class RepeatedMessageFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedMessageFieldGenerator( const FieldDescriptor* descriptor,
                                             const Options& options );
     ~RepeatedMessageFieldGenerator();
@@ -113,7 +113,7 @@ class RepeatedMessageFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

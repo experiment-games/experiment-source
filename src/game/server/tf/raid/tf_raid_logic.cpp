@@ -220,24 +220,24 @@ void CRaidLogic::Reset( void )
 //--------------------------------------------------------------------------------------------------------
 bool SpawnWanderer( const Vector &spot )
 {
-	if ( !tf_raid_spawn_wanderers.GetBool() )
-		return false;
+    if ( !tf_raid_spawn_wanderers.GetBool() )
+        return false;
 
-	return SpawnRedTFBot( TF_CLASS_SCOUT, spot ) ? true : false;
+    return SpawnRedTFBot( TF_CLASS_SCOUT, spot ) ? true : false;
 
 /*
-	CBaseCombatCharacter *minion = static_cast< CBaseCombatCharacter * >( CreateEntityByName( "bot_npc_minion" ) );
-	if ( minion )
-	{
-		minion->SetAbsOrigin( spot );
-		minion->SetOwnerEntity( NULL );
+    CBaseCombatCharacter *minion = static_cast< CBaseCombatCharacter * >( CreateEntityByName( "bot_npc_minion" ) );
+    if ( minion )
+    {
+        minion->SetAbsOrigin( spot );
+        minion->SetOwnerEntity( NULL );
 
-		DispatchSpawn( minion );
+        DispatchSpawn( minion );
 
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 */
 }
 #endif  // 0
@@ -319,78 +319,78 @@ void CRaidLogic::OnRoundStart( void )
     }
 
 #if 0
-	//----------------------------------------------
-	// fill the world with wandering defenders
-	int totalPopulation = (int)( tf_raid_wandering_density.GetFloat() * totalSpace + 0.5f );
+    //----------------------------------------------
+    // fill the world with wandering defenders
+    int totalPopulation = (int)( tf_raid_wandering_density.GetFloat() * totalSpace + 0.5f );
 
-	CUtlVector< CNavArea * > minionAreaVector;
-	SelectSeparatedShuffleSet< CNavArea >( totalPopulation, tf_raid_sentry_spacing.GetFloat(), TheNavAreas, &minionAreaVector );
+    CUtlVector< CNavArea * > minionAreaVector;
+    SelectSeparatedShuffleSet< CNavArea >( totalPopulation, tf_raid_sentry_spacing.GetFloat(), TheNavAreas, &minionAreaVector );
 
-	for( int i=0; i<minionAreaVector.Count(); ++i )
-	{
-		static_cast< CTFNavArea * >( minionAreaVector[i] )->AddToWanderCount( 1 );
+    for( int i=0; i<minionAreaVector.Count(); ++i )
+    {
+        static_cast< CTFNavArea * >( minionAreaVector[i] )->AddToWanderCount( 1 );
 //		SpawnWanderer( minionAreaVector[i]->GetRandomPoint() );
-	}
+    }
 
-	DevMsg( "RAID: Total minion population = %d\n", minionAreaVector.Count() );
-
-
-	//----------------------------------------------
-	// determine where sentry guns will be
-
-	// the total sentry population is based on the total actual space, not just sentry areas
-	totalPopulation = (int)( tf_raid_sentry_density.GetFloat() * totalSpace + 0.5f );
-
-	SelectSeparatedShuffleSet< CTFNavArea >( totalPopulation, tf_raid_sentry_spacing.GetFloat(), m_sentrySpotVector, &m_actualSentrySpotVector );
-
-	for( int i=0; i<m_actualSentrySpotVector.Count(); ++i )
-	{
-		SpawnSentry( m_actualSentrySpotVector[i]->GetCenter() );
-	}
-
-	DevMsg( "RAID: Total sentry population = %d\n", m_actualSentrySpotVector.Count() );
+    DevMsg( "RAID: Total minion population = %d\n", minionAreaVector.Count() );
 
 
-	//----------------------------------------------
-	// fill the world with defending bots
-	if ( tf_raid_spawn_defenders.GetBool() )
-	{
-		const int classRosterCount = 5;
-		int classRoster[ classRosterCount ] = { TF_CLASS_SNIPER, TF_CLASS_DEMOMAN, TF_CLASS_SNIPER, TF_CLASS_DEMOMAN, TF_CLASS_PYRO };
+    //----------------------------------------------
+    // determine where sentry guns will be
 
-		CUtlVector< CTFNavArea * > validSpawnAreaVector;
-		for( int i=0; i<TheNavAreas.Count(); ++i )
-		{
-			CTFNavArea *area = (CTFNavArea *)TheNavAreas[i];
-			if ( area->IsValidForWanderingPopulation() && IsSpaceToSpawnHere( area->GetCenter() ) )
-			{
-				validSpawnAreaVector.AddToTail( area );
-			}
-		}
+    // the total sentry population is based on the total actual space, not just sentry areas
+    totalPopulation = (int)( tf_raid_sentry_density.GetFloat() * totalSpace + 0.5f );
 
-		totalPopulation = (int)( tf_raid_defender_density.GetFloat() * totalSpace + 0.5f );
-		totalPopulation = clamp( totalPopulation, 0, tf_raid_max_defender_count.GetInt() );
+    SelectSeparatedShuffleSet< CTFNavArea >( totalPopulation, tf_raid_sentry_spacing.GetFloat(), m_sentrySpotVector, &m_actualSentrySpotVector );
 
-		CUtlVector< CTFNavArea * > defenderAreaVector;
-		SelectSeparatedShuffleSet< CTFNavArea >( totalPopulation, tf_raid_sentry_spacing.GetFloat(), validSpawnAreaVector, &defenderAreaVector );
+    for( int i=0; i<m_actualSentrySpotVector.Count(); ++i )
+    {
+        SpawnSentry( m_actualSentrySpotVector[i]->GetCenter() );
+    }
 
-		for( int i=0; i<defenderAreaVector.Count(); ++i )
-		{
-			CTFNavArea *homeArea = defenderAreaVector[i];
+    DevMsg( "RAID: Total sentry population = %d\n", m_actualSentrySpotVector.Count() );
 
-			CTFBot *bot = SpawnRedTFBot( classRoster[ i % classRosterCount ], homeArea->GetCenter() + Vector( 0, 0, 10.0f ) );
-			if ( bot )
-			{
-				bot->SetHomeArea( homeArea );
-			}
-			else
-			{
-				DevMsg( "RAID: Failed to spawn defender!\n" );
-			}
-		}
 
-		DevMsg( "RAID: Total defender population = %d\n", defenderAreaVector.Count() );
-	}
+    //----------------------------------------------
+    // fill the world with defending bots
+    if ( tf_raid_spawn_defenders.GetBool() )
+    {
+        const int classRosterCount = 5;
+        int classRoster[ classRosterCount ] = { TF_CLASS_SNIPER, TF_CLASS_DEMOMAN, TF_CLASS_SNIPER, TF_CLASS_DEMOMAN, TF_CLASS_PYRO };
+
+        CUtlVector< CTFNavArea * > validSpawnAreaVector;
+        for( int i=0; i<TheNavAreas.Count(); ++i )
+        {
+            CTFNavArea *area = (CTFNavArea *)TheNavAreas[i];
+            if ( area->IsValidForWanderingPopulation() && IsSpaceToSpawnHere( area->GetCenter() ) )
+            {
+                validSpawnAreaVector.AddToTail( area );
+            }
+        }
+
+        totalPopulation = (int)( tf_raid_defender_density.GetFloat() * totalSpace + 0.5f );
+        totalPopulation = clamp( totalPopulation, 0, tf_raid_max_defender_count.GetInt() );
+
+        CUtlVector< CTFNavArea * > defenderAreaVector;
+        SelectSeparatedShuffleSet< CTFNavArea >( totalPopulation, tf_raid_sentry_spacing.GetFloat(), validSpawnAreaVector, &defenderAreaVector );
+
+        for( int i=0; i<defenderAreaVector.Count(); ++i )
+        {
+            CTFNavArea *homeArea = defenderAreaVector[i];
+
+            CTFBot *bot = SpawnRedTFBot( classRoster[ i % classRosterCount ], homeArea->GetCenter() + Vector( 0, 0, 10.0f ) );
+            if ( bot )
+            {
+                bot->SetHomeArea( homeArea );
+            }
+            else
+            {
+                DevMsg( "RAID: Failed to spawn defender!\n" );
+            }
+        }
+
+        DevMsg( "RAID: Total defender population = %d\n", defenderAreaVector.Count() );
+    }
 #endif
 
     // collect all capture point gates
@@ -452,158 +452,158 @@ int CompareIncursionDistances( CTFNavArea *const *area1, CTFNavArea *const *area
 class CPopulator : public ISearchSurroundingAreasFunctor
 {
 public:
-	CPopulator( float leaderIncursionRange, int maxWanderersToSpawn )
-	{
-		m_leaderIncursionRange = leaderIncursionRange;
-		m_spaceLeft = maxWanderersToSpawn;
+    CPopulator( float leaderIncursionRange, int maxWanderersToSpawn )
+    {
+        m_leaderIncursionRange = leaderIncursionRange;
+        m_spaceLeft = maxWanderersToSpawn;
 
-		m_floor = FLT_MAX;
+        m_floor = FLT_MAX;
 
-		CTeam *invaderTeam = GetGlobalTeam( TF_TEAM_BLUE );
-		for( int i=0; i<invaderTeam->GetNumPlayers(); ++i )
-		{
-			if ( !invaderTeam->GetPlayer(i)->IsAlive() )
-				continue;
+        CTeam *invaderTeam = GetGlobalTeam( TF_TEAM_BLUE );
+        for( int i=0; i<invaderTeam->GetNumPlayers(); ++i )
+        {
+            if ( !invaderTeam->GetPlayer(i)->IsAlive() )
+                continue;
 
-			if ( invaderTeam->GetPlayer(i)->GetAbsOrigin().z < m_floor )
-			{
-				m_floor = invaderTeam->GetPlayer(i)->GetAbsOrigin().z;
-			}
-		}
+            if ( invaderTeam->GetPlayer(i)->GetAbsOrigin().z < m_floor )
+            {
+                m_floor = invaderTeam->GetPlayer(i)->GetAbsOrigin().z;
+            }
+        }
 
-		m_floor -= tf_raid_mob_spawn_below_tolerance.GetFloat();
-	}
+        m_floor -= tf_raid_mob_spawn_below_tolerance.GetFloat();
+    }
 
-	virtual bool operator() ( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
-	{
-		CTFNavArea *area = (CTFNavArea *)baseArea;
+    virtual bool operator() ( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
+    {
+        CTFNavArea *area = (CTFNavArea *)baseArea;
 
-		if ( area->IsBlocked( TF_TEAM_RED ) )
-			return true;
+        if ( area->IsBlocked( TF_TEAM_RED ) )
+            return true;
 
-		if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING | TF_NAV_SPAWN_ROOM_BLUE ) )
-			return true;
+        if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING | TF_NAV_SPAWN_ROOM_BLUE ) )
+            return true;
 
-		if ( tf_raid_debug.GetInt() > 1 )
-		{
-			if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
-				area->DrawFilled( 255, 100, 0, 100, 1.0f );
-			else
-				area->DrawFilled( 0, 100, 255, 100, 1.0f );
-		}
+        if ( tf_raid_debug.GetInt() > 1 )
+        {
+            if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
+                area->DrawFilled( 255, 100, 0, 100, 1.0f );
+            else
+                area->DrawFilled( 0, 100, 255, 100, 1.0f );
+        }
 
-		// require minimum size
-		if ( area->GetSizeX() < 45.0f && area->GetSizeY() < 45.0f )
-			return true;
+        // require minimum size
+        if ( area->GetSizeX() < 45.0f && area->GetSizeY() < 45.0f )
+            return true;
 
-		// don't use areas far below team
+        // don't use areas far below team
 // 		if ( area->GetCenter().z < m_floor )
 // 			return true;
 
-		if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
-		{
-			// don't spawn wanderers in view of raiders
-			// clear any unspawned wanderers here
-			area->SetWanderCount( 0 );
-			return true;
-		}
+        if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
+        {
+            // don't spawn wanderers in view of raiders
+            // clear any unspawned wanderers here
+            area->SetWanderCount( 0 );
+            return true;
+        }
 
-		// collect out-of-sight areas
-		m_hiddenAreaVector.AddToTail( area );
+        // collect out-of-sight areas
+        m_hiddenAreaVector.AddToTail( area );
 
-		// collect out-of-sight areas ahead of the team for special spawns
-		const float aheadBuffer = 500.0f;
-		if ( area->GetIncursionDistance( TF_TEAM_BLUE ) > m_leaderIncursionRange + aheadBuffer )
-		{
-			m_hiddenAreaAheadVector.AddToTail( area );
-		}
+        // collect out-of-sight areas ahead of the team for special spawns
+        const float aheadBuffer = 500.0f;
+        if ( area->GetIncursionDistance( TF_TEAM_BLUE ) > m_leaderIncursionRange + aheadBuffer )
+        {
+            m_hiddenAreaAheadVector.AddToTail( area );
+        }
 
-		if ( m_spaceLeft <= 0 )
-			return true;
+        if ( m_spaceLeft <= 0 )
+            return true;
 
-		if ( !tf_raid_spawn_wanderers.GetBool() )
-		{
-			return true;
-		}
+        if ( !tf_raid_spawn_wanderers.GetBool() )
+        {
+            return true;
+        }
 
-		if ( TFGameRules()->GetRaidLogic()->IsMobSpawning() )
-		{
-			// don't spawn wanderers if a mob is spawning to keep slots free
-			return true;
-		}
+        if ( TFGameRules()->GetRaidLogic()->IsMobSpawning() )
+        {
+            // don't spawn wanderers if a mob is spawning to keep slots free
+            return true;
+        }
 
-		if ( !area->IsValidForWanderingPopulation() )
-		{
-			return true;
-		}
+        if ( !area->IsValidForWanderingPopulation() )
+        {
+            return true;
+        }
 
-		int maxSpawnCount = 5;
-		while( area->GetWanderCount() > 0 && --maxSpawnCount && m_spaceLeft )
-		{
-			// attempt to spawn a wanderer here
-			if ( SpawnWanderer( area->GetRandomPoint() + Vector( 0, 0, StepHeight ) ) )
-			{
-				area->SetWanderCount( area->GetWanderCount() - 1 );
-				--m_spaceLeft;
-			}
-		}
+        int maxSpawnCount = 5;
+        while( area->GetWanderCount() > 0 && --maxSpawnCount && m_spaceLeft )
+        {
+            // attempt to spawn a wanderer here
+            if ( SpawnWanderer( area->GetRandomPoint() + Vector( 0, 0, StepHeight ) ) )
+            {
+                area->SetWanderCount( area->GetWanderCount() - 1 );
+                --m_spaceLeft;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	// return true if 'adjArea' should be included in the ongoing search
-	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar ) 
-	{
-		CTFNavArea *area = (CTFNavArea *)adjArea;
-		float incursionDistance = area->GetIncursionDistance( TF_TEAM_BLUE );
+    // return true if 'adjArea' should be included in the ongoing search
+    virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar )
+    {
+        CTFNavArea *area = (CTFNavArea *)adjArea;
+        float incursionDistance = area->GetIncursionDistance( TF_TEAM_BLUE );
 
-		return incursionDistance > m_leaderIncursionRange - tf_populator_active_buffer_range.GetFloat() &&
-			   incursionDistance < m_leaderIncursionRange + tf_populator_active_buffer_range.GetFloat() &&
-			   !adjArea->IsBlocked( TEAM_ANY );
-	}
+        return incursionDistance > m_leaderIncursionRange - tf_populator_active_buffer_range.GetFloat() &&
+                incursionDistance < m_leaderIncursionRange + tf_populator_active_buffer_range.GetFloat() &&
+                !adjArea->IsBlocked( TEAM_ANY );
+    }
 
-	virtual void PostSearch( void )
-	{
-		// collect the highest hidden & ahead areas
-		float minZ = 999999.9f, maxZ = -999999.9f;
+    virtual void PostSearch( void )
+    {
+        // collect the highest hidden & ahead areas
+        float minZ = 999999.9f, maxZ = -999999.9f;
 
-		int i;
-		for( i=0; i<m_hiddenAreaAheadVector.Count(); ++i )
-		{
-			CTFNavArea *area = m_hiddenAreaAheadVector[i];
-			float areaZ = area->GetCenter().z;
+        int i;
+        for( i=0; i<m_hiddenAreaAheadVector.Count(); ++i )
+        {
+            CTFNavArea *area = m_hiddenAreaAheadVector[i];
+            float areaZ = area->GetCenter().z;
 
-			if ( areaZ < minZ )
-				minZ = areaZ;
-			if ( areaZ > maxZ )
-				maxZ = areaZ;
-		}
+            if ( areaZ < minZ )
+                minZ = areaZ;
+            if ( areaZ > maxZ )
+                maxZ = areaZ;
+        }
 
-		float floorZ = minZ + 0.7f * ( maxZ - minZ );
+        float floorZ = minZ + 0.7f * ( maxZ - minZ );
 
-		for( i=0; i<m_hiddenAreaAheadVector.Count(); ++i )
-		{
-			CTFNavArea *area = m_hiddenAreaAheadVector[i];
-			float areaZ = area->GetCenter().z;
+        for( i=0; i<m_hiddenAreaAheadVector.Count(); ++i )
+        {
+            CTFNavArea *area = m_hiddenAreaAheadVector[i];
+            float areaZ = area->GetCenter().z;
 
-			if ( areaZ > floorZ )
-			{
-				m_hiddenAreaAheadHighVector.AddToTail( area );
-			}
-		}
+            if ( areaZ > floorZ )
+            {
+                m_hiddenAreaAheadHighVector.AddToTail( area );
+            }
+        }
 
-		// sort hidden areas by incursion distance
-		m_hiddenAreaVector.Sort( CompareIncursionDistances );
-	}
+        // sort hidden areas by incursion distance
+        m_hiddenAreaVector.Sort( CompareIncursionDistances );
+    }
 
 
-	float m_leaderIncursionRange;
-	float m_floor;
-	int m_spaceLeft;
+    float m_leaderIncursionRange;
+    float m_floor;
+    int m_spaceLeft;
 
-	CUtlVector< CTFNavArea * > m_hiddenAreaVector;
-	CUtlVector< CTFNavArea * > m_hiddenAreaAheadVector;
-	CUtlVector< CTFNavArea * > m_hiddenAreaAheadHighVector;
+    CUtlVector< CTFNavArea * > m_hiddenAreaVector;
+    CUtlVector< CTFNavArea * > m_hiddenAreaAheadVector;
+    CUtlVector< CTFNavArea * > m_hiddenAreaAheadHighVector;
 };
 #endif  // 0
 
@@ -715,71 +715,71 @@ CTFNavArea *CRaidLogic::FindSpawnAreaBehind( void )
 //--------------------------------------------------------------------------------------------------------
 bool CRaidLogic::SpawnSquad( CTFNavArea *spawnArea )
 {
-	if ( spawnArea == NULL )
-		return false;
+    if ( spawnArea == NULL )
+        return false;
 
-	int squadSize = 4;
+    int squadSize = 4;
 
-	int freeSlots = GetAvailableRedSpawnSlots();
-	if ( freeSlots < squadSize )
-	{
-		DevMsg( "RAID: %3.2f: *** Not enough free slots to spawn a squad\n", gpGlobals->curtime );
-		return false;
-	}
+    int freeSlots = GetAvailableRedSpawnSlots();
+    if ( freeSlots < squadSize )
+    {
+        DevMsg( "RAID: %3.2f: *** Not enough free slots to spawn a squad\n", gpGlobals->curtime );
+        return false;
+    }
 
-	const int squadClassMaxCount = 4;
-	int squadClasses[ squadClassMaxCount ];
-	int squadClassCount = 0;
+    const int squadClassMaxCount = 4;
+    int squadClasses[ squadClassMaxCount ];
+    int squadClassCount = 0;
 
-	squadClasses[ squadClassCount++ ] = TF_CLASS_HEAVYWEAPONS;
-	squadClasses[ squadClassCount++ ] = TF_CLASS_SOLDIER;
-	squadClasses[ squadClassCount++ ] = TF_CLASS_PYRO;
-	squadClasses[ squadClassCount++ ] = TF_CLASS_DEMOMAN;
+    squadClasses[ squadClassCount++ ] = TF_CLASS_HEAVYWEAPONS;
+    squadClasses[ squadClassCount++ ] = TF_CLASS_SOLDIER;
+    squadClasses[ squadClassCount++ ] = TF_CLASS_PYRO;
+    squadClasses[ squadClassCount++ ] = TF_CLASS_DEMOMAN;
 
-	// randomly shuffle the class order
-	int n = squadClassCount;
-	while( n > 1 )
-	{
-		int k = RandomInt( 0, n-1 );
-		n--;
-		
-		int tmp = squadClasses[n];
-		squadClasses[n] = squadClasses[k];
-		squadClasses[k] = tmp;
-	}
+    // randomly shuffle the class order
+    int n = squadClassCount;
+    while( n > 1 )
+    {
+        int k = RandomInt( 0, n-1 );
+        n--;
 
-	if ( GetMaximumRaiderIncursionDistance() > tf_raid_squad_medic_intro_percent.GetFloat() * GetIncursionDistanceAtEnd() )
-	{
-		// Medics join squads farther into the raid
-		squadClasses[0] = TF_CLASS_MEDIC;
-	}
+        int tmp = squadClasses[n];
+        squadClasses[n] = squadClasses[k];
+        squadClasses[k] = tmp;
+    }
+
+    if ( GetMaximumRaiderIncursionDistance() > tf_raid_squad_medic_intro_percent.GetFloat() * GetIncursionDistanceAtEnd() )
+    {
+        // Medics join squads farther into the raid
+        squadClasses[0] = TF_CLASS_MEDIC;
+    }
 
 
-	CTFBotSquad *squad = new CTFBotSquad;
-	CTFBot *bot;
+    CTFBotSquad *squad = new CTFBotSquad;
+    CTFBot *bot;
 
-	DevMsg( "RAID: %3.2f: <<<< Spawning Squad >>>>\n", gpGlobals->curtime );
+    DevMsg( "RAID: %3.2f: <<<< Spawning Squad >>>>\n", gpGlobals->curtime );
 
-	for( int i=0; i<squadSize; ++i )
-	{
-		int which = squadClasses[ i ];
+    for( int i=0; i<squadSize; ++i )
+    {
+        int which = squadClasses[ i ];
 
-		bot = SpawnRedTFBot( which, spawnArea->GetCenter() );
-		if ( !bot )
-			return false;
+        bot = SpawnRedTFBot( which, spawnArea->GetCenter() );
+        if ( !bot )
+            return false;
 
-		bot->JoinSquad( squad );
+        bot->JoinSquad( squad );
 
-		DevMsg( "RAID: %3.2f: Squad member %s(%d)\n", gpGlobals->curtime, bot->GetPlayerName(), bot->entindex() );
-	}
+        DevMsg( "RAID: %3.2f: Squad member %s(%d)\n", gpGlobals->curtime, bot->GetPlayerName(), bot->entindex() );
+    }
 
-	IGameEvent* event = gameeventmanager->CreateEvent( "raid_spawn_squad" );
-	if ( event )
-	{
-		gameeventmanager->FireEvent( event );
-	}
+    IGameEvent* event = gameeventmanager->CreateEvent( "raid_spawn_squad" );
+    if ( event )
+    {
+        gameeventmanager->FireEvent( event );
+    }
 
-	return true;
+    return true;
 }
 #endif  // 0
 
@@ -802,155 +802,155 @@ void CRaidLogic::StartMobTimer( float duration )
 //--------------------------------------------------------------------------------------------------------
 CTFNavArea *CRaidLogic::SelectMobSpawn( CUtlVector< CTFNavArea * > *spawnAreaVector, RelativePositionType where )
 {
-	if ( spawnAreaVector->Count() == 0 )
-	{
-		// use high-reliability locations
-		CTFNavArea *spawnArea = FindSpawnAreaBehind();
-		if ( spawnArea )
-			return spawnArea;
+    if ( spawnAreaVector->Count() == 0 )
+    {
+        // use high-reliability locations
+        CTFNavArea *spawnArea = FindSpawnAreaBehind();
+        if ( spawnArea )
+            return spawnArea;
 
-		return NULL; // FindSpawnAreaAhead();
-	}
+        return NULL; // FindSpawnAreaAhead();
+    }
 
-	const int maxRetries = 5;
-	CTFNavArea *spawnArea = NULL;
-	CTFPlayer *farRaider = GetFarthestAlongRaider();
+    const int maxRetries = 5;
+    CTFNavArea *spawnArea = NULL;
+    CTFPlayer *farRaider = GetFarthestAlongRaider();
 
-	if ( !farRaider )
-		return NULL;
+    if ( !farRaider )
+        return NULL;
 
-	for( int r=0; r<maxRetries; ++r )
-	{
-		int which = 0;
-		switch( where )
-		{
-		case AHEAD:
-			// areas are sorted from behind to ahead - weight the selection to choose ahead
-			which = SkewedRandomValue() * spawnAreaVector->Count();
-			break;
+    for( int r=0; r<maxRetries; ++r )
+    {
+        int which = 0;
+        switch( where )
+        {
+        case AHEAD:
+            // areas are sorted from behind to ahead - weight the selection to choose ahead
+            which = SkewedRandomValue() * spawnAreaVector->Count();
+            break;
 
-		case BEHIND:
-			// areas are sorted from behind to ahead - weight the selection to choose behind
-			which = ( 1.0f - SkewedRandomValue() ) * spawnAreaVector->Count();
-			break;
+        case BEHIND:
+            // areas are sorted from behind to ahead - weight the selection to choose behind
+            which = ( 1.0f - SkewedRandomValue() ) * spawnAreaVector->Count();
+            break;
 
-		case ANYWHERE:
-			// areas are sorted from behind to ahead - weight the selection to choose ahead
-			which = RandomFloat( 0.0f, 1.0f ) * spawnAreaVector->Count();
-			break;
-		}
+        case ANYWHERE:
+            // areas are sorted from behind to ahead - weight the selection to choose ahead
+            which = RandomFloat( 0.0f, 1.0f ) * spawnAreaVector->Count();
+            break;
+        }
 
-		if ( which == spawnAreaVector->Count() )
-			--which;
+        if ( which == spawnAreaVector->Count() )
+            --which;
 
-		spawnArea = spawnAreaVector->Element( which );
+        spawnArea = spawnAreaVector->Element( which );
 
-		if ( ( farRaider->GetAbsOrigin() - spawnArea->GetCenter() ).IsLengthGreaterThan( tf_raid_mob_spawn_min_range.GetFloat() ) )
-		{
-			// well behaved spawn area
-			return spawnArea;
-		}
-	}
+        if ( ( farRaider->GetAbsOrigin() - spawnArea->GetCenter() ).IsLengthGreaterThan( tf_raid_mob_spawn_min_range.GetFloat() ) )
+        {
+            // well behaved spawn area
+            return spawnArea;
+        }
+    }
 
-	// return whatever we've found so far
-	return spawnArea;
+    // return whatever we've found so far
+    return spawnArea;
 }
 
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::SpawnMobs( CUtlVector< CTFNavArea * > *spawnAreaVector )
 {
-	if ( !tf_raid_spawn_mobs.GetBool() )
-		return;
+    if ( !tf_raid_spawn_mobs.GetBool() )
+        return;
 
-	if ( m_mobLifetimeTimer.HasStarted() )
-	{
-		if ( m_mobLifetimeTimer.IsElapsed() )
-		{
-			// time is up for this mob to spawn, clear the rest
-			DevMsg( "RAID: %3.2f: Mob spawn lifetime is up. Mob count remaining unspawned: %d\n", gpGlobals->curtime, m_mobCountRemaining );
-			m_mobLifetimeTimer.Invalidate();
-			m_mobCountRemaining = 0;
-			m_mobArea = NULL;
+    if ( m_mobLifetimeTimer.HasStarted() )
+    {
+        if ( m_mobLifetimeTimer.IsElapsed() )
+        {
+            // time is up for this mob to spawn, clear the rest
+            DevMsg( "RAID: %3.2f: Mob spawn lifetime is up. Mob count remaining unspawned: %d\n", gpGlobals->curtime, m_mobCountRemaining );
+            m_mobLifetimeTimer.Invalidate();
+            m_mobCountRemaining = 0;
+            m_mobArea = NULL;
 
-			// start next mob
-			m_mobSpawnTimer.Start( RandomFloat( tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
-		}
+            // start next mob
+            m_mobSpawnTimer.Start( RandomFloat( tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
+        }
 
-		// can't create another mob until this mob has expired
-		return;
-	}
+        // can't create another mob until this mob has expired
+        return;
+    }
 
-	if ( m_mobSpawnTimer.HasStarted() && m_mobSpawnTimer.IsElapsed() && spawnAreaVector && spawnAreaVector->Count() > 0 )
-	{
-		// chance of mob changes as we progress through the map
-		int mobChance;
-		float progressRatio = GetMaximumRaiderIncursionDistance() / GetIncursionDistanceAtEnd();
-		if ( progressRatio < 0.5f )
-		{
-			mobChance = tf_raid_spawn_mob_as_squad_chance_start.GetInt() + 2.0f * progressRatio * ( tf_raid_spawn_mob_as_squad_chance_halfway.GetInt() - tf_raid_spawn_mob_as_squad_chance_start.GetInt() );
-		}
-		else
-		{
-			mobChance = tf_raid_spawn_mob_as_squad_chance_halfway.GetInt() + 2.0f * ( progressRatio - 0.5f ) * ( tf_raid_spawn_mob_as_squad_chance_final.GetInt() - tf_raid_spawn_mob_as_squad_chance_halfway.GetInt() );
-		}
+    if ( m_mobSpawnTimer.HasStarted() && m_mobSpawnTimer.IsElapsed() && spawnAreaVector && spawnAreaVector->Count() > 0 )
+    {
+        // chance of mob changes as we progress through the map
+        int mobChance;
+        float progressRatio = GetMaximumRaiderIncursionDistance() / GetIncursionDistanceAtEnd();
+        if ( progressRatio < 0.5f )
+        {
+            mobChance = tf_raid_spawn_mob_as_squad_chance_start.GetInt() + 2.0f * progressRatio * ( tf_raid_spawn_mob_as_squad_chance_halfway.GetInt() - tf_raid_spawn_mob_as_squad_chance_start.GetInt() );
+        }
+        else
+        {
+            mobChance = tf_raid_spawn_mob_as_squad_chance_halfway.GetInt() + 2.0f * ( progressRatio - 0.5f ) * ( tf_raid_spawn_mob_as_squad_chance_final.GetInt() - tf_raid_spawn_mob_as_squad_chance_halfway.GetInt() );
+        }
 
-		if ( RandomInt( 1, 100 ) <= mobChance )
-		{
-			// this mob is a squad
-			CTFNavArea *spawnArea = SelectMobSpawn( spawnAreaVector, BEHIND ); // m_wasCapturingPoint ? ANYWHERE : BEHIND );
+        if ( RandomInt( 1, 100 ) <= mobChance )
+        {
+            // this mob is a squad
+            CTFNavArea *spawnArea = SelectMobSpawn( spawnAreaVector, BEHIND ); // m_wasCapturingPoint ? ANYWHERE : BEHIND );
 
-			if ( SpawnSquad( spawnArea ) )
-			{
-				StartMobTimer( RandomFloat( tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
-			}
-			else
-			{
-				// couldn't spawn - try again soon
-				StartMobTimer( 1.0f );
-				DevMsg( "RAID: %3.2f: No place to spawn Squad!\n", gpGlobals->curtime );
-			}
-			return;
-		}
+            if ( SpawnSquad( spawnArea ) )
+            {
+                StartMobTimer( RandomFloat( tf_raid_mob_spawn_min_interval.GetFloat(), tf_raid_mob_spawn_max_interval.GetFloat() ) );
+            }
+            else
+            {
+                // couldn't spawn - try again soon
+                StartMobTimer( 1.0f );
+                DevMsg( "RAID: %3.2f: No place to spawn Squad!\n", gpGlobals->curtime );
+            }
+            return;
+        }
 
-		// time to throw in a mob rush
-		m_mobArea = SelectMobSpawn( spawnAreaVector, m_wasCapturingPoint ? ANYWHERE : BEHIND );
-		if ( m_mobArea )
-		{
-			const int mobClassCount = 4;
-			static int mobClassList[ mobClassCount ] = 
-			{
-				TF_CLASS_SCOUT,
-				TF_CLASS_HEAVYWEAPONS,
-				TF_CLASS_PYRO,
-				TF_CLASS_SPY,
-			};
+        // time to throw in a mob rush
+        m_mobArea = SelectMobSpawn( spawnAreaVector, m_wasCapturingPoint ? ANYWHERE : BEHIND );
+        if ( m_mobArea )
+        {
+            const int mobClassCount = 4;
+            static int mobClassList[ mobClassCount ] =
+            {
+                TF_CLASS_SCOUT,
+                TF_CLASS_HEAVYWEAPONS,
+                TF_CLASS_PYRO,
+                TF_CLASS_SPY,
+            };
 
-			m_mobLifetimeTimer.Start( 7.0f );
-			m_mobCountRemaining = tf_raid_mob_spawn_count.GetInt();
-			m_mobClass = mobClassList[ RandomInt( 0, mobClassCount-1 ) ];
-			DevMsg( "RAID: %3.2f: <<<< Creating mob! >>>>\n", gpGlobals->curtime );
+            m_mobLifetimeTimer.Start( 7.0f );
+            m_mobCountRemaining = tf_raid_mob_spawn_count.GetInt();
+            m_mobClass = mobClassList[ RandomInt( 0, mobClassCount-1 ) ];
+            DevMsg( "RAID: %3.2f: <<<< Creating mob! >>>>\n", gpGlobals->curtime );
 
-			IGameEvent* event = gameeventmanager->CreateEvent( "raid_spawn_mob" );
-			if ( event )
-			{
-				gameeventmanager->FireEvent( event );
-			}
-		}
-		else
-		{
-			// couldn't spawn - try again soon
-			StartMobTimer( 1.0f );
-			DevMsg( "RAID: %3.2f: No place to spawn Mob!\n", gpGlobals->curtime );
-		}
-	}
+            IGameEvent* event = gameeventmanager->CreateEvent( "raid_spawn_mob" );
+            if ( event )
+            {
+                gameeventmanager->FireEvent( event );
+            }
+        }
+        else
+        {
+            // couldn't spawn - try again soon
+            StartMobTimer( 1.0f );
+            DevMsg( "RAID: %3.2f: No place to spawn Mob!\n", gpGlobals->curtime );
+        }
+    }
 }
 #endif  // 0
 
 //--------------------------------------------------------------------------------------------------------
 class CNearbyHiddenScan : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CNearbyHiddenScan( void )
     {
         m_hiddenArea = NULL;
@@ -1066,138 +1066,138 @@ CTFNavArea *CRaidLogic::SelectRaidSentryArea( void ) const
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::SpawnEngineers( void )
 {
-	if ( !tf_raid_spawn_engineers.GetBool() || !m_engineerSpawnTimer.IsElapsed() )
-		return;
+    if ( !tf_raid_spawn_engineers.GetBool() || !m_engineerSpawnTimer.IsElapsed() )
+        return;
 
-	m_engineerSpawnTimer.Start( tf_raid_engineer_spawn_interval.GetFloat() );
+    m_engineerSpawnTimer.Start( tf_raid_engineer_spawn_interval.GetFloat() );
 
-	int engineerCount = m_engineerCount;
+    int engineerCount = m_engineerCount;
 
-	while( engineerCount < tf_raid_max_defense_engineers.GetInt() )
-	{
-		// parent of sentry area is hidden area where engineer spawns
-		CTFNavArea *sentryArea = SelectRaidSentryArea();
+    while( engineerCount < tf_raid_max_defense_engineers.GetInt() )
+    {
+        // parent of sentry area is hidden area where engineer spawns
+        CTFNavArea *sentryArea = SelectRaidSentryArea();
 
-		if ( !sentryArea )
-		{
-			// no available areas
-			break;
-		}
+        if ( !sentryArea )
+        {
+            // no available areas
+            break;
+        }
 
-		const int maxTries = 10;
-		int tryCount;
-		for( tryCount=0; tryCount<maxTries; ++tryCount )
-		{
-			CTFBot *bot = SpawnRedTFBot( TF_CLASS_ENGINEER, sentryArea->GetParent()->GetCenter() + Vector( 0, 0, RandomFloat( 0.0f, 30.0f ) ) );
-			if ( bot )
-			{
-				// engineer bot will move to the sentry area and build
-				bot->SetHomeArea( sentryArea );
-				++engineerCount;
-				DevMsg( "RAID: %3.2f: Spawned engineer", gpGlobals->curtime );
-				break;
-			}
-		}
+        const int maxTries = 10;
+        int tryCount;
+        for( tryCount=0; tryCount<maxTries; ++tryCount )
+        {
+            CTFBot *bot = SpawnRedTFBot( TF_CLASS_ENGINEER, sentryArea->GetParent()->GetCenter() + Vector( 0, 0, RandomFloat( 0.0f, 30.0f ) ) );
+            if ( bot )
+            {
+                // engineer bot will move to the sentry area and build
+                bot->SetHomeArea( sentryArea );
+                ++engineerCount;
+                DevMsg( "RAID: %3.2f: Spawned engineer", gpGlobals->curtime );
+                break;
+            }
+        }
 
-		if ( tryCount == maxTries )
-		{
-			DevMsg( "RAID: %3.2f: Can't spawn engineer", gpGlobals->curtime );
-			break;
-		}
-	}
+        if ( tryCount == maxTries )
+        {
+            DevMsg( "RAID: %3.2f: Can't spawn engineer", gpGlobals->curtime );
+            break;
+        }
+    }
 }
 
 
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::SpawnSpecials( CUtlVector< CTFNavArea * > *spawnAheadVector, CUtlVector< CTFNavArea * > *spawnAnywhereVector )
 {
-	// spawn specials
-	if ( tf_raid_spawn_specials.GetBool() && m_specialSpawnTimer.HasStarted() && m_specialSpawnTimer.IsElapsed() )
-	{
-		// time to add in a "special"
-		m_specialSpawnTimer.Start( RandomFloat( tf_raid_special_spawn_min_interval.GetFloat(), tf_raid_special_spawn_max_interval.GetFloat() ) );
+    // spawn specials
+    if ( tf_raid_spawn_specials.GetBool() && m_specialSpawnTimer.HasStarted() && m_specialSpawnTimer.IsElapsed() )
+    {
+        // time to add in a "special"
+        m_specialSpawnTimer.Start( RandomFloat( tf_raid_special_spawn_min_interval.GetFloat(), tf_raid_special_spawn_max_interval.GetFloat() ) );
 
-		DevMsg( "RAID: %3.2f: <<<< Spawning Special >>>>\n", gpGlobals->curtime );
+        DevMsg( "RAID: %3.2f: <<<< Spawning Special >>>>\n", gpGlobals->curtime );
 
-		const int specialClassCount = 8;
-		int availableSpecialClassList[ specialClassCount ];
-		int availableCount = 0;
+        const int specialClassCount = 8;
+        int availableSpecialClassList[ specialClassCount ];
+        int availableCount = 0;
 
-		if ( m_sniperCount < tf_raid_max_defense_snipers.GetInt() )
-		{
-			// increased chance of a sniper
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_SNIPER;
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_SNIPER;
-		}
+        if ( m_sniperCount < tf_raid_max_defense_snipers.GetInt() )
+        {
+            // increased chance of a sniper
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_SNIPER;
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_SNIPER;
+        }
 
-		if ( m_demomanCount < tf_raid_max_defense_demomen.GetInt() )
-		{
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_DEMOMAN;
-		}
+        if ( m_demomanCount < tf_raid_max_defense_demomen.GetInt() )
+        {
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_DEMOMAN;
+        }
 
-		if ( m_heavyCount < tf_raid_max_defense_heavies.GetInt() )
-		{
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_HEAVYWEAPONS;
-		}
+        if ( m_heavyCount < tf_raid_max_defense_heavies.GetInt() )
+        {
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_HEAVYWEAPONS;
+        }
 
-		if ( m_soldierCount < tf_raid_max_defense_soldiers.GetInt() )
-		{
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_SOLDIER;
-		}
+        if ( m_soldierCount < tf_raid_max_defense_soldiers.GetInt() )
+        {
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_SOLDIER;
+        }
 
-		if ( m_pyroCount < tf_raid_max_defense_pyros.GetInt() )
-		{
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_PYRO;
-		}
+        if ( m_pyroCount < tf_raid_max_defense_pyros.GetInt() )
+        {
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_PYRO;
+        }
 
-		if ( m_spyCount < tf_raid_max_defense_spies.GetInt() )
-		{
-			availableSpecialClassList[ availableCount++ ] = TF_CLASS_SPY;
-		}
+        if ( m_spyCount < tf_raid_max_defense_spies.GetInt() )
+        {
+            availableSpecialClassList[ availableCount++ ] = TF_CLASS_SPY;
+        }
 
-		if ( availableCount == 0 )
-		{
-			// nothing to spawn
-			DevMsg( "RAID: %3.2f: All specials in play already.\n", gpGlobals->curtime );
-			return;
-		}
+        if ( availableCount == 0 )
+        {
+            // nothing to spawn
+            DevMsg( "RAID: %3.2f: All specials in play already.\n", gpGlobals->curtime );
+            return;
+        }
 
-		int whichClass = availableSpecialClassList[ RandomInt( 0, availableCount-1 ) ];
+        int whichClass = availableSpecialClassList[ RandomInt( 0, availableCount-1 ) ];
 
-		if ( whichClass == TF_CLASS_SNIPER )
-		{
-			CTFNavArea *homeArea = FindSniperSpawn();
-			if ( homeArea )
-			{
-				// actual spawn-in, hidden area is this area's parent
-				for( int tryCount=0; tryCount<10; ++tryCount )
-				{
-					CTFBot *bot = SpawnRedTFBot( whichClass, homeArea->GetParent()->GetCenter() + Vector( 0, 0, RandomFloat( 0.0f, 30.0f ) ) );
-					if ( bot )
-					{
-						// Bot will move to his home area to do his business
-						bot->SetHomeArea( homeArea );
-						return;
-					}					
-				}
-			}
-		}
-		else if ( spawnAheadVector && spawnAheadVector->Count() > 0 )
-		{
-			CTFNavArea *where = spawnAheadVector->Element( RandomInt( 0, spawnAheadVector->Count()-1 ) );
+        if ( whichClass == TF_CLASS_SNIPER )
+        {
+            CTFNavArea *homeArea = FindSniperSpawn();
+            if ( homeArea )
+            {
+                // actual spawn-in, hidden area is this area's parent
+                for( int tryCount=0; tryCount<10; ++tryCount )
+                {
+                    CTFBot *bot = SpawnRedTFBot( whichClass, homeArea->GetParent()->GetCenter() + Vector( 0, 0, RandomFloat( 0.0f, 30.0f ) ) );
+                    if ( bot )
+                    {
+                        // Bot will move to his home area to do his business
+                        bot->SetHomeArea( homeArea );
+                        return;
+                    }
+                }
+            }
+        }
+        else if ( spawnAheadVector && spawnAheadVector->Count() > 0 )
+        {
+            CTFNavArea *where = spawnAheadVector->Element( RandomInt( 0, spawnAheadVector->Count()-1 ) );
 
-			CTFBot *bot = SpawnRedTFBot( whichClass, where->GetCenter() + Vector( 0, 0, StepHeight ) );
-			if ( bot )
-			{
-				bot->SetHomeArea( where );
-				return;
-			}
-		}
+            CTFBot *bot = SpawnRedTFBot( whichClass, where->GetCenter() + Vector( 0, 0, StepHeight ) );
+            if ( bot )
+            {
+                bot->SetHomeArea( where );
+                return;
+            }
+        }
 
-		// failed to create special - try again soon
-		m_specialSpawnTimer.Start( RandomFloat( 1.0f, 2.0f ) );
-		DevMsg( "RAID: %3.2f: Failed to spawn Special.\n", gpGlobals->curtime );
-	}
+        // failed to create special - try again soon
+        m_specialSpawnTimer.Start( RandomFloat( 1.0f, 2.0f ) );
+        DevMsg( "RAID: %3.2f: Failed to spawn Special.\n", gpGlobals->curtime );
+    }
 }
 #endif  // 0
 
@@ -1231,7 +1231,7 @@ void CRaidLogic::CullObsoleteEnemies( float minIncursion, float maxIncursion )
         else if ( !defender->IsMoving() || defender->GetLocomotionInterface()->IsStuck() )
         {
             if ( defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) < cullMinIncursionDistance ||
-                 defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) > cullMaxIncursionDistance )
+                defenderArea->GetIncursionDistance( TF_TEAM_BLUE ) > cullMaxIncursionDistance )
             {
                 if ( Unspawn( defender ) )
                 {
@@ -1282,7 +1282,7 @@ void CRaidLogic::CullObsoleteEnemies( float minIncursion, float maxIncursion )
 //--------------------------------------------------------------------------------------------------------
 class CShowEscapeRoute : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     virtual bool operator()( CNavArea *baseArea, CNavArea *priorArea, float travelDistanceSoFar )
     {
         CTFNavArea *area = ( CTFNavArea * )baseArea;
@@ -1718,47 +1718,47 @@ void CRaidLogic::Update( void )
         return;
 
 #if 0
-	// populate wanderers
-	CPopulator populator( maxIncursion, tf_raid_max_wanderers.GetInt() - m_wandererCount );
-	SearchSurroundingAreas( m_farthestAlongRaider->GetLastKnownArea(), populator );
+    // populate wanderers
+    CPopulator populator( maxIncursion, tf_raid_max_wanderers.GetInt() - m_wandererCount );
+    SearchSurroundingAreas( m_farthestAlongRaider->GetLastKnownArea(), populator );
 
-	// if raiders are capturing a point, spawn mobs at a faster rate
-	if ( isCapturingPoint && m_mobSpawnTimer.GetRemainingTime() > tf_raid_capture_mob_interval.GetFloat() )
-	{
-		StartMobTimer( tf_raid_capture_mob_interval.GetFloat() - 0.1f );
-	}
+    // if raiders are capturing a point, spawn mobs at a faster rate
+    if ( isCapturingPoint && m_mobSpawnTimer.GetRemainingTime() > tf_raid_capture_mob_interval.GetFloat() )
+    {
+        StartMobTimer( tf_raid_capture_mob_interval.GetFloat() - 0.1f );
+    }
 
-	SpawnMobs( &populator.m_hiddenAreaVector );
-	SpawnSpecials( &populator.m_hiddenAreaAheadVector, &populator.m_hiddenAreaVector );
-	SpawnEngineers();
+    SpawnMobs( &populator.m_hiddenAreaVector );
+    SpawnSpecials( &populator.m_hiddenAreaAheadVector, &populator.m_hiddenAreaVector );
+    SpawnEngineers();
 
 
-	// emit mob
-	if ( IsMobSpawning() && m_mobCountRemaining && m_mobArea && tf_raid_spawn_mobs.GetBool() )
-	{
-		if ( m_mobArea->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
-		{
-			// the mob is trying to spawn from an area that doesn't have room to spawn in bots, pick another
-			DevMsg( "RAID: %3.2f: Mob attempting to spawn where there isn't room - retrying\n", gpGlobals->curtime );
-			m_mobArea = SelectMobSpawn( &populator.m_hiddenAreaVector, BEHIND );
-			if ( !m_mobArea )
-			{
-				DevMsg( "RAID: %3.2f: Can't find a mob spawn area!\n", gpGlobals->curtime );
+    // emit mob
+    if ( IsMobSpawning() && m_mobCountRemaining && m_mobArea && tf_raid_spawn_mobs.GetBool() )
+    {
+        if ( m_mobArea->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
+        {
+            // the mob is trying to spawn from an area that doesn't have room to spawn in bots, pick another
+            DevMsg( "RAID: %3.2f: Mob attempting to spawn where there isn't room - retrying\n", gpGlobals->curtime );
+            m_mobArea = SelectMobSpawn( &populator.m_hiddenAreaVector, BEHIND );
+            if ( !m_mobArea )
+            {
+                DevMsg( "RAID: %3.2f: Can't find a mob spawn area!\n", gpGlobals->curtime );
 
-				// try again soon
-				StartMobTimer( 2.0f );
-			}
-		}
+                // try again soon
+                StartMobTimer( 2.0f );
+            }
+        }
 
-		if ( m_mobArea )
-		{
-			if ( SpawnRedTFBot( m_mobClass, m_mobArea->GetCenter() + Vector( 0, 0, StepHeight ), IS_MOB_RUSHER ) )
-			{
-				--m_mobCountRemaining;
-				DevMsg( "RAID: %3.2f: Spawned mob member, %d to go\n", gpGlobals->curtime, m_mobCountRemaining );
-			}
-		}
-	}
+        if ( m_mobArea )
+        {
+            if ( SpawnRedTFBot( m_mobClass, m_mobArea->GetCenter() + Vector( 0, 0, StepHeight ), IS_MOB_RUSHER ) )
+            {
+                --m_mobCountRemaining;
+                DevMsg( "RAID: %3.2f: Spawned mob member, %d to go\n", gpGlobals->curtime, m_mobCountRemaining );
+            }
+        }
+    }
 #endif  // 0
 
     // block/unblock capture point gate doors
@@ -1833,14 +1833,14 @@ CTFNavArea *CRaidLogic::FindEarliestVisibleEscapeRouteAreaNearTeam( CTFNavArea *
             }
 
             /*
-                  float rangeSq = ( viewArea->GetCenter() - area->GetCenter() ).LengthSqr();
+                float rangeSq = ( viewArea->GetCenter() - area->GetCenter() ).LengthSqr();
 
-                  if ( firstAreaIncursion > rangeSq )
-                  {
+                if ( firstAreaIncursion > rangeSq )
+                {
                     // closest
                     firstAreaIncursion = rangeSq;
                     firstArea = area;
-                  }
+                }
             */
 
             if ( firstAreaIncursion > areaIncursion )
@@ -2068,7 +2068,7 @@ CBaseEntity *CRaidLogic::GetRescueRespawn( void ) const
 //--------------------------------------------------------------------------------------------------------
 class CMarkEscapeRoute
 {
-   public:
+    public:
     CMarkEscapeRoute( CUtlVector< CTFNavArea * > *escapeRouteVector )
     {
         m_escapeRouteVector = escapeRouteVector;
@@ -2091,7 +2091,7 @@ class CMarkEscapeRoute
 //--------------------------------------------------------------------------------------------------------
 class CMarkEscapeRouteVisible
 {
-   public:
+    public:
     bool operator()( CNavArea *baseArea )
     {
         CTFNavArea *area = ( CTFNavArea * )baseArea;
@@ -2134,8 +2134,8 @@ void CRaidLogic::BuildEscapeRoute( void )
         float closeRangeSq = FLT_MAX;
 
         for ( pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) );
-              pathNode;
-              pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) ) )
+            pathNode;
+            pathNode = dynamic_cast< CPathTrack * >( gEntList.FindEntityByClassname( pathNode, "path_track" ) ) )
         {
             float rangeSq = ( pathNode->GetAbsOrigin() - safeRoomPos ).LengthSqr();
 

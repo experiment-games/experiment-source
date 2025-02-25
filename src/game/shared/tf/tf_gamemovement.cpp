@@ -93,7 +93,7 @@ extern ConVar mp_tournament_readymode_countdown;
 //-----------------------------------------------------------------------------
 class CTFGameMovement : public CGameMovement
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGameMovement, CGameMovement );
 
     CTFGameMovement();
@@ -131,11 +131,11 @@ class CTFGameMovement : public CGameMovement
 
     virtual void HandleDuckingSpeedCrop( void );
 
-   protected:
+    protected:
     virtual void CheckWaterJump( void );
     void FullWalkMoveUnderwater();
 
-   private:
+    private:
     bool CheckWaterJumpButton( void );
     void AirDash( void );
     void PreventBunnyJumping();
@@ -144,16 +144,16 @@ class CTFGameMovement : public CGameMovement
 
     // Ducking.
 #if 0
-	// New duck tests!
-	void			HandleDuck( int nButtonsPressed );
-	void			HandleUnDuck( int nButtonsReleased );
-	void			TestDuck();
+    // New duck tests!
+    void			HandleDuck( int nButtonsPressed );
+    void			HandleUnDuck( int nButtonsReleased );
+    void			TestDuck();
 #endif
     void DuckOverrides();
     void OnDuck( int nButtonsPressed );
     void OnUnDuck( int nButtonsReleased );
 
-   private:
+    private:
     Vector m_vecWaterPoint;
     CTFPlayer *m_pTFPlayer;
     bool m_isPassingThroughEnemies;
@@ -648,9 +648,9 @@ bool CTFGameMovement::TauntMove( void )
 
             // No need to read buttons explicitly anymore, since that input is already included in m_flForwardMove
             /*	if ( mv->m_nButtons & IN_FORWARD )
-              flMoveDir += 1.f;
+            flMoveDir += 1.f;
             if ( mv->m_nButtons & IN_BACK )
-              flMoveDir += -1.f;	  */
+            flMoveDir += -1.f;	  */
 
             // Clamp to [0,1], just in case.
             if ( flMoveDir > 1.0f )
@@ -852,7 +852,7 @@ void CTFGameMovement::VehicleMove( void )
 
     m_pTFPlayer->SetCurrentTauntMoveSpeed( flTargetMoveSpeed );
     float flLeanAccel = flTargetSpeed > flSmoothMoveSpeed ? flAcceleration : flTargetSpeed < flSmoothMoveSpeed ? -flAcceleration
-                                                                                                               : 0.f;
+                                                                                                                : 0.f;
     flLeanAccel = Sign( m_pTFPlayer->GetCurrentTauntMoveSpeed() ) != Sign( flTargetSpeed ) ? -flLeanAccel : flLeanAccel;
     m_pTFPlayer->m_PlayerAnimState->Vehicle_LeanAccel( flLeanAccel );
 
@@ -1026,8 +1026,8 @@ void CTFGameMovement::AirDash( void )
 
     // Find the direction,velocity in the x,y plane.
     Vector vecWishDirection( ( ( vecForward.x * flForwardMove ) + ( vecRight.x * flSideMove ) ),
-                             ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
-                             0.0f );
+                            ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
+                            0.0f );
 
     // Update the velocity on the scout.
     mv->m_vecVelocity = vecWishDirection;
@@ -1294,10 +1294,10 @@ bool CTFGameMovement::CheckJumpButton()
     }
     /*
     #ifdef STAGING_ONLY
-      if ( m_pTFPlayer->m_Shared.InCond( TF_COND_SPACE_GRAVITY ) )
-      {
+    if ( m_pTFPlayer->m_Shared.InCond( TF_COND_SPACE_GRAVITY ) )
+    {
         flJumpMod *= tf_space_gravity_jump_multipler.GetFloat();
-      }
+    }
 
     #endif // STAGING_ONLY
     */
@@ -1451,8 +1451,8 @@ bool CTFGameMovement::CheckWater( void )
     Vector vecPlayerMax = GetPlayerMaxs();
 
     Vector vecPoint( ( mv->GetAbsOrigin().x + ( vecPlayerMin.x + vecPlayerMax.x ) * 0.5f ),
-                     ( mv->GetAbsOrigin().y + ( vecPlayerMin.y + vecPlayerMax.y ) * 0.5f ),
-                     ( mv->GetAbsOrigin().z + vecPlayerMin.z + 1 ) );
+                    ( mv->GetAbsOrigin().y + ( vecPlayerMin.y + vecPlayerMax.y ) * 0.5f ),
+                    ( mv->GetAbsOrigin().z + vecPlayerMin.z + 1 ) );
 
     // Assume that we are not in water at all.
     int wl = WL_NotInWater;
@@ -1673,44 +1673,44 @@ void CTFGameMovement::WaterMove( void )
         if ( !pm.startsolid && !pm.allsolid )
         {
 #if 0
-			float stepDist = pm.endpos.z - mv->GetAbsOrigin().z;
-			mv->m_outStepHeight += stepDist;
-			// walked up the step, so just keep result and exit
+            float stepDist = pm.endpos.z - mv->GetAbsOrigin().z;
+            mv->m_outStepHeight += stepDist;
+            // walked up the step, so just keep result and exit
 
-			Vector vecNewWaterPoint;
-			VectorCopy( m_vecWaterPoint, vecNewWaterPoint );
-			vecNewWaterPoint.z += ( dest.z - mv->GetAbsOrigin().z );
-			bool bOutOfWater = !( enginetrace->GetPointContents( vecNewWaterPoint ) & MASK_WATER );
-			if ( bOutOfWater && ( mv->m_vecVelocity.z > 0.0f ) && ( pm.fraction == 1.0f )  )
-			{
-				// Check the waist level water positions.
-				trace_t traceWater;
-				UTIL_TraceLine( vecNewWaterPoint, m_vecWaterPoint, CONTENTS_WATER, player, COLLISION_GROUP_NONE, &traceWater );
-				if( traceWater.fraction < 1.0f )
-				{
-					float flFraction = 1.0f - traceWater.fraction;
+            Vector vecNewWaterPoint;
+            VectorCopy( m_vecWaterPoint, vecNewWaterPoint );
+            vecNewWaterPoint.z += ( dest.z - mv->GetAbsOrigin().z );
+            bool bOutOfWater = !( enginetrace->GetPointContents( vecNewWaterPoint ) & MASK_WATER );
+            if ( bOutOfWater && ( mv->m_vecVelocity.z > 0.0f ) && ( pm.fraction == 1.0f )  )
+            {
+                // Check the waist level water positions.
+                trace_t traceWater;
+                UTIL_TraceLine( vecNewWaterPoint, m_vecWaterPoint, CONTENTS_WATER, player, COLLISION_GROUP_NONE, &traceWater );
+                if( traceWater.fraction < 1.0f )
+                {
+                    float flFraction = 1.0f - traceWater.fraction;
 
 //					Vector vecSegment;
 //					VectorSubtract( mv->GetAbsOrigin(), dest, vecSegment );
 //					VectorMA( mv->GetAbsOrigin(), flFraction, vecSegment, mv->GetAbsOrigin() );
-					float flZDiff = dest.z - mv->GetAbsOrigin().z;
-					float flSetZ = mv->GetAbsOrigin().z + ( flFraction * flZDiff );
-					flSetZ -= 0.0325f;
+                    float flZDiff = dest.z - mv->GetAbsOrigin().z;
+                    float flSetZ = mv->GetAbsOrigin().z + ( flFraction * flZDiff );
+                    flSetZ -= 0.0325f;
 
-					VectorCopy (pm.endpos, mv->GetAbsOrigin());
-					mv->GetAbsOrigin().z = flSetZ;
-					VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
-					mv->m_vecVelocity.z = 0.0f;
-				}
+                    VectorCopy (pm.endpos, mv->GetAbsOrigin());
+                    mv->GetAbsOrigin().z = flSetZ;
+                    VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
+                    mv->m_vecVelocity.z = 0.0f;
+                }
 
-			}
-			else
-			{
-				VectorCopy (pm.endpos, mv->GetAbsOrigin());
-				VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
-			}
+            }
+            else
+            {
+                VectorCopy (pm.endpos, mv->GetAbsOrigin());
+                VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
+            }
 
-			return;
+            return;
 #endif
             float stepDist = pm.endpos.z - mv->GetAbsOrigin().z;
             mv->m_outStepHeight += stepDist;
@@ -1757,8 +1757,8 @@ void CTFGameMovement::WalkMove( void )
 
     // Find the direction,velocity in the x,y plane.
     Vector vecWishDirection( ( ( vecForward.x * flForwardMove ) + ( vecRight.x * flSideMove ) ),
-                             ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
-                             0.0f );
+                            ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
+                            0.0f );
 
     // Calculate the speed and direction of movement, then clamp the speed.
     float flWishSpeed = VectorNormalize( vecWishDirection );
@@ -1795,8 +1795,8 @@ void CTFGameMovement::WalkMove( void )
     Assert( mv->m_vecVelocity.z == 0.0f );
 
     float flAdjustedMaxSpeed = /* ( m_pTFPlayer->m_Shared.GetAmountStunned( TF_STUN_MOVEMENT ) ) ?
-      mv->m_flMaxSpeed *= ( 1.f - m_pTFPlayer->m_Shared.GetAmountStunned( TF_STUN_MOVEMENT ) ) :
-      */ mv->m_flMaxSpeed;
+    mv->m_flMaxSpeed *= ( 1.f - m_pTFPlayer->m_Shared.GetAmountStunned( TF_STUN_MOVEMENT ) ) :
+    */ mv->m_flMaxSpeed;
 
     // Clamp the players speed in x,y.
     float flNewSpeed = VectorLength( mv->m_vecVelocity );
@@ -1903,7 +1903,7 @@ void CTFGameMovement::WalkMove( void )
         // Track how far we moved (if we're a Scout or an Engineer carrying a building).
         CTFPlayer *pTFPlayer = ToTFPlayer( player );
         if ( pTFPlayer->IsPlayerClass( TF_CLASS_SCOUT ) ||
-             ( pTFPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) && pTFPlayer->m_Shared.IsCarryingObject() ) )
+            ( pTFPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) && pTFPlayer->m_Shared.IsCarryingObject() ) )
         {
             float fInchesToMeters = 0.0254f;
             float fWorldScale = 0.25;
@@ -1938,19 +1938,19 @@ void CTFGameMovement::WalkMove( void )
     // StayOnGround();
 
 #if 0
-	// Debugging!!!
-	Vector vecTestVelocity = mv->m_vecVelocity;
-	vecTestVelocity.z = 0.0f;
-	float flTestSpeed = VectorLength( vecTestVelocity );
-	if ( baseVelocity.IsZero() && ( flTestSpeed > ( flAdjustedMaxSpeed + 1.0f ) ) )
-	{
-		Msg( "Step Max Speed < %f\n", flTestSpeed );
-	}
+    // Debugging!!!
+    Vector vecTestVelocity = mv->m_vecVelocity;
+    vecTestVelocity.z = 0.0f;
+    float flTestSpeed = VectorLength( vecTestVelocity );
+    if ( baseVelocity.IsZero() && ( flTestSpeed > ( flAdjustedMaxSpeed + 1.0f ) ) )
+    {
+        Msg( "Step Max Speed < %f\n", flTestSpeed );
+    }
 
-	if ( tf_showspeed.GetBool() )
-	{
-		Msg( "Speed=%f\n", flTestSpeed );
-	}
+    if ( tf_showspeed.GetBool() )
+    {
+        Msg( "Speed=%f\n", flTestSpeed );
+    }
 
 #endif
 }
@@ -2053,7 +2053,7 @@ float CTFGameMovement::GetAirSpeedCap( void )
         #ifdef STAGING_ONLY
             if ( m_pTFPlayer->m_Shared.InCond( TF_COND_SPACE_GRAVITY ) )
             {
-              flCap *= tf_space_aircontrol.GetFloat();
+            flCap *= tf_space_aircontrol.GetFloat();
             }
         #endif
         */
@@ -2151,10 +2151,10 @@ void CTFGameMovement::AirMove( void )
     }
     /*
     #ifdef STAGING_ONLY
-      if ( m_pTFPlayer->m_Shared.InCond( TF_COND_SPACE_GRAVITY ) )
-      {
+    if ( m_pTFPlayer->m_Shared.InCond( TF_COND_SPACE_GRAVITY ) )
+    {
         flAirAccel *= tf_space_aircontrol.GetFloat();
-      }
+    }
     #endif
     */
     AirAccelerate( wishdir, wishspeed, flAirAccel );
@@ -2197,7 +2197,7 @@ extern void TracePlayerBBoxForGround( const Vector &start, const Vector &end, co
 //-----------------------------------------------------------------------------
 class CTraceFilterObject : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterObject, CTraceFilterSimple );
 
     CTraceFilterObject( const IHandleEntity *passentity, int collisionGroup );
@@ -2364,7 +2364,7 @@ void CTFGameMovement::CategorizePosition( void )
     bool bUnderwater = ( player->GetWaterLevel() >= WL_Eyes );
     bool bMoveToEndPos = false;
     if ( player->GetMoveType() == MOVETYPE_WALK &&
-         player->GetGroundEntity() != NULL && !bUnderwater )
+        player->GetGroundEntity() != NULL && !bUnderwater )
     {
         // if walking and still think we're on ground, we'll extend trace down by stepsize so we don't bounce down slopes
         vecEndPos.z -= player->GetStepSize();
@@ -2416,7 +2416,7 @@ void CTFGameMovement::CategorizePosition( void )
             // Too steep.
             bInAir = true;
             if ( ( mv->m_vecVelocity.z > 0.0f ) &&
-                 ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
+                ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
             {
                 player->m_surfaceFriction = 0.25f;
             }
@@ -2426,9 +2426,9 @@ void CTFGameMovement::CategorizePosition( void )
     {
         // YWB:  This logic block essentially lifted from StayOnGround implementation
         if ( bMoveToEndPos &&
-             !trace.startsolid &&      // not sure we need this check as fraction would == 0.0f?
-             trace.fraction > 0.0f &&  // must go somewhere
-             trace.fraction < 1.0f )   // must hit something
+            !trace.startsolid &&      // not sure we need this check as fraction would == 0.0f?
+            trace.fraction > 0.0f &&  // must go somewhere
+            trace.fraction < 1.0f )   // must hit something
         {
             float flDelta = fabs( mv->GetAbsOrigin().z - trace.endpos.z );
             // HACK HACK:  The real problem is that trace returning that strange value
@@ -2765,7 +2765,7 @@ void CTFGameMovement::FullTossMove( void )
     if ( player->GetGroundEntity() != NULL )
     {
         if ( VectorCompare( player->GetBaseVelocity(), vec3_origin ) &&
-             VectorCompare( mv->m_vecVelocity, vec3_origin ) )
+            VectorCompare( mv->m_vecVelocity, vec3_origin ) )
             return;
     }
 
@@ -2855,8 +2855,8 @@ void CTFGameMovement::StepMove( Vector &vecDestination, trace_t &trace )
 
         // If we are not on the standable ground any more or going the "high road" didn't move us at all, then we'll also want to check the "low road"
         if ( ( trace.fraction != 1.0f &&
-               trace.plane.normal[2] < 0.7 ) ||
-             VectorCompare( mv->GetAbsOrigin(), vecPos ) )
+                trace.plane.normal[2] < 0.7 ) ||
+            VectorCompare( mv->GetAbsOrigin(), vecPos ) )
         {
             bLowRoad = true;
             bUpRoad = false;
@@ -2969,7 +2969,7 @@ void CTFGameMovement::PlayerRoughLandingEffects( float fvol )
             // No impact effects if we're in space low-grav
             if ( m_pTFPlayer->m_Shared.InCond( TF_COND_SPACE_GRAVITY  ) )
             {
-              return;
+            return;
             }
         #endif // STAGING_ONLY
         */
@@ -2995,168 +2995,168 @@ void CTFGameMovement::PlayerRoughLandingEffects( float fvol )
 #if 0
 // Not being used currently - part of TestDuck!
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::HandleDuck( int nButtonsPressed )
 {
-	// XBOX SERVER ONLY
+    // XBOX SERVER ONLY
 #if !defined( CLIENT_DLL )
-	if ( IsX360() && nButtonsPressed & IN_DUCK )
-	{
-		// Hinting logic
-		if ( player->GetToggledDuckState() && player->m_nNumCrouches < NUM_CROUCH_HINTS )
-		{
-			UTIL_HudHintText( player, "#Valve_Hint_Crouch" );
-			player->m_nNumCrouches++;
-		}
-	}
+    if ( IsX360() && nButtonsPressed & IN_DUCK )
+    {
+        // Hinting logic
+        if ( player->GetToggledDuckState() && player->m_nNumCrouches < NUM_CROUCH_HINTS )
+        {
+            UTIL_HudHintText( player, "#Valve_Hint_Crouch" );
+            player->m_nNumCrouches++;
+        }
+    }
 #endif
 
-	bool bInAir = ( player->GetGroundEntity() == NULL );
-	bool bInDuck = ( player->GetFlags() & FL_DUCKING ) ? true : false;
+    bool bInAir = ( player->GetGroundEntity() == NULL );
+    bool bInDuck = ( player->GetFlags() & FL_DUCKING ) ? true : false;
 
-	// Starting a duck.
-	if ( ( nButtonsPressed & IN_DUCK ) && !bInDuck )
-	{
-		if ( !player->m_Local.m_bDucking )
-		{
-			player->m_Local.m_flDucktime = TIME_TO_DUCK_MS;
-			player->m_Local.m_bDucking = true;
-		}
-		else
-		{
-			// Find unduck percentage and calcluate the duck time.
-			float flPercentage = player->m_Local.m_flDucktime /  TIME_TO_UNDUCK_MS;
-			player->m_Local.m_flDucktime = TIME_TO_DUCK_MS * ( 1.0f - flPercentage );
-		}
+    // Starting a duck.
+    if ( ( nButtonsPressed & IN_DUCK ) && !bInDuck )
+    {
+        if ( !player->m_Local.m_bDucking )
+        {
+            player->m_Local.m_flDucktime = TIME_TO_DUCK_MS;
+            player->m_Local.m_bDucking = true;
+        }
+        else
+        {
+            // Find unduck percentage and calcluate the duck time.
+            float flPercentage = player->m_Local.m_flDucktime /  TIME_TO_UNDUCK_MS;
+            player->m_Local.m_flDucktime = TIME_TO_DUCK_MS * ( 1.0f - flPercentage );
+        }
 
-		if ( m_pTFPlayer->m_Shared.GetAirDash() > 0 )
-		{
-			m_pTFPlayer->DoAnimationEvent( PLAYERANIMEVENT_DOUBLEJUMP_CROUCH );
-		}
-	}
+        if ( m_pTFPlayer->m_Shared.GetAirDash() > 0 )
+        {
+            m_pTFPlayer->DoAnimationEvent( PLAYERANIMEVENT_DOUBLEJUMP_CROUCH );
+        }
+    }
 
-	// Handle the ducking.
-	if ( player->m_Local.m_bDucking )
-	{
-		// Finish in duck transition when transition time is over, in "duck", in air.
-		if ( ( player->m_Local.m_flDucktime <= 0.0f ) || bInDuck || bInAir )
-		{
-			FinishDuck();
-		}
-		else
-		{
-			// Calculate the eye offset.
-			float flDuckFraction = SimpleSpline( 1.0f - ( player->m_Local.m_flDucktime / TIME_TO_DUCK_MS ) );
-			SetDuckedEyeOffset( flDuckFraction );
-		}
-	}
+    // Handle the ducking.
+    if ( player->m_Local.m_bDucking )
+    {
+        // Finish in duck transition when transition time is over, in "duck", in air.
+        if ( ( player->m_Local.m_flDucktime <= 0.0f ) || bInDuck || bInAir )
+        {
+            FinishDuck();
+        }
+        else
+        {
+            // Calculate the eye offset.
+            float flDuckFraction = SimpleSpline( 1.0f - ( player->m_Local.m_flDucktime / TIME_TO_DUCK_MS ) );
+            SetDuckedEyeOffset( flDuckFraction );
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::HandleUnDuck( int nButtonsReleased )
 {
-	if ( !player->m_Local.m_bAllowAutoMovement )
-		return;
+    if ( !player->m_Local.m_bAllowAutoMovement )
+        return;
 
-	bool bInAir = ( player->GetGroundEntity() == NULL );
-	bool bInDuck = ( player->GetFlags() & FL_DUCKING ) ? true : false;
+    bool bInAir = ( player->GetGroundEntity() == NULL );
+    bool bInDuck = ( player->GetFlags() & FL_DUCKING ) ? true : false;
 
-	// Ending a duck (or trying to).
-	if ( nButtonsReleased & IN_DUCK )
-	{
-		if ( bInDuck )
-		{
-			player->m_Local.m_flDucktime = TIME_TO_UNDUCK_MS;
-			player->m_Local.m_bDucking = true;
-		}
-		else if ( player->m_Local.m_bDucking )
-		{
-			// Find unduck percentage and calcluate the duck time.
-			float flPercentage = player->m_Local.m_flDucktime / TIME_TO_DUCK_MS;
-			player->m_Local.m_flDucktime = TIME_TO_UNDUCK_MS * ( 1.0f - flPercentage );
-		}
-	}
+    // Ending a duck (or trying to).
+    if ( nButtonsReleased & IN_DUCK )
+    {
+        if ( bInDuck )
+        {
+            player->m_Local.m_flDucktime = TIME_TO_UNDUCK_MS;
+            player->m_Local.m_bDucking = true;
+        }
+        else if ( player->m_Local.m_bDucking )
+        {
+            // Find unduck percentage and calcluate the duck time.
+            float flPercentage = player->m_Local.m_flDucktime / TIME_TO_DUCK_MS;
+            player->m_Local.m_flDucktime = TIME_TO_UNDUCK_MS * ( 1.0f - flPercentage );
+        }
+    }
 
-	// Check to see if we are capable of unducking given our environment.
-	if ( CanUnduck() )
-	{
-		if ( ( player->m_Local.m_bDucking || player->m_Local.m_bDucked ) )
-		{
-			// We are unducking now.
-			player->m_Local.m_bDucking = true;
+    // Check to see if we are capable of unducking given our environment.
+    if ( CanUnduck() )
+    {
+        if ( ( player->m_Local.m_bDucking || player->m_Local.m_bDucked ) )
+        {
+            // We are unducking now.
+            player->m_Local.m_bDucking = true;
 
-			// Finish ducking immediately if duck time is over or we are in the air.
-			if ( player->m_Local.m_flDucktime <= 0.0f || bInAir )
-			{
-				FinishUnDuck();
-			}
-			else
-			{
-				// Calculate the eye offset.
-				float flDuckFraction = SimpleSpline( ( player->m_Local.m_flDucktime / TIME_TO_UNDUCK_MS ) );
-				SetDuckedEyeOffset( flDuckFraction );
-			}
-		}
-	}
-	else
-	{
-		// Under something where we cannot unduck - rest.
-		if ( player->m_Local.m_flDucktime != TIME_TO_UNDUCK_MS )
-		{
-			player->m_Local.m_flDucktime = TIME_TO_UNDUCK_MS;
-			player->m_Local.m_bDucked = true;
-			player->m_Local.m_bDucking = false;
-			player->AddFlag( FL_DUCKING );
+            // Finish ducking immediately if duck time is over or we are in the air.
+            if ( player->m_Local.m_flDucktime <= 0.0f || bInAir )
+            {
+                FinishUnDuck();
+            }
+            else
+            {
+                // Calculate the eye offset.
+                float flDuckFraction = SimpleSpline( ( player->m_Local.m_flDucktime / TIME_TO_UNDUCK_MS ) );
+                SetDuckedEyeOffset( flDuckFraction );
+            }
+        }
+    }
+    else
+    {
+        // Under something where we cannot unduck - rest.
+        if ( player->m_Local.m_flDucktime != TIME_TO_UNDUCK_MS )
+        {
+            player->m_Local.m_flDucktime = TIME_TO_UNDUCK_MS;
+            player->m_Local.m_bDucked = true;
+            player->m_Local.m_bDucking = false;
+            player->AddFlag( FL_DUCKING );
 
-			// Reset the eye offset.
-			SetDuckedEyeOffset( 1.0f );
-		}
-	}
+            // Reset the eye offset.
+            SetDuckedEyeOffset( 1.0f );
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::TestDuck(  )
 {
 
-	// Handle buttons.
-	int nButtonsChanged	= ( mv->m_nOldButtons ^ mv->m_nButtons );
-	int nButtonsPressed	= nButtonsChanged & mv->m_nButtons;
-	int nButtonsReleased = nButtonsChanged & mv->m_nOldButtons;
-	if ( mv->m_nButtons & IN_DUCK )
-	{
-		mv->m_nOldButtons |= IN_DUCK;
-	}
-	else
-	{
-		mv->m_nOldButtons &= ~IN_DUCK;
-	}
+    // Handle buttons.
+    int nButtonsChanged	= ( mv->m_nOldButtons ^ mv->m_nButtons );
+    int nButtonsPressed	= nButtonsChanged & mv->m_nButtons;
+    int nButtonsReleased = nButtonsChanged & mv->m_nOldButtons;
+    if ( mv->m_nButtons & IN_DUCK )
+    {
+        mv->m_nOldButtons |= IN_DUCK;
+    }
+    else
+    {
+        mv->m_nOldButtons &= ~IN_DUCK;
+    }
 
-	// Handle death.
-	if ( IsDead() )
-		return;
-	// Slow down ducked players.
-	HandleDuckingSpeedCrop();
+    // Handle death.
+    if ( IsDead() )
+        return;
+    // Slow down ducked players.
+    HandleDuckingSpeedCrop();
 
-	// In some ducked state - button press to duck, duck transitions, or fully ducked.
-	bool bInDuck = ( player->GetFlags() & FL_DUCKING ) ? true : false;
-	if ( ( mv->m_nButtons & IN_DUCK ) || player->m_Local.m_bDucking || bInDuck )
-	{
-		// Duck State
-		if ( ( mv->m_nButtons & IN_DUCK ) )
-		{
-			HandleDuck( nButtonsPressed );
-		}
-		// Unduck State.
-		else
-		{
-			HandleUnDuck( nButtonsReleased );
-		}
-	}
+    // In some ducked state - button press to duck, duck transitions, or fully ducked.
+    bool bInDuck = ( player->GetFlags() & FL_DUCKING ) ? true : false;
+    if ( ( mv->m_nButtons & IN_DUCK ) || player->m_Local.m_bDucking || bInDuck )
+    {
+        // Duck State
+        if ( ( mv->m_nButtons & IN_DUCK ) )
+        {
+            HandleDuck( nButtonsPressed );
+        }
+        // Unduck State.
+        else
+        {
+            HandleUnDuck( nButtonsReleased );
+        }
+    }
 }
 #endif
 
@@ -3169,7 +3169,7 @@ void CTFGameMovement::DuckOverrides()
 
     // Don't allowing ducking in water.
     if ( ( ( player->GetWaterLevel() >= WL_Feet ) && !bOnGround ) ||
-         player->GetWaterLevel() >= WL_Eyes )
+        player->GetWaterLevel() >= WL_Eyes )
     {
         mv->m_nButtons &= ~IN_DUCK;
     }

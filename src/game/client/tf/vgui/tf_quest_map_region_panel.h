@@ -37,7 +37,7 @@ class Slider;
 //-----------------------------------------------------------------------------
 class CQuestMapPathsPanel : public Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CQuestMapPathsPanel, Panel );
     CQuestMapPathsPanel( Panel* pParent, const char* pszPanelname, float flZoomScale );
 
@@ -58,7 +58,7 @@ class CQuestMapPathsPanel : public Panel
         return m_circleDrawer;
     }
 
-   private:
+    private:
     CCircleDrawingHelper m_circleDrawer;
     CUtlMap< uint32, EditablePanel* > m_mapRegionLinkPanels;
     EditablePanel* m_pActiveRegionLinkPanel = nullptr;
@@ -74,7 +74,7 @@ class CQuestMapRegionPanel : public EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CQuestMapRegionPanel, EditablePanel );
 
-   public:
+    public:
     CQuestMapRegionPanel( Panel* pParent, const char* pszPanelName, const CMsgProtoDefID& msgIDCurrentRegion, CQuestNodeViewPanel* pNodeViewPanel );
     ~CQuestMapRegionPanel();
 
@@ -108,7 +108,7 @@ class CQuestMapRegionPanel : public EditablePanel, public CGameEventListener
     bool BIsZooming() const;
     void UpdateControls();
 
-   private:
+    private:
     void SOChangeEvent();
     void CreateClickCircle();
 

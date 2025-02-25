@@ -248,7 +248,7 @@ inline float GetComponent( const VMatrix &value, int i )
 template < typename T >
 class CDmAttributeInfo
 {
-   public:
+    public:
     enum
     {
         ATTRIBUTE_TYPE = AT_UNKNOWN
@@ -276,7 +276,7 @@ class CDmAttributeInfo
     template <>                                                                                                           \
     class CDmAttributeInfo< _className >                                                                                  \
     {                                                                                                                     \
-       public:                                                                                                            \
+        public:                                                                                                            \
         enum                                                                                                              \
         {                                                                                                                 \
             ATTRIBUTE_TYPE = _attributeType                                                                               \
@@ -300,7 +300,7 @@ class CDmAttributeInfo
     template <>                                                                                           \
     class CDmAttributeInfo< CUtlVector< _className > >                                                    \
     {                                                                                                     \
-       public:                                                                                            \
+        public:                                                                                            \
         enum                                                                                              \
         {                                                                                                 \
             ATTRIBUTE_TYPE = _attributeType                                                               \

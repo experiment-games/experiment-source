@@ -24,7 +24,7 @@ class CSaveDocumentQuery : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CSaveDocumentQuery, vgui::Frame );
 
-   public:
+    public:
     CSaveDocumentQuery( vgui::Panel *pParent, const char *filename, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget = 0, KeyValues *pKeyValues = 0 );
     ~CSaveDocumentQuery();
 
@@ -35,7 +35,7 @@ class CSaveDocumentQuery : public vgui::Frame
     // Put the message box into a modal state
     void DoModal();
 
-   private:
+    private:
     // Posts commands to the action signal target
     void PostCommand( const char *pCommand );
 
@@ -66,8 +66,8 @@ void ShowSaveDocumentQuery( vgui::Panel *pParent, const char *pFileName, const c
 //-----------------------------------------------------------------------------
 CSaveDocumentQuery::CSaveDocumentQuery( vgui::Panel *pParent, char const *pFileName, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand )
     : BaseClass( pParent, "SaveDocumentQuery" ),
-      m_nContext( nContext ),
-      m_pActionSignalTarget( pActionSignalTarget )
+    m_nContext( nContext ),
+    m_pActionSignalTarget( pActionSignalTarget )
 {
     if ( !pFileName || !pFileName[0] )
     {

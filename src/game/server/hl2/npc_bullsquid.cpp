@@ -322,17 +322,17 @@ void CNPC_Bullsquid::HandleAnimEvent( animevent_t *pEvent )
             /*
                 case BSQUID_AE_TAILWHIP:
                 {
-                  CBaseEntity *pHurt = CheckTraceHullAttack( 70, Vector(-16,-16,-16), Vector(16,16,16), sk_bullsquid_dmg_whip.GetFloat(), DMG_SLASH | DMG_ALWAYSGIB );
-                  if ( pHurt )
-                  {
+                CBaseEntity *pHurt = CheckTraceHullAttack( 70, Vector(-16,-16,-16), Vector(16,16,16), sk_bullsquid_dmg_whip.GetFloat(), DMG_SLASH | DMG_ALWAYSGIB );
+                if ( pHurt )
+                {
                     Vector right, up;
                     AngleVectors( GetAbsAngles(), NULL, &right, &up );
 
                     if ( pHurt->GetFlags() & ( FL_NPC | FL_CLIENT ) )
-                       pHurt->ViewPunch( QAngle( 20, 0, -20 ) );
+                        pHurt->ViewPunch( QAngle( 20, 0, -20 ) );
 
                     pHurt->ApplyAbsVelocityImpulse( 100 * (up+2*right) );
-                  }
+                }
                 }
                 break;
             */
@@ -516,30 +516,30 @@ int CNPC_Bullsquid::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 {
 #if 0  // Fix later.
 
-	float flDist;
-	Vector vecApex, vOffset;
+    float flDist;
+    Vector vecApex, vOffset;
 
-	// if the squid is running, has an enemy, was hurt by the enemy, hasn't been hurt in the last 3 seconds, and isn't too close to the enemy,
-	// it will swerve. (whew).
-	if ( GetEnemy() != NULL && IsMoving() && pevAttacker == GetEnemy() && gpGlobals->curtime - m_flLastHurtTime > 3 )
-	{
-		flDist = ( GetAbsOrigin() - GetEnemy()->GetAbsOrigin() ).Length2D();
-		
-		if ( flDist > SQUID_SPRINT_DIST )
-		{
-			AI_Waypoint_t*	pRoute = GetNavigator()->GetPath()->Route();
+    // if the squid is running, has an enemy, was hurt by the enemy, hasn't been hurt in the last 3 seconds, and isn't too close to the enemy,
+    // it will swerve. (whew).
+    if ( GetEnemy() != NULL && IsMoving() && pevAttacker == GetEnemy() && gpGlobals->curtime - m_flLastHurtTime > 3 )
+    {
+        flDist = ( GetAbsOrigin() - GetEnemy()->GetAbsOrigin() ).Length2D();
 
-			if ( pRoute )
-			{
-				flDist = ( GetAbsOrigin() - pRoute[ pRoute->iNodeID ].vecLocation ).Length2D();// reusing flDist. 
+        if ( flDist > SQUID_SPRINT_DIST )
+        {
+            AI_Waypoint_t*	pRoute = GetNavigator()->GetPath()->Route();
 
-				if ( GetNavigator()->GetPath()->BuildTriangulationRoute( GetAbsOrigin(), pRoute[ pRoute->iNodeID ].vecLocation, flDist * 0.5, GetEnemy(), &vecApex, &vOffset, NAV_GROUND ) )
-				{
-					GetNavigator()->PrependWaypoint( vecApex, bits_WP_TO_DETOUR | bits_WP_DONT_SIMPLIFY );
-				}
-			}
-		}
-	}
+            if ( pRoute )
+            {
+                flDist = ( GetAbsOrigin() - pRoute[ pRoute->iNodeID ].vecLocation ).Length2D();// reusing flDist.
+
+                if ( GetNavigator()->GetPath()->BuildTriangulationRoute( GetAbsOrigin(), pRoute[ pRoute->iNodeID ].vecLocation, flDist * 0.5, GetEnemy(), &vecApex, &vOffset, NAV_GROUND ) )
+                {
+                    GetNavigator()->PrependWaypoint( vecApex, bits_WP_TO_DETOUR | bits_WP_DONT_SIMPLIFY );
+                }
+            }
+        }
+    }
 #endif
 
     if ( !FClassnameIs( inputInfo.GetAttacker(), "monster_headcrab" ) )
@@ -559,11 +559,11 @@ int CNPC_Bullsquid::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 int CNPC_Bullsquid::GetSoundInterests( void )
 {
     return SOUND_WORLD |
-           SOUND_COMBAT |
-           SOUND_CARCASS |
-           SOUND_MEAT |
-           SOUND_GARBAGE |
-           SOUND_PLAYER;
+            SOUND_COMBAT |
+            SOUND_CARCASS |
+            SOUND_MEAT |
+            SOUND_GARBAGE |
+            SOUND_PLAYER;
 }
 
 //=========================================================

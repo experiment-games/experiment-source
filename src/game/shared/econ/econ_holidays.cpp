@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 class IIsHolidayActive
 {
-   public:
+    public:
     IIsHolidayActive( const char *pszHolidayName )
         : m_pszHolidayName( pszHolidayName ) {}
     virtual ~IIsHolidayActive() {}
@@ -23,7 +23,7 @@ class IIsHolidayActive
         return m_pszHolidayName;
     }
 
-   private:
+    private:
     const char *m_pszHolidayName;
 };
 
@@ -33,7 +33,7 @@ class IIsHolidayActive
 //-----------------------------------------------------------------------------
 class CNoHoliday : public IIsHolidayActive
 {
-   public:
+    public:
     CNoHoliday()
         : IIsHolidayActive( "none" ) {}
 
@@ -48,7 +48,7 @@ class CNoHoliday : public IIsHolidayActive
 //-----------------------------------------------------------------------------
 class CSingleDayHoliday : public IIsHolidayActive
 {
-   public:
+    public:
     CSingleDayHoliday( const char *pszName, int iMonth, int iDay )
         : IIsHolidayActive( pszName ), m_iMonth( iMonth ), m_iDay( iDay )
     {
@@ -60,7 +60,7 @@ class CSingleDayHoliday : public IIsHolidayActive
         return m_iMonth == timeCurrent.GetMonth() && m_iDay == timeCurrent.GetDayOfMonth();
     }
 
-   private:
+    private:
     int m_iMonth;
     int m_iDay;
 };
@@ -72,7 +72,7 @@ class CSingleDayHoliday : public IIsHolidayActive
 //-----------------------------------------------------------------------------
 class CWeeksBasedHoliday : public IIsHolidayActive
 {
-   public:
+    public:
     CWeeksBasedHoliday( const char *pszName, int iMonth, int iDay, int iExtraWeeks )
         : IIsHolidayActive( pszName ), m_iMonth( iMonth ), m_iDay( iDay ), m_iExtraWeeks( iExtraWeeks ), m_iCachedCalculatedYear( 0 )
     {
@@ -123,7 +123,7 @@ class CWeeksBasedHoliday : public IIsHolidayActive
         return timeCurrent.GetRTime32() > m_timeStart && timeCurrent.GetRTime32() < m_timeEnd;
     }
 
-   private:
+    private:
     static const int kMonday = 1;
     static const int kFriday = 5;
 
@@ -144,7 +144,7 @@ class CWeeksBasedHoliday : public IIsHolidayActive
 //-----------------------------------------------------------------------------
 class CCyclicalHoliday : public IIsHolidayActive
 {
-   public:
+    public:
     CCyclicalHoliday( const char *pszName, int iMonth, int iDay, int iYear, float fCycleLengthInDays, float fBonusTimeInDays )
         : IIsHolidayActive( pszName ), m_fCycleLengthInDays( fCycleLengthInDays ), m_fBonusTimeInDays( fBonusTimeInDays )
     {
@@ -180,7 +180,7 @@ class CCyclicalHoliday : public IIsHolidayActive
         return false;
     }
 
-   private:
+    private:
     time_t m_timeInitial;
 
     float m_fCycleLengthInDays;
@@ -193,7 +193,7 @@ class CCyclicalHoliday : public IIsHolidayActive
 //-----------------------------------------------------------------------------
 class COrHoliday : public IIsHolidayActive
 {
-   public:
+    public:
     COrHoliday( const char *pszName, IIsHolidayActive *pA, IIsHolidayActive *pB )
         : IIsHolidayActive( pszName ), m_pA( pA ), m_pB( pB )
     {
@@ -207,7 +207,7 @@ class COrHoliday : public IIsHolidayActive
         return m_pA->IsActive( timeCurrent ) || m_pB->IsActive( timeCurrent );
     }
 
-   private:
+    private:
     IIsHolidayActive *m_pA;
     IIsHolidayActive *m_pB;
 };
@@ -217,7 +217,7 @@ class COrHoliday : public IIsHolidayActive
 //-----------------------------------------------------------------------------
 class CDateBasedHoliday : public IIsHolidayActive
 {
-   public:
+    public:
     CDateBasedHoliday( const char *pszName, const char *pszStartTime, const char *pszEndTime )
         : IIsHolidayActive( pszName )
     {
@@ -235,7 +235,7 @@ class CDateBasedHoliday : public IIsHolidayActive
         return m_rtEndTime.GetRTime32();
     }
 
-   private:
+    private:
     CRTime m_rtStartTime;
     CRTime m_rtEndTime;
 };
@@ -245,7 +245,7 @@ class CDateBasedHoliday : public IIsHolidayActive
 //-----------------------------------------------------------------------------
 class CDateBasedHolidayNoSpecificYear : public IIsHolidayActive
 {
-   public:
+    public:
     CDateBasedHolidayNoSpecificYear( const char *pszName, const char *pszStartTime, const char *pszEndTime )
         : IIsHolidayActive( pszName ), m_pszStartTime( pszStartTime ), m_pszEndTime( pszEndTime ), m_iCachedYear( -1 )
     {
@@ -276,7 +276,7 @@ class CDateBasedHolidayNoSpecificYear : public IIsHolidayActive
         return m_rtCachedEndTime.GetRTime32();
     }
 
-   private:
+    private:
     const char *m_pszStartTime;
     const char *m_pszEndTime;
 
@@ -365,7 +365,7 @@ int EconHolidays_GetHolidayForString( const char *pszHolidayName )
     {
         Assert( s_HolidayChecks[iHoliday] );
         if ( s_HolidayChecks[iHoliday] &&
-             0 == Q_stricmp( pszHolidayName, s_HolidayChecks[iHoliday]->GetHolidayName() ) )
+            0 == Q_stricmp( pszHolidayName, s_HolidayChecks[iHoliday]->GetHolidayName() ) )
         {
             return iHoliday;
         }

@@ -21,7 +21,7 @@ class bf_write;
 
 class CEntityGroundContact
 {
-   public:
+    public:
     int entindex;
     float minheight;
     float maxheight;
@@ -29,7 +29,7 @@ class CEntityGroundContact
 
 class CUserCmd
 {
-   public:
+    public:
     CUserCmd()
     {
         Reset();

@@ -346,9 +346,9 @@ IMotionEvent::simresult_e CAI_BasePhysicsFlyingBot::Simulate( IPhysicsMotionCont
 
     /*
     DevMsg("Sim %d : %5.1f %5.1f %5.1f\n", count++,
-      m_vCurrentVelocity.x - actualVelocity.x,
-      m_vCurrentVelocity.y - actualVelocity.y,
-      m_vCurrentVelocity.z - actualVelocity.z );
+    m_vCurrentVelocity.x - actualVelocity.x,
+    m_vCurrentVelocity.y - actualVelocity.y,
+    m_vCurrentVelocity.z - actualVelocity.z );
     */
 
     // do angles.

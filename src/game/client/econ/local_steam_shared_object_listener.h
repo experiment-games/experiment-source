@@ -15,7 +15,7 @@
 
 class CLocalSteamSharedObjectListener : public GCSDK::ISharedObjectListener
 {
-   public:
+    public:
     CLocalSteamSharedObjectListener();
     virtual ~CLocalSteamSharedObjectListener();
 

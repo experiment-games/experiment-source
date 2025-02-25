@@ -138,9 +138,9 @@ void CreateBotName( int iTeam, CHL2MPBot::DifficultyType skill, char *pBuffer, i
 
     // we use this as our formatting, because we don't know the language of the downstream clients
     CFmtStr name( "%s%s%s",
-                  pDifficultyString,
-                  pFriendlyOrEnemyTitle,
-                  pBotName );
+                pDifficultyString,
+                pFriendlyOrEnemyTitle,
+                pBotName );
     Q_strncpy( pBuffer, name.Access(), iBufferSize );
 }
 
@@ -324,9 +324,9 @@ CON_COMMAND_F( hl2mp_bot_kick, "Remove a HL2MPBot by name, or all bots (\"all\")
         if ( player->MyNextBotPointer() )
         {
             if ( iTeam == TEAM_ANY ||
-                 FStrEq( pPlayerName, player->GetPlayerName() ) ||
-                 ( player->GetTeamNumber() == iTeam ) ||
-                 ( player->GetTeamNumber() == iTeam ) )
+                FStrEq( pPlayerName, player->GetPlayerName() ) ||
+                ( player->GetTeamNumber() == iTeam ) ||
+                ( player->GetTeamNumber() == iTeam ) )
             {
                 if ( bMoveToSpectatorTeam )
                 {
@@ -401,9 +401,9 @@ CON_COMMAND_F( hl2mp_bot_kill, "Kill a HL2MPBot by name, or all bots (\"all\")."
         if ( player->MyNextBotPointer() )
         {
             if ( iTeam == TEAM_ANY ||
-                 FStrEq( pPlayerName, player->GetPlayerName() ) ||
-                 ( player->GetTeamNumber() == iTeam ) ||
-                 ( player->GetTeamNumber() == iTeam ) )
+                FStrEq( pPlayerName, player->GetPlayerName() ) ||
+                ( player->GetTeamNumber() == iTeam ) ||
+                ( player->GetTeamNumber() == iTeam ) )
             {
                 CTakeDamageInfo info( player, player, 9999999.9f, DMG_ENERGYBEAM );
                 player->TakeDamage( info );
@@ -829,7 +829,7 @@ void CHL2MPBot::Event_Killed( const CTakeDamageInfo &info )
 //---------------------------------------------------------------------------------------------
 class CCollectReachableObjects : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CCollectReachableObjects( const CHL2MPBot *me, float maxRange, const CUtlVector< CHandle< CBaseEntity > > &potentialVector, CUtlVector< CHandle< CBaseEntity > > *collectionVector )
         : m_potentialVector( potentialVector )
     {
@@ -1035,7 +1035,7 @@ void CHL2MPBot::OnWeaponFired( CBaseCombatCharacter *whoFired, CBaseCombatWeapon
 //-----------------------------------------------------------------------------------------------------
 class CFindClosestPotentiallyVisibleAreaToPos
 {
-   public:
+    public:
     CFindClosestPotentiallyVisibleAreaToPos( const Vector &pos )
     {
         m_pos = pos;
@@ -1104,9 +1104,9 @@ void CHL2MPBot::UpdateLookingAroundForEnemies( void )
         /*
         if ( known->WasEverVisible() && known->GetTimeSinceLastSeen() < 3.0f )
         {
-          // I saw you just a moment ago...
-          GetBodyInterface()->AimHeadTowards( known->GetLastKnownPosition() + Vector( 0, 0, HumanEyeHeight ), IBody::IMPORTANT, 1.0f, NULL, "Aiming at a last known threat position" );
-          return;
+        // I saw you just a moment ago...
+        GetBodyInterface()->AimHeadTowards( known->GetLastKnownPosition() + Vector( 0, 0, HumanEyeHeight ), IBody::IMPORTANT, 1.0f, NULL, "Aiming at a last known threat position" );
+        return;
         }
         */
 
@@ -1182,7 +1182,7 @@ void CHL2MPBot::UpdateLookingAroundForEnemies( void )
 //---------------------------------------------------------------------------------------------
 class CFindVantagePoint : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CFindVantagePoint( int enemyTeamIndex )
     {
         m_enemyTeamIndex = enemyTeamIndex;
@@ -1596,12 +1596,12 @@ bool CHL2MPBot::IsHitScanWeapon( CBaseHL2MPCombatWeapon *weapon ) const
     if ( weapon )
     {
         if ( FClassnameIs( weapon, "weapon_rpg" ) ||
-             FClassnameIs( weapon, "weapon_frag" ) ||
-             FClassnameIs( weapon, "weapon_slam" ) ||
-             FClassnameIs( weapon, "weapon_crowbar" ) ||
-             FClassnameIs( weapon, "weapon_stunstick" ) ||
-             FClassnameIs( weapon, "weapon_crossbow" ) ||
-             FClassnameIs( weapon, "weapon_physcannon" ) )
+            FClassnameIs( weapon, "weapon_frag" ) ||
+            FClassnameIs( weapon, "weapon_slam" ) ||
+            FClassnameIs( weapon, "weapon_crowbar" ) ||
+            FClassnameIs( weapon, "weapon_stunstick" ) ||
+            FClassnameIs( weapon, "weapon_crossbow" ) ||
+            FClassnameIs( weapon, "weapon_physcannon" ) )
         {
             return false;
         }
@@ -1628,8 +1628,8 @@ bool CHL2MPBot::IsContinuousFireWeapon( CBaseHL2MPCombatWeapon *weapon ) const
             return true;
 
         if ( FClassnameIs( weapon, "weapon_smg1" ) ||
-             FClassnameIs( weapon, "weapon_ar2" ) ||
-             FClassnameIs( weapon, "weapon_shotgun" ) )
+            FClassnameIs( weapon, "weapon_ar2" ) ||
+            FClassnameIs( weapon, "weapon_shotgun" ) )
         {
             return true;
         }
@@ -1670,8 +1670,8 @@ bool CHL2MPBot::IsBarrageAndReloadWeapon( CBaseHL2MPCombatWeapon *weapon ) const
     if ( weapon )
     {
         if ( FClassnameIs( weapon, "weapon_frag" ) ||
-             FClassnameIs( weapon, "weapon_crossbow" ) ||
-             FClassnameIs( weapon, "weapon_shotgun" ) )
+            FClassnameIs( weapon, "weapon_crossbow" ) ||
+            FClassnameIs( weapon, "weapon_shotgun" ) )
         {
             return true;
         }
@@ -2310,8 +2310,8 @@ CBaseHL2MPBludgeonWeapon *CHL2MPBot::GetBludgeonWeapon( void )
         return false;
 
     return pWeapon->ClassMatches( "weapon_crossbow" ) ||
-           pWeapon->ClassMatches( "weapon_rpg" ) ||
-           pWeapon->ClassMatches( "weapon_357" );
+            pWeapon->ClassMatches( "weapon_rpg" ) ||
+            pWeapon->ClassMatches( "weapon_357" );
 }
 
 bool CHL2MPBot::PrefersLongRange( CBaseCombatWeapon *pWeapon )

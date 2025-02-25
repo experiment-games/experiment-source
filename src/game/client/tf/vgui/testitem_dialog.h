@@ -47,7 +47,7 @@ class CTestItemDialog : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTestItemDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CTestItemDialog( vgui::Panel *parent, testitem_itemtypes_t iItemType, int iClassUsage, KeyValues *pExistingKVs );
     ~CTestItemDialog( void );
 
@@ -62,7 +62,7 @@ class CTestItemDialog : public vgui::EditablePanel, public CGameEventListener
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
     MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
 
-   private:
+    private:
     void InitializeFromExistingKVs( KeyValues *pExistingKVs );
     void SetEntryStep( testitem_entrysteps_t iStep );
     void OpenSelectModelDialog( void );
@@ -71,7 +71,7 @@ class CTestItemDialog : public vgui::EditablePanel, public CGameEventListener
     void SetupUnusualEffectComboBox( void );
     void HandleClassCheckbuttonChecked( vgui::Panel *pPanel );
 
-   private:
+    private:
     testitem_entrysteps_t m_iEntryStep;
     testitem_itemtypes_t m_iItemType;
     int m_iClassUsage;

@@ -23,7 +23,7 @@ class C_ScriptIntro : public C_BaseEntity
 {
     DECLARE_CLASS( C_ScriptIntro, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ScriptIntro( void );
@@ -33,7 +33,7 @@ class C_ScriptIntro : public C_BaseEntity
     void CalculateFOV( void );
     void CalculateAlpha( void );
 
-   public:
+    public:
     int m_iNextFOV;
     int m_iFOV;
     int m_iPrevFOV;
@@ -45,7 +45,7 @@ class C_ScriptIntro : public C_BaseEntity
     // Our intro data block
     IntroData_t m_IntroData;
 
-   private:
+    private:
     Vector m_vecCameraView;
     QAngle m_vecCameraViewAngles;
     int m_iBlendMode;
@@ -276,9 +276,9 @@ void C_ScriptIntro::ClientThink( void )
     /*
     if ( m_flNextBlendTime >= gpGlobals->curtime )
     {
-      Msg("INTRO BLENDING: Blending from mode %d to %d.\n", m_IntroData.m_Passes[0].m_BlendMode, m_IntroData.m_Passes[1].m_BlendMode );
-      Msg("				 curtime %.2f    StartedAt %.2f    FinishAt: %.2f\n", gpGlobals->curtime, m_flBlendStartTime, m_flNextBlendTime );
-      Msg("				 Perc:   %.2f\n", flPerc );
+    Msg("INTRO BLENDING: Blending from mode %d to %d.\n", m_IntroData.m_Passes[0].m_BlendMode, m_IntroData.m_Passes[1].m_BlendMode );
+    Msg("				 curtime %.2f    StartedAt %.2f    FinishAt: %.2f\n", gpGlobals->curtime, m_flBlendStartTime, m_flNextBlendTime );
+    Msg("				 Perc:   %.2f\n", flPerc );
     }
     */
 
@@ -318,8 +318,8 @@ void C_ScriptIntro::CalculateAlpha( void )
     /*
     if ( m_IntroData.m_flCurrentFadeColor[3] != flNewAlpha )
     {
-      Msg("INTRO FADING: curtime %.2f    StartedAt %.2f    Duration: %.2f\n", gpGlobals->curtime, m_flFadeTimeStartedAt, m_flFadeDuration );
-      Msg("           TimePassed %.2f    Alpha:    %.2f\n", RemapValClamped( gpGlobals->curtime, m_flFadeTimeStartedAt, m_flFadeTimeStartedAt + m_flFadeDuration, 0.0, 1.0 ), m_IntroData.m_flCurrentFadeColor[3] );
+    Msg("INTRO FADING: curtime %.2f    StartedAt %.2f    Duration: %.2f\n", gpGlobals->curtime, m_flFadeTimeStartedAt, m_flFadeDuration );
+    Msg("           TimePassed %.2f    Alpha:    %.2f\n", RemapValClamped( gpGlobals->curtime, m_flFadeTimeStartedAt, m_flFadeTimeStartedAt + m_flFadeDuration, 0.0, 1.0 ), m_IntroData.m_flCurrentFadeColor[3] );
     }
     */
 

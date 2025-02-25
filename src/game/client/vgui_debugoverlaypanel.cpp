@@ -23,7 +23,7 @@ class CDebugOverlay : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     CDebugOverlay( vgui::VPANEL parent );
     virtual ~CDebugOverlay( void );
 
@@ -33,7 +33,7 @@ class CDebugOverlay : public vgui::Panel
 
     virtual bool ShouldDraw( void );
 
-   private:
+    private:
     vgui::HFont m_hFont;
 };
 
@@ -153,10 +153,10 @@ void CDebugOverlay::Paint()
 
 class CDebugOverlayPanel : public IDebugOverlayPanel
 {
-   private:
+    private:
     CDebugOverlay *debugOverlayPanel;
 
-   public:
+    public:
     CDebugOverlayPanel( void )
     {
         debugOverlayPanel = NULL;

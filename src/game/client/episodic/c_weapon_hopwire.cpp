@@ -25,7 +25,7 @@ class C_HopwireExplosion : public C_EnvelopeFX
 {
     typedef C_EnvelopeFX BaseClass;
 
-   public:
+    public:
     C_HopwireExplosion( void )
         : m_hOwner( NULL )
     {
@@ -44,7 +44,7 @@ class C_HopwireExplosion : public C_EnvelopeFX
     void StopExplosion( void );
     void StartPreExplosion( void );
 
-   private:
+    private:
     CInterpolatedValue m_FXCoreScale;
     CInterpolatedValue m_FXCoreAlpha;
 
@@ -334,7 +334,7 @@ class C_GrenadeHopwire : public C_BaseGrenade
     DECLARE_CLASS( C_GrenadeHopwire, C_BaseGrenade );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_GrenadeHopwire( void );
 
     virtual int DrawModel( int flags );
@@ -342,7 +342,7 @@ class C_GrenadeHopwire : public C_BaseGrenade
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ReceiveMessage( int classID, bf_read &msg );
 
-   private:
+    private:
     C_HopwireExplosion m_ExplosionEffect;  // Explosion effect information and drawing
 };
 

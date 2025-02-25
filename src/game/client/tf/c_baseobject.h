@@ -36,7 +36,7 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
 {
     DECLARE_CLASS( C_BaseObject, C_BaseCombatCharacter );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_BaseObject();
@@ -231,10 +231,10 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
         return ( ( m_flInvisibilityPercent != 1.f && flValue == 1.f ) || ( m_flInvisibilityPercent == 1.f && flValue != 1.f ) );
     }
 
-   private:
+    private:
     void StopAnimGeneratedSounds( void );
 
-   public:
+    public:
     // Client/Server shared build point code
     void CreateBuildPoints( void );
     void AddAndParseBuildPoint( int iAttachmentNumber, KeyValues *pkvBuildPoint );
@@ -273,7 +273,7 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
     bool WasLastPlacementPosValid( void );  // query if we're in a valid place, when we last tried to calculate it
 
     // IHasBuildPoints
-   public:
+    public:
     virtual int GetNumBuildPoints( void ) const;
     virtual bool GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles );
     virtual int GetBuildPointAttachmentIndex( int iPoint ) const;
@@ -301,7 +301,7 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
     }
 
     // ITargetIDProvidesHint
-   public:
+    public:
     virtual void DisplayHintTo( C_BasePlayer *pPlayer );
 
     virtual void GetGlowEffectColor( float *r, float *g, float *b );
@@ -311,14 +311,14 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
         return m_bWasMapPlaced;
     }
 
-   protected:
+    protected:
     virtual void UpdateDamageEffects( BuildingDamageLevel_t damageLevel ) {}  // default is no effects
 
     void UpdateDesiredBuildRotation( float flFrameTime );
 
     bool CalculatePlacementPos( void );
 
-   protected:
+    protected:
     BuildingDamageLevel_t CalculateDamageLevel( void );
 
     char m_szIDString[MAX_ID_STRING];
@@ -337,7 +337,7 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
 
     HPARTICLEFFECT m_hDamageEffects;
 
-   private:
+    private:
     enum
     {
         YAW_PREVIEW_OFF = 0,
@@ -397,7 +397,7 @@ class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, publi
 
     CNetworkVar( bool, m_bWasMapPlaced );
 
-   private:
+    private:
     C_BaseObject( const C_BaseObject & );  // not defined, not accessible
 };
 

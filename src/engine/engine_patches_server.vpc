@@ -8,9 +8,9 @@ $Include "$SRCDIR\engine\engine_patches_base.vpc"
 
 $Project
 {
-	$Folder "Engine Patches"
-	{
-		$File "$SRCDIR\engine\detours\baseclient_connect.cpp"
-		$File "$SRCDIR\engine\detours\baseserver_check_password.cpp"
+    $Folder "Engine Patches"
+    {
+        $File "$SRCDIR\engine\detours\baseclient_connect.cpp"
+        $File "$SRCDIR\engine\detours\baseserver_check_password.cpp"
     }
 }

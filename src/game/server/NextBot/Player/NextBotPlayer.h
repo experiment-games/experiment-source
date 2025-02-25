@@ -84,7 +84,7 @@ T *NextBotCreatePlayerBot( const char *name, bool bReportFakeClient = true )
  */
 class INextBotPlayerInput
 {
-   public:
+    public:
     virtual void PressFireButton( float duration = -1.0f ) = 0;
     virtual void ReleaseFireButton( void ) = 0;
 
@@ -134,7 +134,7 @@ class INextBotPlayerInput
 template < typename PlayerType >
 class NextBotPlayer : public PlayerType, public INextBot, public INextBotPlayerInput
 {
-   public:
+    public:
     DECLARE_CLASS( NextBotPlayer, PlayerType );
 
     NextBotPlayer( void );
@@ -254,11 +254,11 @@ class NextBotPlayer : public PlayerType, public INextBot, public INextBotPlayerI
 
     virtual void AvoidPlayers( CUserCmd *pCmd ) {}  // some game types allow players to pass through each other, this method pushes them apart
 
-   public:
+    public:
     // begin INextBot ------------------------------------------------------------------------------------------------------------------
     virtual void Update( void );  // (EXTEND) update internal state
 
-   protected:
+    protected:
     int m_inputButtons;  // this is still needed to guarantee each button press is captured at least once
     int m_prevInputButtons;
     CountdownTimer m_fireButtonTimer;

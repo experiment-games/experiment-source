@@ -28,7 +28,7 @@ class RichText : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( RichText, EditablePanel );
 
-   public:
+    public:
     RichText( Panel *parent, const char *panelName );
     ~RichText();
 
@@ -97,23 +97,23 @@ class RichText : public EditablePanel
     int GetNumLines();
 
     /* CUSTOM MESSAGE HANDLING
-      "SetText"
+    "SetText"
         input:	"text"	- text is set to be this string
     */
 
     /* MESSAGE SENDING (to action signal targets)
-      "TextChanged"	- sent when the text is edited by the user
+    "TextChanged"	- sent when the text is edited by the user
 
 
-      "TextClicked"	- sent when clickable text has been clicked on
+    "TextClicked"	- sent when clickable text has been clicked on
         "text"	- the text that was clicked on
     */
 
     virtual bool RequestInfo( KeyValues *outputData );
     /* INFO HANDLING
-      "GetText"
+    "GetText"
         returns:
-          "text" - text contained in the text box
+        "text" - text contained in the text box
     */
     virtual void SetFgColor( Color color );
     virtual void SetDrawOffsets( int ofsx, int ofsy );
@@ -130,7 +130,7 @@ class RichText : public EditablePanel
 
     void SetDrawTextOnly();
 
-   protected:
+    protected:
     virtual void OnThink();
     virtual void PerformLayout();  // layout the text in the window
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -168,10 +168,10 @@ class RichText : public EditablePanel
     virtual void Validate( CValidator &validator, char *pchName );
 #endif  // DBGFLAG_VALIDATE
 
-   protected:
+    protected:
     ScrollBar *_vertScrollBar;  // the scroll bar used in the window
 
-   private:
+    private:
     int GetLineHeight();
     HFont GetDefaultFont();
 
@@ -245,7 +245,7 @@ class RichText : public EditablePanel
     bool _mouseSelection;      // whether we are highlighting text or not (selecting text)
     bool _mouseDragSelection;  // tells weather mouse is outside window and button is down so we select text
     int _select[2];            // select[1] is the offset in the text to where the cursor is currently
-                               // select[0] is the offset to where the cursor was dragged to. or -1 if no drag.
+                                // select[0] is the offset to where the cursor was dragged to. or -1 if no drag.
     int _pixelsIndent;
     int _maxCharCount;  // max number of chars that can be in the text buffer
     HFont _font;        // font of chars in the text buffer

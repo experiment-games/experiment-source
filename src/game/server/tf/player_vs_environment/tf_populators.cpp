@@ -160,11 +160,11 @@ void OnBotTeleported( CTFBot *bot )
     {
         CPVSFilter filter( origin );
 #if 0
-		// These are pretty, but they're chewing into our particle budget (1000 particles each!)
-		// They're also basically invisible because bots spawn in ubered.
+        // These are pretty, but they're chewing into our particle budget (1000 particles each!)
+        // They're also basically invisible because bots spawn in ubered.
 
-		TE_TFParticleEffect( filter, 0.0, "teleported_blue", origin, vec3_angle );
-		TE_TFParticleEffect( filter, 0.0, "player_sparkles_blue", origin, vec3_angle );
+        TE_TFParticleEffect( filter, 0.0, "teleported_blue", origin, vec3_angle );
+        TE_TFParticleEffect( filter, 0.0, "player_sparkles_blue", origin, vec3_angle );
 #endif
         s_lastTeleporter->EmitSound( "MVM.Robot_Teleporter_Deliver" );
 
@@ -843,9 +843,9 @@ void CMissionPopulator::Update( void )
     VPROF_BUDGET( "CMissionPopulator::Update", "NextBot" );
 
     if ( TFGameRules()->InSetup() ||
-         GetManager()->GetWaveNumber() < m_beginAtWaveIndex ||
-         GetManager()->GetWaveNumber() >= m_stopAtWaveIndex ||
-         TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() )
+        GetManager()->GetWaveNumber() < m_beginAtWaveIndex ||
+        GetManager()->GetWaveNumber() >= m_stopAtWaveIndex ||
+        TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() )
     {
         m_state = NOT_STARTED;
         return;
@@ -2097,7 +2097,7 @@ void CWave::ActiveWaveUpdate( void )
             // Now let's kill everyone left on the attacking team
             CTFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
             if ( pPlayer && pPlayer->IsAlive() &&
-                 ( ( pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) || pPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) ) )
+                ( ( pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) || pPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) ) )
             {
                 pPlayer->CommitSuicide( true, false );
             }

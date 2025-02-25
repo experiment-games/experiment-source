@@ -22,7 +22,7 @@ class CAutoPtr
 {
     T *m_pT;
 
-   public:
+    public:
     CAutoPtr()
     {
         m_pT = NULL;
@@ -64,7 +64,7 @@ class CAutoPtr
         return m_pT;
     }
 
-   protected:
+    protected:
     T *operator=( T *p )
     {
         AssertMsg( NULL == m_pT, "If this assert fires, you're leaking.\n" );
@@ -75,7 +75,7 @@ class CAutoPtr
 
 class CRefCount
 {
-   public:
+    public:
     CRefCount()
     {
         m_cRef = 1;
@@ -97,7 +97,7 @@ class CRefCount
         return cRef;
     }
 
-   protected:
+    protected:
     // Classes that derive from this should make their destructors private and virtual!
     virtual ~CRefCount()
     {

@@ -40,9 +40,9 @@ float AI_ClampYaw( float yawSpeedPerSec, float current, float target, float time
 //-----------------------------------------------------------------------------
 
 class CAI_Motor : public CAI_Component,
-                  public CAI_ProxyMovementSink
+                public CAI_ProxyMovementSink
 {
-   public:
+    public:
     CAI_Motor( CAI_BaseNPC *pOuter );
     virtual ~CAI_Motor();
 
@@ -200,7 +200,7 @@ class CAI_Motor : public CAI_Component,
         m_bYawLocked = state;
     }
 
-   protected:
+    protected:
     //
     // Common services provided by CAI_BaseNPC, Convenience methods to simplify derived code
     //
@@ -234,7 +234,7 @@ class CAI_Motor : public CAI_Component,
     AIMotorMoveResult_t MoveGroundExecuteWalk( const AILocalMoveGoal_t &move, float speed, float dist, AIMoveTrace_t *pTraceResult );
     virtual AIMotorMoveResult_t MoveFlyExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
 
-   protected:  // made protected while animation transition details worked out, private:
+    protected:  // made protected while animation transition details worked out, private:
     // --------------------------------
     void SetMoveVel( const Vector &velocity )
     {
@@ -267,7 +267,7 @@ class CAI_Motor : public CAI_Component,
     bool m_bYawLocked;
 
     //---------------------------------
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 };
 

@@ -70,11 +70,11 @@ static void add_test_case(int fmt, int flags, int test_flags)
 
 /* Returns 1 on different images with, allows a small difference if gamma corrected */
 static int compare_images(const struct spng_ihdr *ihdr,
-                          int fmt,
-                          int flags,
-                          const unsigned char *img_spng,
-                          const unsigned char *img_png,
-                          size_t img_size)
+                        int fmt,
+                        int flags,
+                        const unsigned char *img_spng,
+                        const unsigned char *img_png,
+                        size_t img_size)
 {
     uint32_t w, h;
     uint32_t x, y;
@@ -245,7 +245,7 @@ static int compare_images(const struct spng_ihdr *ihdr,
                     spng_sample = s_sample;
                     png_sample = p_sample;
 
-                   if(have_alpha)
+                    if(have_alpha)
                     {
                         memcpy(&s_alpha, img_spng + px_ofs + 1, 1);
                         memcpy(&p_alpha, img_png + px_ofs + 1, 1);
@@ -286,17 +286,17 @@ static int compare_images(const struct spng_ihdr *ihdr,
                     if(red_diff > max_diff || green_diff > max_diff || blue_diff > max_diff)
                     {
                         printf("invalid gamma correction at x: %" PRIu32 " y: %" PRIu32 ", "
-                               "spng: %" PRIu16 " %" PRIu16 " %" PRIu16 " "
-                               "png: %" PRIu16 " %" PRIu16 " %" PRIu16 "\n",
-                               x, y,
-                               spng_red, spng_green, spng_blue,
-                               png_red, png_green, png_blue);
+                                "spng: %" PRIu16 " %" PRIu16 " %" PRIu16 " "
+                                "png: %" PRIu16 " %" PRIu16 " %" PRIu16 "\n",
+                                x, y,
+                                spng_red, spng_green, spng_blue,
+                                png_red, png_green, png_blue);
                         pixel_diff = 1;
                     }
                     else if(sample_diff > max_diff)
                     {
                         printf("invalid gamma correction at x: %" PRIu32 " y: %" PRIu32 ", "
-                               "spng: %" PRIu16 " png: %" PRIu16 "\n", x, y, spng_sample, png_sample);
+                                "spng: %" PRIu16 " png: %" PRIu16 "\n", x, y, spng_sample, png_sample);
                         pixel_diff = 1;
                     }
                 }
@@ -309,16 +309,16 @@ static int compare_images(const struct spng_ihdr *ihdr,
                         else issue_str = "grayscale difference";
 
                         printf("%s at x: %u y: %u spng: %u png: %u\n",
-                               issue_str, x, y, spng_sample, png_sample);
+                                issue_str, x, y, spng_sample, png_sample);
                     }
                     else
                     {
                         printf("color difference at x: %" PRIu32 " y: %" PRIu32 ", "
-                               "spng: %" PRIu16 " %" PRIu16 " %" PRIu16 " "
-                               "png: %" PRIu16 " %" PRIu16 " %" PRIu16 "\n",
-                               x, y,
-                               spng_red, spng_green, spng_blue,
-                               png_red, png_green, png_blue);
+                                "spng: %" PRIu16 " %" PRIu16 " %" PRIu16 " "
+                                "png: %" PRIu16 " %" PRIu16 " %" PRIu16 "\n",
+                                x, y,
+                                spng_red, spng_green, spng_blue,
+                                png_red, png_green, png_blue);
                     }
 
                     pixel_diff = 1;
@@ -328,8 +328,8 @@ static int compare_images(const struct spng_ihdr *ihdr,
             if(have_alpha && spng_alpha != png_alpha)
             {
                 printf("alpha mismatch at x:%" PRIu32 " y:%" PRIu32 ", "
-                       "spng: %" PRIu16 " png: %" PRIu16 "\n",
-                       x, y, spng_alpha, png_alpha);
+                        "spng: %" PRIu16 " png: %" PRIu16 "\n",
+                        x, y, spng_alpha, png_alpha);
                 alpha_mismatch = 1;
             }
         }
@@ -542,20 +542,20 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
     }
 
     /* NOTE: libpng changes or corrupts chunk data once it's past the IDAT stream,
-             some checks are not done because of this. */
+            some checks are not done because of this. */
     uint32_t png_width, png_height;
     int png_bit_depth = 0, png_color_type = 0, png_interlace_method = 0, png_compression_method = 0, png_filter_method = 0;
 
     png_get_IHDR(png_ptr, info_ptr, &png_width, &png_height, &png_bit_depth, &png_color_type,
-                 &png_interlace_method, &png_compression_method, &png_filter_method);
+                &png_interlace_method, &png_compression_method, &png_filter_method);
 
     if(spng.ihdr.width != png_width ||
-       spng.ihdr.height != png_height ||
-       spng.ihdr.bit_depth != png_bit_depth ||
-       spng.ihdr.color_type != png_color_type ||
-       spng.ihdr.interlace_method != png_interlace_method ||
-       spng.ihdr.compression_method != png_compression_method ||
-       spng.ihdr.filter_method != png_filter_method)
+        spng.ihdr.height != png_height ||
+        spng.ihdr.bit_depth != png_bit_depth ||
+        spng.ihdr.color_type != png_color_type ||
+        spng.ihdr.interlace_method != png_interlace_method ||
+        spng.ihdr.compression_method != png_compression_method ||
+        spng.ihdr.filter_method != png_filter_method)
     {
         if(!after_idat)
         {
@@ -575,8 +575,8 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         for(i=0; i < spng.plte.n_entries; i++)
         {
             if(spng.plte.entries[i].red != png_palette[i].red ||
-               spng.plte.entries[i].green != png_palette[i].green ||
-               spng.plte.entries[i].blue != png_palette[i].blue)
+                spng.plte.entries[i].green != png_palette[i].green ||
+                spng.plte.entries[i].blue != png_palette[i].blue)
             {
                 printf("palette entry %d not identical\n", i);
                 ret = 1;
@@ -603,8 +603,8 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         else if(spng.ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR)
         {
             if(spng.trns.red != png_trans_color->red ||
-               spng.trns.green != png_trans_color->green ||
-               spng.trns.blue != png_trans_color->blue)
+                spng.trns.green != png_trans_color->green ||
+                spng.trns.blue != png_trans_color->blue)
             {
                 printf("tRNS truecolor samples not identical\n");
                 ret = 1;
@@ -640,16 +640,16 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
                         png_fblue_x, png_fblue_y;
 
         png_get_cHRM_fixed(png_ptr, info_ptr, &png_fwhite_x, &png_fwhite_y, &png_fred_x, &png_fred_y,
-                           &png_fgreen_x, &png_fgreen_y, &png_fblue_x, &png_fblue_y);
+                            &png_fgreen_x, &png_fgreen_y, &png_fblue_x, &png_fblue_y);
 
         if(spng.chrm_int.white_point_x != png_fwhite_x ||
-           spng.chrm_int.white_point_y != png_fwhite_y ||
-           spng.chrm_int.red_x != png_fred_x ||
-           spng.chrm_int.red_y != png_fred_y ||
-           spng.chrm_int.green_x != png_fgreen_x ||
-           spng.chrm_int.green_y != png_fgreen_y ||
-           spng.chrm_int.blue_x != png_fblue_x ||
-           spng.chrm_int.blue_y != png_fblue_y)
+            spng.chrm_int.white_point_y != png_fwhite_y ||
+            spng.chrm_int.red_x != png_fred_x ||
+            spng.chrm_int.red_y != png_fred_y ||
+            spng.chrm_int.green_x != png_fgreen_x ||
+            spng.chrm_int.green_y != png_fgreen_y ||
+            spng.chrm_int.blue_x != png_fblue_x ||
+            spng.chrm_int.blue_y != png_fblue_y)
         {
             printf("cHRM fixed point values are not identical\n");
             ret = 1;
@@ -707,8 +707,8 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         else if(spng.ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR || spng.ihdr.color_type == SPNG_COLOR_TYPE_INDEXED)
         {
             if(spng.sbit.red_bits != png_sig_bit->red ||
-               spng.sbit.green_bits != png_sig_bit->green ||
-               spng.sbit.blue_bits != png_sig_bit->blue)
+                spng.sbit.green_bits != png_sig_bit->green ||
+                spng.sbit.blue_bits != png_sig_bit->blue)
             {
                 printf("rgb significant bits not identical\n");
                 ret = 1;
@@ -725,9 +725,9 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         else if(spng.ihdr.color_type == 6)
         {
             if(spng.sbit.red_bits != png_sig_bit->red ||
-               spng.sbit.green_bits != png_sig_bit->green ||
-               spng.sbit.blue_bits != png_sig_bit->blue ||
-               spng.sbit.alpha_bits != png_sig_bit->alpha)
+                spng.sbit.green_bits != png_sig_bit->green ||
+                spng.sbit.blue_bits != png_sig_bit->blue ||
+                spng.sbit.alpha_bits != png_sig_bit->alpha)
             {
                 printf("rgba significant bits not identical\n");
                 ret = 1;
@@ -802,8 +802,8 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         else if(spng.ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR || spng.ihdr.color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA)
         {
             if(spng.bkgd.red != png_bkgd->red ||
-               spng.bkgd.green != png_bkgd->green ||
-               spng.bkgd.blue != png_bkgd->blue)
+                spng.bkgd.green != png_bkgd->green ||
+                spng.bkgd.blue != png_bkgd->blue)
             {
                 printf("bKGD rgb samples are not identical\n");
                 ret = 1;
@@ -842,8 +842,8 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         png_get_pHYs(png_ptr, info_ptr, &png_phys_res_x, &png_phys_rex_y, &png_phys_unit_type);
 
         if(spng.phys.ppu_x != png_phys_res_x ||
-           spng.phys.ppu_y != png_phys_rex_y  ||
-           spng.phys.unit_specifier != png_phys_unit_type)
+            spng.phys.ppu_y != png_phys_rex_y  ||
+            spng.phys.unit_specifier != png_phys_unit_type)
         {
             printf("pHYs data not indentical\n");
             ret = 1;
@@ -908,11 +908,11 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         png_get_tIME(png_ptr, info_ptr, &png_time);
 
         if(spng.time.year != png_time->year ||
-           spng.time.month != png_time->month ||
-           spng.time.day != png_time->day ||
-           spng.time.hour != png_time->hour ||
-           spng.time.minute != png_time->minute ||
-           spng.time.second != png_time->second)
+            spng.time.month != png_time->month ||
+            spng.time.day != png_time->day ||
+            spng.time.hour != png_time->hour ||
+            spng.time.minute != png_time->minute ||
+            spng.time.second != png_time->second)
         {
             printf("tIME data not identical\n");
             ret = 1;
@@ -927,8 +927,8 @@ static int compare_chunks(spng_ctx *ctx, png_infop info_ptr, png_structp png_ptr
         png_get_oFFs(png_ptr, info_ptr, &png_offset_x, &png_offset_y, &png_offs_unit_type);
 
         if(spng.offs.x != png_offset_x ||
-           spng.offs.y != png_offset_y ||
-           spng.offs.unit_specifier != png_offs_unit_type)
+            spng.offs.y != png_offset_y ||
+            spng.offs.unit_specifier != png_offs_unit_type)
         {
             printf("oFFs data not identical\n");
             ret = 1;
@@ -1194,7 +1194,7 @@ static int spngt_run_test(const char *filename, struct spngt_test_case *test_cas
         }
 
         /* Unfortunately there's a handful of testsuite image that don't
-           compress well with the default filter heuristic */
+            compress well with the default filter heuristic */
         /* Fail the test on a 4% size increase */
         /*int pct = 25;
         if( (encoded_len - encoded_len / pct) > file_length)
@@ -1286,11 +1286,11 @@ int main(int argc, char **argv)
         unsigned int png_ver = png_access_version_number();
 
         printf("spng header version: %u.%u.%u, library version: %s\n",
-               SPNG_VERSION_MAJOR, SPNG_VERSION_MINOR, SPNG_VERSION_PATCH,
-               spng_version_string());
+                SPNG_VERSION_MAJOR, SPNG_VERSION_MINOR, SPNG_VERSION_PATCH,
+                spng_version_string());
         printf("png header version: %u.%u.%u, library version: %u.%u.%u\n",
-               PNG_LIBPNG_VER_MAJOR, PNG_LIBPNG_VER_MINOR, PNG_LIBPNG_VER_RELEASE,
-               png_ver / 10000, png_ver / 100 % 100, png_ver % 100);
+                PNG_LIBPNG_VER_MAJOR, PNG_LIBPNG_VER_MINOR, PNG_LIBPNG_VER_RELEASE,
+                png_ver / 10000, png_ver / 100 % 100, png_ver % 100);
 
 
         return 0;
@@ -1321,8 +1321,8 @@ int main(int argc, char **argv)
             clr_type_str = "RGBA";
 
         printf("%s %" PRIu8 "-bit, %" PRIu32 "x%" PRIu32 " %s\n",
-               clr_type_str, ihdr.bit_depth, ihdr.width, ihdr.height,
-               ihdr.interlace_method ? "interlaced" : "non-interlaced");
+                clr_type_str, ihdr.bit_depth, ihdr.width, ihdr.height,
+                ihdr.interlace_method ? "interlaced" : "non-interlaced");
     }
     else printf("failed to get image info\n");
 
@@ -1364,7 +1364,7 @@ int main(int argc, char **argv)
     add_test_case(SPNG_FMT_GA16, SPNG_DECODE_TRNS, fmt_limit_2);
 
     /* This tests the input->output format logic used in libvips,
-       it emulates the behavior of their old PNG loader which uses libpng. */
+        it emulates the behavior of their old PNG loader which uses libpng. */
     add_test_case(SPNGT_FMT_VIPS, SPNG_DECODE_TRNS, 0);
 
     add_test_case(SPNG_FMT_PNG, 0, SPNGT_EXTENDED_TESTS);

@@ -17,7 +17,7 @@ class CBeam;
 
 class CTripmineGrenade : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTripmineGrenade, CBaseGrenade );
 
     CTripmineGrenade();
@@ -35,10 +35,10 @@ class CTripmineGrenade : public CBaseGrenade
     void MakeBeam( void );
     void KillBeam( void );
 
-   public:
+    public:
     EHANDLE m_hOwner;
 
-   private:
+    private:
     float m_flPowerUp;
     Vector m_vecDir;
     Vector m_vecEnd;

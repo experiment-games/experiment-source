@@ -29,7 +29,7 @@ class CTextMessagePanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     enum
     {
         TYPE_UNKNOWN = 0,
@@ -74,7 +74,7 @@ class CTextMessagePanel : public vgui::Panel
         SetPos( 0, 0 );
     }
 
-   private:
+    private:
     message_t *AllocMessage( void );
     void Reset( void );
 
@@ -340,10 +340,10 @@ void CTextMessagePanel::Paint()
 
 class CTextMessage : public ITextMessage
 {
-   private:
+    private:
     CTextMessagePanel *textMessagePanel;
 
-   public:
+    public:
     CTextMessage( void )
     {
         textMessagePanel = NULL;

@@ -19,7 +19,7 @@
 //---------------------------------------------------------------------------------
 class CTFRatingData : public GCSDK::CProtoBufSharedObject< CSOTFRatingData, k_EProtoObjectTFRatingData, /* bPublicMutable */ false >
 {
-   public:
+    public:
     CTFRatingData();
     CTFRatingData( uint32 unAccountID, EMMRating eRatingType, const MMRatingData_t &ratingData );
 

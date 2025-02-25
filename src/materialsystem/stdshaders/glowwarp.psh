@@ -15,6 +15,3 @@ mul r0, t0, v0
 ;mul_x2 r0, t0, v0
 ;mov r0, v0
 ;mul r0, t0, c0
-
-
-

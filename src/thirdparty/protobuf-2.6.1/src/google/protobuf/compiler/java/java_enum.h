@@ -66,7 +66,7 @@ namespace java
 
 class EnumGenerator
 {
-   public:
+    public:
     explicit EnumGenerator( const EnumDescriptor* descriptor,
                             bool immutable_api,
                             Context* context );
@@ -74,7 +74,7 @@ class EnumGenerator
 
     void Generate( io::Printer* printer );
 
-   private:
+    private:
     const EnumDescriptor* descriptor_;
 
     // The proto language allows multiple enum constants to have the same numeric

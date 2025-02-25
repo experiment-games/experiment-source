@@ -17,7 +17,7 @@ class CDmeBookmark : public CDmElement
 {
     DEFINE_ELEMENT( CDmeBookmark, CDmElement );
 
-   public:
+    public:
     const char *GetNote() const
     {
         return m_Note;
@@ -44,7 +44,7 @@ class CDmeBookmark : public CDmElement
         m_Duration = duration.GetTenthsOfMS();
     }
 
-   private:
+    private:
     CDmaString m_Note;
     CDmaVar< int > m_Time;
     CDmaVar< int > m_Duration;

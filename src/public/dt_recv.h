@@ -24,7 +24,7 @@ class RecvProp;
 // This is passed into RecvProxy functions.
 class CRecvProxyData
 {
-   public:
+    public:
     const RecvProp *m_pRecvProp;  // The property it's receiving.
 
     DVariant m_Value;  // The value given to you to store.
@@ -60,7 +60,7 @@ typedef void ( *DataTableRecvVarProxyFn )( const RecvProp *pProp, void **pOut, v
 // make some optimizations.
 class CStandardRecvProxies
 {
-   public:
+    public:
     CStandardRecvProxies();
 
     RecvVarProxyFn m_Int32ToInt8;
@@ -79,7 +79,7 @@ class CRecvDecoder;
 class RecvProp
 {
     // This info comes from the receive data table.
-   public:
+    public:
     RecvProp();
 
     void InitArray( int nElements, int elementStride );
@@ -127,13 +127,13 @@ class RecvProp
     const char *GetParentArrayPropName();
     void SetParentArrayPropName( const char *pArrayPropName );
 
-   public:
+    public:
     const char *m_pVarName;
     SendPropType m_RecvType;
     int m_Flags;
     int m_StringBufferSize;
 
-   private:
+    private:
     bool m_bInsideArray;  // Set to true by the engine if this property sits inside an array.
 
     // Extra data that certain special property types bind to the property here.
@@ -159,7 +159,7 @@ class RecvProp
 
 class RecvTable
 {
-   public:
+    public:
     typedef RecvProp PropType;
 
     RecvTable();
@@ -181,7 +181,7 @@ class RecvTable
     void SetInMainList( bool bInList );
     bool IsInMainList() const;
 
-   public:
+    public:
     // Properties described in a table.
     RecvProp *m_pProps;
     int m_nProps;
@@ -192,7 +192,7 @@ class RecvTable
 
     const char *m_pNetTableName;  // The name matched between client and server.
 
-   private:
+    private:
     bool m_bInitialized;
     bool m_bInMainList;
 };
@@ -330,12 +330,12 @@ RecvProp RecvPropVectorXY(
 #if 0  // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 
 RecvProp RecvPropQuaternion(
-	const char *pVarName, 
-	int offset, 
-	int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags=0, 
-	RecvVarProxyFn varProxy=RecvProxy_QuaternionToQuaternion
-	);
+    const char *pVarName,
+    int offset,
+    int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
+    int flags=0,
+    RecvVarProxyFn varProxy=RecvProxy_QuaternionToQuaternion
+    );
 #endif
 
 RecvProp RecvPropInt(

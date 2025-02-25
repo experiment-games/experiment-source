@@ -48,7 +48,7 @@ class CWheelOfDoomSpiral : public CBaseAnimating
     DECLARE_CLASS( CWheelOfDoom, CBaseAnimating );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CWheelOfDoomSpiral()
     {
         m_flScale = 0.f;
@@ -79,7 +79,7 @@ class CWheelOfDoomSpiral : public CBaseAnimating
         SetNextThink( gpGlobals->curtime );
     }
 
-   private:
+    private:
     void GrowThink()
     {
         // Grow ourselves over time
@@ -131,9 +131,9 @@ END_DATADESC()
 #endif
 CWheelOfDoom::CWheelOfDoom( void )
     : m_EffectManager( this ),
-      m_pChosenEffect( NULL ),
-      m_pSpiral( NULL ),
-      m_flFinishBroadcastingEffectTime( 0.f )
+    m_pChosenEffect( NULL ),
+    m_pSpiral( NULL ),
+    m_flFinishBroadcastingEffectTime( 0.f )
 {
     AddEffects( EF_NODRAW );
 
@@ -863,8 +863,8 @@ void CWheelOfDoom::WOD_Pee::UpdateEffect( EffectData_t& data )
     Vector vBoxMin = pCloud->GetAbsOrigin() + vWorldMins;
     Vector vBoxMax = pCloud->GetAbsOrigin() + vWorldMaxs;
     Vector vRandomPos( RandomFloat( vBoxMin.x, vBoxMax.x ),
-                       RandomFloat( vBoxMin.y, vBoxMax.y ),
-                       RandomFloat( vBoxMin.z, vBoxMax.z ) );
+                        RandomFloat( vBoxMin.y, vBoxMax.y ),
+                        RandomFloat( vBoxMin.z, vBoxMax.z ) );
 
     // Drop some pee
     CTFProjectile_Jar* pGrenade = static_cast< CTFProjectile_Jar* >( CBaseEntity::CreateNoSpawn( "tf_projectile_jar", vRandomPos, QAngle( 0, 0, 0 ), NULL ) );
@@ -872,8 +872,8 @@ void CWheelOfDoom::WOD_Pee::UpdateEffect( EffectData_t& data )
 
     // Random angular impulse
     Vector angImpulse( RandomFloat( -300.f, 300.f ),
-                       RandomFloat( -300.f, 300.f ),
-                       RandomFloat( -300.f, 300.f ) );
+                        RandomFloat( -300.f, 300.f ),
+                        RandomFloat( -300.f, 300.f ) );
 
     // Add some spin
     IPhysicsObject* pPhysicsObject = pGrenade->VPhysicsGetObject();

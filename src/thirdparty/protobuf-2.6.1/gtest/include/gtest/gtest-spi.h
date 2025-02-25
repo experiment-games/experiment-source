@@ -52,7 +52,7 @@ namespace testing
 class GTEST_API_ ScopedFakeTestPartResultReporter
     : public TestPartResultReporterInterface
 {
-   public:
+    public:
     // The two possible mocking modes of this object.
     enum InterceptMode
     {
@@ -68,7 +68,7 @@ class GTEST_API_ ScopedFakeTestPartResultReporter
 
     // Same as above, but you can choose the interception scope of this object.
     ScopedFakeTestPartResultReporter( InterceptMode intercept_mode,
-                                      TestPartResultArray* result );
+                                    TestPartResultArray* result );
 
     // The d'tor restores the previous test part result reporter.
     virtual ~ScopedFakeTestPartResultReporter();
@@ -80,7 +80,7 @@ class GTEST_API_ ScopedFakeTestPartResultReporter
     // interface.
     virtual void ReportTestPartResult( const TestPartResult& result );
 
-   private:
+    private:
     void Init();
 
     const InterceptMode intercept_mode_;
@@ -100,14 +100,14 @@ namespace internal
 // non-fatal failure will be generated.
 class GTEST_API_ SingleFailureChecker
 {
-   public:
+    public:
     // The constructor remembers the arguments.
     SingleFailureChecker( const TestPartResultArray* results,
-                          TestPartResult::Type type,
-                          const string& substr );
+                        TestPartResult::Type type,
+                        const string& substr );
     ~SingleFailureChecker();
 
-   private:
+    private:
     const TestPartResultArray* const results_;
     const TestPartResult::Type type_;
     const string substr_;
@@ -147,7 +147,7 @@ class GTEST_API_ SingleFailureChecker
     {                                                                                \
         class GTestExpectFatalFailureHelper                                          \
         {                                                                            \
-           public:                                                                   \
+            public:                                                                   \
             static void Execute()                                                    \
             {                                                                        \
                 statement;                                                           \
@@ -170,7 +170,7 @@ class GTEST_API_ SingleFailureChecker
     {                                                                                \
         class GTestExpectFatalFailureHelper                                          \
         {                                                                            \
-           public:                                                                   \
+            public:                                                                   \
             static void Execute()                                                    \
             {                                                                        \
                 statement;                                                           \

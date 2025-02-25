@@ -175,7 +175,7 @@ void UTIL_StripInvalidCharacters( char *pszInput, int maxlen )
     while ( *pIn )
     {
         if ( ( *pIn != '"' ) &&
-             ( *pIn != '%' ) )
+            ( *pIn != '%' ) )
         {
             *pOut++ = *pIn;
         }
@@ -956,15 +956,15 @@ void CDescription::TransferCurrentValues( const char *pszConfigFile )
     while ( pObj )
     {
         /*
-          TODO: if/when prefixed keys are implemented
-          const char *value;
+        TODO: if/when prefixed keys are implemented
+        const char *value;
         if ( pObj->bSetInfo )
         {
-          value = engine->LocalPlayerInfo_ValueForKey( pObj->cvarname ); // use LocalPlayerInfo because PlayerInfo strips keys prefixed with "_"
+        value = engine->LocalPlayerInfo_ValueForKey( pObj->cvarname ); // use LocalPlayerInfo because PlayerInfo strips keys prefixed with "_"
         }
         else
         {
-          value = engine->pfnGetCvarString( pObj->cvarname );
+        value = engine->pfnGetCvarString( pObj->cvarname );
         }
         */
 

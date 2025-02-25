@@ -84,7 +84,7 @@ class CStatsRecorder : public CAutoGameSystem
         UploadPerfData( PERFDATA_SHUTDOWN );
     }
 
-   public:
+    public:
     int m_nWriteIndex;
     float m_flTimeLevelStart;
     float m_flTotalTimeInLevels;
@@ -230,9 +230,9 @@ void CStatsRecorder::UploadPerfData( int iType )
         if ( pPerfData )
         {
             g_pClientGameStatsUploader->UploadGameStats( "",
-                                                         1,
-                                                         1 + strlen( pPerfData ),
-                                                         pPerfData );
+                                                        1,
+                                                        1 + strlen( pPerfData ),
+                                                        pPerfData );
         }
     }
 }

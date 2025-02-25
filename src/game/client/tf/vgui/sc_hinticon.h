@@ -19,7 +19,7 @@
 
 class CSCHintIcon : public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CSCHintIcon, vgui::Panel );
 
     CSCHintIcon( vgui::Panel* parent, const char* panelName );
@@ -42,7 +42,7 @@ class CSCHintIcon : public vgui::Panel
 
     virtual void PaintBackground();
 
-   private:
+    private:
     CUtlString m_strActionName;
     CUtlString m_strActionSet;
     ControllerActionSetHandle_t m_actionSetHandle;

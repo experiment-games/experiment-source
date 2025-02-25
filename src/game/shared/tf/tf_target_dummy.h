@@ -17,7 +17,7 @@ class CTFTargetDummy : public CBaseAnimating, public ITFTargetDummy
 {
     DECLARE_CLASS( CTFTargetDummy, CBaseAnimating );
 
-   public:
+    public:
     static CTFTargetDummy* Create( const Vector& vPosition, const QAngle& qAngles, CTFPlayer* pOwner );
 
     CTFTargetDummy();
@@ -35,7 +35,7 @@ class CTFTargetDummy : public CBaseAnimating, public ITFTargetDummy
 
     virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const;
 
-   private:
+    private:
     // Gibs.
     CUtlVector< breakmodel_t > m_aGibs;
 };

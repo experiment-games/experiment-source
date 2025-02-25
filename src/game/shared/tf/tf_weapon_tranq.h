@@ -21,7 +21,7 @@
 //
 class CTFTranq : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFTranq, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -39,7 +39,7 @@ class CTFTranq : public CTFWeaponBaseGun
         return TF_WEAPON_TRANQ;
     }
 
-   private:
+    private:
     CTFTranq( const CTFTranq& ) {}
 };
 

@@ -269,12 +269,12 @@ void DrawAmbientActiveCirlce( float flXPos, float flYPos, const Color& color )
 }
 
 void CQuestMapNodePanel::DrawNode( float flXPos,
-                                   float flYPos,
-                                   bool bPurchased,
-                                   const Color& colorActive,
-                                   const Color& colorBonus,
-                                   const Color& colorInactive,
-                                   float flScale ) const
+                                    float flYPos,
+                                    bool bPurchased,
+                                    const Color& colorActive,
+                                    const Color& colorBonus,
+                                    const Color& colorInactive,
+                                    float flScale ) const
 {
     Color colorBlack( 0, 0, 0, 255 );
 

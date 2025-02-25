@@ -23,7 +23,7 @@ class CTFHudRobotDestruction_StateImage : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudRobotDestruction_StateImage, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudRobotDestruction_StateImage( Panel *parent, const char *name, const char *pszResFile );
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
@@ -34,7 +34,7 @@ class CTFHudRobotDestruction_StateImage : public vgui::EditablePanel
         m_pImage->SetVisible( bVisible );
     }
 
-   protected:
+    protected:
     vgui::ImagePanel *m_pImage;
     vgui::ImagePanel *m_pRobotImage;
     const char *m_pszResFile;
@@ -45,12 +45,12 @@ class CTFHudRobotDestruction_DeadImage : public CTFHudRobotDestruction_StateImag
 {
     DECLARE_CLASS_SIMPLE( CTFHudRobotDestruction_DeadImage, CTFHudRobotDestruction_StateImage );
 
-   public:
+    public:
     CTFHudRobotDestruction_DeadImage( Panel *parent, const char *name, const char *pszResFile );
 
     void SetProgress( float flProgress );
 
-   private:
+    private:
     CTFProgressBar *m_pRespawnProgressBar;
 };
 
@@ -59,7 +59,7 @@ class CTFHudRobotDestruction_ActiveImage : public CTFHudRobotDestruction_StateIm
 {
     DECLARE_CLASS_SIMPLE( CTFHudRobotDestruction_ActiveImage, CTFHudRobotDestruction_StateImage );
 
-   public:
+    public:
     CTFHudRobotDestruction_ActiveImage( Panel *parent, const char *name, const char *pszResFile );
 
     virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
@@ -70,7 +70,7 @@ class CTFHudRobotDestruction_RobotIndicator : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudRobotDestruction_RobotIndicator, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudRobotDestruction_RobotIndicator( vgui::Panel *pParent, const char *pszName, CTFRobotDestruction_RobotGroup *pGroup );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
@@ -99,7 +99,7 @@ class CTFHudRobotDestruction_RobotIndicator : public vgui::EditablePanel
         m_pPrevRobotIndicator = pPrev;
     }
 
-   private:
+    private:
     CTFHudRobotDestruction_RobotIndicator *m_pPrevRobotIndicator;
     CTFHudRobotDestruction_RobotIndicator *m_pNextRobotIndicator;
     CHandle< CTFRobotDestruction_RobotGroup > m_hGroup;
@@ -118,7 +118,7 @@ class CTFHUDRobotDestruction : public vgui::EditablePanel, public CGameEventList
 {
     DECLARE_CLASS_SIMPLE( CTFHUDRobotDestruction, vgui::EditablePanel );
 
-   public:
+    public:
     typedef CUtlVector< CTFHudRobotDestruction_RobotIndicator * > RobotVector_t;
 
     CTFHUDRobotDestruction( vgui::Panel *parent, const char *name );
@@ -139,7 +139,7 @@ class CTFHUDRobotDestruction : public vgui::EditablePanel, public CGameEventList
 
     void UpdateRobotElements();
 
-   private:
+    private:
     void PaintPDPlayerScore( const CTFPlayer *pPlayer );
 
     void UpdateStolenPoints( int nTeam, EditablePanel *pContainer );
@@ -174,7 +174,7 @@ class CTFHUDRobotDestruction : public vgui::EditablePanel, public CGameEventList
     {
         DECLARE_CLASS_SIMPLE( CProgressPanel, ImagePanel );
 
-       public:
+        public:
         CProgressPanel( vgui::Panel *parent, const char *name );
 
         virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
@@ -193,7 +193,7 @@ class CTFHUDRobotDestruction : public vgui::EditablePanel, public CGameEventList
             m_StandardColor = c;
         }
 
-       private:
+        private:
         void CaptureBounds();
         void CalculateSize();
 

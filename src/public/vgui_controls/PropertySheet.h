@@ -30,7 +30,7 @@ class PropertySheet : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( PropertySheet, EditablePanel );
 
-   public:
+    public:
     PropertySheet( Panel *parent, const char *panelName, bool draggableTabs = false );
     PropertySheet( Panel *parent, const char *panelName, ComboBox *combo );
     ~PropertySheet();
@@ -103,10 +103,10 @@ class PropertySheet : public EditablePanel
     virtual bool IsSmallTabs() const;
 
     /* MESSAGES SENT TO PAGES
-      "PageShow"	- sent when a page is shown
-      "PageHide"	- sent when a page is hidden
-      "ResetData"	- sent when the data should be reloaded from doc
-      "ApplyChanges" - sent when data should be written to doc
+    "PageShow"	- sent when a page is shown
+    "PageHide"	- sent when a page is hidden
+    "ResetData"	- sent when the data should be reloaded from doc
+    "ApplyChanges" - sent when data should be written to doc
     */
 
     virtual void OnPanelDropped( CUtlVector< KeyValues * > &msglist );
@@ -131,7 +131,7 @@ class PropertySheet : public EditablePanel
 
     void SetTabFont( vgui::HFont hFont );
 
-   protected:
+    protected:
     virtual void PaintBorder();
     virtual void PerformLayout();
     virtual Panel *HasHotkey( wchar_t key );
@@ -152,7 +152,7 @@ class PropertySheet : public EditablePanel
     MESSAGE_FUNC_HANDLE( OnCurrentDefaultButtonSet, "CurrentDefaultButtonSet", button );
     MESSAGE_FUNC( OnFindDefaultButton, "FindDefaultButton" );
 
-   private:
+    private:
     // enable/disable the page with title "title"
     virtual void SetPageEnabled( const char *title, bool state );
 
@@ -160,7 +160,7 @@ class PropertySheet : public EditablePanel
     {
         Page_t()
             : page( 0 ),
-              contextMenu( false )
+            contextMenu( false )
         {
         }
 

@@ -58,16 +58,16 @@ enum GameStatsVersions_t
 
 struct BasicGameStatsRecord_t
 {
-   public:
+    public:
     BasicGameStatsRecord_t()
         : m_nCount( 0 ),
-          m_nSeconds( 0 ),
-          m_nCommentary( 0 ),
-          m_nHDR( 0 ),
-          m_nCaptions( 0 ),
-          m_bSteam( true ),
-          m_bCyberCafe( false ),
-          m_nDeaths( 0 )
+        m_nSeconds( 0 ),
+        m_nCommentary( 0 ),
+        m_nHDR( 0 ),
+        m_nCaptions( 0 ),
+        m_bSteam( true ),
+        m_bCyberCafe( false ),
+        m_nDeaths( 0 )
     {
         Q_memset( m_nSkill, 0, sizeof( m_nSkill ) );
     }
@@ -78,7 +78,7 @@ struct BasicGameStatsRecord_t
     bool ParseFromBuffer( CUtlBuffer &buf, int iBufferStatsVersion );
 
     // Data
-   public:
+    public:
     int m_nCount;
     int m_nSeconds;
 
@@ -93,13 +93,13 @@ struct BasicGameStatsRecord_t
 
 struct BasicGameStats_t
 {
-   public:
+    public:
     BasicGameStats_t()
         : m_nSecondsToCompleteGame( 0 ),
-          m_nHL2ChaptureUnlocked( 0 ),
-          m_bSteam( true ),
-          m_bCyberCafe( false ),
-          m_nDXLevel( 0 )
+        m_nHL2ChaptureUnlocked( 0 ),
+        m_bSteam( true ),
+        m_bCyberCafe( false ),
+        m_nDXLevel( 0 )
     {
     }
 
@@ -111,7 +111,7 @@ struct BasicGameStats_t
     BasicGameStatsRecord_t *FindOrAddRecordForMap( char const *mapname );
 
     // Data
-   public:
+    public:
     int m_nSecondsToCompleteGame;  // 0 means they haven't finished playing yet
 
     BasicGameStatsRecord_t m_Summary;  // Summary record
@@ -125,7 +125,7 @@ struct BasicGameStats_t
 
 class CBaseGameStats
 {
-   public:
+    public:
     CBaseGameStats();
 
     // override this to declare what format you want to send.  New products should use new format.
@@ -313,7 +313,7 @@ class CBaseGameStats
     void SetDXLevelStatistic( int iDXLevel );
     void SetHL2UnlockedChapterStatistic( void );
 #endif  // GAMEDLL
-   public:
+    public:
 #ifdef GAME_DLL
     BasicGameStats_t m_BasicStats;  // exposed in case you do a complete overhaul and still want to save it
 #endif
@@ -406,7 +406,7 @@ extern CBaseGameStats *gamestats;  // starts out pointing at a singleton of the 
 // used to drive most of the game stat event handlers as well as track basic stats under the hood of CBaseGameStats
 class CBaseGameStats_Driver : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CBaseGameStats_Driver( void );
 
     typedef CAutoGameSystemPerFrame BaseClass;

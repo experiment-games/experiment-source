@@ -18,7 +18,7 @@ class INextBotEntityFilter;
  */
 class IVision : public INextBotComponent
 {
-   public:
+    public:
     IVision( INextBot *bot );
     virtual ~IVision() {}
 
@@ -32,13 +32,13 @@ class IVision : public INextBotComponent
     //
 
     /**
-     * Iterate each interesting entity we are aware of.
-     * If functor returns false, stop iterating and return false.
-     * NOTE: known.GetEntity() is guaranteed to be non-NULL
-     */
+    * Iterate each interesting entity we are aware of.
+    * If functor returns false, stop iterating and return false.
+    * NOTE: known.GetEntity() is guaranteed to be non-NULL
+    */
     class IForEachKnownEntity
     {
-       public:
+        public:
         virtual bool Inspect( const CKnownEntity &known ) = 0;
     };
     virtual bool ForEachKnownEntity( IForEachKnownEntity &func );
@@ -66,19 +66,19 @@ class IVision : public INextBotComponent
     //-- physical vision interface follows ------------------------------------------------------
 
     /**
-     * Populate "potentiallyVisible" with the set of all entities we could potentially see.
-     * Entities in this set will be tested for visibility/recognition in IVision::Update()
-     */
+    * Populate "potentiallyVisible" with the set of all entities we could potentially see.
+    * Entities in this set will be tested for visibility/recognition in IVision::Update()
+    */
     virtual void CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * > *potentiallyVisible );
 
     virtual float GetMaxVisionRange( void ) const;    // return maximum distance vision can reach
     virtual float GetMinRecognizeTime( void ) const;  // return VISUAL reaction time
 
     /**
-     * IsAbleToSee() returns true if the viewer can ACTUALLY SEE the subject or position,
-     * taking into account blindness, smoke effects, invisibility, etc.
-     * If 'visibleSpot' is non-NULL, the highest priority spot on the subject that is visible is returned.
-     */
+    * IsAbleToSee() returns true if the viewer can ACTUALLY SEE the subject or position,
+    * taking into account blindness, smoke effects, invisibility, etc.
+    * If 'visibleSpot' is non-NULL, the highest priority spot on the subject that is visible is returned.
+    */
     enum FieldOfViewCheckType
     {
         USE_FOV,
@@ -91,8 +91,8 @@ class IVision : public INextBotComponent
     virtual bool IsVisibleEntityNoticed( CBaseEntity *subject ) const;  // return true if we 'notice' the subject, even though we have LOS to it
 
     /**
-     * Check if 'subject' is within the viewer's field of view
-     */
+    * Check if 'subject' is within the viewer's field of view
+    */
     virtual bool IsInFieldOfView( const Vector &pos ) const;
     virtual bool IsInFieldOfView( CBaseEntity *subject ) const;
     virtual float GetDefaultFieldOfView( void ) const;  // return default FOV in degrees
@@ -102,16 +102,16 @@ class IVision : public INextBotComponent
     virtual bool IsLineOfSightClear( const Vector &pos ) const;  // return true if the ray to the given point is unobstructed
 
     /**
-     * Returns true if the ray between the position and the subject is unobstructed.
-     * A visible spot on the subject is returned in 'visibleSpot'.
-     */
+    * Returns true if the ray between the position and the subject is unobstructed.
+    * A visible spot on the subject is returned in 'visibleSpot'.
+    */
     virtual bool IsLineOfSightClearToEntity( const CBaseEntity *subject, Vector *visibleSpot = NULL ) const;
 
     /// @todo: Implement LookAt system
     virtual bool IsLookingAt( const Vector &pos, float cosTolerance = 0.95f ) const;                  // are we looking at the given position
     virtual bool IsLookingAt( const CBaseCombatCharacter *actor, float cosTolerance = 0.95f ) const;  // are we looking at the given actor
 
-   private:
+    private:
     CountdownTimer m_scanTimer;  // for throttling update rate
 
     float m_FOV;         // current FOV in degrees

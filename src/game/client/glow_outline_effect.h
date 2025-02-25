@@ -24,7 +24,7 @@ static const int GLOW_FOR_ALL_SPLIT_SCREEN_SLOTS = -1;
 
 class CGlowObjectManager
 {
-   public:
+    public:
     CGlowObjectManager()
         : m_nFirstFreeSlot( GlowObjectDefinition_t::END_OF_FREE_LIST )
     {
@@ -115,7 +115,7 @@ class CGlowObjectManager
 
     void RenderGlowEffects( const CViewSetup *pSetup, int nSplitScreenSlot );
 
-   private:
+    private:
     void RenderGlowModels( const CViewSetup *pSetup, int nSplitScreenSlot, CMatRenderContextPtr &pRenderContext );
     void ApplyEntityGlowEffects( const CViewSetup *pSetup, int nSplitScreenSlot, CMatRenderContextPtr &pRenderContext, float flBloomScale, int x, int y, int w, int h );
 
@@ -124,10 +124,10 @@ class CGlowObjectManager
         bool ShouldDraw( int nSlot ) const
         {
             return m_hEntity.Get() &&
-                   ( m_nSplitScreenSlot == GLOW_FOR_ALL_SPLIT_SCREEN_SLOTS || m_nSplitScreenSlot == nSlot ) &&
-                   ( m_bRenderWhenOccluded || m_bRenderWhenUnoccluded ) &&
-                   m_hEntity->ShouldDraw() &&
-                   !m_hEntity->IsDormant();
+                    ( m_nSplitScreenSlot == GLOW_FOR_ALL_SPLIT_SCREEN_SLOTS || m_nSplitScreenSlot == nSlot ) &&
+                    ( m_bRenderWhenOccluded || m_bRenderWhenUnoccluded ) &&
+                    m_hEntity->ShouldDraw() &&
+                    !m_hEntity->IsDormant();
         }
 
         bool IsUnused() const
@@ -160,7 +160,7 @@ extern CGlowObjectManager g_GlowObjectManager;
 
 class CGlowObject
 {
-   public:
+    public:
     CGlowObject( C_BaseEntity *pEntity, const Vector &vGlowColor = Vector( 1.0f, 1.0f, 1.0f ), float flGlowAlpha = 1.0f, bool bRenderWhenOccluded = false, bool bRenderWhenUnoccluded = false, int nSplitScreenSlot = GLOW_FOR_ALL_SPLIT_SCREEN_SLOTS )
     {
         m_nGlowObjectHandle = g_GlowObjectManager.RegisterGlowObject( pEntity, vGlowColor, flGlowAlpha, bRenderWhenOccluded, bRenderWhenUnoccluded, nSplitScreenSlot );
@@ -208,7 +208,7 @@ class CGlowObject
 
     // Add more accessors/mutators here as needed
 
-   private:
+    private:
     int m_nGlowObjectHandle;
 
     // Assignment & copy-construction disallowed

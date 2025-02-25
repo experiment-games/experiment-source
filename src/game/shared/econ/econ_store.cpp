@@ -166,8 +166,8 @@ ENUMSTRINGS_START( ECurrency ){ k_ECurrencyUSD, "USD" },
     }
 
     m_fRentalPriceScale = fMaxRentalPriceScale <= 0.0f || fMaxRentalPriceScale >= 100.0f
-                              ? 100.0f
-                              : fMaxRentalPriceScale;
+                            ? 100.0f
+                            : fMaxRentalPriceScale;
 
     // Clean up
     vecTokens.PurgeAndDeleteElements();
@@ -206,7 +206,7 @@ bool econ_store_entry_t::IsListedInSubcategories( const CEconStoreCategoryManage
 bool econ_store_entry_t::IsListedInCategoryOrSubcategories( const CEconStoreCategoryManager::StoreCategory_t &Category ) const
 {
     return IsListedInCategory( Category.m_unID ) ||
-           IsListedInSubcategories( Category );
+            IsListedInSubcategories( Category );
 }
 
 bool econ_store_entry_t::IsOnSale( ECurrency eCurrency ) const
@@ -224,7 +224,7 @@ bool econ_store_entry_t::HasDiscount( ECurrency eCurrency, item_price_t *out_pun
 {
     // Items on sale always report as being discounted.
     if ( IsOnSale( eCurrency ) ||
-         ( GetItemDefinitionIndex() == InventoryManager()->GetLocalInventory()->GetPreviewItemDef() ) )
+        ( GetItemDefinitionIndex() == InventoryManager()->GetLocalInventory()->GetPreviewItemDef() ) )
     {
         if ( out_punOptionalBasePrice )
         {
@@ -246,8 +246,8 @@ bool econ_store_entry_t::HasDiscount( ECurrency eCurrency, item_price_t *out_pun
     FOR_EACH_VEC( pBundleInfo->vecItemDefs, bundleIdx )
     {
         const econ_store_entry_t *pCurEntry = pBundleInfo->vecItemDefs[bundleIdx]
-                                                  ? GetEconPriceSheet()->GetEntry( pBundleInfo->vecItemDefs[bundleIdx]->GetDefinitionIndex() )
-                                                  : NULL;
+                                                ? GetEconPriceSheet()->GetEntry( pBundleInfo->vecItemDefs[bundleIdx]->GetDefinitionIndex() )
+                                                : NULL;
         if ( pCurEntry )
         {
             unTotalPriceOfBundleItems += pCurEntry->GetCurrentPrice( eCurrency );
@@ -295,8 +295,8 @@ item_price_t econ_store_entry_t::GetCurrentPrice( ECurrency eCurrency ) const
     }
 #endif
     return IsOnSale( eCurrency )
-               ? GetSalePrice( eCurrency )
-               : GetBasePrice( eCurrency );
+                ? GetSalePrice( eCurrency )
+                : GetBasePrice( eCurrency );
 }
 
 float econ_store_entry_t::GetRentalPriceScale() const
@@ -506,7 +506,7 @@ bool CEconStorePriceSheet::InitFromKV( KeyValues *pKVRoot )
         CEconItemSchema *pSchema = GEconManager()->GetItemSchema();
         m_StorePromotionSpendForFreeItem.m_pItemDef = pSchema->GetItemDefinitionByName( pPromotionsKV->GetString( "item_definition" ) );
         AssertMsg( m_StorePromotionSpendForFreeItem.m_pItemDef || !pPromotionsKV->GetString( "item_definition", NULL ),
-                   "Could find not the specified item for \"promotion_spend_for_free_item\"" );
+                    "Could find not the specified item for \"promotion_spend_for_free_item\"" );
 #endif
     }
 
@@ -855,9 +855,9 @@ bool CEconStorePriceSheet::BInitMarketEntryFromKV( KeyValues *pKVEntry )
 {
     item_price_t unSalePrice = 0;
     /*
-      // TF2 doesn't support NXP or RMB yet
-      if ( eCurrency == k_ECurrencyNXP || eCurrency == k_ECurrencyRMB )
-      {
+    // TF2 doesn't support NXP or RMB yet
+    if ( eCurrency == k_ECurrencyNXP || eCurrency == k_ECurrencyRMB )
+    {
         // For these currencies, we calculate the sale price based on the discount percentage times the *USD* base price -- rather than the discount percentage
         // times the base price for the given currency.
         const item_price_t unSalePrice_USD = econ_store_entry_t::GetDiscountedPrice( unPreDiscountPrice, k_ECurrencyUSD, fDiscountPercentage );
@@ -867,10 +867,10 @@ bool CEconStorePriceSheet::BInitMarketEntryFromKV( KeyValues *pKVEntry )
         Assert( unSalePrice < unPreDiscountPrice );
         if ( unSalePrice >= unPreDiscountPrice )
         {
-          unSalePrice = unPreDiscountPrice;
+        unSalePrice = unPreDiscountPrice;
         }
-      }
-      else
+    }
+    else
     */
     {
         unSalePrice = econ_store_entry_t::GetDiscountedPrice( unPreDiscountPrice, eCurrency, fDiscountPercentage );
@@ -1004,8 +1004,8 @@ bool CEconStoreEntryLess::Less( const uint16 &lhs, const uint16 &rhs, void *pCon
                     {
                         // Note: locale-savvy string sorting uses wcscoll, not wcscmp
                         return sortType == kEconStoreSortType_Name_ZToA
-                                   ? wcscoll( wszItemNameA, wszItemNameB ) > 0  // only sort in reverse alphabetical order if asked to -- fall-through cases uses forward order
-                                   : wcscoll( wszItemNameA, wszItemNameB ) < 0;
+                                    ? wcscoll( wszItemNameA, wszItemNameB ) > 0  // only sort in reverse alphabetical order if asked to -- fall-through cases uses forward order
+                                    : wcscoll( wszItemNameA, wszItemNameB ) < 0;
                     }
                 }
                 break;
@@ -1088,19 +1088,19 @@ static void InitStreamLocale( std::wostringstream &stream, ELanguage eLang, uint
     // But if our amount is fractional, we should show it regardless
     // hack hack - certain currencies should not show fractional symbol - see if we can wire this through from config at some point
     if ( ( eCurrencyCode == k_ECurrencyRUB ||
-           eCurrencyCode == k_ECurrencyJPY ||
-           eCurrencyCode == k_ECurrencyIDR ||
-           eCurrencyCode == k_ECurrencyVND ||
-           eCurrencyCode == k_ECurrencyKRW ||
-           eCurrencyCode == k_ECurrencyUAH ||
-           eCurrencyCode == k_ECurrencyCNY ||
-           eCurrencyCode == k_ECurrencyCOP ||
-           eCurrencyCode == k_ECurrencyTWD ||
-           eCurrencyCode == k_ECurrencyINR ||
-           eCurrencyCode == k_ECurrencyCRC ||
-           eCurrencyCode == k_ECurrencyUYU ||
-           eCurrencyCode == k_ECurrencyKZT ) &&
-         nExpectedAmount % 100 == 0 )
+            eCurrencyCode == k_ECurrencyJPY ||
+            eCurrencyCode == k_ECurrencyIDR ||
+            eCurrencyCode == k_ECurrencyVND ||
+            eCurrencyCode == k_ECurrencyKRW ||
+            eCurrencyCode == k_ECurrencyUAH ||
+            eCurrencyCode == k_ECurrencyCNY ||
+            eCurrencyCode == k_ECurrencyCOP ||
+            eCurrencyCode == k_ECurrencyTWD ||
+            eCurrencyCode == k_ECurrencyINR ||
+            eCurrencyCode == k_ECurrencyCRC ||
+            eCurrencyCode == k_ECurrencyUYU ||
+            eCurrencyCode == k_ECurrencyKZT ) &&
+        nExpectedAmount % 100 == 0 )
     {
         stream.precision( 0 );
         stream.setf( std::ios_base::fixed );
@@ -1421,6 +1421,6 @@ int GetStoreVersion()
 const CEconStorePriceSheet *GetEconPriceSheet()
 {
     return EconUI() && EconUI()->GetStorePanel()
-               ? EconUI()->GetStorePanel()->GetPriceSheet()
-               : NULL;
+                ? EconUI()->GetStorePanel()->GetPriceSheet()
+                : NULL;
 }

@@ -28,7 +28,7 @@ class MenuButton : public Button
 {
     DECLARE_CLASS_SIMPLE( MenuButton, Button );
 
-   public:
+    public:
     MenuButton( Panel *parent, const char *panelName, const char *text );
     ~MenuButton();
 
@@ -68,7 +68,7 @@ class MenuButton : public Button
 
     Menu *GetMenu();
 
-   private:
+    private:
     Menu *m_pMenu;
     Menu::MenuDirection_e m_iDirection;
 

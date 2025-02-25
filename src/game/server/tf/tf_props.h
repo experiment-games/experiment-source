@@ -16,7 +16,7 @@ class CPropSoccerBall : public CPhysicsProp
 {
     DECLARE_CLASS( CPropSoccerBall, CPhysicsProp );
 
-   public:
+    public:
     CPropSoccerBall()
         : m_flNextAllowedImpactTime( 0.f ), m_hLastToucher( NULL )
     {
@@ -45,7 +45,7 @@ class CPropSoccerBall : public CPhysicsProp
         return false;
     }
 
-   private:
+    private:
     string_t m_iszTriggers;
     float m_flNextAllowedImpactTime;
     CUtlVector< CBaseTrigger * > m_vecTriggers;

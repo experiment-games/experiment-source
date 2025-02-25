@@ -22,7 +22,7 @@
 //=========================================================
 class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CExperimentScriptedWeapon, CWeaponExperimentBase );
     DECLARE_DATADESC();
 
@@ -98,7 +98,7 @@ class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
 
     virtual const Vector &GetBulletSpread( void );
 
-   public:
+    public:
     // Weapon info accessors for data in the weapon's data file
     CExperimentSWeaponInfo *m_pLuaWeaponInfo;
     virtual const FileWeaponInfo_t &GetWpnData( void ) const;
@@ -118,7 +118,7 @@ class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
     virtual char const *GetPrintName( void ) const;
     bool IsMeleeWeapon() const;
 
-   public:
+    public:
 // Server Only Methods
 #if !defined( CLIENT_DLL )
 
@@ -132,7 +132,7 @@ class CExperimentScriptedWeapon : public CBaseExperimentCombatWeapon
 
 #endif  // End client-only methods
 
-   private:
+    private:
     CExperimentScriptedWeapon( const CExperimentScriptedWeapon & );
 
     CNetworkString( m_iScriptedClassname, MAX_WEAPON_STRING );

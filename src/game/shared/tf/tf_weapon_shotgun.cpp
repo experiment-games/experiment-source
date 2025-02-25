@@ -265,7 +265,7 @@ int CTFShotgun_Revenge::GetWorldModelIndex( void )
     // Engineer guitar support.
     CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
     if ( pPlayer && pPlayer->GetPlayerClass() && ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_ENGINEER ) &&
-         ( pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ) && ( pPlayer->m_Shared.GetTauntIndex() == TAUNT_BASE_WEAPON ) )
+        ( pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ) && ( pPlayer->m_Shared.GetTauntIndex() == TAUNT_BASE_WEAPON ) )
     {
         // While we are taunting, replace our normal world model with the guitar.
         m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_TAUNT_FRONTIER_JUSTICE_GUITAR_MODEL );

@@ -40,7 +40,7 @@ typedef struct
 
 class CScriptListItem
 {
-   public:
+    public:
     CScriptListItem();
     CScriptListItem( char const *strItem, char const *strValue );
 
@@ -52,7 +52,7 @@ class CScriptListItem
 
 class CScriptObject : public vgui::Panel
 {
-   public:
+    public:
     void AddItem( CScriptListItem *pItem );
     void RemoveAndDeleteAllItems( void );
     CScriptObject( void );
@@ -90,7 +90,7 @@ class CScriptObject : public vgui::Panel
 
 abstract_class CDescription
 {
-   public:
+    public:
     CDescription( void );
     virtual ~CDescription();
 
@@ -118,11 +118,11 @@ abstract_class CDescription
         return m_pszHintText;
     };
 
-   public:
+    public:
     CScriptObject *pObjList;
     CScriptObject *FindObject( const char *pszObjectName );
 
-   private:
+    private:
     char *m_pszHintText;
     char *m_pszDescriptionType;
 };
@@ -135,7 +135,7 @@ class Panel;
 
 class mpcontrol_t : public vgui::Panel
 {
-   public:
+    public:
     mpcontrol_t( vgui::Panel *parent, char const *panelName );
 
     virtual void OnSizeChanged( int wide, int tall ) OVERRIDE;
@@ -150,7 +150,7 @@ class mpcontrol_t : public vgui::Panel
 
 class CInfoDescription : public CDescription
 {
-   public:
+    public:
     CInfoDescription( void );
 
     virtual void WriteScriptHeader( FileHandle_t fp ) OVERRIDE;

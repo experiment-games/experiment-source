@@ -40,7 +40,7 @@ struct cplane_t;
 
 class VMatrix
 {
-   public:
+    public:
     VMatrix() = default;
     VMatrix(
         vec_t m00,
@@ -145,7 +145,7 @@ class VMatrix
 #endif
 
     // Matrix->vector operations.
-   public:
+    public:
     // Multiply by a 3D vector (same as operator*).
     void V3Mul( const Vector &vIn, Vector &vOut ) const;
 
@@ -173,7 +173,7 @@ class VMatrix
 #endif
 
     // Matrix->plane operations.
-   public:
+    public:
     // Transform the plane. The matrix can only contain translation and rotation.
     void TransformPlane( const VPlane &inPlane, VPlane &outPlane ) const;
 
@@ -183,7 +183,7 @@ class VMatrix
 #endif
 
     // Matrix->matrix operations.
-   public:
+    public:
     VMatrix &operator=( const VMatrix &mOther );
 
     // Multiply two matrices (out = this * vm).
@@ -209,7 +209,7 @@ class VMatrix
 #endif
 
     // Matrix operations.
-   public:
+    public:
     // Set to identity.
     void Identity();
 
@@ -251,7 +251,7 @@ class VMatrix
     VMatrix Transpose3x3() const;
 #endif
 
-   public:
+    public:
     // The matrix.
     vec_t m[4][4];
 };
@@ -802,9 +802,9 @@ inline void VMatrix::Identity()
 inline bool VMatrix::IsIdentity() const
 {
     return m[0][0] == 1.0f && m[0][1] == 0.0f && m[0][2] == 0.0f && m[0][3] == 0.0f &&
-           m[1][0] == 0.0f && m[1][1] == 1.0f && m[1][2] == 0.0f && m[1][3] == 0.0f &&
-           m[2][0] == 0.0f && m[2][1] == 0.0f && m[2][2] == 1.0f && m[2][3] == 0.0f &&
-           m[3][0] == 0.0f && m[3][1] == 0.0f && m[3][2] == 0.0f && m[3][3] == 1.0f;
+            m[1][0] == 0.0f && m[1][1] == 1.0f && m[1][2] == 0.0f && m[1][3] == 0.0f &&
+            m[2][0] == 0.0f && m[2][1] == 0.0f && m[2][2] == 1.0f && m[2][3] == 0.0f &&
+            m[3][0] == 0.0f && m[3][1] == 0.0f && m[3][2] == 0.0f && m[3][3] == 1.0f;
 }
 
 #ifndef VECTOR_NO_SLOW_OPERATIONS

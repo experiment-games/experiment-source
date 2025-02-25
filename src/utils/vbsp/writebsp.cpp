@@ -292,8 +292,8 @@ int CreateOrigFace( face_t *f )
         for ( j = firstmodeledge; j < numedges; j++ )
         {
             if ( ( eIndex[0] == dedges[j].v[1] ) &&
-                 ( eIndex[1] == dedges[j].v[0] ) &&
-                 ( edgefaces[j][0]->contents == f->contents ) )
+                ( eIndex[1] == dedges[j].v[0] ) &&
+                ( edgefaces[j][0]->contents == f->contents ) )
             {
                 // check for multiple backward edges!! -- shouldn't have
                 if ( edgefaces[j][1] )
@@ -672,8 +672,8 @@ int FindMatchingBrushSideTexinfo( int sideIndex, const texinfomap_t *pMap )
     for ( int j = 0; j < texinfo.Count(); j++ )
     {
         if ( pMap[j].refCount > 0 &&
-             texinfo[j].flags == sideTexFlags &&
-             g_SurfaceProperties[texinfo[j].texdata] == sideSurfaceProp )
+            texinfo[j].flags == sideTexFlags &&
+            g_SurfaceProperties[texinfo[j].texdata] == sideSurfaceProp )
         {
             // found one
             return j;
@@ -1122,9 +1122,9 @@ void BeginBSPFile( void )
 
     // BUGBUG: This doesn't work!
 #if 0
-	// make a default empty leaf for the tracing code
-	memset( &dleafs[1], 0, sizeof(dleafs[1]) );
-	dleafs[1].contents = CONTENTS_EMPTY;
+    // make a default empty leaf for the tracing code
+    memset( &dleafs[1], 0, sizeof(dleafs[1]) );
+    dleafs[1].contents = CONTENTS_EMPTY;
 #endif
 }
 

@@ -12,7 +12,7 @@
 // $monitorTextureVar
 class CMonitorMaterialProxy : public IMaterialProxy
 {
-   public:
+    public:
     CMonitorMaterialProxy();
     virtual ~CMonitorMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -22,7 +22,7 @@ class CMonitorMaterialProxy : public IMaterialProxy
         delete this;
     }
 
-   private:
+    private:
     IMaterialVar *m_pMonitorTextureVar;
 };
 

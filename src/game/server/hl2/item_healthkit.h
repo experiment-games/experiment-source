@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------
 class CNewWallHealth : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CNewWallHealth, CBaseAnimating );
 
     void Spawn();
@@ -52,7 +52,7 @@ class CNewWallHealth : public CBaseAnimating
 //-----------------------------------------------------------------------------
 class CWallHealth : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CWallHealth, CBaseToggle );
 
     void Spawn();

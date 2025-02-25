@@ -10,7 +10,7 @@
 
 class CTFBotSpyInfiltrate : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
@@ -28,7 +28,7 @@ class CTFBotSpyInfiltrate : public Action< CTFBot >
         return "SpyInfiltrate";
     };
 
-   private:
+    private:
     CountdownTimer m_repathTimer;
     PathFollower m_path;
 

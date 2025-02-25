@@ -60,7 +60,7 @@ enum TFNavAttributeType
 
 class CTFNavArea : public CNavArea
 {
-   public:
+    public:
     DECLARE_CLASS( CTFNavArea, CNavArea );
 
     CTFNavArea( void );
@@ -104,7 +104,7 @@ class CTFNavArea : public CNavArea
 
     class IForEachPotentiallyVisibleActor
     {
-       public:
+        public:
         virtual bool Inspect( CBaseCombatCharacter *who ) = 0;
     };
     bool ForEachPotentiallyVisibleActor( IForEachPotentiallyVisibleActor &func, int team = TEAM_ANY );
@@ -209,7 +209,7 @@ class CTFNavArea : public CNavArea
     }
     Vector ScriptComputeClosestPointInPortal( HSCRIPT to, int dir, const Vector &fromPos ) const;
 
-   private:
+    private:
     friend class CTFNavMesh;
 
     float m_distanceFromSpawnRoom[TF_TEAM_COUNT];

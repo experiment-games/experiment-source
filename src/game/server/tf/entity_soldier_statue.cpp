@@ -70,9 +70,9 @@ void CEntitySoldierStatue::StatueThink( void )
             CTFPlayer *pPlayer = vecPlayers[i];
 
             if ( pPlayer &&
-                 pPlayer->GetAbsVelocity().IsZero() &&
-                 ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr() < ENTITY_SOLDIER_STATUE_DISTANCE ) &&
-                 pPlayer->IsLineOfSightClear( this ) )
+                pPlayer->GetAbsVelocity().IsZero() &&
+                ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr() < ENTITY_SOLDIER_STATUE_DISTANCE ) &&
+                pPlayer->IsLineOfSightClear( this ) )
             {
                 PlaySound();
             }

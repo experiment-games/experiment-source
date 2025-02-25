@@ -36,7 +36,7 @@ class Panel;
 //-----------------------------------------------------------------------------
 class IPanel : public IBaseInterface
 {
-   public:
+    public:
     virtual void Init( VPANEL vguiPanel, IClientPanel *panel ) = 0;
 
     // methods

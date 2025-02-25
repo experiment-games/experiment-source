@@ -63,7 +63,7 @@ inline PixRGBA8 PixRGBAF_to_8( PixRGBAF const &f )
 
 class FloatBitMap_t
 {
-   public:
+    public:
     int Width, Height;  // bitmap dimensions
     float *RGBAData;    // actual data
 
@@ -175,8 +175,8 @@ class FloatBitMap_t
     // pixels are "modifiable", and can be used to set boundary conditions. Alpha=0 means the pixel
     // is locked.  deltas are in the order [(x,y)-(x,y-1),(x,y)-(x-1,y),(x,y)-(x+1,y),(x,y)-(x,y+1)
     void Poisson( FloatBitMap_t *deltas[4],
-                  int n_iters,
-                  uint32 flags  // SPF_xxx
+                int n_iters,
+                uint32 flags  // SPF_xxx
     );
 
     FloatBitMap_t *QuarterSize( void ) const;        // get a new one downsampled
@@ -241,7 +241,7 @@ class FloatBitMap_t
 // a FloatCubeMap_t holds the floating point bitmaps for 6 faces of a cube map
 class FloatCubeMap_t
 {
-   public:
+    public:
     FloatBitMap_t face_maps[6];
 
     FloatCubeMap_t( int xfsize, int yfsize )
@@ -315,7 +315,7 @@ enum ImagePyramidMode_t
 
 class FloatImagePyramid_t
 {
-   public:
+    public:
     int m_nLevels;
     FloatBitMap_t *m_pLevels[MAX_IMAGE_PYRAMID_LEVELS];  // level 0 is highest res
 

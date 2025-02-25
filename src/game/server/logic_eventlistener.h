@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ====
+//========= Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. ====
 //
 // Purpose:
 //
@@ -18,7 +18,7 @@ class CLogicEventListener : public CLogicalEntity, public CGameEventListener
     DECLARE_CLASS( CLogicEventListener, CLogicalEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     // FIXME: Subclass
 #ifdef PORTAL2
 #endif  // PORTAL2
@@ -29,7 +29,7 @@ class CLogicEventListener : public CLogicalEntity, public CGameEventListener
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_iszEventName;
     bool m_bIsEnabled;
     int m_nTeam;
@@ -46,14 +46,14 @@ class CLogicEventListenerItemEquip : public CLogicEventListener
     DECLARE_CLASS( CLogicEventListenerItemEquip, CLogicalEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void FireGameEvent( IGameEvent *event );
 
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bIsEnabled;
     int m_nTeam;
     string_t m_szWeaponClassname;

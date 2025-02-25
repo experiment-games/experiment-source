@@ -108,7 +108,7 @@ class CAdvisorLevitate : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     // in the absence of goal entities, we float up before throwing and down after
     inline bool OldStyle( void )
     {
@@ -143,7 +143,7 @@ DEFINE_FIELD( m_flFloat, FIELD_FLOAT ),
     DECLARE_SERVERCLASS();
 #endif
 
-   public:
+    public:
     //
     // CBaseEntity:
     //
@@ -217,7 +217,7 @@ DEFINE_FIELD( m_flFloat, FIELD_FLOAT ),
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
 #if NPC_ADVISOR_HAS_BEHAVIOR
     Vector GetThrowFromPos( CBaseEntity *pEnt );  ///< Get the position in which we shall hold an object prior to throwing it
 #endif
@@ -536,9 +536,9 @@ bool CNPC_Advisor::CanLevitateEntity( CBaseEntity *pEntity, int minMass, int max
     float mass = pPhys->GetMass();
 
     return ( mass >= minMass &&
-             mass <= maxMass &&
-             // pEntity->VPhysicsGetObject()->IsAsleep() &&
-             pPhys->IsMoveable() /* &&
+            mass <= maxMass &&
+            // pEntity->VPhysicsGetObject()->IsAsleep() &&
+            pPhys->IsMoveable() /* &&
             !DidThrow(pEntity) */
     );
 }
@@ -648,49 +648,49 @@ void CNPC_Advisor::StartTask( const Task_t *pTask )
 
             else
             {
-              CBaseEntity *list[128];
+            CBaseEntity *list[128];
 
-              m_physicsObjects.RemoveAll();
+            m_physicsObjects.RemoveAll();
 
-              //NDebugOverlay::Box( GetAbsOrigin(), Vector( -408, -368, -188 ), Vector( 92, 208, 168 ), 255, 255, 0, 1, 5 );
+            //NDebugOverlay::Box( GetAbsOrigin(), Vector( -408, -368, -188 ), Vector( 92, 208, 168 ), 255, 255, 0, 1, 5 );
 
-              // one-off class used to determine which entities we want from the UTIL_EntitiesInBox
-              class CAdvisorLevitateEntitiesEnum : public CFlaggedEntitiesEnum
-              {
-              public:
+            // one-off class used to determine which entities we want from the UTIL_EntitiesInBox
+            class CAdvisorLevitateEntitiesEnum : public CFlaggedEntitiesEnum
+            {
+            public:
                 CAdvisorLevitateEntitiesEnum( CBaseEntity **pList, int listMax, int nMinMass, int nMaxMass )
                 :	CFlaggedEntitiesEnum( pList, listMax, 0 ),
-                  m_nMinMass( nMinMass ),
-                  m_nMaxMass( nMaxMass )
+                m_nMinMass( nMinMass ),
+                m_nMaxMass( nMaxMass )
                 {
                 }
 
                 virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity )
                 {
-                  CBaseEntity *pEntity = gEntList.GetBaseEntity( pHandleEntity->GetRefEHandle() );
-                  if ( AdvisorCanLevitateEntity( pEntity, m_nMinMass, m_nMaxMass ) )
-                  {
+                CBaseEntity *pEntity = gEntList.GetBaseEntity( pHandleEntity->GetRefEHandle() );
+                if ( AdvisorCanLevitateEntity( pEntity, m_nMinMass, m_nMaxMass ) )
+                {
                     return CFlaggedEntitiesEnum::EnumElement( pHandleEntity );
-                  }
-                  return ITERATION_CONTINUE;
+                }
+                return ITERATION_CONTINUE;
                 }
 
                 int m_nMinMass;
                 int m_nMaxMass;
-              };
+            };
 
-              CAdvisorLevitateEntitiesEnum levitateEnum( list, ARRAYSIZE( list ), 10, 220 );
+            CAdvisorLevitateEntitiesEnum levitateEnum( list, ARRAYSIZE( list ), 10, 220 );
 
-              int nCount = UTIL_EntitiesInBox( GetAbsOrigin() - Vector( 554, 368, 188 ), GetAbsOrigin() + Vector( 92, 208, 168 ), &levitateEnum );
-              for ( int i = 0; i < nCount; i++ )
-              {
+            int nCount = UTIL_EntitiesInBox( GetAbsOrigin() - Vector( 554, 368, 188 ), GetAbsOrigin() + Vector( 92, 208, 168 ), &levitateEnum );
+            for ( int i = 0; i < nCount; i++ )
+            {
                 //Msg( "%d found %s\n", m_physicsObjects.Count(), STRING( list[i]->GetModelName() ) );
                 if ( list[i]->GetMoveType() == MOVETYPE_VPHYSICS )
                 {
-                  //Msg( "   %d added %s\n", m_physicsObjects.Count(), STRING( list[i]->GetModelName() ) );
-                  m_physicsObjects.AddToTail( list[i] );
+                //Msg( "   %d added %s\n", m_physicsObjects.Count(), STRING( list[i]->GetModelName() ) );
+                m_physicsObjects.AddToTail( list[i] );
                 }
-              }
+            }
             }
             */
 
@@ -722,7 +722,7 @@ void CNPC_Advisor::StartTask( const Task_t *pTask )
             /*
             for (int ii = m_hvStagedEnts.Count() - 1; ii >= 0 ; --ii)
             {
-              m_hvStagedEnts[ii] = NULL;
+            m_hvStagedEnts[ii] = NULL;
             }
             */
             Write_AllBeamsOff();
@@ -820,15 +820,15 @@ void CNPC_Advisor::RunTask( const Task_t *pTask )
             // Draw boxes around the objects we're levitating.
             for ( int i = 0; i < m_physicsObjects.Count(); i++ )
             {
-              CBaseEntity *pEnt = m_physicsObjects.Element( i );
-              if ( !pEnt )
+            CBaseEntity *pEnt = m_physicsObjects.Element( i );
+            if ( !pEnt )
                 continue;	// The prop has been broken!
 
-              IPhysicsObject *pPhys = pEnt->VPhysicsGetObject();
-              if ( pPhys && pPhys->IsMoveable() )
-              {
+            IPhysicsObject *pPhys = pEnt->VPhysicsGetObject();
+            if ( pPhys && pPhys->IsMoveable() )
+            {
                 NDebugOverlay::Box( pEnt->GetAbsOrigin(), pEnt->CollisionProp()->OBBMins(), pEnt->CollisionProp()->OBBMaxs(), 0, 255, 0, 1, 0.1 );
-              }
+            }
             }*/
 
             break;
@@ -941,7 +941,7 @@ void CNPC_Advisor::RunTask( const Task_t *pTask )
             }
 
             if ( ( gpGlobals->curtime > m_flThrowPhysicsTime - advisor_throw_lead_prefetch_time.GetFloat() ) &&
-                 !m_vSavedLeadVel.IsValid() )
+                !m_vSavedLeadVel.IsValid() )
             {
                 // save off the velocity we will use to lead the player a little early, so that if he jukes
                 // at the last moment he'll have a better shot of dodging the object.
@@ -987,29 +987,29 @@ void CNPC_Advisor::RunTask( const Task_t *pTask )
             CBaseEntity *pPinEnt = m_hPlayerPinPos;
             if (!pPinEnt)
             {
-              GetEnemy()->SetGravity(1.0f);
-              GetEnemy()->SetMoveType( MOVETYPE_WALK );
-              TaskComplete();
-              break;
+            GetEnemy()->SetGravity(1.0f);
+            GetEnemy()->SetMoveType( MOVETYPE_WALK );
+            TaskComplete();
+            break;
             }
 
             // failsafe: don't do this for more than ten seconds.
             if ( gpGlobals->curtime > m_playerPinFailsafeTime )
             {
-              GetEnemy()->SetGravity(1.0f);
-              GetEnemy()->SetMoveType( MOVETYPE_WALK );
-              Warning( "Advisor did not leave PIN PLAYER mode. Aborting due to ten second failsafe!\n" );
-              TaskFail("Advisor did not leave PIN PLAYER mode. Aborting due to ten second failsafe!\n");
-              break;
+            GetEnemy()->SetGravity(1.0f);
+            GetEnemy()->SetMoveType( MOVETYPE_WALK );
+            Warning( "Advisor did not leave PIN PLAYER mode. Aborting due to ten second failsafe!\n" );
+            TaskFail("Advisor did not leave PIN PLAYER mode. Aborting due to ten second failsafe!\n");
+            break;
             }
 
             // if the player isn't the enemy, bail out.
             if ( !GetEnemy()->IsPlayer() )
             {
-              GetEnemy()->SetGravity(1.0f);
-              GetEnemy()->SetMoveType( MOVETYPE_WALK );
-              TaskFail( "Player is not the enemy?!" );
-              break;
+            GetEnemy()->SetGravity(1.0f);
+            GetEnemy()->SetMoveType( MOVETYPE_WALK );
+            TaskFail( "Player is not the enemy?!" );
+            break;
             }
 
             GetEnemy()->SetMoveType( MOVETYPE_FLY );
@@ -1247,9 +1247,9 @@ void CNPC_Advisor::PreHurlClearTheWay( CBaseEntity *pThrowable, const Vector &to
     {
         CBaseEntity *obstruction = list[i];
         if ( obstruction != pThrowable &&
-             m_physicsObjects.HasElement( obstruction ) &&  // if it's floating
-             !m_hvStagedEnts.HasElement( obstruction ) &&   // and I'm not staging it
-             !DidThrow( obstruction ) )                     // and I didn't just throw it
+            m_physicsObjects.HasElement( obstruction ) &&  // if it's floating
+            !m_hvStagedEnts.HasElement( obstruction ) &&   // and I'm not staging it
+            !DidThrow( obstruction ) )                     // and I didn't just throw it
         {
             IPhysicsObject *pPhys = obstruction->VPhysicsGetObject();
             Assert( pPhys );
@@ -1282,15 +1282,15 @@ void CNPC_Advisor::PreHurlClearTheWay( CBaseEntity *pThrowable, const Vector &to
 
     /*
 
-      // Otherwise only help out a little
-      Vector extents = Vector(256, 256, 256);
-      Ray_t ray;
-      ray.Init( vecStartPoint, vecStartPoint + 2048 * vecVelDir, -extents, extents );
-      int nCount = UTIL_EntitiesAlongRay( list, 1024, ray, FL_NPC | FL_CLIENT );
-      for ( int i = 0; i < nCount; i++ )
-      {
+    // Otherwise only help out a little
+    Vector extents = Vector(256, 256, 256);
+    Ray_t ray;
+    ray.Init( vecStartPoint, vecStartPoint + 2048 * vecVelDir, -extents, extents );
+    int nCount = UTIL_EntitiesAlongRay( list, 1024, ray, FL_NPC | FL_CLIENT );
+    for ( int i = 0; i < nCount; i++ )
+    {
         if ( !IsAttractiveTarget( list[i] ) )
-          continue;
+        continue;
 
         VectorSubtract( list[i]->WorldSpaceCenter(), vecStartPoint, vecDelta );
         distance = VectorNormalize( vecDelta );
@@ -1298,13 +1298,13 @@ void CNPC_Advisor::PreHurlClearTheWay( CBaseEntity *pThrowable, const Vector &to
 
         if ( flDot > flMaxDot )
         {
-          if ( distance < flBestDist )
-          {
+        if ( distance < flBestDist )
+        {
             pBestTarget = list[i];
             flBestDist = distance;
-          }
         }
-      }
+        }
+    }
 
     */
 }
@@ -1322,9 +1322,9 @@ void CNPC_Advisor::PurgeThrownObjects()
   for (int ii = 0 ; ii < kMaxThrownObjectsTracked ; ++ii)
   {
     if ( m_haRecentlyThrownObjects[ii].IsValid() &&
-       m_flaRecentlyThrownObjectTimes[ii] < threeSecondsAgo )
+        m_flaRecentlyThrownObjectTimes[ii] < threeSecondsAgo )
     {
-       m_haRecentlyThrownObjects[ii].Set(NULL);
+        m_haRecentlyThrownObjects[ii].Set(NULL);
     }
   }
 

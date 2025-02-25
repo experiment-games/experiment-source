@@ -307,7 +307,7 @@ void CEyeballBoss::JarateNearbyPlayers( float range )
     for ( int i = 0; i < playerVector.Count(); ++i )
     {
         if ( IsRangeLessThan( playerVector[i], range ) &&
-             IsLineOfSightClear( playerVector[i], CBaseCombatCharacter::IGNORE_ACTORS ) )
+            IsLineOfSightClear( playerVector[i], CBaseCombatCharacter::IGNORE_ACTORS ) )
         {
             playerVector[i]->m_Shared.AddCond( TF_COND_URINE, 10.0f );
         }
@@ -501,9 +501,9 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
         if ( player->m_Shared.IsStealthed() )
         {
             if ( !player->m_Shared.InCond( TF_COND_BURNING ) &&
-                 !player->m_Shared.InCond( TF_COND_URINE ) &&
-                 !player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) &&
-                 !player->m_Shared.InCond( TF_COND_BLEEDING ) )
+                !player->m_Shared.InCond( TF_COND_URINE ) &&
+                !player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) &&
+                !player->m_Shared.InCond( TF_COND_BLEEDING ) )
             {
                 // cloaked spies are invisible to us
                 continue;
@@ -740,12 +740,12 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
     }
 
     TraceHull( me->GetAbsOrigin() + Vector( 0, 0, ceiling ) + aheadXY * 50.0f,
-               me->GetAbsOrigin() + Vector( 0, 0, -2000.0f ) + aheadXY * 50.0f,
-               Vector( 1.25f * me->WorldAlignMins().x, 1.25f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
-               Vector( 1.25f * me->WorldAlignMaxs().x, 1.25f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
-               GetBot()->GetBodyInterface()->GetSolidMask(),
-               &filter,
-               &result );
+                me->GetAbsOrigin() + Vector( 0, 0, -2000.0f ) + aheadXY * 50.0f,
+                Vector( 1.25f * me->WorldAlignMins().x, 1.25f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
+                Vector( 1.25f * me->WorldAlignMaxs().x, 1.25f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
+                GetBot()->GetBodyInterface()->GetSolidMask(),
+                &filter,
+                &result );
 
     float groundZ = result.endpos.z;
 

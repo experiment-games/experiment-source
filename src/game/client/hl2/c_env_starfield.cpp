@@ -23,7 +23,7 @@ class C_EnvStarfield : public C_BaseEntity
 {
     DECLARE_CLASS( C_EnvStarfield, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_EnvStarfield();
@@ -31,14 +31,14 @@ class C_EnvStarfield : public C_BaseEntity
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ClientThink( void );
 
-   private:
+    private:
     // Emitter
     CSmartPtr< CTrailParticles > m_pEmitter;
     bool m_bOn;
     float m_flDensity;
     float m_flNumParticles;
 
-   private:
+    private:
     C_EnvStarfield( const C_EnvStarfield & );
 };
 
@@ -68,13 +68,13 @@ void C_EnvStarfield::OnDataChanged( DataUpdateType_t updateType )
         m_pEmitter = CTrailParticles::Create( "EnvStarfield" );
         Vector vecCenter = MainViewOrigin() + ( MainViewForward() * cl_starfield_distance.GetFloat() );
         m_pEmitter->Setup( ( Vector & )vecCenter,
-                           NULL,
-                           0.0,
-                           0,
-                           64,
-                           0,
-                           0,
-                           bitsPARTICLE_TRAIL_VELOCITY_DAMPEN | bitsPARTICLE_TRAIL_FADE | bitsPARTICLE_TRAIL_FADE_IN );
+                            NULL,
+                            0.0,
+                            0,
+                            64,
+                            0,
+                            0,
+                            bitsPARTICLE_TRAIL_VELOCITY_DAMPEN | bitsPARTICLE_TRAIL_FADE | bitsPARTICLE_TRAIL_FADE_IN );
 
         // Start thinking
         SetNextClientThink( CLIENT_THINK_ALWAYS );

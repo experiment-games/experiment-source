@@ -18,7 +18,7 @@
 
 abstract_class IEngineVoice
 {
-   public:
+    public:
     virtual bool IsHeadsetPresent( int iController ) = 0;
     virtual bool IsLocalPlayerTalking( int iController ) = 0;
 

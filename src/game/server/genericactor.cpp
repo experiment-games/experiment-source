@@ -33,7 +33,7 @@ ConVar flex_looktime( "flex_looktime", "5" );
 
 class CGenericActor : public CAI_BaseActor
 {
-   public:
+    public:
     DECLARE_CLASS( CGenericActor, CAI_BaseActor );
 
     void Spawn( void );
@@ -102,15 +102,15 @@ void CGenericActor::Spawn()
     SetModel( STRING( GetModelName() ) );
 
     /*
-      if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) )
+    if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) )
         UTIL_SetSize(this, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
-      else
+    else
         UTIL_SetSize(this, VEC_HULL_MIN, VEC_HULL_MAX);
     */
 
     if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) ||
-         FStrEq( STRING( GetModelName() ), "models/holo.mdl" ) ||
-         FStrEq( STRING( GetModelName() ), "models/blackout.mdl" ) )
+        FStrEq( STRING( GetModelName() ), "models/holo.mdl" ) ||
+        FStrEq( STRING( GetModelName() ), "models/blackout.mdl" ) )
     {
         UTIL_SetSize( this, VEC_HULL_MIN, VEC_HULL_MAX );
     }
@@ -174,10 +174,10 @@ void CGenericActor::Precache()
 
 class CFlextalkActor : public CGenericActor
 {
-   private:
+    private:
     DECLARE_CLASS( CFlextalkActor, CGenericActor );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CFlextalkActor()

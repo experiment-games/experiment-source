@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CBossAlphaLostVictim : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
     virtual ActionResult< CBossAlpha > Update( CBossAlpha *me, float interval );
     virtual void OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
@@ -20,7 +20,7 @@ class CBossAlphaLostVictim : public Action< CBossAlpha >
         return "LostVictim";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
     float m_headTurn;
     int m_headYawPoseParameter;

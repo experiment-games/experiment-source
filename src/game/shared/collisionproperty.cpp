@@ -36,7 +36,7 @@
 //-----------------------------------------------------------------------------
 class CDirtySpatialPartitionEntityList : public CAutoGameSystem, public IPartitionQueryCallback
 {
-   public:
+    public:
     CDirtySpatialPartitionEntityList( char const *name );
 
     // Members of IGameSystem
@@ -72,7 +72,7 @@ class CDirtySpatialPartitionEntityList : public CAutoGameSystem, public IPartiti
         }
     }
 
-   private:
+    private:
     CTSListWithFreeList< CBaseHandle > m_DirtyEntities;
     CThreadSpinRWLock m_partitionMutex;
     ThreadId_t m_partitionWriteId;
@@ -588,7 +588,7 @@ void CCollisionProperty::SetSolidFlags( int flags )
 
     // These two flags, if changed, can produce different surrounding bounds
     if ( ( oldFlags & ( FSOLID_FORCE_WORLD_ALIGNED | FSOLID_USE_TRIGGER_BOUNDS ) ) !=
-         ( m_usSolidFlags & ( FSOLID_FORCE_WORLD_ALIGNED | FSOLID_USE_TRIGGER_BOUNDS ) ) )
+        ( m_usSolidFlags & ( FSOLID_FORCE_WORLD_ALIGNED | FSOLID_USE_TRIGGER_BOUNDS ) ) )
     {
         MarkSurroundingBoundsDirty();
     }
@@ -706,8 +706,8 @@ void CCollisionProperty::RefreshScaledCollisionBounds( void )
     if ( nSurroundType == USE_SPECIFIED_BOUNDS )
     {
         SetSurroundingBoundsType( nSurroundType,
-                                  &( m_vecSpecifiedSurroundingMinsPreScaled.Get() ),
-                                  &( m_vecSpecifiedSurroundingMaxsPreScaled.Get() ) );
+                                &( m_vecSpecifiedSurroundingMinsPreScaled.Get() ),
+                                &( m_vecSpecifiedSurroundingMaxsPreScaled.Get() ) );
     }
     else
     {
@@ -863,9 +863,9 @@ void CCollisionProperty::RandomPointInBounds( const Vector &vecNormalizedMins, c
 // Transforms an AABB measured in entity space to a box that surrounds it in world space
 //-----------------------------------------------------------------------------
 void CCollisionProperty::CollisionAABBToWorldAABB( const Vector &entityMins,
-                                                   const Vector &entityMaxs,
-                                                   Vector *pWorldMins,
-                                                   Vector *pWorldMaxs ) const
+                                                    const Vector &entityMaxs,
+                                                    Vector *pWorldMins,
+                                                    Vector *pWorldMaxs ) const
 {
     if ( !IsBoundsDefinedInEntitySpace() || ( GetCollisionAngles() == vec3_angle ) )
     {
@@ -901,8 +901,8 @@ bool CCollisionProperty::IsPointInBounds( const Vector &vecWorldPt ) const
     Vector vecLocalSpace;
     WorldToCollisionSpace( vecWorldPt, &vecLocalSpace );
     return ( ( vecLocalSpace.x >= m_vecMins.Get().x && vecLocalSpace.x <= m_vecMaxs.Get().x ) &&
-             ( vecLocalSpace.y >= m_vecMins.Get().y && vecLocalSpace.y <= m_vecMaxs.Get().y ) &&
-             ( vecLocalSpace.z >= m_vecMins.Get().z && vecLocalSpace.z <= m_vecMaxs.Get().z ) );
+            ( vecLocalSpace.y >= m_vecMins.Get().y && vecLocalSpace.y <= m_vecMaxs.Get().y ) &&
+            ( vecLocalSpace.z >= m_vecMins.Get().z && vecLocalSpace.z <= m_vecMaxs.Get().z ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1141,8 +1141,8 @@ void CCollisionProperty::ComputeSurroundingBox( Vector *pVecWorldMins, Vector *p
         Vector vecWorldHitboxMins, vecWorldHitboxMaxs;
         if ( ComputeHitboxSurroundingBox( &vecWorldHitboxMins, &vecWorldHitboxMaxs ) )
         {
-          VectorMin( vecWorldHitboxMaxs, vecTestMins, vecTestMins );
-          VectorMax( vecWorldHitboxMaxs, vecTestMaxs, vecTestMaxs );
+        VectorMin( vecWorldHitboxMaxs, vecTestMins, vecTestMins );
+        VectorMax( vecWorldHitboxMaxs, vecTestMaxs, vecTestMaxs );
         }
 
         Assert( vecTestMins.x >= pVecWorldMins->x && vecTestMins.y >= pVecWorldMins->y && vecTestMins.z >= pVecWorldMins->z );

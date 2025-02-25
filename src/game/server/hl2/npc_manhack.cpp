@@ -448,7 +448,7 @@ void CNPC_Manhack::TakeDamageFromPhyscannon( CBasePlayer *pPlayer )
     float flDamage = m_iMaxHealth * flFactor;
 
 #if 0
-	Msg("Doing %f damage for %f speed!\n", flDamage, flSpeed );
+    Msg("Doing %f damage for %f speed!\n", flDamage, flSpeed );
 #endif
 
     info.SetDamage( flDamage );
@@ -1066,13 +1066,13 @@ void CNPC_Manhack::MaintainGroundHeight( void )
 
     trace_t tr;
     AI_TraceHull( GetAbsOrigin(),
-                  GetAbsOrigin() - Vector( 0, 0, minGroundHeight ),
-                  GetHullMins(),
-                  GetHullMaxs(),
-                  ( MASK_NPCSOLID_BRUSHONLY ),
-                  this,
-                  COLLISION_GROUP_NONE,
-                  &tr );
+                GetAbsOrigin() - Vector( 0, 0, minGroundHeight ),
+                GetHullMins(),
+                GetHullMaxs(),
+                ( MASK_NPCSOLID_BRUSHONLY ),
+                this,
+                COLLISION_GROUP_NONE,
+                &tr );
 
     if ( tr.fraction != 1.0f )
     {
@@ -1299,9 +1299,9 @@ void CNPC_Manhack::MoveToTarget( float flInterval, const Vector &vMoveTarget )
     // Boost vertical movement
     if ( targetDir.z > 0 )
     {
-      // Z acceleration is faster when we thrust upwards.
-      // This is to help keep manhacks out of water.
-      myZAccel *= 5.0;
+    // Z acceleration is faster when we thrust upwards.
+    // This is to help keep manhacks out of water.
+    myZAccel *= 5.0;
     }
     */
 
@@ -1662,7 +1662,7 @@ void CNPC_Manhack::Bump( CBaseEntity *pHitEntity, float flInterval, trace_t &tr 
         GetMoveProbe()->MoveLimit( NAV_GROUND, GetAbsOrigin(), GetNavigator()->GetCurWaypointPos(), MoveCollisionMask(), GetEnemy(), &moveTrace );
 
         if ( IsMoveBlocked( moveTrace ) &&
-             !moveTrace.pObstruction->ClassMatches( GetClassname() ) )
+            !moveTrace.pObstruction->ClassMatches( GetClassname() ) )
         {
             TaskFail( FAIL_NO_ROUTE );
             GetNavigator()->ClearGoal();
@@ -1702,13 +1702,13 @@ void CNPC_Manhack::CheckCollisions( float flInterval )
     CBaseEntity *pHitEntity = NULL;
 
     AI_TraceHull( GetAbsOrigin(),
-                  vecCheckPos,
-                  GetHullMins(),
-                  GetHullMaxs(),
-                  MoveCollisionMask(),
-                  this,
-                  COLLISION_GROUP_NONE,
-                  &tr );
+                vecCheckPos,
+                GetHullMins(),
+                GetHullMaxs(),
+                MoveCollisionMask(),
+                this,
+                COLLISION_GROUP_NONE,
+                &tr );
 
     if ( ( tr.fraction != 1.0 || tr.startsolid ) && tr.m_pEnt )
     {
@@ -1723,9 +1723,9 @@ void CNPC_Manhack::CheckCollisions( float flInterval )
         }
 
         if ( pHitEntity != NULL &&
-             pHitEntity->m_takedamage == DAMAGE_YES &&
-             pHitEntity->Classify() != CLASS_MANHACK &&
-             gpGlobals->curtime > m_flWaterSuspendTime )
+            pHitEntity->m_takedamage == DAMAGE_YES &&
+            pHitEntity->Classify() != CLASS_MANHACK &&
+            gpGlobals->curtime > m_flWaterSuspendTime )
         {
             // Slice this thing
             Slice( pHitEntity, flInterval, tr );
@@ -1975,25 +1975,25 @@ void CNPC_Manhack::MoveExecute_Alive( float flInterval )
         angles.y = 0;
 
 #if 0
-		// Using our steering if we're not otherwise affecting our panels
-		if ( m_flEngineStallTime < gpGlobals->curtime && m_flBurstDuration < gpGlobals->curtime )
-		{
-			Vector delta( 10 * AngleDiff( m_vTargetBanking.x, m_vCurrentBanking.x ), -10 * AngleDiff( m_vTargetBanking.z, m_vCurrentBanking.z ), 0 );
-			//Vector delta( 3 * AngleNormalize( m_vCurrentBanking.x ), -4 * AngleNormalize( m_vCurrentBanking.z ), 0 );
-			VectorYawRotate( delta, -m_fHeadYaw, delta );
+        // Using our steering if we're not otherwise affecting our panels
+        if ( m_flEngineStallTime < gpGlobals->curtime && m_flBurstDuration < gpGlobals->curtime )
+        {
+            Vector delta( 10 * AngleDiff( m_vTargetBanking.x, m_vCurrentBanking.x ), -10 * AngleDiff( m_vTargetBanking.z, m_vCurrentBanking.z ), 0 );
+            //Vector delta( 3 * AngleNormalize( m_vCurrentBanking.x ), -4 * AngleNormalize( m_vCurrentBanking.z ), 0 );
+            VectorYawRotate( delta, -m_fHeadYaw, delta );
 
-			// DevMsg("%.0f %.0f\n", delta.x, delta.y );
+            // DevMsg("%.0f %.0f\n", delta.x, delta.y );
 
-			SetPoseParameter( m_iPanel1, -delta.x - delta.y * 2);
-			SetPoseParameter( m_iPanel2, -delta.x + delta.y * 2);
-			SetPoseParameter( m_iPanel3,  delta.x + delta.y * 2);
-			SetPoseParameter( m_iPanel4,  delta.x - delta.y * 2);
+            SetPoseParameter( m_iPanel1, -delta.x - delta.y * 2);
+            SetPoseParameter( m_iPanel2, -delta.x + delta.y * 2);
+            SetPoseParameter( m_iPanel3,  delta.x + delta.y * 2);
+            SetPoseParameter( m_iPanel4,  delta.x - delta.y * 2);
 
-			//SetPoseParameter( m_iPanel1, -delta.x );
-			//SetPoseParameter( m_iPanel2, -delta.x );
-			//SetPoseParameter( m_iPanel3, delta.x );
-			//SetPoseParameter( m_iPanel4, delta.x );
-		}
+            //SetPoseParameter( m_iPanel1, -delta.x );
+            //SetPoseParameter( m_iPanel2, -delta.x );
+            //SetPoseParameter( m_iPanel3, delta.x );
+            //SetPoseParameter( m_iPanel4, delta.x );
+        }
 #endif
     }
 
@@ -2272,8 +2272,8 @@ void CNPC_Manhack::RunTask( const Task_t *pTask )
         {
             CBaseEntity *pEnemy = GetEnemy();
             if ( pEnemy &&
-                 ( GetCurSchedule()->GetId() == SCHED_CHASE_ENEMY ) &&
-                 GetNavigator()->IsGoalActive() )
+                ( GetCurSchedule()->GetId() == SCHED_CHASE_ENEMY ) &&
+                GetNavigator()->IsGoalActive() )
             {
                 Vector vecEnemyPosition;
                 vecEnemyPosition = pEnemy->EyePosition();
@@ -2597,8 +2597,8 @@ void CNPC_Manhack::StartTask( const Task_t *pTask )
             // FIXME: why were these tasks considered bad?
             _asm
             {
-              int	3;
-              int 5;
+            int	3;
+            int 5;
             }
             */
         }
@@ -2851,8 +2851,8 @@ void CNPC_Manhack::KillSprites( float flDelay )
     /*
     if ( m_hLightTrail )
     {
-      m_hLightTrail->FadeAndDie( flDelay );
-      m_hLightTrail = NULL;
+    m_hLightTrail->FadeAndDie( flDelay );
+    m_hLightTrail = NULL;
     }
     */
 }

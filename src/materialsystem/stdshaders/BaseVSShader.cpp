@@ -1523,7 +1523,7 @@ BlendType_t CBaseVSShader::EvaluateBlendRequirements( int textureVar, bool isBas
 
     // Or we've got a texture alpha (for blending or alpha test)
     isTranslucent = isTranslucent || ( TextureIsTranslucent( textureVar, isBaseTexture ) &&
-                                       !( CurrentMaterialVarFlags() & MATERIAL_VAR_ALPHATEST ) );
+                                        !( CurrentMaterialVarFlags() & MATERIAL_VAR_ALPHATEST ) );
 
     if ( ( detailTextureVar != -1 ) && ( !isTranslucent ) )
     {

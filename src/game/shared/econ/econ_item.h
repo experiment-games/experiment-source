@@ -68,7 +68,7 @@ struct schema_attribute_stat_bucket_t
 
 class CSchemaAttributeStats
 {
-   public:
+    public:
     template < typename TAttribStatsStorageClass, typename TAttribInMemoryType >
     static void RegisterAttributeType()
     {
@@ -83,7 +83,7 @@ class CSchemaAttributeStats
         return m_pHead;
     }
 
-   private:
+    private:
     static const schema_attribute_stat_bucket_t *m_pHead;
 };
 
@@ -107,7 +107,7 @@ class ISchemaAttributeTypeBase : public ISchemaAttributeType
 {
     friend class CSchemaAttributeStats;
 
-   public:
+    public:
     ISchemaAttributeTypeBase()
     {
         CSchemaAttributeStats::RegisterAttributeType< ISchemaAttributeTypeBase< TAttribInMemoryType >, TAttribInMemoryType >();
@@ -247,7 +247,7 @@ class ISchemaAttributeTypeBase : public ISchemaAttributeType
     virtual void ConvertTypedValueToByteStream( const TAttribInMemoryType &typedValue, ::std::string *out_psBytes ) const = 0;
     virtual void ConvertByteStreamToTypedValue( const ::std::string &sBytes, TAttribInMemoryType *out_pTypedValue ) const = 0;
 
-   private:
+    private:
     static schema_attribute_stat_bucket_t s_InstanceStats;
 };
 
@@ -271,7 +271,7 @@ schema_attribute_stat_bucket_t ISchemaAttributeTypeBase< TAttribInMemoryType >::
 
 class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer< IEconItemInterface >
 {
-   public:
+    public:
     typedef GCSDK::CSharedObject BaseClass;
 
     struct attribute_t
@@ -279,7 +279,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
         attrib_definition_index_t m_unDefinitionIndex;  // stored as ints here for memory efficiency on the GC
         attribute_data_union_t m_value;
 
-       private:
+        private:
         void operator=( const attribute_t &rhs );
     };
 
@@ -318,7 +318,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
     // IEconItemInterface interface.
     const GameItemDefinition_t *GetItemDefinition() const;
 
-   public:
+    public:
     virtual void IterateAttributes( class IEconItemAttributeIterator *pIterator ) const OVERRIDE;
     virtual itemid_t GetID() const
     {
@@ -542,7 +542,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
         return GetDynamicAttributeCountInternal() > 0;
     }
 
-   private:
+    private:
     const char *FindIconURL( bool bLarge ) const;
 
     void Init();
@@ -563,7 +563,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
 #endif
     }
 
-   public:
+    public:
     void Compact();
 
     // these are overridden to handle attributes
@@ -597,7 +597,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
     void OnTraded( uint32 unTradabilityDelaySeconds );
     void OnReceivedFromMarket( bool bFromRollback );
 
-   protected:
+    protected:
     // Call this when the appearance of this item changes (ex. paintkit, style, festive). This will
     // cause the icon to be lazily re-evaluated (ie. so that changing the style will change the icon)
     void DirtyIconURL()
@@ -642,7 +642,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
     mutable const char *m_pszSmallIcon;
     mutable const char *m_pszLargeIcon;
 
-   public:
+    public:
     // data that is most commonly changed
     uint64 m_ulID;                         // Item ID
     uint32 m_unAccountID;                  // Item Owner
@@ -670,7 +670,7 @@ class CEconItem : public GCSDK::CSharedObject, public CMaterialOverrideContainer
 //-----------------------------------------------------------------------------
 class CEconItemCustomData
 {
-   public:
+    public:
     CEconItemCustomData()
         : m_pInteriorItem( NULL ), m_ulOriginalID( INVALID_ITEM_ID ), m_unQuantity( 1 ), m_vecAttributes( /* grow size: */ 1, /* init size: */ 0 ), m_vecEquipped( /* grow size: */ 1, /* init size: */ 0 )
     {
@@ -733,7 +733,7 @@ bool YieldingAddItemToDatabase( CEconItem *pItem, const CSteamID &steamID, EItem
 //-----------------------------------------------------------------------------
 class CCrateLootListWrapper
 {
-   public:
+    public:
     CCrateLootListWrapper( const IEconItemInterface *pEconItem )
         : m_pLootList( NULL ), m_unAuditDetailData( 0 ), m_bIsDynamicallyAllocatedLootList( false )
     {
@@ -764,11 +764,11 @@ class CCrateLootListWrapper
         return m_unAuditDetailData;
     }
 
-   private:
+    private:
     CCrateLootListWrapper( const CCrateLootListWrapper & );  // intentionally unimplemented
     void operator=( const CCrateLootListWrapper & );         // intentionally unimplemented
 
-   private:
+    private:
     // Look for an attribute that specifies a crate series.
     MUST_CHECK_RETURN bool BAttemptCrateSeriesInitialization( const IEconItemInterface *pEconItem );
 
@@ -778,7 +778,7 @@ class CCrateLootListWrapper
     // Look for a line-item-per-attribute list.
     MUST_CHECK_RETURN bool BAttemptLineItemInitialization( const IEconItemInterface *pEconItem );
 
-   private:
+    private:
     const IEconLootList *m_pLootList;
     uint32 m_unAuditDetailData;
     bool m_bIsDynamicallyAllocatedLootList;
@@ -790,7 +790,7 @@ class CCrateLootListWrapper
 //-----------------------------------------------------------------------------
 class CEconItemHandle : GCSDK::ISharedObjectListener
 {
-   public:
+    public:
     CEconItemHandle()
         : m_pItem( NULL ), m_iItemID( INVALID_ITEM_ID )
     {
@@ -832,7 +832,7 @@ class CEconItemHandle : GCSDK::ISharedObjectListener
     virtual void PostSOUpdate( const CSteamID &steamIDOwner, GCSDK::ESOCacheEvent eEvent ) OVERRIDE {}
     virtual void SOCacheSubscribed( const CSteamID &steamIDOwner, GCSDK::ESOCacheEvent eEvent ) OVERRIDE {}
 
-   private:
+    private:
     void UnsubscribeFromSOEvents();
 
     CEconItem *m_pItem;       // The item

@@ -305,8 +305,8 @@ const char *GetColorNameForAttribColor( attrib_colors_t unAttribColor )
     Assert( unAttribColor < NUM_ATTRIB_COLORS );
 
     return g_AttribColorDefs[unAttribColor]
-               ? g_AttribColorDefs[unAttribColor]->GetColorName()
-               : "ItemAttribNeutral";
+                ? g_AttribColorDefs[unAttribColor]->GetColorName()
+                : "ItemAttribNeutral";
 }
 
 const char *GetHexColorForAttribColor( attrib_colors_t unAttribColor )
@@ -315,8 +315,8 @@ const char *GetHexColorForAttribColor( attrib_colors_t unAttribColor )
     Assert( unAttribColor < NUM_ATTRIB_COLORS );
 
     return g_AttribColorDefs[unAttribColor]
-               ? g_AttribColorDefs[unAttribColor]->GetHexColor()
-               : "#ebe2ca";
+                ? g_AttribColorDefs[unAttribColor]->GetHexColor()
+                : "#ebe2ca";
 }
 
 entityquality_t GetItemQualityFromString( const char *sQuality )
@@ -948,7 +948,7 @@ const CEconItemAttributeDefinition *GetCardUpgradeForIndex( const IEconItemInter
 
     class CGetNthUserGeneratedAttributeIterator : public IEconItemUntypedAttributeIterator
     {
-       public:
+        public:
         CGetNthUserGeneratedAttributeIterator( int iTargetIndex )
             : m_iCount( iTargetIndex ), m_pAttrDef( NULL )
         {
@@ -970,7 +970,7 @@ const CEconItemAttributeDefinition *GetCardUpgradeForIndex( const IEconItemInter
             return m_pAttrDef;
         }
 
-       private:
+        private:
         int m_iCount;
         const CEconItemAttributeDefinition *m_pAttrDef;
     };

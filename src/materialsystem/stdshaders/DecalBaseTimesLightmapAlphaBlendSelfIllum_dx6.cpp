@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum, DecalBaseTimesLightmapAlphaBlendSelfIllum_DX6 )
 
 BEGIN_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX6,
-              "Help for DecalBaseTimesLightmapAlphaBlendSelfIllum_DX6" )
+            "Help for DecalBaseTimesLightmapAlphaBlendSelfIllum_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b", "decal base texture", 0 )
@@ -52,7 +52,7 @@ SHADER_DRAW
         pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
         pShaderShadow->OverbrightValue( SHADER_TEXTURE_STAGE1, OVERBRIGHT );
         pShaderShadow->DrawFlags( SHADER_DRAW_POSITION |
-                                  SHADER_DRAW_TEXCOORD1 | SHADER_DRAW_LIGHTMAP_TEXCOORD0 );
+                                SHADER_DRAW_TEXCOORD1 | SHADER_DRAW_LIGHTMAP_TEXCOORD0 );
         FogToFogColor();
     }
     DYNAMIC_STATE

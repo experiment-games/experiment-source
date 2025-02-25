@@ -74,7 +74,7 @@ struct AI_FollowGroup_t
 
 class CAI_FollowManager
 {
-   public:
+    public:
     ~CAI_FollowManager()
     {
         for ( int i = 0; i < m_groups.Count(); i++ )
@@ -150,7 +150,7 @@ class CAI_FollowManager
         return 0;
     }
 
-   private:
+    private:
     bool RedistributeSlots( AI_FollowGroup_t *pGroup );
     int FindBestSlot( AI_FollowGroup_t *pGroup );
     void CalculateFieldsFromSlot( AI_FollowSlot_t *pSlot, AI_FollowNavInfo_t *pFollowerInfo );
@@ -756,11 +756,11 @@ void CAI_FollowBehavior::GatherConditions( void )
     }
 
 #if 0
-	else if ( !IsFollowPointInRange() )
-	{
-		GetHintNode()->Unlock();
-		SetHintNode( NULL );
-	}
+    else if ( !IsFollowPointInRange() )
+    {
+        GetHintNode()->Unlock();
+        SetHintNode( NULL );
+    }
 #endif
 
 #ifdef HL2_EPISODIC
@@ -946,8 +946,8 @@ CAI_Hint *CAI_FollowBehavior::FindFollowPoint()
 bool CAI_FollowBehavior::IsFollowPointInRange()
 {
     return ( GetHintNode() &&
-             GetHintNode()->HintType() == HINT_FOLLOW_WAIT_POINT &&
-             ( GetHintNode()->GetAbsOrigin() - GetFollowTarget()->GetAbsOrigin() ).LengthSqr() < Square( MAX( m_FollowNavGoal.followPointTolerance, GetGoalRange() ) ) );
+            GetHintNode()->HintType() == HINT_FOLLOW_WAIT_POINT &&
+            ( GetHintNode()->GetAbsOrigin() - GetFollowTarget()->GetAbsOrigin() ).LengthSqr() < Square( MAX( m_FollowNavGoal.followPointTolerance, GetGoalRange() ) ) );
 }
 
 //-------------------------------------
@@ -1001,8 +1001,8 @@ int CAI_FollowBehavior::SelectScheduleFollowPoints()
     {
         distSqToPoint = ( GetHintNode()->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr();
         if ( !bShouldUseFollowPoints ||
-             distSqToPoint > Square( 2.0 * GetHullWidth() ) ||
-             HasCondition( COND_FOLLOW_WAIT_POINT_INVALID ) )
+            distSqToPoint > Square( 2.0 * GetHullWidth() ) ||
+            HasCondition( COND_FOLLOW_WAIT_POINT_INVALID ) )
         {
             GetHintNode()->Unlock();
             SetHintNode( NULL );
@@ -1048,7 +1048,7 @@ int CAI_FollowBehavior::SelectScheduleFollowPoints()
 int CAI_FollowBehavior::SelectScheduleMoveToFormation()
 {
     if ( ( GetNpcState() != NPC_STATE_COMBAT && !( HasCondition( COND_LIGHT_DAMAGE ) || HasCondition( COND_HEAVY_DAMAGE ) ) ) ||
-         !IsFollowGoalInRange( GetGoalRange(), GetGoalZRange(), GetGoalFlags() ) )
+        !IsFollowGoalInRange( GetGoalRange(), GetGoalZRange(), GetGoalFlags() ) )
     {
         AISquadIter_t iter;
         CAI_Squad *pSquad = GetOuter()->GetSquad();
@@ -1928,16 +1928,16 @@ void CAI_FollowBehavior::BuildScheduleTestBits()
     bool bIgnoreMovedMark = false;
 
     if ( ( GetOuter()->ConditionInterruptsCurSchedule( COND_GIVE_WAY ) ||
-           GetOuter()->ConditionInterruptsCurSchedule( COND_IDLE_INTERRUPT ) ||
-           ( bIsHideAndReload = IsCurSchedule( SCHED_HIDE_AND_RELOAD ) ) == true ||
-           ( bIsReload = IsCurSchedule( SCHED_RELOAD ) ) == true ||
-           IsCurSchedule( SCHED_STANDOFF ) ||
-           ( bIsTakeCover = IsCurSchedule( SCHED_TAKE_COVER_FROM_ENEMY ) ) == true ||
-           IsCurSchedule( SCHED_COMBAT_FACE ) ||
-           IsCurSchedule( SCHED_ALERT_FACE ) ||
-           IsCurSchedule( SCHED_COMBAT_STAND ) ||
-           IsCurSchedule( SCHED_ALERT_STAND ) ) ||
-         IsCurSchedule( SCHED_ALERT_FACE_BESTSOUND ) )
+            GetOuter()->ConditionInterruptsCurSchedule( COND_IDLE_INTERRUPT ) ||
+            ( bIsHideAndReload = IsCurSchedule( SCHED_HIDE_AND_RELOAD ) ) == true ||
+            ( bIsReload = IsCurSchedule( SCHED_RELOAD ) ) == true ||
+            IsCurSchedule( SCHED_STANDOFF ) ||
+            ( bIsTakeCover = IsCurSchedule( SCHED_TAKE_COVER_FROM_ENEMY ) ) == true ||
+            IsCurSchedule( SCHED_COMBAT_FACE ) ||
+            IsCurSchedule( SCHED_ALERT_FACE ) ||
+            IsCurSchedule( SCHED_COMBAT_STAND ) ||
+            IsCurSchedule( SCHED_ALERT_STAND ) ) ||
+        IsCurSchedule( SCHED_ALERT_FACE_BESTSOUND ) )
     {
 #ifdef HL2_EPISODIC
         if ( IsCurSchedule( SCHED_RELOAD, false ) && GetOuter()->Classify() == CLASS_PLAYER_ALLY_VITAL )
@@ -1970,7 +1970,7 @@ void CAI_FollowBehavior::BuildScheduleTestBits()
         if ( HL2GameRules()->IsAlyxInDarknessMode() )
         {
             if ( IsCurSchedule( SCHED_FOLLOW, false ) || IsCurSchedule( SCHED_MOVE_TO_FACE_FOLLOW_TARGET, false ) ||
-                 IsCurSchedule( SCHED_FACE_FOLLOW_TARGET, false ) )
+                IsCurSchedule( SCHED_FACE_FOLLOW_TARGET, false ) )
             {
                 GetOuter()->SetCustomInterruptCondition( GetClassScheduleIdSpace()->ConditionLocalToGlobal( COND_FOLLOW_PLAYER_IS_NOT_LIT ) );
             }
@@ -2001,7 +2001,7 @@ bool CAI_FollowBehavior::IsCurScheduleFollowSchedule()
 {
     int curScheduleId = ( GetOuter()->GetCurSchedule() ) ? GetOuter()->GetCurSchedule()->GetId() : SCHED_NONE;
     if ( curScheduleId >= GetClassScheduleIdSpace()->ScheduleLocalToGlobal( SCHED_FOLLOWER_MOVE_AWAY_FAIL ) &&
-         curScheduleId <= GetClassScheduleIdSpace()->ScheduleLocalToGlobal( SCHED_FOLLOWER_STAND_AT_WAIT_POINT ) )
+        curScheduleId <= GetClassScheduleIdSpace()->ScheduleLocalToGlobal( SCHED_FOLLOWER_STAND_AT_WAIT_POINT ) )
     {
         return true;
     }
@@ -2644,7 +2644,7 @@ bool CAI_FollowManager::RedistributeSlots( AI_FollowGroup_t *pGroup )
             AI_Follower_t *p = &pGroup->followers[h];
 
             if ( movedFollowers.Find( p->hFollower ) == movedFollowers.InvalidIndex() &&
-                 ( p->slot == -1 || pSlot->priority > pGroup->pFormation->pSlots[p->slot].priority ) )
+                ( p->slot == -1 || pSlot->priority > pGroup->pFormation->pSlots[p->slot].priority ) )
             {
                 float distSqCur = ( p->hFollower->GetAbsOrigin() - slotPos ).LengthSqr();
                 if ( distSqCur < distSqBest )

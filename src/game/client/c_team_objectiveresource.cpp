@@ -408,8 +408,8 @@ void C_BaseTeamObjectiveResource::ClientThink()
                             if ( pPlayer )
                             {
                                 if ( m_iCappingTeam[i] != TEAM_UNASSIGNED &&
-                                     pPlayer->GetTeamNumber() != m_iCappingTeam[i] &&
-                                     GetCapWarningLevel( i ) == CP_WARN_FINALCAP )
+                                    pPlayer->GetTeamNumber() != m_iCappingTeam[i] &&
+                                    GetCapWarningLevel( i ) == CP_WARN_FINALCAP )
                                 {
                                     // Prevent spam
                                     if ( gpGlobals->curtime > ( m_flLastCapWarningTime[i] + 5 ) )

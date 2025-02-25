@@ -10,7 +10,7 @@ DECLARE_AUTO_LIST( ITFMvMBossProgressUserAutoList );
 
 class C_TFMvMBossProgressUser : public ITFMvMBossProgressUserAutoList
 {
-   public:
+    public:
     virtual const char* GetBossProgressImageName() const
     {
         return NULL;

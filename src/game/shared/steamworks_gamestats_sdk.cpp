@@ -50,9 +50,9 @@ CSteamWorksGameStatsUploader &GetSteamWorksSGameStatsUploader()
 CSteamWorksGameStatsUploader::CSteamWorksGameStatsUploader()
     : CAutoGameSystemPerFrame( "CSteamWorksGameStatsUploader" )
 #if !defined( NO_STEAM ) && defined( GAME_DLL )
-      ,
-      m_CallbackSteamSessionInfoIssued( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued ),
-      m_CallbackSteamSessionInfoClosed( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed )
+    ,
+    m_CallbackSteamSessionInfoIssued( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued ),
+    m_CallbackSteamSessionInfoClosed( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed )
 #endif
 {
 }

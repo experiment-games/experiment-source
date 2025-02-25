@@ -15,7 +15,7 @@
 
 class CExtinguisherJet : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CExtinguisherJet, CBaseEntity );
 
     CExtinguisherJet( void );
@@ -38,7 +38,7 @@ class CExtinguisherJet : public CBaseEntity
     DECLARE_SERVERCLASS();
 
     // Stuff from the datatable.
-   public:
+    public:
     CNetworkVar( bool, m_bEmit );   // Emit particles?
     CNetworkVar( int, m_nLength );  // Length of jet
     CNetworkVar( int, m_nSize );    // Size of jet (as in width and noise of particle movement)

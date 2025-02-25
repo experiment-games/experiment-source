@@ -448,7 +448,7 @@ static inline uint32_t read_u32(const void *src)
     const unsigned char *data = src;
 
     return (data[0] & 0xFFUL) << 24 | (data[1] & 0xFFUL) << 16 |
-           (data[2] & 0xFFUL) << 8  | (data[3] & 0xFFUL);
+            (data[2] & 0xFFUL) << 8  | (data[3] & 0xFFUL);
 }
 
 static inline int32_t read_s32(const void *src)
@@ -999,7 +999,7 @@ static int write_iend(spng_ctx *ctx)
 }
 
 /* Read and check the current chunk's crc,
-   returns -SPNG_CRC_DISCARD if the chunk should be discarded */
+    returns -SPNG_CRC_DISCARD if the chunk should be discarded */
 static inline int read_and_check_crc(spng_ctx *ctx)
 {
     if(ctx == NULL) return SPNG_EINTERNAL;
@@ -1217,11 +1217,11 @@ static int spng__deflate_init(spng_ctx *ctx, struct spng__zlib_options *options)
 }
 
 /* Inflate a zlib stream starting with start_buf if non-NULL,
-   continuing from the datastream till an end marker,
-   allocating and writing the inflated stream to *out,
-   leaving "extra" bytes at the end, final buffer length is *len.
+    continuing from the datastream till an end marker,
+    allocating and writing the inflated stream to *out,
+    leaving "extra" bytes at the end, final buffer length is *len.
 
-   Takes into account the chunk size and cache limits.
+    Takes into account the chunk size and cache limits.
 */
 static int spng__inflate_stream(spng_ctx *ctx, char **out, size_t *len, size_t extra, const void *start_buf, size_t start_len)
 {
@@ -1428,11 +1428,11 @@ static void defilter_up(size_t bytes, unsigned char *row, const unsigned char *p
 }
 
 /* Defilter *scanline in-place.
-   *prev_scanline and *scanline should point to the first pixel,
-   scanline_width is the width of the scanline including the filter byte.
+    *prev_scanline and *scanline should point to the first pixel,
+    scanline_width is the width of the scanline including the filter byte.
 */
 static int defilter_scanline(const unsigned char *prev_scanline, unsigned char *scanline,
-                             size_t scanline_width, unsigned bytes_per_pixel, unsigned filter)
+                            size_t scanline_width, unsigned bytes_per_pixel, unsigned filter)
 {
     if(prev_scanline == NULL || scanline == NULL || !scanline_width) return SPNG_EINTERNAL;
 
@@ -1523,7 +1523,7 @@ no_opt:
 }
 
 static int filter_scanline(unsigned char *filtered, const unsigned char *prev_scanline, const unsigned char *scanline,
-                           size_t scanline_width, unsigned bytes_per_pixel, const unsigned filter)
+                            size_t scanline_width, unsigned bytes_per_pixel, const unsigned filter)
 {
     if(prev_scanline == NULL || scanline == NULL || scanline_width <= 1) return SPNG_EINTERNAL;
 
@@ -1584,7 +1584,7 @@ static int filter_scanline(unsigned char *filtered, const unsigned char *prev_sc
 }
 
 static int32_t filter_sum(const unsigned char *prev_scanline, const unsigned char *scanline,
-                          size_t size, unsigned bytes_per_pixel, const unsigned filter)
+                        size_t size, unsigned bytes_per_pixel, const unsigned filter)
 {
     /* prevent potential over/underflow, bails out at a width of ~8M pixels for RGBA8 */
     if(size > (INT32_MAX / 128)) return INT32_MAX;
@@ -1687,9 +1687,9 @@ static unsigned get_best_filter(const unsigned char *prev_scanline, const unsign
 
 /* Scale "sbits" significant bits in "sample" from "bit_depth" to "target"
 
-   "bit_depth" must be a valid PNG depth
-   "sbits" must be less than or equal to "bit_depth"
-   "target" must be between 1 and 16
+    "bit_depth" must be a valid PNG depth
+    "sbits" must be less than or equal to "bit_depth"
+    "target" must be between 1 and 16
 */
 static uint16_t sample_to_target(uint16_t sample, unsigned bit_depth, unsigned sbits, unsigned target)
 {
@@ -1908,10 +1908,10 @@ static inline void scale_row(unsigned char *row, uint32_t pixels, int fmt, unsig
 
 /* Expand to *row using 8-bit palette indices from *scanline */
 static void expand_row(unsigned char *row,
-                       const unsigned char *scanline,
-                       const union spng__decode_plte *decode_plte,
-                       uint32_t width,
-                       int fmt)
+                        const unsigned char *scanline,
+                        const union spng__decode_plte *decode_plte,
+                        uint32_t width,
+                        int fmt)
 {
     uint32_t i = 0;
     unsigned char *px;
@@ -2000,7 +2000,7 @@ ga16:
         return;
     }
 
-     /* 1/2/4/8-bit -> GA16 */
+    /* 1/2/4/8-bit -> GA16 */
     for(i=0; i < width; i++)
     {
         sample = get_sample(&iter);
@@ -2022,9 +2022,9 @@ static int check_ihdr(const struct spng_ihdr *ihdr, uint32_t max_width, uint32_t
         case SPNG_COLOR_TYPE_GRAYSCALE:
         {
             if( !(ihdr->bit_depth == 1 || ihdr->bit_depth == 2 ||
-                  ihdr->bit_depth == 4 || ihdr->bit_depth == 8 ||
-                  ihdr->bit_depth == 16) )
-                  return SPNG_EBIT_DEPTH;
+                ihdr->bit_depth == 4 || ihdr->bit_depth == 8 ||
+                ihdr->bit_depth == 16) )
+                return SPNG_EBIT_DEPTH;
 
             break;
         }
@@ -2040,7 +2040,7 @@ static int check_ihdr(const struct spng_ihdr *ihdr, uint32_t max_width, uint32_t
         case SPNG_COLOR_TYPE_INDEXED:
         {
             if( !(ihdr->bit_depth == 1 || ihdr->bit_depth == 2 ||
-                  ihdr->bit_depth == 4 || ihdr->bit_depth == 8) )
+                ihdr->bit_depth == 4 || ihdr->bit_depth == 8) )
                 return SPNG_EBIT_DEPTH;
 
             break;
@@ -2123,13 +2123,13 @@ static int check_chrm_int(const struct spng_chrm_int *chrm_int)
     if(chrm_int == NULL) return 1;
 
     if(chrm_int->white_point_x > spng_u32max ||
-       chrm_int->white_point_y > spng_u32max ||
-       chrm_int->red_x > spng_u32max ||
-       chrm_int->red_y > spng_u32max ||
-       chrm_int->green_x  > spng_u32max ||
-       chrm_int->green_y  > spng_u32max ||
-       chrm_int->blue_x > spng_u32max ||
-       chrm_int->blue_y > spng_u32max) return SPNG_ECHRM;
+        chrm_int->white_point_y > spng_u32max ||
+        chrm_int->red_x > spng_u32max ||
+        chrm_int->red_y > spng_u32max ||
+        chrm_int->green_x  > spng_u32max ||
+        chrm_int->green_y  > spng_u32max ||
+        chrm_int->blue_x > spng_u32max ||
+        chrm_int->blue_y > spng_u32max) return SPNG_ECHRM;
 
     return 0;
 }
@@ -2739,9 +2739,9 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 
                 ctx->stored.iccp = 1;
             }
-             else if(!memcmp(chunk.type, type_text, 4) ||
-                     !memcmp(chunk.type, type_ztxt, 4) ||
-                     !memcmp(chunk.type, type_itxt, 4))
+            else if(!memcmp(chunk.type, type_text, 4) ||
+                    !memcmp(chunk.type, type_ztxt, 4) ||
+                    !memcmp(chunk.type, type_itxt, 4))
             {
                 if(!chunk.length) return SPNG_ECHUNK_SIZE;
 
@@ -3696,7 +3696,7 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
     else flags &= ~SPNG_DECODE_TRNS;
 
     if(ihdr->color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA ||
-       ihdr->color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) flags &= ~SPNG_DECODE_TRNS;
+        ihdr->color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA) flags &= ~SPNG_DECODE_TRNS;
 
     if(flags & SPNG_DECODE_GAMMA && ctx->stored.gama) f.apply_gamma = 1;
     else flags &= ~SPNG_DECODE_GAMMA;
@@ -3707,12 +3707,12 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
     if(fmt & (SPNG_FMT_RGBA8 | SPNG_FMT_RGBA16))
     {
         if(ihdr->color_type == SPNG_COLOR_TYPE_TRUECOLOR_ALPHA &&
-           ihdr->bit_depth == depth_target) f.same_layout = 1;
+            ihdr->bit_depth == depth_target) f.same_layout = 1;
     }
     else if(fmt == SPNG_FMT_RGB8)
     {
         if(ihdr->color_type == SPNG_COLOR_TYPE_TRUECOLOR &&
-           ihdr->bit_depth == depth_target) f.same_layout = 1;
+            ihdr->bit_depth == depth_target) f.same_layout = 1;
 
         f.apply_trns = 0; /* not applicable */
     }
@@ -3733,13 +3733,13 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
     else if(fmt == SPNG_FMT_GA8 && ihdr->color_type == SPNG_COLOR_TYPE_GRAYSCALE && ihdr->bit_depth <= 8)
     {
         if(ihdr->color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA &&
-           ihdr->bit_depth == depth_target) f.same_layout = 1;
+            ihdr->bit_depth == depth_target) f.same_layout = 1;
         else if(ihdr->bit_depth <= 8) f.unpack = 1;
     }
     else if(fmt == SPNG_FMT_GA16 && ihdr->color_type == SPNG_COLOR_TYPE_GRAYSCALE && ihdr->bit_depth == 16)
     {
         if(ihdr->color_type == SPNG_COLOR_TYPE_GRAYSCALE_ALPHA &&
-           ihdr->bit_depth == depth_target) f.same_layout = 1;
+            ihdr->bit_depth == depth_target) f.same_layout = 1;
         else if(ihdr->bit_depth == 16) f.unpack = 1;
     }
 
@@ -3840,21 +3840,21 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
 
     /* Prevent infinite loops in sample_to_target() */
     if(!depth_target || depth_target > 16 ||
-       !processing_depth || processing_depth > 16 ||
-       !sb->grayscale_bits || sb->grayscale_bits > processing_depth ||
-       !sb->alpha_bits || sb->alpha_bits > processing_depth ||
-       !sb->red_bits || sb->red_bits > processing_depth ||
-       !sb->green_bits || sb->green_bits > processing_depth ||
-       !sb->blue_bits || sb->blue_bits > processing_depth)
+        !processing_depth || processing_depth > 16 ||
+        !sb->grayscale_bits || sb->grayscale_bits > processing_depth ||
+        !sb->alpha_bits || sb->alpha_bits > processing_depth ||
+        !sb->red_bits || sb->red_bits > processing_depth ||
+        !sb->green_bits || sb->green_bits > processing_depth ||
+        !sb->blue_bits || sb->blue_bits > processing_depth)
     {
         return decode_err(ctx, SPNG_ESBIT);
     }
 
     if(sb->red_bits == sb->green_bits &&
-       sb->green_bits == sb->blue_bits &&
-       sb->blue_bits == sb->alpha_bits &&
-       sb->alpha_bits == processing_depth &&
-       processing_depth == depth_target) f.do_scaling = 0;
+        sb->green_bits == sb->blue_bits &&
+        sb->blue_bits == sb->alpha_bits &&
+        sb->alpha_bits == processing_depth &&
+        processing_depth == depth_target) f.do_scaling = 0;
 
     struct spng_plte_entry *plte = ctx->decode_plte.rgba;
 
@@ -6268,9 +6268,9 @@ static void store3(void* p, __m128i v)
 static void defilter_sub3(size_t rowbytes, unsigned char *row)
 {
     /* The Sub filter predicts each pixel as the previous pixel, a.
-     * There is no pixel to the left of the first pixel.  It's encoded directly.
-     * That works with our main loop if we just say that left pixel was zero.
-     */
+    * There is no pixel to the left of the first pixel.  It's encoded directly.
+    * That works with our main loop if we just say that left pixel was zero.
+    */
     size_t rb = rowbytes;
 
     __m128i a, d = _mm_setzero_si128();
@@ -6296,9 +6296,9 @@ static void defilter_sub3(size_t rowbytes, unsigned char *row)
 static void defilter_sub4(size_t rowbytes, unsigned char *row)
 {
     /* The Sub filter predicts each pixel as the previous pixel, a.
-     * There is no pixel to the left of the first pixel.  It's encoded directly.
-     * That works with our main loop if we just say that left pixel was zero.
-     */
+    * There is no pixel to the left of the first pixel.  It's encoded directly.
+    * That works with our main loop if we just say that left pixel was zero.
+    */
     size_t rb = rowbytes+4;
 
     __m128i a, d = _mm_setzero_si128();
@@ -6317,10 +6317,10 @@ static void defilter_sub4(size_t rowbytes, unsigned char *row)
 static void defilter_avg3(size_t rowbytes, unsigned char *row, const unsigned char *prev)
 {
     /* The Avg filter predicts each pixel as the (truncated) average of a and b.
-     * There's no pixel to the left of the first pixel.  Luckily, it's
-     * predicted to be half of the pixel above it.  So again, this works
-     * perfectly with our loop if we make sure a starts at zero.
-     */
+    * There's no pixel to the left of the first pixel.  Luckily, it's
+    * predicted to be half of the pixel above it.  So again, this works
+    * perfectly with our loop if we make sure a starts at zero.
+    */
 
     size_t rb = rowbytes;
 
@@ -6332,7 +6332,7 @@ static void defilter_avg3(size_t rowbytes, unsigned char *row, const unsigned ch
     while(rb >= 4)
     {
         __m128i avg;
-               b = load4(prev);
+                b = load4(prev);
         a = d; d = load4(row );
 
         /* PNG requires a truncating average, so we can't just use _mm_avg_epu8 */
@@ -6351,7 +6351,7 @@ static void defilter_avg3(size_t rowbytes, unsigned char *row, const unsigned ch
     if(rb > 0)
     {
         __m128i avg;
-               b = load3(prev);
+                b = load3(prev);
         a = d; d = load3(row );
 
         /* PNG requires a truncating average, so we can't just use _mm_avg_epu8 */
@@ -6368,10 +6368,10 @@ static void defilter_avg3(size_t rowbytes, unsigned char *row, const unsigned ch
 static void defilter_avg4(size_t rowbytes, unsigned char *row, const unsigned char *prev)
 {
     /* The Avg filter predicts each pixel as the (truncated) average of a and b.
-     * There's no pixel to the left of the first pixel.  Luckily, it's
-     * predicted to be half of the pixel above it.  So again, this works
-     * perfectly with our loop if we make sure a starts at zero.
-     */
+    * There's no pixel to the left of the first pixel.  Luckily, it's
+    * predicted to be half of the pixel above it.  So again, this works
+    * perfectly with our loop if we make sure a starts at zero.
+    */
     size_t rb = rowbytes+4;
 
     const __m128i zero = _mm_setzero_si128();
@@ -6381,7 +6381,7 @@ static void defilter_avg4(size_t rowbytes, unsigned char *row, const unsigned ch
     while(rb > 4)
     {
         __m128i avg;
-               b = load4(prev);
+                b = load4(prev);
         a = d; d = load4(row );
 
         /* PNG requires a truncating average, so we can't just use _mm_avg_epu8 */
@@ -6409,8 +6409,8 @@ static __m128i abs_i16(__m128i x)
     return _mm_abs_epi16(x);
 #else
     /* Read this all as, return x<0 ? -x : x.
-     * To negate two's complement, you flip all the bits then add 1.
-     */
+    * To negate two's complement, you flip all the bits then add 1.
+    */
     __m128i is_negative = _mm_cmplt_epi16(x, _mm_setzero_si128());
 
     /* Flip negative lanes. */
@@ -6435,18 +6435,18 @@ static __m128i if_then_else(__m128i c, __m128i t, __m128i e)
 static void defilter_paeth3(size_t rowbytes, unsigned char *row, const unsigned char *prev)
 {
     /* Paeth tries to predict pixel d using the pixel to the left of it, a,
-     * and two pixels from the previous row, b and c:
-     *   prev: c b
-     *   row:  a d
-     * The Paeth function predicts d to be whichever of a, b, or c is nearest to
-     * p=a+b-c.
-     *
-     * The first pixel has no left context, and so uses an Up filter, p = b.
-     * This works naturally with our main loop's p = a+b-c if we force a and c
-     * to zero.
-     * Here we zero b and d, which become c and a respectively at the start of
-     * the loop.
-     */
+    * and two pixels from the previous row, b and c:
+    *   prev: c b
+    *   row:  a d
+    * The Paeth function predicts d to be whichever of a, b, or c is nearest to
+    * p=a+b-c.
+    *
+    * The first pixel has no left context, and so uses an Up filter, p = b.
+    * This works naturally with our main loop's p = a+b-c if we force a and c
+    * to zero.
+    * Here we zero b and d, which become c and a respectively at the start of
+    * the loop.
+    */
     size_t rb = rowbytes;
     const __m128i zero = _mm_setzero_si128();
     __m128i c, b = zero,
@@ -6455,8 +6455,8 @@ static void defilter_paeth3(size_t rowbytes, unsigned char *row, const unsigned 
     while(rb >= 4)
     {
         /* It's easiest to do this math (particularly, deal with pc) with 16-bit
-         * intermediates.
-         */
+        * intermediates.
+        */
         __m128i pa,pb,pc,smallest,nearest;
         c = b; b = _mm_unpacklo_epi8(load4(prev), zero);
         a = d; d = _mm_unpacklo_epi8(load4(row ), zero);
@@ -6493,8 +6493,8 @@ static void defilter_paeth3(size_t rowbytes, unsigned char *row, const unsigned 
     if(rb > 0)
     {
         /* It's easiest to do this math (particularly, deal with pc) with 16-bit
-         * intermediates.
-         */
+        * intermediates.
+        */
         __m128i pa, pb, pc, smallest, nearest;
         c = b; b = _mm_unpacklo_epi8(load3(prev), zero);
         a = d; d = _mm_unpacklo_epi8(load3(row ), zero);
@@ -6527,18 +6527,18 @@ static void defilter_paeth3(size_t rowbytes, unsigned char *row, const unsigned 
 static void defilter_paeth4(size_t rowbytes, unsigned char *row, const unsigned char *prev)
 {
     /* Paeth tries to predict pixel d using the pixel to the left of it, a,
-     * and two pixels from the previous row, b and c:
-     *   prev: c b
-     *   row:  a d
-     * The Paeth function predicts d to be whichever of a, b, or c is nearest to
-     * p=a+b-c.
-     *
-     * The first pixel has no left context, and so uses an Up filter, p = b.
-     * This works naturally with our main loop's p = a+b-c if we force a and c
-     * to zero.
-     * Here we zero b and d, which become c and a respectively at the start of
-     * the loop.
-     */
+    * and two pixels from the previous row, b and c:
+    *   prev: c b
+    *   row:  a d
+    * The Paeth function predicts d to be whichever of a, b, or c is nearest to
+    * p=a+b-c.
+    *
+    * The first pixel has no left context, and so uses an Up filter, p = b.
+    * This works naturally with our main loop's p = a+b-c if we force a and c
+    * to zero.
+    * Here we zero b and d, which become c and a respectively at the start of
+    * the loop.
+    */
     size_t rb = rowbytes+4;
 
     const __m128i zero = _mm_setzero_si128();
@@ -6549,8 +6549,8 @@ static void defilter_paeth4(size_t rowbytes, unsigned char *row, const unsigned 
     while(rb > 4)
     {
         /* It's easiest to do this math (particularly, deal with pc) with 16-bit
-         * intermediates.
-         */
+        * intermediates.
+        */
         c = b; b = _mm_unpacklo_epi8(load4(prev), zero);
         a = d; d = _mm_unpacklo_epi8(load4(row ), zero);
 
@@ -6618,7 +6618,7 @@ static void defilter_paeth4(size_t rowbytes, unsigned char *row, const unsigned 
  * the input and output pointers.
  */
 #define png_ldr(type,pointer)\
-   (temp_pointer = png_ptr(type,pointer), *temp_pointer)
+    (temp_pointer = png_ptr(type,pointer), *temp_pointer)
 
 
 #if defined(_MSC_VER) && !defined(__clang__) && defined(_M_ARM64)

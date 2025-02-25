@@ -42,7 +42,7 @@ enum PlayerAnimEvent_t
 
 class ISDKPlayerAnimState : virtual public IPlayerAnimState
 {
-   public:
+    public:
     // This is called by both the client and the server in the same way to trigger events for
     // players firing, jumping, throwing grenades, etc.
     virtual void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 ) = 0;
@@ -54,7 +54,7 @@ class ISDKPlayerAnimState : virtual public IPlayerAnimState
 // This abstracts the differences between SDK players and hostages.
 class ISDKPlayerAnimStateHelpers
 {
-   public:
+    public:
     virtual CWeaponSDKBase* SDKAnim_GetActiveWeapon() = 0;
     virtual bool SDKAnim_CanMove() = 0;
 };

@@ -16,14 +16,14 @@
 /// Abuse report manager that knows about the TF2 specifics
 class CTFAbuseReportManager : public CAbuseReportManager
 {
-   public:
+    public:
     CTFAbuseReportManager();
     virtual ~CTFAbuseReportManager();
 
     virtual void ActivateSubmitReportUI();
     virtual bool CreateAndPopulateIncident();
 
-   protected:
+    protected:
     // virtual bool CreateAndPopulateIncident();
 };
 

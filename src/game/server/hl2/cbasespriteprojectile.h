@@ -23,7 +23,7 @@ class CBaseSpriteProjectile : public CSprite
     DECLARE_DATADESC();
     DECLARE_CLASS( CBaseSpriteProjectile, CSprite );
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther );
     virtual void HandleTouch( CBaseEntity *pOther );
 

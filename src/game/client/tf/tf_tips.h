@@ -23,7 +23,7 @@ struct CaptainCanteenAsset_t
 //-----------------------------------------------------------------------------
 class CTFTips : public CAutoGameSystem
 {
-   public:
+    public:
     CTFTips();
 
     virtual bool Init();
@@ -39,7 +39,7 @@ class CTFTips : public CAutoGameSystem
     const wchar_t *GetRandomMvMTip( int &iClassUsed );  // iClassUsed will be filled in with the class that was selected
     void GetRandomCaptainCanteenImages( const char **ppchBody, const char **ppchMisc, const char **ppchHat );
 
-   private:
+    private:
     const wchar_t *GetTip( int iClass, int iTip );
     const char *GetRandomCaptainCanteenAsset( CUtlVector< CaptainCanteenAsset_t > *pAssetBucket );
 

@@ -59,27 +59,27 @@ void AesGenTables(void)
   for (i = 0; i < 256; i++)
   {
     {
-      UInt32 a1 = Sbox[i];
-      UInt32 a2 = xtime(a1);
-      UInt32 a3 = a2 ^ a1;
-      T[        i] = Ui32(a2, a1, a1, a3);
-      T[0x100 + i] = Ui32(a3, a2, a1, a1);
-      T[0x200 + i] = Ui32(a1, a3, a2, a1);
-      T[0x300 + i] = Ui32(a1, a1, a3, a2);
+    UInt32 a1 = Sbox[i];
+    UInt32 a2 = xtime(a1);
+    UInt32 a3 = a2 ^ a1;
+    T[        i] = Ui32(a2, a1, a1, a3);
+    T[0x100 + i] = Ui32(a3, a2, a1, a1);
+    T[0x200 + i] = Ui32(a1, a3, a2, a1);
+    T[0x300 + i] = Ui32(a1, a1, a3, a2);
     }
     {
-      UInt32 a1 = InvS[i];
-      UInt32 a2 = xtime(a1);
-      UInt32 a4 = xtime(a2);
-      UInt32 a8 = xtime(a4);
-      UInt32 a9 = a8 ^ a1;
-      UInt32 aB = a8 ^ a2 ^ a1;
-      UInt32 aD = a8 ^ a4 ^ a1;
-      UInt32 aE = a8 ^ a4 ^ a2;
-      D[        i] = Ui32(aE, a9, aD, aB);
-      D[0x100 + i] = Ui32(aB, aE, a9, aD);
-      D[0x200 + i] = Ui32(aD, aB, aE, a9);
-      D[0x300 + i] = Ui32(a9, aD, aB, aE);
+    UInt32 a1 = InvS[i];
+    UInt32 a2 = xtime(a1);
+    UInt32 a4 = xtime(a2);
+    UInt32 a8 = xtime(a4);
+    UInt32 a9 = a8 ^ a1;
+    UInt32 aB = a8 ^ a2 ^ a1;
+    UInt32 aD = a8 ^ a4 ^ a1;
+    UInt32 aE = a8 ^ a4 ^ a2;
+    D[        i] = Ui32(aE, a9, aD, aB);
+    D[0x100 + i] = Ui32(aB, aE, a9, aD);
+    D[0x200 + i] = Ui32(aD, aB, aE, a9);
+    D[0x300 + i] = Ui32(a9, aD, aB, aE);
     }
   }
   g_AesCbc_Encode = AesCbc_Encode;
@@ -143,9 +143,9 @@ void MY_FAST_CALL Aes_SetKey_Enc(UInt32 *w, const Byte *key, unsigned keySize)
     UInt32 t = w[i - 1];
     unsigned rem = i % keySize;
     if (rem == 0)
-      t = Ui32(Sbox[gb1(t)] ^ Rcon[i / keySize], Sbox[gb2(t)], Sbox[gb3(t)], Sbox[gb0(t)]);
+    t = Ui32(Sbox[gb1(t)] ^ Rcon[i / keySize], Sbox[gb2(t)], Sbox[gb3(t)], Sbox[gb0(t)]);
     else if (keySize > 6 && rem == 4)
-      t = Ui32(Sbox[gb0(t)], Sbox[gb1(t)], Sbox[gb2(t)], Sbox[gb3(t)]);
+    t = Ui32(Sbox[gb0(t)], Sbox[gb1(t)], Sbox[gb2(t)], Sbox[gb3(t)]);
     w[i] = w[i - keySize] ^ t;
   }
 }
@@ -160,10 +160,10 @@ void MY_FAST_CALL Aes_SetKey_Dec(UInt32 *w, const Byte *key, unsigned keySize)
   {
     UInt32 r = w[i];
     w[i] =
-      D[        Sbox[gb0(r)]] ^
-      D[0x100 + Sbox[gb1(r)]] ^
-      D[0x200 + Sbox[gb2(r)]] ^
-      D[0x300 + Sbox[gb3(r)]];
+    D[        Sbox[gb0(r)]] ^
+    D[0x100 + Sbox[gb1(r)]] ^
+    D[0x200 + Sbox[gb2(r)]] ^
+    D[0x300 + Sbox[gb3(r)]];
   }
 }
 
@@ -186,7 +186,7 @@ static void Aes_Encode(const UInt32 *w, UInt32 *dest, const UInt32 *src)
   {
     HT16(m, s, 0);
     if (--numRounds2 == 0)
-      break;
+    break;
     HT16(s, m, 4);
     w += 8;
   }
@@ -209,7 +209,7 @@ static void Aes_Decode(const UInt32 *w, UInt32 *dest, const UInt32 *src)
     w -= 8;
     HD16(m, s, 4);
     if (--numRounds2 == 0)
-      break;
+    break;
     HD16(s, m, 0);
   }
   FD4(0); FD4(1); FD4(2); FD4(3);
@@ -230,9 +230,9 @@ void MY_FAST_CALL AesCbc_Encode(UInt32 *p, Byte *data, size_t numBlocks)
     p[1] ^= GetUi32(data + 4);
     p[2] ^= GetUi32(data + 8);
     p[3] ^= GetUi32(data + 12);
-    
+
     Aes_Encode(p + 4, p, p);
-    
+
     SetUi32(data,      p[0]);
     SetUi32(data + 4,  p[1]);
     SetUi32(data + 8,  p[2]);
@@ -256,7 +256,7 @@ void MY_FAST_CALL AesCbc_Decode(UInt32 *p, Byte *data, size_t numBlocks)
     SetUi32(data + 4,  p[1] ^ out[1]);
     SetUi32(data + 8,  p[2] ^ out[2]);
     SetUi32(data + 12, p[3] ^ out[3]);
-    
+
     p[0] = in[0];
     p[1] = in[1];
     p[2] = in[2];
@@ -272,13 +272,13 @@ void MY_FAST_CALL AesCtr_Code(UInt32 *p, Byte *data, size_t numBlocks)
     Byte buf[16];
     int i;
     if (++p[0] == 0)
-      p[1]++;
+    p[1]++;
     Aes_Encode(p + 4, temp, p);
     SetUi32(buf,      temp[0]);
     SetUi32(buf + 4,  temp[1]);
     SetUi32(buf + 8,  temp[2]);
     SetUi32(buf + 12, temp[3]);
     for (i = 0; i < 16; i++)
-      *data++ ^= buf[i];
+    *data++ ^= buf[i];
   }
 }

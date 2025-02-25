@@ -66,7 +66,7 @@ namespace java
 
 class MessageGenerator
 {
-   public:
+    public:
     explicit MessageGenerator( const Descriptor* descriptor );
     virtual ~MessageGenerator();
 
@@ -89,16 +89,16 @@ class MessageGenerator
     // ExtensionRegistry.
     virtual void GenerateExtensionRegistrationCode( io::Printer* printer ) = 0;
 
-   protected:
+    protected:
     const Descriptor* descriptor_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MessageGenerator );
 };
 
 class ImmutableMessageGenerator : public MessageGenerator
 {
-   public:
+    public:
     explicit ImmutableMessageGenerator( const Descriptor* descriptor,
                                         Context* context );
     virtual ~ImmutableMessageGenerator();
@@ -109,7 +109,7 @@ class ImmutableMessageGenerator : public MessageGenerator
     virtual void GenerateStaticVariables( io::Printer* printer );
     virtual void GenerateStaticVariableInitializers( io::Printer* printer );
 
-   private:
+    private:
     enum UseMemoization
     {
         MEMOIZE,

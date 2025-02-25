@@ -26,13 +26,13 @@ class C_BaseTeamObjectiveResource : public C_BaseEntity
 {
     DECLARE_CLASS( C_BaseTeamObjectiveResource, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_BaseTeamObjectiveResource();
     virtual ~C_BaseTeamObjectiveResource();
 
-   public:
+    public:
     virtual void ClientThink();
     virtual void OnPreDataChanged( DataUpdateType_t updateType );
     virtual void OnDataChanged( DataUpdateType_t updateType );
@@ -298,7 +298,7 @@ class C_BaseTeamObjectiveResource : public C_BaseEntity
         return true;
     }
 
-   protected:
+    protected:
     int m_iTimerToShowInHUD;
     int m_iStopWatchTimer;
 

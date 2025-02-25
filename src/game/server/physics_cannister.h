@@ -18,7 +18,7 @@ class CThrustController : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
     {
         angular = m_torqueVector;
@@ -44,7 +44,7 @@ class CPhysicsCannister : public CBaseCombatCharacter, public CDefaultPlayerPick
 {
     DECLARE_CLASS( CPhysicsCannister, CBaseCombatCharacter );
 
-   public:
+    public:
     ~CPhysicsCannister( void );
 
     void Spawn( void );
@@ -107,7 +107,7 @@ class CPhysicsCannister : public CBaseCombatCharacter, public CDefaultPlayerPick
     void ShutdownJet( void );
     void BeginShutdownThink( void );
 
-   public:
+    public:
     virtual bool OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
     {
         return true;
@@ -131,10 +131,10 @@ class CPhysicsCannister : public CBaseCombatCharacter, public CDefaultPlayerPick
         return vec3_origin;
     }
 
-   protected:
+    protected:
     void SetPhysicsAttacker( CBasePlayer *pEntity, float flTime );
 
-   public:
+    public:
     Vector m_thrustOrigin;
     CThrustController m_thruster;
     IPhysicsMotionController *m_pController;
@@ -156,7 +156,7 @@ class CPhysicsCannister : public CBaseCombatCharacter, public CDefaultPlayerPick
     float m_flLastPhysicsInfluenceTime;
     EHANDLE m_hLauncher;  // Entity that caused this cannister to launch
 
-   private:
+    private:
     Vector CalcLocalThrust( const Vector &offset );
 };
 

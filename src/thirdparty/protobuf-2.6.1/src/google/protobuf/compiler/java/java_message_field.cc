@@ -52,26 +52,26 @@ namespace java {
 namespace {
 
 void SetMessageVariables(const FieldDescriptor* descriptor,
-                         int messageBitIndex,
-                         int builderBitIndex,
-                         const FieldGeneratorInfo* info,
-                         ClassNameResolver* name_resolver,
-                         map<string, string>* variables) {
+                        int messageBitIndex,
+                        int builderBitIndex,
+                        const FieldGeneratorInfo* info,
+                        ClassNameResolver* name_resolver,
+                        map<string, string>* variables) {
   SetCommonFieldVariables(descriptor, info, variables);
 
   (*variables)["type"] =
-      name_resolver->GetImmutableClassName(descriptor->message_type());
+    name_resolver->GetImmutableClassName(descriptor->message_type());
   (*variables)["mutable_type"] =
-      name_resolver->GetMutableClassName(descriptor->message_type());
+    name_resolver->GetMutableClassName(descriptor->message_type());
   (*variables)["group_or_message"] =
     (GetType(descriptor) == FieldDescriptor::TYPE_GROUP) ?
     "Group" : "Message";
   // TODO(birdo): Add @deprecated javadoc when generating javadoc is supported
   // by the proto compiler
   (*variables)["deprecation"] = descriptor->options().deprecated()
-      ? "@java.lang.Deprecated " : "";
+    ? "@java.lang.Deprecated " : "";
   (*variables)["on_changed"] =
-      HasDescriptorMethods(descriptor->containing_type()) ? "onChanged();" : "";
+    HasDescriptorMethods(descriptor->containing_type()) ? "onChanged();" : "";
 
   if (SupportFieldPresence(descriptor->file())) {
     // For singular messages and builders, one bit is used for the hasField bit.
@@ -104,14 +104,14 @@ void SetMessageVariables(const FieldDescriptor* descriptor,
   // For repeated fields, one bit is used for whether the array is immutable
   // in the parsing constructor.
   (*variables)["get_mutable_bit_parser"] =
-      GenerateGetBitMutableLocal(builderBitIndex);
+    GenerateGetBitMutableLocal(builderBitIndex);
   (*variables)["set_mutable_bit_parser"] =
-      GenerateSetBitMutableLocal(builderBitIndex);
+    GenerateSetBitMutableLocal(builderBitIndex);
 
   (*variables)["get_has_field_bit_from_local"] =
-      GenerateGetBitFromLocal(builderBitIndex);
+    GenerateGetBitFromLocal(builderBitIndex);
   (*variables)["set_has_field_bit_to_local"] =
-      GenerateSetBitToLocal(messageBitIndex);
+    GenerateSetBitToLocal(messageBitIndex);
 }
 
 }  // namespace
@@ -120,9 +120,9 @@ void SetMessageVariables(const FieldDescriptor* descriptor,
 
 ImmutableMessageFieldGenerator::
 ImmutableMessageFieldGenerator(const FieldDescriptor* descriptor,
-                      int messageBitIndex,
-                      int builderBitIndex,
-                      Context* context)
+                    int messageBitIndex,
+                    int builderBitIndex,
+                    Context* context)
   : descriptor_(descriptor), messageBitIndex_(messageBitIndex),
     builderBitIndex_(builderBitIndex), context_(context),
     name_resolver_(context->GetNameResolver()) {
@@ -148,10 +148,10 @@ GenerateInterfaceMembers(io::Printer* printer) const {
   // message or a nested builder, so that asking for the interface doesn't
   // cause a message to ever be built.
   if (SupportFieldPresence(descriptor_->file()) ||
-      descriptor_->containing_oneof() == NULL) {
+    descriptor_->containing_oneof() == NULL) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$boolean has$capitalized_name$();\n");
+    "$deprecation$boolean has$capitalized_name$();\n");
   }
   WriteFieldDocComment(printer, descriptor_);
   printer->Print(variables_,
@@ -160,7 +160,7 @@ GenerateInterfaceMembers(io::Printer* printer) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$$type$OrBuilder get$capitalized_name$OrBuilder();\n");
+    "$deprecation$$type$OrBuilder get$capitalized_name$OrBuilder();\n");
   }
 }
 
@@ -173,18 +173,18 @@ GenerateMembers(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $get_has_field_bit_message$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $get_has_field_bit_message$;\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$ get$capitalized_name$() {\n"
-      "  return $name$_;\n"
-      "}\n");
+    "$deprecation$public $type$ get$capitalized_name$() {\n"
+    "  return $name$_;\n"
+    "}\n");
 
     if (HasNestedBuilders(descriptor_->containing_type())) {
-      WriteFieldDocComment(printer, descriptor_);
-      printer->Print(variables_,
+    WriteFieldDocComment(printer, descriptor_);
+    printer->Print(variables_,
         "$deprecation$public $type$OrBuilder "
         "get$capitalized_name$OrBuilder() {\n"
         "  return $name$_;\n"
@@ -193,18 +193,18 @@ GenerateMembers(io::Printer* printer) const {
   } else {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $name$_ != null;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $name$_ != null;\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$ get$capitalized_name$() {\n"
-      "  return $name$_ == null ? $type$.getDefaultInstance() : $name$_;\n"
-      "}\n");
+    "$deprecation$public $type$ get$capitalized_name$() {\n"
+    "  return $name$_ == null ? $type$.getDefaultInstance() : $name$_;\n"
+    "}\n");
 
     if (HasNestedBuilders(descriptor_->containing_type())) {
-      WriteFieldDocComment(printer, descriptor_);
-      printer->Print(variables_,
+    WriteFieldDocComment(printer, descriptor_);
+    printer->Print(variables_,
         "$deprecation$public $type$OrBuilder "
         "get$capitalized_name$OrBuilder() {\n"
         "  return get$capitalized_name$();\n"
@@ -218,18 +218,18 @@ void ImmutableMessageFieldGenerator::PrintNestedBuilderCondition(
     const char* regular_case,
     const char* nested_builder_case) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
-     printer->Print(variables_, "if ($name$Builder_ == null) {\n");
-     printer->Indent();
-     printer->Print(variables_, regular_case);
-     printer->Outdent();
-     printer->Print("} else {\n");
-     printer->Indent();
-     printer->Print(variables_, nested_builder_case);
-     printer->Outdent();
-     printer->Print("}\n");
-   } else {
-     printer->Print(variables_, regular_case);
-   }
+    printer->Print(variables_, "if ($name$Builder_ == null) {\n");
+    printer->Indent();
+    printer->Print(variables_, regular_case);
+    printer->Outdent();
+    printer->Print("} else {\n");
+    printer->Indent();
+    printer->Print(variables_, nested_builder_case);
+    printer->Outdent();
+    printer->Print("}\n");
+    } else {
+    printer->Print(variables_, regular_case);
+    }
 }
 
 void ImmutableMessageFieldGenerator::PrintNestedBuilderFunction(
@@ -259,20 +259,20 @@ GenerateBuilderMembers(io::Printer* printer) const {
 
   if (support_field_presence) {
     printer->Print(variables_,
-      // Used when the builder is null.
-      "private $type$ $name$_ = $type$.getDefaultInstance();\n");
+    // Used when the builder is null.
+    "private $type$ $name$_ = $type$.getDefaultInstance();\n");
   } else {
     printer->Print(variables_,
-      "private $type$ $name$_ = null;\n");
+    "private $type$ $name$_ = null;\n");
   }
 
   if (HasNestedBuilders(descriptor_->containing_type())) {
     printer->Print(variables_,
-      // If this builder is non-null, it is used and the other fields are
-      // ignored.
-      "private com.google.protobuf.SingleFieldBuilder<\n"
-      "    $type$, $type$.Builder, $type$OrBuilder> $name$Builder_;"
-      "\n");
+    // If this builder is non-null, it is used and the other fields are
+    // ignored.
+    "private com.google.protobuf.SingleFieldBuilder<\n"
+    "    $type$, $type$.Builder, $type$OrBuilder> $name$Builder_;"
+    "\n");
   }
 
   // The comments above the methods below are based on a hypothetical
@@ -282,14 +282,14 @@ GenerateBuilderMembers(io::Printer* printer) const {
   WriteFieldDocComment(printer, descriptor_);
   if (support_field_presence) {
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $get_has_field_bit_builder$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $get_has_field_bit_builder$;\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $name$Builder_ != null || $name$_ != null;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $name$Builder_ != null || $name$_ != null;\n"
+    "}\n");
   }
 
   // Field getField()
@@ -342,20 +342,20 @@ GenerateBuilderMembers(io::Printer* printer) const {
 
     support_field_presence
         ? "if ($get_has_field_bit_builder$ &&\n"
-          "    $name$_ != $type$.getDefaultInstance()) {\n"
-          "  $name$_ =\n"
-          "    $type$.newBuilder($name$_).mergeFrom(value).buildPartial();\n"
-          "} else {\n"
-          "  $name$_ = value;\n"
-          "}\n"
-          "$on_changed$\n"
+        "    $name$_ != $type$.getDefaultInstance()) {\n"
+        "  $name$_ =\n"
+        "    $type$.newBuilder($name$_).mergeFrom(value).buildPartial();\n"
+        "} else {\n"
+        "  $name$_ = value;\n"
+        "}\n"
+        "$on_changed$\n"
         : "if ($name$_ != null) {\n"
-          "  $name$_ =\n"
-          "    $type$.newBuilder($name$_).mergeFrom(value).buildPartial();\n"
-          "} else {\n"
-          "  $name$_ = value;\n"
-          "}\n"
-          "$on_changed$\n",
+        "  $name$_ =\n"
+        "    $type$.newBuilder($name$_).mergeFrom(value).buildPartial();\n"
+        "} else {\n"
+        "  $name$_ = value;\n"
+        "}\n"
+        "$on_changed$\n",
 
     "$name$Builder_.mergeFrom(value);\n",
 
@@ -369,14 +369,14 @@ GenerateBuilderMembers(io::Printer* printer) const {
 
     support_field_presence
         ? "$name$_ = $type$.getDefaultInstance();\n"
-          "$on_changed$\n"
+        "$on_changed$\n"
         : "$name$_ = null;\n"
-          "$on_changed$\n",
+        "$on_changed$\n",
 
     support_field_presence
         ? "$name$Builder_.clear();\n"
         : "$name$_ = null;\n"
-          "$name$Builder_ = null;\n",
+        "$name$Builder_ = null;\n",
 
     "$clear_has_field_bit_builder$\n"
     "return this;\n");
@@ -384,43 +384,43 @@ GenerateBuilderMembers(io::Printer* printer) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$.Builder get$capitalized_name$Builder() {\n"
-      "  $set_has_field_bit_builder$\n"
-      "  $on_changed$\n"
-      "  return get$capitalized_name$FieldBuilder().getBuilder();\n"
-      "}\n");
+    "$deprecation$public $type$.Builder get$capitalized_name$Builder() {\n"
+    "  $set_has_field_bit_builder$\n"
+    "  $on_changed$\n"
+    "  return get$capitalized_name$FieldBuilder().getBuilder();\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder() {\n"
-      "  if ($name$Builder_ != null) {\n"
-      "    return $name$Builder_.getMessageOrBuilder();\n"
-      "  } else {\n");
+    "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder() {\n"
+    "  if ($name$Builder_ != null) {\n"
+    "    return $name$Builder_.getMessageOrBuilder();\n"
+    "  } else {\n");
     if (support_field_presence) {
-      printer->Print(variables_,
+    printer->Print(variables_,
         "    return $name$_;\n");
     } else {
-      printer->Print(variables_,
+    printer->Print(variables_,
         "    return $name$_ == null ?\n"
         "        $type$.getDefaultInstance() : $name$_;\n");
     }
     printer->Print(variables_,
-      "  }\n"
-      "}\n");
+    "  }\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "private com.google.protobuf.SingleFieldBuilder<\n"
-      "    $type$, $type$.Builder, $type$OrBuilder> \n"
-      "    get$capitalized_name$FieldBuilder() {\n"
-      "  if ($name$Builder_ == null) {\n"
-      "    $name$Builder_ = new com.google.protobuf.SingleFieldBuilder<\n"
-      "        $type$, $type$.Builder, $type$OrBuilder>(\n"
-      "            get$capitalized_name$(),\n"
-      "            getParentForChildren(),\n"
-      "            isClean());\n"
-      "    $name$_ = null;\n"
-      "  }\n"
-      "  return $name$Builder_;\n"
-      "}\n");
+    "private com.google.protobuf.SingleFieldBuilder<\n"
+    "    $type$, $type$.Builder, $type$OrBuilder> \n"
+    "    get$capitalized_name$FieldBuilder() {\n"
+    "  if ($name$Builder_ == null) {\n"
+    "    $name$Builder_ = new com.google.protobuf.SingleFieldBuilder<\n"
+    "        $type$, $type$.Builder, $type$OrBuilder>(\n"
+    "            get$capitalized_name$(),\n"
+    "            getParentForChildren(),\n"
+    "            isClean());\n"
+    "    $name$_ = null;\n"
+    "  }\n"
+    "  return $name$Builder_;\n"
+    "}\n");
   }
 }
 
@@ -428,7 +428,7 @@ void ImmutableMessageFieldGenerator::
 GenerateFieldBuilderInitializationCode(io::Printer* printer)  const {
   if (SupportFieldPresence(descriptor_->file())) {
     printer->Print(variables_,
-      "get$capitalized_name$FieldBuilder();\n");
+    "get$capitalized_name$FieldBuilder();\n");
   }
 }
 
@@ -444,16 +444,16 @@ void ImmutableMessageFieldGenerator::
 GenerateBuilderClearCode(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     PrintNestedBuilderCondition(printer,
-      "$name$_ = $type$.getDefaultInstance();\n",
+    "$name$_ = $type$.getDefaultInstance();\n",
 
-      "$name$Builder_.clear();\n");
+    "$name$Builder_.clear();\n");
     printer->Print(variables_, "$clear_has_field_bit_builder$\n");
   } else {
     PrintNestedBuilderCondition(printer,
-      "$name$_ = null;\n",
+    "$name$_ = null;\n",
 
-      "$name$_ = null;\n"
-      "$name$Builder_ = null;\n");
+    "$name$_ = null;\n"
+    "$name$Builder_ = null;\n");
   }
 }
 
@@ -490,11 +490,11 @@ GenerateParsingCode(io::Printer* printer) const {
 
   if (GetType(descriptor_) == FieldDescriptor::TYPE_GROUP) {
     printer->Print(variables_,
-      "$name$_ = input.readGroup($number$, $type$.PARSER,\n"
-      "    extensionRegistry);\n");
+    "$name$_ = input.readGroup($number$, $type$.PARSER,\n"
+    "    extensionRegistry);\n");
   } else {
     printer->Print(variables_,
-      "$name$_ = input.readMessage($type$.PARSER, extensionRegistry);\n");
+    "$name$_ = input.readMessage($type$.PARSER, extensionRegistry);\n");
   }
 
   printer->Print(variables_,
@@ -549,13 +549,13 @@ string ImmutableMessageFieldGenerator::GetBoxedType() const {
 
 ImmutableMessageOneofFieldGenerator::
 ImmutableMessageOneofFieldGenerator(const FieldDescriptor* descriptor,
-                                 int messageBitIndex,
-                                 int builderBitIndex,
-                                 Context* context)
+                                int messageBitIndex,
+                                int builderBitIndex,
+                                Context* context)
     : ImmutableMessageFieldGenerator(
-          descriptor, messageBitIndex, builderBitIndex, context) {
+        descriptor, messageBitIndex, builderBitIndex, context) {
   const OneofGeneratorInfo* info =
-      context->GetOneofGeneratorInfo(descriptor->containing_oneof());
+    context->GetOneofGeneratorInfo(descriptor->containing_oneof());
   SetCommonOneofVariables(descriptor, info, &variables_);
 }
 
@@ -568,9 +568,9 @@ GenerateMembers(io::Printer* printer) const {
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $has_oneof_case_message$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $has_oneof_case_message$;\n"
+    "}\n");
   }
   WriteFieldDocComment(printer, descriptor_);
   printer->Print(variables_,
@@ -584,12 +584,12 @@ GenerateMembers(io::Printer* printer) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder() {\n"
-      "  if ($has_oneof_case_message$) {\n"
-      "     return ($type$) $oneof_name$_;\n"
-      "  }\n"
-      "  return $type$.getDefaultInstance();\n"
-      "}\n");
+    "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder() {\n"
+    "  if ($has_oneof_case_message$) {\n"
+    "     return ($type$) $oneof_name$_;\n"
+    "  }\n"
+    "  return $type$.getDefaultInstance();\n"
+    "}\n");
   }
 }
 
@@ -600,11 +600,11 @@ GenerateBuilderMembers(io::Printer* printer) const {
   // demand and then forever delegates to it after creation.
   if (HasNestedBuilders(descriptor_->containing_type())) {
     printer->Print(variables_,
-      // If this builder is non-null, it is used and the other fields are
-      // ignored.
-      "private com.google.protobuf.SingleFieldBuilder<\n"
-      "    $type$, $type$.Builder, $type$OrBuilder> $name$Builder_;"
-      "\n");
+    // If this builder is non-null, it is used and the other fields are
+    // ignored.
+    "private com.google.protobuf.SingleFieldBuilder<\n"
+    "    $type$, $type$.Builder, $type$OrBuilder> $name$Builder_;"
+    "\n");
   }
 
   // The comments above the methods below are based on a hypothetical
@@ -614,9 +614,9 @@ GenerateBuilderMembers(io::Printer* printer) const {
     // boolean hasField()
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public boolean has$capitalized_name$() {\n"
-      "  return $has_oneof_case_message$;\n"
-      "}\n");
+    "$deprecation$public boolean has$capitalized_name$() {\n"
+    "  return $has_oneof_case_message$;\n"
+    "}\n");
   }
 
   // Field getField()
@@ -710,40 +710,40 @@ GenerateBuilderMembers(io::Printer* printer) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$.Builder get$capitalized_name$Builder() {\n"
-      "  return get$capitalized_name$FieldBuilder().getBuilder();\n"
-      "}\n");
+    "$deprecation$public $type$.Builder get$capitalized_name$Builder() {\n"
+    "  return get$capitalized_name$FieldBuilder().getBuilder();\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder() {\n"
-      "  if (($has_oneof_case_message$) && ($name$Builder_ != null)) {\n"
-      "    return $name$Builder_.getMessageOrBuilder();\n"
-      "  } else {\n"
-      "    if ($has_oneof_case_message$) {\n"
-      "      return ($type$) $oneof_name$_;\n"
-      "    }\n"
-      "    return $type$.getDefaultInstance();\n"
-      "  }\n"
-      "}\n");
+    "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder() {\n"
+    "  if (($has_oneof_case_message$) && ($name$Builder_ != null)) {\n"
+    "    return $name$Builder_.getMessageOrBuilder();\n"
+    "  } else {\n"
+    "    if ($has_oneof_case_message$) {\n"
+    "      return ($type$) $oneof_name$_;\n"
+    "    }\n"
+    "    return $type$.getDefaultInstance();\n"
+    "  }\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "private com.google.protobuf.SingleFieldBuilder<\n"
-      "    $type$, $type$.Builder, $type$OrBuilder> \n"
-      "    get$capitalized_name$FieldBuilder() {\n"
-      "  if ($name$Builder_ == null) {\n"
-      "    if (!($has_oneof_case_message$)) {\n"
-      "      $oneof_name$_ = $type$.getDefaultInstance();\n"
-      "    }\n"
-      "    $name$Builder_ = new com.google.protobuf.SingleFieldBuilder<\n"
-      "        $type$, $type$.Builder, $type$OrBuilder>(\n"
-      "            ($type$) $oneof_name$_,\n"
-      "            getParentForChildren(),\n"
-      "            isClean());\n"
-      "    $oneof_name$_ = null;\n"
-      "  }\n"
-      "  $set_oneof_case_message$;\n"
-      "  return $name$Builder_;\n"
-      "}\n");
+    "private com.google.protobuf.SingleFieldBuilder<\n"
+    "    $type$, $type$.Builder, $type$OrBuilder> \n"
+    "    get$capitalized_name$FieldBuilder() {\n"
+    "  if ($name$Builder_ == null) {\n"
+    "    if (!($has_oneof_case_message$)) {\n"
+    "      $oneof_name$_ = $type$.getDefaultInstance();\n"
+    "    }\n"
+    "    $name$Builder_ = new com.google.protobuf.SingleFieldBuilder<\n"
+    "        $type$, $type$.Builder, $type$OrBuilder>(\n"
+    "            ($type$) $oneof_name$_,\n"
+    "            getParentForChildren(),\n"
+    "            isClean());\n"
+    "    $oneof_name$_ = null;\n"
+    "  }\n"
+    "  $set_oneof_case_message$;\n"
+    "  return $name$Builder_;\n"
+    "}\n");
   }
 }
 
@@ -751,7 +751,7 @@ void ImmutableMessageOneofFieldGenerator::
 GenerateBuildingCode(io::Printer* printer) const {
 
   printer->Print(variables_,
-                 "if ($has_oneof_case_message$) {\n");
+                "if ($has_oneof_case_message$) {\n");
   printer->Indent();
 
   PrintNestedBuilderCondition(printer,
@@ -779,11 +779,11 @@ GenerateParsingCode(io::Printer* printer) const {
 
   if (GetType(descriptor_) == FieldDescriptor::TYPE_GROUP) {
     printer->Print(variables_,
-      "$oneof_name$_ = input.readGroup($number$, $type$.PARSER,\n"
-      "    extensionRegistry);\n");
+    "$oneof_name$_ = input.readGroup($number$, $type$.PARSER,\n"
+    "    extensionRegistry);\n");
   } else {
     printer->Print(variables_,
-      "$oneof_name$_ = input.readMessage($type$.PARSER, extensionRegistry);\n");
+    "$oneof_name$_ = input.readMessage($type$.PARSER, extensionRegistry);\n");
   }
 
   printer->Print(variables_,
@@ -816,15 +816,15 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 
 RepeatedImmutableMessageFieldGenerator::
 RepeatedImmutableMessageFieldGenerator(const FieldDescriptor* descriptor,
-                                       int messageBitIndex,
-                                       int builderBitIndex,
-                                       Context* context)
+                                        int messageBitIndex,
+                                        int builderBitIndex,
+                                        Context* context)
   : descriptor_(descriptor), messageBitIndex_(messageBitIndex),
     builderBitIndex_(builderBitIndex), context_(context),
     name_resolver_(context->GetNameResolver())  {
   SetMessageVariables(descriptor, messageBitIndex, builderBitIndex,
-                      context->GetFieldGeneratorInfo(descriptor),
-                      name_resolver_, &variables_);
+                    context->GetFieldGeneratorInfo(descriptor),
+                    name_resolver_, &variables_);
 }
 
 RepeatedImmutableMessageFieldGenerator::
@@ -857,12 +857,12 @@ GenerateInterfaceMembers(io::Printer* printer) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$java.util.List<? extends $type$OrBuilder> \n"
-      "    get$capitalized_name$OrBuilderList();\n");
+    "$deprecation$java.util.List<? extends $type$OrBuilder> \n"
+    "    get$capitalized_name$OrBuilderList();\n");
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$$type$OrBuilder get$capitalized_name$OrBuilder(\n"
-      "    int index);\n");
+    "$deprecation$$type$OrBuilder get$capitalized_name$OrBuilder(\n"
+    "    int index);\n");
   }
 }
 
@@ -906,18 +906,18 @@ void RepeatedImmutableMessageFieldGenerator::PrintNestedBuilderCondition(
     const char* regular_case,
     const char* nested_builder_case) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
-     printer->Print(variables_, "if ($name$Builder_ == null) {\n");
-     printer->Indent();
-     printer->Print(variables_, regular_case);
-     printer->Outdent();
-     printer->Print("} else {\n");
-     printer->Indent();
-     printer->Print(variables_, nested_builder_case);
-     printer->Outdent();
-     printer->Print("}\n");
-   } else {
-     printer->Print(variables_, regular_case);
-   }
+    printer->Print(variables_, "if ($name$Builder_ == null) {\n");
+    printer->Indent();
+    printer->Print(variables_, regular_case);
+    printer->Outdent();
+    printer->Print("} else {\n");
+    printer->Indent();
+    printer->Print(variables_, nested_builder_case);
+    printer->Outdent();
+    printer->Print("}\n");
+    } else {
+    printer->Print(variables_, regular_case);
+    }
 }
 
 void RepeatedImmutableMessageFieldGenerator::PrintNestedBuilderFunction(
@@ -967,11 +967,11 @@ GenerateBuilderMembers(io::Printer* printer) const {
 
   if (HasNestedBuilders(descriptor_->containing_type())) {
     printer->Print(variables_,
-      // If this builder is non-null, it is used and the other fields are
-      // ignored.
-      "private com.google.protobuf.RepeatedFieldBuilder<\n"
-      "    $type$, $type$.Builder, $type$OrBuilder> $name$Builder_;\n"
-      "\n");
+    // If this builder is non-null, it is used and the other fields are
+    // ignored.
+    "private com.google.protobuf.RepeatedFieldBuilder<\n"
+    "    $type$, $type$.Builder, $type$OrBuilder> $name$Builder_;\n"
+    "\n");
   }
 
   // The comments above the methods below are based on a hypothetical
@@ -1142,66 +1142,66 @@ GenerateBuilderMembers(io::Printer* printer) const {
   if (HasNestedBuilders(descriptor_->containing_type())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
-      "$deprecation$public $type$.Builder get$capitalized_name$Builder(\n"
-      "    int index) {\n"
-      "  return get$capitalized_name$FieldBuilder().getBuilder(index);\n"
-      "}\n");
+    "$deprecation$public $type$.Builder get$capitalized_name$Builder(\n"
+    "    int index) {\n"
+    "  return get$capitalized_name$FieldBuilder().getBuilder(index);\n"
+    "}\n");
 
     WriteFieldDocComment(printer, descriptor_);
         printer->Print(variables_,
-      "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder(\n"
-      "    int index) {\n"
-      "  if ($name$Builder_ == null) {\n"
-      "    return $name$_.get(index);"
-      "  } else {\n"
-      "    return $name$Builder_.getMessageOrBuilder(index);\n"
-      "  }\n"
-      "}\n");
+    "$deprecation$public $type$OrBuilder get$capitalized_name$OrBuilder(\n"
+    "    int index) {\n"
+    "  if ($name$Builder_ == null) {\n"
+    "    return $name$_.get(index);"
+    "  } else {\n"
+    "    return $name$Builder_.getMessageOrBuilder(index);\n"
+    "  }\n"
+    "}\n");
 
     WriteFieldDocComment(printer, descriptor_);
         printer->Print(variables_,
-      "$deprecation$public java.util.List<? extends $type$OrBuilder> \n"
-      "     get$capitalized_name$OrBuilderList() {\n"
-      "  if ($name$Builder_ != null) {\n"
-      "    return $name$Builder_.getMessageOrBuilderList();\n"
-      "  } else {\n"
-      "    return java.util.Collections.unmodifiableList($name$_);\n"
-      "  }\n"
-      "}\n");
+    "$deprecation$public java.util.List<? extends $type$OrBuilder> \n"
+    "     get$capitalized_name$OrBuilderList() {\n"
+    "  if ($name$Builder_ != null) {\n"
+    "    return $name$Builder_.getMessageOrBuilderList();\n"
+    "  } else {\n"
+    "    return java.util.Collections.unmodifiableList($name$_);\n"
+    "  }\n"
+    "}\n");
 
     WriteFieldDocComment(printer, descriptor_);
         printer->Print(variables_,
-      "$deprecation$public $type$.Builder add$capitalized_name$Builder() {\n"
-      "  return get$capitalized_name$FieldBuilder().addBuilder(\n"
-      "      $type$.getDefaultInstance());\n"
-      "}\n");
+    "$deprecation$public $type$.Builder add$capitalized_name$Builder() {\n"
+    "  return get$capitalized_name$FieldBuilder().addBuilder(\n"
+    "      $type$.getDefaultInstance());\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
         printer->Print(variables_,
-      "$deprecation$public $type$.Builder add$capitalized_name$Builder(\n"
-      "    int index) {\n"
-      "  return get$capitalized_name$FieldBuilder().addBuilder(\n"
-      "      index, $type$.getDefaultInstance());\n"
-      "}\n");
+    "$deprecation$public $type$.Builder add$capitalized_name$Builder(\n"
+    "    int index) {\n"
+    "  return get$capitalized_name$FieldBuilder().addBuilder(\n"
+    "      index, $type$.getDefaultInstance());\n"
+    "}\n");
     WriteFieldDocComment(printer, descriptor_);
         printer->Print(variables_,
-      "$deprecation$public java.util.List<$type$.Builder> \n"
-      "     get$capitalized_name$BuilderList() {\n"
-      "  return get$capitalized_name$FieldBuilder().getBuilderList();\n"
-      "}\n"
-      "private com.google.protobuf.RepeatedFieldBuilder<\n"
-      "    $type$, $type$.Builder, $type$OrBuilder> \n"
-      "    get$capitalized_name$FieldBuilder() {\n"
-      "  if ($name$Builder_ == null) {\n"
-      "    $name$Builder_ = new com.google.protobuf.RepeatedFieldBuilder<\n"
-      "        $type$, $type$.Builder, $type$OrBuilder>(\n"
-      "            $name$_,\n"
-      "            $get_mutable_bit_builder$,\n"
-      "            getParentForChildren(),\n"
-      "            isClean());\n"
-      "    $name$_ = null;\n"
-      "  }\n"
-      "  return $name$Builder_;\n"
-      "}\n");
+    "$deprecation$public java.util.List<$type$.Builder> \n"
+    "     get$capitalized_name$BuilderList() {\n"
+    "  return get$capitalized_name$FieldBuilder().getBuilderList();\n"
+    "}\n"
+    "private com.google.protobuf.RepeatedFieldBuilder<\n"
+    "    $type$, $type$.Builder, $type$OrBuilder> \n"
+    "    get$capitalized_name$FieldBuilder() {\n"
+    "  if ($name$Builder_ == null) {\n"
+    "    $name$Builder_ = new com.google.protobuf.RepeatedFieldBuilder<\n"
+    "        $type$, $type$.Builder, $type$OrBuilder>(\n"
+    "            $name$_,\n"
+    "            $get_mutable_bit_builder$,\n"
+    "            getParentForChildren(),\n"
+    "            isClean());\n"
+    "    $name$_ = null;\n"
+    "  }\n"
+    "  return $name$Builder_;\n"
+    "}\n");
   }
 }
 
@@ -1284,11 +1284,11 @@ GenerateParsingCode(io::Printer* printer) const {
 
   if (GetType(descriptor_) == FieldDescriptor::TYPE_GROUP) {
     printer->Print(variables_,
-      "$name$_.add(input.readGroup($number$, $type$.PARSER,\n"
-      "    extensionRegistry));\n");
+    "$name$_.add(input.readGroup($number$, $type$.PARSER,\n"
+    "    extensionRegistry));\n");
   } else {
     printer->Print(variables_,
-      "$name$_.add(input.readMessage($type$.PARSER, extensionRegistry));\n");
+    "$name$_.add(input.readMessage($type$.PARSER, extensionRegistry));\n");
   }
 }
 

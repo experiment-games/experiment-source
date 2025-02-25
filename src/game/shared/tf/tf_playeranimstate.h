@@ -24,7 +24,7 @@ class CTFPlayer;
 // ------------------------------------------------------------------------------------------------ //
 class CTFPlayerAnimState : public CMultiPlayerAnimState
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPlayerAnimState, CMultiPlayerAnimState );
 
     CTFPlayerAnimState();
@@ -73,7 +73,7 @@ class CTFPlayerAnimState : public CMultiPlayerAnimState
 
     void Vehicle_LeanAccel( float flInAccel );
 
-   private:
+    private:
     void Taunt_ComputePoseParam_MoveX( CStudioHdr *pStudioHdr );
     void Taunt_ComputePoseParam_MoveY( CStudioHdr *pStudioHdr );
     void Vehicle_ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr );

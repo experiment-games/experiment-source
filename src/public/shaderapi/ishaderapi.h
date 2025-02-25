@@ -126,7 +126,7 @@ enum ShaderAPIOcclusionQueryResult_t
 #define SHADERAPI_INTERFACE_VERSION "ShaderApi030"
 abstract_class IShaderAPI : public IShaderDynamicAPI
 {
-   public:
+    public:
     //
     // NOTE: These methods have been ported to DX10
     //
@@ -311,7 +311,7 @@ abstract_class IShaderAPI : public IShaderDynamicAPI
     // Set to SHADER_RENDERTARGET_BACKBUFFER if you want to use the regular framebuffer.
     // Set to SHADER_RENDERTARGET_DEPTHBUFFER if you want to use the regular z buffer.
     virtual void SetRenderTarget( ShaderAPITextureHandle_t colorTextureHandle = SHADER_RENDERTARGET_BACKBUFFER,
-                                  ShaderAPITextureHandle_t depthTextureHandle = SHADER_RENDERTARGET_DEPTHBUFFER ) = 0;
+                                ShaderAPITextureHandle_t depthTextureHandle = SHADER_RENDERTARGET_DEPTHBUFFER ) = 0;
 
     // stuff that isn't to be used from within a shader
     virtual void ClearBuffersObeyStencil( bool bClearColor, bool bClearDepth ) = 0;

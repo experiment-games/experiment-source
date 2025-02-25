@@ -301,7 +301,7 @@ void CHLTVDirector::FrameUpdatePostEntityThink( void )
     UpdateSettings();  // update settings from cvars
 
     if ( ( m_nNextAnalyzeTick < gpGlobals->tickcount ) &&
-         ( m_fDelay >= HLTV_MIN_DIRECTOR_DELAY ) )
+        ( m_fDelay >= HLTV_MIN_DIRECTOR_DELAY ) )
     {
         m_nNextAnalyzeTick = gpGlobals->tickcount + TIME_TO_TICKS( 0.5f );
 
@@ -963,13 +963,13 @@ CHLTVGameEvent *CHLTVDirector::FindBestGameEvent()
     // camera cut rules :
 
     if ( bestEventPrio[1] >= bestEventPrio[0] &&
-         bestEventPrio[1] >= bestEventPrio[2] &&
-         bestEventPrio[1] >= bestEventPrio[3] )
+        bestEventPrio[1] >= bestEventPrio[2] &&
+        bestEventPrio[1] >= bestEventPrio[3] )
     {
         return &m_EventHistory[bestEvent[1]];  // best case
     }
     else if ( bestEventPrio[0] > bestEventPrio[1] &&
-              bestEventPrio[0] > bestEventPrio[2] )
+            bestEventPrio[0] > bestEventPrio[2] )
     {
         return &m_EventHistory[bestEvent[0]];  // event 0 is very important
     }

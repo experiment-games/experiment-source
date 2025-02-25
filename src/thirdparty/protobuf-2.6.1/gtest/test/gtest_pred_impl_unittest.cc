@@ -99,21 +99,21 @@ struct PredFunctor1 {
 // A unary predicate-formatter function.
 template <typename T1>
 testing::AssertionResult PredFormatFunction1(const char* e1,
-                                             const T1& v1) {
+                                            const T1& v1) {
   if (PredFunction1(v1))
     return testing::AssertionSuccess();
 
   return testing::AssertionFailure()
-      << e1
-      << " is expected to be positive, but evaluates to "
-      << v1 << ".";
+    << e1
+    << " is expected to be positive, but evaluates to "
+    << v1 << ".";
 }
 
 // A unary predicate-formatter functor.
 struct PredFormatFunctor1 {
   template <typename T1>
   testing::AssertionResult operator()(const char* e1,
-                                      const T1& v1) const {
+                                    const T1& v1) const {
     return PredFormatFunction1(e1, v1);
   }
 };
@@ -137,9 +137,9 @@ class Predicate1Test : public testing::Test {
 
     // Verifies that the control flow in the test function is expected.
     if (expected_to_finish_ && !finished_) {
-      FAIL() << "The predicate assertion unexpactedly aborted the test.";
+    FAIL() << "The predicate assertion unexpactedly aborted the test.";
     } else if (!expected_to_finish_ && finished_) {
-      FAIL() << "The failed predicate assertion didn't abort the test "
+    FAIL() << "The failed predicate assertion didn't abort the test "
                 "as expected.";
     }
   }
@@ -166,7 +166,7 @@ typedef Predicate1Test ASSERT_PRED1Test;
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED1Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED1(PredFunction1Int,
-               ++n1_);
+                ++n1_);
   finished_ = true;
 }
 
@@ -174,7 +174,7 @@ TEST_F(EXPECT_PRED1Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED1Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED1(PredFunction1Bool,
-               Bool(++n1_));
+                Bool(++n1_));
   finished_ = true;
 }
 
@@ -182,7 +182,7 @@ TEST_F(EXPECT_PRED1Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED1Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED1(PredFunctor1(),
-               ++n1_);
+                ++n1_);
   finished_ = true;
 }
 
@@ -190,7 +190,7 @@ TEST_F(EXPECT_PRED1Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED1Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED1(PredFunctor1(),
-               Bool(++n1_));
+                Bool(++n1_));
   finished_ = true;
 }
 
@@ -199,7 +199,7 @@ TEST_F(EXPECT_PRED1Test, FunctorOnUserTypeSuccess) {
 TEST_F(EXPECT_PRED1Test, FunctionOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED1(PredFunction1Int,
-                 n1_++);
+                n1_++);
     finished_ = true;
   }, "");
 }
@@ -209,7 +209,7 @@ TEST_F(EXPECT_PRED1Test, FunctionOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED1Test, FunctionOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED1(PredFunction1Bool,
-                 Bool(n1_++));
+                Bool(n1_++));
     finished_ = true;
   }, "");
 }
@@ -219,7 +219,7 @@ TEST_F(EXPECT_PRED1Test, FunctionOnUserTypeFailure) {
 TEST_F(EXPECT_PRED1Test, FunctorOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED1(PredFunctor1(),
-                 n1_++);
+                n1_++);
     finished_ = true;
   }, "");
 }
@@ -229,7 +229,7 @@ TEST_F(EXPECT_PRED1Test, FunctorOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED1Test, FunctorOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED1(PredFunctor1(),
-                 Bool(n1_++));
+                Bool(n1_++));
     finished_ = true;
   }, "");
 }
@@ -238,7 +238,7 @@ TEST_F(EXPECT_PRED1Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED1Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED1(PredFunction1Int,
-               ++n1_);
+                ++n1_);
   finished_ = true;
 }
 
@@ -246,7 +246,7 @@ TEST_F(ASSERT_PRED1Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED1Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED1(PredFunction1Bool,
-               Bool(++n1_));
+                Bool(++n1_));
   finished_ = true;
 }
 
@@ -254,7 +254,7 @@ TEST_F(ASSERT_PRED1Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED1Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED1(PredFunctor1(),
-               ++n1_);
+                ++n1_);
   finished_ = true;
 }
 
@@ -262,7 +262,7 @@ TEST_F(ASSERT_PRED1Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED1Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED1(PredFunctor1(),
-               Bool(++n1_));
+                Bool(++n1_));
   finished_ = true;
 }
 
@@ -272,7 +272,7 @@ TEST_F(ASSERT_PRED1Test, FunctionOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED1(PredFunction1Int,
-                 n1_++);
+                n1_++);
     finished_ = true;
   }, "");
 }
@@ -283,7 +283,7 @@ TEST_F(ASSERT_PRED1Test, FunctionOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED1(PredFunction1Bool,
-                 Bool(n1_++));
+                Bool(n1_++));
     finished_ = true;
   }, "");
 }
@@ -294,7 +294,7 @@ TEST_F(ASSERT_PRED1Test, FunctorOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED1(PredFunctor1(),
-                 n1_++);
+                n1_++);
     finished_ = true;
   }, "");
 }
@@ -305,7 +305,7 @@ TEST_F(ASSERT_PRED1Test, FunctorOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED1(PredFunctor1(),
-                 Bool(n1_++));
+                Bool(n1_++));
     finished_ = true;
   }, "");
 }
@@ -314,7 +314,7 @@ TEST_F(ASSERT_PRED1Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT1Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT1(PredFormatFunction1,
-                      ++n1_);
+                    ++n1_);
   finished_ = true;
 }
 
@@ -322,7 +322,7 @@ TEST_F(EXPECT_PRED_FORMAT1Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT1Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT1(PredFormatFunction1,
-                      Bool(++n1_));
+                    Bool(++n1_));
   finished_ = true;
 }
 
@@ -330,7 +330,7 @@ TEST_F(EXPECT_PRED_FORMAT1Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT1Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT1(PredFormatFunctor1(),
-                      ++n1_);
+                    ++n1_);
   finished_ = true;
 }
 
@@ -338,7 +338,7 @@ TEST_F(EXPECT_PRED_FORMAT1Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT1Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT1(PredFormatFunctor1(),
-                      Bool(++n1_));
+                    Bool(++n1_));
   finished_ = true;
 }
 
@@ -386,7 +386,7 @@ TEST_F(EXPECT_PRED_FORMAT1Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT1Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT1(PredFormatFunction1,
-                      ++n1_);
+                    ++n1_);
   finished_ = true;
 }
 
@@ -394,7 +394,7 @@ TEST_F(ASSERT_PRED_FORMAT1Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT1Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT1(PredFormatFunction1,
-                      Bool(++n1_));
+                    Bool(++n1_));
   finished_ = true;
 }
 
@@ -402,7 +402,7 @@ TEST_F(ASSERT_PRED_FORMAT1Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT1Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT1(PredFormatFunctor1(),
-                      ++n1_);
+                    ++n1_);
   finished_ = true;
 }
 
@@ -410,7 +410,7 @@ TEST_F(ASSERT_PRED_FORMAT1Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT1Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT1(PredFormatFunctor1(),
-                      Bool(++n1_));
+                    Bool(++n1_));
   finished_ = true;
 }
 
@@ -479,7 +479,7 @@ bool PredFunction2Bool(Bool v1, Bool v2) {
 struct PredFunctor2 {
   template <typename T1, typename T2>
   bool operator()(const T1& v1,
-                  const T2& v2) {
+                const T2& v2) {
     return v1 + v2 > 0;
   }
 };
@@ -487,25 +487,25 @@ struct PredFunctor2 {
 // A binary predicate-formatter function.
 template <typename T1, typename T2>
 testing::AssertionResult PredFormatFunction2(const char* e1,
-                                             const char* e2,
-                                             const T1& v1,
-                                             const T2& v2) {
+                                            const char* e2,
+                                            const T1& v1,
+                                            const T2& v2) {
   if (PredFunction2(v1, v2))
     return testing::AssertionSuccess();
 
   return testing::AssertionFailure()
-      << e1 << " + " << e2
-      << " is expected to be positive, but evaluates to "
-      << v1 + v2 << ".";
+    << e1 << " + " << e2
+    << " is expected to be positive, but evaluates to "
+    << v1 + v2 << ".";
 }
 
 // A binary predicate-formatter functor.
 struct PredFormatFunctor2 {
   template <typename T1, typename T2>
   testing::AssertionResult operator()(const char* e1,
-                                      const char* e2,
-                                      const T1& v1,
-                                      const T2& v2) const {
+                                    const char* e2,
+                                    const T1& v1,
+                                    const T2& v2) const {
     return PredFormatFunction2(e1, e2, v1, v2);
   }
 };
@@ -532,9 +532,9 @@ class Predicate2Test : public testing::Test {
 
     // Verifies that the control flow in the test function is expected.
     if (expected_to_finish_ && !finished_) {
-      FAIL() << "The predicate assertion unexpactedly aborted the test.";
+    FAIL() << "The predicate assertion unexpactedly aborted the test.";
     } else if (!expected_to_finish_ && finished_) {
-      FAIL() << "The failed predicate assertion didn't abort the test "
+    FAIL() << "The failed predicate assertion didn't abort the test "
                 "as expected.";
     }
   }
@@ -563,8 +563,8 @@ typedef Predicate2Test ASSERT_PRED2Test;
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED2Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED2(PredFunction2Int,
-               ++n1_,
-               ++n2_);
+                ++n1_,
+                ++n2_);
   finished_ = true;
 }
 
@@ -572,8 +572,8 @@ TEST_F(EXPECT_PRED2Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED2Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED2(PredFunction2Bool,
-               Bool(++n1_),
-               Bool(++n2_));
+                Bool(++n1_),
+                Bool(++n2_));
   finished_ = true;
 }
 
@@ -581,8 +581,8 @@ TEST_F(EXPECT_PRED2Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED2Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED2(PredFunctor2(),
-               ++n1_,
-               ++n2_);
+                ++n1_,
+                ++n2_);
   finished_ = true;
 }
 
@@ -590,8 +590,8 @@ TEST_F(EXPECT_PRED2Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED2Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED2(PredFunctor2(),
-               Bool(++n1_),
-               Bool(++n2_));
+                Bool(++n1_),
+                Bool(++n2_));
   finished_ = true;
 }
 
@@ -600,8 +600,8 @@ TEST_F(EXPECT_PRED2Test, FunctorOnUserTypeSuccess) {
 TEST_F(EXPECT_PRED2Test, FunctionOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED2(PredFunction2Int,
-                 n1_++,
-                 n2_++);
+                n1_++,
+                n2_++);
     finished_ = true;
   }, "");
 }
@@ -611,8 +611,8 @@ TEST_F(EXPECT_PRED2Test, FunctionOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED2Test, FunctionOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED2(PredFunction2Bool,
-                 Bool(n1_++),
-                 Bool(n2_++));
+                Bool(n1_++),
+                Bool(n2_++));
     finished_ = true;
   }, "");
 }
@@ -622,8 +622,8 @@ TEST_F(EXPECT_PRED2Test, FunctionOnUserTypeFailure) {
 TEST_F(EXPECT_PRED2Test, FunctorOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED2(PredFunctor2(),
-                 n1_++,
-                 n2_++);
+                n1_++,
+                n2_++);
     finished_ = true;
   }, "");
 }
@@ -633,8 +633,8 @@ TEST_F(EXPECT_PRED2Test, FunctorOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED2Test, FunctorOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED2(PredFunctor2(),
-                 Bool(n1_++),
-                 Bool(n2_++));
+                Bool(n1_++),
+                Bool(n2_++));
     finished_ = true;
   }, "");
 }
@@ -643,8 +643,8 @@ TEST_F(EXPECT_PRED2Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED2Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED2(PredFunction2Int,
-               ++n1_,
-               ++n2_);
+                ++n1_,
+                ++n2_);
   finished_ = true;
 }
 
@@ -652,8 +652,8 @@ TEST_F(ASSERT_PRED2Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED2Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED2(PredFunction2Bool,
-               Bool(++n1_),
-               Bool(++n2_));
+                Bool(++n1_),
+                Bool(++n2_));
   finished_ = true;
 }
 
@@ -661,8 +661,8 @@ TEST_F(ASSERT_PRED2Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED2Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED2(PredFunctor2(),
-               ++n1_,
-               ++n2_);
+                ++n1_,
+                ++n2_);
   finished_ = true;
 }
 
@@ -670,8 +670,8 @@ TEST_F(ASSERT_PRED2Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED2Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED2(PredFunctor2(),
-               Bool(++n1_),
-               Bool(++n2_));
+                Bool(++n1_),
+                Bool(++n2_));
   finished_ = true;
 }
 
@@ -681,8 +681,8 @@ TEST_F(ASSERT_PRED2Test, FunctionOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED2(PredFunction2Int,
-                 n1_++,
-                 n2_++);
+                n1_++,
+                n2_++);
     finished_ = true;
   }, "");
 }
@@ -693,8 +693,8 @@ TEST_F(ASSERT_PRED2Test, FunctionOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED2(PredFunction2Bool,
-                 Bool(n1_++),
-                 Bool(n2_++));
+                Bool(n1_++),
+                Bool(n2_++));
     finished_ = true;
   }, "");
 }
@@ -705,8 +705,8 @@ TEST_F(ASSERT_PRED2Test, FunctorOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED2(PredFunctor2(),
-                 n1_++,
-                 n2_++);
+                n1_++,
+                n2_++);
     finished_ = true;
   }, "");
 }
@@ -717,8 +717,8 @@ TEST_F(ASSERT_PRED2Test, FunctorOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED2(PredFunctor2(),
-                 Bool(n1_++),
-                 Bool(n2_++));
+                Bool(n1_++),
+                Bool(n2_++));
     finished_ = true;
   }, "");
 }
@@ -727,8 +727,8 @@ TEST_F(ASSERT_PRED2Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT2Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT2(PredFormatFunction2,
-                      ++n1_,
-                      ++n2_);
+                    ++n1_,
+                    ++n2_);
   finished_ = true;
 }
 
@@ -736,8 +736,8 @@ TEST_F(EXPECT_PRED_FORMAT2Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT2Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT2(PredFormatFunction2,
-                      Bool(++n1_),
-                      Bool(++n2_));
+                    Bool(++n1_),
+                    Bool(++n2_));
   finished_ = true;
 }
 
@@ -745,8 +745,8 @@ TEST_F(EXPECT_PRED_FORMAT2Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT2Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT2(PredFormatFunctor2(),
-                      ++n1_,
-                      ++n2_);
+                    ++n1_,
+                    ++n2_);
   finished_ = true;
 }
 
@@ -754,8 +754,8 @@ TEST_F(EXPECT_PRED_FORMAT2Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT2Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT2(PredFormatFunctor2(),
-                      Bool(++n1_),
-                      Bool(++n2_));
+                    Bool(++n1_),
+                    Bool(++n2_));
   finished_ = true;
 }
 
@@ -807,8 +807,8 @@ TEST_F(EXPECT_PRED_FORMAT2Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT2Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT2(PredFormatFunction2,
-                      ++n1_,
-                      ++n2_);
+                    ++n1_,
+                    ++n2_);
   finished_ = true;
 }
 
@@ -816,8 +816,8 @@ TEST_F(ASSERT_PRED_FORMAT2Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT2Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT2(PredFormatFunction2,
-                      Bool(++n1_),
-                      Bool(++n2_));
+                    Bool(++n1_),
+                    Bool(++n2_));
   finished_ = true;
 }
 
@@ -825,8 +825,8 @@ TEST_F(ASSERT_PRED_FORMAT2Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT2Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT2(PredFormatFunctor2(),
-                      ++n1_,
-                      ++n2_);
+                    ++n1_,
+                    ++n2_);
   finished_ = true;
 }
 
@@ -834,8 +834,8 @@ TEST_F(ASSERT_PRED_FORMAT2Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT2Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT2(PredFormatFunctor2(),
-                      Bool(++n1_),
-                      Bool(++n2_));
+                    Bool(++n1_),
+                    Bool(++n2_));
   finished_ = true;
 }
 
@@ -908,8 +908,8 @@ bool PredFunction3Bool(Bool v1, Bool v2, Bool v3) {
 struct PredFunctor3 {
   template <typename T1, typename T2, typename T3>
   bool operator()(const T1& v1,
-                  const T2& v2,
-                  const T3& v3) {
+                const T2& v2,
+                const T3& v3) {
     return v1 + v2 + v3 > 0;
   }
 };
@@ -917,29 +917,29 @@ struct PredFunctor3 {
 // A ternary predicate-formatter function.
 template <typename T1, typename T2, typename T3>
 testing::AssertionResult PredFormatFunction3(const char* e1,
-                                             const char* e2,
-                                             const char* e3,
-                                             const T1& v1,
-                                             const T2& v2,
-                                             const T3& v3) {
+                                            const char* e2,
+                                            const char* e3,
+                                            const T1& v1,
+                                            const T2& v2,
+                                            const T3& v3) {
   if (PredFunction3(v1, v2, v3))
     return testing::AssertionSuccess();
 
   return testing::AssertionFailure()
-      << e1 << " + " << e2 << " + " << e3
-      << " is expected to be positive, but evaluates to "
-      << v1 + v2 + v3 << ".";
+    << e1 << " + " << e2 << " + " << e3
+    << " is expected to be positive, but evaluates to "
+    << v1 + v2 + v3 << ".";
 }
 
 // A ternary predicate-formatter functor.
 struct PredFormatFunctor3 {
   template <typename T1, typename T2, typename T3>
   testing::AssertionResult operator()(const char* e1,
-                                      const char* e2,
-                                      const char* e3,
-                                      const T1& v1,
-                                      const T2& v2,
-                                      const T3& v3) const {
+                                    const char* e2,
+                                    const char* e3,
+                                    const T1& v1,
+                                    const T2& v2,
+                                    const T3& v3) const {
     return PredFormatFunction3(e1, e2, e3, v1, v2, v3);
   }
 };
@@ -969,9 +969,9 @@ class Predicate3Test : public testing::Test {
 
     // Verifies that the control flow in the test function is expected.
     if (expected_to_finish_ && !finished_) {
-      FAIL() << "The predicate assertion unexpactedly aborted the test.";
+    FAIL() << "The predicate assertion unexpactedly aborted the test.";
     } else if (!expected_to_finish_ && finished_) {
-      FAIL() << "The failed predicate assertion didn't abort the test "
+    FAIL() << "The failed predicate assertion didn't abort the test "
                 "as expected.";
     }
   }
@@ -1002,9 +1002,9 @@ typedef Predicate3Test ASSERT_PRED3Test;
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED3Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED3(PredFunction3Int,
-               ++n1_,
-               ++n2_,
-               ++n3_);
+                ++n1_,
+                ++n2_,
+                ++n3_);
   finished_ = true;
 }
 
@@ -1012,9 +1012,9 @@ TEST_F(EXPECT_PRED3Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED3Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED3(PredFunction3Bool,
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_));
   finished_ = true;
 }
 
@@ -1022,9 +1022,9 @@ TEST_F(EXPECT_PRED3Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED3Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED3(PredFunctor3(),
-               ++n1_,
-               ++n2_,
-               ++n3_);
+                ++n1_,
+                ++n2_,
+                ++n3_);
   finished_ = true;
 }
 
@@ -1032,9 +1032,9 @@ TEST_F(EXPECT_PRED3Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED3Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED3(PredFunctor3(),
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_));
   finished_ = true;
 }
 
@@ -1043,9 +1043,9 @@ TEST_F(EXPECT_PRED3Test, FunctorOnUserTypeSuccess) {
 TEST_F(EXPECT_PRED3Test, FunctionOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED3(PredFunction3Int,
-                 n1_++,
-                 n2_++,
-                 n3_++);
+                n1_++,
+                n2_++,
+                n3_++);
     finished_ = true;
   }, "");
 }
@@ -1055,9 +1055,9 @@ TEST_F(EXPECT_PRED3Test, FunctionOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED3Test, FunctionOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED3(PredFunction3Bool,
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++));
     finished_ = true;
   }, "");
 }
@@ -1067,9 +1067,9 @@ TEST_F(EXPECT_PRED3Test, FunctionOnUserTypeFailure) {
 TEST_F(EXPECT_PRED3Test, FunctorOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED3(PredFunctor3(),
-                 n1_++,
-                 n2_++,
-                 n3_++);
+                n1_++,
+                n2_++,
+                n3_++);
     finished_ = true;
   }, "");
 }
@@ -1079,9 +1079,9 @@ TEST_F(EXPECT_PRED3Test, FunctorOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED3Test, FunctorOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED3(PredFunctor3(),
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++));
     finished_ = true;
   }, "");
 }
@@ -1090,9 +1090,9 @@ TEST_F(EXPECT_PRED3Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED3Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED3(PredFunction3Int,
-               ++n1_,
-               ++n2_,
-               ++n3_);
+                ++n1_,
+                ++n2_,
+                ++n3_);
   finished_ = true;
 }
 
@@ -1100,9 +1100,9 @@ TEST_F(ASSERT_PRED3Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED3Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED3(PredFunction3Bool,
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_));
   finished_ = true;
 }
 
@@ -1110,9 +1110,9 @@ TEST_F(ASSERT_PRED3Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED3Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED3(PredFunctor3(),
-               ++n1_,
-               ++n2_,
-               ++n3_);
+                ++n1_,
+                ++n2_,
+                ++n3_);
   finished_ = true;
 }
 
@@ -1120,9 +1120,9 @@ TEST_F(ASSERT_PRED3Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED3Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED3(PredFunctor3(),
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_));
   finished_ = true;
 }
 
@@ -1132,9 +1132,9 @@ TEST_F(ASSERT_PRED3Test, FunctionOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED3(PredFunction3Int,
-                 n1_++,
-                 n2_++,
-                 n3_++);
+                n1_++,
+                n2_++,
+                n3_++);
     finished_ = true;
   }, "");
 }
@@ -1145,9 +1145,9 @@ TEST_F(ASSERT_PRED3Test, FunctionOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED3(PredFunction3Bool,
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++));
     finished_ = true;
   }, "");
 }
@@ -1158,9 +1158,9 @@ TEST_F(ASSERT_PRED3Test, FunctorOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED3(PredFunctor3(),
-                 n1_++,
-                 n2_++,
-                 n3_++);
+                n1_++,
+                n2_++,
+                n3_++);
     finished_ = true;
   }, "");
 }
@@ -1171,9 +1171,9 @@ TEST_F(ASSERT_PRED3Test, FunctorOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED3(PredFunctor3(),
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++));
     finished_ = true;
   }, "");
 }
@@ -1182,9 +1182,9 @@ TEST_F(ASSERT_PRED3Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT3Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT3(PredFormatFunction3,
-                      ++n1_,
-                      ++n2_,
-                      ++n3_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_);
   finished_ = true;
 }
 
@@ -1192,9 +1192,9 @@ TEST_F(EXPECT_PRED_FORMAT3Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT3Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT3(PredFormatFunction3,
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_));
   finished_ = true;
 }
 
@@ -1202,9 +1202,9 @@ TEST_F(EXPECT_PRED_FORMAT3Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT3Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT3(PredFormatFunctor3(),
-                      ++n1_,
-                      ++n2_,
-                      ++n3_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_);
   finished_ = true;
 }
 
@@ -1212,9 +1212,9 @@ TEST_F(EXPECT_PRED_FORMAT3Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT3Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT3(PredFormatFunctor3(),
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_));
   finished_ = true;
 }
 
@@ -1270,9 +1270,9 @@ TEST_F(EXPECT_PRED_FORMAT3Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT3Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT3(PredFormatFunction3,
-                      ++n1_,
-                      ++n2_,
-                      ++n3_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_);
   finished_ = true;
 }
 
@@ -1280,9 +1280,9 @@ TEST_F(ASSERT_PRED_FORMAT3Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT3Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT3(PredFormatFunction3,
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_));
   finished_ = true;
 }
 
@@ -1290,9 +1290,9 @@ TEST_F(ASSERT_PRED_FORMAT3Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT3Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT3(PredFormatFunctor3(),
-                      ++n1_,
-                      ++n2_,
-                      ++n3_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_);
   finished_ = true;
 }
 
@@ -1300,9 +1300,9 @@ TEST_F(ASSERT_PRED_FORMAT3Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT3Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT3(PredFormatFunctor3(),
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_));
   finished_ = true;
 }
 
@@ -1379,9 +1379,9 @@ bool PredFunction4Bool(Bool v1, Bool v2, Bool v3, Bool v4) {
 struct PredFunctor4 {
   template <typename T1, typename T2, typename T3, typename T4>
   bool operator()(const T1& v1,
-                  const T2& v2,
-                  const T3& v3,
-                  const T4& v4) {
+                const T2& v2,
+                const T3& v3,
+                const T4& v4) {
     return v1 + v2 + v3 + v4 > 0;
   }
 };
@@ -1389,33 +1389,33 @@ struct PredFunctor4 {
 // A 4-ary predicate-formatter function.
 template <typename T1, typename T2, typename T3, typename T4>
 testing::AssertionResult PredFormatFunction4(const char* e1,
-                                             const char* e2,
-                                             const char* e3,
-                                             const char* e4,
-                                             const T1& v1,
-                                             const T2& v2,
-                                             const T3& v3,
-                                             const T4& v4) {
+                                            const char* e2,
+                                            const char* e3,
+                                            const char* e4,
+                                            const T1& v1,
+                                            const T2& v2,
+                                            const T3& v3,
+                                            const T4& v4) {
   if (PredFunction4(v1, v2, v3, v4))
     return testing::AssertionSuccess();
 
   return testing::AssertionFailure()
-      << e1 << " + " << e2 << " + " << e3 << " + " << e4
-      << " is expected to be positive, but evaluates to "
-      << v1 + v2 + v3 + v4 << ".";
+    << e1 << " + " << e2 << " + " << e3 << " + " << e4
+    << " is expected to be positive, but evaluates to "
+    << v1 + v2 + v3 + v4 << ".";
 }
 
 // A 4-ary predicate-formatter functor.
 struct PredFormatFunctor4 {
   template <typename T1, typename T2, typename T3, typename T4>
   testing::AssertionResult operator()(const char* e1,
-                                      const char* e2,
-                                      const char* e3,
-                                      const char* e4,
-                                      const T1& v1,
-                                      const T2& v2,
-                                      const T3& v3,
-                                      const T4& v4) const {
+                                    const char* e2,
+                                    const char* e3,
+                                    const char* e4,
+                                    const T1& v1,
+                                    const T2& v2,
+                                    const T3& v3,
+                                    const T4& v4) const {
     return PredFormatFunction4(e1, e2, e3, e4, v1, v2, v3, v4);
   }
 };
@@ -1448,9 +1448,9 @@ class Predicate4Test : public testing::Test {
 
     // Verifies that the control flow in the test function is expected.
     if (expected_to_finish_ && !finished_) {
-      FAIL() << "The predicate assertion unexpactedly aborted the test.";
+    FAIL() << "The predicate assertion unexpactedly aborted the test.";
     } else if (!expected_to_finish_ && finished_) {
-      FAIL() << "The failed predicate assertion didn't abort the test "
+    FAIL() << "The failed predicate assertion didn't abort the test "
                 "as expected.";
     }
   }
@@ -1483,10 +1483,10 @@ typedef Predicate4Test ASSERT_PRED4Test;
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED4Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED4(PredFunction4Int,
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_);
   finished_ = true;
 }
 
@@ -1494,10 +1494,10 @@ TEST_F(EXPECT_PRED4Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED4Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED4(PredFunction4Bool,
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_));
   finished_ = true;
 }
 
@@ -1505,10 +1505,10 @@ TEST_F(EXPECT_PRED4Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED4Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED4(PredFunctor4(),
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_);
   finished_ = true;
 }
 
@@ -1516,10 +1516,10 @@ TEST_F(EXPECT_PRED4Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED4Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED4(PredFunctor4(),
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_));
   finished_ = true;
 }
 
@@ -1528,10 +1528,10 @@ TEST_F(EXPECT_PRED4Test, FunctorOnUserTypeSuccess) {
 TEST_F(EXPECT_PRED4Test, FunctionOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED4(PredFunction4Int,
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++);
     finished_ = true;
   }, "");
 }
@@ -1541,10 +1541,10 @@ TEST_F(EXPECT_PRED4Test, FunctionOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED4Test, FunctionOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED4(PredFunction4Bool,
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++));
     finished_ = true;
   }, "");
 }
@@ -1554,10 +1554,10 @@ TEST_F(EXPECT_PRED4Test, FunctionOnUserTypeFailure) {
 TEST_F(EXPECT_PRED4Test, FunctorOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED4(PredFunctor4(),
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++);
     finished_ = true;
   }, "");
 }
@@ -1567,10 +1567,10 @@ TEST_F(EXPECT_PRED4Test, FunctorOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED4Test, FunctorOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED4(PredFunctor4(),
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++));
     finished_ = true;
   }, "");
 }
@@ -1579,10 +1579,10 @@ TEST_F(EXPECT_PRED4Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED4Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED4(PredFunction4Int,
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_);
   finished_ = true;
 }
 
@@ -1590,10 +1590,10 @@ TEST_F(ASSERT_PRED4Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED4Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED4(PredFunction4Bool,
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_));
   finished_ = true;
 }
 
@@ -1601,10 +1601,10 @@ TEST_F(ASSERT_PRED4Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED4Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED4(PredFunctor4(),
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_);
   finished_ = true;
 }
 
@@ -1612,10 +1612,10 @@ TEST_F(ASSERT_PRED4Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED4Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED4(PredFunctor4(),
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_));
   finished_ = true;
 }
 
@@ -1625,10 +1625,10 @@ TEST_F(ASSERT_PRED4Test, FunctionOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED4(PredFunction4Int,
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++);
     finished_ = true;
   }, "");
 }
@@ -1639,10 +1639,10 @@ TEST_F(ASSERT_PRED4Test, FunctionOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED4(PredFunction4Bool,
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++));
     finished_ = true;
   }, "");
 }
@@ -1653,10 +1653,10 @@ TEST_F(ASSERT_PRED4Test, FunctorOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED4(PredFunctor4(),
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++);
     finished_ = true;
   }, "");
 }
@@ -1667,10 +1667,10 @@ TEST_F(ASSERT_PRED4Test, FunctorOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED4(PredFunctor4(),
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++));
     finished_ = true;
   }, "");
 }
@@ -1679,10 +1679,10 @@ TEST_F(ASSERT_PRED4Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT4Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT4(PredFormatFunction4,
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_);
   finished_ = true;
 }
 
@@ -1690,10 +1690,10 @@ TEST_F(EXPECT_PRED_FORMAT4Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT4Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT4(PredFormatFunction4,
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_));
   finished_ = true;
 }
 
@@ -1701,10 +1701,10 @@ TEST_F(EXPECT_PRED_FORMAT4Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT4Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT4(PredFormatFunctor4(),
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_);
   finished_ = true;
 }
 
@@ -1712,10 +1712,10 @@ TEST_F(EXPECT_PRED_FORMAT4Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT4Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT4(PredFormatFunctor4(),
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_));
   finished_ = true;
 }
 
@@ -1775,10 +1775,10 @@ TEST_F(EXPECT_PRED_FORMAT4Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT4Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT4(PredFormatFunction4,
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_);
   finished_ = true;
 }
 
@@ -1786,10 +1786,10 @@ TEST_F(ASSERT_PRED_FORMAT4Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT4Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT4(PredFormatFunction4,
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_));
   finished_ = true;
 }
 
@@ -1797,10 +1797,10 @@ TEST_F(ASSERT_PRED_FORMAT4Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT4Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT4(PredFormatFunctor4(),
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_);
   finished_ = true;
 }
 
@@ -1808,10 +1808,10 @@ TEST_F(ASSERT_PRED_FORMAT4Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT4Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT4(PredFormatFunctor4(),
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_));
   finished_ = true;
 }
 
@@ -1892,10 +1892,10 @@ bool PredFunction5Bool(Bool v1, Bool v2, Bool v3, Bool v4, Bool v5) {
 struct PredFunctor5 {
   template <typename T1, typename T2, typename T3, typename T4, typename T5>
   bool operator()(const T1& v1,
-                  const T2& v2,
-                  const T3& v3,
-                  const T4& v4,
-                  const T5& v5) {
+                const T2& v2,
+                const T3& v3,
+                const T4& v4,
+                const T5& v5) {
     return v1 + v2 + v3 + v4 + v5 > 0;
   }
 };
@@ -1903,37 +1903,37 @@ struct PredFunctor5 {
 // A 5-ary predicate-formatter function.
 template <typename T1, typename T2, typename T3, typename T4, typename T5>
 testing::AssertionResult PredFormatFunction5(const char* e1,
-                                             const char* e2,
-                                             const char* e3,
-                                             const char* e4,
-                                             const char* e5,
-                                             const T1& v1,
-                                             const T2& v2,
-                                             const T3& v3,
-                                             const T4& v4,
-                                             const T5& v5) {
+                                            const char* e2,
+                                            const char* e3,
+                                            const char* e4,
+                                            const char* e5,
+                                            const T1& v1,
+                                            const T2& v2,
+                                            const T3& v3,
+                                            const T4& v4,
+                                            const T5& v5) {
   if (PredFunction5(v1, v2, v3, v4, v5))
     return testing::AssertionSuccess();
 
   return testing::AssertionFailure()
-      << e1 << " + " << e2 << " + " << e3 << " + " << e4 << " + " << e5
-      << " is expected to be positive, but evaluates to "
-      << v1 + v2 + v3 + v4 + v5 << ".";
+    << e1 << " + " << e2 << " + " << e3 << " + " << e4 << " + " << e5
+    << " is expected to be positive, but evaluates to "
+    << v1 + v2 + v3 + v4 + v5 << ".";
 }
 
 // A 5-ary predicate-formatter functor.
 struct PredFormatFunctor5 {
   template <typename T1, typename T2, typename T3, typename T4, typename T5>
   testing::AssertionResult operator()(const char* e1,
-                                      const char* e2,
-                                      const char* e3,
-                                      const char* e4,
-                                      const char* e5,
-                                      const T1& v1,
-                                      const T2& v2,
-                                      const T3& v3,
-                                      const T4& v4,
-                                      const T5& v5) const {
+                                    const char* e2,
+                                    const char* e3,
+                                    const char* e4,
+                                    const char* e5,
+                                    const T1& v1,
+                                    const T2& v2,
+                                    const T3& v3,
+                                    const T4& v4,
+                                    const T5& v5) const {
     return PredFormatFunction5(e1, e2, e3, e4, e5, v1, v2, v3, v4, v5);
   }
 };
@@ -1969,9 +1969,9 @@ class Predicate5Test : public testing::Test {
 
     // Verifies that the control flow in the test function is expected.
     if (expected_to_finish_ && !finished_) {
-      FAIL() << "The predicate assertion unexpactedly aborted the test.";
+    FAIL() << "The predicate assertion unexpactedly aborted the test.";
     } else if (!expected_to_finish_ && finished_) {
-      FAIL() << "The failed predicate assertion didn't abort the test "
+    FAIL() << "The failed predicate assertion didn't abort the test "
                 "as expected.";
     }
   }
@@ -2006,11 +2006,11 @@ typedef Predicate5Test ASSERT_PRED5Test;
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED5Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED5(PredFunction5Int,
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_,
-               ++n5_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_,
+                ++n5_);
   finished_ = true;
 }
 
@@ -2018,11 +2018,11 @@ TEST_F(EXPECT_PRED5Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED5Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED5(PredFunction5Bool,
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_),
-               Bool(++n5_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_),
+                Bool(++n5_));
   finished_ = true;
 }
 
@@ -2030,11 +2030,11 @@ TEST_F(EXPECT_PRED5Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED5Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED5(PredFunctor5(),
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_,
-               ++n5_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_,
+                ++n5_);
   finished_ = true;
 }
 
@@ -2042,11 +2042,11 @@ TEST_F(EXPECT_PRED5Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED5Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED5(PredFunctor5(),
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_),
-               Bool(++n5_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_),
+                Bool(++n5_));
   finished_ = true;
 }
 
@@ -2055,11 +2055,11 @@ TEST_F(EXPECT_PRED5Test, FunctorOnUserTypeSuccess) {
 TEST_F(EXPECT_PRED5Test, FunctionOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED5(PredFunction5Int,
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++,
-                 n5_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++,
+                n5_++);
     finished_ = true;
   }, "");
 }
@@ -2069,11 +2069,11 @@ TEST_F(EXPECT_PRED5Test, FunctionOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED5Test, FunctionOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED5(PredFunction5Bool,
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++),
-                 Bool(n5_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++),
+                Bool(n5_++));
     finished_ = true;
   }, "");
 }
@@ -2083,11 +2083,11 @@ TEST_F(EXPECT_PRED5Test, FunctionOnUserTypeFailure) {
 TEST_F(EXPECT_PRED5Test, FunctorOnBuiltInTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED5(PredFunctor5(),
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++,
-                 n5_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++,
+                n5_++);
     finished_ = true;
   }, "");
 }
@@ -2097,11 +2097,11 @@ TEST_F(EXPECT_PRED5Test, FunctorOnBuiltInTypeFailure) {
 TEST_F(EXPECT_PRED5Test, FunctorOnUserTypeFailure) {
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_PRED5(PredFunctor5(),
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++),
-                 Bool(n5_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++),
+                Bool(n5_++));
     finished_ = true;
   }, "");
 }
@@ -2110,11 +2110,11 @@ TEST_F(EXPECT_PRED5Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED5Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED5(PredFunction5Int,
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_,
-               ++n5_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_,
+                ++n5_);
   finished_ = true;
 }
 
@@ -2122,11 +2122,11 @@ TEST_F(ASSERT_PRED5Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED5Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED5(PredFunction5Bool,
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_),
-               Bool(++n5_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_),
+                Bool(++n5_));
   finished_ = true;
 }
 
@@ -2134,11 +2134,11 @@ TEST_F(ASSERT_PRED5Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED5Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED5(PredFunctor5(),
-               ++n1_,
-               ++n2_,
-               ++n3_,
-               ++n4_,
-               ++n5_);
+                ++n1_,
+                ++n2_,
+                ++n3_,
+                ++n4_,
+                ++n5_);
   finished_ = true;
 }
 
@@ -2146,11 +2146,11 @@ TEST_F(ASSERT_PRED5Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED5Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED5(PredFunctor5(),
-               Bool(++n1_),
-               Bool(++n2_),
-               Bool(++n3_),
-               Bool(++n4_),
-               Bool(++n5_));
+                Bool(++n1_),
+                Bool(++n2_),
+                Bool(++n3_),
+                Bool(++n4_),
+                Bool(++n5_));
   finished_ = true;
 }
 
@@ -2160,11 +2160,11 @@ TEST_F(ASSERT_PRED5Test, FunctionOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED5(PredFunction5Int,
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++,
-                 n5_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++,
+                n5_++);
     finished_ = true;
   }, "");
 }
@@ -2175,11 +2175,11 @@ TEST_F(ASSERT_PRED5Test, FunctionOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED5(PredFunction5Bool,
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++),
-                 Bool(n5_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++),
+                Bool(n5_++));
     finished_ = true;
   }, "");
 }
@@ -2190,11 +2190,11 @@ TEST_F(ASSERT_PRED5Test, FunctorOnBuiltInTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED5(PredFunctor5(),
-                 n1_++,
-                 n2_++,
-                 n3_++,
-                 n4_++,
-                 n5_++);
+                n1_++,
+                n2_++,
+                n3_++,
+                n4_++,
+                n5_++);
     finished_ = true;
   }, "");
 }
@@ -2205,11 +2205,11 @@ TEST_F(ASSERT_PRED5Test, FunctorOnUserTypeFailure) {
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED5(PredFunctor5(),
-                 Bool(n1_++),
-                 Bool(n2_++),
-                 Bool(n3_++),
-                 Bool(n4_++),
-                 Bool(n5_++));
+                Bool(n1_++),
+                Bool(n2_++),
+                Bool(n3_++),
+                Bool(n4_++),
+                Bool(n5_++));
     finished_ = true;
   }, "");
 }
@@ -2218,11 +2218,11 @@ TEST_F(ASSERT_PRED5Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT5Test, FunctionOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT5(PredFormatFunction5,
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_,
-                      ++n5_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_,
+                    ++n5_);
   finished_ = true;
 }
 
@@ -2230,11 +2230,11 @@ TEST_F(EXPECT_PRED_FORMAT5Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT5Test, FunctionOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT5(PredFormatFunction5,
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_),
-                      Bool(++n5_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_),
+                    Bool(++n5_));
   finished_ = true;
 }
 
@@ -2242,11 +2242,11 @@ TEST_F(EXPECT_PRED_FORMAT5Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(EXPECT_PRED_FORMAT5Test, FunctorOnBuiltInTypeSuccess) {
   EXPECT_PRED_FORMAT5(PredFormatFunctor5(),
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_,
-                      ++n5_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_,
+                    ++n5_);
   finished_ = true;
 }
 
@@ -2254,11 +2254,11 @@ TEST_F(EXPECT_PRED_FORMAT5Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(EXPECT_PRED_FORMAT5Test, FunctorOnUserTypeSuccess) {
   EXPECT_PRED_FORMAT5(PredFormatFunctor5(),
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_),
-                      Bool(++n5_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_),
+                    Bool(++n5_));
   finished_ = true;
 }
 
@@ -2322,11 +2322,11 @@ TEST_F(EXPECT_PRED_FORMAT5Test, FunctorOnUserTypeFailure) {
 // predicate-formatter is a function on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT5Test, FunctionOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT5(PredFormatFunction5,
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_,
-                      ++n5_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_,
+                    ++n5_);
   finished_ = true;
 }
 
@@ -2334,11 +2334,11 @@ TEST_F(ASSERT_PRED_FORMAT5Test, FunctionOnBuiltInTypeSuccess) {
 // predicate-formatter is a function on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT5Test, FunctionOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT5(PredFormatFunction5,
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_),
-                      Bool(++n5_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_),
+                    Bool(++n5_));
   finished_ = true;
 }
 
@@ -2346,11 +2346,11 @@ TEST_F(ASSERT_PRED_FORMAT5Test, FunctionOnUserTypeSuccess) {
 // predicate-formatter is a functor on a built-in type (int).
 TEST_F(ASSERT_PRED_FORMAT5Test, FunctorOnBuiltInTypeSuccess) {
   ASSERT_PRED_FORMAT5(PredFormatFunctor5(),
-                      ++n1_,
-                      ++n2_,
-                      ++n3_,
-                      ++n4_,
-                      ++n5_);
+                    ++n1_,
+                    ++n2_,
+                    ++n3_,
+                    ++n4_,
+                    ++n5_);
   finished_ = true;
 }
 
@@ -2358,11 +2358,11 @@ TEST_F(ASSERT_PRED_FORMAT5Test, FunctorOnBuiltInTypeSuccess) {
 // predicate-formatter is a functor on a user-defined type (Bool).
 TEST_F(ASSERT_PRED_FORMAT5Test, FunctorOnUserTypeSuccess) {
   ASSERT_PRED_FORMAT5(PredFormatFunctor5(),
-                      Bool(++n1_),
-                      Bool(++n2_),
-                      Bool(++n3_),
-                      Bool(++n4_),
-                      Bool(++n5_));
+                    Bool(++n1_),
+                    Bool(++n2_),
+                    Bool(++n3_),
+                    Bool(++n4_),
+                    Bool(++n5_));
   finished_ = true;
 }
 

@@ -17,10 +17,10 @@ class LLabel : public Label
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LLabel, "Label" );
 
-   public:
+    public:
     LLabel( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );

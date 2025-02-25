@@ -25,7 +25,7 @@
 
 class CSceneImage : public ISceneImage
 {
-   public:
+    public:
     virtual bool CreateSceneImageFile( CUtlBuffer &targetBuffer, char const *pchModPath, bool bLittleEndian, bool bQuiet, ISceneCompileStatus *Status );
 };
 
@@ -52,7 +52,7 @@ CUtlVector< SceneFile_t > g_SceneFiles;
 //-----------------------------------------------------------------------------
 class CSceneTokenProcessor : public ISceneTokenProcessor
 {
-   public:
+    public:
     const char *CurrentToken( void )
     {
         return token;
@@ -87,7 +87,7 @@ ISceneTokenProcessor *tokenprocessor = &g_SceneTokenProcessor;
 // the final pool contains all the unique strings seperated by a null
 class CChoreoStringPool : public IChoreoStringPool
 {
-   public:
+    public:
     CChoreoStringPool()
         : m_StringMap( true )
     {
@@ -180,7 +180,7 @@ class CChoreoStringPool : public IChoreoStringPool
         m_nOffset = 0;
     }
 
-   private:
+    private:
     CUtlStringMap< int > m_StringMap;
     unsigned int m_nOffset;
 };
@@ -260,8 +260,8 @@ bool CreateTargetFile_VCD( const char *pSourceName, const char *pTargetName, boo
 
     unsigned int compressedSize;
     unsigned char *pCompressedBuffer = LZMA_OpportunisticCompress( ( unsigned char * )g_SceneFiles[iScene].compiledBuffer.Base(),
-                                                                   g_SceneFiles[iScene].compiledBuffer.TellMaxPut(),
-                                                                   &compressedSize );
+                                                                    g_SceneFiles[iScene].compiledBuffer.TellMaxPut(),
+                                                                    &compressedSize );
     if ( pCompressedBuffer )
     {
         // replace the compiled buffer with the compressed version
@@ -278,7 +278,7 @@ bool CreateTargetFile_VCD( const char *pSourceName, const char *pTargetName, boo
 
 class CSceneImageEntryLessFunc
 {
-   public:
+    public:
     bool Less( const SceneImageEntry_t &entryLHS, const SceneImageEntry_t &entryRHS, void *pCtx )
     {
         return entryLHS.crcFilename < entryRHS.crcFilename;

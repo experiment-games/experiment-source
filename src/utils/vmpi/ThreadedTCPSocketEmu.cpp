@@ -19,7 +19,7 @@
 // This class uses the IThreadedTCPSocket interface to emulate the old ITCPSocket.
 class CThreadedTCPSocketEmu : public ITCPSocket, public ITCPSocketHandler, public IHandlerCreator
 {
-   public:
+    public:
     CThreadedTCPSocketEmu()
     {
         m_pSocket = NULL;
@@ -55,7 +55,7 @@ class CThreadedTCPSocketEmu : public ITCPSocket, public ITCPSocketHandler, publi
     }
 
     // ITCPSocketHandler implementation.
-   private:
+    private:
     virtual void OnPacketReceived( CTCPPacket *pPacket )
     {
         CVMPICriticalSectionLock csLock( &m_RecvPacketsCS );
@@ -80,7 +80,7 @@ class CThreadedTCPSocketEmu : public ITCPSocket, public ITCPSocketHandler, publi
     }
 
     // IHandlerCreator implementation.
-   public:
+    public:
     // This is used for connecting.
     virtual ITCPSocketHandler *CreateNewHandler()
     {
@@ -88,7 +88,7 @@ class CThreadedTCPSocketEmu : public ITCPSocket, public ITCPSocketHandler, publi
     }
 
     // ITCPSocket implementation.
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -224,7 +224,7 @@ class CThreadedTCPSocketEmu : public ITCPSocket, public ITCPSocketHandler, publi
         return -1;
     }
 
-   private:
+    private:
     IThreadedTCPSocket *m_pSocket;
 
     unsigned short m_LocalPort;  // The port we bind to when we want to connect.
@@ -251,7 +251,7 @@ ITCPSocket *CreateTCPSocketEmu()
 
 class CThreadedTCPListenSocketEmu : public ITCPListenSocket, public IHandlerCreator
 {
-   public:
+    public:
     CThreadedTCPListenSocketEmu()
     {
         m_pListener = NULL;
@@ -275,7 +275,7 @@ class CThreadedTCPListenSocketEmu : public ITCPListenSocket, public IHandlerCrea
     }
 
     // ITCPListenSocket implementation.
-   private:
+    private:
     virtual void Release()
     {
         delete this;
@@ -304,14 +304,14 @@ class CThreadedTCPListenSocketEmu : public ITCPListenSocket, public IHandlerCrea
     }
 
     // IHandlerCreator implementation.
-   private:
+    private:
     virtual ITCPSocketHandler *CreateNewHandler()
     {
         m_pLastCreatedSocket = new CThreadedTCPSocketEmu;
         return m_pLastCreatedSocket;
     }
 
-   private:
+    private:
     ITCPConnectSocket *m_pListener;
     CThreadedTCPSocketEmu *m_pLastCreatedSocket;
 };

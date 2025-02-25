@@ -40,7 +40,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 template < typename Encoding, typename Allocator = CrtAllocator >
 class GenericStringBuffer
 {
-   public:
+    public:
     typedef typename Encoding::Ch Ch;
 
     GenericStringBuffer( Allocator* allocator = 0, size_t capacity = kDefaultCapacity )
@@ -120,7 +120,7 @@ class GenericStringBuffer
     static const size_t kDefaultCapacity = 256;
     mutable internal::Stack< Allocator > stack_;
 
-   private:
+    private:
     // Prohibit copy constructor & assignment operator.
     GenericStringBuffer( const GenericStringBuffer& );
     GenericStringBuffer& operator=( const GenericStringBuffer& );

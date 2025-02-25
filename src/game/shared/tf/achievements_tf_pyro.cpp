@@ -20,7 +20,7 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BaseBurn : public CBaseTFAchievement
 {
-   public:
+    public:
     virtual void ListenForEvents()
     {
         ListenForGameEvent( "player_ignited" );
@@ -185,7 +185,7 @@ class CAchievementTFPyro_AxeKillsNoDeaths : public CBaseTFAchievement
         return 3;
     }
 
-   private:
+    private:
     int m_iConsecutiveKills;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFPyro_AxeKillsNoDeaths, ACHIEVEMENT_TF_PYRO_KILL_AXE_SMALL, "TF_PYRO_KILL_AXE_SMALL", 5 );
@@ -323,7 +323,7 @@ class CAchievementTFPyro_AssistMedic : public CBaseTFAchievement
         if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
         {
             if ( pLocalPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) || pLocalPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED ) ||
-                 pLocalPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+                pLocalPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
             {
                 m_iPlayersKilled++;
                 if ( m_iPlayersKilled >= 3 )
@@ -334,7 +334,7 @@ class CAchievementTFPyro_AssistMedic : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iPlayersKilled;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFPyro_AssistMedic, ACHIEVEMENT_TF_PYRO_KILL_UBERCHARGE, "TF_PYRO_KILL_UBERCHARGE", 5 );
@@ -440,7 +440,7 @@ class CAchievementTFPyro_BurnTauntingSpy : public CAchievementTFPyro_BaseBurn
     {
         // This will 'fail' if we add new PDAs that have a different taunt
         if ( pTFVictim->IsPlayerClass( TF_CLASS_SPY ) && pTFVictim->IsTaunting() &&
-             pTFVictim->GetActiveTFWeapon() && pTFVictim->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_PDA_SPY )
+            pTFVictim->GetActiveTFWeapon() && pTFVictim->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_PDA_SPY )
         {
             IncrementCount();
         }
@@ -543,7 +543,7 @@ class CAchievementTFPyro_DoubleKO : public CBaseTFAchievement
         m_DeathHistory.Purge();
     }
 
-   private:
+    private:
     typedef struct
     {
         EHANDLE m_hTarget;
@@ -667,7 +667,7 @@ class CAchievementTFPyro_BurnSimulScouts : public CAchievementTFPyro_BaseBurn
         }
     }
 
-   private:
+    private:
     CUtlVector< CHandle< C_TFPlayer > > m_hBurnedScouts;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnSimulScouts, ACHIEVEMENT_TF_PYRO_SIMULBURN_SCOUTS, "TF_PYRO_SIMULBURN_SCOUTS", 5 );
@@ -745,7 +745,7 @@ class CAchievementTFPyro_KillCamping : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     Vector m_vecPosition;
     int m_iKills;
 };
@@ -878,7 +878,7 @@ class CAchievementTFPyro_BurnMedicPair : public CAchievementTFPyro_BaseBurn
         BaseClass::FireGameEvent_Internal( event );
     }
 
-   private:
+    private:
     CUtlVector< CHandle< C_TFPlayer > > m_hBurnVictims;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnMedicPair, ACHIEVEMENT_TF_PYRO_BURN_MEDICPAIR, "TF_PYRO_BURN_MEDICPAIR", 5 );
@@ -984,7 +984,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_DamageGrind, ACHIEVEMENT_TF_PYRO_DAMAGE_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFPyro_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -997,7 +997,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_AchieveProgress1, ACHIEVEMENT_TF_PYRO_AC
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFPyro_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1010,7 +1010,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_AchieveProgress2, ACHIEVEMENT_TF_PYRO_AC
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFPyro_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {

@@ -20,7 +20,7 @@ enum BrickbatAmmo_t;
 
 class CGrenade_Brickbat : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenade_Brickbat, CBaseGrenade );
 
     virtual void Spawn( void );
@@ -37,7 +37,7 @@ class CGrenade_Brickbat : public CBaseGrenade
     bool m_bExplodes;
     bool m_bBounceToFlat;  // Bouncing to flatten
 
-   public:
+    public:
     DECLARE_DATADESC();
 };
 

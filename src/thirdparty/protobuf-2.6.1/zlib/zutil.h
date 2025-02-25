@@ -4,8 +4,8 @@
  */
 
 /* WARNING: this file should *not* be used by applications. It is
-   part of the implementation of the compression library and is
-   subject to change. Applications should only use zlib.h.
+    part of the implementation of the compression library and is
+    subject to change. Applications should only use zlib.h.
  */
 
 /* @(#) $Id$ */
@@ -268,6 +268,6 @@ void ZLIB_INTERNAL zcfree OF( ( voidpf opaque, voidpf ptr ) );
 
 /* Reverse the bytes in a 32-bit value */
 #define ZSWAP32( q ) ( ( ( ( q ) >> 24 ) & 0xff ) + ( ( ( q ) >> 8 ) & 0xff00 ) + \
-                       ( ( ( q ) & 0xff00 ) << 8 ) + ( ( ( q ) & 0xff ) << 24 ) )
+                        ( ( ( q ) & 0xff00 ) << 8 ) + ( ( ( q ) & 0xff ) << 24 ) )
 
 #endif /* ZUTIL_H */

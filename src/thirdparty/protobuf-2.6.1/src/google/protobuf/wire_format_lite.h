@@ -72,7 +72,7 @@ class StringPieceField;
 // This class is really a namespace that contains only static methods.
 class LIBPROTOBUF_EXPORT WireFormatLite
 {
-   public:
+    public:
     // -----------------------------------------------------------------
     // Helper constants and functions related to the format.  These are
     // mostly meant for internal and generated code to use.
@@ -185,7 +185,7 @@ class LIBPROTOBUF_EXPORT WireFormatLite
     // Reads and ignores a message from the input.  Skipped values are recorded
     // to a CodedOutputStream.
     static bool SkipMessage( io::CodedInputStream* input,
-                             io::CodedOutputStream* output );
+                            io::CodedOutputStream* output );
 
 // This macro does the same thing as WireFormatLite::MakeTag(), but the
 // result is usable as a compile-time constant, which makes it usable
@@ -207,16 +207,16 @@ class LIBPROTOBUF_EXPORT WireFormatLite
     static const int kMessageSetMessageNumber = 3;
     static const int kMessageSetItemStartTag =
         GOOGLE_PROTOBUF_WIRE_FORMAT_MAKE_TAG( kMessageSetItemNumber,
-                                              WireFormatLite::WIRETYPE_START_GROUP );
+                                            WireFormatLite::WIRETYPE_START_GROUP );
     static const int kMessageSetItemEndTag =
         GOOGLE_PROTOBUF_WIRE_FORMAT_MAKE_TAG( kMessageSetItemNumber,
-                                              WireFormatLite::WIRETYPE_END_GROUP );
+                                            WireFormatLite::WIRETYPE_END_GROUP );
     static const int kMessageSetTypeIdTag =
         GOOGLE_PROTOBUF_WIRE_FORMAT_MAKE_TAG( kMessageSetTypeIdNumber,
-                                              WireFormatLite::WIRETYPE_VARINT );
+                                            WireFormatLite::WIRETYPE_VARINT );
     static const int kMessageSetMessageTag =
         GOOGLE_PROTOBUF_WIRE_FORMAT_MAKE_TAG( kMessageSetMessageNumber,
-                                              WireFormatLite::WIRETYPE_LENGTH_DELIMITED );
+                                            WireFormatLite::WIRETYPE_LENGTH_DELIMITED );
 
     // Byte size of all tags of a MessageSet::Item combined.
     static const int kMessageSetItemTagsSize;
@@ -265,17 +265,17 @@ class LIBPROTOBUF_EXPORT WireFormatLite
     // protocol compiler.
     template < typename CType, enum FieldType DeclaredType >
     static inline bool ReadRepeatedPrimitive( int tag_size,
-                                              uint32 tag,
-                                              input,
-                                              RepeatedField< CType >* value ) INL;
+                                            uint32 tag,
+                                            input,
+                                            RepeatedField< CType >* value ) INL;
 
     // Identical to ReadRepeatedPrimitive, except will not inline the
     // implementation.
     template < typename CType, enum FieldType DeclaredType >
     static bool ReadRepeatedPrimitiveNoInline( int tag_size,
-                                               uint32 tag,
-                                               input,
-                                               RepeatedField< CType >* value );
+                                                uint32 tag,
+                                                input,
+                                                RepeatedField< CType >* value );
 
     // Reads a primitive value directly from the provided buffer. It returns a
     // pointer past the segment of data that was read.
@@ -284,7 +284,7 @@ class LIBPROTOBUF_EXPORT WireFormatLite
     // float, double, and the (s)fixed* types.
     template < typename CType, enum FieldType DeclaredType >
     static inline const uint8* ReadPrimitiveFromArray( const uint8* buffer,
-                                                       CType* value ) INL;
+                                                        CType* value ) INL;
 
     // Reads a primitive packed field.
     //
@@ -556,7 +556,7 @@ class LIBPROTOBUF_EXPORT WireFormatLite
     // wire if we encode the data as a length delimited field.
     static inline int LengthDelimitedSize( int length );
 
-   private:
+    private:
     // A helper method for the repeated primitive reader. This method has
     // optimizations for primitive types that have fixed size on the wire, and
     // can be read using potentially faster paths.
@@ -585,7 +585,7 @@ class LIBPROTOBUF_EXPORT WireFormatLite
 // ExtensionSet is part of the lite library but UnknownFieldSet is not.
 class LIBPROTOBUF_EXPORT FieldSkipper
 {
-   public:
+    public:
     FieldSkipper() {}
     virtual ~FieldSkipper() {}
 
@@ -606,7 +606,7 @@ class LIBPROTOBUF_EXPORT FieldSkipper
 
 class LIBPROTOBUF_EXPORT CodedOutputStreamFieldSkipper : public FieldSkipper
 {
-   public:
+    public:
     explicit CodedOutputStreamFieldSkipper( io::CodedOutputStream* unknown_fields )
         : unknown_fields_( unknown_fields ) {}
     virtual ~CodedOutputStreamFieldSkipper() {}
@@ -616,7 +616,7 @@ class LIBPROTOBUF_EXPORT CodedOutputStreamFieldSkipper : public FieldSkipper
     virtual bool SkipMessage( io::CodedInputStream* input );
     virtual void SkipUnknownEnum( int field_number, int value );
 
-   protected:
+    protected:
     io::CodedOutputStream* unknown_fields_;
 };
 

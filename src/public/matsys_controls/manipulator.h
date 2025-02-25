@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class IManipulator
 {
-   public:
+    public:
     virtual ~IManipulator() {}
     virtual void OnBeginManipulation( void ) = 0;
     virtual void OnAcceptManipulation( void ) = 0;
@@ -39,7 +39,7 @@ class IManipulator
 //-----------------------------------------------------------------------------
 class CBaseManipulator : public IManipulator
 {
-   public:
+    public:
     CBaseManipulator()
     {
         m_nViewport[0] = m_nViewport[1] = 0;
@@ -62,7 +62,7 @@ class CBaseManipulator : public IManipulator
         m_nViewport[1] = h;
     }
 
-   protected:
+    protected:
     int m_nViewport[2];
 };
 
@@ -71,13 +71,13 @@ class CBaseManipulator : public IManipulator
 //-----------------------------------------------------------------------------
 class CTransformManipulator : public CBaseManipulator
 {
-   public:
+    public:
     CTransformManipulator( matrix3x4_t *pTransform );
 
     void SetTransform( matrix3x4_t *transform );
     matrix3x4_t *GetTransform();
 
-   protected:
+    protected:
     matrix3x4_t *m_pTransform;
 };
 
@@ -86,7 +86,7 @@ class CTransformManipulator : public CBaseManipulator
 //-----------------------------------------------------------------------------
 class CPotteryWheelManip : public CTransformManipulator
 {
-   public:
+    public:
     CPotteryWheelManip( matrix3x4_t *pTransform );
 
     virtual void OnBeginManipulation( void );
@@ -103,7 +103,7 @@ class CPotteryWheelManip : public CTransformManipulator
     // Sets the zoom level
     void SetZoom( float flZoom );
 
-   protected:
+    protected:
     int m_lastx, m_lasty;
 
     float m_zoom;

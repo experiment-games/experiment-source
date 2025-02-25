@@ -838,9 +838,9 @@ void BombHeadForTeam( int nTeam, int nBombHeadPlayers )
             CTFPlayer *pPlayer = playerVector[i];
 
             if ( pPlayer->GetTimeSinceWasBombHead() > oldestTimeStamp &&
-                 !pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) &&
-                 pPlayer->GetLastKnownArea() &&
-                 pPlayer->GetLastKnownArea()->HasFuncNavPrefer() )
+                !pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) &&
+                pPlayer->GetLastKnownArea() &&
+                pPlayer->GetLastKnownArea()->HasFuncNavPrefer() )
             {
                 pVictim = pPlayer;
                 oldestTimeStamp = pPlayer->GetTimeSinceWasBombHead();
@@ -1225,7 +1225,7 @@ void CastSpell( CBaseCombatCharacter *pCaster, const char *pszCastingAttachmentN
 //---------------------------------------------------------------------------------------------
 class CMerasmusBehavior : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual Action< CMerasmus > *InitialContainedAction( CMerasmus *me )
     {
         return new CMerasmusReveal;
@@ -1248,7 +1248,7 @@ class CMerasmusBehavior : public Action< CMerasmus >
                 for ( int i = 0; i < attackerVector.Count(); ++i )
                 {
                     if ( attackerVector[i].m_attacker != NULL &&
-                         gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
+                        gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
                     {
                         CReliableBroadcastRecipientFilter filter;
                         UTIL_SayText2Filter( filter, attackerVector[i].m_attacker, false, "#TF_Halloween_Merasmus_Killers", attackerVector[i].m_attacker->GetPlayerName() );
@@ -1320,7 +1320,7 @@ class CMerasmusBehavior : public Action< CMerasmus >
         return "Merasmus Behavior";
     }  // return name of this action
 
-   private:
+    private:
 };
 
 //---------------------------------------------------------------------------------------------

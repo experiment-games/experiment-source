@@ -26,7 +26,7 @@ void RegisterMatchDesc( const ETFMatchGroup& eGroup, const IMatchGroupDescriptio
 
 class CMatchDescRegister
 {
-   public:
+    public:
     CMatchDescRegister( ETFMatchGroup eGroup, const IMatchGroupDescription* pDesc )
     {
         RegisterMatchDesc( eGroup, pDesc );
@@ -44,7 +44,7 @@ enum EMatchType_t
 
 class IMatchGroupDescription
 {
-   public:
+    public:
     IMatchGroupDescription( ETFMatchGroup eMatchGroup );
 
 #ifdef CLIENT_DLL
@@ -286,7 +286,7 @@ class IMatchGroupDescription
     const ETFMatchGroup m_eMatchGroup;
     const IProgressionDesc* m_pProgressionDesc;
 
-   protected:
+    protected:
     bool m_bActive = false;
     EMatchMode m_eLateJoinMode = eMatchMode_Invalid;
     EMMPenaltyPool m_ePenaltyPool = eMMPenaltyPool_Invalid;

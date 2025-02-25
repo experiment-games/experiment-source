@@ -31,7 +31,7 @@
 
 class CWeaponSMG1 : public CHL2MPMachineGun
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponSMG1, CHL2MPMachineGun );
 
     CWeaponSMG1();
@@ -73,11 +73,11 @@ class CWeaponSMG1 : public CHL2MPMachineGun
     DECLARE_ACTTABLE();
 #endif
 
-   protected:
+    protected:
     Vector m_vecTossVelocity;
     float m_flNextGrenadeCheck;
 
-   private:
+    private:
     CWeaponSMG1( const CWeaponSMG1 & );
 };
 

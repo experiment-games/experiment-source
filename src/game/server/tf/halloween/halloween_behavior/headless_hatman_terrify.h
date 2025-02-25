@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------
 class CHeadlessHatmanTerrify : public Action< CHeadlessHatman >
 {
-   public:
+    public:
     virtual ActionResult< CHeadlessHatman > OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction );
     virtual ActionResult< CHeadlessHatman > Update( CHeadlessHatman *me, float interval );
     virtual const char *GetName( void ) const
@@ -17,7 +17,7 @@ class CHeadlessHatmanTerrify : public Action< CHeadlessHatman >
         return "Terrify";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_booTimer;
     CountdownTimer m_scareTimer;
     CountdownTimer m_timer;

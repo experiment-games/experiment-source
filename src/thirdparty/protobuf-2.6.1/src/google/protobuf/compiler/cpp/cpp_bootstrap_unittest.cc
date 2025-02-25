@@ -75,7 +75,7 @@ class MockErrorCollector : public MultiFileErrorCollector {
   void AddError(const string& filename, int line, int column,
                 const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1:$2: $3\n",
-                                 filename, line, column, message);
+                                filename, line, column, message);
   }
 };
 
@@ -87,19 +87,19 @@ class MockGeneratorContext : public GeneratorContext {
   }
 
   void ExpectFileMatches(const string& virtual_filename,
-                         const string& physical_filename) {
+                        const string& physical_filename) {
     string* expected_contents = FindPtrOrNull(files_, virtual_filename);
     ASSERT_TRUE(expected_contents != NULL)
-      << "Generator failed to generate file: " << virtual_filename;
+    << "Generator failed to generate file: " << virtual_filename;
 
     string actual_contents;
     GOOGLE_CHECK_OK(
         File::GetContents(TestSourceDir() + "/" + physical_filename,
-                          &actual_contents, true));
+                        &actual_contents, true));
     EXPECT_TRUE(actual_contents == *expected_contents)
-      << physical_filename << " needs to be regenerated.  Please run "
-         "generate_descriptor_proto.sh and add this file "
-         "to your CL.";
+    << physical_filename << " needs to be regenerated.  Please run "
+        "generate_descriptor_proto.sh and add this file "
+        "to your CL.";
   }
 
   // implements GeneratorContext --------------------------------------
@@ -135,10 +135,10 @@ TEST(BootstrapTest, GeneratedDescriptorMatches) {
   string parameter;
   parameter = "dllexport_decl=LIBPROTOBUF_EXPORT";
   ASSERT_TRUE(generator.Generate(proto_file, parameter,
-                                 &context, &error));
+                                &context, &error));
   parameter = "dllexport_decl=LIBPROTOC_EXPORT";
   ASSERT_TRUE(generator.Generate(plugin_proto_file, parameter,
-                                 &context, &error));
+                                &context, &error));
 
   context.ExpectFileMatches("google/protobuf/descriptor.pb.h",
                             "google/protobuf/descriptor.pb.h");

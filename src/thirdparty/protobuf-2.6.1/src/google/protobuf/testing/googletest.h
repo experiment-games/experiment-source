@@ -80,14 +80,14 @@ static const LogLevel WARNING = LOGLEVEL_WARNING;
 // buffer unit tests.
 class ScopedMemoryLog
 {
-   public:
+    public:
     ScopedMemoryLog();
     virtual ~ScopedMemoryLog();
 
     // Fetches all messages with the given severity level.
     const vector< string >& GetMessages( LogLevel error );
 
-   private:
+    private:
     map< LogLevel, vector< string > > messages_;
     LogHandler* old_handler_;
 

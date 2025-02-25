@@ -126,8 +126,8 @@ void SixenseGestureBindings::AddBinding( CUtlString hand_str, CUtlString action_
         GestureBinding existing_binding = m_GestureBindingList[it];
 
         if ( binding.m_Action == existing_binding.m_Action &&
-             binding.m_iArgument == existing_binding.m_iArgument &&
-             binding.m_iHand == existing_binding.m_iHand )
+            binding.m_iArgument == existing_binding.m_iArgument &&
+            binding.m_iHand == existing_binding.m_iHand )
         {
             // Already the same binding active, delete it
             FreeStrings( existing_binding );
@@ -178,9 +178,9 @@ void SixenseGestureBindings::ListBindings()
 
         // these all have the same arguments (left, right, up...)
         else if ( binding.m_Action == sixenseUtils::IButtonStates::ACTION_JOYSTICK_MOVE ||
-                  binding.m_Action == sixenseUtils::IButtonStates::ACTION_POINT_GESTURE ||
-                  binding.m_Action == sixenseUtils::IButtonStates::ACTION_VELOCITY_GESTURE ||
-                  binding.m_Action == sixenseUtils::IButtonStates::ACTION_TILT_GESTURE )
+                binding.m_Action == sixenseUtils::IButtonStates::ACTION_POINT_GESTURE ||
+                binding.m_Action == sixenseUtils::IButtonStates::ACTION_VELOCITY_GESTURE ||
+                binding.m_Action == sixenseUtils::IButtonStates::ACTION_TILT_GESTURE )
         {
             if ( DirectionTokenToStr( binding.m_iArgument, strbuf, strbuflen ) )
             {
@@ -261,9 +261,9 @@ void SixenseGestureBindings::WriteBindings( CUtlString filename_str )
 
         // these all have the same arguments (left, right, up...)
         else if ( binding.m_Action == sixenseUtils::IButtonStates::ACTION_JOYSTICK_MOVE ||
-                  binding.m_Action == sixenseUtils::IButtonStates::ACTION_POINT_GESTURE ||
-                  binding.m_Action == sixenseUtils::IButtonStates::ACTION_VELOCITY_GESTURE ||
-                  binding.m_Action == sixenseUtils::IButtonStates::ACTION_TILT_GESTURE )
+                binding.m_Action == sixenseUtils::IButtonStates::ACTION_POINT_GESTURE ||
+                binding.m_Action == sixenseUtils::IButtonStates::ACTION_VELOCITY_GESTURE ||
+                binding.m_Action == sixenseUtils::IButtonStates::ACTION_TILT_GESTURE )
         {
             if ( DirectionTokenToStr( binding.m_iArgument, strbuf, strbuflen ) )
             {

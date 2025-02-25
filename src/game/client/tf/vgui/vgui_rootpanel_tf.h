@@ -27,7 +27,7 @@ class C_TFRootPanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     C_TFRootPanel( vgui::VPANEL parent );
     virtual ~C_TFRootPanel( void );
 
@@ -41,7 +41,7 @@ class C_TFRootPanel : public vgui::Panel
     // Run effects and let them decide whether to remove themselves
     void OnTick( void );
 
-   private:
+    private:
     // Render all panel effects
     void RenderPanelEffects( void );
 

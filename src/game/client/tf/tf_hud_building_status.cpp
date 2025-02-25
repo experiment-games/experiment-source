@@ -1559,8 +1559,8 @@ void CHudBuildingStatusContainer::RecalculateAlertState( void )
 void CHudBuildingStatusContainer::OnTick( void )
 {
     if ( m_AlertLevel >= BUILDING_HUD_ALERT_VERY_LOW_AMMO &&
-         gpGlobals->curtime >= m_flNextBeep &&
-         m_iNumBeepsToBeep > 0 )
+        gpGlobals->curtime >= m_flNextBeep &&
+        m_iNumBeepsToBeep > 0 )
     {
         C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 

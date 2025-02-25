@@ -9,10 +9,10 @@ class C_TFPlayer;
 
 class C_TFHaptics
 {
-   protected:
+    protected:
     C_TFHaptics();
 
-   public:
+    public:
     bool wasCloaked : 1;
     bool wasFullyCloaked : 1;
     bool wasUber : 1;

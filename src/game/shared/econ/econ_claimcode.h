@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------------
 class CEconClaimCode : public GCSDK::CProtoBufSharedObject< CSOEconClaimCode, k_EEconTypeClaimCode >
 {
-   public:
+    public:
 };
 
 #endif  // ECON_CLAIMCODE_H

@@ -62,7 +62,7 @@ class CSHA1
 class Minimum_CSHA1
 #endif
 {
-   public:
+    public:
     // Two different formats for ReportHash(...)
     enum
     {
@@ -99,7 +99,7 @@ class Minimum_CSHA1
 #endif
     void GetHash( unsigned char *uDest );
 
-   private:
+    private:
     // Private SHA-1 transformation
     void Transform( uint32 state[5], unsigned char buffer[64] );
 
@@ -123,7 +123,7 @@ bool HashLessFunc( SHADigest_t const &lhs, SHADigest_t const &rhs );
 // utility class for manipulating SHA1 hashes in their compact form
 struct CSHA
 {
-   public:
+    public:
     SHADigest_t m_shaDigest;
 
     CSHA()

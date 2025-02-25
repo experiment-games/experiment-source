@@ -14,20 +14,20 @@
 
 class C_Func_LOD : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_Func_LOD, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_Func_LOD();
 
     // C_BaseEntity overrides.
-   public:
+    public:
     unsigned char GetClientSideFade();
 
-   public:
+    public:
     // Replicated vars from the server.
     // These are documented in the server-side entity.
-   public:
+    public:
     float m_fDisappearDist;
 };
 

@@ -16,7 +16,7 @@
 
 class CLadderMatchGroupDescription : public IMatchGroupDescription
 {
-   public:
+    public:
     CLadderMatchGroupDescription( ETFMatchGroup eMatchGroup, ConVar* pmm_match_group_size )
         : IMatchGroupDescription( eMatchGroup )
     {
@@ -172,9 +172,9 @@ class CLadderMatchGroupDescription : public IMatchGroupDescription
 
         // Allow late-join if we're not started yet, have missing players, and have not lost everyone.
         return nMissingPlayers && nPlayers &&
-               ( pTFGameRules->State_Get() == GR_STATE_BETWEEN_RNDS ||
-                 pTFGameRules->State_Get() == GR_STATE_PREGAME ||
-                 pTFGameRules->State_Get() == GR_STATE_STARTGAME );
+                ( pTFGameRules->State_Get() == GR_STATE_BETWEEN_RNDS ||
+                pTFGameRules->State_Get() == GR_STATE_PREGAME ||
+                pTFGameRules->State_Get() == GR_STATE_STARTGAME );
     }
 
     bool BMatchIsSafeToLeaveForPlayer( const CMatchInfo* pMatchInfo, const CMatchInfo::PlayerMatchData_t* pMatchPlayer ) const OVERRIDE
@@ -213,14 +213,14 @@ class CLadderMatchGroupDescription : public IMatchGroupDescription
     }
 #endif
 
-   protected:
+    protected:
 };
 
 REGISTER_MATCH_GROUP_TYPE( k_eTFMatchGroup_Ladder_6v6, new CLadderMatchGroupDescription( k_eTFMatchGroup_Ladder_6v6, &tf_mm_match_size_ladder_6v6 ) );
 
 class CEventPlaceholderMatchGroupDescription : public CLadderMatchGroupDescription
 {
-   public:
+    public:
     CEventPlaceholderMatchGroupDescription( ETFMatchGroup eMatchGroup, ConVar* pmm_match_group_size )
         : CLadderMatchGroupDescription( eMatchGroup, pmm_match_group_size )
     {

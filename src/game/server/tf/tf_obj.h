@@ -73,7 +73,7 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
 {
     DECLARE_CLASS( CBaseObject, CBaseCombatCharacter );
 
-   public:
+    public:
     CBaseObject();
 
     virtual void UpdateOnRemove( void );
@@ -486,7 +486,7 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
         return m_vecBuildCenterOfMass;
     }
 
-   protected:
+    protected:
     virtual bool CanBeUpgraded() const
     {
         return !( IsDisposableBuilding() || IsMiniBuilding() );
@@ -508,14 +508,14 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
     bool CalculatePlacementPos( void );
     bool EstimateValidBuildPos( void );
 
-   private:
+    private:
     // Purpose: Spawn any objects specified inside the mdl
     void SpawnEntityOnBuildPoint( const char *pEntityName, int iAttachmentNumber );
 
     // bool TestPositionForPlayerBlock( Vector vecBuildOrigin, CBasePlayer *pPlayer );
     // void RecursiveTestBuildSpace( int iNode, bool *bNodeClear, bool *bNodeVisited );
 
-   protected:
+    protected:
     enum OBJSOLIDTYPE
     {
         SOLID_TO_PLAYER_USE_DEFAULT = 0,
@@ -561,7 +561,7 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
         return m_flCarryDeployTime;
     }
 
-   public:
+    public:
     // Upgrade Level ( 1, 2, 3 )
     CNetworkVar( int, m_iUpgradeLevel );
     CNetworkVar( int, m_iUpgradeMetal );
@@ -570,7 +570,7 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
     int m_nDefaultUpgradeLevel;
     float m_flUpgradeCompleteTime;  // Time when the upgrade animation will complete
 
-   private:
+    private:
     // Make sure we pick up changes to these.
     IMPLEMENT_NETWORK_VAR_FOR_DERIVED( m_iHealth );
     IMPLEMENT_NETWORK_VAR_FOR_DERIVED( m_takedamage );
@@ -592,13 +592,13 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
     CNetworkVar( bool, m_bPlacing );   // True while the object's being placed
     CNetworkVar( bool, m_bBuilding );  // True while the object's still constructing itself
 
-   protected:
+    protected:
     float m_flConstructionTimeLeft;   // Current time left in construction
     float m_flTotalConstructionTime;  // Total construction time (the value of GetTotalTime() at the time construction
-                                      // started, ie, incase you teleport out of a construction yard)
+                                    // started, ie, incase you teleport out of a construction yard)
     float m_flConstructionStartTime;
 
-   protected:
+    protected:
     // Carried
     CNetworkVar( bool, m_bCarried );
     CNetworkVar( bool, m_bCarryDeploy );
@@ -609,7 +609,7 @@ class CBaseObject : public CBaseCombatCharacter, public IHasBuildPoints, public 
     float m_flPlasmaDisableTime;
     CNetworkVar( bool, m_bPlasmaDisable );
 
-   private:
+    private:
     int m_iHealthOnPickup;
     float m_flCarryDeployTime;
 

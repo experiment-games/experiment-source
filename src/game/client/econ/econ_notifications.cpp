@@ -37,7 +37,7 @@ ConVar cl_notifications_move_time( "cl_notifications_move_time", "0.5", FCVAR_AR
 // notification queue holds all the notifications
 class CEconNotificationQueue
 {
-   public:
+    public:
     CEconNotificationQueue();
     ~CEconNotificationQueue();
 
@@ -60,7 +60,7 @@ class CEconNotificationQueue
         return m_vecNotifications;
     }
 
-   private:
+    private:
     int m_iIDGenerator;
     CUtlVector< CEconNotification * > m_vecNotifications;
 };
@@ -275,7 +275,7 @@ class CGenericNotificationToast : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CGenericNotificationToast, vgui::EditablePanel );
 
-   public:
+    public:
     CGenericNotificationToast( vgui::Panel *parent, int iNotificationID, bool bMainMenu );
     virtual ~CGenericNotificationToast();
 
@@ -283,7 +283,7 @@ class CGenericNotificationToast : public vgui::EditablePanel
     virtual void PerformLayout() OVERRIDE;
     virtual void OnThink() OVERRIDE;
 
-   protected:
+    protected:
     void UpdateKVs( CEconNotification *pNotification );
 
     int m_iNotificationID;
@@ -431,7 +431,7 @@ class CNotificationToastControl : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CNotificationToastControl, vgui::EditablePanel );
 
-   public:
+    public:
     CNotificationToastControl( vgui::EditablePanel *pParent, vgui::EditablePanel *pNotificationToast, int iNotificationID, bool bAddControls )
         : BaseClass( pParent, bAddControls ? "NotificationToastControl" : "NotificationToastContainer" ), m_pChild( pNotificationToast ), m_iNotificationID( iNotificationID ), m_bAddControls( bAddControls ), m_pTriggerButton( NULL ), m_pAcceptButton( NULL ), m_pDeclineButton( NULL ), m_iOverrideHeight( 0 )
     {
@@ -450,7 +450,7 @@ class CNotificationToastControl : public vgui::EditablePanel
         // with pyro was causing crashes because of pNotification being NULL, and there were
         // previously existing checks, but it's not clear why.
         CEconNotification::EType eNotificationType = pNotification ? pNotification->NotificationType()
-                                                                   : CEconNotification::eType_Basic;
+                                                                    : CEconNotification::eType_Basic;
 
         bool bHighPriority = pNotification && pNotification->BHighPriority();
         bool bCanDelete = false;
@@ -680,7 +680,7 @@ class CNotificationToastControl : public vgui::EditablePanel
         m_iOverrideHeight = iHeight;
     }
 
-   private:
+    private:
     vgui::EditablePanel *m_pChild;
     vgui::Panel *m_pTriggerButton;
     vgui::Panel *m_pAcceptButton;
@@ -708,7 +708,7 @@ class CNotificationQueuePanel : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CNotificationQueuePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CNotificationQueuePanel( const char *pElementName )
         : CHudElement( pElementName ), BaseClass( NULL, "NotificationQueuePanel" ), m_mapNotificationPanels( DefLessFunc( int ) ), m_flInvalidateTime( 0.0f ), m_bInvalidated( false )
     {
@@ -911,7 +911,7 @@ class CNotificationQueuePanel : public CHudElement, public vgui::EditablePanel
         }
     }
 
-   protected:
+    protected:
     typedef CUtlMap< int, NotificationUIInfo_t > tNotificationPanels;
     tNotificationPanels m_mapNotificationPanels;
     int m_iOriginalX;
@@ -1096,7 +1096,7 @@ class CMainMenuNotificationsControl : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMainMenuNotificationsControl, vgui::EditablePanel );
 
-   public:
+    public:
     CMainMenuNotificationsControl( vgui::EditablePanel *pParent, const char *pElementName )
         : BaseClass( pParent, pElementName ), m_mapNotificationPanels( DefLessFunc( int ) ), m_iNumItems( 0 )
     {
@@ -1222,7 +1222,7 @@ class CMainMenuNotificationsControl : public vgui::EditablePanel
         }
     }
 
-   protected:
+    protected:
     typedef CUtlMap< int, NotificationUIInfo_t > tNotificationPanels;
     tNotificationPanels m_mapNotificationPanels;
     int m_iNumItems;
@@ -1233,7 +1233,7 @@ class CNotificationsPresentPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CNotificationsPresentPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CNotificationsPresentPanel( vgui::Panel *pParent, const char *pElementName )
         : vgui::EditablePanel( pParent, "NotificationsPresentPanel" )
     {
@@ -1281,7 +1281,7 @@ int NotificationQueue_Add( CEconNotification *pNotification )
     return 0;
 
     if ( ( !engine->IsInGame() && pNotification->BCreateMainMenuPanel() ) ||
-         ( engine->IsInGame() && cl_notifications_show_ingame.GetBool() && pNotification->BShowInGameElements() ) )
+        ( engine->IsInGame() && cl_notifications_show_ingame.GetBool() && pNotification->BShowInGameElements() ) )
     {
         vgui::surface()->PlaySound( pNotification->GetSoundFilename() );
     }
@@ -1413,7 +1413,7 @@ CON_COMMAND( cl_decline_first_notification, "Tries to decline/remove the first n
 
 class CTFTestNotification : public CEconNotification
 {
-   public:
+    public:
     CTFTestNotification( const char *pText, EType eType )
         : CEconNotification(), m_pText( pText ), m_eType( eType )
     {
@@ -1440,7 +1440,7 @@ class CTFTestNotification : public CEconNotification
         MarkForDeletion();
     }
 
-   private:
+    private:
     const char *m_pText;
     EType m_eType;
 };

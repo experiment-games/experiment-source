@@ -26,7 +26,7 @@ class CDmeVertexData;
 //=============================================================================
 class CDmMeshComp
 {
-   public:
+    public:
     CDmMeshComp( CDmeMesh *pMesh, CDmeVertexData *pPassedBase = NULL );
 
     ~CDmMeshComp();
@@ -36,7 +36,7 @@ class CDmMeshComp
 
     class CVert
     {
-       public:
+        public:
         CVert( int nPositionIndex, const CUtlVector< int > *pVertexIndices, const Vector *pPosition );
 
         CVert( const CVert &src );
@@ -49,7 +49,7 @@ class CDmMeshComp
 
         bool operator==( const CVert &rhs ) const;
 
-       protected:
+        protected:
         friend class CDmMeshComp;
 
         int m_positionIndex;                        // Index in the position data
@@ -57,13 +57,13 @@ class CDmMeshComp
         const Vector *m_pPosition;
         CUtlVector< CEdge * > m_edges;  // An array of pointers to the edges containing this vertex
 
-       private:
+        private:
         CVert();  // Not used
     };
 
     class CEdge
     {
-       public:
+        public:
         CEdge();
 
         int GetVertPositionIndex( int edgeRelativeVertexIndex ) const;
@@ -85,7 +85,7 @@ class CDmMeshComp
         // Returns true if the edge starts and stops at the same point in local space
         bool operator==( const CEdge &rhs ) const;
 
-       protected:
+        protected:
         friend class CDmMeshComp;
 
         CVert *m_pVert0;
@@ -95,8 +95,8 @@ class CDmMeshComp
 
     class CFace
     {
-       public:
-       protected:
+        public:
+        protected:
         friend class CDmMeshComp;
 
         CUtlVector< CVert * > m_verts;

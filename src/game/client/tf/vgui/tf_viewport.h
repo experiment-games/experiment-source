@@ -23,10 +23,10 @@ class CBitmapImagePanel;
 //==============================================================================
 class TFViewport : public CBaseViewport
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( TFViewport, CBaseViewport );
 
-   public:
+    public:
     TFViewport();
     ~TFViewport();
 
@@ -42,7 +42,7 @@ class TFViewport : public CBaseViewport
 
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     void CenterWindow( vgui::Frame *win );
 };
 

@@ -937,9 +937,9 @@ void CTFHUDRobotDestruction::UpdateCarriedFlagStatus( C_BasePlayer *pNewOwner /*
         {
             int nTeam;
             if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND ||
-                 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
-                 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
-                 pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
+                pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
+                pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
+                pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
             {
                 nTeam = ( ( GetLocalPlayerTeam() == TF_TEAM_BLUE ) ? ( TF_TEAM_BLUE ) : ( TF_TEAM_RED ) );
             }
@@ -1152,14 +1152,14 @@ void CTFHUDRobotDestruction::CProgressPanel::PaintBackground()
     bool bPastBlink = gpGlobals->curtime > ( m_flLastScoreTime + flBlinkPeriod );
     // Blink if it's blink time, or else pulse if within threshold, else just be the standard color
     float flLerp = bPastBlink ? ( m_flCurrentProgress >= m_flBlinkThreshold ? ( ( sin( gpGlobals->curtime * m_flBlinkRate ) * 0.5f ) + 0.5f ) : 1.f )
-                              : ( ( gpGlobals->curtime - m_flLastScoreTime ) / flBlinkPeriod );
+                            : ( ( gpGlobals->curtime - m_flLastScoreTime ) / flBlinkPeriod );
     flLerp = clamp( flLerp, 0.f, 1.f );
     const float flInverseLerp = 1.f - flLerp;
     // Get out lerped color
     Color drawColor( flInverseLerp * m_BrightColor.r() + flLerp * m_StandardColor.r(),
-                     flInverseLerp * m_BrightColor.g() + flLerp * m_StandardColor.g(),
-                     flInverseLerp * m_BrightColor.b() + flLerp * m_StandardColor.b(),
-                     255 );
+                    flInverseLerp * m_BrightColor.g() + flLerp * m_StandardColor.g(),
+                    flInverseLerp * m_BrightColor.b() + flLerp * m_StandardColor.b(),
+                    255 );
     // Change color in base class (it uses it in PaintBackground)
     SetDrawColor( drawColor );
 
@@ -1203,7 +1203,7 @@ void CTFHUDRobotDestruction::CProgressPanel::CalculateSize()
     // Find xpos
     int nProgressWidth = m_nWideOrg - m_nRightOffset - m_nLeftOffset;
     m_flXpos = m_bLeftToRight ? m_nXOrg
-                              : ( 1.f - m_flCurrentProgress ) * nProgressWidth + m_nXOrg;
+                            : ( 1.f - m_flCurrentProgress ) * nProgressWidth + m_nXOrg;
 
     // Find width
     m_flWidth = m_flCurrentProgress * nProgressWidth;

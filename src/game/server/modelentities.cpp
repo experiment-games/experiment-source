@@ -206,7 +206,7 @@ class CTriggerBrush : public CBaseEntity
         TRIGGER_IGNOREALL = 0x20,
     };
 
-   public:
+    public:
     DECLARE_CLASS( CTriggerBrush, CBaseEntity );
 
     // engine inputs

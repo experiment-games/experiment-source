@@ -19,7 +19,7 @@
 
 class CGrenadePack : public CTFPowerup
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadePack, CTFPowerup );
 
     void Spawn( void );

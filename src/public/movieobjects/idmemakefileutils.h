@@ -36,7 +36,7 @@ enum CompilationState_t
 
 abstract_class IDmeMakefileUtils : public IAppSystem
 {
-   public:
+    public:
     // Methods related to compilation
     virtual void PerformCompile( CDmElement * pElement, bool bBuildAllDependencies ) = 0;
 

@@ -109,9 +109,9 @@ void CZombieAttack::SelectVictim( CZombie *me )
         if ( pPlayer->m_Shared.IsStealthed() )
         {
             if ( !pPlayer->m_Shared.InCond( TF_COND_BURNING ) &&
-                 !pPlayer->m_Shared.InCond( TF_COND_URINE ) &&
-                 !pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) &&
-                 !pPlayer->m_Shared.InCond( TF_COND_BLEEDING ) )
+                !pPlayer->m_Shared.InCond( TF_COND_URINE ) &&
+                !pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) &&
+                !pPlayer->m_Shared.InCond( TF_COND_BLEEDING ) )
             {
                 // cloaked spies are invisible to us
                 continue;
@@ -288,8 +288,8 @@ EventDesiredResult< CZombie > CZombieAttack::OnOtherKilled( CZombie *me, CBaseCo
 {
     /*if ( victim && victim->IsPlayer() && me->GetLocomotionInterface()->IsOnGround() )
     {
-      me->AddGestureSequence( me->LookupSequence( "taunt06" ) );
-      m_tauntTimer.Start( 3.0f );
+    me->AddGestureSequence( me->LookupSequence( "taunt06" ) );
+    m_tauntTimer.Start( 3.0f );
     }*/
 
     return TryContinue( RESULT_TRY );

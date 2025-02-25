@@ -377,9 +377,9 @@ DEFINE_INPUTFUNC( FIELD_VOID, "Lock", InputLock ),
 //-----------------------------------------------------------------------------
 CPropVehicleDriveable::CPropVehicleDriveable( void )
     : m_pServerVehicle( NULL ),
-      m_hKeepUpright( NULL ),
-      m_flTurnOffKeepUpright( 0 ),
-      m_flNoImpactDamageTime( 0 )
+    m_hKeepUpright( NULL ),
+    m_flTurnOffKeepUpright( 0 ),
+    m_flNoImpactDamageTime( 0 )
 {
     m_vecEyeExitEndpoint.Init();
     m_vecGunCrosshair.Init();

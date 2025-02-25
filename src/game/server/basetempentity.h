@@ -22,7 +22,7 @@
 //  event system to propagate
 class CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
@@ -47,10 +47,10 @@ class CBaseTempEntity
     static void PrecacheTempEnts( void );
 
     void NetworkStateChanged() {}  // TE's are sent out right away so we don't track whether state changes or not,
-                                   // but we want to allow CNetworkVars.
+                                    // but we want to allow CNetworkVars.
     void NetworkStateChanged( void *pVar ) {}
 
-   private:
+    private:
     // Descriptive name, for when running tests
     const char *m_pszName;
 

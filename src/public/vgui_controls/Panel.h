@@ -109,7 +109,7 @@ struct OverridableColorEntry
 //-----------------------------------------------------------------------------
 class IPanelAnimationPropertyConverter
 {
-   public:
+    public:
     virtual void GetData( Panel *panel, KeyValues *kv, PanelAnimationMapEntry *entry ) = 0;
     virtual void SetData( Panel *panel, KeyValues *kv, PanelAnimationMapEntry *entry ) = 0;
     virtual void InitFromDefault( Panel *panel, PanelAnimationMapEntry *entry ) = 0;
@@ -213,7 +213,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     static void PushVPanelLuaInstance( lua_State *L, VPANEL panel );
 #endif
 
-   public:
+    public:
     // For property mapping
     static void InitPropertyConverters( void );
     static void AddPropertyConverter( char const *typeName, IPanelAnimationPropertyConverter *converter );
@@ -231,7 +231,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     virtual ~Panel();
 
 #ifdef LUA_SDK
-   protected:
+    protected:
     bool m_bIsPaintClipping = true;
     int m_nLastLocalCursorX = 0;
     int m_nLastLocalCursorY = 0;
@@ -243,7 +243,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     CUtlDict< int, int > m_PreparedFunctions;
     bool m_bIsWorldClicker = false;
 
-   public:
+    public:
     lua_State *m_lua_State = nullptr;
     int m_nTableReference;
     int m_nRefCount;
@@ -946,7 +946,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     MESSAGE_FUNC_CHARPTR( OnNavigateFrom, "OnNavigateFrom", panelName );
 
     // Drag Drop protected/internal interface
-   protected:
+    protected:
     virtual void OnStartDragging();
     virtual void OnContinueDragging();
     virtual void OnFinishDragging( bool mousereleased, MouseCode code, bool aborted = false );
@@ -958,7 +958,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
 
     virtual void PaintTraverse( bool Repaint, bool allowForce = true );
 
-   protected:
+    protected:
     virtual void OnChildSettingsApplied( KeyValues *pInResourceData, Panel *pChild );
 
     MESSAGE_FUNC_ENUM_ENUM( OnRequestFocus, "OnRequestFocus", VPANEL, subFocus, VPANEL, defaultPanel );
@@ -977,7 +977,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     void ApplyOverridableColors( void );
     void SetOverridableColor( Color *pColor, const Color &newColor );
 
-   public:
+    public:
     void SetNavUp( const char *controlName );
     void SetNavDown( const char *controlName );
     void SetNavLeft( const char *controlName );
@@ -1055,7 +1055,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
         return _flags.IsFlagSet( MARKED_FOR_DELETION );
     }
 
-   protected:
+    protected:
     // this will return m_NavDown and will not look for the next visible panel
     Panel *GetNavUpPanel();
     Panel *GetNavDownPanel();
@@ -1068,7 +1068,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     bool m_PassUnhandledInput;
     NAV_DIRECTION m_LastNavDirection;
 
-   private:
+    private:
     enum PanelFlags_t
     {
         MARKED_FOR_DELETION = 0x0001,
@@ -1226,7 +1226,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     CUtlString m_sNavBackName;
     PHandle m_NavBack;
 
-   private:
+    private:
     char *_tooltipText;  // Tool tip text for panels that share tooltip panels with other panels
 
     PHandle m_hMouseEventHandler;
@@ -1284,23 +1284,23 @@ inline bool Panel::IsMouseInputDisabledForThisPanel() const
 template< class S >
 inline void Panel::PostMessageToAllSiblingsOfType( KeyValues *msg, float delaySeconds /*= 0.0f*/ )
 {
-	Panel *parent = GetParent();
-	if ( parent )
-	{
-		int nChildCount = parent->GetChildCount();
-		for ( int i = 0; i < nChildCount; ++i )
-		{
-			Panel *sibling = parent->GetChild( i );
-			if ( sibling == this )
-				continue;
-			if ( dynamic_cast< S * >( sibling ) )
-			{
-				PostMessage( sibling->GetVPanel(), msg->MakeCopy(), delaySeconds );
-			}
-		}
-	}
+    Panel *parent = GetParent();
+    if ( parent )
+    {
+        int nChildCount = parent->GetChildCount();
+        for ( int i = 0; i < nChildCount; ++i )
+        {
+            Panel *sibling = parent->GetChild( i );
+            if ( sibling == this )
+                continue;
+            if ( dynamic_cast< S * >( sibling ) )
+            {
+                PostMessage( sibling->GetVPanel(), msg->MakeCopy(), delaySeconds );
+            }
+        }
+    }
 
-	msg->deleteThis();
+    msg->deleteThis();
 }
 #endif
 
@@ -1316,7 +1316,7 @@ struct SortedPanel_t
 
 class CSortedPanelYLess
 {
-   public:
+    public:
     bool Less( const SortedPanel_t &src1, const SortedPanel_t &src2, void *pCtx )
     {
         int nX1, nY1, nX2, nY2;

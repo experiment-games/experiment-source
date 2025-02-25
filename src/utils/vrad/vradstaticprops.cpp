@@ -71,7 +71,7 @@ struct colorTexel_t
 
 class CComputeStaticPropLightingResults
 {
-   public:
+    public:
     ~CComputeStaticPropLightingResults()
     {
         m_ColorVertsArrays.PurgeAndDeleteElements();
@@ -124,7 +124,7 @@ struct Rasterizer
         return ( size_t )( GetRow( it->uv.y ) * mResX ) + ( size_t )( GetCol( it->uv.x ) );
     }
 
-   private:
+    private:
     const Vector2D mT0, mT1, mT2;
     const size_t mResX, mResY;
     const float mUvStepX, mUvStepY;
@@ -245,7 +245,7 @@ static void DumpLightmapLinear( const char *_dstFilename, const CUtlVector< colo
 
 class CVradStaticPropMgr : public IVradStaticPropMgr
 {
-   public:
+    public:
     // constructor, destructor
     CVradStaticPropMgr();
     virtual ~CVradStaticPropMgr();
@@ -257,7 +257,7 @@ class CVradStaticPropMgr : public IVradStaticPropMgr
     // iterate all the instanced static props and compute their vertex lighting
     void ComputeLighting( int iThread );
 
-   private:
+    private:
     // VMPI stuff.
 #ifdef MPI
     static void VMPI_ProcessStaticProp_Static( int iThread, uint64 iStaticProp, MessageBuffer *pBuf );
@@ -278,7 +278,7 @@ class CVradStaticPropMgr : public IVradStaticPropMgr
     // Creates a collision model
     void CreateCollisionModel( char const *pModelName );
 
-   private:
+    private:
     // Unique static prop models
     struct StaticPropDict_t
     {
@@ -464,7 +464,7 @@ bool LoadStudioModel( char const *pModelName, CUtlBuffer &buf )
 
     // Check that it's valid
     if ( strncmp( ( const char * )buf.PeekGet(), "IDST", 4 ) &&
-         strncmp( ( const char * )buf.PeekGet(), "IDAG", 4 ) )
+        strncmp( ( const char * )buf.PeekGet(), "IDAG", 4 ) )
     {
         Warning( "Error! Invalid model file \"%s\"\n", pModelName );
         return false;
@@ -633,7 +633,7 @@ bool LoadFileIntoBuffer( CUtlBuffer &buf, const char *pFilename )
 // keeps a list of all textures that cast shadows via alpha channel
 class CShadowTextureList
 {
-   public:
+    public:
     // This loads a vtf and converts it to RGB8888 format
     unsigned char *LoadVTFRGB8888( const char *pName, int *pWidth, int *pHeight, bool *pClampU, bool *pClampV )
     {
@@ -821,8 +821,8 @@ class CShadowTextureList
         // asume power of 2, clamp or wrap
         // UNDONE: Support clamp?  This code should work
 #if 0
-		u = tex.clampU ? clamp(u,0,(tex.width-1)) : (u & (tex.width-1));
-		v = tex.clampV ? clamp(v,0,(tex.height-1)) : (v & (tex.height-1));
+        u = tex.clampU ? clamp(u,0,(tex.width-1)) : (u & (tex.width-1));
+        v = tex.clampV ? clamp(v,0,(tex.height-1)) : (v & (tex.height-1));
 #else
         // for now always wrap
         u &= ( tex.width - 1 );
@@ -1377,11 +1377,11 @@ void CVradStaticPropMgr::ComputeLighting( CStaticProp &prop, int iThread, int pr
 
                         Vector directColor( 0, 0, 0 );
                         ComputeDirectLightingAtPoint( direct_pos,
-                                                      sampleNormal,
-                                                      directColor,
-                                                      iThread,
-                                                      skip_prop,
-                                                      nFlags );
+                                                    sampleNormal,
+                                                    directColor,
+                                                    iThread,
+                                                    skip_prop,
+                                                    nFlags );
                         Vector indirectColor( 0, 0, 0 );
 
                         if ( g_bShowStaticPropNormals )
@@ -1522,8 +1522,8 @@ void CVradStaticPropMgr::SerializeLighting()
 
         // allocate a buffer with enough padding for alignment
         size = sizeof( HardwareVerts::FileHeader_t ) +
-               m_StaticProps[i].m_MeshData.Count() * sizeof( HardwareVerts::MeshHeader_t ) +
-               totalVertexes * 4 + 2 * 512;
+                m_StaticProps[i].m_MeshData.Count() * sizeof( HardwareVerts::MeshHeader_t ) +
+                totalVertexes * 4 + 2 * 512;
         utlBuf.EnsureCapacity( size );
         Q_memset( utlBuf.Base(), 0, size );
 
@@ -1966,12 +1966,12 @@ void CVradStaticPropMgr::AddPolysForRayTrace( void )
                                     // 		printf( "gl %6.3f %6.3f %6.3f 0 1 0\n", XYZ(position2));
                                     // 		printf( "gl %6.3f %6.3f %6.3f 0 0 1\n", XYZ(position3));
                                     g_RtEnv.AddTriangle( TRACE_ID_STATICPROP | nProp,
-                                                         position1,
-                                                         position2,
-                                                         position3,
-                                                         color,
-                                                         flags,
-                                                         materialIndex );
+                                                        position1,
+                                                        position2,
+                                                        position3,
+                                                        color,
+                                                        flags,
+                                                        materialIndex );
                                 }
                             }
                             else
@@ -2002,11 +2002,11 @@ struct tl_tri_t
     bool operator==( const tl_tri_t &t ) const
     {
         return ( p0 == t.p0 &&
-                 p1 == t.p1 &&
-                 p2 == t.p2 &&
-                 n0 == t.n0 &&
-                 n1 == t.n1 &&
-                 n2 == t.n2 );
+                p1 == t.p1 &&
+                p2 == t.p2 &&
+                n0 == t.n0 &&
+                n1 == t.n1 &&
+                n2 == t.n2 );
     }
 };
 

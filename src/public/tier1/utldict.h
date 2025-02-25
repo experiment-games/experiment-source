@@ -47,7 +47,7 @@ enum EDictCompareType
 template < class T, class I = int >
 class CUtlDict
 {
-   public:
+    public:
     // constructor, destructor
     // Left at growSize = 0, the memory will first allocate 1 element and double in size
     // at each increment.
@@ -105,7 +105,7 @@ class CUtlDict
     // to fish out the index type from a given dict
     typedef I IndexType_t;
 
-   protected:
+    protected:
     typedef CUtlMap< const char *, T, I > DictElementMap_t;
     DictElementMap_t m_Elements;
 };

@@ -39,7 +39,7 @@ class CBaseRecordingSessionBlock;
 //
 class IEngineReplay : public IBaseInterface
 {
-   public:
+    public:
     virtual bool IsSupportedModAndPlatform() = 0;
 
     virtual float GetHostTime() = 0;
@@ -80,7 +80,7 @@ class IEngineReplay : public IBaseInterface
 #if !defined( DEDICATED )
 class IEngineClientReplay : public IBaseInterface
 {
-   public:
+    public:
     virtual INetChannel *GetNetChannel() = 0;
     virtual bool IsConnected() = 0;
     virtual bool IsListenServer() = 0;

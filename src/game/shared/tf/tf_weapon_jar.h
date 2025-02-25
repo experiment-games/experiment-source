@@ -40,7 +40,7 @@ enum EThrowableTypes
 //
 class CTFJar : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFJar, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -95,7 +95,7 @@ class CTFJar : public CTFWeaponBaseGun
         return false;
     }
 
-   private:
+    private:
     int m_iProjectileType;
 
     CTFJar( const CTFJar & ) {}
@@ -104,7 +104,7 @@ class CTFJar : public CTFWeaponBaseGun
 // *************************************************************************************************************************
 class CTFJarMilk : public CTFJar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFJarMilk, CTFJar );
     DECLARE_NETWORKCLASS();
 
@@ -126,7 +126,7 @@ class CTFJarMilk : public CTFJar
 // *************************************************************************************************************************
 class CTFCleaver : public CTFJar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFCleaver, CTFJar );
     DECLARE_NETWORKCLASS();
 
@@ -175,7 +175,7 @@ class CTFCleaver : public CTFJar
 //
 class CTFProjectile_Jar : public CTFGrenadePipebombProjectile
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_Jar, CTFGrenadePipebombProjectile );
     DECLARE_NETWORKCLASS();
 
@@ -241,7 +241,7 @@ class CTFProjectile_Jar : public CTFGrenadePipebombProjectile
         return TF_WEAPON_PEEJAR_EXPLODE_SOUND;
     }
 
-   protected:
+    protected:
     Vector m_vCollisionVelocity;
     int m_iProjectileType;
 #endif
@@ -250,7 +250,7 @@ class CTFProjectile_Jar : public CTFGrenadePipebombProjectile
 // *************************************************************************************************************************
 class CTFProjectile_JarMilk : public CTFProjectile_Jar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_JarMilk, CTFProjectile_Jar );
     DECLARE_NETWORKCLASS();
 
@@ -280,7 +280,7 @@ class CTFProjectile_JarMilk : public CTFProjectile_Jar
 // *************************************************************************************************************************
 class CTFProjectile_Cleaver : public CTFProjectile_Jar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_Cleaver, CTFProjectile_Jar );
     DECLARE_NETWORKCLASS();
 
@@ -321,7 +321,7 @@ class CTFProjectile_Cleaver : public CTFProjectile_Jar
 
     void RemoveCleaver( void );
 
-   private:
+    private:
     bool m_bHitPlayer;
     bool m_bSoundPlayed;
 #endif

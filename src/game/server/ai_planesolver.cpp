@@ -54,13 +54,13 @@ inline float cube( float f )
 
 CAI_PlaneSolver::CAI_PlaneSolver( CAI_BaseNPC *pNpc )
     : m_pNpc( pNpc ),
-      m_fSolvedPrev( false ),
-      m_PrevTarget( FLT_MAX, FLT_MAX, FLT_MAX ),
-      m_PrevSolution( 0 ),
-      m_ClosestHaveBeenToCurrent( FLT_MAX ),
-      m_TimeLastProgress( FLT_MAX ),
-      m_fCannotSolveCurrent( false ),
-      m_RefreshSamplesTimer( PLANE_SOLVER_THINK_FREQUENCY[AIStrongOpt()] - 0.05 )
+    m_fSolvedPrev( false ),
+    m_PrevTarget( FLT_MAX, FLT_MAX, FLT_MAX ),
+    m_PrevSolution( 0 ),
+    m_ClosestHaveBeenToCurrent( FLT_MAX ),
+    m_TimeLastProgress( FLT_MAX ),
+    m_fCannotSolveCurrent( false ),
+    m_RefreshSamplesTimer( PLANE_SOLVER_THINK_FREQUENCY[AIStrongOpt()] - 0.05 )
 {
 }
 
@@ -208,11 +208,11 @@ float CAI_PlaneSolver::CalculateRegulationWeight( const AIMoveTrace_t &moveTrace
 //-----------------------------------------------------------------------------
 
 void CAI_PlaneSolver::GenerateSuggestionFromTrace( const AILocalMoveGoal_t &goal,
-                                                   const AIMoveTrace_t &moveTrace,
-                                                   float probeDist,
-                                                   float arcCenter,
-                                                   float arcSpan,
-                                                   int probeOffset )
+                                                    const AIMoveTrace_t &moveTrace,
+                                                    float probeDist,
+                                                    float arcCenter,
+                                                    float arcSpan,
+                                                    int probeOffset )
 {
     AI_MoveSuggestion_t suggestion;
     AI_MoveSuggType_t type;
@@ -443,7 +443,7 @@ AI_SuggestorResult_t CAI_PlaneSolver::GenerateObstacleSuggestions( const AILocal
 
         // Generate suggestion from direct trace, or probe if direct trace doesn't match
         if ( fabs( probeDist - ( distClear + directTrace.flDistObstructed ) ) < 0.1 &&
-             ( ProbeForNpcs() || directTrace.fStatus != AIMR_BLOCKED_NPC ) )
+            ( ProbeForNpcs() || directTrace.fStatus != AIMR_BLOCKED_NPC ) )
         {
             if ( directTrace.fStatus != AIMR_OK )
             {

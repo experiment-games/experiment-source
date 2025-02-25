@@ -76,10 +76,10 @@ void CWaterBullet::BulletThink()
     SetNextThink( gpGlobals->curtime + 0.05 );
 
     /*
-      QAngle angles = GetAbsAngles();
-      angles.x += random->RandomInt( -6, 6 );
-      angles.y += random->RandomInt( -6, 6 );
-      SetAbsAngles( angles );
+    QAngle angles = GetAbsAngles();
+    angles.x += random->RandomInt( -6, 6 );
+    angles.y += random->RandomInt( -6, 6 );
+    SetAbsAngles( angles );
     */
 
     Vector forward;

@@ -19,20 +19,20 @@ class CHudElement;
 //-----------------------------------------------------------------------------
 class CHudElementHelper
 {
-   public:
+    public:
     // Static list of helpers
     static CHudElementHelper *m_sHelpers;
     // Create all the hud elements
     static void CreateAllElements( void );
 
-   public:
+    public:
     // Construction
     CHudElementHelper( CHudElement *( *pfnCreate )( void ), int depth );
 
     // Accessors
     CHudElementHelper *GetNext( void );
 
-   private:
+    private:
     // Next factory in list
     CHudElementHelper *m_pNext;
     // Creation function to use for this technology

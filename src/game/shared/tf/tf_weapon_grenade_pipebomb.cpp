@@ -913,8 +913,8 @@ void CTFGrenadePipebombProjectile::VPhysicsCollision( int index, gamevcollisione
     // Temp: Don't stick to the saw blades in sawmill.
     // We should make the saws their own entity type for networking.
     if ( FStrEq( pHitEntity->m_iParent.ToCStr(), "sawmovelinear01" ) ||
-         FStrEq( pHitEntity->m_iParent.ToCStr(), "sawmovelinear02" ) ||
-         PropDynamic_CollidesWithGrenades( pHitEntity ) )
+        FStrEq( pHitEntity->m_iParent.ToCStr(), "sawmovelinear02" ) ||
+        PropDynamic_CollidesWithGrenades( pHitEntity ) )
     {
         bIsDynamicProp = false;
     }
@@ -1020,7 +1020,7 @@ int CTFGrenadePipebombProjectile::OnTakeDamage( const CTakeDamageInfo &info )
                                     {
                                         CBaseObject *pObject = pTeam->GetObject( i );
                                         if ( pObject && pObject->GetAbsOrigin().DistTo( GetAbsOrigin() ) < 100 &&
-                                             pObject->ObjectType() != OBJ_ATTACHMENT_SAPPER )
+                                            pObject->ObjectType() != OBJ_ATTACHMENT_SAPPER )
                                         {
                                             pPlayer->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_DESTROY_STICKIES, 1 );
                                             break;  // Only one award per sticky.
@@ -1224,10 +1224,10 @@ void CTFGrenadePipebombProjectile::Deflected( CBaseEntity *pDeflectedBy, Vector 
         if ( pWeapon )
         {
             flForceMultiplier = RemapValClamped( ( gpGlobals->curtime - pWeapon->GetChargeBeginTime() ),
-                                                 0.0f,
-                                                 pWeapon->GetChargeMaxTime(),
-                                                 1.0f,
-                                                 2.0f );
+                                                0.0f,
+                                                pWeapon->GetChargeMaxTime(),
+                                                1.0f,
+                                                2.0f );
         }
         Vector vecForce = vecDir * flForceMultiplier * CTFWeaponBase::DeflectionForce( WorldAlignSize(), 90, 12.0f );
 
@@ -1269,7 +1269,7 @@ void CTFGrenadePipebombProjectile::Deflected( CBaseEntity *pDeflectedBy, Vector 
 //-----------------------------------------------------------------------------
 class CProxyStickybombGlowColor : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );

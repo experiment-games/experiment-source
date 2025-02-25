@@ -212,10 +212,10 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity* pOther )
     // Verify a correct "other."
     Assert( pOther );
     if ( !pOther ||
-         !pOther->IsSolid() ||
-         pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) ||
-         ( pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS ) ||
-         pOther->IsFuncLOD() )
+        !pOther->IsSolid() ||
+        pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) ||
+        ( pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS ) ||
+        pOther->IsFuncLOD() )
     {
         return;
     }
@@ -242,10 +242,10 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity* pOther )
 
     // The stuff we collide with
     bool bCombatEntity = pOther->IsPlayer() ||
-                         pOther->IsBaseObject() ||
-                         pOther->IsCombatCharacter() ||
-                         pOther->IsCombatItem() ||
-                         pOther->IsProjectileCollisionTarget();
+                        pOther->IsBaseObject() ||
+                        pOther->IsCombatCharacter() ||
+                        pOther->IsCombatItem() ||
+                        pOther->IsProjectileCollisionTarget();
 
     if ( bCombatEntity )
     {

@@ -27,7 +27,7 @@ class CBSPDispRayDistanceEnumerator;
 //
 class CBSPDispFaceListEnumerator : public ISpatialLeafEnumerator, public IBSPTreeDataEnumerator
 {
-   public:
+    public:
     //=========================================================================
     //
     // Construction/Deconstruction
@@ -45,7 +45,7 @@ class CBSPDispFaceListEnumerator : public ISpatialLeafEnumerator, public IBSPTre
     // IBSPTreeDataEnumerator
     bool FASTCALL EnumerateElement( int userId, intp context );
 
-   public:
+    public:
     CUtlVector< CVRADDispColl * > m_DispList;
     CUtlVector< int > m_FaceList;
 };
@@ -56,7 +56,7 @@ class CBSPDispFaceListEnumerator : public ISpatialLeafEnumerator, public IBSPTre
 //
 class CBSPDispRayEnumerator : public ISpatialLeafEnumerator, public IBSPTreeDataEnumerator
 {
-   public:
+    public:
     // ISpatialLeafEnumerator
     bool EnumerateLeaf( int ndxLeaf, intp context );
 
@@ -70,7 +70,7 @@ class CBSPDispRayEnumerator : public ISpatialLeafEnumerator, public IBSPTreeData
 //
 class CVRadDispMgr : public IVRadDispMgr
 {
-   public:
+    public:
     //=========================================================================
     //
     // Construction/Deconstruction
@@ -128,7 +128,7 @@ class CVRadDispMgr : public IVRadDispMgr
     bool DispFaceList_EnumerateLeaf( int ndxLeaf, int context );
     bool DispFaceList_EnumerateElement( int userId, int context );
 
-   private:
+    private:
     //=========================================================================
     //
     // BSP Tree Helpers
@@ -160,7 +160,7 @@ class CVRadDispMgr : public IVRadDispMgr
         CUtlVector< CPatch * > &interestingPatches,
         float patchSampleRadius );
 
-   private:
+    private:
     struct DispCollTree_t
     {
         CVRADDispColl *m_pDispTree;
@@ -233,7 +233,7 @@ bool FASTCALL CBSPDispRayEnumerator::EnumerateElement( int userId, intp context 
 
 class CBSPDispRayDistanceEnumerator : public IBSPTreeDataEnumerator
 {
-   public:
+    public:
     CBSPDispRayDistanceEnumerator()
         : m_Distance( 1.0f ), m_pSurface( 0 ) {}
 
@@ -372,15 +372,15 @@ void CVRadDispMgr::DispBuilderInit( CCoreDispInfo *pBuilderDisp, dface_t *pFace,
     pSurf->AdjustSurfPointData();
 
     Vector vecTmp( texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][0],
-                   texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][1],
-                   texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][2] );
+                    texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][1],
+                    texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][2] );
     int nLuxelsPerWorldUnit = static_cast< int >( 1.0f / VectorLength( vecTmp ) );
     Vector vecU( texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][0],
-                 texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][1],
-                 texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][2] );
+                texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][1],
+                texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[0][2] );
     Vector vecV( texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[1][0],
-                 texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[1][1],
-                 texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[1][2] );
+                texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[1][1],
+                texinfo[pFace->texinfo].lightmapVecsLuxelsPerWorldUnits[1][2] );
     pSurf->CalcLuxelCoords( nLuxelsPerWorldUnit, false, vecU, vecV );
 
     pBuilderDisp->SetNeighborData( pDisp->m_EdgeNeighbors, pDisp->m_CornerNeighbors );
@@ -1248,8 +1248,8 @@ void CVRadDispMgr::GetInterestingPatchesForLuxels(
                 for ( int z = voxelMin[2]; z < voxelMax[2]; z++ )
                 {
                     int iBit = ( z - allVoxelMin[2] ) * ( allVoxelSize[0] * allVoxelSize[1] ) +
-                               ( y - allVoxelMin[1] ) * allVoxelSize[0] +
-                               ( x - allVoxelMin[0] );
+                                ( y - allVoxelMin[1] ) * allVoxelSize[0] +
+                                ( x - allVoxelMin[0] );
                     voxelBits[iBit >> 3] |= ( 1 << ( iBit & 7 ) );
                 }
             }
@@ -1376,7 +1376,7 @@ void CVRadDispMgr::InsertSamplesDataIntoHashTable( void )
 {
     int totalSamples = 0;
 #if 0
-	int totalSamplesInSolid = 0;
+    int totalSamplesInSolid = 0;
 #endif
 
     for ( int ndxFace = 0; ndxFace < numfaces; ndxFace++ )
@@ -1390,7 +1390,7 @@ void CVRadDispMgr::InsertSamplesDataIntoHashTable( void )
             continue;
 
 #if 0
-		bool bDisp = ( pFace->dispinfo != -1 );
+        bool bDisp = ( pFace->dispinfo != -1 );
 #endif
         //
         // for each sample
@@ -1401,15 +1401,15 @@ void CVRadDispMgr::InsertSamplesDataIntoHashTable( void )
             if ( pSample )
             {
 #if 0
-				if( bDisp )
-				{
-					// test sample to see if the displacement samples resides in solid
-					if( SampleInSolid( pSample ) )
-					{
-						totalSamplesInSolid++;
-						continue;
-					}
-				}
+                if( bDisp )
+                {
+                    // test sample to see if the displacement samples resides in solid
+                    if( SampleInSolid( pSample ) )
+                    {
+                        totalSamplesInSolid++;
+                        continue;
+                    }
+                }
 #endif
 
                 // create the sample handle
@@ -1424,8 +1424,8 @@ void CVRadDispMgr::InsertSamplesDataIntoHashTable( void )
     }
 
 #if 0
-	// not implemented yet!!!
-	Msg( "%d samples in solid\n", totalSamplesInSolid );
+    // not implemented yet!!!
+    Msg( "%d samples in solid\n", totalSamplesInSolid );
 #endif
 
     // log the distribution

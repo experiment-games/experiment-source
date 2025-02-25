@@ -30,14 +30,14 @@ class CTargetID : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CTargetID, vgui::Panel );
 
-   public:
+    public:
     CTargetID( const char *pElementName );
     void Init( void );
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint( void );
     void VidInit( void );
 
-   private:
+    private:
     Color GetColorForTargetTeam( int iTeamNumber );
 
     vgui::HFont m_hFont;

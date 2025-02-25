@@ -46,9 +46,9 @@ import java.io.IOException;
 public class LazyStringEndToEndTest extends TestCase {
 
   private static ByteString TEST_ALL_TYPES_SERIALIZED_WITH_ILLEGAL_UTF8 =
-      ByteString.copyFrom(new byte[] {
-          114, 4, -1, 0, -1, 0, -30, 2, 4, -1,
-          0, -1, 0, -30, 2, 4, -1, 0, -1, 0, });
+    ByteString.copyFrom(new byte[] {
+        114, 4, -1, 0, -1, 0, -30, 2, 4, -1,
+        0, -1, 0, -30, 2, 4, -1, 0, -1, 0, });
 
   private ByteString encodedTestAllTypes;
 
@@ -64,9 +64,9 @@ public class LazyStringEndToEndTest extends TestCase {
   }
 
   /**
-   * Tests that an invalid UTF8 string will roundtrip through a parse
-   * and serialization.
-   */
+    * Tests that an invalid UTF8 string will roundtrip through a parse
+    * and serialization.
+    */
   public void testParseAndSerialize() throws InvalidProtocolBufferException {
     UnittestProto.TestAllTypes tV2 = UnittestProto.TestAllTypes.parseFrom(
         TEST_ALL_TYPES_SERIALIZED_WITH_ILLEGAL_UTF8);

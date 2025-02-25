@@ -20,17 +20,17 @@ class CTFItemPickupPanel : public CItemPickupPanel
 {
     DECLARE_CLASS_SIMPLE( CTFItemPickupPanel, CItemPickupPanel );
 
-   public:
+    public:
     CTFItemPickupPanel( Panel *parent );
     virtual ~CTFItemPickupPanel();
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnCommand( const char *command );
 
-   protected:
+    protected:
     virtual void UpdateModelPanels( void );
 
-   private:
+    private:
     vgui::ImagePanel *m_pClassImage;
     vgui::Panel *m_pClassImageBG;
 };
@@ -42,7 +42,7 @@ class CTFItemDiscardPanel : public CItemDiscardPanel
 {
     DECLARE_CLASS_SIMPLE( CTFItemDiscardPanel, CItemDiscardPanel );
 
-   public:
+    public:
     CTFItemDiscardPanel( Panel *parent );
     virtual ~CTFItemDiscardPanel();
 
@@ -52,7 +52,7 @@ class CTFItemDiscardPanel : public CItemDiscardPanel
     virtual void OnTick( void );
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     vgui::Label *m_pExplanationALabel;
     vgui::Label *m_pExplanationBLabel;
     vgui::Label *m_pExplanationCaratLabel;

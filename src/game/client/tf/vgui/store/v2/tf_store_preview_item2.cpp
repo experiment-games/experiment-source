@@ -49,17 +49,17 @@ inline float SCurve( float t )
 //-----------------------------------------------------------------------------
 CFullscreenStorePreviewItem::CFullscreenStorePreviewItem( vgui::Panel *pParent, EditablePanel *pOwner )
     : BaseClass( pParent, "FullscreenStorePreview" ),
-      m_iItemDef( INVALID_ITEM_ID ),
-      m_pCycleTextLabel( NULL ),
-      m_pTeamNavPanel( NULL ),
-      m_pPreviewButton( NULL ),
-      m_pRotLeftButton( NULL ),
-      m_pRotRightButton( NULL ),
-      m_pZoomButton( NULL ),
-      m_pOverlayPanel( NULL ),
-      m_flGoFullscreenStartTime( 0.0f ),
-      m_flLastMouseMoveTime( 0.0f ),
-      m_bIsHalloweenOrFullmoonOnlyItem( false )
+    m_iItemDef( INVALID_ITEM_ID ),
+    m_pCycleTextLabel( NULL ),
+    m_pTeamNavPanel( NULL ),
+    m_pPreviewButton( NULL ),
+    m_pRotLeftButton( NULL ),
+    m_pRotRightButton( NULL ),
+    m_pZoomButton( NULL ),
+    m_pOverlayPanel( NULL ),
+    m_flGoFullscreenStartTime( 0.0f ),
+    m_flLastMouseMoveTime( 0.0f ),
+    m_bIsHalloweenOrFullmoonOnlyItem( false )
 {
     m_hOwner = pOwner;
 }
@@ -725,18 +725,18 @@ void CTFStorePreviewItemPanel2::OnCommand( const char *command )
     }
     else if ( !V_strnicmp( command, "addtocart", 9 )
 #ifdef ENABLE_STORE_RENTAL_BACKEND
-              || !V_strnicmp( command, "addrentaltocart", 15 )
+            || !V_strnicmp( command, "addrentaltocart", 15 )
 #endif
     )
     {
 #ifdef ENABLE_STORE_RENTAL_BACKEND
         ECartItemType eCartItemType = !V_stricmp( command, "addrentaltocart_1day" )
-                                          ? kCartItem_Rental_1Day
-                                      : !V_stricmp( command, "addrentaltocart_3day" )
-                                          ? kCartItem_Rental_3Day
-                                      : !V_stricmp( command, "addrentaltocart_7day" )
-                                          ? kCartItem_Rental_7Day
-                                          : kCartItem_Purchase;
+                                        ? kCartItem_Rental_1Day
+                                    : !V_stricmp( command, "addrentaltocart_3day" )
+                                        ? kCartItem_Rental_3Day
+                                    : !V_stricmp( command, "addrentaltocart_7day" )
+                                        ? kCartItem_Rental_7Day
+                                        : kCartItem_Purchase;
 #else
         ECartItemType eCartItemType = kCartItem_Purchase;
 #endif
@@ -947,7 +947,7 @@ void CTFStorePreviewItemPanel2::PreviewItem( int iClass, CEconItemView *pItem, c
                 // they weren't real items with a real origin that would prevent them from being crafted. In the short term it makes
                 // more sense to just force this to always display "false" because at least it will never be wrong.
                 m_pDetailsViewChild->SetDialogVariable( "craftable", pDef->IsBundle() ? g_pVGuiLocalize->Find( "#Attrib_CannotCraftWeapons" ) : pDef->GetCapabilities() & ITEM_CAP_CAN_BE_CRAFTED_IF_PURCHASED ? pYesNo[0]
-                                                                                                                                                                                                               : pYesNo[1] );
+                                                                                                                                                                                                                : pYesNo[1] );
 
                 m_pDetailsViewChild->SetDialogVariable( "item_level_info", "" );
 

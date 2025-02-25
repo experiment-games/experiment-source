@@ -11,15 +11,15 @@ $Include "$SRCDIR\vpc_scripts\source_exe_con_base.vpc"
 
 $Project "TGA Diff"
 {
-	$Folder	"Source Files"
-	{
-		$File	"tgadiff.cpp"
-	}
+    $Folder	"Source Files"
+    {
+        $File	"tgadiff.cpp"
+    }
 
-	$Folder	"Link Libraries"
-	{
-		$Lib bitmap
-		$Lib mathlib
-		$Lib tier2
-	}
+    $Folder	"Link Libraries"
+    {
+        $Lib bitmap
+        $Lib mathlib
+        $Lib tier2
+    }
 }

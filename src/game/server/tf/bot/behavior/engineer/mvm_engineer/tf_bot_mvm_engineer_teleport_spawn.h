@@ -11,7 +11,7 @@ class CBaseTFBotHintEntity;
 
 class CTFBotMvMEngineerTeleportSpawn : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMvMEngineerTeleportSpawn( CBaseTFBotHintEntity *pHint, bool bFirstTeleportSpawn );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -22,7 +22,7 @@ class CTFBotMvMEngineerTeleportSpawn : public Action< CTFBot >
         return "MvMEngineerTeleportSpawn";
     };
 
-   private:
+    private:
     CountdownTimer m_teleportDelay;
     CHandle< CBaseTFBotHintEntity > m_hintEntity;
     bool m_bFirstTeleportSpawn;

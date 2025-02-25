@@ -19,7 +19,7 @@ class CTeam;
 //-----------------------------------------------------------------------------
 class CTeamSpawnPoint : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTeamSpawnPoint, CPointEntity );
 
     void Activate( void );
@@ -27,7 +27,7 @@ class CTeamSpawnPoint : public CPointEntity
 
     COutputEvent m_OnPlayerSpawn;
 
-   protected:
+    protected:
     int m_iDisabled;
 
     // Input handlers
@@ -44,7 +44,7 @@ class CTeamVehicleSpawnPoint : public CTeamSpawnPoint
 {
     DECLARE_CLASS( CTeamVehicleSpawnPoint, CTeamSpawnPoint );
 
-   public:
+    public:
     void Activate( void );
     bool IsValid( void );
 

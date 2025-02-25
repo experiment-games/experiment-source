@@ -317,7 +317,7 @@ void CHudBaseDeathNotice::RetireExpiredDeathNotices()
 
     // Do we have too many death messages in the queue?
     if ( m_DeathNotices.Count() > 0 &&
-         m_DeathNotices.Count() > ( int )m_flMaxDeathNotices )
+        m_DeathNotices.Count() > ( int )m_flMaxDeathNotices )
     {
         // First, remove any notices not involving the local player, since they are lower priority.
         iCount = m_DeathNotices.Count();
@@ -395,7 +395,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
             CBasePlayer *pVictim = UTIL_PlayerByIndex( victim );
             CBasePlayer *pLocalPlayer = CBasePlayer::GetLocalPlayer();
             if ( pVictim && pLocalPlayer &&
-                 ( pVictim->GetTeamNumber() == pLocalPlayer->GetTeamNumber() ) )
+                ( pVictim->GetTeamNumber() == pLocalPlayer->GetTeamNumber() ) )
             {
                 return;
             }

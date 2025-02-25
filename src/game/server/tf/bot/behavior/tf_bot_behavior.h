@@ -10,7 +10,7 @@
 
 class CTFBotMainAction : public Action< CTFBot >
 {
-   public:
+    public:
     virtual Action< CTFBot > *InitialContainedAction( CTFBot *me );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -31,16 +31,16 @@ class CTFBotMainAction : public Action< CTFBot >
     virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const;
 
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
     virtual const char *GetName( void ) const
     {
         return "MainAction";
     };
 
-   private:
+    private:
     CountdownTimer m_reloadTimer;
     mutable CountdownTimer m_aimAdjustTimer;
     mutable float m_aimErrorRadius;
@@ -64,9 +64,9 @@ class CTFBotMainAction : public Action< CTFBot >
     const CKnownEntity *GetHealerOfThreat( const CKnownEntity *threat ) const;
 
     const CKnownEntity *SelectMoreDangerousThreatInternal( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;
 
     void Dodge( CTFBot *me );
 

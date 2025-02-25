@@ -46,7 +46,7 @@ class Vector;
 // a separate stream that connects to the main output
 class IAudioOutputStream
 {
-   public:
+    public:
     virtual ~IAudioOutputStream() {}
     // queue a set of samples for output.
     // NOTE: nSampleCount is the number of samples being written to each channel, not the total # of all channels' samples
@@ -78,7 +78,7 @@ struct AudioState_t;
 
 abstract_class IEngineSound
 {
-   public:
+    public:
     // Precache a particular sample
     virtual bool PrecacheSound( const char *pSample, bool bPreload = false, bool bIsUISound = false ) = 0;
     virtual bool IsSoundPrecached( const char *pSample ) = 0;

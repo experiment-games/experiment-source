@@ -16,7 +16,7 @@
 
 class CHalloweenSoulPack : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CHalloweenSoulPack, CBaseEntity )
 
     DECLARE_NETWORKCLASS();
@@ -47,7 +47,7 @@ class CHalloweenSoulPack : public CBaseEntity
     virtual void OnDataChanged( DataUpdateType_t type ) OVERRIDE;
     virtual void ClientThink() OVERRIDE;
 #endif
-   private:
+    private:
     void FlyThink( void );
     void FlyTowardsTargetEntity( void );
     void InitSplineData( void );

@@ -21,7 +21,7 @@ class CBaseScriptedTrigger : public CBaseTrigger
 {
     DECLARE_CLASS( CBaseScriptedTrigger, CBaseTrigger );
 
-   public:
+    public:
     CBaseScriptedTrigger();
     ~CBaseScriptedTrigger();
 
@@ -39,7 +39,7 @@ class CBaseScriptedTrigger : public CBaseTrigger
     // by default, triggers don't deal with TraceAttack
     void TraceAttack( CBaseEntity *pAttacker, float flDamage, const Vector &vecDir, trace_t *ptr, int bitsDamageType ) {}
 
-   protected:
+    protected:
     DECLARE_DATADESC();
 };
 

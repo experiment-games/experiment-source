@@ -67,17 +67,17 @@ namespace python
 // CodeGenerator with the CommandLineInterface in your main() function.
 class LIBPROTOC_EXPORT Generator : public CodeGenerator
 {
-   public:
+    public:
     Generator();
     virtual ~Generator();
 
     // CodeGenerator methods.
     virtual bool Generate( const FileDescriptor* file,
-                           const string& parameter,
-                           GeneratorContext* generator_context,
-                           string* error ) const;
+                            const string& parameter,
+                            GeneratorContext* generator_context,
+                            string* error ) const;
 
-   private:
+    private:
     void PrintImports() const;
     void PrintFileDescriptor() const;
     void PrintTopLevelEnums() const;
@@ -105,22 +105,22 @@ class LIBPROTOC_EXPORT Generator : public CodeGenerator
     void PrintMessages() const;
     void PrintMessage( const Descriptor& message_descriptor, const string& prefix, vector< string >* to_register ) const;
     void PrintNestedMessages( const Descriptor& containing_descriptor,
-                              const string& prefix,
-                              vector< string >* to_register ) const;
+                            const string& prefix,
+                            vector< string >* to_register ) const;
 
     void FixForeignFieldsInDescriptors() const;
     void FixForeignFieldsInDescriptor(
         const Descriptor& descriptor,
         const Descriptor* containing_descriptor ) const;
     void FixForeignFieldsInField( const Descriptor* containing_type,
-                                  const FieldDescriptor& field,
-                                  const string& python_dict_name ) const;
+                                const FieldDescriptor& field,
+                                const string& python_dict_name ) const;
     void AddMessageToFileDescriptor( const Descriptor& descriptor ) const;
     void AddEnumToFileDescriptor( const EnumDescriptor& descriptor ) const;
     void AddExtensionToFileDescriptor( const FieldDescriptor& descriptor ) const;
     string FieldReferencingExpression( const Descriptor* containing_type,
-                                       const FieldDescriptor& field,
-                                       const string& python_dict_name ) const;
+                                        const FieldDescriptor& field,
+                                        const string& python_dict_name ) const;
     template < typename DescriptorT >
     void FixContainingTypeInDescriptor(
         const DescriptorT& descriptor,
@@ -138,7 +138,7 @@ class LIBPROTOC_EXPORT Generator : public CodeGenerator
 
     void PrintEnumValueDescriptor( const EnumValueDescriptor& descriptor ) const;
     string OptionsValue( const string& class_name,
-                         const string& serialized_options ) const;
+                        const string& serialized_options ) const;
     bool GeneratingDescriptorProto() const;
 
     template < typename DescriptorT >

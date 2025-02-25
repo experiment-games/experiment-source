@@ -23,7 +23,7 @@
 //
 class CTFGrenadeGas : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeGas, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -55,7 +55,7 @@ class CTFGrenadeGas : public CTFWeaponBaseGrenade
 
 class CTFGasGrenadeEffect : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGasGrenadeEffect, CBaseEntity );
     DECLARE_NETWORKCLASS();
 
@@ -85,7 +85,7 @@ class CTFGasGrenadeEffect : public CBaseEntity
 
 class CTFGrenadeGasProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeGasProjectile, CTFWeaponBaseGrenadeProj );
     DECLARE_DATADESC();
 
@@ -110,7 +110,7 @@ class CTFGrenadeGasProjectile : public CTFWeaponBaseGrenadeProj
     void Think_Emit( void );
     void Think_Fade( void );
 
-   private:
+    private:
     int m_nPulses;
 
     CHandle< CTFGasGrenadeEffect > m_hGasEffect;

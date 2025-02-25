@@ -67,7 +67,7 @@ enum
 //-----------------------------------------------------------------------------
 class CDmAttribute
 {
-   public:
+    public:
     // Returns the type
     DmAttributeType_t GetType() const;
     const char *GetTypeString() const;
@@ -153,7 +153,7 @@ class CDmAttribute
     // estimate memory overhead
     int EstimateMemoryUsage( TraversalDepth_t depth ) const;
 
-   private:
+    private:
     // Class factory
     static CDmAttribute *CreateAttribute( CDmElement *pOwner, DmAttributeType_t type, const char *pAttributeName );
     static CDmAttribute *CreateExternalAttribute( CDmElement *pOwner, DmAttributeType_t type, const char *pAttributeName, void *pExternalMemory );
@@ -220,7 +220,7 @@ class CDmAttribute
     template < class T >
     void CopyDataOut( T &dest ) const;
 
-   private:
+    private:
     CDmAttribute *m_pNext;
     void *m_pData;
     CDmElement *m_pOwner;
@@ -668,8 +668,8 @@ T *FindAncestorReferencingElement( CDmElement *target )
         return NULL;
 
     for ( DmAttributeReferenceIterator_t it = g_pDataModel->FirstAttributeReferencingElement( target->GetHandle() );
-          it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
-          it = g_pDataModel->NextAttributeReferencingElement( it ) )
+        it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
+        it = g_pDataModel->NextAttributeReferencingElement( it ) )
     {
         CDmAttribute *attr = g_pDataModel->GetAttribute( it );
         Assert( attr );
@@ -697,8 +697,8 @@ T *FindAncestorReferencingElement_R_Impl( CUtlRBTree< CDmElement * > &visited, C
     // Pass one, see if it's in this ancestor list
     DmAttributeReferenceIterator_t it;
     for ( it = g_pDataModel->FirstAttributeReferencingElement( check->GetHandle() );
-          it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
-          it = g_pDataModel->NextAttributeReferencingElement( it ) )
+        it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
+        it = g_pDataModel->NextAttributeReferencingElement( it ) )
     {
         CDmAttribute *attr = g_pDataModel->GetAttribute( it );
         Assert( attr );
@@ -714,8 +714,8 @@ T *FindAncestorReferencingElement_R_Impl( CUtlRBTree< CDmElement * > &visited, C
     }
 
     for ( it = g_pDataModel->FirstAttributeReferencingElement( check->GetHandle() );
-          it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
-          it = g_pDataModel->NextAttributeReferencingElement( it ) )
+        it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
+        it = g_pDataModel->NextAttributeReferencingElement( it ) )
     {
         CDmAttribute *attr = g_pDataModel->GetAttribute( it );
         Assert( attr );
@@ -739,8 +739,8 @@ void FindAncestorsReferencingElement( CDmElement *target, CUtlVector< T * > &lis
 
     list.RemoveAll();
     for ( DmAttributeReferenceIterator_t it = g_pDataModel->FirstAttributeReferencingElement( target->GetHandle() );
-          it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
-          it = g_pDataModel->NextAttributeReferencingElement( it ) )
+        it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
+        it = g_pDataModel->NextAttributeReferencingElement( it ) )
     {
         CDmAttribute *attr = g_pDataModel->GetAttribute( it );
         Assert( attr );

@@ -15,7 +15,7 @@
 
 class C_HLTVCamera : CGameEventListener
 {
-   public:
+    public:
     C_HLTVCamera();
     virtual ~C_HLTVCamera();
 
@@ -52,7 +52,7 @@ class C_HLTVCamera : CGameEventListener
         return m_nNumSpectators;
     }
 
-   protected:
+    protected:
     void CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );
     void CalcFixedView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );
     void CalcInEyeCamView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );

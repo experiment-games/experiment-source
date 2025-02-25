@@ -220,10 +220,10 @@ SendPropTime( SENDINFO( m_flBlueEndFadeTime ) ),
 //-----------------------------------------------------------------------------
 CNPC_Vortigaunt::CNPC_Vortigaunt( void )
     : m_bPlayerRequestedHeal( false ),
-      m_flNextHealTime( 3.0f ),  // Let the player settle before we decide to do this
-      m_nNumTokensToSpawn( 0 ),
-      m_flAimDelay( 0.0f ),
-      m_eHealState( HEAL_STATE_NONE )
+    m_flNextHealTime( 3.0f ),  // Let the player settle before we decide to do this
+    m_nNumTokensToSpawn( 0 ),
+    m_flAimDelay( 0.0f ),
+    m_eHealState( HEAL_STATE_NONE )
 {
 }
 
@@ -394,9 +394,9 @@ void CNPC_Vortigaunt::RunTask( const Task_t *pTask )
         {
             // If our enemy is gone, dead or out of sight, pick a new one (only if we're not delaying this behavior)
             if ( ( HasCondition( COND_ENEMY_OCCLUDED ) ||
-                   GetEnemy() == NULL ||
-                   GetEnemy()->IsAlive() == false ) &&
-                 m_flAimDelay < gpGlobals->curtime )
+                    GetEnemy() == NULL ||
+                    GetEnemy()->IsAlive() == false ) &&
+                m_flAimDelay < gpGlobals->curtime )
             {
                 CBaseEntity *pNewEnemy = BestEnemy();
                 if ( pNewEnemy != NULL )
@@ -1319,14 +1319,14 @@ int CNPC_Vortigaunt::TranslateSchedule( int scheduleType )
             case SCHED_ESTABLISH_LINE_OF_FIRE:
             case SCHED_ESTABLISH_LINE_OF_FIRE_FALLBACK:
 
-              // Don't go running off after an enemy just because we're in an attack delay!  This has to do with
-              // the base systems assuming that held weapons are driving certain decisions when this creature
-              // uses an innate ability.
-              if ( ( GetNextAttack() > gpGlobals->curtime ) && HasCondition( COND_ENEMY_TOO_FAR ) == false )
+            // Don't go running off after an enemy just because we're in an attack delay!  This has to do with
+            // the base systems assuming that held weapons are driving certain decisions when this creature
+            // uses an innate ability.
+            if ( ( GetNextAttack() > gpGlobals->curtime ) && HasCondition( COND_ENEMY_TOO_FAR ) == false )
                 return SCHED_COMBAT_FACE;
 
-              break;
-              */
+            break;
+            */
     }
 
     return BaseClass::TranslateSchedule( scheduleType );
@@ -1497,7 +1497,7 @@ int CNPC_Vortigaunt::SelectHealSchedule( void )
 
         // If the player is too far away or blocked, give chase
         if ( HasCondition( COND_VORTIGAUNT_HEAL_TARGET_TOO_FAR ) ||
-             HasCondition( COND_VORTIGAUNT_HEAL_TARGET_BLOCKED ) )
+            HasCondition( COND_VORTIGAUNT_HEAL_TARGET_BLOCKED ) )
             return SCHED_VORTIGAUNT_RUN_TO_PLAYER;
 
         // Stand and face the player
@@ -1747,8 +1747,8 @@ void CNPC_Vortigaunt::MaintainHealSchedule( void )
 
             if ( m_flHealHinderedTime > 2.0f )
             {
-              // If too long, stop trying
-              StopHealing();
+            // If too long, stop trying
+            StopHealing();
             }
             */
 
@@ -1829,9 +1829,9 @@ bool CNPC_Vortigaunt::OverrideMoveFacing( const AILocalMoveGoal_t &move, float f
     // If we're in our aiming gesture, then always face our target as we run
     Activity nActivity = NPC_TranslateActivity( ACT_GESTURE_RANGE_ATTACK1 );
     if ( IsPlayingGesture( nActivity ) ||
-         IsCurSchedule( SCHED_PC_MOVE_TOWARDS_COVER_FROM_BEST_SOUND ) ||
-         IsCurSchedule( SCHED_VORT_FLEE_FROM_BEST_SOUND ) ||
-         IsCurSchedule( SCHED_TAKE_COVER_FROM_BEST_SOUND ) )
+        IsCurSchedule( SCHED_PC_MOVE_TOWARDS_COVER_FROM_BEST_SOUND ) ||
+        IsCurSchedule( SCHED_VORT_FLEE_FROM_BEST_SOUND ) ||
+        IsCurSchedule( SCHED_TAKE_COVER_FROM_BEST_SOUND ) )
     {
         Vector vecEnemyLKP = GetEnemyLKP();
         AddFacingTarget( GetEnemy(), vecEnemyLKP, 1.0, 0.2 );
@@ -1850,7 +1850,7 @@ void CNPC_Vortigaunt::BuildScheduleTestBits( void )
 
     // Allow healing to interrupt us if we're standing around
     if ( IsCurSchedule( SCHED_IDLE_STAND ) ||
-         IsCurSchedule( SCHED_ALERT_STAND ) )
+        IsCurSchedule( SCHED_ALERT_STAND ) )
     {
         if ( m_eHealState == HEAL_STATE_NONE )
         {
@@ -2296,7 +2296,7 @@ int CNPC_Vortigaunt::IRelationPriority( CBaseEntity *pTarget )
 
     // Targets near our follow target have a higher priority to us
     if ( m_FollowBehavior.GetFollowTarget() &&
-         m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().DistToSqr( pTarget->GetAbsOrigin() ) < Square( 25 * 12 ) )
+        m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().DistToSqr( pTarget->GetAbsOrigin() ) < Square( 25 * 12 ) )
     {
         priority++;
     }
@@ -2370,9 +2370,9 @@ void CNPC_Vortigaunt::GatherHealConditions( void )
 
     // We stop if there are enemies around
     if ( m_bArmorRechargeEnabled == false ||
-         HasCondition( COND_NEW_ENEMY ) ||
-         HasCondition( COND_HEAR_DANGER ) ||
-         HasCondition( COND_HEAVY_DAMAGE ) )
+        HasCondition( COND_NEW_ENEMY ) ||
+        HasCondition( COND_HEAR_DANGER ) ||
+        HasCondition( COND_HEAVY_DAMAGE ) )
     {
         ClearCondition( COND_VORTIGAUNT_HEAL_VALID );
         return;
@@ -2461,41 +2461,41 @@ void CNPC_Vortigaunt::DispelAntlions( const Vector &vecOrigin, float flRadius, b
 
         CBroadcastRecipientFilter filter2;
         te->BeamRingPoint( filter2, 0, vecOrigin,  // origin
-                           64,                     // start radius
-                           800,                    // end radius
-                           m_nLightningSprite,     // texture
-                           0,                      // halo index
-                           0,                      // start frame
-                           2,                      // framerate
-                           0.1f,                   // life
-                           128,                    // width
-                           0,                      // spread
-                           0,                      // amplitude
-                           255,                    // r
-                           255,                    // g
-                           225,                    // b
-                           32,                     // a
-                           0,                      // speed
-                           FBEAM_FADEOUT );
+                            64,                     // start radius
+                            800,                    // end radius
+                            m_nLightningSprite,     // texture
+                            0,                      // halo index
+                            0,                      // start frame
+                            2,                      // framerate
+                            0.1f,                   // life
+                            128,                    // width
+                            0,                      // spread
+                            0,                      // amplitude
+                            255,                    // r
+                            255,                    // g
+                            225,                    // b
+                            32,                     // a
+                            0,                      // speed
+                            FBEAM_FADEOUT );
 
         // Shockring
         te->BeamRingPoint( filter2, 0, vecOrigin + Vector( 0, 0, 16 ),  // origin
-                           64,                                          // start radius
-                           800,                                         // end radius
-                           m_nLightningSprite,                          // texture
-                           0,                                           // halo index
-                           0,                                           // start frame
-                           2,                                           // framerate
-                           0.2f,                                        // life
-                           64,                                          // width
-                           0,                                           // spread
-                           0,                                           // amplitude
-                           255,                                         // r
-                           255,                                         // g
-                           225,                                         // b
-                           200,                                         // a
-                           0,                                           // speed
-                           FBEAM_FADEOUT );
+                            64,                                          // start radius
+                            800,                                         // end radius
+                            m_nLightningSprite,                          // texture
+                            0,                                           // halo index
+                            0,                                           // start frame
+                            2,                                           // framerate
+                            0.2f,                                        // life
+                            64,                                          // width
+                            0,                                           // spread
+                            0,                                           // amplitude
+                            255,                                         // r
+                            255,                                         // g
+                            225,                                         // b
+                            200,                                         // a
+                            0,                                           // speed
+                            FBEAM_FADEOUT );
 
         // Ground effects
         CEffectData data;
@@ -2551,11 +2551,11 @@ void CNPC_Vortigaunt::DispelAntlions( const Vector &vecOrigin, float flRadius, b
                 /*
                 unsigned char uchAttachment = pAntlion->LookupAttachment( "mouth" );
                 EntityMessageBegin( this, true );
-                  WRITE_BYTE( VORTFX_ARMBEAM );
-                  WRITE_LONG( pAntlion->entindex() );
-                  WRITE_BYTE( uchAttachment );
-                  WRITE_VEC3COORD( vecOrigin );
-                  WRITE_VEC3NORMAL( Vector( 0, 0, 1 ) );
+                WRITE_BYTE( VORTFX_ARMBEAM );
+                WRITE_LONG( pAntlion->entindex() );
+                WRITE_BYTE( uchAttachment );
+                WRITE_VEC3COORD( vecOrigin );
+                WRITE_VEC3NORMAL( Vector( 0, 0, 1 ) );
                 MessageEnd();
                 */
             }
@@ -2639,7 +2639,7 @@ int CNPC_Vortigaunt::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
         // take less damage from antlion worker acid/poison
         if ( info.GetAttacker()->Classify() == CLASS_ANTLION &&
-             ( info.GetDamageType() & ( DMG_ACID | DMG_POISON ) ) != 0 )
+            ( info.GetDamageType() & ( DMG_ACID | DMG_POISON ) ) != 0 )
         {
             subInfo.ScaleDamage( sk_vortigaunt_vital_antlion_worker_dmg.GetFloat() );
         }
@@ -3332,7 +3332,7 @@ class CFleshEffectTarget : public CPointEntity
 {
     DECLARE_CLASS( CFleshEffectTarget, CPointEntity );
 
-   public:
+    public:
     void InputSetRadius( inputdata_t &inputData );
 
     virtual void Spawn( void )
@@ -3342,7 +3342,7 @@ class CFleshEffectTarget : public CPointEntity
         AddEFlags( EFL_FORCE_CHECK_TRANSMIT );
     }
 
-   private:
+    private:
     CNetworkVar( float, m_flRadius );
     CNetworkVar( float, m_flScaleTime );
 

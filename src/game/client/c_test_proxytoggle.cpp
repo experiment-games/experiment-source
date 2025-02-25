@@ -19,7 +19,7 @@ static C_Test_ProxyToggle_Networkable *g_pTestObj = 0;
 
 class C_Test_ProxyToggle_Networkable : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_Test_ProxyToggle_Networkable, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 

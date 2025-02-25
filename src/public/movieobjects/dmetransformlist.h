@@ -20,7 +20,7 @@ class CDmeTransformList : public CDmElement
 {
     DEFINE_ELEMENT( CDmeTransformList, CDmElement );
 
-   public:
+    public:
     int GetTransformCount() const;
     CDmeTransform *GetTransform( int nIndex );
     void SetTransform( int nIndex, const matrix3x4_t &mat );

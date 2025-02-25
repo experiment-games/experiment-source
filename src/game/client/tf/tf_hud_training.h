@@ -34,7 +34,7 @@ class CTFHudTraining : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTFHudTraining, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudTraining( vgui::Panel *parent, const char *name );
     virtual ~CTFHudTraining();
 
@@ -49,7 +49,7 @@ class CTFHudTraining : public vgui::EditablePanel, public CGameEventListener
     void SetTrainingText( char *msg );
     void SetTrainingObjective( char *msg );
 
-   private:
+    private:
     CExRichText *m_pMsgLabel;
     CExLabel *m_pPressSpacebarToContinueLabel;
 };

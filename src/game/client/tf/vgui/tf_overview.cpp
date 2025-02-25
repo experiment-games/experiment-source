@@ -844,25 +844,25 @@ void CTFMapOverview::DrawMapOverlayTexture()
 void CTFMapOverview::UpdateMapOverlayTexture()
 {
     /*
-      char tempfile[MAX_PATH];
-      Q_snprintf( tempfile, sizeof( tempfile ), "overviews/%s_%s_%s_%s", levelname, roundname, capname, teamname );
+    char tempfile[MAX_PATH];
+    Q_snprintf( tempfile, sizeof( tempfile ), "overviews/%s_%s_%s_%s", levelname, roundname, capname, teamname );
 
-      // TODO release old texture ?
+    // TODO release old texture ?
 
-      m_nMapTextureOverlayID = surface()->CreateNewTextureID();
+    m_nMapTextureOverlayID = surface()->CreateNewTextureID();
 
-      //if we have not uploaded yet, lets go ahead and do so
-      surface()->DrawSetTextureFile( m_nMapTextureOverlayID, tempfile, true, false );
+    //if we have not uploaded yet, lets go ahead and do so
+    surface()->DrawSetTextureFile( m_nMapTextureOverlayID, tempfile, true, false );
 
-      int wide, tall;
+    int wide, tall;
 
-      surface()->DrawGetTextureSize( m_nMapTextureOverlayID, wide, tall );
+    surface()->DrawGetTextureSize( m_nMapTextureOverlayID, wide, tall );
 
-      if ( wide != tall )
-      {
+    if ( wide != tall )
+    {
         DevMsg( 1, "Error! CTFMapOverview::UpdateMapOverlayTexture: map overlay image must be a square.\n" );
         m_nMapTextureOverlayID = -1;
         return;
-      }
+    }
     */
 }

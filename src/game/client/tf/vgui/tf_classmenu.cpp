@@ -98,10 +98,10 @@ void CTFClassTipsItemPanel::ApplySchemeSettings( IScheme *pScheme )
 //-----------------------------------------------------------------------------
 class CTFClassTipsListPanel : public PanelListPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFClassTipsListPanel, PanelListPanel );
 
-   public:
+    public:
     CTFClassTipsListPanel( Panel *parent, const char *panelName )
         : PanelListPanel( parent, panelName )
     {
@@ -168,7 +168,7 @@ class CTFClassTipsListPanel : public PanelListPanel
         ivgui()->RemoveTickSignal( GetVPanel() );
     }
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose:
     //-----------------------------------------------------------------------------
@@ -336,10 +336,10 @@ class CTFClassTipsListPanel : public PanelListPanel
 //-----------------------------------------------------------------------------
 class CTFClassTipsPanel : public EditablePanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFClassTipsPanel, EditablePanel );
 
-   public:
+    public:
     CTFClassTipsPanel( Panel *parent, const char *panelName )
         : EditablePanel( parent, panelName )
     {
@@ -361,7 +361,7 @@ class CTFClassTipsPanel : public EditablePanel
         const char *pPathID = IsX360() ? "MOD" : "GAME";
         m_fmtResFilename.sprintf( "classes/%s.res", g_aRawPlayerClassNames[iClass] );
         if ( !g_pFullFileSystem->FileExists( m_fmtResFilename.Access(), pPathID ) &&
-             g_pFullFileSystem->FileExists( "classes/default.res", pPathID ) )
+            g_pFullFileSystem->FileExists( "classes/default.res", pPathID ) )
         {
             m_fmtResFilename.sprintf( "classes/default.res" );
         }
@@ -426,7 +426,7 @@ class CTFClassTipsPanel : public EditablePanel
         InvalidateLayout( true, true );
     }
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose:
     //-----------------------------------------------------------------------------
@@ -635,11 +635,11 @@ void CTFClassMenu::ShowPanel( bool bShow )
 
         // can't change class if you're on the losing team during the "bonus time" after a team has won the round
         if ( ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
-               C_TFPlayer::GetLocalTFPlayer() &&
-               C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam() && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED && GetSpectatorMode() == OBS_MODE_NONE ) ||
-             TFGameRules()->State_Get() == GR_STATE_GAME_OVER ||
-             ( TFGameRules()->IsInTraining() && C_TFPlayer::GetLocalTFPlayer() &&
-               ( C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass() == NULL || C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
+                C_TFPlayer::GetLocalTFPlayer() &&
+                C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam() && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED && GetSpectatorMode() == OBS_MODE_NONE ) ||
+            TFGameRules()->State_Get() == GR_STATE_GAME_OVER ||
+            ( TFGameRules()->IsInTraining() && C_TFPlayer::GetLocalTFPlayer() &&
+                ( C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass() == NULL || C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
         {
             SetVisible( false );
 
@@ -887,11 +887,11 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
         Go();
     }
     else if ( ( m_iClassMenuKey != BUTTON_CODE_INVALID && m_iClassMenuKey == code ) ||
-              code == KEY_XBUTTON_BACK ||
-              code == KEY_XBUTTON_B ||
-              code == STEAMCONTROLLER_B ||
-              code == KEY_0 ||
-              code == KEY_PAD_0 )
+            code == KEY_XBUTTON_BACK ||
+            code == KEY_XBUTTON_B ||
+            code == STEAMCONTROLLER_B ||
+            code == KEY_0 ||
+            code == KEY_PAD_0 )
     {
         C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
@@ -1220,9 +1220,9 @@ void CTFClassMenu::Go()
     // Display replay recording message if appropriate
     int &nDisplayedConnectedRecording = CPlayerSpawnCache::Instance().m_Data.m_nDisplayedConnectedRecording;
     if ( g_pReplay->IsReplayEnabled() &&
-         !g_pEngineClientReplay->IsPlayingReplayDemo() &&  // FIXME: We shouldn't need this here but for some reason the engine thinks a replay is recording during demo playback, even though replay_recording has a FCVAR_DONTRECORD flag
-         !nDisplayedConnectedRecording &&
-         replay_replaywelcomedlgcount.GetInt() <= MAX_TIMES_TO_SHOW_REPLAY_WELCOME_DLG )
+        !g_pEngineClientReplay->IsPlayingReplayDemo() &&  // FIXME: We shouldn't need this here but for some reason the engine thinks a replay is recording during demo playback, even though replay_recording has a FCVAR_DONTRECORD flag
+        !nDisplayedConnectedRecording &&
+        replay_replaywelcomedlgcount.GetInt() <= MAX_TIMES_TO_SHOW_REPLAY_WELCOME_DLG )
     {
         wchar_t wText[256];
         wchar wKeyBind[80];

@@ -31,7 +31,7 @@ class CGrenadeSpit : public CBaseGrenade
 {
     DECLARE_CLASS( CGrenadeSpit, CBaseGrenade );
 
-   public:
+    public:
     CGrenadeSpit( void );
 
     virtual void Spawn( void );
@@ -48,7 +48,7 @@ class CGrenadeSpit : public CBaseGrenade
     void Detonate( void );
     void Think( void );
 
-   private:
+    private:
     DECLARE_DATADESC();
 
     void InitHissSound( void );

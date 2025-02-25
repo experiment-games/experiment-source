@@ -294,14 +294,14 @@ void CTFWeaponPDA_Spy::CheckDisguiseTimer( void )
     // Get the player owning the weapon.
     CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
     if ( !pPlayer )
-      return;
+    return;
 
     if ( pPlayer->m_Shared.InCond( TF_COND_DISGUISING ) )
     {
-      if ( gpGlobals->curtime > pPlayer->m_Shared.GetDisguiseCompleteTime() )
-      {
+    if ( gpGlobals->curtime > pPlayer->m_Shared.GetDisguiseCompleteTime() )
+    {
         pPlayer->m_Shared.CompleteDisguise();
-      }
+    }
     }
     */
 }
@@ -456,7 +456,7 @@ bool CTFWeaponPDA_Engineer_Destroy::VisibleInWeaponSelection( void )
 {
     if ( IsConsole()
 #ifdef CLIENT_DLL
-         || ::input->IsSteamControllerActive() || tf_build_menu_controller_mode.GetBool()
+        || ::input->IsSteamControllerActive() || tf_build_menu_controller_mode.GetBool()
 #endif
     )
     {

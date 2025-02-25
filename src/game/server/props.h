@@ -26,7 +26,7 @@ class CBaseProp : public CBaseAnimating
 {
     DECLARE_CLASS( CBaseProp, CBaseAnimating );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void Activate( void );
@@ -52,7 +52,7 @@ class CBaseProp : public CBaseAnimating
 //-----------------------------------------------------------------------------
 class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public CDefaultPlayerPickupVPhysics
 {
-   public:
+    public:
     CBreakableProp();
 
     DECLARE_CLASS( CBreakableProp, CBaseProp );
@@ -124,7 +124,7 @@ class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public C
     // Disable auto fading under dx7 or when level fades are specified
     void DisableAutoFade();
 
-   public:
+    public:
     COutputEvent m_OnBreak;
     COutputFloat m_OnHealthChanged;
     COutputEvent m_OnTakeDamage;
@@ -135,7 +135,7 @@ class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public C
 
     QAngle m_preferredCarryAngles;
 
-   public:
+    public:
     // IBreakableWithPropData
     void SetDmgModBullet( float flDmgMod )
     {
@@ -266,11 +266,11 @@ class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public C
     // Copy fade from another breakable prop
     void CopyFadeFrom( CBreakableProp *pSource );
 
-   protected:
+    protected:
     bool UpdateHealth( int iNewHealth, CBaseEntity *pActivator );
     virtual void OnBreak( const Vector &vecVelocity, const AngularImpulse &angVel, CBaseEntity *pBreaker ) {}
 
-   protected:
+    protected:
     unsigned int m_createTick;
     float m_flPressureDelay;
     EHANDLE m_hBreaker;
@@ -299,10 +299,10 @@ class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public C
     bool GetEnableMotionPosition( Vector *pPosition, QAngle *pAngles );
     void ClearEnableMotionPosition();
 
-   private:
+    private:
     CBaseEntity *FindEnableMotionFixup();
 
-   public:
+    public:
     virtual bool OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
     virtual void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
     virtual void OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t reason );
@@ -313,11 +313,11 @@ class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public C
     void CreateFlare( float flLifetime );
 #endif  // HL2_EPISODIC
 
-   protected:
+    protected:
     void SetPhysicsAttacker( CBasePlayer *pEntity, float flTime );
     void CheckRemoveRagdolls();
 
-   private:
+    private:
     void InputEnablePhyscannonPickup( inputdata_t &inputdata );
     void InputDisablePhyscannonPickup( inputdata_t &inputdata );
 
@@ -334,7 +334,7 @@ class CBreakableProp : public CBaseProp, public IBreakableWithPropData, public C
     void ForceFadeScaleToAlwaysVisible();
     void RampToDefaultFadeScale();
 
-   private:
+    private:
     enum PhysgunState_t
     {
         PHYSGUN_MUST_BE_DETACHED = 0,
@@ -380,7 +380,7 @@ class CDynamicProp : public CBreakableProp, public IPositionWatcher
 {
     DECLARE_CLASS( CDynamicProp, CBreakableProp );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -435,7 +435,7 @@ class CDynamicProp : public CBreakableProp, public IPositionWatcher
 
     CNetworkVar( bool, m_bUseHitboxesForRenderBox );
 
-   protected:
+    protected:
     void FinishSetSequence( int nSequence );
     void PropSetAnim( const char *szAnim );
     void BoneFollowerHierarchyChanged();
@@ -453,7 +453,7 @@ class CPhysicsProp : public CBreakableProp, public IPhysicsPropAutoList
     DECLARE_CLASS( CPhysicsProp, CBreakableProp );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     ~CPhysicsProp();
     CPhysicsProp( void )
     {
@@ -506,7 +506,7 @@ class CPhysicsProp : public CBreakableProp, public IPhysicsPropAutoList
         return m_massScale;
     }
 
-   private:
+    private:
     // Compute impulse to apply to the enabled entity.
     void ComputeEnablingImpulse( int index, gamevcollisionevent_t *pEvent );
 
@@ -530,7 +530,7 @@ class CPhysicsProp : public CBreakableProp, public IPhysicsPropAutoList
     bool m_bThrownByPlayer;
     bool m_bFirstCollisionAfterLaunch;
 
-   protected:
+    protected:
     CNetworkVar( bool, m_bAwake );
 };
 
@@ -542,7 +542,7 @@ enum parentCollisionInteraction_t
 
 abstract_class IParentPropInteraction
 {
-   public:
+    public:
     virtual void OnParentCollisionInteraction( parentCollisionInteraction_t eType, int index, gamevcollisionevent_t *pEvent ) = 0;
     virtual void OnParentPhysGunDrop( CBasePlayer * pPhysGunUser, PhysGunDrop_t Reason ) = 0;
 };

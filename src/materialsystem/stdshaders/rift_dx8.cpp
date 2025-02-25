@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER( Rift_DX8,
-                 "Help for Rift_DX8" )
+                "Help for Rift_DX8" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( TEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "second texture" )

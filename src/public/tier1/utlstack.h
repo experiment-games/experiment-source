@@ -26,7 +26,7 @@
 template < class T, class M = CUtlMemory< T > >
 class CUtlStack
 {
-   public:
+    public:
     // constructor, destructor
     CUtlStack( int growSize = 0, int initSize = 0 );
     ~CUtlStack();
@@ -73,7 +73,7 @@ class CUtlStack
     // Memory deallocation
     void Purge();
 
-   private:
+    private:
     // Grows the stack allocation
     void GrowStack();
 

@@ -58,7 +58,7 @@ class CTFFlameThrower : public CTFWeaponBaseGun
 {
     DECLARE_CLASS( CTFFlameThrower, CTFWeaponBaseGun );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -183,7 +183,7 @@ class CTFFlameThrower : public CTFWeaponBaseGun
         return m_bCritFire;
     }
 
-   private:
+    private:
     Vector GetMuzzlePosHelper( bool bVisualPos );
     const char *GetNewFlameEffectInternal( int nTeam, bool bCrit );
 #if defined( GAME_DLL )
@@ -228,7 +228,7 @@ class CTFFlameThrower : public CTFWeaponBaseGun
 
     class FlameEffect_t
     {
-       public:
+        public:
         FlameEffect_t( CTFFlameThrower *pFlamethrower )
             : m_pFlameEffect( NULL ), m_pFlamethrower( pFlamethrower ), m_pOwner( NULL ), m_hEffectWeapon( NULL )
         {
@@ -241,7 +241,7 @@ class CTFFlameThrower : public CTFWeaponBaseGun
             return m_pFlameEffect;
         }
 
-       private:
+        private:
         CNewParticleEffect *m_pFlameEffect;
         CTFFlameThrower *m_pFlamethrower;
         CTFPlayer *m_pOwner;
@@ -271,7 +271,7 @@ class CTFFlameRocket : public CTFBaseRocket
 {
     DECLARE_CLASS( CTFFlameRocket, CTFBaseRocket );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 };
 
@@ -284,11 +284,11 @@ class CTFFlameEntity : public CBaseEntity, public ITFFlameEntityAutoList
 {
     DECLARE_CLASS( CTFFlameEntity, CBaseEntity );
 
-   public:
+    public:
     CTFFlameEntity();
     virtual void Spawn( void );
 
-   public:
+    public:
     static CTFFlameEntity *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, float flSpeed, int iDmgType, float m_flDmgAmount, bool bAlwaysCritFromBehind, bool bRandomize = true );
 
     void FlameThink( void );
@@ -301,7 +301,7 @@ class CTFFlameEntity : public CBaseEntity, public ITFFlameEntityAutoList
         return m_hAttacker.Get() == pEnt;
     }
 
-   private:
+    private:
     void RemoveFlame();
     void OnCollide( CBaseEntity *pOther );
     void OnCollideWithTeammate( CTFPlayer *pPlayer );
@@ -330,7 +330,7 @@ class CTFFlameEntity : public CBaseEntity, public ITFFlameEntityAutoList
 
 class CTraceFilterIgnoreObjects : public CTraceFilterSimple
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS( CTraceFilterIgnoreObjects, CTraceFilterSimple );
 

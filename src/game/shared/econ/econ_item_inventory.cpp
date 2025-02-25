@@ -446,7 +446,7 @@ void CInventoryManager::SendItemSystemConnectedEvent( void )
 //-----------------------------------------------------------------------------
 class CGCDev_NewItemRequestResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCDev_NewItemRequestResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -644,13 +644,13 @@ void CInventoryManager::MoveItemToBackpackPosition( CEconItemView *pItem, int iB
 //-----------------------------------------------------------------------------
 class CWaitForBackpackSortFinishDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitForBackpackSortFinishDialog( vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         InventoryManager()->SortBackpackFinished();
@@ -685,7 +685,7 @@ void CInventoryManager::SortBackpackFinished( void )
 //-----------------------------------------------------------------------------
 class CGBackpackSortFinished : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGBackpackSortFinished( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -1015,7 +1015,7 @@ void CInventoryManager::VerifyAckFileLoaded( void )
     m_pkvItemClientAckFile = new KeyValues( ITEM_CLIENTACK_FILE );
 
     ISteamRemoteStorage *pRemoteStorage = SteamClient() ? ( ISteamRemoteStorage * )SteamClient()->GetISteamGenericInterface(
-                                                              SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
+                                                            SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
                                                         : NULL;
 
     if ( pRemoteStorage )
@@ -1091,7 +1091,7 @@ void CInventoryManager::SaveAckFile( void )
     m_bClientAckDirty = false;
 
     ISteamRemoteStorage *pRemoteStorage = SteamClient() ? ( ISteamRemoteStorage * )SteamClient()->GetISteamGenericInterface(
-                                                              SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
+                                                            SteamAPI_GetHSteamUser(), SteamAPI_GetHSteamPipe(), STEAMREMOTESTORAGE_INTERFACE_VERSION )
                                                         : NULL;
 
     if ( pRemoteStorage )
@@ -1114,7 +1114,7 @@ void CInventoryManager::SaveAckFile( void )
 //-----------------------------------------------------------------------------
 class CGCLookupAccountNameResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCLookupAccountNameResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -1133,7 +1133,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCLookupAccountNameResponse, "CGCLookupAccountNam
 
 class CGCLookupMultipleAccountsNameResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCLookupMultipleAccountsNameResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -2326,7 +2326,7 @@ CON_COMMAND_F( item_giveitem, "Give an item to the local player. Format: item_gi
 
         criteria.SetIgnoreEnabledFlag( true );
         if ( !criteria.BAddCondition( "name", k_EOperator_String_EQ, pszItemname, true ) ||
-             !criteria.BSerializeToMsg( *msg.Body().mutable_criteria() ) )
+            !criteria.BSerializeToMsg( *msg.Body().mutable_criteria() ) )
         {
             Msg( "Failed to add condition and/or serialize item grant request. This is probably caused by having a string that's too long.\n" );
             return;

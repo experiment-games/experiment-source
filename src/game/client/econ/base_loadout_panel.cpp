@@ -666,42 +666,42 @@ bool CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
     ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
     if ( nButtonCode == KEY_XBUTTON_UP ||
-         nButtonCode == KEY_XSTICK1_UP ||
-         nButtonCode == KEY_XSTICK2_UP ||
-         nButtonCode == KEY_UP )
+        nButtonCode == KEY_XSTICK1_UP ||
+        nButtonCode == KEY_XSTICK2_UP ||
+        nButtonCode == KEY_UP )
     {
         SelectAdjacentItem( 0, -1 );
         return true;
     }
     else if ( nButtonCode == KEY_XBUTTON_DOWN ||
-              nButtonCode == KEY_XSTICK1_DOWN ||
-              nButtonCode == KEY_XSTICK2_DOWN ||
-              nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-              nButtonCode == KEY_DOWN )
+            nButtonCode == KEY_XSTICK1_DOWN ||
+            nButtonCode == KEY_XSTICK2_DOWN ||
+            nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
+            nButtonCode == KEY_DOWN )
     {
         SelectAdjacentItem( 0, 1 );
         return true;
     }
     else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-              nButtonCode == KEY_XSTICK1_RIGHT ||
-              nButtonCode == KEY_XSTICK2_RIGHT ||
-              nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-              nButtonCode == KEY_RIGHT )
+            nButtonCode == KEY_XSTICK1_RIGHT ||
+            nButtonCode == KEY_XSTICK2_RIGHT ||
+            nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
+            nButtonCode == KEY_RIGHT )
     {
         SelectAdjacentItem( 1, 0 );
         return true;
     }
     else if ( nButtonCode == KEY_XBUTTON_LEFT ||
-              nButtonCode == KEY_XSTICK1_LEFT ||
-              nButtonCode == KEY_XSTICK2_LEFT ||
-              nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-              nButtonCode == KEY_LEFT )
+            nButtonCode == KEY_XSTICK1_LEFT ||
+            nButtonCode == KEY_XSTICK2_LEFT ||
+            nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
+            nButtonCode == KEY_LEFT )
     {
         SelectAdjacentItem( -1, 0 );
         return true;
     }
     else if ( code == KEY_PAGEDOWN ||
-              nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER )
+            nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER )
     {
         if ( m_nCurrentPage < GetNumPages() - 1 )
         {
@@ -711,7 +711,7 @@ bool CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
         return true;
     }
     else if ( code == KEY_PAGEUP ||
-              nButtonCode == KEY_XBUTTON_LEFT_SHOULDER )
+            nButtonCode == KEY_XBUTTON_LEFT_SHOULDER )
     {
         if ( m_nCurrentPage > 0 )
         {

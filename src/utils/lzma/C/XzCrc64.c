@@ -20,7 +20,7 @@
   ((v <<  8) & ((UInt64)0xFF << 32)) | \
   ((v << 24) & ((UInt64)0xFF << 40)) | \
   ((v << 40) & ((UInt64)0xFF << 48)) | \
-   (v << 56))
+    (v << 56))
   UInt64 MY_FAST_CALL XzCrc64UpdateT1_BeT4(UInt64 v, const void *data, size_t size, const UInt64 *table);
 #endif
 
@@ -51,7 +51,7 @@ void MY_FAST_CALL Crc64GenerateTable()
     UInt64 r = i;
     unsigned j;
     for (j = 0; j < 8; j++)
-      r = (r >> 1) ^ (kCrc64Poly & ~((r & 1) - 1));
+    r = (r >> 1) ^ (kCrc64Poly & ~((r & 1) - 1));
     g_Crc64Table[i] = r;
   }
   for (; i < 256 * CRC_NUM_TABLES; i++)
@@ -59,12 +59,12 @@ void MY_FAST_CALL Crc64GenerateTable()
     UInt64 r = g_Crc64Table[i - 256];
     g_Crc64Table[i] = g_Crc64Table[r & 0xFF] ^ (r >> 8);
   }
-  
+
   #ifdef MY_CPU_LE
 
   g_Crc64Update = XzCrc64UpdateT4;
 
-  
+
 
 
 
@@ -74,16 +74,16 @@ void MY_FAST_CALL Crc64GenerateTable()
     #ifndef MY_CPU_BE
     UInt32 k = 1;
     if (*(const Byte *)&k == 1)
-      g_Crc64Update = XzCrc64UpdateT4;
+    g_Crc64Update = XzCrc64UpdateT4;
     else
     #endif
     {
-      for (i = 256 * CRC_NUM_TABLES - 1; i >= 256; i--)
-      {
+    for (i = 256 * CRC_NUM_TABLES - 1; i >= 256; i--)
+    {
         UInt64 x = g_Crc64Table[i - 256];
         g_Crc64Table[i] = CRC_UINT64_SWAP(x);
-      }
-      g_Crc64Update = XzCrc64UpdateT1_BeT4;
+    }
+    g_Crc64Update = XzCrc64UpdateT1_BeT4;
     }
   }
   #endif

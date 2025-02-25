@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 class C_PointWorldText : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_PointWorldText, C_BaseEntity );
 
     DECLARE_CLIENTCLASS();
@@ -31,7 +31,7 @@ class C_PointWorldText : public C_BaseEntity
 
     bool IsTransparent( void );
 
-   private:
+    private:
     void UpdateRenderBounds();
     void ComputeCornerVertices( const QAngle &angles, const Vector &origin, Vector *pVerts ) const;
 

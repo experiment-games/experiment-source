@@ -20,7 +20,7 @@ EXTERN_RECV_TABLE( DT_HL2Local );
 
 class C_HL2PlayerLocalData
 {
-   public:
+    public:
     DECLARE_PREDICTABLE();
     DECLARE_CLASS_NOBASE( C_HL2PlayerLocalData );
     DECLARE_EMBEDDED_NETWORKVAR();

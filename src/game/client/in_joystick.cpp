@@ -584,9 +584,9 @@ void CInput::DescribeJoystickAxis( char const *axis, joy_axis_t *mapping )
     else
     {
         Msg( "%s:  mapped to %s (%s)\n",
-             axis,
-             DescribeAxis( mapping->AxisMap ),
-             mapping->ControlMap != 0 ? "relative" : "absolute" );
+            axis,
+            DescribeAxis( mapping->AxisMap ),
+            mapping->ControlMap != 0 ? "relative" : "absolute" );
     }
 }
 

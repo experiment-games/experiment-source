@@ -53,12 +53,12 @@ typedef enum
 /* convert an object to an integer (including string coercion) */
 #define tointeger( o, i )                                        \
     ( l_likely( ttisinteger( o ) ) ? ( *( i ) = ivalue( o ), 1 ) \
-                                   : luaV_tointeger( o, i, LUA_FLOORN2I ) )
+                                    : luaV_tointeger( o, i, LUA_FLOORN2I ) )
 
 /* convert an object to an integer (without string coercion) */
 #define tointegerns( o, i )                                      \
     ( l_likely( ttisinteger( o ) ) ? ( *( i ) = ivalue( o ), 1 ) \
-                                   : luaV_tointegerns( o, i, LUA_FLOORN2I ) )
+                                    : luaV_tointegerns( o, i, LUA_FLOORN2I ) )
 
 #define intop( op, v1, v2 ) l_castU2S( l_castS2U( v1 ) op l_castS2U( v2 ) )
 
@@ -73,9 +73,9 @@ typedef enum
 */
 #define luaV_fastget( L, t, k, slot, f )                                                    \
     ( !ttistable( t )                                                                       \
-          ? ( slot = NULL, 0 )            /* not a table; 'slot' is NULL and result is 0 */ \
-          : ( slot = f( hvalue( t ), k ), /* else, do raw access */                         \
-              !isempty( slot ) ) )        /* result not empty? */
+        ? ( slot = NULL, 0 )            /* not a table; 'slot' is NULL and result is 0 */ \
+        : ( slot = f( hvalue( t ), k ), /* else, do raw access */                         \
+            !isempty( slot ) ) )        /* result not empty? */
 
 /*
 ** Special case of 'luaV_fastget' for integers, inlining the fast case
@@ -83,11 +83,11 @@ typedef enum
 */
 #define luaV_fastgeti( L, t, k, slot )                                           \
     ( !ttistable( t )                                                            \
-          ? ( slot = NULL, 0 ) /* not a table; 'slot' is NULL and result is 0 */ \
-          : ( slot = ( l_castS2U( k ) - 1u < hvalue( t )->alimit )               \
-                         ? &hvalue( t )->array[k - 1]                            \
-                         : luaH_getint( hvalue( t ), k ),                        \
-              !isempty( slot ) ) ) /* result not empty? */
+        ? ( slot = NULL, 0 ) /* not a table; 'slot' is NULL and result is 0 */ \
+        : ( slot = ( l_castS2U( k ) - 1u < hvalue( t )->alimit )               \
+                        ? &hvalue( t )->array[k - 1]                            \
+                        : luaH_getint( hvalue( t ), k ),                        \
+            !isempty( slot ) ) ) /* result not empty? */
 
 /*
 ** Finish a fast set operation (when fast get succeeds). In that case,

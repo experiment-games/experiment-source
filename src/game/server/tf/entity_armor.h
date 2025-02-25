@@ -19,7 +19,7 @@
 
 class CArmor : public CTFPowerup
 {
-   public:
+    public:
     DECLARE_CLASS( CArmor, CTFPowerup );
 
     void Spawn( void );

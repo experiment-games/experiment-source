@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CZombieSpecialAttack : public Action< CZombie >
 {
-   public:
+    public:
     virtual ActionResult< CZombie > OnStart( CZombie *me, Action< CZombie > *priorAction );
     virtual ActionResult< CZombie > Update( CZombie *me, float interval );
 
@@ -18,7 +18,7 @@ class CZombieSpecialAttack : public Action< CZombie >
     {
         return "Special Attack";
     }  // return name of this action
-   private:
+    private:
     void DoSpecialAttack( CZombie *me );
 
     CountdownTimer m_stompTimer;

@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 abstract_class IServerBrowser
 {
-   public:
+    public:
     // activates the server browser window, brings it to the foreground
     virtual bool Activate() = 0;
 

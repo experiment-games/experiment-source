@@ -25,7 +25,7 @@ enum VehicleSeatQuery_e;
 // vehicles are not restricted in what they can derive from.
 abstract_class IServerVehicle : public IVehicle
 {
-   public:
+    public:
     // Get the entity associated with the vehicle.
     virtual CBaseEntity *GetVehicleEnt() = 0;
 
@@ -111,7 +111,7 @@ abstract_class IServerVehicle : public IVehicle
 // handler (i.e. something derived CBaseServerVehicle.
 abstract_class IDrivableVehicle
 {
-   public:
+    public:
     virtual CBaseEntity *GetDriver( void ) = 0;
 
     // Process movement

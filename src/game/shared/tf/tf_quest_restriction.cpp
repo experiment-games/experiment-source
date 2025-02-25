@@ -473,7 +473,7 @@ bool CTFQuestEvaluator::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReason
 //-----------------------------------------------------------------------------
 class CTFQuestOperatorRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestOperatorRestriction, CTFQuestRestriction )
 
     virtual ~CTFQuestOperatorRestriction()
@@ -577,7 +577,7 @@ class CTFQuestOperatorRestriction : public CTFQuestRestriction
         return s_nMaxInputCount;
     }
 
-   protected:
+    protected:
     CUtlVector< CTFQuestRestriction * > m_vecRestrictions;
 };
 
@@ -586,7 +586,7 @@ class CTFQuestOperatorRestriction : public CTFQuestRestriction
 //-----------------------------------------------------------------------------
 class CTFQuestAndOperatorRestriction : public CTFQuestOperatorRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestAndOperatorRestriction, CTFQuestOperatorRestriction )
 
     virtual bool PassesRestrictions( IGameEvent *pEvent ) const OVERRIDE
@@ -626,7 +626,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestAndOperatorRestriction, AND, FIELD_N
 //-----------------------------------------------------------------------------
 class CTFQuestOrOperatorRestriction : public CTFQuestOperatorRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestOrOperatorRestriction, CTFQuestOperatorRestriction )
 
     virtual bool PassesRestrictions( IGameEvent *pEvent ) const OVERRIDE
@@ -666,7 +666,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestOrOperatorRestriction, OR, FIELD_NON
 //-----------------------------------------------------------------------------
 class CTFQuestNotOperatorRestriction : public CTFQuestOperatorRestriction
 {
-   public:
+    public:
     virtual bool PassesRestrictions( IGameEvent *pEvent ) const OVERRIDE
     {
         return !m_vecRestrictions[0]->PassesRestrictions( pEvent );
@@ -694,7 +694,7 @@ class CTFQuestNotOperatorRestriction : public CTFQuestOperatorRestriction
         }
     }
 
-   protected:
+    protected:
     virtual int GetMaxInputCount() const OVERRIDE
     {
         return 1;
@@ -704,7 +704,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestNotOperatorRestriction, NOT, FIELD_N
 
 class CTFGenericStringRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     CTFGenericStringRestriction()
         : m_pszKeyName( NULL ), m_pszValue( NULL )
     {
@@ -764,7 +764,7 @@ class CTFGenericStringRestriction : public CTFQuestRestriction
         GetValidParamsKeyFromEvent( "value", m_pszFieldName, m_pszEventName, pRequiredKeys );
     }
 
-   protected:
+    protected:
     const char *m_pszKeyName;
     const char *m_pszValue;
     bool m_bStringsEqual = true;
@@ -772,7 +772,7 @@ class CTFGenericStringRestriction : public CTFQuestRestriction
 
 class CTFGenericSubStringRestriction : public CTFGenericStringRestriction
 {
-   public:
+    public:
     CTFGenericSubStringRestriction()
     {
     }
@@ -791,7 +791,7 @@ class CTFGenericSubStringRestriction : public CTFGenericStringRestriction
 
 class CTFWeaponClassRestriction : public CTFGenericStringRestriction
 {
-   public:
+    public:
     CTFWeaponClassRestriction()
     {
     }
@@ -815,7 +815,7 @@ class CTFWeaponClassRestriction : public CTFGenericStringRestriction
 
 class CTFWeaponDefindexRestriction : public CTFGenericStringRestriction
 {
-   public:
+    public:
     CTFWeaponDefindexRestriction()
     {
     }
@@ -835,7 +835,7 @@ class CTFWeaponDefindexRestriction : public CTFGenericStringRestriction
                     return true;
 
                 if ( pItemDef->GetXifierRemapClass() && pRequiredItemDef->GetXifierRemapClass() &&
-                     FStrEq( pItemDef->GetXifierRemapClass(), pRequiredItemDef->GetXifierRemapClass() ) )
+                    FStrEq( pItemDef->GetXifierRemapClass(), pRequiredItemDef->GetXifierRemapClass() ) )
                     return true;
             }
         }
@@ -861,7 +861,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFGenericStringRestriction, var, FIELD_VAR 
 //-----------------------------------------------------------------------------
 class CTFQuestBasePlayerRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     CTFQuestBasePlayerRestriction()
         : m_pszPlayerKey( NULL ), m_pszPlayerMethod( NULL )
     {
@@ -954,7 +954,7 @@ class CTFQuestBasePlayerRestriction : public CTFQuestRestriction
         pOutputKeys->SetString( "get_player", m_pszPlayerMethod );
     }
 
-   protected:
+    protected:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const = 0;
 
     const char *m_pszPlayerKey;
@@ -966,7 +966,7 @@ class CTFQuestBasePlayerRestriction : public CTFQuestRestriction
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerDisguiseRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestPlayerDisguiseRestriction() {}
 
     enum EDisguiseTargetState_t
@@ -1028,7 +1028,7 @@ class CTFQuestPlayerDisguiseRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetInt( "disguise_target", m_eDisguiseState );
     }
 
-   protected:
+    protected:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         // Disguise state check
@@ -1069,7 +1069,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerDisguiseRestriction, player_di
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerJumpingRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestPlayerJumpingRestriction() {}
 
     enum EJumpingState_t
@@ -1124,7 +1124,7 @@ class CTFQuestPlayerJumpingRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetInt( "jumping_state", m_eJumpingState );
     }
 
-   protected:
+    protected:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
 #ifdef GAME_DLL
@@ -1167,7 +1167,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerJumpingRestriction, player_jum
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerAliveRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestPlayerAliveRestriction() {}
 
     virtual bool BInitFromKV( KeyValues *pKVItem, CUtlVector< CUtlString > *pVecErrors /* = NULL */ ) OVERRIDE
@@ -1203,7 +1203,7 @@ class CTFQuestPlayerAliveRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetInt( "alive_state", m_bAliveState );
     }
 
-   protected:
+    protected:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         return ( pPlayer->m_iHealth > 0 ) == m_bAliveState;
@@ -1218,7 +1218,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerAliveRestriction, player_alive
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerDistanceRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestPlayerDistanceRestriction() {}
 
     virtual bool BInitFromKV( KeyValues *pKVItem, CUtlVector< CUtlString > *pVecErrors /* = NULL */ ) OVERRIDE
@@ -1264,7 +1264,7 @@ class CTFQuestPlayerDistanceRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetInt( "distance_to_check", m_nDistance );
     }
 
-   protected:
+    protected:
     enum EDistanceCheck_t
     {
         INVALID_CHECK_TYPE = 0,
@@ -1297,7 +1297,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerDistanceRestriction, player_di
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerIsOwnerRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestPlayerIsOwnerRestriction() {}
 
     virtual bool BInitFromKV( KeyValues *pKVItem, CUtlVector< CUtlString > *pVecErrors /* = NULL */ ) OVERRIDE
@@ -1343,7 +1343,7 @@ class CTFQuestPlayerIsOwnerRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetBool( "is_owner", m_bIsOwner );
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         return m_bIsOwner == ( pPlayer == GetQuestOwner() );
@@ -1358,7 +1358,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerIsOwnerRestriction, player_is_
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerIsEnemyRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestPlayerIsEnemyRestriction() {}
 
     virtual bool BInitFromKV( KeyValues *pKVItem, CUtlVector< CUtlString > *pVecErrors /* = NULL */ ) OVERRIDE
@@ -1377,7 +1377,7 @@ class CTFQuestPlayerIsEnemyRestriction : public CTFQuestBasePlayerRestriction
         return true;
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         Assert( pPlayer != GetQuestOwner() );
@@ -1394,7 +1394,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerIsOwnerRestriction, player_is_
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerClassRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestPlayerClassRestriction, CTFQuestBasePlayerRestriction )
 
     CTFQuestPlayerClassRestriction()
@@ -1461,7 +1461,7 @@ class CTFQuestPlayerClassRestriction : public CTFQuestBasePlayerRestriction
         }
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         // Check if the classes match
@@ -1479,7 +1479,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerClassRestriction, player_class
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerConditionRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     virtual const char *GetValueString() const OVERRIDE
     {
         return GetTFConditionName( m_eCondition );
@@ -1532,7 +1532,7 @@ class CTFQuestPlayerConditionRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetBool( "provider_must_be_owner", m_bOwnerMustBeProvider );
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         // Must be in the condition
@@ -1556,12 +1556,12 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerConditionRestriction, player_c
 //-----------------------------------------------------------------------------
 class CTFQuestPlayerObjectRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestPlayerObjectRestriction, CTFQuestBasePlayerRestriction )
 
     CTFQuestPlayerObjectRestriction()
         : m_pszObjectKey( NULL ),
-          m_eObjectType( OBJ_DISPENSER )
+        m_eObjectType( OBJ_DISPENSER )
     {
     }
 
@@ -1619,7 +1619,7 @@ class CTFQuestPlayerObjectRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetString( "value", GetValueString() );
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         int nEntIndex = pEvent->GetInt( m_pszObjectKey );
@@ -1641,7 +1641,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestPlayerObjectRestriction, object_type
 //-----------------------------------------------------------------------------
 class CTFQuestScorerRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     CTFQuestScorerRestriction()
         : m_pszScorerKey( NULL )
     {
@@ -1682,7 +1682,7 @@ class CTFQuestScorerRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetString( "scorer_key", m_pszScorerKey );
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
 #ifdef GAME_DLL
@@ -1709,7 +1709,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestScorerRestriction, scorer, FIELD_PLA
 //-----------------------------------------------------------------------------
 class CTFQuestWeaponTypeRestriction : public CTFGenericStringRestriction
 {
-   public:
+    public:
     virtual const char *GetValueString() const OVERRIDE
     {
         return WeaponIdToAlias( m_eWeaponType );
@@ -1732,7 +1732,7 @@ class CTFQuestWeaponTypeRestriction : public CTFGenericStringRestriction
         return m_eWeaponType == weaponID;
     }
 
-   private:
+    private:
     ETFWeaponType m_eWeaponType;
 };
 REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestWeaponTypeRestriction, weapon_type, FIELD_WEAPON_TYPE );
@@ -1742,7 +1742,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestWeaponTypeRestriction, weapon_type, 
 //-----------------------------------------------------------------------------
 class CTFQuestCustomDamageRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     virtual const char *GetValueString() const OVERRIDE
     {
         return m_strValue;
@@ -1796,7 +1796,7 @@ class CTFQuestCustomDamageRestriction : public CTFQuestRestriction
         pOutputKeys->SetString( "value", GetValueString() );
     }
 
-   private:
+    private:
     ETFDmgCustom m_eCustomDamageType;
     const char *m_pszCustomDamageKey;
     CUtlString m_strValue;
@@ -1808,7 +1808,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestCustomDamageRestriction, custom_dama
 //-----------------------------------------------------------------------------
 class CTFFlagEventTypeRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     CTFFlagEventTypeRestriction()
         : m_eEventType( TF_FLAGEVENT_CAPTURE ), m_pszKeyName( NULL )
     {
@@ -1864,7 +1864,7 @@ class CTFFlagEventTypeRestriction : public CTFQuestRestriction
         pOutputKeys->SetString( "event_key", m_pszKeyName );
     }
 
-   private:
+    private:
     ETFFlagEventTypes m_eEventType;
     const char *m_pszKeyName;
 };
@@ -1881,7 +1881,7 @@ static const char *s_pszTeamRestrictionNames[] =
 //-----------------------------------------------------------------------------
 class CTFQuestTeamRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     enum ETeamRestriction
     {
         TEAM_RESTRICTION_ANY = 0,
@@ -1926,7 +1926,7 @@ class CTFQuestTeamRestriction : public CTFQuestRestriction
         const CTFPlayer *pOwner = GetQuestOwner();
         bool bTeamIsOwners = nTeam == pOwner->GetTeamNumber();
         if ( ( m_eTeamRestriction == TEAM_RESTRICTION_IS_OWNERS && !bTeamIsOwners ) ||
-             ( m_eTeamRestriction == TEAM_RESTRICTION_IS_NOT_OWNERS && bTeamIsOwners ) )
+            ( m_eTeamRestriction == TEAM_RESTRICTION_IS_NOT_OWNERS && bTeamIsOwners ) )
         {
             return false;
         }
@@ -1960,7 +1960,7 @@ class CTFQuestTeamRestriction : public CTFQuestRestriction
         pOutputKeys->SetString( "team_key", m_pszTeamKey );
     }
 
-   private:
+    private:
     ETeamRestriction m_eTeamRestriction;
     const char *m_pszTeamKey;
 };
@@ -1971,7 +1971,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestTeamRestriction, team_restriction, F
 //-----------------------------------------------------------------------------
 class CTFQuestMapRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestMapRestriction, CTFQuestRestriction )
 
     CTFQuestMapRestriction()
@@ -2020,8 +2020,8 @@ class CTFQuestMapRestriction : public CTFQuestRestriction
         pMapKey->SetString( "control_type", "text_entry" );
         /*for ( int i=0; i<maps.Count(); ++i )
         {
-          const char *pszMapName = maps[i].pszMapName;
-          pMapKey->AddSubKey( new KeyValues( pszMapName ) );
+        const char *pszMapName = maps[i].pszMapName;
+        pMapKey->AddSubKey( new KeyValues( pszMapName ) );
         }*/
 
         pRequiredKeys->AddSubKey( pMapKey );
@@ -2034,7 +2034,7 @@ class CTFQuestMapRestriction : public CTFQuestRestriction
         pOutputKeys->SetString( "value", GetValueString() );
     }
 
-   private:
+    private:
     bool IsValidMap() const
     {
 #ifdef CLIENT_DLL
@@ -2055,7 +2055,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestMapRestriction, map, FIELD_NONE );
 //-----------------------------------------------------------------------------
 class CTFQuestGameTypeRestriction : public CTFQuestRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestGameTypeRestriction, CTFQuestRestriction )
 
     CTFQuestGameTypeRestriction()
@@ -2117,7 +2117,7 @@ class CTFQuestGameTypeRestriction : public CTFQuestRestriction
         pOutputKeys->SetString( "value", GetValueString() );
     }
 
-   private:
+    private:
     ETFGameType m_eGameType;
 };
 REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestGameTypeRestriction, game_type, FIELD_NONE );
@@ -2127,7 +2127,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestGameTypeRestriction, game_type, FIEL
 //-----------------------------------------------------------------------------
 class CTFQuestLoadoutPositionRestriction : public CTFQuestBasePlayerRestriction
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestLoadoutPositionRestriction, CTFQuestRestriction )
 
     CTFQuestLoadoutPositionRestriction()
@@ -2179,7 +2179,7 @@ class CTFQuestLoadoutPositionRestriction : public CTFQuestBasePlayerRestriction
         pOutputKeys->SetString( "loadout_key", m_pszLoadoutKey );
     }
 
-   private:
+    private:
     virtual bool BPlayerCheck( const CTFPlayer *pPlayer, IGameEvent *pEvent ) const OVERRIDE
     {
         int iClass = pPlayer->GetPlayerClass()->GetClassIndex();
@@ -2208,7 +2208,7 @@ REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestLoadoutPositionRestriction, loadout_
 //-----------------------------------------------------------------------------
 class CTFConditionQuestCondition : public CTFQuestRestriction
 {
-   public:
+    public:
     CTFConditionQuestCondition()
         : m_pszKeyName( NULL )
     {
@@ -2251,7 +2251,7 @@ class CTFConditionQuestCondition : public CTFQuestRestriction
         pOutputKeys->SetString( "condition_key", m_pszKeyName );
     }
 
-   private:
+    private:
     virtual bool PassesRestrictions( IGameEvent *pEvent ) const OVERRIDE
     {
         return pEvent->GetInt( m_pszKeyName ) == m_eCondition;
@@ -2306,7 +2306,7 @@ CTFQuestRestriction *CreateRestrictionByName( const char *pszName, CTFQuestCondi
 //-----------------------------------------------------------------------------
 class CTFQuestEventListener : public CTFQuestEvaluator, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestEventListener, CTFQuestEvaluator )
 
     CTFQuestEventListener()
@@ -2529,7 +2529,7 @@ class CTFQuestEventListener : public CTFQuestEvaluator, public CGameEventListene
         return 1;
     }
 
-   protected:
+    protected:
     const char *m_pszEventName;
     const char *m_pszOverrideScoreKeyName;
     CTFQuestRestriction *m_pRestrictions;
@@ -2540,7 +2540,7 @@ class CTFQuestEventListener : public CTFQuestEvaluator, public CGameEventListene
 //-----------------------------------------------------------------------------
 class CTFQuestCountEvaluator : public CTFQuestEvaluator
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestCountEvaluator, CTFQuestEvaluator )
 
     virtual ~CTFQuestCountEvaluator()
@@ -2738,7 +2738,7 @@ class CTFQuestCountEvaluator : public CTFQuestEvaluator
         vecOutValidChildren.AddToTail( "counter" );
     }
 
-   private:
+    private:
     CUtlVector< CTFQuestEvaluator * > m_vecChildren;
 
     int GetTotalCount()

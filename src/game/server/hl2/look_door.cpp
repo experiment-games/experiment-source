@@ -19,7 +19,7 @@
 
 class CLookDoor : public CFuncMoveLinear
 {
-   public:
+    public:
     DECLARE_CLASS( CLookDoor, CFuncMoveLinear );
 
     void Spawn( void );
@@ -40,7 +40,7 @@ class CLookDoor : public CFuncMoveLinear
 
 class CLookDoorThinker : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLookDoorThinker, CLogicalEntity );
 
     void LookThink( void );

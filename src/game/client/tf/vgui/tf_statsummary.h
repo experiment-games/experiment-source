@@ -28,10 +28,10 @@ extern ClassDetails_t g_PerClassStatDetails[15];
 
 class CTFStatsSummaryPanel : public vgui::EditablePanel, public CGameEventListener
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFStatsSummaryPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFStatsSummaryPanel();
     CTFStatsSummaryPanel( vgui::Panel *parent );
     ~CTFStatsSummaryPanel();
@@ -52,7 +52,7 @@ class CTFStatsSummaryPanel : public vgui::EditablePanel, public CGameEventListen
 
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     MESSAGE_FUNC( OnActivate, "activate" );
     MESSAGE_FUNC( OnDeactivate, "deactivate" );
 

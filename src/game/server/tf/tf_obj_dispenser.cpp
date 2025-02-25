@@ -186,8 +186,8 @@ void CObjectDispenser::FirstSpawn()
     bool bShouldBeMini = ShouldBeMiniBuilding( GetOwner() );
 
     UTIL_SetSize( this,
-                  bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
-                  bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
+                bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
+                bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
 
     m_takedamage = DAMAGE_YES;
     m_iAmmoMetal = 0;
@@ -354,8 +354,8 @@ void CObjectDispenser::SetModel( const char *pModel )
 
     // Reset this after model change
     UTIL_SetSize( this,
-                  DISPENSER_MINS,
-                  DISPENSER_MAXS );
+                DISPENSER_MINS,
+                DISPENSER_MAXS );
     ResetSequenceInfo();
 }
 
@@ -556,8 +556,8 @@ bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
             // This is crude; it doesn't account for the value difference in resupplying rockets vs pistol bullets.
             // Still, it's better than nothing when trying to measure the value classes generate.
             if ( TFGameRules() &&
-                 TFGameRules()->GameModeUsesUpgrades() &&
-                 TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
+                TFGameRules()->GameModeUsesUpgrades() &&
+                TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
             {
                 CTF_GameStats.Event_PlayerAwardBonusPoints( pOwner, pPlayer, 1 );
             }
@@ -927,7 +927,7 @@ bool CObjectDispenser::CouldHealTarget( CBaseEntity *pTarget )
 
             // if they're disguised as enemy
             if ( pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) &&
-                 pTFPlayer->m_Shared.GetDisguiseTeam() != iTeam )
+                pTFPlayer->m_Shared.GetDisguiseTeam() != iTeam )
             {
                 return false;
             }

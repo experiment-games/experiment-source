@@ -44,7 +44,7 @@ class CHudCommentary : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudCommentary, vgui::Panel );
 
-   public:
+    public:
     CHudCommentary( const char *name );
 
     virtual void Init( void );
@@ -66,7 +66,7 @@ class CHudCommentary : public CHudElement, public vgui::Panel
     virtual void Paint( void );
     virtual bool ShouldDraw( void );
 
-   private:
+    private:
     CHandle< C_PointCommentaryNode > m_hActiveNode;
     bool m_bShouldPaint;
     float m_flStartTime;
@@ -103,7 +103,7 @@ class C_PointCommentaryNode : public C_BaseAnimating
 {
     DECLARE_CLASS( C_PointCommentaryNode, C_BaseAnimating );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_DATADESC();
 
@@ -176,7 +176,7 @@ class C_PointCommentaryNode : public C_BaseAnimating
         }
     }
 
-   public:
+    public:
     // Data received from the server
     bool m_bActive;
     bool m_bWasActive;

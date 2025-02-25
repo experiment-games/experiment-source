@@ -10,7 +10,7 @@
 
 class CTFBotPayloadGuard : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual ActionResult< CTFBot > OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
@@ -31,7 +31,7 @@ class CTFBotPayloadGuard : public Action< CTFBot >
         return "PayloadGuard";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
 

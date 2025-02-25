@@ -21,7 +21,7 @@ class IPlayerGroup;
 
 class IPlayerGroupInvite
 {
-   public:
+    public:
     virtual ~IPlayerGroupInvite() {}
 
     virtual CSteamID GetInviter() const = 0;
@@ -32,7 +32,7 @@ class IPlayerGroupInvite
 
 class IPlayerGroup
 {
-   public:
+    public:
     virtual ~IPlayerGroup() {}
 
     virtual PlayerGroupID_t GetGroupID() const = 0;

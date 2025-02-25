@@ -122,18 +122,18 @@ void CItemMaterialCustomizationIconPanel::DrawQuad( int iSubtileIndex, int iSubt
     //
     // My hope is that this code is so awful I'm never allowed to write UI code again.
     float fXScale = 1.0f / ( float )iSubtileCount,
-          fXOffsetL = ( float )iSubtileIndex * fXScale,
-          fXOffsetR = ( float )( iSubtileIndex + 1 ) * fXScale,
-          fXUpperLowerOffset = fXScale * 0.65f;
+        fXOffsetL = ( float )iSubtileIndex * fXScale,
+        fXOffsetR = ( float )( iSubtileIndex + 1 ) * fXScale,
+        fXUpperLowerOffset = fXScale * 0.65f;
 
     // We shift our coordinates on the top slightly to the right (by fXUpperLowerOffset) and on
     // the bottom slightly to the left (also by fXUpperLowerOffset). The far left side can't move
     // away from 0 and the far right side can't move away from 1, so the edge case handling makes
     // this look uglier than it really is.
     float fXUL = iSubtileIndex == 0 ? fXOffsetL : fXOffsetL + fXUpperLowerOffset,
-          fXUR = iSubtileIndex == iSubtileCount - 1 ? fXOffsetR : fXOffsetR + fXUpperLowerOffset,
-          fXBL = iSubtileIndex == 0 ? fXOffsetL : fXOffsetL - fXUpperLowerOffset,
-          fXBR = iSubtileIndex == iSubtileCount - 1 ? fXOffsetR : fXOffsetR - fXUpperLowerOffset;
+        fXUR = iSubtileIndex == iSubtileCount - 1 ? fXOffsetR : fXOffsetR + fXUpperLowerOffset,
+        fXBL = iSubtileIndex == 0 ? fXOffsetL : fXOffsetL - fXUpperLowerOffset,
+        fXBR = iSubtileIndex == iSubtileCount - 1 ? fXOffsetR : fXOffsetR - fXUpperLowerOffset;
 
     Vector2D uv11( fXUL, 0.0f );
     Vector2D uv21( fXUR, 0.0f );
@@ -2235,8 +2235,8 @@ void CItemModelPanel::SetItem( const CEconItemView *pItem )
 
                 // Our current item is a base item. Our new item needs to be base too, and match item indices and quality
                 bMatch &= ( m_ItemData.GetItemDefIndex() == pItem->GetItemDefIndex() ) &&
-                          ( m_ItemData.GetItemQuality() == pItem->GetItemQuality() ) &&
-                          ( m_ItemData.GetSOCData() == pItem->GetSOCData() );
+                        ( m_ItemData.GetItemQuality() == pItem->GetItemQuality() ) &&
+                        ( m_ItemData.GetSOCData() == pItem->GetSOCData() );
             }
         }
         if ( !bMatch )
@@ -2326,8 +2326,8 @@ void CItemModelPanel::ShowContainedItemPanel( const CEconItemView *pItem )
             return;
 
         const IEconTool *pEconTool = pItem->GetItemDefinition()
-                                         ? pItem->GetItemDefinition()->GetEconTool()
-                                         : NULL;
+                                        ? pItem->GetItemDefinition()->GetEconTool()
+                                        : NULL;
         if ( !pEconTool )
             return;
 

@@ -39,7 +39,7 @@
 
 Widget::Widget(int number, const std::string& name)
     : number_(number),
-      name_(name) {}
+    name_(name) {}
 
 Widget::~Widget() {}
 

@@ -428,11 +428,11 @@ void CEventPlayListEntry::UpdateExpireLabel()
         int nSecs = rtTimeRemaining % 60 % 60;
 
         V_snwprintf( wszTimeBuf,
-                     V_ARRAYSIZE( wszTimeBuf ),
-                     g_pVGuiLocalize->Find( "#TF_Matchmaking_SpecialEvent_ExpireShort" ),
-                     nHrs,
-                     nMins,
-                     nSecs );
+                    V_ARRAYSIZE( wszTimeBuf ),
+                    g_pVGuiLocalize->Find( "#TF_Matchmaking_SpecialEvent_ExpireShort" ),
+                    nHrs,
+                    nMins,
+                    nSecs );
     }
 
     SetDialogVariable( "expire", m_rtExpireTime == 0 ? L"" : wszTimeBuf );
@@ -504,7 +504,7 @@ bool BEventActive()
 {
     auto &msgWorldStatus = GTFGCClientSystem()->WorldStatus();
     return ( msgWorldStatus.event_match_group() != k_eTFMatchGroup_Invalid &&
-             CRTime( msgWorldStatus.event_expire_time() ) > CRTime::RTime32TimeCur() );
+            CRTime( msgWorldStatus.event_expire_time() ) > CRTime::RTime32TimeCur() );
 }
 
 void CEventPlayListEntry::UpdateEventMatchGroup()

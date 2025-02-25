@@ -258,9 +258,9 @@ void CNewParticleEffect::RecordControlPointOrientation( int nWhichPoint )
 }
 
 void CNewParticleEffect::SetControlPointOrientation( int nWhichPoint,
-                                                     const Vector &forward,
-                                                     const Vector &right,
-                                                     const Vector &up )
+                                                    const Vector &forward,
+                                                    const Vector &right,
+                                                    const Vector &up )
 {
     CParticleCollection::SetControlPointOrientation( nWhichPoint, forward, right, up );
     RecordControlPointOrientation( nWhichPoint );
@@ -370,20 +370,20 @@ void CNewParticleEffect::DetectChanges()
 
     // if nothing changed, return
     if ( m_MinBounds.x < m_LastMin.x ||
-         m_MinBounds.y < m_LastMin.y ||
-         m_MinBounds.z < m_LastMin.z ||
+        m_MinBounds.y < m_LastMin.y ||
+        m_MinBounds.z < m_LastMin.z ||
 
-         m_MinBounds.x > ( m_LastMin.x + flExtraBuffer ) ||
-         m_MinBounds.y > ( m_LastMin.y + flExtraBuffer ) ||
-         m_MinBounds.z > ( m_LastMin.z + flExtraBuffer ) ||
+        m_MinBounds.x > ( m_LastMin.x + flExtraBuffer ) ||
+        m_MinBounds.y > ( m_LastMin.y + flExtraBuffer ) ||
+        m_MinBounds.z > ( m_LastMin.z + flExtraBuffer ) ||
 
-         m_MaxBounds.x > m_LastMax.x ||
-         m_MaxBounds.y > m_LastMax.y ||
-         m_MaxBounds.z > m_LastMax.z ||
+        m_MaxBounds.x > m_LastMax.x ||
+        m_MaxBounds.y > m_LastMax.y ||
+        m_MaxBounds.z > m_LastMax.z ||
 
-         m_MaxBounds.x < ( m_LastMax.x - flExtraBuffer ) ||
-         m_MaxBounds.y < ( m_LastMax.y - flExtraBuffer ) ||
-         m_MaxBounds.z < ( m_LastMax.z - flExtraBuffer ) )
+        m_MaxBounds.x < ( m_LastMax.x - flExtraBuffer ) ||
+        m_MaxBounds.y < ( m_LastMax.y - flExtraBuffer ) ||
+        m_MaxBounds.z < ( m_LastMax.z - flExtraBuffer ) )
     {
         // call leafsystem to updated this guy
         ClientLeafSystem()->RenderableChanged( m_hRenderHandle );
@@ -533,8 +533,8 @@ int CNewParticleEffect::DrawModel( int flags )
         C_BaseEntity *pCameraObject = cl_entitylist->GetEnt( viewentity );
         // apply logic that lets you skip rendering a system if the camera is attached to its entity
         if ( pCameraObject &&
-             ( m_pDef->m_nSkipRenderControlPoint != -1 ) &&
-             ( m_pDef->m_nSkipRenderControlPoint <= m_nHighestCP ) )
+            ( m_pDef->m_nSkipRenderControlPoint != -1 ) &&
+            ( m_pDef->m_nSkipRenderControlPoint <= m_nHighestCP ) )
         {
             C_BaseEntity *pEntity = ( EHANDLE )GetControlPointEntity( m_pDef->m_nSkipRenderControlPoint );
             if ( pEntity )

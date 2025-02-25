@@ -31,31 +31,31 @@ ConVar cl_npc_speedmod_outtime( "cl_npc_speedmod_outtime", "1.5", FCVAR_CLIENTDL
 // clang-format off
 
 IMPLEMENT_CLIENTCLASS_DT(C_BaseHLPlayer, DT_HL2_Player, CHL2_Player)
-	RecvPropDataTable( RECVINFO_DT(m_HL2Local),0, &REFERENCE_RECV_TABLE(DT_HL2Local) ),
-	RecvPropBool( RECVINFO( m_fIsSprinting ) ),
+    RecvPropDataTable( RECVINFO_DT(m_HL2Local),0, &REFERENCE_RECV_TABLE(DT_HL2Local) ),
+    RecvPropBool( RECVINFO( m_fIsSprinting ) ),
 END_RECV_TABLE()
 
 BEGIN_PREDICTION_DATA( C_BaseHLPlayer )
-	DEFINE_PRED_TYPEDESCRIPTION( m_HL2Local, C_HL2PlayerLocalData ),
-	DEFINE_PRED_FIELD( m_fIsSprinting, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_TYPEDESCRIPTION( m_HL2Local, C_HL2PlayerLocalData ),
+    DEFINE_PRED_FIELD( m_fIsSprinting, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
 END_PREDICTION_DATA()
 
 BEGIN_RECV_TABLE_NOBASE( LadderMove_t, DT_LadderMove )
-	RecvPropBool( RECVINFO( m_bForceLadderMove ) ),
-	RecvPropBool( RECVINFO( m_bForceMount ) ),
-	RecvPropFloat( RECVINFO( m_flStartTime ) ),
-	RecvPropFloat( RECVINFO( m_flArrivalTime ) ),
-	RecvPropVector( RECVINFO( m_vecGoalPosition ) ),
-	RecvPropVector( RECVINFO( m_vecStartPosition ) ),
+    RecvPropBool( RECVINFO( m_bForceLadderMove ) ),
+    RecvPropBool( RECVINFO( m_bForceMount ) ),
+    RecvPropFloat( RECVINFO( m_flStartTime ) ),
+    RecvPropFloat( RECVINFO( m_flArrivalTime ) ),
+    RecvPropVector( RECVINFO( m_vecGoalPosition ) ),
+    RecvPropVector( RECVINFO( m_vecStartPosition ) ),
 END_RECV_TABLE()
 
 BEGIN_PREDICTION_DATA_NO_BASE( LadderMove_t )
-	DEFINE_PRED_FIELD( m_bForceLadderMove, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_bForceMount, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD_TOL( m_flStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
-	DEFINE_PRED_FIELD_TOL( m_flArrivalTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
-	DEFINE_PRED_FIELD( m_vecGoalPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
-	DEFINE_PRED_FIELD( m_vecStartPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
+    DEFINE_PRED_FIELD( m_bForceLadderMove, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( m_bForceMount, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD_TOL( m_flStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
+    DEFINE_PRED_FIELD_TOL( m_flArrivalTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
+    DEFINE_PRED_FIELD( m_vecGoalPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
+    DEFINE_PRED_FIELD( m_vecStartPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
 END_PREDICTION_DATA()
 
 static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
@@ -226,8 +226,8 @@ bool C_BaseHLPlayer::TestMove( const Vector &pos, float fVertDist, float radius,
     {
         // check if the endpos intersects with the direction the object is travelling.  if it doesn't, this is a good direction to move.
         if ( objDir.IsZero() ||
-             ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) &&
-               ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
+            ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) &&
+                ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
         {
             // our first trace failed, so see if we can go farther if we step up.
 
@@ -241,7 +241,7 @@ bool C_BaseHLPlayer::TestMove( const Vector &pos, float fVertDist, float radius,
             {
                 // check if the endpos intersects with the direction the object is travelling.  if it doesn't, this is a good direction to move.
                 if ( objDir.IsZero() ||
-                     ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) && ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
+                    ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) && ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
                 {
                     return false;
                 }
@@ -308,7 +308,7 @@ void C_BaseHLPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUse
     bool istryingtomove = false;
     bool ismovingforward = false;
     if ( fabs( pCmd->forwardmove ) > 0.0f ||
-         fabs( pCmd->sidemove ) > 0.0f )
+        fabs( pCmd->sidemove ) > 0.0f )
     {
         istryingtomove = true;
         if ( pCmd->forwardmove > 1.0f )
@@ -375,12 +375,12 @@ void C_BaseHLPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUse
         float flDirProduct = DotProduct( vRayDir, vPlayerVel );
 
         if ( !IntersectInfiniteRayWithSphere(
-                 GetAbsOrigin(),
-                 vRayDir,
-                 obj->GetAbsOrigin(),
-                 radius,
-                 &flHit1,
-                 &flHit2 ) )
+                GetAbsOrigin(),
+                vRayDir,
+                obj->GetAbsOrigin(),
+                radius,
+                &flHit1,
+                &flHit2 ) )
             continue;
 
         Vector dirToObject = -vecToObject;
@@ -590,20 +590,20 @@ void C_BaseHLPlayer::PerformClientSideNPCSpeedModifiers( float flFrameTime, CUse
                     VectorNormalize(vecMyVelocity);
                     if ( flSpeed > 1.0 )
                     {
-                      // Velocity roughly parallel?
-                      if ( DotProduct(vecTargetVelocity,vecMyVelocity) > 0.4  )
-                      {
+                    // Velocity roughly parallel?
+                    if ( DotProduct(vecTargetVelocity,vecMyVelocity) > 0.4  )
+                    {
                         bShouldModSpeed = true;
-                      }
+                    }
                     }
                     else
                     {
-                      // NPC's not moving, slow down if we're moving at him
-                      //Msg("Dot: %.2f\n", DotProduct( los, vecMyVelocity ) );
-                      if ( DotProduct( los, vecMyVelocity ) > 0.8 )
-                      {
+                    // NPC's not moving, slow down if we're moving at him
+                    //Msg("Dot: %.2f\n", DotProduct( los, vecMyVelocity ) );
+                    if ( DotProduct( los, vecMyVelocity ) > 0.8 )
+                    {
                         bShouldModSpeed = true;
-                      }
+                    }
                     }
                     */
 

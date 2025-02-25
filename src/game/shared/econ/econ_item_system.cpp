@@ -445,7 +445,7 @@ bool IDelayedSchemaData::InitializeSchemaInternal( CEconItemSchema *pItemSchema,
 //-----------------------------------------------------------------------------
 class DelayedSchemaData_GCDirectData : public IDelayedSchemaData
 {
-   public:
+    public:
     DelayedSchemaData_GCDirectData( const std::string &strBuffer )
         : m_bufRawData( strBuffer.data(), strBuffer.size(), CUtlBuffer::READ_ONLY )
     {
@@ -457,7 +457,7 @@ class DelayedSchemaData_GCDirectData : public IDelayedSchemaData
         return InitializeSchemaInternal( pItemSchema, m_bufRawData, true, 0 );
     }
 
-   private:
+    private:
     CUtlBuffer m_bufRawData;
 };
 
@@ -468,7 +468,7 @@ extern bool CheckValveSignature( const void *data, uint32 nDataSize, const void 
 //-----------------------------------------------------------------------------
 class DelayedSchemaData_HTTPResponseData : public IDelayedSchemaData
 {
-   public:
+    public:
     DelayedSchemaData_HTTPResponseData( ISteamHTTP *pHTTP, HTTPRequestHandle handleHTTPRequest, uint32 unBodySize, uint32 nExpectedVersion, const std::string &sSignature )
         : m_nExpectedVersion( nExpectedVersion )
     {
@@ -490,7 +490,7 @@ class DelayedSchemaData_HTTPResponseData : public IDelayedSchemaData
         return InitializeSchemaInternal( pItemSchema, m_bufRawData, false, m_nExpectedVersion );
     }
 
-   private:
+    private:
     bool m_bValid;
     CUtlBuffer m_bufRawData;
     uint32 m_nExpectedVersion;
@@ -504,7 +504,7 @@ class DelayedSchemaData_HTTPResponseData : public IDelayedSchemaData
 //-----------------------------------------------------------------------------
 class CGCUpdateItemSchema : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCUpdateItemSchema( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient )
     {

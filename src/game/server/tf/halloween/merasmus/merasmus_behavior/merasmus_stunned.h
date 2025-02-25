@@ -8,7 +8,7 @@
 
 class CMerasmusStunned : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
     virtual void OnEnd( CMerasmus *me, Action< CMerasmus > *nextAction );
@@ -17,7 +17,7 @@ class CMerasmusStunned : public Action< CMerasmus >
     {
         return "Stunned!";
     }  // return name of this action
-   private:
+    private:
     enum StunStage_t
     {
         STUN_BEGIN,

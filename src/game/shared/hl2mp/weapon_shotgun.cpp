@@ -25,19 +25,19 @@ extern ConVar sk_plr_num_shotgun_pellets;
 
 class CWeaponShotgun : public CBaseHL2MPCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponShotgun, CBaseHL2MPCombatWeapon );
 
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
-   private:
+    private:
     CNetworkVar( bool, m_bNeedPump );       // When emptied completely
     CNetworkVar( bool, m_bDelayedFire1 );   // Fire primary when finished reloading
     CNetworkVar( bool, m_bDelayedFire2 );   // Fire secondary when finished reloading
     CNetworkVar( bool, m_bDelayedReload );  // Reload when finished pump
 
-   public:
+    public:
     virtual const Vector &GetBulletSpread( void )
     {
         static Vector cone = VECTOR_CONE_10DEGREES;
@@ -76,7 +76,7 @@ class CWeaponShotgun : public CBaseHL2MPCombatWeapon
 
     CWeaponShotgun( void );
 
-   private:
+    private:
     CWeaponShotgun( const CWeaponShotgun & );
 };
 

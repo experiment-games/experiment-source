@@ -53,37 +53,37 @@ import java.io.UnsupportedEncodingException;
 public class IsValidUtf8Test extends TestCase {
 
   /**
-   * Tests that round tripping of all two byte permutations work.
-   */
+    * Tests that round tripping of all two byte permutations work.
+    */
   public void testIsValidUtf8_1Byte() throws UnsupportedEncodingException {
     IsValidUtf8TestUtil.testBytes(1,
         IsValidUtf8TestUtil.EXPECTED_ONE_BYTE_ROUNDTRIPPABLE_COUNT);
   }
 
   /**
-   * Tests that round tripping of all two byte permutations work.
-   */
+    * Tests that round tripping of all two byte permutations work.
+    */
   public void testIsValidUtf8_2Bytes() throws UnsupportedEncodingException {
     IsValidUtf8TestUtil.testBytes(2,
         IsValidUtf8TestUtil.EXPECTED_TWO_BYTE_ROUNDTRIPPABLE_COUNT);
   }
 
   /**
-   * Tests that round tripping of all three byte permutations work.
-   */
+    * Tests that round tripping of all three byte permutations work.
+    */
   public void testIsValidUtf8_3Bytes() throws UnsupportedEncodingException {
     IsValidUtf8TestUtil.testBytes(3,
         IsValidUtf8TestUtil.EXPECTED_THREE_BYTE_ROUNDTRIPPABLE_COUNT);
   }
 
   /**
-   * Tests that round tripping of a sample of four byte permutations work.
-   * All permutations are prohibitively expensive to test for automated runs;
-   * {@link IsValidUtf8FourByteTest} is used for full coverage. This method
-   * tests specific four-byte cases.
-   */
+    * Tests that round tripping of a sample of four byte permutations work.
+    * All permutations are prohibitively expensive to test for automated runs;
+    * {@link IsValidUtf8FourByteTest} is used for full coverage. This method
+    * tests specific four-byte cases.
+    */
   public void testIsValidUtf8_4BytesSamples()
-      throws UnsupportedEncodingException {
+    throws UnsupportedEncodingException {
     // Valid 4 byte.
     assertValidUtf8(0xF0, 0xA4, 0xAD, 0xA2);
 
@@ -97,8 +97,8 @@ public class IsValidUtf8Test extends TestCase {
   }
 
   /**
-   * Tests some hard-coded test cases.
-   */
+    * Tests some hard-coded test cases.
+    */
   public void testSomeSequences() {
     // Empty
     assertTrue(asBytes("").isValidUtf8());
@@ -127,7 +127,7 @@ public class IsValidUtf8Test extends TestCase {
   private byte[] toByteArray(int... bytes) {
     byte[] realBytes = new byte[bytes.length];
     for (int i = 0; i < bytes.length; i++) {
-      realBytes[i] = (byte) bytes[i];
+    realBytes[i] = (byte) bytes[i];
     }
     return realBytes;
   }
@@ -145,14 +145,14 @@ public class IsValidUtf8Test extends TestCase {
     assertTrue(not ^ lit.isValidUtf8());
     assertTrue(not ^ sub.isValidUtf8());
     ByteString[] ropes = {
-      RopeByteString.newInstanceForTest(ByteString.EMPTY, lit),
-      RopeByteString.newInstanceForTest(ByteString.EMPTY, sub),
-      RopeByteString.newInstanceForTest(lit, ByteString.EMPTY),
-      RopeByteString.newInstanceForTest(sub, ByteString.EMPTY),
-      RopeByteString.newInstanceForTest(sub, lit)
+    RopeByteString.newInstanceForTest(ByteString.EMPTY, lit),
+    RopeByteString.newInstanceForTest(ByteString.EMPTY, sub),
+    RopeByteString.newInstanceForTest(lit, ByteString.EMPTY),
+    RopeByteString.newInstanceForTest(sub, ByteString.EMPTY),
+    RopeByteString.newInstanceForTest(sub, lit)
     };
     for (ByteString rope : ropes) {
-      assertTrue(not ^ rope.isValidUtf8());
+    assertTrue(not ^ rope.isValidUtf8());
     }
   }
 
@@ -172,7 +172,7 @@ public class IsValidUtf8Test extends TestCase {
     // A sanity check.
     int actual = 0;
     for (Shard shard : IsValidUtf8TestUtil.FOUR_BYTE_SHARDS) {
-      actual += shard.expected;
+    actual += shard.expected;
     }
     assertEquals(IsValidUtf8TestUtil.EXPECTED_FOUR_BYTE_ROUNDTRIPPABLE_COUNT,
         actual);

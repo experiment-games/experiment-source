@@ -9,7 +9,7 @@ class CHL2MPBot;
 
 class CHL2MPBotSquad : public INextBotEventResponder
 {
-   public:
+    public:
     CHL2MPBotSquad( void );
     virtual ~CHL2MPBotSquad() {}
 
@@ -28,7 +28,7 @@ class CHL2MPBotSquad : public INextBotEventResponder
 
     class Iterator
     {
-       public:
+        public:
         Iterator( void )
         {
             m_bot = NULL;
@@ -87,7 +87,7 @@ class CHL2MPBotSquad : public INextBotEventResponder
         return m_bShouldPreserveSquad;
     }
 
-   private:
+    private:
     friend class CHL2MPBot;
 
     void Join( CHL2MPBot *bot );

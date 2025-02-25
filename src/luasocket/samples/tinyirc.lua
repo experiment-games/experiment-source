@@ -74,16 +74,16 @@ while 1 do
                 io.write("Removing client from set\n")
                 set:remove(input)
             else
-            	io.write("Broadcasting line '", line, "'\n")
-            	writable, error = socket.skip(1, socket.select(nil, set, 1))
-            	if not error then
-                	for __, output in ipairs(writable) do
-                    	if output ~= input then
+                io.write("Broadcasting line '", line, "'\n")
+                writable, error = socket.skip(1, socket.select(nil, set, 1))
+                if not error then
+                    for __, output in ipairs(writable) do
+                        if output ~= input then
                             output:send(line .. "\n")
                         end
-                	end
-            	else io.write("No client ready to receive!!!\n") end
-			end
+                    end
+                else io.write("No client ready to receive!!!\n") end
+            end
         end
     end
 end

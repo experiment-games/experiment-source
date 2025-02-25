@@ -10,14 +10,14 @@
  */
 class C_BotNPCMinion : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_BotNPCMinion, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
     C_BotNPCMinion();
     virtual ~C_BotNPCMinion();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual bool IsNextBot()
     {
@@ -30,7 +30,7 @@ class C_BotNPCMinion : public C_NextBotCombatCharacter
 
     virtual void ClientThink();
 
-   private:
+    private:
     C_BotNPCMinion( const C_BotNPCMinion& );  // not defined, not accessible
 
     CNetworkHandle( C_BaseEntity, m_stunTarget );

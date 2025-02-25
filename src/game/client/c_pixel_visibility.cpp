@@ -140,30 +140,30 @@ float PixelVisibility_DrawProxy( IMatRenderContext *pRenderContext, OcclusionQue
 
     // sprite/quad proxy
 #if 0
-	meshBuilder.Begin( pMesh, MATERIAL_QUADS, 1 );
+    meshBuilder.Begin( pMesh, MATERIAL_QUADS, 1 );
 
-	VectorMA (origin, -scale, CurrentViewUp(), point);
-	VectorMA (point, -scale, CurrentViewRight(), point);
-	meshBuilder.Position3fv (point.Base());
-	meshBuilder.AdvanceVertex();
+    VectorMA (origin, -scale, CurrentViewUp(), point);
+    VectorMA (point, -scale, CurrentViewRight(), point);
+    meshBuilder.Position3fv (point.Base());
+    meshBuilder.AdvanceVertex();
 
-	VectorMA (origin, scale, CurrentViewUp(), point);
-	VectorMA (point, -scale, CurrentViewRight(), point);
-	meshBuilder.Position3fv (point.Base());
-	meshBuilder.AdvanceVertex();
+    VectorMA (origin, scale, CurrentViewUp(), point);
+    VectorMA (point, -scale, CurrentViewRight(), point);
+    meshBuilder.Position3fv (point.Base());
+    meshBuilder.AdvanceVertex();
 
-	VectorMA (origin, scale, CurrentViewUp(), point);
-	VectorMA (point, scale, CurrentViewRight(), point);
-	meshBuilder.Position3fv (point.Base());
-	meshBuilder.AdvanceVertex();
+    VectorMA (origin, scale, CurrentViewUp(), point);
+    VectorMA (point, scale, CurrentViewRight(), point);
+    meshBuilder.Position3fv (point.Base());
+    meshBuilder.AdvanceVertex();
 
-	VectorMA (origin, -scale, CurrentViewUp(), point);
-	VectorMA (point, scale, CurrentViewRight(), point);
-	meshBuilder.Position3fv (point.Base());
-	meshBuilder.AdvanceVertex();
-	
-	meshBuilder.End();
-	pMesh->Draw();
+    VectorMA (origin, -scale, CurrentViewUp(), point);
+    VectorMA (point, scale, CurrentViewRight(), point);
+    meshBuilder.Position3fv (point.Base());
+    meshBuilder.AdvanceVertex();
+
+    meshBuilder.End();
+    pMesh->Draw();
 #endif
     pRenderContext->EndOcclusionQueryDrawing( queryHandle );
 
@@ -173,7 +173,7 @@ float PixelVisibility_DrawProxy( IMatRenderContext *pRenderContext, OcclusionQue
 
 class CPixelVisSet
 {
-   public:
+    public:
     void Init( const pixelvis_queryparams_t &params );
     void MarkActive();
     bool IsActive();
@@ -185,7 +185,7 @@ class CPixelVisSet
         sizeIsScreenSpace = false;
     }
 
-   public:
+    public:
     float proxySize;
     float proxyAspect;
     float fadeTimeInv;
@@ -193,7 +193,7 @@ class CPixelVisSet
     unsigned short serial;
     bool sizeIsScreenSpace;
 
-   private:
+    private:
     int frameIssued;
 };
 
@@ -227,7 +227,7 @@ bool CPixelVisSet::IsActive()
 
 class CPixelVisibilityQuery
 {
-   public:
+    public:
     CPixelVisibilityQuery();
     ~CPixelVisibilityQuery();
     bool IsValid();
@@ -248,11 +248,11 @@ class CPixelVisibilityQuery
         m_hasValidQueryResults = false;
     }
 
-   public:
+    public:
     Vector m_origin;
     int m_frameIssued;
 
-   private:
+    private:
     float m_brightnessTarget;
     float m_clipFraction;
     OcclusionQueryObjectHandle_t m_queryHandle;
@@ -446,14 +446,14 @@ void CPixelVisibilityQuery::IssueCountingQuery( IMatRenderContext *pRenderContex
     {
         Assert( IsValid() );
 #if 0
-		// this centers it on the screen.
-		// This is nice because it makes the glows fade as they get partially clipped by the view frustum
-		// But it introduces sub-pixel errors (off by one row/column of pixels) so the glows shimmer
-		// UNDONE: Compute an offset center coord that matches sub-pixel coords with the real glow position
-		// UNDONE: Or frustum clip the sphere/geometry and fade based on proxy size
-		Vector origin = m_origin - CurrentViewOrigin();
-		float dot = DotProduct(CurrentViewForward(), origin);
-		origin = CurrentViewOrigin() + dot * CurrentViewForward();
+        // this centers it on the screen.
+        // This is nice because it makes the glows fade as they get partially clipped by the view frustum
+        // But it introduces sub-pixel errors (off by one row/column of pixels) so the glows shimmer
+        // UNDONE: Compute an offset center coord that matches sub-pixel coords with the real glow position
+        // UNDONE: Or frustum clip the sphere/geometry and fade based on proxy size
+        Vector origin = m_origin - CurrentViewOrigin();
+        float dot = DotProduct(CurrentViewForward(), origin);
+        origin = CurrentViewOrigin() + dot * CurrentViewForward();
 #endif
         PixelVisibility_DrawProxy( pRenderContext, m_queryHandleCount, m_origin, proxySize, proxyAspect, pMaterial, sizeIsScreenSpace );
     }
@@ -467,7 +467,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class CPixelVisibilitySystem : public CAutoGameSystem
 {
-   public:
+    public:
     // GameSystem: Level init, shutdown
     virtual void LevelInitPreEntity();
     virtual void LevelShutdownPostEntity();
@@ -494,13 +494,13 @@ class CPixelVisibilitySystem : public CAutoGameSystem
     void DebugInfo()
     {
         Msg( "Pixel vis system using %d sets total (%d in free list), %d queries total (%d in free list)\n",
-             m_setList.TotalCount(),
-             m_setList.Count( m_freeSetsList ),
-             m_queryList.TotalCount(),
-             m_queryList.Count( m_freeQueriesList ) );
+            m_setList.TotalCount(),
+            m_setList.Count( m_freeSetsList ),
+            m_queryList.TotalCount(),
+            m_queryList.Count( m_freeQueriesList ) );
     }
 
-   private:
+    private:
     CUtlMultiList< CPixelVisSet, unsigned short > m_setList;
     CUtlMultiList< CPixelVisibilityQuery, unsigned short > m_queryList;
     unsigned short m_freeQueriesList;
@@ -772,7 +772,7 @@ void PixelvisDrawChanged( IConVar *pPixelvisVar, const char *pOld, float flOldVa
 
 class CTraceFilterGlow : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterGlow, CTraceFilterSimple );
 
     CTraceFilterGlow( const IHandleEntity *passentity, int collisionGroup )

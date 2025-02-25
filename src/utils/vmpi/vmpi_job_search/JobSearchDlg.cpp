@@ -26,7 +26,7 @@ static char THIS_FILE[] = __FILE__;
 // These are stored with jobs to help with sorting and to remember the job ID.
 class CJobInfo
 {
-   public:
+    public:
     unsigned long m_JobID;
     CString m_StartTimeUnformatted;
     CString m_MachineName;
@@ -113,16 +113,16 @@ void CJobSearchDlg::OnDblclkJobsList( NMHDR *pNMHDR, LRESULT *pResult )
         memset( &pi, 0, sizeof( pi ) );
 
         if ( !CreateProcess(
-                 NULL,
-                 ( char * )( const char * )cmdLine,
-                 NULL,  // security
-                 NULL,
-                 TRUE,
-                 0,     // flags
-                 NULL,  // environment
-                 NULL,  // current directory
-                 &si,
-                 &pi ) )
+                NULL,
+                ( char * )( const char * )cmdLine,
+                NULL,  // security
+                NULL,
+                TRUE,
+                0,     // flags
+                NULL,  // environment
+                NULL,  // current directory
+                &si,
+                &pi ) )
         {
             CString errStr;
             errStr.Format( "Error launching '%s'", cmdLine.GetBuffer() );
@@ -261,7 +261,7 @@ bool ReadStringFromFile( FILE *fp, char *pStr, int strSize )
     for ( i; i < strSize - 2; i++ )
     {
         if ( fread( &pStr[i], 1, 1, fp ) != 1 ||
-             pStr[i] == '\n' )
+            pStr[i] == '\n' )
         {
             break;
         }
@@ -323,8 +323,8 @@ BOOL CJobSearchDlg::OnInitDialog()
 
         char hostName[512], dbName[512], userName[512];
         if ( !ReadStringFromFile( fp, hostName, sizeof( hostName ) ) ||
-             !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) ||
-             !ReadStringFromFile( fp, userName, sizeof( userName ) ) )
+            !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) ||
+            !ReadStringFromFile( fp, userName, sizeof( userName ) ) )
         {
             fclose( fp );
             Q_snprintf( str, sizeof( str ), "'%s' has invalid format.", pFilename );
@@ -417,7 +417,7 @@ BOOL CJobSearchDlg::OnInitDialog()
     m_AnchorMgr.AddAnchor( this, GetDlgItem( IDC_QUIT ), ANCHOR_WIDTH_PERCENT, ANCHOR_BOTTOM, ANCHOR_WIDTH_PERCENT, ANCHOR_BOTTOM );
 
     return TRUE;  // return TRUE unless you set the focus to a control
-                  // EXCEPTION: OCX Property Pages should return FALSE
+                // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CJobSearchDlg::PopulateWorkerList( CUtlVector< char * > &computerNames )

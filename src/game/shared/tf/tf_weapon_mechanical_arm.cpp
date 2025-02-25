@@ -200,7 +200,7 @@ void CTFMechanicalArm::ShockVictim( CTFPlayer *pOwner, CBaseEntity *pTarget )
                 if ( pTemp && ( pTemp->ObjectType() != OBJ_ATTACHMENT_SAPPER ) )
                 {
                     if ( ( pTemp->GetAbsOrigin().DistTo( pPipebomb->GetAbsOrigin() ) < 100 ) &&
-                         ( pTemp->FVisible( pPipebomb, MASK_SOLID_BRUSHONLY ) ) )
+                        ( pTemp->FVisible( pPipebomb, MASK_SOLID_BRUSHONLY ) ) )
                     {
                         pOwner->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_DESTROY_STICKIES, 1 );
                         break;  // Only one award per sticky.
@@ -228,7 +228,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
     if ( m_iPrimaryAmmoType == TF_AMMO_METAL )
     {
         if ( ( GetAmmoPerShot() > GetOwner()->GetAmmoCount( m_iPrimaryAmmoType ) ) ||
-             ( pOwner->GetWaterLevel() == WL_Eyes ) )
+            ( pOwner->GetWaterLevel() == WL_Eyes ) )
         {
             WeaponSound( EMPTY );
             m_flNextSecondaryAttack = gpGlobals->curtime + 0.67f;
@@ -433,7 +433,7 @@ void CTFMechanicalArm::PrimaryAttack()
     if ( m_iPrimaryAmmoType == TF_AMMO_METAL )
     {
         if ( ( GetAmmoPerShot() > GetOwner()->GetAmmoCount( m_iPrimaryAmmoType ) ) ||
-             ( pOwner->GetWaterLevel() == WL_Eyes ) )
+            ( pOwner->GetWaterLevel() == WL_Eyes ) )
         {
             WeaponSound( EMPTY );
             m_flNextPrimaryAttack = gpGlobals->curtime + flFireDelay;

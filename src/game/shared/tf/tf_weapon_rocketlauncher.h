@@ -34,7 +34,7 @@
 //
 class CTFRocketLauncher : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRocketLauncher, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -79,7 +79,7 @@ class CTFRocketLauncher : public CTFWeaponBaseGun
 
     virtual bool CanInspect() const OVERRIDE;
 
-   private:
+    private:
     float m_flShowReloadHintAt;
 
     // Since the ammo in the clip can be predicted/networked out of order from when the reload sound happens
@@ -97,7 +97,7 @@ class CTFRocketLauncher : public CTFWeaponBaseGun
 // ------------------------------------------------------------------------------------------------------------------------
 class CTFRocketLauncher_DirectHit : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRocketLauncher_DirectHit, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -116,7 +116,7 @@ class CTFRocketLauncher_DirectHit : public CTFRocketLauncher
 // ------------------------------------------------------------------------------------------------------------------------
 class CTFRocketLauncher_AirStrike : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRocketLauncher_AirStrike, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -146,7 +146,7 @@ class CTFRocketLauncher_AirStrike : public CTFRocketLauncher
 // ------------------------------------------------------------------------------------------------------------------------
 class CTFRocketLauncher_Mortar : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRocketLauncher_Mortar, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -169,7 +169,7 @@ class CTFRocketLauncher_Mortar : public CTFRocketLauncher
     virtual void ItemPostFrame( void );
     virtual void ItemBusyFrame( void );
 
-   private:
+    private:
     void RedirectRockets();
 
 #ifdef GAME_DLL
@@ -180,7 +180,7 @@ class CTFRocketLauncher_Mortar : public CTFRocketLauncher
 // ------------------------------------------------------------------------------------------------------------------------
 class CTFCrossbow : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFCrossbow, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -213,7 +213,7 @@ class CTFCrossbow : public CTFRocketLauncher
     CNetworkVar( float, m_flRegenerateDuration );
     CNetworkVar( float, m_flLastUsedTimestamp );
 
-   private:
+    private:
     bool m_bMilkNextAttack;
 };
 

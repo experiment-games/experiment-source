@@ -11,7 +11,7 @@
 
 class CDialogParams
 {
-   public:
+    public:
     float m_flLeftEye[3];
     float m_flRightEye[3];
 
@@ -48,7 +48,7 @@ class CDialogParams
 class CQC_EyesDlg : public CDialog
 {
     // Construction
-   public:
+    public:
     CQC_EyesDlg( CWnd *pParent = NULL );  // standard constructor
 
     // Dialog Data
@@ -63,12 +63,12 @@ class CQC_EyesDlg : public CDialog
 
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CQC_EyesDlg)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange *pDX );  // DDX/DDV support
                                                         //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     HICON m_hIcon;
 
     void GenerateQCText();
@@ -83,7 +83,7 @@ class CQC_EyesDlg : public CDialog
     // Cached list of bitmaps.
     class CBitmapRef
     {
-       public:
+        public:
         UINT m_iResource;
         HBITMAP m_hBitmap;
         CBitmapRef *m_pNext;

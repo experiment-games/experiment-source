@@ -402,8 +402,8 @@ Vector CTFProjectile_Throwable::GetVelocityVector( const Vector &vecForward, con
     float flSpeed = RemapVal( flCharge, 0, 1.0f, GetProjectileSpeed(), GetProjectileMaxSpeed() );
 
     return ( ( flSpeed * vecForward ) +
-             ( ( random->RandomFloat( -10.0f, 10.0f ) + 200.0f ) * vecUp ) +
-             ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) );
+            ( ( random->RandomFloat( -10.0f, 10.0f ) + 200.0f ) * vecUp ) +
+            ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) );
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 void CTFProjectile_Throwable::OnHit( CBaseEntity *pOther )

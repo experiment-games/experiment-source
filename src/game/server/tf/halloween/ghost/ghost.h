@@ -19,7 +19,7 @@ class CTFPlayer;
 //----------------------------------------------------------------------------
 class CGhostLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     DECLARE_CLASS( CGhostLocomotion, NextBotGroundLocomotion );
 
     CGhostLocomotion( INextBot *bot )
@@ -35,7 +35,7 @@ class CGhostLocomotion : public NextBotGroundLocomotion
 //----------------------------------------------------------------------------
 class CGhost : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CGhost, NextBotCombatCharacter );
 
     CGhost();
@@ -59,7 +59,7 @@ class CGhost : public NextBotCombatCharacter
 
     virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const;
 
-   private:
+    private:
     CGhostLocomotion *m_locomotor;
     Vector m_eyeOffset;
     Vector m_homePos;

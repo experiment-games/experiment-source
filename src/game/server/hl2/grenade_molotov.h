@@ -19,7 +19,7 @@
 
 class CGrenade_Molotov : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenade_Molotov, CBaseGrenade );
 
     virtual void Spawn( void );
@@ -28,7 +28,7 @@ class CGrenade_Molotov : public CBaseGrenade
     void MolotovTouch( CBaseEntity *pOther );
     void MolotovThink( void );
 
-   protected:
+    protected:
     SmokeTrail *m_pFireTrail;
 
     DECLARE_DATADESC();

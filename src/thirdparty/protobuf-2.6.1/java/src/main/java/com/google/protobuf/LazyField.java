@@ -46,13 +46,13 @@ import java.util.Map.Entry;
 public class LazyField extends LazyFieldLite {
 
   /**
-   * Carry a message's default instance which is used by {@code hashCode()}, {@code euqals()} and
-   * {@code toString()}.
-   */
+    * Carry a message's default instance which is used by {@code hashCode()}, {@code euqals()} and
+    * {@code toString()}.
+    */
   private final MessageLite defaultInstance;
 
   public LazyField(MessageLite defaultInstance,
-      ExtensionRegistryLite extensionRegistry, ByteString bytes) {
+    ExtensionRegistryLite extensionRegistry, ByteString bytes) {
     super(extensionRegistry, bytes);
 
     this.defaultInstance = defaultInstance;
@@ -85,42 +85,42 @@ public class LazyField extends LazyFieldLite {
   // ====================================================
 
   /**
-   * LazyEntry and LazyIterator are used to encapsulate the LazyField, when
-   * users iterate all fields from FieldSet.
-   */
+    * LazyEntry and LazyIterator are used to encapsulate the LazyField, when
+    * users iterate all fields from FieldSet.
+    */
   static class LazyEntry<K> implements Entry<K, Object> {
     private Entry<K, LazyField> entry;
 
     private LazyEntry(Entry<K, LazyField> entry) {
-      this.entry = entry;
+    this.entry = entry;
     }
 
     // @Override
     public K getKey() {
-      return entry.getKey();
+    return entry.getKey();
     }
 
     // @Override
     public Object getValue() {
-      LazyField field = entry.getValue();
-      if (field == null) {
+    LazyField field = entry.getValue();
+    if (field == null) {
         return null;
-      }
-      return field.getValue();
+    }
+    return field.getValue();
     }
 
     public LazyField getField() {
-      return entry.getValue();
+    return entry.getValue();
     }
 
     // @Override
     public Object setValue(Object value) {
-      if (!(value instanceof MessageLite)) {
+    if (!(value instanceof MessageLite)) {
         throw new IllegalArgumentException(
             "LazyField now only used for MessageSet, "
             + "and the value of MessageSet must be an instance of MessageLite");
-      }
-      return entry.getValue().setValue((MessageLite) value);
+    }
+    return entry.getValue().setValue((MessageLite) value);
     }
   }
 
@@ -128,27 +128,27 @@ public class LazyField extends LazyFieldLite {
     private Iterator<Entry<K, Object>> iterator;
 
     public LazyIterator(Iterator<Entry<K, Object>> iterator) {
-      this.iterator = iterator;
+    this.iterator = iterator;
     }
 
     // @Override
     public boolean hasNext() {
-      return iterator.hasNext();
+    return iterator.hasNext();
     }
 
     @SuppressWarnings("unchecked")
     // @Override
     public Entry<K, Object> next() {
-      Entry<K, ?> entry = iterator.next();
-      if (entry.getValue() instanceof LazyField) {
+    Entry<K, ?> entry = iterator.next();
+    if (entry.getValue() instanceof LazyField) {
         return new LazyEntry<K>((Entry<K, LazyField>) entry);
-      }
-      return (Entry<K, Object>) entry;
+    }
+    return (Entry<K, Object>) entry;
     }
 
     // @Override
     public void remove() {
-      iterator.remove();
+    iterator.remove();
     }
   }
 }

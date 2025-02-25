@@ -242,7 +242,7 @@ struct ClientWorldListInfo_t : public CRefCounted1< WorldListInfo_t >
     // using m_pActualLeafMap[ remapped leaf index ] == actual leaf index
     LeafIndex_t *m_pActualLeafIndex;
 
-   private:
+    private:
     virtual bool OnFinalRelease();
 
     bool m_bPooledAlloc;
@@ -255,7 +255,7 @@ struct ClientWorldListInfo_t : public CRefCounted1< WorldListInfo_t >
 
 class CWorldListCache
 {
-   public:
+    public:
     CWorldListCache()
     {
     }
@@ -290,12 +290,12 @@ class CWorldListCache
         m_Entries.Insert( new Entry_t( viewSetup, pList, pListInfo ) );
     }
 
-   private:
+    private:
     struct Entry_t
     {
         Entry_t( const CViewSetup &viewSetup, IWorldRenderList *pList = NULL, ClientWorldListInfo_t *pListInfo = NULL )
             : pList( ( pList ) ? InlineAddRef( pList ) : NULL ),
-              pListInfo( ( pListInfo ) ? InlineAddRef( pListInfo ) : NULL )
+            pListInfo( ( pListInfo ) ? InlineAddRef( pListInfo ) : NULL )
         {
             // @NOTE (toml 8/18/2006): because doing memcmp, need to fill all of the fields and the padding!
             memset( &m_bOrtho, 0, offsetof( Entry_t, pList ) - offsetof( Entry_t, m_bOrtho ) );
@@ -349,7 +349,7 @@ class CWorldListCache
 
     class CEntryComparator
     {
-       public:
+        public:
         CEntryComparator( int ) {}
         bool operator!() const
         {
@@ -373,10 +373,10 @@ class CSkyboxView : public CRendering3dView
 {
     DECLARE_CLASS( CSkyboxView, CRendering3dView );
 
-   public:
+    public:
     CSkyboxView( CViewRender *pMainView )
         : CRendering3dView( pMainView ),
-          m_pSky3dParams( NULL )
+        m_pSky3dParams( NULL )
     {
     }
 
@@ -384,7 +384,7 @@ class CSkyboxView : public CRendering3dView
     void DrawWorld( float waterZAdjust );
     void Draw();
 
-   protected:
+    protected:
 #ifdef PORTAL
     virtual bool ShouldDrawPortals()
     {
@@ -412,10 +412,10 @@ class CPortalSkyboxView : public CSkyboxView
 {
     DECLARE_CLASS( CPortalSkyboxView, CSkyboxView );
 
-   public:
+    public:
     CPortalSkyboxView( CViewRender *pMainView )
         : CSkyboxView( pMainView ),
-          m_pRenderTarget( NULL )
+        m_pRenderTarget( NULL )
     {
     }
 
@@ -424,7 +424,7 @@ class CPortalSkyboxView : public CSkyboxView
     // Skybox drawing through portals with workarounds to fix area bits, position/scaling, view id's..........
     void Draw();
 
-   private:
+    private:
     virtual SkyboxVisibility_t ComputeSkyboxVisibility();
 
     ITexture *m_pRenderTarget;
@@ -438,14 +438,14 @@ class CShadowDepthView : public CRendering3dView
 {
     DECLARE_CLASS( CShadowDepthView, CRendering3dView );
 
-   public:
+    public:
     CShadowDepthView( CViewRender *pMainView )
         : CRendering3dView( pMainView ) {}
 
     void Setup( const CViewSetup &shadowViewIn, ITexture *pRenderTarget, ITexture *pDepthTexture );
     void Draw();
 
-   private:
+    private:
     ITexture *m_pRenderTarget;
     ITexture *m_pDepthTexture;
 };
@@ -457,14 +457,14 @@ class CFreezeFrameView : public CRendering3dView
 {
     DECLARE_CLASS( CFreezeFrameView, CRendering3dView );
 
-   public:
+    public:
     CFreezeFrameView( CViewRender *pMainView )
         : CRendering3dView( pMainView ) {}
 
     void Setup( const CViewSetup &view );
     void Draw();
 
-   private:
+    private:
     CMaterialReference m_pFreezeFrame;
     CMaterialReference m_TranslucentSingleColor;
 };
@@ -476,7 +476,7 @@ class CBaseWorldView : public CRendering3dView
 {
     DECLARE_CLASS( CBaseWorldView, CRendering3dView );
 
-   protected:
+    protected:
     CBaseWorldView( CViewRender *pMainView )
         : CRendering3dView( pMainView ) {}
 
@@ -499,14 +499,14 @@ class CSimpleWorldView : public CBaseWorldView
 {
     DECLARE_CLASS( CSimpleWorldView, CBaseWorldView );
 
-   public:
+    public:
     CSimpleWorldView( CViewRender *pMainView )
         : CBaseWorldView( pMainView ) {}
 
     void Setup( const CViewSetup &view, int nClearFlags, bool bDrawSkybox, const VisibleFogVolumeInfo_t &fogInfo, const WaterRenderInfo_t &info, ViewCustomVisibility_t *pCustomVisibility = NULL );
     void Draw();
 
-   private:
+    private:
     VisibleFogVolumeInfo_t m_fogInfo;
 };
 
@@ -517,30 +517,30 @@ class CBaseWaterView : public CBaseWorldView
 {
     DECLARE_CLASS( CBaseWaterView, CBaseWorldView );
 
-   public:
+    public:
     CBaseWaterView( CViewRender *pMainView )
         : CBaseWorldView( pMainView ),
-          m_SoftwareIntersectionView( pMainView )
+        m_SoftwareIntersectionView( pMainView )
     {
     }
 
     //	void Setup( const CViewSetup &, const WaterRenderInfo_t& info );
 
-   protected:
+    protected:
     void CalcWaterEyeAdjustments( const VisibleFogVolumeInfo_t &fogInfo, float &newWaterHeight, float &waterZAdjust, bool bSoftwareUserClipPlane );
 
     class CSoftwareIntersectionView : public CBaseWorldView
     {
         DECLARE_CLASS( CSoftwareIntersectionView, CBaseWorldView );
 
-       public:
+        public:
         CSoftwareIntersectionView( CViewRender *pMainView )
             : CBaseWorldView( pMainView ) {}
 
         void Setup( bool bAboveWater );
         void Draw();
 
-       private:
+        private:
         CBaseWaterView *GetOuter()
         {
             return GET_OUTER( CBaseWaterView, m_SoftwareIntersectionView );
@@ -565,12 +565,12 @@ class CAboveWaterView : public CBaseWaterView
 {
     DECLARE_CLASS( CAboveWaterView, CBaseWaterView );
 
-   public:
+    public:
     CAboveWaterView( CViewRender *pMainView )
         : CBaseWaterView( pMainView ),
-          m_ReflectionView( pMainView ),
-          m_RefractionView( pMainView ),
-          m_IntersectionView( pMainView )
+        m_ReflectionView( pMainView ),
+        m_RefractionView( pMainView ),
+        m_IntersectionView( pMainView )
     {
     }
 
@@ -581,14 +581,14 @@ class CAboveWaterView : public CBaseWaterView
     {
         DECLARE_CLASS( CReflectionView, CBaseWorldView );
 
-       public:
+        public:
         CReflectionView( CViewRender *pMainView )
             : CBaseWorldView( pMainView ) {}
 
         void Setup( bool bReflectEntities );
         void Draw();
 
-       private:
+        private:
         CAboveWaterView *GetOuter()
         {
             return GET_OUTER( CAboveWaterView, m_ReflectionView );
@@ -599,14 +599,14 @@ class CAboveWaterView : public CBaseWaterView
     {
         DECLARE_CLASS( CRefractionView, CBaseWorldView );
 
-       public:
+        public:
         CRefractionView( CViewRender *pMainView )
             : CBaseWorldView( pMainView ) {}
 
         void Setup();
         void Draw();
 
-       private:
+        private:
         CAboveWaterView *GetOuter()
         {
             return GET_OUTER( CAboveWaterView, m_RefractionView );
@@ -617,14 +617,14 @@ class CAboveWaterView : public CBaseWaterView
     {
         DECLARE_CLASS( CIntersectionView, CBaseWorldView );
 
-       public:
+        public:
         CIntersectionView( CViewRender *pMainView )
             : CBaseWorldView( pMainView ) {}
 
         void Setup();
         void Draw();
 
-       private:
+        private:
         CAboveWaterView *GetOuter()
         {
             return GET_OUTER( CAboveWaterView, m_IntersectionView );
@@ -649,10 +649,10 @@ class CUnderWaterView : public CBaseWaterView
 {
     DECLARE_CLASS( CUnderWaterView, CBaseWaterView );
 
-   public:
+    public:
     CUnderWaterView( CViewRender *pMainView )
         : CBaseWaterView( pMainView ),
-          m_RefractionView( pMainView )
+        m_RefractionView( pMainView )
     {
     }
 
@@ -663,14 +663,14 @@ class CUnderWaterView : public CBaseWaterView
     {
         DECLARE_CLASS( CRefractionView, CBaseWorldView );
 
-       public:
+        public:
         CRefractionView( CViewRender *pMainView )
             : CBaseWorldView( pMainView ) {}
 
         void Setup();
         void Draw();
 
-       private:
+        private:
         CUnderWaterView *GetOuter()
         {
             return GET_OUTER( CUnderWaterView, m_RefractionView );
@@ -691,7 +691,7 @@ class CReflectiveGlassView : public CSimpleWorldView
 {
     DECLARE_CLASS( CReflectiveGlassView, CSimpleWorldView );
 
-   public:
+    public:
     CReflectiveGlassView( CViewRender *pMainView )
         : BaseClass( pMainView )
     {
@@ -710,7 +710,7 @@ class CRefractiveGlassView : public CSimpleWorldView
 {
     DECLARE_CLASS( CRefractiveGlassView, CSimpleWorldView );
 
-   public:
+    public:
     CRefractiveGlassView( CViewRender *pMainView )
         : BaseClass( pMainView )
     {
@@ -1442,7 +1442,7 @@ void CViewRender::ViewDrawScene( bool bDrew3dSkybox, SkyboxVisibility_t nSkyboxV
     SetupVis( view, visFlags, pCustomVisibility );
 
     if ( !bDrew3dSkybox &&
-         ( nSkyboxVisible == SKYBOX_NOT_VISIBLE ) && ( visFlags & IVRenderView::VIEW_SETUP_VIS_EX_RETURN_FLAGS_USES_RADIAL_VIS ) )
+        ( nSkyboxVisible == SKYBOX_NOT_VISIBLE ) && ( visFlags & IVRenderView::VIEW_SETUP_VIS_EX_RETURN_FLAGS_USES_RADIAL_VIS ) )
     {
         // This covers the case where we don't see a 3dskybox, yet radial vis is clipping
         // the far plane.  Need to clear to fog color in this case.
@@ -2088,8 +2088,8 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 
 #ifdef USE_MONITORS
         if ( cl_drawmonitors.GetBool() &&
-             ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 70 ) &&
-             ( ( whatToDraw & RENDERVIEW_SUPPRESSMONITORRENDERING ) == 0 ) )
+            ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 70 ) &&
+            ( ( whatToDraw & RENDERVIEW_SUPPRESSMONITORRENDERING ) == 0 ) )
         {
             CViewSetup viewMiddle = GetView( STEREO_EYE_MONO );
             DrawMonitors( viewMiddle );
@@ -2591,10 +2591,10 @@ void CViewRender::DetermineWaterRenderInfo( const VisibleFogVolumeInfo_t &fogVol
     if ( bDebugCheapWater )
     {
         Msg( "Water material: %s dist to water: %f\nforcecheap: %s forceexpensive: %s\n",
-             pWaterMaterial->GetName(),
-             fogVolumeInfo.m_flDistanceToWater,
-             bForceCheap ? "true" : "false",
-             bForceExpensive ? "true" : "false" );
+            pWaterMaterial->GetName(),
+            fogVolumeInfo.m_flDistanceToWater,
+            bForceCheap ? "true" : "false",
+            bForceExpensive ? "true" : "false" );
     }
 
     // Unless expensive water is active, reflections are off.
@@ -3387,7 +3387,7 @@ bool ClientWorldListInfo_t::OnFinalRelease()
 //-----------------------------------------------------------------------------
 CBase3dView::CBase3dView( CViewRender *pMainView )
     : m_pMainView( pMainView ),
-      m_Frustum( pMainView->m_Frustum )
+    m_Frustum( pMainView->m_Frustum )
 {
 }
 
@@ -3410,12 +3410,12 @@ CObjectPool< ClientWorldListInfo_t > ClientWorldListInfo_t::gm_Pool;
 //-----------------------------------------------------------------------------
 CRendering3dView::CRendering3dView( CViewRender *pMainView )
     : CBase3dView( pMainView ),
-      m_pWorldRenderList( NULL ),
-      m_pRenderablesList( NULL ),
-      m_pWorldListInfo( NULL ),
-      m_pCustomVisibility( NULL ),
-      m_DrawFlags( 0 ),
-      m_ClearFlags( 0 )
+    m_pWorldRenderList( NULL ),
+    m_pRenderablesList( NULL ),
+    m_pWorldListInfo( NULL ),
+    m_pCustomVisibility( NULL ),
+    m_DrawFlags( 0 ),
+    m_ClearFlags( 0 )
 {
 }
 
@@ -3855,32 +3855,32 @@ static void DrawClippedDepthBox( IClientRenderable *pEnt, float *pClipPlane )
     // #define DEBUG_DRAWCLIPPEDDEPTHBOX //uncomment to draw the depth box as a colorful box
 
     static const int iQuads[6][5] = { { 0, 4, 6, 2, 0 },  // always an extra copy of first index at end to make some algorithms simpler
-                                      { 3, 7, 5, 1, 3 },
-                                      { 1, 5, 4, 0, 1 },
-                                      { 2, 6, 7, 3, 2 },
-                                      { 0, 2, 3, 1, 0 },
-                                      { 5, 7, 6, 4, 5 } };
+                                    { 3, 7, 5, 1, 3 },
+                                    { 1, 5, 4, 0, 1 },
+                                    { 2, 6, 7, 3, 2 },
+                                    { 0, 2, 3, 1, 0 },
+                                    { 5, 7, 6, 4, 5 } };
 
     static const int iLines[12][2] = { { 0, 1 },
-                                       { 0, 2 },
-                                       { 0, 4 },
-                                       { 1, 3 },
-                                       { 1, 5 },
-                                       { 2, 3 },
-                                       { 2, 6 },
-                                       { 3, 7 },
-                                       { 4, 6 },
-                                       { 4, 5 },
-                                       { 5, 7 },
-                                       { 6, 7 } };
+                                        { 0, 2 },
+                                        { 0, 4 },
+                                        { 1, 3 },
+                                        { 1, 5 },
+                                        { 2, 3 },
+                                        { 2, 6 },
+                                        { 3, 7 },
+                                        { 4, 6 },
+                                        { 4, 5 },
+                                        { 5, 7 },
+                                        { 6, 7 } };
 
 #ifdef DEBUG_DRAWCLIPPEDDEPTHBOX
     static const float fColors[6][3] = { { 1.0f, 0.0f, 0.0f },
-                                         { 0.0f, 1.0f, 1.0f },
-                                         { 0.0f, 1.0f, 0.0f },
-                                         { 1.0f, 0.0f, 1.0f },
-                                         { 0.0f, 0.0f, 1.0f },
-                                         { 1.0f, 1.0f, 0.0f } };
+                                        { 0.0f, 1.0f, 1.0f },
+                                        { 0.0f, 1.0f, 0.0f },
+                                        { 1.0f, 0.0f, 1.0f },
+                                        { 0.0f, 0.0f, 1.0f },
+                                        { 1.0f, 1.0f, 0.0f } };
 #endif
 
     Vector vNormal = *( Vector * )pClipPlane;
@@ -4280,7 +4280,7 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool b
                 {
                     CClientRenderablesList::CEntry
                         *const pEntitiesBegin = m_pRenderablesList->m_RenderGroups[RENDER_GROUP_OPAQUE_STATIC_HUGE + 2 * bucket],
-                               *const pEntitiesEnd = pEntitiesBegin + m_pRenderablesList->m_RenderGroupCounts[RENDER_GROUP_OPAQUE_STATIC_HUGE + 2 * bucket];
+                                *const pEntitiesEnd = pEntitiesBegin + m_pRenderablesList->m_RenderGroupCounts[RENDER_GROUP_OPAQUE_STATIC_HUGE + 2 * bucket];
                     DrawOpaqueRenderables_DrawStaticProps( pEntitiesBegin, pEntitiesEnd, bShadowDepth );
                 }
             }
@@ -4290,7 +4290,7 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool b
             {
                 CClientRenderablesList::CEntry
                     *const pEntitiesBegin = m_pRenderablesList->m_RenderGroups[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket],
-                           *const pEntitiesEnd = pEntitiesBegin + m_pRenderablesList->m_RenderGroupCounts[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket];
+                            *const pEntitiesEnd = pEntitiesBegin + m_pRenderablesList->m_RenderGroupCounts[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket];
                 DrawOpaqueRenderables_Range( pEntitiesBegin, pEntitiesEnd, bShadowDepth );
             }
 
@@ -4319,11 +4319,11 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool b
     for ( int bucket = 0; bucket < RENDER_GROUP_CFG_NUM_OPAQUE_ENT_BUCKETS; ++bucket )
     {
         for ( CClientRenderablesList::CEntry
-                  *const pEntitiesBegin = m_pRenderablesList->m_RenderGroups[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket],
-                         *const pEntitiesEnd = pEntitiesBegin + m_pRenderablesList->m_RenderGroupCounts[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket],
-                         *itEntity = pEntitiesBegin;
-              itEntity < pEntitiesEnd;
-              ++itEntity )
+                *const pEntitiesBegin = m_pRenderablesList->m_RenderGroups[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket],
+                        *const pEntitiesEnd = pEntitiesBegin + m_pRenderablesList->m_RenderGroupCounts[RENDER_GROUP_OPAQUE_ENTITY_HUGE + 2 * bucket],
+                        *itEntity = pEntitiesBegin;
+            itEntity < pEntitiesEnd;
+            ++itEntity )
         {
             C_BaseEntity *pEntity = itEntity->m_pRenderable ? itEntity->m_pRenderable->GetIClientUnknown()->GetBaseEntity() : NULL;
             if ( pEntity )
@@ -4420,8 +4420,8 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool b
                 }
                 /*else
                 {
-                  DrawOpaqueRenderables_DrawStaticProps( pProps[bucket][0], pProps[bucket][1], DepthMode );
-                  DrawOpaqueRenderables_Range( pEnts[bucket][0], pEnts[bucket][1], DepthMode );
+                DrawOpaqueRenderables_DrawStaticProps( pProps[bucket][0], pProps[bucket][1], DepthMode );
+                DrawOpaqueRenderables_Range( pEnts[bucket][0], pEnts[bucket][1], DepthMode );
                 }*/
             }
     }
@@ -5858,11 +5858,11 @@ void CBaseWorldView::SSAO_DepthPass()
     }
 
 #if 0
-	if ( m_bRenderFlashlightDepthTranslucents || r_flashlightdepth_drawtranslucents.GetBool() )
-	{
-		VPROF_BUDGET( "DrawTranslucentRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
-		DrawTranslucentRenderables( m_DrawFlags & DF_DRAWSKYBOX, false, ???3d );
-	}
+    if ( m_bRenderFlashlightDepthTranslucents || r_flashlightdepth_drawtranslucents.GetBool() )
+    {
+        VPROF_BUDGET( "DrawTranslucentRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+        DrawTranslucentRenderables( m_DrawFlags & DF_DRAWSKYBOX, false, ???3d );
+    }
 #endif
 
     modelrender->ForcedMaterialOverride( 0 );
@@ -6023,9 +6023,9 @@ void CSimpleWorldView::Draw()
 //
 //-----------------------------------------------------------------------------
 void CBaseWaterView::CalcWaterEyeAdjustments( const VisibleFogVolumeInfo_t &fogInfo,
-                                              float &newWaterHeight,
-                                              float &waterZAdjust,
-                                              bool bSoftwareUserClipPlane )
+                                            float &newWaterHeight,
+                                            float &waterZAdjust,
+                                            bool bSoftwareUserClipPlane )
 {
     if ( !bSoftwareUserClipPlane )
     {
@@ -6200,7 +6200,7 @@ void CAboveWaterView::CReflectionView::Setup( bool bReflectEntities )
     // NOTE: Clearing the color is unnecessary since we're drawing the skybox
     // and dest-alpha is never used in the reflection
     m_DrawFlags = DF_RENDER_REFLECTION | DF_CLIP_Z | DF_CLIP_BELOW |
-                  DF_RENDER_ABOVEWATER;
+                DF_RENDER_ABOVEWATER;
 
     // NOTE: This will cause us to draw the 2d skybox in the reflection
     // (which we want to do instead of drawing the 3d skybox)
@@ -6259,8 +6259,8 @@ void CAboveWaterView::CRefractionView::Setup()
     m_ClearFlags = VIEW_CLEAR_COLOR | VIEW_CLEAR_DEPTH;
 
     m_DrawFlags = DF_RENDER_REFRACTION | DF_CLIP_Z |
-                  DF_RENDER_UNDERWATER | DF_FUDGE_UP |
-                  DF_DRAW_ENTITITES;
+                DF_RENDER_UNDERWATER | DF_FUDGE_UP |
+                DF_DRAW_ENTITITES;
 }
 
 //-----------------------------------------------------------------------------
@@ -6418,8 +6418,8 @@ void CUnderWaterView::CRefractionView::Setup()
     // It is then blitted out into the refraction target. This is so that
     // we only have to set up 3d sky vis once, and only render it once also!
     m_DrawFlags = DF_CLIP_Z |
-                  DF_CLIP_BELOW | DF_RENDER_ABOVEWATER |
-                  DF_DRAW_ENTITITES;
+                DF_CLIP_BELOW | DF_RENDER_ABOVEWATER |
+                DF_DRAW_ENTITITES;
 
     m_ClearFlags = VIEW_CLEAR_DEPTH;
     if ( GetOuter()->m_bDrawSkybox )

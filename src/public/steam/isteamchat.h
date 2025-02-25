@@ -25,7 +25,7 @@ enum EChatNotificationFormat
 //-----------------------------------------------------------------------------
 class ISteamChat
 {
-   public:
+    public:
     // A running game can subscribe to the activity inside a Steam group chat. This functionality can be used by
     // games to, for example, have a guild chat that's accessible outside the game (using normal Steam group chat
     // functionality) and inside the game (using this API). Using this API from inside a game won't affect or limit

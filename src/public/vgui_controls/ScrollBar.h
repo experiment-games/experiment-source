@@ -29,7 +29,7 @@ class ScrollBar : public Panel
 {
     DECLARE_CLASS_SIMPLE( ScrollBar, Panel );
 
-   public:
+    public:
     ScrollBar( Panel *parent, const char *panelName, bool vertical );
 
     // Set the value of the scroll bar slider.
@@ -93,7 +93,7 @@ class ScrollBar : public Panel
     void UseImages( const char *pszUpArrow, const char *pszDownArrow, const char *pszLine, const char *pszBox );
 
     /* MESSAGES SENT:
-      "ScrollBarSliderMoved"
+    "ScrollBarSliderMoved"
         "position" - new value of the slider
     */
 
@@ -105,7 +105,7 @@ class ScrollBar : public Panel
 
     virtual void ApplySettings( KeyValues *pInResourceData );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void SendSliderMoveMessage( int value );
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -118,7 +118,7 @@ class ScrollBar : public Panel
     virtual void UpdateSliderImages( void );
     Button *GetDepressedButton( int iIndex );
 
-   private:
+    private:
     Button *_button[2];
     ScrollBarSlider *_slider;
     int _buttonPressedScrollValue;

@@ -84,7 +84,7 @@ DEFINE_FIELD( endtime, FIELD_TIME ),
 //-----------------------------------------------------------------------------
 class CViewEffects : public IViewEffects
 {
-   public:
+    public:
     ~CViewEffects()
     {
         ClearAllFades();
@@ -106,7 +106,7 @@ class CViewEffects : public IViewEffects
     virtual void Save( ISave *pSave );
     virtual void Restore( IRestore *pRestore, bool fCreatePlayers );
 
-   private:
+    private:
     void ClearAllShakes();
     screenshake_t *FindLongestShake();
 
@@ -231,9 +231,9 @@ void CViewEffects::CalcShake( void )
         }
 
         if ( ( gpGlobals->curtime > pShake->endtime ) ||
-             pShake->duration <= 0 ||
-             pShake->amplitude <= 0 ||
-             pShake->frequency <= 0 )
+            pShake->duration <= 0 ||
+            pShake->amplitude <= 0 ||
+            pShake->frequency <= 0 )
         {
             // Retire this shake.
             delete m_ShakeList.Element( nShake );
@@ -701,7 +701,7 @@ class CViewEffectsSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
     struct QueuedItem_t;
 
-   public:
+    public:
     CViewEffectsSaveRestoreBlockHandler()
     {
     }
@@ -768,7 +768,7 @@ class CViewEffectsSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
     {
     }
 
-   private:
+    private:
     bool m_bDoLoad;
 };
 

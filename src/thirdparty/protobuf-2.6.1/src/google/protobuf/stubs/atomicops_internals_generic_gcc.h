@@ -39,27 +39,27 @@ namespace internal
 {
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     __atomic_compare_exchange_n( ptr, &old_value, new_value, true, __ATOMIC_RELAXED, __ATOMIC_RELAXED );
     return old_value;
 }
 
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     return __atomic_exchange_n( ptr, new_value, __ATOMIC_RELAXED );
 }
 
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     return __atomic_add_fetch( ptr, increment, __ATOMIC_RELAXED );
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     return __atomic_add_fetch( ptr, increment, __ATOMIC_SEQ_CST );
 }
@@ -136,8 +136,8 @@ inline Atomic64 Acquire_CompareAndSwap( volatile Atomic64* ptr,
 }
 
 inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
-                                          Atomic64 old_value,
-                                          Atomic64 new_value )
+                                        Atomic64 old_value,
+                                        Atomic64 new_value )
 {
     __atomic_compare_exchange_n( ptr, &old_value, new_value, true, __ATOMIC_RELAXED, __ATOMIC_RELAXED );
     return old_value;

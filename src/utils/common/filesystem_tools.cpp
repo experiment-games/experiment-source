@@ -119,10 +119,10 @@ bool FileSystem_Init_Normal( const char *pFilename, FSInitType_t initType, bool 
     else
     {
         if ( !Sys_LoadInterface(
-                 "filesystem_stdio",
-                 FILESYSTEM_INTERFACE_VERSION,
-                 &g_pFullFileSystemModule,
-                 ( void ** )&g_pFullFileSystem ) )
+                "filesystem_stdio",
+                FILESYSTEM_INTERFACE_VERSION,
+                &g_pFullFileSystemModule,
+                ( void ** )&g_pFullFileSystem ) )
         {
             return false;
         }

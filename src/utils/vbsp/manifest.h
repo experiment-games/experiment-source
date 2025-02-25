@@ -30,7 +30,7 @@ struct Cordon_t
 
 class CManifestMap
 {
-   public:
+    public:
     CManifestMap( void );
     char m_RelativeMapFileName[MAX_PATH];
     bool m_bTopLevelMap;
@@ -38,7 +38,7 @@ class CManifestMap
 
 class CManifest
 {
-   public:
+    public:
     CManifest( void );
 
     static ChunkFileResult_t LoadManifestMapKeyCallback( const char *szKey, const char *szValue, CManifestMap *pManifestMap );
@@ -62,7 +62,7 @@ class CManifest
 
     void CordonWorld();
 
-   private:
+    private:
     bool LoadVMFManifestUserPrefs( const char *pszFileName );
 
     CUtlVector< CManifestMap * > m_Maps;

@@ -19,7 +19,7 @@ class CHudInspectPanel : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudInspectPanel, EditablePanel );
 
-   public:
+    public:
     CHudInspectPanel( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -34,7 +34,7 @@ class CHudInspectPanel : public CHudElement, public EditablePanel
 
     int HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-   private:
+    private:
     void LockInspectRenderGroup( bool bLock );
     void SetPanelVisible( bool bVisible );
 

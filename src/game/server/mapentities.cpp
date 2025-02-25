@@ -52,8 +52,8 @@ CBaseEntity *CreateEntityByName( const char *className, int iForceEdictIndex )
     Assert( pEntity );
 
 #if 0
-	if ( g_pScriptVM )
-		g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityCreated", ToHScript( pEntity ) );
+    if ( g_pScriptVM )
+        g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityCreated", ToHScript( pEntity ) );
 #endif
 
 #if defined( LUA_SDK )

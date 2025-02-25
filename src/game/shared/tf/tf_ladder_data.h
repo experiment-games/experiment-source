@@ -24,7 +24,7 @@
 //---------------------------------------------------------------------------------
 class CSOTFLadderData : public GCSDK::CProtoBufSharedObject< CSOTFLadderPlayerStats, k_EEConTypeLadderData >
 {
-   public:
+    public:
     CSOTFLadderData();
     CSOTFLadderData( uint32 unAccountID, ETFMatchGroup eMatchGroup );
 };
@@ -37,7 +37,7 @@ const CSOTFLadderData *GetLocalPlayerLadderData( ETFMatchGroup nMatchGroup );  /
 //---------------------------------------------------------------------------------
 class CSOTFMatchResultPlayerInfo : public GCSDK::CProtoBufSharedObject< CSOTFMatchResultPlayerStats, k_EEConTypeMatchResultPlayerInfo >
 {
-   public:
+    public:
     CSOTFMatchResultPlayerInfo();
 };
 

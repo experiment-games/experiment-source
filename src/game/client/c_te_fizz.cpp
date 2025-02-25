@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 class C_TEFizz : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEFizz, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -32,7 +32,7 @@ class C_TEFizz : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_nEntity;
     int m_nModelIndex;
     int m_nDensity;

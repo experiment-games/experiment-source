@@ -28,7 +28,7 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
 {
     typedef CTier2AppSystem< INetworkSystem > BaseClass;
 
-   public:
+    public:
     CNetworkSystem();
     virtual ~CNetworkSystem();
 
@@ -66,7 +66,7 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
 
     static bool StringToSockaddr( const char *s, struct sockaddr *sadr );
 
-   private:
+    private:
     bool m_bWinSockInitialized : 1;
 
     CNetworkServer *m_pServer;

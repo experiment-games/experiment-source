@@ -161,7 +161,7 @@ void SetMatrixValues( MATRIXCLASSOUT *pMatrix, int nRows, int nCols, ... )
 template < class MATRIXTYPE >
 class MatrixRowAccessor
 {
-   public:
+    public:
     FORCEINLINE MatrixRowAccessor( MATRIXTYPE const &matrix, int nRow )
     {
         m_pMatrix = &matrix;
@@ -183,7 +183,7 @@ class MatrixRowAccessor
         return m_pMatrix->Width();
     }
 
-   private:
+    private:
     MATRIXTYPE const *m_pMatrix;
     int m_nRow;
 };
@@ -191,7 +191,7 @@ class MatrixRowAccessor
 template < class MATRIXTYPE >
 class MatrixColumnAccessor
 {
-   public:
+    public:
     FORCEINLINE MatrixColumnAccessor( MATRIXTYPE const &matrix, int nColumn )
     {
         m_pMatrix = &matrix;
@@ -213,7 +213,7 @@ class MatrixColumnAccessor
         return m_pMatrix->Height();
     }
 
-   private:
+    private:
     MATRIXTYPE const *m_pMatrix;
     int m_nColumn;
 };
@@ -222,7 +222,7 @@ class MatrixColumnAccessor
 template < class MATRIXTYPE >
 class MatrixTransposeAccessor
 {
-   public:
+    public:
     FORCEINLINE MatrixTransposeAccessor( MATRIXTYPE const &matrix )
     {
         m_pMatrix = &matrix;
@@ -242,7 +242,7 @@ class MatrixTransposeAccessor
         return m_pMatrix->Width();
     }
 
-   private:
+    private:
     MATRIXTYPE const *m_pMatrix;
 };
 
@@ -387,7 +387,7 @@ void LeastSquaresFit( ATYPE const &matA, BTYPE const &vecB, XTYPE &vecX )
 template < int NUMROWS, int NUMCOLS >
 class CFixedMatrix
 {
-   public:
+    public:
     FORCEINLINE int Width( void ) const
     {
         return NUMCOLS;
@@ -409,7 +409,7 @@ class CFixedMatrix
         Assert( ( nNumRows == NUMROWS ) && ( nNumCols == NUMCOLS ) );
     }
 
-   private:
+    private:
     float m_flValues[NUMROWS][NUMCOLS];
 };
 

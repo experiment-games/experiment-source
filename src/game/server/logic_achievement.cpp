@@ -76,12 +76,12 @@
 // Allows map logic to send achievement related events to the achievement system.
 class CLogicAchievement : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLogicAchievement, CLogicalEntity );
 
     CLogicAchievement();
 
-   protected:
+    protected:
     // Inputs
     void InputFireEvent( inputdata_t &inputdata );
     void InputEnable( inputdata_t &inputdata );

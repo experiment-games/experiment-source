@@ -19,8 +19,8 @@ mov oPos, $projPos
 alloc $worldPos
 if( $DOWATERFOG == 1 )
 {
-	; Get the worldpos z component only since that's all we need for height fog
-	dp4 $worldPos.z, $vPos, $cModel2
+    ; Get the worldpos z component only since that's all we need for height fog
+    dp4 $worldPos.z, $vPos, $cModel2
 }
 &CalcFog( $worldPos, $projPos );
 free $worldPos
@@ -33,6 +33,3 @@ free $worldPos
 
 dp4 oT0.x, $vTexCoord0, $SHADER_SPECIFIC_CONST_0
 dp4 oT0.y, $vTexCoord0, $SHADER_SPECIFIC_CONST_1
-
-
-

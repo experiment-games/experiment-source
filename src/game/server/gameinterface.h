@@ -31,7 +31,7 @@ extern INetworkStringTable *g_pStringTableServerPopFiles;
 // Most of this is implemented in gameinterface.cpp, but some of it is per-mod in files like cs_gameinterface.cpp, etc.
 class CServerGameClients : public IServerGameClients
 {
-   public:
+    public:
     virtual bool ClientConnect( edict_t *pEntity, char const *pszName, char const *pszAddress, char *reject, int maxrejectlen ) OVERRIDE;
     virtual void ClientActive( edict_t *pEntity, bool bLoadGame ) OVERRIDE;
     virtual void ClientDisconnect( edict_t *pEntity ) OVERRIDE;
@@ -66,7 +66,7 @@ class CServerGameClients : public IServerGameClients
 
 class CServerGameDLL : public IServerGameDLL
 {
-   public:
+    public:
     virtual bool DLLInit( CreateInterfaceFn engineFactory, CreateInterfaceFn physicsFactory, CreateInterfaceFn fileSystemFactory, CGlobalVars *pGlobals ) OVERRIDE;
     virtual void DLLShutdown( void ) OVERRIDE;
     // Get the simulation interval (must be compiled with identical values into both client and game .dll for MOD!!!)
@@ -149,9 +149,9 @@ class CServerGameDLL : public IServerGameDLL
                                         size_t nMapFileSize ) OVERRIDE;
 
     virtual ePrepareLevelResourcesResult AsyncPrepareLevelResources( /* in/out */ char *pszMapName, size_t nMapNameSize,
-                                                                     /* in/out */ char *pszMapFile,
-                                                                     size_t nMapFileSize,
-                                                                     float *flProgress = NULL ) OVERRIDE;
+                                                                    /* in/out */ char *pszMapFile,
+                                                                    size_t nMapFileSize,
+                                                                    float *flProgress = NULL ) OVERRIDE;
 
     virtual eCanProvideLevelResult CanProvideLevel( /* in/out */ char *pMapName, int nMapNameMax ) OVERRIDE;
 
@@ -160,7 +160,7 @@ class CServerGameDLL : public IServerGameDLL
 
     virtual bool GetWorkshopMap( uint32 uIndex, WorkshopMapDesc_t *pDesc ) OVERRIDE;
 
-   private:
+    private:
     // This can just be a wrapper on MapEntity_ParseAllEntities, but CS does some tricks in here
     // with the entity list.
     void LevelInit_ParseAllEntities( const char *pMapEntities );
@@ -180,7 +180,7 @@ void ClientPutInServerOverride( ClientPutInServerOverrideFn fn );
 // These are created for map entities in order as the map entities are spawned.
 class CMapEntityRef
 {
-   public:
+    public:
     int m_iEdict;         // Which edict slot this entity got. -1 if CreateEntityByName failed.
     int m_iSerialNumber;  // The edict serial number. TODO used anywhere ?
 };
@@ -192,7 +192,7 @@ extern CUtlLinkedList< CMapEntityRef, unsigned short > g_MapEntityRefs;
 //-----------------------------------------------------------------------------
 class CMapLoadEntityFilter : public IMapEntityFilter
 {
-   public:
+    public:
     virtual bool ShouldCreateEntity( const char *pClassname )
     {
         // During map load, create all the entities.
@@ -223,7 +223,7 @@ bool IsEngineThreaded();
 
 class CServerGameTags : public IServerGameTags
 {
-   public:
+    public:
     virtual void GetTaggedConVarList( KeyValues *pCvarTagList );
 };
 EXPOSE_SINGLE_INTERFACE( CServerGameTags, IServerGameTags, INTERFACEVERSION_SERVERGAMETAGS );

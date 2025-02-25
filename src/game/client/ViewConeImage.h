@@ -25,7 +25,7 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 class CViewConeImage
 {
-   public:
+    public:
     // initialization
     bool Init( vgui::Panel* pParent, KeyValues* pInitData );
 
@@ -34,7 +34,7 @@ class CViewConeImage
 
     void SetColor( int r, int g, int b );
 
-   private:
+    private:
     BitmapImage m_Image;
 };
 

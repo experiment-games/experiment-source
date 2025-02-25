@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2004, Valve Corporation, All rights reserved. =======
 //
 // Purpose:
 //
@@ -35,7 +35,7 @@ namespace GCSDK
 //-----------------------------------------------------------------------------
 class CProtoBufNetPacket : public IMsgNetPacket
 {
-   public:
+    public:
     CProtoBufNetPacket( CNetPacket *pNetPacket, GCProtoBufMsgSrc eReplyType, const CSteamID steamID, uint32 nGCDirIndex, MsgType_t msgType );
 
     // IMsgNetPacket
@@ -117,7 +117,7 @@ class CProtoBufNetPacket : public IMsgNetPacket
     // called to obtain access to the body portion of the net packet associated with this message. Will return NULL if not in a valid state
     bool GetMsgBody( const uint8 *&pubData, uint32 &cubData ) const;
 
-   private:
+    private:
     virtual ~CProtoBufNetPacket();
 
     CNetPacket *m_pNetPacket;
@@ -133,11 +133,11 @@ class CProtoBufNetPacket : public IMsgNetPacket
 //-----------------------------------------------------------------------------
 class CProtoBufMsgBase
 {
-   public:
+    public:
     // allows any kind of destination to be the target of an AsyncSend
     class IProtoBufSendHandler
     {
-       public:
+        public:
         virtual bool BAsyncSend( MsgType_t eMsg, const uint8 *pubMsgBytes, uint32 cubSize ) = 0;
     };
 
@@ -236,11 +236,11 @@ class CProtoBufMsgBase
     // own body accessor that returns the body as the specific type
     virtual ::google::protobuf::Message *GetGenericBody() const = 0;
 
-   protected:
+    protected:
     // Mutex to use when registering a new pool type
     static CThreadMutex s_PoolRegMutex;
 
-   private:
+    private:
     // utility function that handles allocating a memory pool big enough for the provided header and specified body
     // size and writing the header into the pool. This will return a pointer to the memory, as well as the header size.
     static uint8 *AllocateMessageMemory( MsgType_t eMsgType, const CMsgProtoBufHeader &hdr, uint32 cubBodySize, uint32 *pCubTotalSizeOut );
@@ -268,7 +268,7 @@ class CProtoBufMsgBase
 //-----------------------------------------------------------------------------
 class CProtoBufMsgMemoryPoolBase
 {
-   public:
+    public:
     CProtoBufMsgMemoryPoolBase( uint32 unTargetLow, uint32 unTargetHigh );
     virtual ~CProtoBufMsgMemoryPoolBase();
 
@@ -298,7 +298,7 @@ class CProtoBufMsgMemoryPoolBase
     // To be overriden by the templated class
     virtual CUtlString GetName() = 0;
 
-   protected:
+    protected:
     // The actual memory management. Must be overriden by the templated class
     virtual google::protobuf::Message *InternalAlloc() = 0;
     virtual void InternalFree( google::protobuf::Message *pMsg ) = 0;
@@ -306,7 +306,7 @@ class CProtoBufMsgMemoryPoolBase
     // Called by the derived destructor to deallocate the outstanding messages
     bool PopItem( google::protobuf::Message **ppMsg );
 
-   private:
+    private:
     CTSQueue< google::protobuf::Message * > *m_pTSQueueFreeObjects;
 
     // These counters are important to get correct, so interlocked in case of allocating on threads
@@ -335,10 +335,10 @@ namespace GCSDK
 template < typename PB_OBJECT_TYPE >
 class CProtoBufMsgMemoryPool : public CProtoBufMsgMemoryPoolBase
 {
-   public:
+    public:
     CProtoBufMsgMemoryPool()
         : CProtoBufMsgMemoryPoolBase( PB_OBJECT_TYPE::descriptor()->options().GetExtension( msgpool_soft_limit ),
-                                      PB_OBJECT_TYPE::descriptor()->options().GetExtension( msgpool_hard_limit ) ) {}
+                                    PB_OBJECT_TYPE::descriptor()->options().GetExtension( msgpool_hard_limit ) ) {}
     virtual ~CProtoBufMsgMemoryPool()
     {
         google::protobuf::Message *pObject = NULL;
@@ -353,7 +353,7 @@ class CProtoBufMsgMemoryPool : public CProtoBufMsgMemoryPoolBase
         return PB_OBJECT_TYPE::default_instance().GetTypeName().c_str();
     }
 
-   private:
+    private:
     virtual ::google::protobuf::Message *InternalAlloc()
     {
         PB_OBJECT_TYPE *pObject = ( PB_OBJECT_TYPE * )malloc( sizeof( PB_OBJECT_TYPE ) );
@@ -382,7 +382,7 @@ class CProtoBufMsgMemoryPool : public CProtoBufMsgMemoryPoolBase
 //-----------------------------------------------------------------------------
 class CProtoBufMsgMemoryPoolMgr
 {
-   public:
+    public:
     CProtoBufMsgMemoryPoolMgr();
     ~CProtoBufMsgMemoryPoolMgr();
 
@@ -398,7 +398,7 @@ class CProtoBufMsgMemoryPoolMgr
         m_PoolHeaders.Free( pObject );
     }
 
-   private:
+    private:
     CProtoBufMsgMemoryPool< CMsgProtoBufHeader > m_PoolHeaders;
     CUtlVector< CProtoBufMsgMemoryPoolBase * > m_vecMsgPools;
 };
@@ -413,11 +413,11 @@ extern CProtoBufMsgMemoryPoolMgr *GProtoBufMsgMemoryPoolMgr();
 //-----------------------------------------------------------------------------
 class CProtoBufPtrMsg : public CProtoBufMsgBase
 {
-   public:
+    public:
     CProtoBufPtrMsg( google::protobuf::Message *pProto )
         : m_pProtoBufBody( pProto ) {}
 
-   private:
+    private:
     virtual google::protobuf::Message *GetGenericBody() const OVERRIDE
     {
         return m_pProtoBufBody;
@@ -440,11 +440,11 @@ class CProtoBufPtrMsg : public CProtoBufMsgBase
 template < typename PB_OBJECT_TYPE >
 class CProtoBufMsg : public CProtoBufMsgBase
 {
-   private:
+    private:
     static bool s_bRegisteredWithMemoryPoolMgr;
     static CProtoBufMsgMemoryPool< PB_OBJECT_TYPE > *s_pMemoryPool;
 
-   public:
+    public:
     // Used to alloc a protobuf of this type from the pool. Can be used by functions
     // working with protobufs that aren't messages to take advantage of pooling
     static PB_OBJECT_TYPE *AllocProto()
@@ -540,7 +540,7 @@ class CProtoBufMsg : public CProtoBufMsgBase
         return *m_pProtoBufBody;
     }
 
-   private:
+    private:
     virtual google::protobuf::Message *GetGenericBody() const OVERRIDE
     {
         return m_pProtoBufBody;
@@ -567,14 +567,14 @@ CProtoBufMsgMemoryPool< PB_OBJECT_TYPE > *CProtoBufMsg< PB_OBJECT_TYPE >::s_pMem
 template < class TMsg >
 class CProtoBufPoolObj
 {
-   private:
+    private:
     TMsg *m_pMsg;
 
-   private:  // Disallow copying/assignment
+    private:  // Disallow copying/assignment
     CProtoBufPoolObj( CProtoBufPoolObj const &x );
     CProtoBufPoolObj &operator=( CProtoBufPoolObj const &x );
 
-   public:
+    public:
     CProtoBufPoolObj()
     {
         m_pMsg = CProtoBufMsg< TMsg >::AllocProto();

@@ -30,7 +30,7 @@ static ConVar soundpatch_captionlength( "soundpatch_captionlength", "2.0", FCVAR
 // This is a class that controls a ramp for a sound (pitch / volume / etc)
 class CSoundEnvelope
 {
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 
     CSoundEnvelope()
@@ -50,7 +50,7 @@ class CSoundEnvelope
         return m_current;
     }
 
-   private:
+    private:
     float m_current;
     float m_target;
     float m_rate;
@@ -136,7 +136,7 @@ void CSoundEnvelope::Update( float deltaTime )
 
 class CCopyRecipientFilter : public IRecipientFilter
 {
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 
     CCopyRecipientFilter()
@@ -206,7 +206,7 @@ class CCopyRecipientFilter : public IRecipientFilter
         return true;
     }
 
-   private:
+    private:
     enum
     {
         FLAG_ACTIVE = 0x1,
@@ -230,7 +230,7 @@ DEFINE_FIELD( m_Flags, FIELD_INTEGER ),
     // It has envelopes for pitch and volume and can manage state changes to those
     class CSoundPatch
 {
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 
     static int g_SoundPatchCount;
@@ -284,12 +284,12 @@ DEFINE_FIELD( m_Flags, FIELD_INTEGER ),
     // Returns the ent index
     int EntIndex() const;
 
-   private:
+    private:
     // SoundPatches take volumes between 0 & 1, and use that to multiply the sounds.txt specified volume.
     // This function is an internal method of accessing the real volume passed into the engine (i.e. post multiply)
     float GetVolumeForEngine( void );
 
-   private:
+    private:
     CSoundEnvelope m_pitch;
     CSoundEnvelope m_volume;
 
@@ -367,7 +367,7 @@ DEFINE_EMBEDDED( m_pitch ),
     // Get the volume from the script
     CSoundParameters params;
     if ( !Q_stristr( pSoundName, ".wav" ) && !Q_stristr( pSoundName, ".mp3" ) &&
-         CBaseEntity::GetParametersForSound( pSoundName, params, NULL ) )
+        CBaseEntity::GetParametersForSound( pSoundName, params, NULL ) )
     {
         m_flScriptVolume = params.volume;
         // This has to be the actual .wav because rndwave would cause a bunch of new .wavs to play... bad...
@@ -704,7 +704,7 @@ class CSoundControllerImp : public CSoundEnvelopeController, public CAutoGameSys
     //-----------------------------------------------------------------------------
     // internal functions, private to this file
     //-----------------------------------------------------------------------------
-   public:
+    public:
     CSoundControllerImp( void )
         : CAutoGameSystemPerFrame( "CSoundControllerImp" )
     {
@@ -721,7 +721,7 @@ class CSoundControllerImp : public CSoundEnvelopeController, public CAutoGameSys
     //-----------------------------------------------------------------------------
     // external interface functions (from CSoundEnvelopeController)
     //-----------------------------------------------------------------------------
-   public:
+    public:
     // Start this sound playing, or reset if already playing with new volume/pitch
     void Play( CSoundPatch *pSound, float volume, float pitch, float flStartTime = 0 );
     void CommandAdd( CSoundPatch *pSound, float executeDeltaTime, soundcommands_t command, float commandTime, float commandValue );
@@ -776,7 +776,7 @@ class CSoundControllerImp : public CSoundEnvelopeController, public CAutoGameSys
         SystemReset();
     }
 
-   private:
+    private:
     CUtlVector< CSoundPatch * > m_soundList;
     CUtlPriorityQueue< SoundCommand_t * > m_commandList;
     float m_flLastTime;
@@ -1269,7 +1269,7 @@ CSoundEnvelopeController &CSoundEnvelopeController::GetController( void )
 //-----------------------------------------------------------------------------
 class CSoundPatchSaveRestoreOps : public CClassPtrSaveRestoreOps
 {
-   public:
+    public:
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
     {
         pSave->StartBlock();

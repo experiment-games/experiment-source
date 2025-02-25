@@ -54,7 +54,7 @@ enum audio_filter_type_t
 
 class IAudioMix
 {
-   public:
+    public:
     virtual ~IAudioMix() {}
     virtual void Process( CAudioMixState *pState ) = 0;
 
@@ -72,7 +72,7 @@ class CAudioMixDescription;
 
 abstract_class ISoundSystem : public IAppSystem
 {
-   public:
+    public:
     virtual void Update( float time ) = 0;
     virtual void Flush( void ) = 0;
 

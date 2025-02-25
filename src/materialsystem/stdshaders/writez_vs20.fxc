@@ -5,20 +5,20 @@
 
 struct VS_INPUT
 {
-	float4 vPos		: POSITION;
+    float4 vPos		: POSITION;
 };
 
 struct VS_OUTPUT
 {
-	float4 vProjPos		: POSITION;
+    float4 vProjPos		: POSITION;
 };
 
 
 VS_OUTPUT main( const VS_INPUT v )
 {
-	VS_OUTPUT o = ( VS_OUTPUT )0;
+    VS_OUTPUT o = ( VS_OUTPUT )0;
 
-	o.vProjPos = mul( v.vPos, cModelViewProj );
+    o.vProjPos = mul( v.vPos, cModelViewProj );
 
-	return o;
+    return o;
 }

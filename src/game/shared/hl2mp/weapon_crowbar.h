@@ -28,7 +28,7 @@
 
 class CWeaponCrowbar : public CBaseHL2MPBludgeonWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponCrowbar, CBaseHL2MPBludgeonWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -61,7 +61,7 @@ class CWeaponCrowbar : public CBaseHL2MPBludgeonWeapon
 
     CWeaponCrowbar( const CWeaponCrowbar & );
 
-   private:
+    private:
 };
 
 #endif  // HL2MP_WEAPON_CROWBAR_H

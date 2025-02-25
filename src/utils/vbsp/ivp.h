@@ -22,7 +22,7 @@ extern int RemapWorldMaterial( int materialIndexIn );
 
 class CPhysCollisionEntry
 {
-   public:
+    public:
     CPhysCollisionEntry( CPhysCollide *pCollide );
 
     virtual void WriteToTextBuffer( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex ) = 0;
@@ -31,28 +31,28 @@ class CPhysCollisionEntry
     unsigned int GetCollisionBinarySize();
     unsigned int WriteCollisionBinary( char *pDest );
 
-   protected:
+    protected:
     void DumpCollideFileName( const char *pName, int modelIndex, CTextBuffer *pTextBuffer );
 
-   protected:
+    protected:
     CPhysCollide *m_pCollide;
 };
 
 class CPhysCollisionEntryStaticMesh : public CPhysCollisionEntry
 {
-   public:
+    public:
     CPhysCollisionEntryStaticMesh( CPhysCollide *pCollide, const char *pMaterialName );
 
     virtual void WriteToTextBuffer( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
     virtual void DumpCollide( CTextBuffer *pTextBuffer, int modelIndex, int collideIndex );
 
-   private:
+    private:
     const char *m_pMaterial;
 };
 
 class CTextBuffer
 {
-   public:
+    public:
     CTextBuffer( void );
     ~CTextBuffer( void );
     inline int GetSize( void )
@@ -73,7 +73,7 @@ class CTextBuffer
     void CopyStringQuotes( const char *pString );
     void Terminate( void );
 
-   private:
+    private:
     void CopyData( const char *pData, int len );
     CUtlVector< char > m_buffer;
 };

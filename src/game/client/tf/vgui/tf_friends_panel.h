@@ -28,7 +28,7 @@ class CSteamFriendPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSteamFriendPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CSteamFriendPanel( Panel* parent, const char* panelName );
     void SetSteamID( const CSteamID& steamID );
 
@@ -46,7 +46,7 @@ class CSteamFriendPanel : public vgui::EditablePanel
     MESSAGE_FUNC( DoJoinServer, "Context_JoinServer" );
     MESSAGE_FUNC( DoSendMessage, "Context_SendMessage" );
 
-   private:
+    private:
     void UpdateControls();
 
     CSteamID m_steamID;
@@ -60,7 +60,7 @@ class CSteamFriendsListPanel : public CExScrollingEditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSteamFriendsListPanel, CExScrollingEditablePanel );
 
-   public:
+    public:
     CSteamFriendsListPanel( Panel* parent, const char* panelName );
     virtual ~CSteamFriendsListPanel();
 
@@ -68,7 +68,7 @@ class CSteamFriendsListPanel : public CExScrollingEditablePanel
     virtual void ApplySettings( KeyValues* inResourceData ) OVERRIDE;
     virtual void OnThink();
 
-   private:
+    private:
     CCallback< CSteamFriendsListPanel, PersonaStateChange_t, false > m_sPersonaStateChangedCallback;
     void OnPersonaStateChanged( PersonaStateChange_t* info );
 

@@ -141,7 +141,7 @@ void CZombie::Spawn( void )
 
     if ( FStrEq( name, "spy" ) )
     {
-      m_bSpy = true;
+    m_bSpy = true;
     }*/
 
     // SetModel( CFmtStr( "models/player/%s.mdl", name ) );
@@ -242,7 +242,7 @@ int CZombie::OnTakeDamage_Alive( const CTakeDamageInfo &info )
     if ( info.GetAttacker() && info.GetAttacker()->IsPlayer() )
     {
         int idx = m_vecRecentDamagers.FindPredicate( [&info]( const RecentDamager_t &recent )
-                                                     { return recent.m_hEnt == info.GetAttacker(); } );
+                                                    { return recent.m_hEnt == info.GetAttacker(); } );
 
         if ( idx == m_vecRecentDamagers.InvalidIndex() )
         {
@@ -435,7 +435,7 @@ void CZombie::AddHat( const char *pszModel )
 //---------------------------------------------------------------------------------------------
 class CZombieBehavior : public Action< CZombie >
 {
-   public:
+    public:
     virtual Action< CZombie > *InitialContainedAction( CZombie *me )
     {
         return new CZombieSpawn;
@@ -503,7 +503,7 @@ class CZombieBehavior : public Action< CZombie >
         return "ZombieBehavior";
     }  // return name of this action
 
-   private:
+    private:
     bool ShouldLaugh( CZombie *me )
     {
         if ( !m_laughTimer.HasStarted() )

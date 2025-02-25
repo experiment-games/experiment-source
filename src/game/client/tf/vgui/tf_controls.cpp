@@ -211,9 +211,9 @@ void DrawFilledColoredCircleSegment( float flXPos, float flYPos, float flRadiusO
         verts[1] = verts[2];
         // Compute the leading-edge verts
         lambdaCompVerts( flStartRadAngle[0] + i * invDelta[0],
-                         flStartRadAngle[1] + i * invDelta[1],
-                         verts[2],
-                         verts[3] );
+                        flStartRadAngle[1] + i * invDelta[1],
+                        verts[2],
+                        verts[3] );
 
         surface()->DrawTexturedPolygon( 4, verts, true );
     }
@@ -296,8 +296,8 @@ int AttemptPositionTooltip( const tooltippos_t eTooltipPosition,
 //			mouse over panel.
 //-----------------------------------------------------------------------------
 void PositionTooltip( const tooltippos_t ePreferredTooltipPosition,
-                      vgui::Panel *pMouseOverPanel,
-                      vgui::Panel *pToolTipPanel )
+                    vgui::Panel *pMouseOverPanel,
+                    vgui::Panel *pToolTipPanel )
 {
     struct PosResult_t
     {
@@ -315,10 +315,10 @@ void PositionTooltip( const tooltippos_t ePreferredTooltipPosition,
     for ( int i = 0; i < MAX_POSITIONS; ++i )
     {
         arResults[i].nScore = AttemptPositionTooltip( ( tooltippos_t )i,
-                                                      pMouseOverPanel,
-                                                      pToolTipPanel,
-                                                      arResults[i].nX,
-                                                      arResults[i].nY );
+                                                    pMouseOverPanel,
+                                                    pToolTipPanel,
+                                                    arResults[i].nX,
+                                                    arResults[i].nY );
 
         flAverageScore += arResults[i].nScore;
         // 0 is a perfect score.
@@ -336,7 +336,7 @@ void PositionTooltip( const tooltippos_t ePreferredTooltipPosition,
     if ( arResults[ePreferredTooltipPosition].nScore < ( flAverageScore / 2.f ) )
     {
         pToolTipPanel->SetPos( arResults[ePreferredTooltipPosition].nX,
-                               arResults[ePreferredTooltipPosition].nY );
+                                arResults[ePreferredTooltipPosition].nY );
         return;
     }
 
@@ -1324,7 +1324,7 @@ class CExScrollBar : public ScrollBar
 {
     DECLARE_CLASS_SIMPLE( CExScrollBar, ScrollBar );
 
-   public:
+    public:
     CExScrollBar( Panel *parent, const char *name, bool bVertical )
         : ScrollBar( parent, name, bVertical )
     {
@@ -1778,7 +1778,7 @@ void CDraggableScrollingPanel::OnChildRemoved( Panel *pChild )
     BaseClass::OnChildRemoved( pChild );
 
     auto idx = m_vecChildOriginalData.FindPredicate( [&]( const ChildPositionInfo_t &other )
-                                                     { return other.m_pChild == pChild; } );
+                                                    { return other.m_pChild == pChild; } );
 
     m_vecChildOriginalData.Remove( idx );
 }
@@ -1944,7 +1944,7 @@ void CDraggableScrollingPanel::SetZoomAmount( float flZoomAmount, int nXZoomFocu
 const CDraggableScrollingPanel::ChildPositionInfo_t *CDraggableScrollingPanel::GetChildPositionInfo( const Panel *pChildPanel ) const
 {
     auto idx = m_vecChildOriginalData.FindPredicate( [&]( const ChildPositionInfo_t &other )
-                                                     { return other.m_pChild == pChildPanel; } );
+                                                    { return other.m_pChild == pChildPanel; } );
 
     if ( idx == m_vecChildOriginalData.InvalidIndex() )
         return NULL;
@@ -2172,16 +2172,16 @@ void CTFLogoPanel::PaintTFLogo( float flAngle, const Color &color ) const
     };
 
     lambdaDrawSegment( flNaturalTiltAngle + flAngle,
-                       flNaturalTiltAngle + flAngle + 90 );
+                        flNaturalTiltAngle + flAngle + 90 );
 
     lambdaDrawSegment( flNaturalTiltAngle + flAngle + 90,
-                       flNaturalTiltAngle + flAngle + 180 );
+                        flNaturalTiltAngle + flAngle + 180 );
 
     lambdaDrawSegment( flNaturalTiltAngle + flAngle + 180,
-                       flNaturalTiltAngle + flAngle + 270 );
+                        flNaturalTiltAngle + flAngle + 270 );
 
     lambdaDrawSegment( flNaturalTiltAngle + flAngle + 270,
-                       flNaturalTiltAngle + flAngle + 360 );
+                        flNaturalTiltAngle + flAngle + 360 );
 }
 
 void CTFLogoPanel::Paint()
@@ -2195,14 +2195,14 @@ void CTFLogoPanel::Paint()
 
 class CScrollingIndicatorPanel : public EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CScrollingIndicatorPanel, EditablePanel );
     CScrollingIndicatorPanel( const wchar *pwszText,
-                              const char *pszSoundName,
-                              float flDelay,
-                              int nXTravel,
-                              int nYTravel,
-                              bool bPositive )
+                            const char *pszSoundName,
+                            float flDelay,
+                            int nXTravel,
+                            int nYTravel,
+                            bool bPositive )
         : BaseClass( NULL, "Indicator" ), m_strSound( pszSoundName ), m_nXTravel( nXTravel ), m_nYTravel( nYTravel ), m_bPositive( bPositive )
     {
         vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme" );
@@ -2273,7 +2273,7 @@ class CScrollingIndicatorPanel : public EditablePanel
         InvalidateLayout();
     }
 
-   private:
+    private:
     wchar m_wszBuff[256];
     CUtlString m_strSound;
     bool m_bPositive;
@@ -2282,20 +2282,20 @@ class CScrollingIndicatorPanel : public EditablePanel
 };
 
 void CreateScrollingIndicator( int nXPos,
-                               int nYPos,
-                               const wchar *pwszText,
-                               const char *pszSoundName,
-                               float flDelay,
-                               int nXTravel,
-                               int nYTravel,
-                               bool bPositive )
+                                int nYPos,
+                                const wchar *pwszText,
+                                const char *pszSoundName,
+                                float flDelay,
+                                int nXTravel,
+                                int nYTravel,
+                                bool bPositive )
 {
     CScrollingIndicatorPanel *pPanel = new CScrollingIndicatorPanel( pwszText,
-                                                                     pszSoundName,
-                                                                     flDelay,
-                                                                     nXTravel,
-                                                                     nYTravel,
-                                                                     bPositive );
+                                                                    pszSoundName,
+                                                                    flDelay,
+                                                                    nXTravel,
+                                                                    nYTravel,
+                                                                    bPositive );
     pPanel->MakeReadyForUse();
     pPanel->SetPos( nXPos - pPanel->GetWide() / 2, nYPos );
 }
@@ -2308,7 +2308,7 @@ class CAutoFittingLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( CAutoFittingLabel, Label );
 
-   public:
+    public:
     CAutoFittingLabel( Panel *parent, const char *name )
         : Label( parent, name, ( const char * )NULL ), m_mapColors( DefLessFunc( int ) )
     {
@@ -2393,7 +2393,7 @@ class CAutoFittingLabel : public Label
         }
     }
 
-   private:
+    private:
     CUtlVector< HFont > m_vecFonts;
     CUtlMap< int, Color > m_mapColors;
 };

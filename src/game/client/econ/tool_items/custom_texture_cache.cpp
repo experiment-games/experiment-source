@@ -306,10 +306,10 @@ struct SCustomImageCacheEntry : private ITextureRegenerator
         bool bFailed;
         RemoteStorageDownloadUGCResult_t result;
         if ( !steamapicontext->SteamUtils()->GetAPICallResult( m_hDownloadApiCall,
-                                                               &result,
-                                                               sizeof( result ),
-                                                               RemoteStorageDownloadUGCResult_t::k_iCallback,
-                                                               &bFailed ) )
+                                                                &result,
+                                                                sizeof( result ),
+                                                                RemoteStorageDownloadUGCResult_t::k_iCallback,
+                                                                &bFailed ) )
         {
             // Still busy.
             return;
@@ -634,7 +634,7 @@ int GetCustomTextureGuiHandle( uint64 hCloudId )
 
 class CCustomTextureOnItemProxy : public IMaterialProxy
 {
-   public:
+    public:
     CCustomTextureOnItemProxy();
     virtual ~CCustomTextureOnItemProxy();
 
@@ -643,10 +643,10 @@ class CCustomTextureOnItemProxy : public IMaterialProxy
     virtual void Release();
     virtual IMaterial *GetMaterial();
 
-   protected:
+    protected:
     virtual void OnBindInternal( CEconItemView *pScriptItem );
 
-   private:
+    private:
     IMaterialVar *m_pBaseTextureVar;
     ITexture *m_pOriginalTexture;
 };
@@ -807,7 +807,7 @@ void CCustomTextureOnItemProxy::OnBindInternal( CEconItemView *pScriptItem )
 //-----------------------------------------------------------------------------
 class CCustomTextureToolCache : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     CCustomTextureToolCache() {}
     virtual ~CCustomTextureToolCache() {}
 
@@ -998,10 +998,10 @@ EResult CApplyCustomTextureJob::YieldingFindFileIncacheOrUploadFileToCDN()
     bool bFailed;
     RemoteStorageFileShareResult_t shareResult;
     while ( !steamapicontext->SteamUtils()->GetAPICallResult( hFileShareApiCall,
-                                                              &shareResult,
-                                                              sizeof( shareResult ),
-                                                              RemoteStorageFileShareResult_t::k_iCallback,
-                                                              &bFailed ) )
+                                                            &shareResult,
+                                                            sizeof( shareResult ),
+                                                            RemoteStorageFileShareResult_t::k_iCallback,
+                                                            &bFailed ) )
     {
         BYield();
     }

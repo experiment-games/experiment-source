@@ -23,7 +23,7 @@ IClientMode *g_pClientMode = NULL;
 
 class CHLModeManager : public IVModeManager
 {
-   public:
+    public:
     CHLModeManager( void );
     virtual ~CHLModeManager( void );
 

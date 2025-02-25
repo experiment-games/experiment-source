@@ -41,8 +41,8 @@ DEFINE_FIELD( m_pool, FIELD_EHANDLE ),
 
     //-----------------------------------------------------------------------------------------------------
     /**
-     * Send fish position relative to pool origin
-     */
+    * Send fish position relative to pool origin
+    */
     void SendProxy_FishOriginX( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID )
 {
     CFish *fish = ( CFish * )pStruct;

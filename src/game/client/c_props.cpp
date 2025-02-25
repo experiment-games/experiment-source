@@ -120,7 +120,7 @@ class C_BasePropDoor : public C_DynamicProp
 {
     DECLARE_CLASS( C_BasePropDoor, C_DynamicProp );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     // constructor, destructor
@@ -131,7 +131,7 @@ class C_BasePropDoor : public C_DynamicProp
 
     virtual bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t &trace );
 
-   private:
+    private:
     C_BasePropDoor( const C_BasePropDoor & );
 };
 
@@ -187,7 +187,7 @@ bool C_BasePropDoor::TestCollision( const Ray_t &ray, unsigned int mask, trace_t
 #ifndef _XBOX
 class CPhysBoxMultiplayer : public CPhysBox, public IMultiplayerPhysics
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysBoxMultiplayer, CPhysBox );
 
     virtual int GetMultiplayerPhysicsMode()

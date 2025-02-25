@@ -25,7 +25,7 @@ inline void TelemetrySetLevel( unsigned int Level ) {}
 
 class CTelemetryLock
 {
-   public:
+    public:
     CTelemetryLock( void *plocation, const char *description ) {}
     ~CTelemetryLock() {}
     void Locked() {}
@@ -34,7 +34,7 @@ class CTelemetryLock
 
 class CTelemetrySpikeDetector
 {
-   public:
+    public:
     CTelemetrySpikeDetector( const char *msg, uint32 threshold = 50 ) {}
     ~CTelemetrySpikeDetector() {}
 };
@@ -91,7 +91,7 @@ PLATFORM_INTERFACE void TelemetrySetLevel( unsigned int Level );
 
 class CTelemetryLock
 {
-   public:
+    public:
     CTelemetryLock( void *plocation, const char *description )
     {
         m_plocation = ( const char * )plocation;
@@ -117,14 +117,14 @@ class CTelemetryLock
         }
     }
 
-   public:
+    public:
     const char *m_plocation;
     const char *m_description;
 };
 
 class CTelemetrySpikeDetector
 {
-   public:
+    public:
     // Spews Telemetry message when threshold hit (in milliseconds.)
     CTelemetrySpikeDetector( const char *msg, float threshold = 5 )
         : m_message( msg ), m_threshold( threshold ), time0( tmFastTime() ) {}
@@ -137,7 +137,7 @@ class CTelemetrySpikeDetector
         }
     }
 
-   private:
+    private:
     TmU64 time0;
     float m_threshold;
     const char *m_message;

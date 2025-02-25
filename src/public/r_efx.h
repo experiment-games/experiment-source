@@ -18,7 +18,7 @@ struct dlight_t;
 
 class CVEfx : public IVEfx
 {
-   public:
+    public:
     virtual ~CVEfx() {}
 
     virtual int Draw_DecalIndexFromName( char *name );

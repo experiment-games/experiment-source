@@ -24,7 +24,7 @@ struct ss_update_t
 
 class CEnvSoundscape : public CServerOnlyPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvSoundscape, CServerOnlyPointEntity );
     DECLARE_DATADESC();
 
@@ -48,12 +48,12 @@ class CEnvSoundscape : public CServerOnlyPointEntity
         return m_soundscapeName;
     }
 
-   private:
+    private:
     bool IsEnabled( void ) const;
     void Disable( void );
     void Enable( void );
 
-   public:
+    public:
     COutputEvent m_OnPlay;
     float m_flRadius;
     string_t m_soundscapeName;
@@ -65,13 +65,13 @@ class CEnvSoundscape : public CServerOnlyPointEntity
     // those of this soundscape.
     CHandle< CEnvSoundscape > m_hProxySoundscape;
 
-   private:
+    private:
     bool m_bDisabled;
 };
 
 class CEnvSoundscapeProxy : public CEnvSoundscape
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvSoundscapeProxy, CEnvSoundscape );
     DECLARE_DATADESC();
 
@@ -85,7 +85,7 @@ class CEnvSoundscapeProxy : public CEnvSoundscape
         return;
     }
 
-   private:
+    private:
     string_t m_MainSoundscapeName;
 };
 
@@ -93,7 +93,7 @@ class CEnvSoundscapeTriggerable : public CEnvSoundscape
 {
     friend class CTriggerSoundscape;
 
-   public:
+    public:
     DECLARE_CLASS( CEnvSoundscapeTriggerable, CEnvSoundscape );
     DECLARE_DATADESC();
 
@@ -102,7 +102,7 @@ class CEnvSoundscapeTriggerable : public CEnvSoundscape
     // Overrides the base class's think and prevents it from running at all.
     virtual void Think();
 
-   private:
+    private:
     // Passed through from CTriggerSoundscape.
     void DelegateStartTouch( CBaseEntity *pEnt );
     void DelegateEndTouch( CBaseEntity *pEnt );

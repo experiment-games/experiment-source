@@ -21,7 +21,7 @@
 
 class CWeaponMP5 : public CWeaponSDKBase
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponMP5, CWeaponSDKBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -38,7 +38,7 @@ class CWeaponMP5 : public CWeaponSDKBase
         return WEAPON_MP5;
     }
 
-   private:
+    private:
     CWeaponMP5( const CWeaponMP5 & );
 
     void Fire( float flSpread );

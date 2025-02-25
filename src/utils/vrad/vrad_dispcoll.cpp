@@ -91,8 +91,8 @@ void CVRADDispColl::CalcSampleRadius2AndBox( dface_t *pFace )
 
     // Todo: Width = Height now, should change all the code to look at one value.
     Vector vecTmp( pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][0],
-                   pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
-                   pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
+                    pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
+                    pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
     float flWidth = 1.0f / VectorLength( vecTmp );
     float flHeight = flWidth;
 

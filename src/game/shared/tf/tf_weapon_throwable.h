@@ -33,7 +33,7 @@ class CTFProjectile_Throwable;
 // *************************************************************************************************************************
 class CTFThrowable : public CTFJar, public ITFChargeUpWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CTFThrowable, CTFJar );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -87,7 +87,7 @@ class CTFThrowable : public CTFJar, public ITFChargeUpWeapon
 // *************************************************************************************************************************
 class CTFThrowablePrimary : public CTFThrowable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFThrowablePrimary, CTFThrowable );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -95,7 +95,7 @@ class CTFThrowablePrimary : public CTFThrowable
 
 class CTFThrowableSecondary : public CTFThrowable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFThrowableSecondary, CTFThrowable );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -103,7 +103,7 @@ class CTFThrowableSecondary : public CTFThrowable
 
 class CTFThrowableMelee : public CTFThrowable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFThrowableMelee, CTFThrowable );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -111,7 +111,7 @@ class CTFThrowableMelee : public CTFThrowable
 
 class CTFThrowableUtility : public CTFThrowable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFThrowableUtility, CTFThrowable );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -120,7 +120,7 @@ class CTFThrowableUtility : public CTFThrowable
 // *************************************************************************************************************************
 class CTFProjectile_Throwable : public CTFProjectile_Jar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_Throwable, CTFProjectile_Jar );
     DECLARE_NETWORKCLASS();
 
@@ -229,19 +229,19 @@ class CTFProjectile_Throwable : public CTFProjectile_Jar
     }
 #endif
 
-   protected:
+    protected:
 #ifdef GAME_DLL
     float m_flChargePercent;
     bool m_bHit;
 #endif  // GAME_DLL
 
-   private:
+    private:
 };
 
 // *************************************************************************************************************************
 class CTFProjectile_ThrowableRepel : public CTFProjectile_Throwable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_ThrowableRepel, CTFProjectile_Throwable );
     DECLARE_NETWORKCLASS();
 
@@ -281,7 +281,7 @@ class CTFProjectile_ThrowableRepel : public CTFProjectile_Throwable
 // *************************************************************************************************************************
 class CTFProjectile_ThrowableBrick : public CTFProjectile_Throwable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_ThrowableBrick, CTFProjectile_Throwable );
     DECLARE_NETWORKCLASS();
 
@@ -321,7 +321,7 @@ class CTFProjectile_ThrowableBrick : public CTFProjectile_Throwable
 // *************************************************************************************************************************
 class CTFProjectile_ThrowableBreadMonster : public CTFProjectile_Throwable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_ThrowableBreadMonster, CTFProjectile_Throwable );
     DECLARE_NETWORKCLASS();
 

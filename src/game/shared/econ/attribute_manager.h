@@ -70,7 +70,7 @@ class CAttributeManager
 {
     DECLARE_CLASS_NOBASE( CAttributeManager );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_EMBEDDED_NETWORKVAR();
 
@@ -91,12 +91,12 @@ class CAttributeManager
     void ProvideTo( CBaseEntity *pProvider );
     void StopProvidingTo( CBaseEntity *pProvider );
 
-   protected:
+    protected:
     // Not to be called directly. Use ProvideTo() or StopProvidingTo() above.
     void AddProvider( CBaseEntity *pProvider );
     void RemoveProvider( CBaseEntity *pProvider );
 
-   public:
+    public:
     // Return true if this entity is providing attributes to the specified entity
     bool IsProvidingTo( CBaseEntity *pEntity ) const;
 
@@ -140,7 +140,7 @@ class CAttributeManager
         return Scratch;
     }
 
-   private:
+    private:
     template < class T >
     static void TypedAttribHookValueInternal( T &out, T TValue, string_t iszAttribHook, const CBaseEntity *pEntity, IHasAttributes *pAttribInterface, CUtlVector< CBaseEntity * > *pItemList )
     {
@@ -183,7 +183,7 @@ class CAttributeManager
     int m_nCurrentTick;
     int m_nCalls;
 
-   public:
+    public:
     virtual float ApplyAttributeFloat( float flValue, CBaseEntity *pInitiator, string_t iszAttribHook = NULL_STRING, CUtlVector< CBaseEntity * > *pItemList = NULL );
     virtual string_t ApplyAttributeString( string_t iszValue, CBaseEntity *pInitiator, string_t iszAttribHook = NULL_STRING, CUtlVector< CBaseEntity * > *pItemList = NULL );
 
@@ -199,7 +199,7 @@ class CAttributeManager
     void *operator new( size_t stAllocateBlock );
     void *operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine );
 
-   protected:
+    protected:
     CUtlVector< EHANDLE > m_Providers;  // entities that we receive attribute data *from*
     CUtlVector< EHANDLE > m_Receivers;  // entities that we provide attribute data *to*
     CNetworkVarForDerived( int, m_iReapplyProvisionParity );
@@ -208,13 +208,13 @@ class CAttributeManager
     CNetworkVarForDerived( attributeprovidertypes_t, m_ProviderType );
     int m_iCacheVersion;  // maps to gamerules counter for global cache flushing
 
-   public:
+    public:
     virtual void OnAttributeValuesChanged()
     {
         ClearCache();
     }
 
-   private:
+    private:
     void ClearCache();
     int GetGlobalCacheVersion() const;
 
@@ -238,7 +238,7 @@ class CAttributeManager
     CUtlVector< cached_attribute_t > m_CachedResults;
 
 #ifdef CLIENT_DLL
-   public:
+    public:
     // Data received from the server
     int m_iOldReapplyProvisionParity;
 #endif
@@ -249,7 +249,7 @@ class CAttributeManager
 //-----------------------------------------------------------------------------
 class CAttributeContainer : public CAttributeManager
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CAttributeContainer, CAttributeManager );
     DECLARE_EMBEDDED_NETWORKVAR();
@@ -281,7 +281,7 @@ class CAttributeContainer : public CAttributeManager
         m_Item.OnAttributeValuesChanged();
     }
 
-   private:
+    private:
     CNetworkVarEmbedded( CEconItemView, m_Item );
 };
 
@@ -292,7 +292,7 @@ class CAttributeContainer : public CAttributeManager
 #ifndef DOTA_DLL
 class CAttributeContainerPlayer : public CAttributeManager
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CAttributeContainerPlayer, CAttributeManager );
     DECLARE_EMBEDDED_NETWORKVAR();
@@ -316,14 +316,14 @@ class CAttributeContainerPlayer : public CAttributeManager
         m_hPlayer->NetworkStateChanged();
     }
 
-   private:
+    private:
     CNetworkHandle( CBasePlayer, m_hPlayer );
 };
 #endif
 
 class CEconGetAttributeIterator : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     CEconGetAttributeIterator( attrib_definition_index_t nDefIndex, float flDefaultValue )
         : m_nDefIndex( nDefIndex ), m_flValue( flDefaultValue ) {}
 

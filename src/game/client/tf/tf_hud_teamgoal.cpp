@@ -32,7 +32,7 @@ class CHudTeamGoal : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTeamGoal, EditablePanel );
 
-   public:
+    public:
     CHudTeamGoal( const char *pElementName );
 
     virtual void LevelInit( void );
@@ -41,7 +41,7 @@ class CHudTeamGoal : public CHudElement, public EditablePanel
 
     void SetupGoalPanel( const char *pszGoal );
 
-   private:
+    private:
     Label *m_pSwitchLabel;
     Label *m_pGoalLabel;
     CTFImagePanel *m_pGoalImage;

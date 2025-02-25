@@ -8,7 +8,7 @@ class CPointHurt : public CPointEntity
 {
     DECLARE_CLASS( CPointHurt, CPointEntity );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void HurtThink( void );

@@ -32,7 +32,7 @@ class PerforceFileExplorer : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( PerforceFileExplorer, Frame );
 
-   public:
+    public:
     // The context keyvalues are added to all messages sent by this dialog if they are specified
     PerforceFileExplorer( Panel *parent, const char *pPanelName );
     ~PerforceFileExplorer();
@@ -41,7 +41,7 @@ class PerforceFileExplorer : public vgui::Frame
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
-   protected:
+    protected:
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", kv );
     MESSAGE_FUNC( OnItemDoubleClicked, "ItemDoubleClicked" );
     MESSAGE_FUNC( OnFolderUp, "FolderUp" );

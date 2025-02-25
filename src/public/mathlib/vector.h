@@ -62,7 +62,7 @@ class VectorByValue;
 //=========================================================
 class Vector
 {
-   public:
+    public:
     // Members
     vec_t x, y, z;
 
@@ -130,8 +130,8 @@ class Vector
     bool IsZero( float tolerance = 0.01f ) const
     {
         return ( x > -tolerance && x < tolerance &&
-                 y > -tolerance && y < tolerance &&
-                 z > -tolerance && z < tolerance );
+                y > -tolerance && y < tolerance &&
+                z > -tolerance && z < tolerance );
     }
 
     vec_t NormalizeInPlace();
@@ -209,7 +209,7 @@ class Vector
 
 #else
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     Vector( const Vector& vOther );
 #endif
@@ -227,7 +227,7 @@ FORCEINLINE void NetworkVarConstruct( Vector& v )
 //=========================================================
 class ALIGN8 ShortVector
 {
-   public:
+    public:
     short x, y, z, w;
 
     // Initialization
@@ -269,7 +269,7 @@ class ALIGN8 ShortVector
     FORCEINLINE ShortVector& operator/=( float s );
     FORCEINLINE ShortVector operator*( float fl ) const;
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     //	ShortVector(ShortVector const& vOther);
 
@@ -283,7 +283,7 @@ class ALIGN8 ShortVector
 //=========================================================
 class IntVector4D
 {
-   public:
+    public:
     int x, y, z, w;
 
     // Initialization
@@ -325,7 +325,7 @@ class IntVector4D
     FORCEINLINE IntVector4D& operator/=( float s );
     FORCEINLINE IntVector4D operator*( float fl ) const;
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     //	IntVector4D(IntVector4D const& vOther);
 
@@ -338,7 +338,7 @@ class IntVector4D
 //-----------------------------------------------------------------------------
 class VectorByValue : public Vector
 {
-   public:
+    public:
     // Construction/destruction:
     VectorByValue( void )
         : Vector() {}
@@ -356,7 +356,7 @@ class VectorByValue : public Vector
 //-----------------------------------------------------------------------------
 class TableVector
 {
-   public:
+    public:
     vec_t x, y, z;
 
     operator Vector&()
@@ -388,7 +388,7 @@ class TableVector
 
 class ALIGN16 VectorAligned : public Vector
 {
-   public:
+    public:
     inline VectorAligned( void ){};
     inline VectorAligned( vec_t X, vec_t Y, vec_t Z )
     {
@@ -397,13 +397,13 @@ class ALIGN16 VectorAligned : public Vector
 
 #ifdef VECTOR_NO_SLOW_OPERATIONS
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     VectorAligned( const VectorAligned& vOther );
     VectorAligned( const Vector& vOther );
 
 #else
-   public:
+    public:
     explicit VectorAligned( const Vector& vOther )
     {
         Init( vOther.x, vOther.y, vOther.z );
@@ -474,9 +474,9 @@ FORCEINLINE Vector ReplicateToVector( float x )
 
 // check if a point is in the field of a view of an object. supports up to 180 degree fov.
 FORCEINLINE bool PointWithinViewAngle( Vector const& vecSrcPosition,
-                                       Vector const& vecTargetPosition,
-                                       Vector const& vecLookDirection,
-                                       float flCosHalfFOV )
+                                        Vector const& vecTargetPosition,
+                                        Vector const& vecLookDirection,
+                                        float flCosHalfFOV )
 {
     Vector vecDelta = vecTargetPosition - vecSrcPosition;
     float cosDiff = DotProduct( vecLookDirection, vecDelta );
@@ -546,10 +546,10 @@ inline Vector::Vector( vec_t XYZ )
 // copy constructor
 //-----------------------------------------------------------------------------
 
-inline Vector::Vector(const Vector &vOther)					
-{ 
-	CHECK_VALID(vOther);
-	x = vOther.x; y = vOther.y; z = vOther.z;
+inline Vector::Vector(const Vector &vOther)
+{
+    CHECK_VALID(vOther);
+    x = vOther.x; y = vOther.y; z = vOther.z;
 }
 #endif
 
@@ -1357,15 +1357,15 @@ inline void VectorAbs( const Vector& src, Vector& dst )
 inline Vector Vector::Min( const Vector& vOther ) const
 {
     return Vector( x < vOther.x ? x : vOther.x,
-                   y < vOther.y ? y : vOther.y,
-                   z < vOther.z ? z : vOther.z );
+                    y < vOther.y ? y : vOther.y,
+                    z < vOther.z ? z : vOther.z );
 }
 
 inline Vector Vector::Max( const Vector& vOther ) const
 {
     return Vector( x > vOther.x ? x : vOther.x,
-                   y > vOther.y ? y : vOther.y,
-                   z > vOther.z ? z : vOther.z );
+                    y > vOther.y ? y : vOther.y,
+                    z > vOther.z ? z : vOther.z );
 }
 
 //-----------------------------------------------------------------------------
@@ -1560,7 +1560,7 @@ class RadianEuler;
 
 class Quaternion  // same data-layout as engine's vec4_t,
 {                 //		which is a vec_t[4]
-   public:
+    public:
 #ifdef VECTOR_PARANOIA
     Quaternion()
     {
@@ -1651,7 +1651,7 @@ inline bool QuaternionsAreEqual( const Quaternion& src1, const Quaternion& src2,
 //-----------------------------------------------------------------------------
 class ALIGN16 QuaternionAligned : public Quaternion
 {
-   public:
+    public:
     inline QuaternionAligned( void ){};
     inline QuaternionAligned( vec_t X, vec_t Y, vec_t Z, vec_t W )
     {
@@ -1660,13 +1660,13 @@ class ALIGN16 QuaternionAligned : public Quaternion
 
 #ifdef VECTOR_NO_SLOW_OPERATIONS
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     QuaternionAligned( const QuaternionAligned& vOther );
     QuaternionAligned( const Quaternion& vOther );
 
 #else
-   public:
+    public:
     explicit QuaternionAligned( const Quaternion& vOther )
     {
         Init( vOther.x, vOther.y, vOther.z, vOther.w );
@@ -1687,7 +1687,7 @@ class ALIGN16 QuaternionAligned : public Quaternion
 class QAngle;
 class RadianEuler
 {
-   public:
+    public:
 #ifdef VECTOR_PARANOIA
     RadianEuler()
     {
@@ -1810,7 +1810,7 @@ class QAngleByValue;
 
 class QAngle
 {
-   public:
+    public:
     // Members
     vec_t x, y, z;
 
@@ -1881,7 +1881,7 @@ class QAngle
     QAngle operator/( float fl ) const;
 #else
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     QAngle( const QAngle& vOther );
 
@@ -1898,7 +1898,7 @@ FORCEINLINE void NetworkVarConstruct( QAngle& q )
 //-----------------------------------------------------------------------------
 class QAngleByValue : public QAngle
 {
-   public:
+    public:
     // Construction/destruction:
     QAngleByValue( void )
         : QAngle() {}

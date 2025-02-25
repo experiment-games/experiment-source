@@ -552,7 +552,7 @@ class CHightower_TeleportVortex : public CTeleportVortex
     DECLARE_NETWORKCLASS();
     DECLARE_CLASS( CHightower_TeleportVortex, CTeleportVortex );
 
-   public:
+    public:
     virtual void Spawn()
     {
         BaseClass::Spawn();
@@ -577,7 +577,7 @@ class CHightower_TeleportVortex : public CTeleportVortex
         m_nWinningTeam = FStrEq( inputdata.value.String(), "red" ) ? TF_TEAM_RED : TF_TEAM_BLUE;
     }
 #endif
-   private:
+    private:
 #ifdef GAME_DLL
     int m_nWinningTeam;
     const char *m_pszDestinationBaseName;

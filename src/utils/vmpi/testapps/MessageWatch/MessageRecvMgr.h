@@ -13,7 +13,7 @@
 
 class IMessageRecvMgr
 {
-   public:
+    public:
 };
 
 #endif  // MESSAGERECVMGR_H

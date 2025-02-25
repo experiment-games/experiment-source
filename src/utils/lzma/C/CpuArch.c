@@ -84,18 +84,18 @@ static void MyCPUID(UInt32 function, UInt32 *a, UInt32 *b, UInt32 *c, UInt32 *d)
     "cpuid;"
     "xchgl %%ebx, %%edi;"
     : "=a" (*a) ,
-      "=D" (*b) ,
+    "=D" (*b) ,
   #else
     "cpuid"
     : "=a" (*a) ,
-      "=b" (*b) ,
+    "=b" (*b) ,
   #endif
-      "=c" (*c) ,
-      "=d" (*d)
+    "=c" (*c) ,
+    "=d" (*d)
     : "0" (function)) ;
 
   #endif
-  
+
   #else
 
   int CPUInfo[4];
@@ -132,7 +132,7 @@ int x86cpuid_GetFirm(const Cx86cpuid *p)
     if (v[0] == p->vendor[0] &&
         v[1] == p->vendor[1] &&
         v[2] == p->vendor[2])
-      return (int)i;
+    return (int)i;
   }
   return -1;
 }
@@ -151,7 +151,7 @@ Bool CPU_Is_InOrder()
   {
     case CPU_FIRM_INTEL: return (family < 6 || (family == 6 && (
         /* Atom CPU */
-           model == 0x100C  /* 45 nm, N4xx, D4xx, N5xx, D5xx, 230, 330 */
+            model == 0x100C  /* 45 nm, N4xx, D4xx, N5xx, D5xx, 230, 330 */
         || model == 0x2006  /* 45 nm, Z6xx */
         || model == 0x2007  /* 32 nm, Z2460 */
         || model == 0x3005  /* 32 nm, Z2760 */

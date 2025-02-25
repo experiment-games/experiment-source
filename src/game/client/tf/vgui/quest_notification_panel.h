@@ -31,7 +31,7 @@ class CQuestNotificationPanel;
 //-----------------------------------------------------------------------------
 class CQuestNotification
 {
-   public:
+    public:
     CQuestNotification( const CQuestThemeDefinition* pTheme );
 
     enum ENotificationType_t
@@ -52,7 +52,7 @@ class CQuestNotification
     virtual ENotificationType_t GetType() const = 0;
     virtual float GetReplayTime() const = 0;
 
-   protected:
+    protected:
     const ProtoDefID_t m_defID;
     RealTimeCountdownTimer m_timerDialog;
     RealTimeCountdownTimer m_timerShow;
@@ -63,7 +63,7 @@ class CQuestNotification
 //-----------------------------------------------------------------------------
 class CQuestNotification_Speaking : public CQuestNotification
 {
-   public:
+    public:
     CQuestNotification_Speaking( const CQuestThemeDefinition* pTheme );
     virtual ~CQuestNotification_Speaking() {}
 
@@ -71,7 +71,7 @@ class CQuestNotification_Speaking : public CQuestNotification
     virtual void Update() OVERRIDE;
     virtual bool IsDone() const OVERRIDE;
 
-   protected:
+    protected:
     virtual const char* GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) = 0;
 
     const char* m_pszSoundToSpeak;
@@ -84,7 +84,7 @@ class CQuestNotification_NewQuest : public CQuestNotification_Speaking
 {
     DECLARE_CLASS_SIMPLE( CQuestNotification_NewQuest, CQuestNotification_Speaking );
 
-   public:
+    public:
     CQuestNotification_NewQuest( const CQuestThemeDefinition* pTheme )
         : CQuestNotification_Speaking( pTheme )
     {
@@ -103,7 +103,7 @@ class CQuestNotification_NewQuest : public CQuestNotification_Speaking
     }
     static float k_flReplayTime;
 
-   protected:
+    protected:
     virtual const char* GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) OVERRIDE;
 };
 
@@ -114,7 +114,7 @@ class CQuestNotification_CompletedQuest : public CQuestNotification_Speaking
 {
     DECLARE_CLASS_SIMPLE( CQuestNotification_CompletedQuest, CQuestNotification_Speaking );
 
-   public:
+    public:
     CQuestNotification_CompletedQuest( const CQuestThemeDefinition* pTheme );
 
     virtual ~CQuestNotification_CompletedQuest() {}
@@ -129,7 +129,7 @@ class CQuestNotification_CompletedQuest : public CQuestNotification_Speaking
         return 0.f;
     }
 
-   protected:
+    protected:
     virtual const char* GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) OVERRIDE;
 
     RealTimeCountdownTimer m_PresentTimer;
@@ -139,7 +139,7 @@ class CQuestNotification_FullyCompletedQuest : public CQuestNotification_Complet
 {
     DECLARE_CLASS_SIMPLE( CQuestNotification_FullyCompletedQuest, CQuestNotification_CompletedQuest );
 
-   public:
+    public:
     CQuestNotification_FullyCompletedQuest( const CQuestThemeDefinition* pTheme )
         : CQuestNotification_CompletedQuest( pTheme )
     {
@@ -152,7 +152,7 @@ class CQuestNotification_FullyCompletedQuest : public CQuestNotification_Complet
         return NOTIFICATION_TYPE_FULLY_COMPLETED;
     }
 
-   protected:
+    protected:
     virtual const char* GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) OVERRIDE;
 };
 
@@ -163,7 +163,7 @@ class CQuestNotificationPanel : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQuestNotificationPanel, EditablePanel );
 
-   public:
+    public:
     CQuestNotificationPanel( const char* pszElementName );
     virtual ~CQuestNotificationPanel();
 
@@ -174,7 +174,7 @@ class CQuestNotificationPanel : public CHudElement, public EditablePanel
     virtual bool ShouldDraw() OVERRIDE;
     virtual void OnThink() OVERRIDE;
 
-   private:
+    private:
     void CheckForAvailableNodeNotification();
 
     bool ShouldPresent();

@@ -16,4 +16,3 @@ mov oT2, $vTexCoord0
 mov oT3, $vTexCoord0
 
 &FreeRegister( \$projPos );
-

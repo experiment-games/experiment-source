@@ -81,15 +81,15 @@ int UnknownFieldSet::SpaceUsedExcludingSelf() const {
   for (int i = 0; i < fields_->size(); i++) {
     const UnknownField& field = (*fields_)[i];
     switch (field.type()) {
-      case UnknownField::TYPE_LENGTH_DELIMITED:
+    case UnknownField::TYPE_LENGTH_DELIMITED:
         total_size += sizeof(*field.length_delimited_.string_value_) +
-                      internal::StringSpaceUsedExcludingSelf(
-                          *field.length_delimited_.string_value_);
+                    internal::StringSpaceUsedExcludingSelf(
+                        *field.length_delimited_.string_value_);
         break;
-      case UnknownField::TYPE_GROUP:
+    case UnknownField::TYPE_GROUP:
         total_size += field.group_->SpaceUsed();
         break;
-      default:
+    default:
         break;
     }
   }
@@ -176,12 +176,12 @@ void UnknownFieldSet::DeleteByNumber(int number) {
   for (int i = 0; i < fields_->size(); ++i) {
     UnknownField* field = &(*fields_)[i];
     if (field->number() == number) {
-      field->Delete();
+    field->Delete();
     } else {
-      if (i != left) {
+    if (i != left) {
         (*fields_)[left] = (*fields_)[i];
-      }
-      ++left;
+    }
+    ++left;
     }
   }
   fields_->resize(left);
@@ -190,7 +190,7 @@ void UnknownFieldSet::DeleteByNumber(int number) {
 bool UnknownFieldSet::MergeFromCodedStream(io::CodedInputStream* input) {
   UnknownFieldSet other;
   if (internal::WireFormat::SkipMessage(input, &other) &&
-      input->ConsumedEntireMessage()) {
+    input->ConsumedEntireMessage()) {
     MergeFrom(other);
     return true;
   } else {
@@ -206,7 +206,7 @@ bool UnknownFieldSet::ParseFromCodedStream(io::CodedInputStream* input) {
 bool UnknownFieldSet::ParseFromZeroCopyStream(io::ZeroCopyInputStream* input) {
   io::CodedInputStream coded_input(input);
   return (ParseFromCodedStream(&coded_input) &&
-          coded_input.ConsumedEntireMessage());
+        coded_input.ConsumedEntireMessage());
 }
 
 bool UnknownFieldSet::ParseFromArray(const void* data, int size) {
@@ -217,30 +217,30 @@ bool UnknownFieldSet::ParseFromArray(const void* data, int size) {
 void UnknownField::Delete() {
   switch (type()) {
     case UnknownField::TYPE_LENGTH_DELIMITED:
-      delete length_delimited_.string_value_;
-      break;
+    delete length_delimited_.string_value_;
+    break;
     case UnknownField::TYPE_GROUP:
-      delete group_;
-      break;
+    delete group_;
+    break;
     default:
-      break;
+    break;
   }
 }
 
 void UnknownField::DeepCopy() {
   switch (type()) {
     case UnknownField::TYPE_LENGTH_DELIMITED:
-      length_delimited_.string_value_ = new string(
-          *length_delimited_.string_value_);
-      break;
+    length_delimited_.string_value_ = new string(
+        *length_delimited_.string_value_);
+    break;
     case UnknownField::TYPE_GROUP: {
-      UnknownFieldSet* group = new UnknownFieldSet;
-      group->MergeFrom(*group_);
-      group_ = group;
-      break;
+    UnknownFieldSet* group = new UnknownFieldSet;
+    group->MergeFrom(*group_);
+    group_ = group;
+    break;
     }
     default:
-      break;
+    break;
   }
 }
 

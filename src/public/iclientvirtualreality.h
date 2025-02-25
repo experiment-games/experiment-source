@@ -36,7 +36,7 @@
 
 abstract_class IClientVirtualReality : public IAppSystem
 {
-   public:
+    public:
     virtual ~IClientVirtualReality() {}
 
     // Placeholder for API revision

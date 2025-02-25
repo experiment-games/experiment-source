@@ -10,7 +10,7 @@
 
 class CTFBotSpyEscape : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -21,7 +21,7 @@ class CTFBotSpyEscape : public Action< CTFBot >
         return "SpyEscape";
     };
 
-   private:
+    private:
 };
 
 #endif  // TF_BOT_SPY_ESCAPE_H

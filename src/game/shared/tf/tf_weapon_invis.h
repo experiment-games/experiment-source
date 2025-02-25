@@ -28,7 +28,7 @@ enum invis_weapontypes_t
 
 class CTFWeaponInvis : public CTFWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponInvis, CTFWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -115,7 +115,7 @@ class CTFWeaponInvis : public CTFWeaponBase
     virtual void GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
 #endif
 
-   private:
+    private:
     CTFWeaponInvis( const CTFWeaponInvis & ) {}
 };
 

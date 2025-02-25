@@ -17,7 +17,7 @@
 
 class MessageBuffer
 {
-   public:
+    public:
     char *data;
 
     MessageBuffer();
@@ -53,7 +53,7 @@ class MessageBuffer
         return len - offset;
     }
 
-   private:
+    private:
     void resize( int minsize );
     int size;
     int offset;

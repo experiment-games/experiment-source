@@ -25,7 +25,7 @@ class CTFMatchmakingPopup : public CExpandablePanel, public CGameEventListener
     friend class CTFMatchmakingDashboard;
     DECLARE_CLASS_SIMPLE( CTFMatchmakingPopup, CExpandablePanel );
 
-   public:
+    public:
     CTFMatchmakingPopup( const char *pszName );
     virtual ~CTFMatchmakingPopup();
 
@@ -40,7 +40,7 @@ class CTFMatchmakingPopup : public CExpandablePanel, public CGameEventListener
 
     virtual void FireGameEvent( IGameEvent *pEvent ) OVERRIDE;
 
-   private:
+    private:
     virtual bool ShouldBeActve() const = 0;
     void UpdateRematchtime();
     void UpdateAutoJoinTime();

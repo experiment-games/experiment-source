@@ -24,7 +24,7 @@
 typedef enum
 {
     VVOID,     /* when 'expdesc' describes the last expression of a list,
-                  this kind means an empty list (so, no expression) */
+                this kind means an empty list (so, no expression) */
     VNIL,      /* constant nil */
     VTRUE,     /* constant true */
     VFALSE,    /* constant false */
@@ -32,30 +32,30 @@ typedef enum
     VKFLT,     /* floating constant; nval = numerical float value */
     VKINT,     /* integer constant; ival = numerical integer value */
     VKSTR,     /* string constant; strval = TString address;
-                  (string is fixed by the lexer) */
+                (string is fixed by the lexer) */
     VNONRELOC, /* expression has its value in a fixed register;
-                  info = result register */
+                info = result register */
     VLOCAL,    /* local variable; var.ridx = register index;
-                  var.vidx = relative index in 'actvar.arr'  */
+                var.vidx = relative index in 'actvar.arr'  */
     VUPVAL,    /* upvalue variable; info = index of upvalue in 'upvalues' */
     VCONST,    /* compile-time <const> variable;
-                  info = absolute index in 'actvar.arr'  */
+                info = absolute index in 'actvar.arr'  */
     VINDEXED,  /* indexed variable;
-                  ind.t = table register;
-                  ind.idx = key's R index */
+                ind.t = table register;
+                ind.idx = key's R index */
     VINDEXUP,  /* indexed upvalue;
-                  ind.t = table upvalue;
-                  ind.idx = key's K index */
+                ind.t = table upvalue;
+                ind.idx = key's K index */
     VINDEXI,   /* indexed variable with constant integer;
                     ind.t = table register;
                     ind.idx = key's value */
     VINDEXSTR, /* indexed variable with literal string;
-                  ind.t = table register;
-                  ind.idx = key's K index */
+                ind.t = table register;
+                ind.idx = key's K index */
     VJMP,      /* expression is a test/comparison;
-                  info = pc of corresponding jump instruction */
+                info = pc of corresponding jump instruction */
     VRELOC,    /* expression can put result in any register;
-                  info = instruction pc */
+                info = instruction pc */
     VCALL,     /* expression is a function call; info = instruction pc */
     VVARARG    /* vararg expression; info = instruction pc */
 } expkind;

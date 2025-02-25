@@ -8,7 +8,7 @@ enum spng_crc_action
     SPNG_CRC_ERROR = 0,
 
     /* Discard chunk, invalid for critical chunks,
-       since v0.6.2: default for ancillary chunks */
+      since v0.6.2: default for ancillary chunks */
     SPNG_CRC_DISCARD = 1,
 
     /* Ignore and don't calculate checksum */

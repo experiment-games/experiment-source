@@ -28,7 +28,7 @@ enum HudNotification_t;
 //-----------------------------------------------------------------------------
 class CTFPasstimeLogic : public CPointEntity, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPasstimeLogic, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -67,7 +67,7 @@ class CTFPasstimeLogic : public CPointEntity, public CGameEventListener
 
     static void AddCondToTeam( ETFCond eCond, int iTeam, float flTime );
 
-   private:
+    private:
     void PostSpawn();
     void InputSetSection( inputdata_t &input );
     bool ParseSetSection( const char *pStr, SetSectionParams &s ) const;

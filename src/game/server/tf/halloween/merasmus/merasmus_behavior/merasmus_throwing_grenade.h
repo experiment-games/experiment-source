@@ -8,7 +8,7 @@
 
 class CMerasmusThrowingGrenade : public Action< CMerasmus >
 {
-   public:
+    public:
     CMerasmusThrowingGrenade( CTFPlayer *pTarget );
 
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
@@ -19,7 +19,7 @@ class CMerasmusThrowingGrenade : public Action< CMerasmus >
     {
         return "Rocket";
     }  // return name of this action
-   private:
+    private:
     CHandle< CTFPlayer > m_hTarget;
     CountdownTimer m_throwTimer;
     CountdownTimer m_releaseGrenadeTimer;

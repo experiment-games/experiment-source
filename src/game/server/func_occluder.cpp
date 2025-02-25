@@ -16,7 +16,7 @@
 
 class CFuncOccluder : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncOccluder, CBaseEntity );
 
     CFuncOccluder();
@@ -32,7 +32,7 @@ class CFuncOccluder : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   private:
+    private:
     CNetworkVar( bool, m_bActive );
     CNetworkVar( int, m_nOccluderIndex );
 };

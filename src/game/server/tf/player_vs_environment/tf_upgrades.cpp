@@ -204,8 +204,8 @@ void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*=
 bool CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, int iUpgrade, bool bDowngrade, bool bFree /*= false */, bool bRespec /*= false*/ )
 {
     if ( !pTFPlayer ||
-         iUpgrade < 0 ||
-         iUpgrade >= g_MannVsMachineUpgrades.m_Upgrades.Count() )
+        iUpgrade < 0 ||
+        iUpgrade >= g_MannVsMachineUpgrades.m_Upgrades.Count() )
     {
         return false;
     }
@@ -469,8 +469,8 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 
     // ...
     float fDefaultValue = pAttrDef->GetDescriptionFormat() == ATTDESCFORM_VALUE_IS_PERCENTAGE || pAttrDef->GetDescriptionFormat() == ATTDESCFORM_VALUE_IS_INVERTED_PERCENTAGE
-                              ? 1.0f
-                              : 0.0f;
+                            ? 1.0f
+                            : 0.0f;
 
     // ...
     if ( upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM )

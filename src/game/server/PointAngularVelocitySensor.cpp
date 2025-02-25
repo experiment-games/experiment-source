@@ -27,13 +27,13 @@ class CPointAngularVelocitySensor : public CPointEntity
 {
     DECLARE_CLASS( CPointAngularVelocitySensor, CPointEntity );
 
-   public:
+    public:
     CPointAngularVelocitySensor();
     void Activate( void );
     void Spawn( void );
     void Think( void );
 
-   private:
+    private:
     float SampleAngularVelocity( CBaseEntity *pEntity );
     int CompareToThreshold( CBaseEntity *pEntity, float flThreshold, bool bFireVelocityOutput );
     void FireCompareOutput( int nCompareResult, CBaseEntity *pActivator );
@@ -374,12 +374,12 @@ class CPointVelocitySensor : public CPointEntity
 {
     DECLARE_CLASS( CPointVelocitySensor, CPointEntity );
 
-   public:
+    public:
     void Spawn();
     void Activate( void );
     void Think( void );
 
-   private:
+    private:
     void SampleVelocity( void );
 
     EHANDLE m_hTargetEntity;  // Entity whose angles are being monitored.

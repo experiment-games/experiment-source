@@ -663,77 +663,77 @@ CCoreDispInfo::~CCoreDispInfo()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CCoreDispInfo::InitSurf( int parentIndex, Vector points[4], Vector normals[4],
-		                      Vector2D texCoords[4], Vector2D lightCoords[4][4], int contents, int flags,
-							  bool bGenerateSurfPointStart, Vector& startPoint, 
-				              bool bHasMappingAxes, Vector& uAxis, Vector& vAxis )
-{	
-	// save the "parent" index
-	m_Surf.m_Index = parentIndex;
-	
-	//
-	// save the surface points and point normals, texture coordinates, and
-	// lightmap coordinates
-	//
-	m_Surf.m_PointCount = CSurface::QUAD_POINT_COUNT;
-	for( int i = 0; i < CSurface::QUAD_POINT_COUNT; i++ )
-	{
-		VectorCopy( points[i], m_Surf.m_Points[i] );
+                            Vector2D texCoords[4], Vector2D lightCoords[4][4], int contents, int flags,
+                            bool bGenerateSurfPointStart, Vector& startPoint,
+                            bool bHasMappingAxes, Vector& uAxis, Vector& vAxis )
+{
+    // save the "parent" index
+    m_Surf.m_Index = parentIndex;
 
-		if( normals )
-		{
-			VectorCopy( normals[i], m_Surf.m_pVerts[i].m_Normal );
-		}
+    //
+    // save the surface points and point normals, texture coordinates, and
+    // lightmap coordinates
+    //
+    m_Surf.m_PointCount = CSurface::QUAD_POINT_COUNT;
+    for( int i = 0; i < CSurface::QUAD_POINT_COUNT; i++ )
+    {
+        VectorCopy( points[i], m_Surf.m_Points[i] );
 
-		if( texCoords )
-		{
-			Vector2DCopy( texCoords[i], m_Surf.m_TexCoords[i] );
-		}
+        if( normals )
+        {
+            VectorCopy( normals[i], m_Surf.m_pVerts[i].m_Normal );
+        }
 
-		if( lightCoords )
-		{
-			Assert( NUM_BUMP_VECTS == 3 );
-			Vector2DCopy( lightCoords[0][i], m_Surf.m_LightCoords[i][0] );
-			Vector2DCopy( lightCoords[1][i], m_Surf.m_LightCoords[i][1] );
-			Vector2DCopy( lightCoords[2][i], m_Surf.m_LightCoords[i][2] );
-			Vector2DCopy( lightCoords[3][i], m_Surf.m_LightCoords[i][3] );
-		}
-	}
-	
-	// save the starting point
-	if( startPoint )
-	{
-		VectorCopy( startPoint, m_Surf.m_PointStart );
-	}
+        if( texCoords )
+        {
+            Vector2DCopy( texCoords[i], m_Surf.m_TexCoords[i] );
+        }
 
-	//
-	// save the surface contents and flags
-	//
-	m_Contents = contents;
-	m_Flags = flags;	
+        if( lightCoords )
+        {
+            Assert( NUM_BUMP_VECTS == 3 );
+            Vector2DCopy( lightCoords[0][i], m_Surf.m_LightCoords[i][0] );
+            Vector2DCopy( lightCoords[1][i], m_Surf.m_LightCoords[i][1] );
+            Vector2DCopy( lightCoords[2][i], m_Surf.m_LightCoords[i][2] );
+            Vector2DCopy( lightCoords[3][i], m_Surf.m_LightCoords[i][3] );
+        }
+    }
 
-	//
-	// adjust surface points, texture coordinates, etc....
-	//
-	if( bHasMappingAxes && ( m_Surf.m_PointStartIndex == -1 ) )
-	{
-		GeneratePointStartIndexFromMappingAxes( uAxis, vAxis );
-	}
-	else
-	{
-		//
-		// adjust the surf data
-		//
-		if( bGenerateSurfPointStart )
-		{
-			GenerateSurfPointStartIndex();
-		}
-		else
-		{
-			FindSurfPointStartIndex();
-		}
-	}
+    // save the starting point
+    if( startPoint )
+    {
+        VectorCopy( startPoint, m_Surf.m_PointStart );
+    }
 
-	AdjustSurfPointData();
+    //
+    // save the surface contents and flags
+    //
+    m_Contents = contents;
+    m_Flags = flags;
+
+    //
+    // adjust surface points, texture coordinates, etc....
+    //
+    if( bHasMappingAxes && ( m_Surf.m_PointStartIndex == -1 ) )
+    {
+        GeneratePointStartIndexFromMappingAxes( uAxis, vAxis );
+    }
+    else
+    {
+        //
+        // adjust the surf data
+        //
+        if( bGenerateSurfPointStart )
+        {
+            GenerateSurfPointStartIndex();
+        }
+        else
+        {
+            FindSurfPointStartIndex();
+        }
+    }
+
+    AdjustSurfPointData();
 }
 #endif
 
@@ -1664,52 +1664,52 @@ void CCoreDispInfo::CalcDispSurfCoords( bool bLightMap, int lightmapID )
 //-----------------------------------------------------------------------------
 void CCoreDispInfo::CalcDispSurfAlphas( void )
 {
-	//
-	// get images width and intervals along the edge
-	//
+    //
+    // get images width and intervals along the edge
+    //
     int postSpacing = GetPostSpacing();
     float ooInt = ( 1.0f / ( float )( postSpacing - 1 ) );
 
     //
     // calculate the parallel edge intervals
     //
-	float edgeInt[2];
-	edgeInt[0] = m_Surf.m_Alpha[1] - m_Surf.m_Alpha[0];
-	edgeInt[1] = m_Surf.m_Alpha[2] - m_Surf.m_Alpha[3];
-	edgeInt[0] *= ooInt;
-	edgeInt[1] *= ooInt;
+    float edgeInt[2];
+    edgeInt[0] = m_Surf.m_Alpha[1] - m_Surf.m_Alpha[0];
+    edgeInt[1] = m_Surf.m_Alpha[2] - m_Surf.m_Alpha[3];
+    edgeInt[0] *= ooInt;
+    edgeInt[1] *= ooInt;
 
     //
     // calculate the displacement points
-    //    
-	for( int i = 0; i < postSpacing; i++ )
-	{
+    //
+    for( int i = 0; i < postSpacing; i++ )
+    {
         //
         // position along parallel edges (start and end for a perpendicular segment)
         //
-		float endValues[2];
+        float endValues[2];
 
-		endValues[0] = edgeInt[0] * ( float )i;
-		endValues[1] = edgeInt[1] * ( float )i;
-		endValues[0] += m_Surf.m_Alpha[0];
-		endValues[1] += m_Surf.m_Alpha[3];
-		
+        endValues[0] = edgeInt[0] * ( float )i;
+        endValues[1] = edgeInt[1] * ( float )i;
+        endValues[0] += m_Surf.m_Alpha[0];
+        endValues[1] += m_Surf.m_Alpha[3];
+
         //
         // interval length for perpendicular edge
         //
-		float seg, segInt;
-		seg = endValues[1] - endValues[0];
-		segInt = seg * ooInt;
+        float seg, segInt;
+        seg = endValues[1] - endValues[0];
+        segInt = seg * ooInt;
 
         //
-		// calculate the alpha value at each point
+        // calculate the alpha value at each point
         //
-		for( int j = 0; j < postSpacing; j++ )
-		{
-			seg = segInt * ( float )j;
-			m_Alphas[i*postSpacing+j] = endValues[0] + seg;
-		}
-	}
+        for( int j = 0; j < postSpacing; j++ )
+        {
+            seg = segInt * ( float )j;
+            m_Alphas[i*postSpacing+j] = endValues[0] + seg;
+        }
+    }
 }
 #endif
 
@@ -2276,14 +2276,14 @@ void CCoreDispInfo::BaseFacePlaneToDispUV( Vector const &planePt, Vector2D &disp
 // Purpose:
 //-----------------------------------------------------------------------------
 void CCoreDispInfo::DispUVToSurf_TriTLToBR_1( const Vector &vecIntersectPoint,
-                                              int nSnapU,
-                                              int nNextU,
-                                              int nSnapV,
-                                              int nNextV,
-                                              Vector &vecPoint,
-                                              Vector *pNormal,
-                                              float *pAlpha,
-                                              bool bBackup )
+                                            int nSnapU,
+                                            int nNextU,
+                                            int nSnapV,
+                                            int nNextV,
+                                            Vector &vecPoint,
+                                            Vector *pNormal,
+                                            float *pAlpha,
+                                            bool bBackup )
 {
     int nWidth = GetWidth();
 
@@ -2387,14 +2387,14 @@ void CCoreDispInfo::DispUVToSurf_TriTLToBR_1( const Vector &vecIntersectPoint,
 // Purpose:
 //-----------------------------------------------------------------------------
 void CCoreDispInfo::DispUVToSurf_TriTLToBR_2( const Vector &vecIntersectPoint,
-                                              int nSnapU,
-                                              int nNextU,
-                                              int nSnapV,
-                                              int nNextV,
-                                              Vector &vecPoint,
-                                              Vector *pNormal,
-                                              float *pAlpha,
-                                              bool bBackup )
+                                            int nSnapU,
+                                            int nNextU,
+                                            int nSnapV,
+                                            int nNextV,
+                                            Vector &vecPoint,
+                                            Vector *pNormal,
+                                            float *pAlpha,
+                                            bool bBackup )
 {
     int nWidth = GetWidth();
 
@@ -2534,14 +2534,14 @@ void CCoreDispInfo::DispUVToSurf_TriTLToBR( Vector &vecPoint, Vector *pNormal, f
 // Purpose:
 //-----------------------------------------------------------------------------
 void CCoreDispInfo::DispUVToSurf_TriBLToTR_1( const Vector &vecIntersectPoint,
-                                              int nSnapU,
-                                              int nNextU,
-                                              int nSnapV,
-                                              int nNextV,
-                                              Vector &vecPoint,
-                                              Vector *pNormal,
-                                              float *pAlpha,
-                                              bool bBackup )
+                                            int nSnapU,
+                                            int nNextU,
+                                            int nSnapV,
+                                            int nNextV,
+                                            Vector &vecPoint,
+                                            Vector *pNormal,
+                                            float *pAlpha,
+                                            bool bBackup )
 {
     int nWidth = GetWidth();
 
@@ -2645,14 +2645,14 @@ void CCoreDispInfo::DispUVToSurf_TriBLToTR_1( const Vector &vecIntersectPoint,
 // Purpose:
 //-----------------------------------------------------------------------------
 void CCoreDispInfo::DispUVToSurf_TriBLToTR_2( const Vector &vecIntersectPoint,
-                                              int nSnapU,
-                                              int nNextU,
-                                              int nSnapV,
-                                              int nNextV,
-                                              Vector &vecPoint,
-                                              Vector *pNormal,
-                                              float *pAlpha,
-                                              bool bBackup )
+                                            int nSnapU,
+                                            int nNextU,
+                                            int nSnapV,
+                                            int nNextV,
+                                            Vector &vecPoint,
+                                            Vector *pNormal,
+                                            float *pAlpha,
+                                            bool bBackup )
 {
     int nWidth = GetWidth();
 

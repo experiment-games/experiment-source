@@ -55,34 +55,34 @@ namespace cpp {
 
 FileGenerator::FileGenerator(const FileDescriptor* file, const Options& options)
     : file_(file),
-      message_generators_(
-          new scoped_ptr<MessageGenerator>[file->message_type_count()]),
-      enum_generators_(
-          new scoped_ptr<EnumGenerator>[file->enum_type_count()]),
-      service_generators_(
-          new scoped_ptr<ServiceGenerator>[file->service_count()]),
-      extension_generators_(
-          new scoped_ptr<ExtensionGenerator>[file->extension_count()]),
-      options_(options) {
+    message_generators_(
+        new scoped_ptr<MessageGenerator>[file->message_type_count()]),
+    enum_generators_(
+        new scoped_ptr<EnumGenerator>[file->enum_type_count()]),
+    service_generators_(
+        new scoped_ptr<ServiceGenerator>[file->service_count()]),
+    extension_generators_(
+        new scoped_ptr<ExtensionGenerator>[file->extension_count()]),
+    options_(options) {
 
   for (int i = 0; i < file->message_type_count(); i++) {
     message_generators_[i].reset(
-      new MessageGenerator(file->message_type(i), options));
+    new MessageGenerator(file->message_type(i), options));
   }
 
   for (int i = 0; i < file->enum_type_count(); i++) {
     enum_generators_[i].reset(
-      new EnumGenerator(file->enum_type(i), options));
+    new EnumGenerator(file->enum_type(i), options));
   }
 
   for (int i = 0; i < file->service_count(); i++) {
     service_generators_[i].reset(
-      new ServiceGenerator(file->service(i), options));
+    new ServiceGenerator(file->service(i), options));
   }
 
   for (int i = 0; i < file->extension_count(); i++) {
     extension_generators_[i].reset(
-      new ExtensionGenerator(file->extension(i), options));
+    new ExtensionGenerator(file->extension(i), options));
   }
 
   SplitStringUsing(file_->package(), ".", &package_parts_);
@@ -103,52 +103,52 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
     "\n"
     "// VALVE - Disable some warnings that this code generates, but we wish to leave on in our projects\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning(push)\n"
-      "#pragma warning(disable : 4530)        // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
-      "#pragma warning(disable : 4244)        // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4267)        // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4125)        // warning C4125: decimal digit terminates octal escape sequence\n"
-      "#pragma warning(disable : 4127)        // warning C4127: conditional expression is constant\n"
-      "#pragma warning(disable : 4100)        // warning C4100: 'op' : unreferenced formal parameter\n"
-      "#pragma warning(disable : 4512)        // warning C4512: assignment operator could not be generated\n"
+    "#pragma warning(push)\n"
+    "#pragma warning(disable : 4530)        // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
+    "#pragma warning(disable : 4244)        // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4267)        // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4125)        // warning C4125: decimal digit terminates octal escape sequence\n"
+    "#pragma warning(disable : 4127)        // warning C4127: conditional expression is constant\n"
+    "#pragma warning(disable : 4100)        // warning C4100: 'op' : unreferenced formal parameter\n"
+    "#pragma warning(disable : 4512)        // warning C4512: assignment operator could not be generated\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic push\n"
-      "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+    "#pragma GCC diagnostic push\n"
+    "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
     "#endif // _GNUC\n"
     "// VALVE\n"
     "\n"
     "// VALVE - Disable some warnings that this code generates, but we wish to leave on in our projects\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning(push)\n"
-      "#pragma warning(disable : 4530)        // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
-      "#pragma warning(disable : 4244)        // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4267)        // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4125)        // warning C4125: decimal digit terminates octal escape sequence\n"
-      "#pragma warning(disable : 4127)        // warning C4127: conditional expression is constant\n"
-      "#pragma warning(disable : 4100)        // warning C4100: 'op' : unreferenced formal parameter\n"
-      "#pragma warning(disable : 4512)        // warning C4512: assignment operator could not be generated\n"
+    "#pragma warning(push)\n"
+    "#pragma warning(disable : 4530)        // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
+    "#pragma warning(disable : 4244)        // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4267)        // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4125)        // warning C4125: decimal digit terminates octal escape sequence\n"
+    "#pragma warning(disable : 4127)        // warning C4127: conditional expression is constant\n"
+    "#pragma warning(disable : 4100)        // warning C4100: 'op' : unreferenced formal parameter\n"
+    "#pragma warning(disable : 4512)        // warning C4512: assignment operator could not be generated\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic push\n"
-      "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+    "#pragma GCC diagnostic push\n"
+    "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
     "#endif // _GNUC\n"
     "// VALVE\n"
     "\n"
     "// VALVE - Disable some warnings that this code generates, but we wish to leave on in our projects\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning(push)\n"
-      "#pragma warning(disable : 4530)        // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
-      "#pragma warning(disable : 4244)        // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4267)        // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4125)        // warning C4125: decimal digit terminates octal escape sequence\n"
-      "#pragma warning(disable : 4127)        // warning C4127: conditional expression is constant\n"
-      "#pragma warning(disable : 4100)        // warning C4100: 'op' : unreferenced formal parameter\n"
-      "#pragma warning(disable : 4512)        // warning C4512: assignment operator could not be generated\n"
+    "#pragma warning(push)\n"
+    "#pragma warning(disable : 4530)        // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
+    "#pragma warning(disable : 4244)        // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4267)        // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4125)        // warning C4125: decimal digit terminates octal escape sequence\n"
+    "#pragma warning(disable : 4127)        // warning C4127: conditional expression is constant\n"
+    "#pragma warning(disable : 4100)        // warning C4100: 'op' : unreferenced formal parameter\n"
+    "#pragma warning(disable : 4512)        // warning C4512: assignment operator could not be generated\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic push\n"
-      "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+    "#pragma GCC diagnostic push\n"
+    "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
     "#endif // _GNUC\n"
     "// VALVE\n"
     "\n"
@@ -177,7 +177,7 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
     "#endif\n"
     "\n",
     "min_header_version",
-      SimpleItoa(protobuf::internal::kMinHeaderVersionForProtoc),
+    SimpleItoa(protobuf::internal::kMinHeaderVersionForProtoc),
     "protoc_version", SimpleItoa(GOOGLE_PROTOBUF_VERSION));
 
   // OK, it's now safe to #include other files.
@@ -185,10 +185,10 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
     "#include <google/protobuf/generated_message_util.h>\n");
   if (file_->message_type_count() > 0) {
     if (HasDescriptorMethods(file_)) {
-      printer->Print(
+    printer->Print(
         "#include <google/protobuf/message.h>\n");
     } else {
-      printer->Print(
+    printer->Print(
         "#include <google/protobuf/message_lite.h>\n");
     }
   }
@@ -198,17 +198,17 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
 
   if (HasDescriptorMethods(file_) && HasEnumDefinitions(file_)) {
     printer->Print(
-      "#include <google/protobuf/generated_enum_reflection.h>\n");
+    "#include <google/protobuf/generated_enum_reflection.h>\n");
   }
 
   if (HasGenericServices(file_)) {
     printer->Print(
-      "#include <google/protobuf/service.h>\n");
+    "#include <google/protobuf/service.h>\n");
   }
 
   if (UseUnknownFieldSet(file_) && file_->message_type_count() > 0) {
     printer->Print(
-      "#include <google/protobuf/unknown_field_set.h>\n");
+    "#include <google/protobuf/unknown_field_set.h>\n");
   }
 
 
@@ -223,9 +223,9 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
 
 
     printer->Print(
-      "#include \"$dependency$.pb.h\"$iwyu$\n",
-      "dependency", StripProto(name),
-      "iwyu", (public_import) ? "  // IWYU pragma: export" : "");
+    "#include \"$dependency$.pb.h\"$iwyu$\n",
+    "dependency", StripProto(name),
+    "iwyu", (public_import) ? "  // IWYU pragma: export" : "");
   }
 
   printer->Print(
@@ -274,9 +274,9 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
   // Generate class definitions.
   for (int i = 0; i < file_->message_type_count(); i++) {
     if (i > 0) {
-      printer->Print("\n");
-      printer->Print(kThinSeparator);
-      printer->Print("\n");
+    printer->Print("\n");
+    printer->Print(kThinSeparator);
+    printer->Print("\n");
     }
     message_generators_[i]->GenerateClassDefinition(printer);
   }
@@ -288,12 +288,12 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
   if (HasGenericServices(file_)) {
     // Generate service definitions.
     for (int i = 0; i < file_->service_count(); i++) {
-      if (i > 0) {
+    if (i > 0) {
         printer->Print("\n");
         printer->Print(kThinSeparator);
         printer->Print("\n");
-      }
-      service_generators_[i]->GenerateDeclarations(printer);
+    }
+    service_generators_[i]->GenerateDeclarations(printer);
     }
 
     printer->Print("\n");
@@ -314,8 +314,8 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
   // Generate class inline methods.
   for (int i = 0; i < file_->message_type_count(); i++) {
     if (i > 0) {
-      printer->Print(kThinSeparator);
-      printer->Print("\n");
+    printer->Print(kThinSeparator);
+    printer->Print("\n");
     }
     message_generators_[i]->GenerateInlineMethods(printer);
   }
@@ -339,10 +339,10 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
         "namespace google {\nnamespace protobuf {\n"
         "\n");
     for (int i = 0; i < file_->message_type_count(); i++) {
-      message_generators_[i]->GenerateGetEnumDescriptorSpecializations(printer);
+    message_generators_[i]->GenerateGetEnumDescriptorSpecializations(printer);
     }
     for (int i = 0; i < file_->enum_type_count(); i++) {
-      enum_generators_[i]->GenerateGetEnumDescriptorSpecializations(printer);
+    enum_generators_[i]->GenerateGetEnumDescriptorSpecializations(printer);
     }
     printer->Print(
         "\n"
@@ -358,10 +358,10 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
   printer->Print(
     "// VALVE\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning( pop )\n"
+    "#pragma warning( pop )\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic pop\n"
+    "#pragma GCC diagnostic pop\n"
     "#endif // _GNUC\n\n"
     "// VALVE\n"
     "\n");
@@ -369,10 +369,10 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
   printer->Print(
     "// VALVE\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning( pop )\n"
+    "#pragma warning( pop )\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic pop\n"
+    "#pragma GCC diagnostic pop\n"
     "#endif // _GNUC\n\n"
     "// VALVE\n"
     "\n");
@@ -380,10 +380,10 @@ void FileGenerator::GenerateHeader(io::Printer* printer) {
   printer->Print(
     "// VALVE\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning( pop )\n"
+    "#pragma warning( pop )\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic pop\n"
+    "#pragma GCC diagnostic pop\n"
     "#endif // _GNUC\n\n"
     "// VALVE\n"
     "\n");
@@ -407,51 +407,51 @@ void FileGenerator::GenerateSource(io::Printer* printer) {
     "// VALVE - Disable some warnings that this code generates, but we wish to leave on in our projects\n"
     "\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning(push)\n"
-      "#pragma warning(disable : 4530)  // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
-      "#pragma warning(disable : 4244)  // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4267)  // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4125)  // warning C4125: decimal digit terminates octal escape sequence\n"
-      "#pragma warning(disable : 4127)  // warning C4127: conditional expression is constant\n"
-      "#pragma warning(disable : 4100)  // warning C4100: 'op' : unreferenced formal parameter\n"
+    "#pragma warning(push)\n"
+    "#pragma warning(disable : 4530)  // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
+    "#pragma warning(disable : 4244)  // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4267)  // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4125)  // warning C4125: decimal digit terminates octal escape sequence\n"
+    "#pragma warning(disable : 4127)  // warning C4127: conditional expression is constant\n"
+    "#pragma warning(disable : 4100)  // warning C4100: 'op' : unreferenced formal parameter\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic push\n"
-      "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+    "#pragma GCC diagnostic push\n"
+    "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
     "#endif // _GNUC\n"
     "// VALVE\n"
     "\n"
     "// VALVE - Disable some warnings that this code generates, but we wish to leave on in our projects\n"
     "\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning(push)\n"
-      "#pragma warning(disable : 4530)  // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
-      "#pragma warning(disable : 4244)  // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4267)  // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4125)  // warning C4125: decimal digit terminates octal escape sequence\n"
-      "#pragma warning(disable : 4127)  // warning C4127: conditional expression is constant\n"
-      "#pragma warning(disable : 4100)  // warning C4100: 'op' : unreferenced formal parameter\n"
+    "#pragma warning(push)\n"
+    "#pragma warning(disable : 4530)  // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
+    "#pragma warning(disable : 4244)  // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4267)  // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4125)  // warning C4125: decimal digit terminates octal escape sequence\n"
+    "#pragma warning(disable : 4127)  // warning C4127: conditional expression is constant\n"
+    "#pragma warning(disable : 4100)  // warning C4100: 'op' : unreferenced formal parameter\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic push\n"
-      "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+    "#pragma GCC diagnostic push\n"
+    "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
     "#endif // _GNUC\n"
     "// VALVE\n"
     "\n"
     "// VALVE - Disable some warnings that this code generates, but we wish to leave on in our projects\n"
     "\n"
     "#if _MSC_VER >= 1300\n"
-      "#pragma warning(push)\n"
-      "#pragma warning(disable : 4530)  // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
-      "#pragma warning(disable : 4244)  // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4267)  // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
-      "#pragma warning(disable : 4125)  // warning C4125: decimal digit terminates octal escape sequence\n"
-      "#pragma warning(disable : 4127)  // warning C4127: conditional expression is constant\n"
-      "#pragma warning(disable : 4100)  // warning C4100: 'op' : unreferenced formal parameter\n"
+    "#pragma warning(push)\n"
+    "#pragma warning(disable : 4530)  // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc (disabled due to std headers having exception syntax)\n"
+    "#pragma warning(disable : 4244)  // warning C4244:  warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4267)  // warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data\n"
+    "#pragma warning(disable : 4125)  // warning C4125: decimal digit terminates octal escape sequence\n"
+    "#pragma warning(disable : 4127)  // warning C4127: conditional expression is constant\n"
+    "#pragma warning(disable : 4100)  // warning C4100: 'op' : unreferenced formal parameter\n"
     "#endif // _MSC_VER\n"
     "#if _GNUC\n"
-      "#pragma GCC diagnostic push\n"
-      "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+    "#pragma GCC diagnostic push\n"
+    "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
     "#endif // _GNUC\n"
     "// VALVE\n"
     "\n"
@@ -467,15 +467,15 @@ void FileGenerator::GenerateSource(io::Printer* printer) {
   // Unknown fields implementation in lite mode uses StringOutputStream
   if (!UseUnknownFieldSet(file_) && file_->message_type_count() > 0) {
     printer->Print(
-      "#include <google/protobuf/io/zero_copy_stream_impl_lite.h>\n");
+    "#include <google/protobuf/io/zero_copy_stream_impl_lite.h>\n");
   }
 
   if (HasDescriptorMethods(file_)) {
     printer->Print(
-      "#include <google/protobuf/descriptor.h>\n"
-      "#include <google/protobuf/generated_message_reflection.h>\n"
-      "#include <google/protobuf/reflection_ops.h>\n"
-      "#include <google/protobuf/wire_format.h>\n");
+    "#include <google/protobuf/descriptor.h>\n"
+    "#include <google/protobuf/generated_message_reflection.h>\n"
+    "#include <google/protobuf/reflection_ops.h>\n"
+    "#include <google/protobuf/wire_format.h>\n");
   }
 
   printer->Print(
@@ -485,30 +485,30 @@ void FileGenerator::GenerateSource(io::Printer* printer) {
 
   if (HasDescriptorMethods(file_)) {
     printer->Print(
-      "\n"
-      "namespace {\n"
-      "\n");
+    "\n"
+    "namespace {\n"
+    "\n");
     for (int i = 0; i < file_->message_type_count(); i++) {
-      message_generators_[i]->GenerateDescriptorDeclarations(printer);
+    message_generators_[i]->GenerateDescriptorDeclarations(printer);
     }
     for (int i = 0; i < file_->enum_type_count(); i++) {
-      printer->Print(
+    printer->Print(
         "const ::google::protobuf::EnumDescriptor* $name$_descriptor_ = NULL;\n",
         "name", ClassName(file_->enum_type(i), false));
     }
 
     if (HasGenericServices(file_)) {
-      for (int i = 0; i < file_->service_count(); i++) {
+    for (int i = 0; i < file_->service_count(); i++) {
         printer->Print(
-          "const ::google::protobuf::ServiceDescriptor* $name$_descriptor_ = NULL;\n",
-          "name", file_->service(i)->name());
-      }
+        "const ::google::protobuf::ServiceDescriptor* $name$_descriptor_ = NULL;\n",
+        "name", file_->service(i)->name());
+    }
     }
 
     printer->Print(
-      "\n"
-      "}  // namespace\n"
-      "\n");
+    "\n"
+    "}  // namespace\n"
+    "\n");
   }
 
   // Define our externally-visible BuildDescriptors() function.  (For the lite
@@ -531,10 +531,10 @@ void FileGenerator::GenerateSource(io::Printer* printer) {
   if (HasGenericServices(file_)) {
     // Generate services.
     for (int i = 0; i < file_->service_count(); i++) {
-      if (i == 0) printer->Print("\n");
-      printer->Print(kThickSeparator);
-      printer->Print("\n");
-      service_generators_[i]->GenerateImplementation(printer);
+    if (i == 0) printer->Print("\n");
+    printer->Print(kThickSeparator);
+    printer->Print("\n");
+    service_generators_[i]->GenerateImplementation(printer);
     }
   }
 
@@ -574,9 +574,9 @@ void FileGenerator::GenerateBuildDescriptors(io::Printer* printer) {
   // and we only use AddDescriptors() to allocate default instances.
   if (HasDescriptorMethods(file_)) {
     printer->Print(
-      "\n"
-      "void $assigndescriptorsname$() {\n",
-      "assigndescriptorsname", GlobalAssignDescriptorsName(file_->name()));
+    "\n"
+    "void $assigndescriptorsname$() {\n",
+    "assigndescriptorsname", GlobalAssignDescriptorsName(file_->name()));
     printer->Indent();
 
     // Make sure the file has found its way into the pool.  If a descriptor
@@ -584,37 +584,37 @@ void FileGenerator::GenerateBuildDescriptors(io::Printer* printer) {
     // been called yet, so we call it manually.  Note that it's fine if
     // AddDescriptors() is called multiple times.
     printer->Print(
-      "$adddescriptorsname$();\n",
-      "adddescriptorsname", GlobalAddDescriptorsName(file_->name()));
+    "$adddescriptorsname$();\n",
+    "adddescriptorsname", GlobalAddDescriptorsName(file_->name()));
 
     // Get the file's descriptor from the pool.
     printer->Print(
-      "const ::google::protobuf::FileDescriptor* file =\n"
-      "  ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(\n"
-      "    \"$filename$\");\n"
-      // Note that this GOOGLE_CHECK is necessary to prevent a warning about "file"
-      // being unused when compiling an empty .proto file.
-      "GOOGLE_CHECK(file != NULL);\n",
-      "filename", file_->name());
+    "const ::google::protobuf::FileDescriptor* file =\n"
+    "  ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(\n"
+    "    \"$filename$\");\n"
+    // Note that this GOOGLE_CHECK is necessary to prevent a warning about "file"
+    // being unused when compiling an empty .proto file.
+    "GOOGLE_CHECK(file != NULL);\n",
+    "filename", file_->name());
 
     // Go through all the stuff defined in this file and generated code to
     // assign the global descriptor pointers based on the file descriptor.
     for (int i = 0; i < file_->message_type_count(); i++) {
-      message_generators_[i]->GenerateDescriptorInitializer(printer, i);
+    message_generators_[i]->GenerateDescriptorInitializer(printer, i);
     }
     for (int i = 0; i < file_->enum_type_count(); i++) {
-      enum_generators_[i]->GenerateDescriptorInitializer(printer, i);
+    enum_generators_[i]->GenerateDescriptorInitializer(printer, i);
     }
     if (HasGenericServices(file_)) {
-      for (int i = 0; i < file_->service_count(); i++) {
+    for (int i = 0; i < file_->service_count(); i++) {
         service_generators_[i]->GenerateDescriptorInitializer(printer, i);
-      }
+    }
     }
 
     printer->Outdent();
     printer->Print(
-      "}\n"
-      "\n");
+    "}\n"
+    "\n");
 
     // ---------------------------------------------------------------
 
@@ -622,32 +622,32 @@ void FileGenerator::GenerateBuildDescriptors(io::Printer* printer) {
     // AssignDescriptors().  All later times, waits for the first call to
     // complete and then returns.
     printer->Print(
-      "namespace {\n"
-      "\n"
-      "GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);\n"
-      "inline void protobuf_AssignDescriptorsOnce() {\n"
-      "  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,\n"
-      "                 &$assigndescriptorsname$);\n"
-      "}\n"
-      "\n",
-      "assigndescriptorsname", GlobalAssignDescriptorsName(file_->name()));
+    "namespace {\n"
+    "\n"
+    "GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);\n"
+    "inline void protobuf_AssignDescriptorsOnce() {\n"
+    "  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,\n"
+    "                 &$assigndescriptorsname$);\n"
+    "}\n"
+    "\n",
+    "assigndescriptorsname", GlobalAssignDescriptorsName(file_->name()));
 
     // protobuf_RegisterTypes():  Calls
     // MessageFactory::InternalRegisterGeneratedType() for each message type.
     printer->Print(
-      "void protobuf_RegisterTypes(const ::std::string&) {\n"
-      "  protobuf_AssignDescriptorsOnce();\n");
+    "void protobuf_RegisterTypes(const ::std::string&) {\n"
+    "  protobuf_AssignDescriptorsOnce();\n");
     printer->Indent();
 
     for (int i = 0; i < file_->message_type_count(); i++) {
-      message_generators_[i]->GenerateTypeRegistrations(printer);
+    message_generators_[i]->GenerateTypeRegistrations(printer);
     }
 
     printer->Outdent();
     printer->Print(
-      "}\n"
-      "\n"
-      "}  // namespace\n");
+    "}\n"
+    "\n"
+    "}  // namespace\n");
   }
 
   // -----------------------------------------------------------------
@@ -699,8 +699,8 @@ void FileGenerator::GenerateBuildDescriptors(io::Printer* printer) {
         dependency->package(), GlobalAddDescriptorsName(dependency->name()));
     // Call its AddDescriptors function.
     printer->Print(
-      "$name$();\n",
-      "name", add_desc_name);
+    "$name$();\n",
+    "name", add_desc_name);
   }
 
   if (HasDescriptorMethods(file_)) {
@@ -717,54 +717,54 @@ void FileGenerator::GenerateBuildDescriptors(io::Printer* printer) {
     // bytes in length". Declare a static array of characters rather than use a
     // string literal.
     if (file_data.size() > 65535) {
-      printer->Print(
+    printer->Print(
         "static const char descriptor[] = {\n");
-      printer->Indent();
+    printer->Indent();
 
-      // Only write 25 bytes per line.
-      static const int kBytesPerLine = 25;
-      for (int i = 0; i < file_data.size();) {
-          for (int j = 0; j < kBytesPerLine && i < file_data.size(); ++i, ++j) {
+    // Only write 25 bytes per line.
+    static const int kBytesPerLine = 25;
+    for (int i = 0; i < file_data.size();) {
+        for (int j = 0; j < kBytesPerLine && i < file_data.size(); ++i, ++j) {
             printer->Print(
-              "$char$, ",
-              "char", SimpleItoa(file_data[i]));
-          }
+            "$char$, ",
+            "char", SimpleItoa(file_data[i]));
+        }
     printer->Print(
             "\n");
-      }
+    }
 
-      printer->Outdent();
-      printer->Print(
+    printer->Outdent();
+    printer->Print(
         "};\n");
 
-      printer->Print(
+    printer->Print(
         "::google::protobuf::DescriptorPool::InternalAddGeneratedFile(descriptor, $size$);\n",
         "size", SimpleItoa(file_data.size()));
 
     } else {
 
     printer->Print(
-      "::google::protobuf::DescriptorPool::InternalAddGeneratedFile(");
+    "::google::protobuf::DescriptorPool::InternalAddGeneratedFile(");
 
     // Only write 40 bytes per line.
     static const int kBytesPerLine = 40;
     for (int i = 0; i < file_data.size(); i += kBytesPerLine) {
-      printer->Print("\n  \"$data$\"",
-                     "data",
-                     EscapeTrigraphs(
-                         CEscape(file_data.substr(i, kBytesPerLine))));
+    printer->Print("\n  \"$data$\"",
+                    "data",
+                    EscapeTrigraphs(
+                        CEscape(file_data.substr(i, kBytesPerLine))));
     }
     printer->Print(
         ", $size$);\n",
-      "size", SimpleItoa(file_data.size()));
+    "size", SimpleItoa(file_data.size()));
 
     }
 
     // Call MessageFactory::InternalRegisterGeneratedFile().
     printer->Print(
-      "::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(\n"
-      "  \"$filename$\", &protobuf_RegisterTypes);\n",
-      "filename", file_->name());
+    "::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(\n"
+    "  \"$filename$\", &protobuf_RegisterTypes);\n",
+    "filename", file_->name());
   }
 
   // Allocate and initialize default instances.  This can't be done lazily
@@ -814,7 +814,7 @@ void FileGenerator::GenerateNamespaceOpeners(io::Printer* printer) {
 
   for (int i = 0; i < package_parts_.size(); i++) {
     printer->Print("namespace $part$ {\n",
-                   "part", package_parts_[i]);
+                    "part", package_parts_[i]);
   }
 }
 
@@ -823,7 +823,7 @@ void FileGenerator::GenerateNamespaceClosers(io::Printer* printer) {
 
   for (int i = package_parts_.size() - 1; i >= 0; i--) {
     printer->Print("}  // namespace $part$\n",
-                   "part", package_parts_[i]);
+                    "part", package_parts_[i]);
   }
 }
 

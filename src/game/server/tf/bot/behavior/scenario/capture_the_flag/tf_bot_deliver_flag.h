@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotDeliverFlag : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
@@ -27,7 +27,7 @@ class CTFBotDeliverFlag : public Action< CTFBot >
         return "DeliverFlag";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
     float m_flTotalTravelDistance;
@@ -44,7 +44,7 @@ class CTFBotDeliverFlag : public Action< CTFBot >
 //-----------------------------------------------------------------------------
 class CTFBotPushToCapturePoint : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotPushToCapturePoint( Action< CTFBot > *nextAction = NULL );
     virtual ~CTFBotPushToCapturePoint() {}
 
@@ -56,7 +56,7 @@ class CTFBotPushToCapturePoint : public Action< CTFBot >
         return "PushToCapturePoint";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
 

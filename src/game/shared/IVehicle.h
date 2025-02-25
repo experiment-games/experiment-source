@@ -23,7 +23,7 @@ class CBaseCombatCharacter;
 // vehicles are not restricted in what they can derive from.
 abstract_class IVehicle
 {
-   public:
+    public:
     // Get and set the current driver. Use PassengerRole_t enum in shareddefs.h for adding passengers
     virtual CBaseCombatCharacter *GetPassenger( int nRole = VEHICLE_ROLE_DRIVER ) = 0;
     virtual int GetPassengerRole( CBaseCombatCharacter * pPassenger ) = 0;

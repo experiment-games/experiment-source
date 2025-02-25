@@ -52,7 +52,7 @@ enum eRobotUIState
 
 struct RobotData_t
 {
-   public:
+    public:
     enum EStringDataKey_t
     {
         MODEL_KEY = 0,
@@ -93,7 +93,7 @@ struct RobotData_t
 
     void Precache();
 
-   private:
+    private:
     template < typename T >
     T GetData( const CUtlMap< int, T > &map, int nKey ) const
     {
@@ -145,7 +145,7 @@ struct RobotSpawnData_t
 //----------------------------------------------------------------------------
 class CRobotLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CRobotLocomotion( INextBot *bot )
         : NextBotGroundLocomotion( bot ) {}
     virtual ~CRobotLocomotion() {}
@@ -157,14 +157,14 @@ class CRobotLocomotion : public NextBotGroundLocomotion
 
     virtual bool ShouldCollideWith( const CBaseEntity *object ) const OVERRIDE;
 
-   private:
+    private:
     virtual float GetMaxYawRate( void ) const OVERRIDE;  // return max rate of yaw rotation
 };
 
 //----------------------------------------------------------------------------
 class CRobotIntention : public IIntention
 {
-   public:
+    public:
     CRobotIntention( class CTFRobotDestruction_Robot *me );
     virtual ~CRobotIntention();
 
@@ -182,14 +182,14 @@ class CRobotIntention : public IIntention
         return NULL;
     }
 
-   private:
+    private:
     Behavior< CTFRobotDestruction_Robot > *m_behavior;
 };
 
 //---------------------------------------------------------------------------------------------
 class CRobotBehavior : public Action< CTFRobotDestruction_Robot >
 {
-   public:
+    public:
     virtual Action< CTFRobotDestruction_Robot > *InitialContainedAction( CTFRobotDestruction_Robot *me ) OVERRIDE;
     virtual ActionResult< CTFRobotDestruction_Robot > OnStart( CTFRobotDestruction_Robot *me, Action< CTFRobotDestruction_Robot > *priorAction ) OVERRIDE;
     virtual ActionResult< CTFRobotDestruction_Robot > Update( CTFRobotDestruction_Robot *me, float interval ) OVERRIDE;
@@ -200,7 +200,7 @@ class CRobotBehavior : public Action< CTFRobotDestruction_Robot >
         return "RobotBehavior";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_SpeakTimer;
     CountdownTimer m_IdleSpeakTimer;
 };
@@ -221,7 +221,7 @@ class CRobotDispenser :
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
 #ifdef GAME_DLL
     CRobotDispenser();
 
@@ -247,7 +247,7 @@ class CRobotDispenser :
         return false;
     }
 
-   private:
+    private:
     virtual void PlayActiveSound() OVERRIDE
     { /*DO NOTHING*/
     }
@@ -256,12 +256,12 @@ class CRobotDispenser :
 
 class CTFRobotDestruction_RobotAnimController
 {
-   public:
+    public:
     CTFRobotDestruction_RobotAnimController( CTFRobotDestruction_Robot *pOuter );
     void Update();
     void Impulse( const Vector &vecImpulse );
 
-   private:
+    private:
     void Approach( Vector &vecIn, const Vector &vecTarget, float flRate );
     void GetPoseParams();
 
@@ -286,14 +286,14 @@ typedef CBaseCombatCharacter RobotBaseClass;
 class CTFRobotDestruction_Robot : public RobotBaseClass
 #ifdef CLIENT_DLL
     ,
-                                  public CGameEventListener
+                                public CGameEventListener
 #endif
 {
     DECLARE_DATADESC();
     DECLARE_CLASS( CTFRobotDestruction_Robot, RobotBaseClass )
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
     CTFRobotDestruction_Robot( void );
     virtual ~CTFRobotDestruction_Robot( void );
     static void StaticPrecache( void );
@@ -393,7 +393,7 @@ class CTFRobotDestruction_Robot : public RobotBaseClass
     // Inputs
     void InputStopAndUseComputer( inputdata_t &inputdata );
 
-   private:
+    private:
     void PlayDeathEffects( void );
     void ModifyDamage( CTakeDamageInfo *info ) const;
     void SpewBars( int nNumToSpew );
@@ -401,7 +401,7 @@ class CTFRobotDestruction_Robot : public RobotBaseClass
     void SelfDestructThink( void );
     void SpewGibs( void );
 #endif
-   private:
+    private:
     int m_iHealth;
     int m_iMaxHealth;
     CUtlVector< breakmodel_t > m_aGibs;
@@ -431,7 +431,7 @@ class CTFRobotDestruction_Robot : public RobotBaseClass
 //--------------------------------------------------------------------------------------------------------------
 class CRobotPathCost : public IPathCost
 {
-   public:
+    public:
     CRobotPathCost( CTFRobotDestruction_Robot *me )
     {
         m_me = me;

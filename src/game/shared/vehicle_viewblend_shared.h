@@ -70,12 +70,12 @@ struct ViewSmoothingData_t
 
 // TEMP: Shared vehicle view smoothing
 void SharedVehicleViewSmoothing( CBasePlayer *pPlayer,
-                                 Vector *pAbsOrigin,
-                                 QAngle *pAbsAngles,
-                                 bool bEnterAnimOn,
-                                 bool bExitAnimOn,
-                                 const Vector &vecEyeExitEndpoint,
-                                 ViewSmoothingData_t *pData,
-                                 float *pFOV );
+                                Vector *pAbsOrigin,
+                                QAngle *pAbsAngles,
+                                bool bEnterAnimOn,
+                                bool bExitAnimOn,
+                                const Vector &vecEyeExitEndpoint,
+                                ViewSmoothingData_t *pData,
+                                float *pFOV );
 
 #endif  // VEHICLE_VIEWBLEND_SHARED_H

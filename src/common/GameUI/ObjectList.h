@@ -18,7 +18,7 @@
 
 class ObjectList : public IObjectContainer
 {
-   public:
+    public:
     void Init();
     bool Add( void* newObject );
     void* GetFirst();
@@ -45,7 +45,7 @@ class ObjectList : public IObjectContainer
         void* object;     // the element's object
     } element_t;
 
-   protected:
+    protected:
     element_t* head;     // first element in list
     element_t* tail;     // last element in list
     element_t* current;  // current element in list

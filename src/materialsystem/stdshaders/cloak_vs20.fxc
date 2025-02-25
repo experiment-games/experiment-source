@@ -1,6 +1,6 @@
 //====== Copyright � 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,116 +32,116 @@ sampler2D morphSampler : register( s0 );
 
 struct VS_INPUT
 {
-	float4 vPos						: POSITION;
-	float4 vBoneWeights				: BLENDWEIGHT;
-	float4 vBoneIndices				: BLENDINDICES;
-	float4 vNormal					: NORMAL;
-	float4 vBaseTexCoord			: TEXCOORD0;
-	float4 vUserData				: TANGENT;
+    float4 vPos						: POSITION;
+    float4 vBoneWeights				: BLENDWEIGHT;
+    float4 vBoneIndices				: BLENDINDICES;
+    float4 vNormal					: NORMAL;
+    float4 vBaseTexCoord			: TEXCOORD0;
+    float4 vUserData				: TANGENT;
 
-	// Position and normal/tangent deltas
-	float3 vPosFlex					: POSITION1;
-	float3 vNormalFlex				: NORMAL1;
+    // Position and normal/tangent deltas
+    float3 vPosFlex					: POSITION1;
+    float3 vNormalFlex				: NORMAL1;
 
 #ifdef SHADER_MODEL_VS_3_0
-	float vVertexID					: POSITION2;
+    float vVertexID					: POSITION2;
 #endif
 };
 
 struct VS_OUTPUT
 {
-    float4 vSetupProjPos			: POSITION;	
-	float  fFog						: FOG;
-	float2 vBaseTexCoord			: TEXCOORD0;
-	float3x3 tangentSpaceTranspose	: TEXCOORD1;
-	//	     second row				: TEXCOORD2;
-	//	     third row				: TEXCOORD3;
-	float3 worldPos					: TEXCOORD4;
-	float3 projPos					: TEXCOORD5;
-	float4 lightAtten				: TEXCOORD6;
-	float3 vRefract					: TEXCOORD7;
+    float4 vSetupProjPos			: POSITION;
+    float  fFog						: FOG;
+    float2 vBaseTexCoord			: TEXCOORD0;
+    float3x3 tangentSpaceTranspose	: TEXCOORD1;
+    //	     second row				: TEXCOORD2;
+    //	     third row				: TEXCOORD3;
+    float3 worldPos					: TEXCOORD4;
+    float3 projPos					: TEXCOORD5;
+    float4 lightAtten				: TEXCOORD6;
+    float3 vRefract					: TEXCOORD7;
 };
 
 VS_OUTPUT main( const VS_INPUT v )
 {
-	VS_OUTPUT o = ( VS_OUTPUT )0;
+    VS_OUTPUT o = ( VS_OUTPUT )0;
 
-	float4 vPosition = v.vPos;
-	float3 vNormal;
-	float4 vTangent;
+    float4 vPosition = v.vPos;
+    float3 vNormal;
+    float4 vTangent;
 
-	DecompressVertex_NormalTangent( v.vNormal, v.vUserData, vNormal, vTangent );
+    DecompressVertex_NormalTangent( v.vNormal, v.vUserData, vNormal, vTangent );
 
 #if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
-	ApplyMorph( v.vPosFlex, v.vNormalFlex, vPosition.xyz, vNormal, vTangent.xyz );
+    ApplyMorph( v.vPosFlex, v.vNormalFlex, vPosition.xyz, vNormal, vTangent.xyz );
 #else
-	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, v.vVertexID, float3( 0, 0, 0 ),
-		vPosition.xyz, vNormal, vTangent.xyz );
+    ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, v.vVertexID, float3( 0, 0, 0 ),
+        vPosition.xyz, vNormal, vTangent.xyz );
 #endif
 
-	// Perform skinning
-	float3 worldNormal, worldPos, worldTangentS, worldTangentT;
-	SkinPositionNormalAndTangentSpace( g_bSkinning, vPosition, vNormal, vTangent,
-										v.vBoneWeights, v.vBoneIndices, worldPos,
-										worldNormal, worldTangentS, worldTangentT );
+    // Perform skinning
+    float3 worldNormal, worldPos, worldTangentS, worldTangentT;
+    SkinPositionNormalAndTangentSpace( g_bSkinning, vPosition, vNormal, vTangent,
+                                        v.vBoneWeights, v.vBoneIndices, worldPos,
+                                        worldNormal, worldTangentS, worldTangentT );
 
-	// Always normalize since flex path is controlled by runtime
-	// constant not a shader combo and will always generate the normalization
-	worldNormal   = normalize( worldNormal );
-	worldTangentS = normalize( worldTangentS );
-	worldTangentT = normalize( worldTangentT );
+    // Always normalize since flex path is controlled by runtime
+    // constant not a shader combo and will always generate the normalization
+    worldNormal   = normalize( worldNormal );
+    worldTangentS = normalize( worldTangentS );
+    worldTangentT = normalize( worldTangentT );
 
-	// Projected position
-	float4 vProjPos = mul( float4( worldPos, 1 ), cViewProj );
-	o.vSetupProjPos = vProjPos;
+    // Projected position
+    float4 vProjPos = mul( float4( worldPos, 1 ), cViewProj );
+    o.vSetupProjPos = vProjPos;
 
-	// Map projected position to the refraction texture
-	float2 vRefractPos;
-	vRefractPos.x = vProjPos.x;
-	vRefractPos.y = -vProjPos.y; // invert Y
-	vRefractPos = (vRefractPos + vProjPos.w) * 0.5f;
+    // Map projected position to the refraction texture
+    float2 vRefractPos;
+    vRefractPos.x = vProjPos.x;
+    vRefractPos.y = -vProjPos.y; // invert Y
+    vRefractPos = (vRefractPos + vProjPos.w) * 0.5f;
 
 #if defined ( SHADER_MODEL_VS_2_0 ) && ( !USE_STATIC_CONTROL_FLOW )
-	o.lightAtten = float4(0,0,0,0);
-	#if ( NUM_LIGHTS > 0 )
-		o.lightAtten.x = GetVertexAttenForLight( worldPos, 0, false );
-	#endif
-	#if ( NUM_LIGHTS > 1 )
-		o.lightAtten.y = GetVertexAttenForLight( worldPos, 1, false );
-	#endif
-	#if ( NUM_LIGHTS > 2 )
-		o.lightAtten.z = GetVertexAttenForLight( worldPos, 2, false );
-	#endif
-	#if ( NUM_LIGHTS > 3 )
-		o.lightAtten.w = GetVertexAttenForLight( worldPos, 3, false );
-	#endif
+    o.lightAtten = float4(0,0,0,0);
+    #if ( NUM_LIGHTS > 0 )
+        o.lightAtten.x = GetVertexAttenForLight( worldPos, 0, false );
+    #endif
+    #if ( NUM_LIGHTS > 1 )
+        o.lightAtten.y = GetVertexAttenForLight( worldPos, 1, false );
+    #endif
+    #if ( NUM_LIGHTS > 2 )
+        o.lightAtten.z = GetVertexAttenForLight( worldPos, 2, false );
+    #endif
+    #if ( NUM_LIGHTS > 3 )
+        o.lightAtten.w = GetVertexAttenForLight( worldPos, 3, false );
+    #endif
 #else
-	// Scalar light attenuation
-	o.lightAtten.x = GetVertexAttenForLight( worldPos, 0, true );
-	o.lightAtten.y = GetVertexAttenForLight( worldPos, 1, true );
-	o.lightAtten.z = GetVertexAttenForLight( worldPos, 2, true );
-	o.lightAtten.w = GetVertexAttenForLight( worldPos, 3, true );
+    // Scalar light attenuation
+    o.lightAtten.x = GetVertexAttenForLight( worldPos, 0, true );
+    o.lightAtten.y = GetVertexAttenForLight( worldPos, 1, true );
+    o.lightAtten.z = GetVertexAttenForLight( worldPos, 2, true );
+    o.lightAtten.w = GetVertexAttenForLight( worldPos, 3, true );
 #endif
 
-	// Compute fog based on the position
-	float3 vWorldPos = mul( v.vPos, cModel[0] );
+    // Compute fog based on the position
+    float3 vWorldPos = mul( v.vPos, cModel[0] );
 #if !defined( _X360 )
-	o.fFog = CalcFog( vWorldPos, vProjPos, FOGTYPE_RANGE );
+    o.fFog = CalcFog( vWorldPos, vProjPos, FOGTYPE_RANGE );
 #endif
 
-	// World position
-	o.worldPos = worldPos;
+    // World position
+    o.worldPos = worldPos;
 
-	// Refract position
-	o.projPos = float3(vRefractPos.x, vRefractPos.y, vProjPos.w);
+    // Refract position
+    o.projPos = float3(vRefractPos.x, vRefractPos.y, vProjPos.w);
 
-	// Tranform bump coordinates
-	o.vBaseTexCoord = v.vBaseTexCoord;
+    // Tranform bump coordinates
+    o.vBaseTexCoord = v.vBaseTexCoord;
 
-	// Tangent space transform
-	o.tangentSpaceTranspose[0] = float3( worldTangentS.x, worldTangentT.x, worldNormal.x );
-	o.tangentSpaceTranspose[1] = float3( worldTangentS.y, worldTangentT.y, worldNormal.y );
-	o.tangentSpaceTranspose[2] = float3( worldTangentS.z, worldTangentT.z, worldNormal.z );
+    // Tangent space transform
+    o.tangentSpaceTranspose[0] = float3( worldTangentS.x, worldTangentT.x, worldNormal.x );
+    o.tangentSpaceTranspose[1] = float3( worldTangentS.y, worldTangentT.y, worldNormal.y );
+    o.tangentSpaceTranspose[2] = float3( worldTangentS.z, worldTangentT.z, worldNormal.z );
 
-	return o;
+    return o;
 }

@@ -33,7 +33,7 @@ class CTFPartyClient : private CAutoGameSystemPerFrame, private CLocalSteamShare
     // Messages
     friend class CGCClientJobPartyChatMsg;
 
-   public:
+    public:
     CTFPartyClient();
     ~CTFPartyClient();
 
@@ -316,7 +316,7 @@ class CTFPartyClient : private CAutoGameSystemPerFrame, private CLocalSteamShare
         UpdateActiveParty();
     }
 
-   private:
+    private:
     // IGameSystemPerFrame
     virtual bool Init() OVERRIDE;
     virtual void Update( float frametime ) OVERRIDE
@@ -340,11 +340,11 @@ class CTFPartyClient : private CAutoGameSystemPerFrame, private CLocalSteamShare
     void OnSetOptionsReply( const GCSDK::CProtoBufMsg< CMsgPartySetOptions > &msg,
                             const GCSDK::CProtoBufMsg< CMsgPartySetOptionsResponse > &reply );
     void OnQueueForMatchReply( const GCSDK::CProtoBufMsg< CMsgPartyQueueForMatch > &msg,
-                               const GCSDK::CProtoBufMsg< CMsgPartyQueueForMatchResponse > &reply );
+                                const GCSDK::CProtoBufMsg< CMsgPartyQueueForMatchResponse > &reply );
     void OnQueueForStandbyReply( const GCSDK::CProtoBufMsg< CMsgPartyQueueForStandby > &msg,
-                                 const GCSDK::CProtoBufMsg< CMsgPartyQueueForStandbyResponse > &reply );
+                                const GCSDK::CProtoBufMsg< CMsgPartyQueueForStandbyResponse > &reply );
     void OnRemoveFromQueueReply( const GCSDK::CProtoBufMsg< CMsgPartyRemoveFromQueue > &msg,
-                                 const GCSDK::CProtoBufMsg< CMsgPartyRemoveFromQueueResponse > &reply );
+                                const GCSDK::CProtoBufMsg< CMsgPartyRemoveFromQueueResponse > &reply );
     void OnRemoveFromStandbyQueueReply( const GCSDK::CProtoBufMsg< CMsgPartyRemoveFromStandbyQueue > &msg,
                                         const GCSDK::CProtoBufMsg< CMsgPartyRemoveFromStandbyQueueResponse > &reply );
     void OnClearPendingPlayerReply( const GCSDK::CProtoBufMsg< CMsgPartyClearPendingPlayer > &msg,

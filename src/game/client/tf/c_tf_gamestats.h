@@ -20,13 +20,13 @@ class CTFPlayer;
 
 struct TF_Gamestats_ClientSession_t
 {
-   public:
+    public:
     TF_Gamestats_ClientSession_t();
 
-   private:
+    private:
     TF_Gamestats_ClientSession_t( const TF_Gamestats_ClientSession_t& stats ) {}
 
-   public:
+    public:
     void Reset();
 
     struct SessionSummary_t
@@ -92,7 +92,7 @@ struct TF_Gamestats_AchievementEvent_t
 // Item event baseclass.
 class TF_Gamestats_ItemEvent
 {
-   public:
+    public:
     TF_Gamestats_ItemEvent( int in_eventNum, CEconItemView* in_item );
 
     int eventNum;
@@ -117,7 +117,7 @@ class TF_Gamestats_ItemEvent
 // Mann Co Catalog Usage Tracking
 class TF_Gamestats_CatalogEvent : public TF_Gamestats_ItemEvent
 {
-   public:
+    public:
     TF_Gamestats_CatalogEvent( int in_eventNum, CEconItemView* in_item, const char* in_filter );
 
     const char* catalogFilter;
@@ -126,7 +126,7 @@ class TF_Gamestats_CatalogEvent : public TF_Gamestats_ItemEvent
 // Crafting System Usage Tracking
 class TF_Gamestats_CraftingEvent : public TF_Gamestats_ItemEvent
 {
-   public:
+    public:
     TF_Gamestats_CraftingEvent( int in_eventNum, CEconItemView* in_item, int in_numAttempts, int in_recipe );
 
     int numAttempts;
@@ -136,7 +136,7 @@ class TF_Gamestats_CraftingEvent : public TF_Gamestats_ItemEvent
 // Store Usage Tracking
 class TF_Gamestats_StoreEvent : public TF_Gamestats_ItemEvent
 {
-   public:
+    public:
     TF_Gamestats_StoreEvent( int in_eventNum, CEconItemView* in_item, const char* in_panelName, int in_classId, const cart_item_t* in_cartItem, int in_checkoutAttempts, const char* in_storeError, int in_totalPrice, int in_currencyCode );
 
     int classId;
@@ -151,7 +151,7 @@ class TF_Gamestats_StoreEvent : public TF_Gamestats_ItemEvent
 // General client-subjective item transaction tracking.
 class TF_Gamestats_ItemTransactionEvent : public TF_Gamestats_ItemEvent
 {
-   public:
+    public:
     TF_Gamestats_ItemTransactionEvent( int in_eventNum, CEconItemView* in_item, const char* in_reason, int in_quality );
 
     const char* reason;
@@ -161,7 +161,7 @@ class TF_Gamestats_ItemTransactionEvent : public TF_Gamestats_ItemEvent
 // Trade Usage Tracking
 class TF_Gamestats_TradeEvent : public TF_Gamestats_ItemEvent
 {
-   public:
+    public:
     TF_Gamestats_TradeEvent( int eventID, CEconItemView* item, bool localPlayerIsPartyA, uint64 steamIDPartyA, uint64 steamIDPartyB, int iTradeRequests, int iTradeAttempts );
     TF_Gamestats_TradeEvent( int eventID, uint64 steamIDRequested, int iTradeRequests, int iTradeAttempts );
     TF_Gamestats_TradeEvent( int eventID, int iTradeRequests, const char* reason, int iTradeAttempts );
@@ -252,7 +252,7 @@ struct TF_Gamestats_QuickPlay_t
 
 class C_CTFGameStats : public CBaseGameStats, public CGameEventListener, public CAutoGameSystem
 {
-   public:
+    public:
     // Constructor/Destructor.
     C_CTFGameStats( void );
     ~C_CTFGameStats( void );
@@ -315,7 +315,7 @@ class C_CTFGameStats : public CBaseGameStats, public CGameEventListener, public 
 
     void QuickplayResults( const TF_Gamestats_QuickPlay_t& info );
 
-   private:
+    private:
     char m_szCountryCode[64];
     char m_szAudioLanguage[64];
     char m_szTextLanguage[64];

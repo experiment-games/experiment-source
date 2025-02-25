@@ -732,14 +732,14 @@ PLATFORM_INTERFACE void ThreadNotifySyncReleasing( void *p );
 
 class PLATFORM_CLASS CThreadLocalBase
 {
-   public:
+    public:
     CThreadLocalBase();
     ~CThreadLocalBase();
 
     void *Get() const;
     void Set( void * );
 
-   private:
+    private:
 #ifdef _WIN32
     uint32 m_index;
 #elif POSIX
@@ -754,7 +754,7 @@ class PLATFORM_CLASS CThreadLocalBase
 template < class T >
 class CThreadLocal : public CThreadLocalBase
 {
-   public:
+    public:
     CThreadLocal()
     {
 #ifdef PLATFORM_64BITS
@@ -805,7 +805,7 @@ class CThreadLocal : public CThreadLocalBase
 template < class T = intp >
 class CThreadLocalInt : public CThreadLocal< T >
 {
-   public:
+    public:
     CThreadLocalInt()
     {
         COMPILE_TIME_ASSERT( sizeof( T ) >= sizeof( int ) );
@@ -853,7 +853,7 @@ class CThreadLocalInt : public CThreadLocal< T >
 template < class T >
 class CThreadLocalPtr : private CThreadLocalBase
 {
-   public:
+    public:
     CThreadLocalPtr() {}
 
     operator const void *() const
@@ -961,7 +961,7 @@ class CThreadLocalPtr : private CThreadLocalBase
         return *( ( T * )Get() + i );
     }
 
-   private:
+    private:
     // Disallowed operations
     CThreadLocalPtr( T *pFrom );
     CThreadLocalPtr( const CThreadLocalPtr< T > &from );
@@ -995,7 +995,7 @@ class CThreadLocalPtr : private CThreadLocalBase
 template < typename T >
 class CInterlockedIntT
 {
-   public:
+    public:
     CInterlockedIntT()
         : m_value( 0 )
     {
@@ -1147,7 +1147,7 @@ class CInterlockedIntT
             return ( T )ThreadInterlockedExchange64( ( int64 * )&m_value, newValue );
     }
 
-   private:
+    private:
     volatile T m_value;
 };
 
@@ -1159,7 +1159,7 @@ typedef CInterlockedIntT< unsigned > CInterlockedUInt;
 template < typename T >
 class CInterlockedPtr
 {
-   public:
+    public:
     CInterlockedPtr()
         : m_value( 0 ) {}
     CInterlockedPtr( T *value )
@@ -1283,7 +1283,7 @@ class CInterlockedPtr
         return m_value - p.m_value;
     }
 
-   private:
+    private:
     T *volatile m_value;
 };
 
@@ -1295,7 +1295,7 @@ class CInterlockedPtr
 //-----------------------------------------------------------------------------
 class ReentrancyVerifier
 {
-   public:
+    public:
     inline ReentrancyVerifier( CInterlockedInt *counter, int sleepTimeMS )
         : mCounter( counter )
     {
@@ -1320,7 +1320,7 @@ class ReentrancyVerifier
         }
     }
 
-   private:
+    private:
     CInterlockedInt *mCounter;
 };
 
@@ -1332,7 +1332,7 @@ class ReentrancyVerifier
 
 class PLATFORM_CLASS CThreadMutex
 {
-   public:
+    public:
     CThreadMutex();
     ~CThreadMutex();
 
@@ -1367,7 +1367,7 @@ class PLATFORM_CLASS CThreadMutex
     //------------------------------------------------------
     void SetTrace( bool );
 
-   private:
+    private:
     // Disallow copying
     CThreadMutex( const CThreadMutex & );
     CThreadMutex &operator=( const CThreadMutex & );
@@ -1413,14 +1413,14 @@ class PLATFORM_CLASS CThreadMutex
 
 class CThreadFastMutex
 {
-   public:
+    public:
     CThreadFastMutex()
         : m_ownerID( 0 ),
-          m_depth( 0 )
+        m_depth( 0 )
     {
     }
 
-   private:
+    private:
     FORCEINLINE bool TryLockInline( const ThreadId_t threadId ) volatile
     {
         if ( threadId != m_ownerID && !ThreadInterlockedAssignIf_SizeT( ( volatile intp * )&m_ownerID, ( ThreadId_t )threadId, 0 ) )
@@ -1438,7 +1438,7 @@ class CThreadFastMutex
 
     PLATFORM_CLASS void Lock( const ThreadId_t threadId, unsigned nSpinSleepTime ) volatile;
 
-   public:
+    public:
     bool TryLock() volatile
     {
 #ifdef _DEBUG
@@ -1526,7 +1526,7 @@ class CThreadFastMutex
         return m_depth;
     }
 
-   private:
+    private:
     volatile ThreadId_t m_ownerID;
     int m_depth;
 };
@@ -1538,13 +1538,13 @@ class CThreadFastMutex
 
 class ALIGN128 CAlignedThreadFastMutex : public CThreadFastMutex
 {
-   public:
+    public:
     CAlignedThreadFastMutex()
     {
         Assert( ( size_t )this % 128 == 0 && sizeof( *this ) == 128 );
     }
 
-   private:
+    private:
     uint8 pad[128 - sizeof( CThreadFastMutex )];
 } ALIGN128_POST;
 
@@ -1562,7 +1562,7 @@ typedef CThreadMutex CThreadFastMutex;
 
 class CThreadNullMutex
 {
-   public:
+    public:
     static void Lock() {}
     static void Unlock() {}
 
@@ -1596,7 +1596,7 @@ class CThreadNullMutex
 template < class BaseClass, bool *pCondition >
 class CThreadConditionalMutex : public BaseClass
 {
-   public:
+    public:
     void Lock()
     {
         if ( *pCondition ) BaseClass::Lock();
@@ -1648,7 +1648,7 @@ class CThreadConditionalMutex : public BaseClass
 template < class BaseClass >
 class CThreadTerminalMutex : public BaseClass
 {
-   public:
+    public:
     bool TryLock()
     {
         if ( !BaseClass::TryLock() )
@@ -1687,7 +1687,7 @@ class CThreadTerminalMutex : public BaseClass
 template < class MUTEX_TYPE = CThreadMutex >
 class CAutoLockT
 {
-   public:
+    public:
     FORCEINLINE CAutoLockT( MUTEX_TYPE &lock, const char *pMutexName, const char *pFilename, int nLineNum, uint64 minReportDurationUs )
         : m_lock( const_cast< typename V_remove_const< MUTEX_TYPE >::type & >( lock ) ), m_pMutexName( pMutexName ), m_pFilename( pFilename ), m_nLineNum( nLineNum ), m_bOwned( true )
     {
@@ -1719,7 +1719,7 @@ class CAutoLockT
         }
     }
 
-   private:
+    private:
     typename V_remove_const< MUTEX_TYPE >::type &m_lock;
     const char *m_pMutexName;
     const char *m_pFilename;
@@ -1770,7 +1770,7 @@ inline CAutoLockT< MUTEX_TYPE > make_auto_lock( MUTEX_TYPE &lock, const char *pM
 
 class PLATFORM_CLASS CThreadSyncObject
 {
-   public:
+    public:
     ~CThreadSyncObject();
 
     //-----------------------------------------------------
@@ -1796,7 +1796,7 @@ class PLATFORM_CLASS CThreadSyncObject
     //-----------------------------------------------------
     bool Wait( uint32 dwTimeout = TT_INFINITE );
 
-   protected:
+    protected:
     CThreadSyncObject();
     void AssertUseable();
 
@@ -1814,7 +1814,7 @@ class PLATFORM_CLASS CThreadSyncObject
 #error "Implement me"
 #endif
 
-   private:
+    private:
     CThreadSyncObject( const CThreadSyncObject & );
     CThreadSyncObject &operator=( const CThreadSyncObject & );
 };
@@ -1835,7 +1835,7 @@ class PLATFORM_CLASS CThreadSyncObject
 
 class PLATFORM_CLASS CThreadSemaphore : public CThreadSyncObject
 {
-   public:
+    public:
     CThreadSemaphore( long initialValue, long maxValue );
 
     //-----------------------------------------------------
@@ -1844,7 +1844,7 @@ class PLATFORM_CLASS CThreadSemaphore : public CThreadSyncObject
     //-----------------------------------------------------
     bool Release( long releaseCount = 1, long *pPreviousCount = NULL );
 
-   private:
+    private:
     CThreadSemaphore( const CThreadSemaphore & );
     CThreadSemaphore &operator=( const CThreadSemaphore & );
 };
@@ -1857,7 +1857,7 @@ class PLATFORM_CLASS CThreadSemaphore : public CThreadSyncObject
 
 class PLATFORM_CLASS CThreadFullMutex : public CThreadSyncObject
 {
-   public:
+    public:
     CThreadFullMutex( bool bEstablishInitialOwnership = false, const char *pszName = NULL );
 
     //-----------------------------------------------------
@@ -1884,7 +1884,7 @@ class PLATFORM_CLASS CThreadFullMutex : public CThreadSyncObject
     }
     void SetTrace( bool ) {}
 
-   private:
+    private:
     CThreadFullMutex( const CThreadFullMutex & );
     CThreadFullMutex &operator=( const CThreadFullMutex & );
 };
@@ -1892,7 +1892,7 @@ class PLATFORM_CLASS CThreadFullMutex : public CThreadSyncObject
 
 class PLATFORM_CLASS CThreadEvent : public CThreadSyncObject
 {
-   public:
+    public:
     CThreadEvent( bool fManualReset = false );
 #ifdef WIN32
     CThreadEvent( HANDLE hHandle );
@@ -1914,7 +1914,7 @@ class PLATFORM_CLASS CThreadEvent : public CThreadSyncObject
 
     bool Wait( uint32 dwTimeout = TT_INFINITE );
 
-   private:
+    private:
     CThreadEvent( const CThreadEvent & );
     CThreadEvent &operator=( const CThreadEvent & );
 };
@@ -1922,7 +1922,7 @@ class PLATFORM_CLASS CThreadEvent : public CThreadSyncObject
 // Hard-wired manual event for use in array declarations
 class CThreadManualEvent : public CThreadEvent
 {
-   public:
+    public:
     CThreadManualEvent()
         : CThreadEvent( true )
     {
@@ -1953,7 +1953,7 @@ inline int ThreadWaitForEvents( int nEvents, CThreadEvent *const *pEvents, bool 
 
 class PLATFORM_CLASS CThreadRWLock
 {
-   public:
+    public:
     CThreadRWLock();
 
     void LockForRead();
@@ -1978,7 +1978,7 @@ class PLATFORM_CLASS CThreadRWLock
         const_cast< CThreadRWLock * >( this )->UnlockWrite();
     }
 
-   private:
+    private:
     void WaitForRead();
 
 #ifdef WIN32
@@ -2002,7 +2002,7 @@ class PLATFORM_CLASS CThreadRWLock
 
 class ALIGN8 PLATFORM_CLASS CThreadSpinRWLock
 {
-   public:
+    public:
     CThreadSpinRWLock()
         : m_nWriters( 0 )
     {
@@ -2046,7 +2046,7 @@ class ALIGN8 PLATFORM_CLASS CThreadSpinRWLock
         const_cast< CThreadSpinRWLock * >( this )->UnlockWrite();
     }
 
-   private:
+    private:
     struct LockInfo_t
     {
         // FIXME(johns): ThreadId_t is 64bits in 64bit linux. So we just kinda truncate it to 32bit, but we should
@@ -2072,7 +2072,7 @@ class ALIGN8 PLATFORM_CLASS CThreadSpinRWLock
 
 class PLATFORM_CLASS CThread
 {
-   public:
+    public:
     CThread();
     virtual ~CThread();
 
@@ -2164,7 +2164,7 @@ class PLATFORM_CLASS CThread
     // time has elapsed, more or less.
     static void Sleep( unsigned duration );
 
-   protected:
+    protected:
     // Optional pre-run call, with ability to fail-create. Note Init()
     // is forced synchronous with Start()
     virtual bool Init();
@@ -2201,7 +2201,7 @@ class PLATFORM_CLASS CThread
     }
 #endif
 
-   private:
+    private:
     enum Flags
     {
         SUPPORT_STOP_PROTOCOL = 1 << 0
@@ -2245,7 +2245,7 @@ class PLATFORM_CLASS CThread
 //-----------------------------------------------------------------------------
 class PLATFORM_CLASS CValidatableThread : public CThread
 {
-   public:
+    public:
     CValidatableThread()
     {
         m_bSleepForValidate = false;
@@ -2266,7 +2266,7 @@ class PLATFORM_CLASS CValidatableThread : public CThread
         m_bSleepForValidate = false;
     }
 #endif
-   protected:
+    protected:
     bool m_bSleepForValidate;
     bool m_bSleepingForValidate;
 };
@@ -2287,7 +2287,7 @@ enum WTCallResult_t
 class CFunctor;
 class PLATFORM_CLASS CWorkerThread : public CThread
 {
-   public:
+    public:
     CWorkerThread();
 
     //-----------------------------------------------------
@@ -2327,7 +2327,7 @@ class PLATFORM_CLASS CWorkerThread : public CThread
     // Boost the worker thread to the master thread, if worker thread is lesser, return old priority
     int BoostPriority();
 
-   protected:
+    protected:
 #ifndef _WIN32
 #define __stdcall
 #endif
@@ -2336,7 +2336,7 @@ class PLATFORM_CLASS CWorkerThread : public CThread
     int Call( unsigned, unsigned timeout, bool fBoost, WaitFunc_t = NULL, CFunctor *pParamFunctor = NULL );
     int WaitForReply( unsigned timeout, WaitFunc_t );
 
-   private:
+    private:
     CWorkerThread( const CWorkerThread & );
     CWorkerThread &operator=( const CWorkerThread & );
 
@@ -2367,7 +2367,7 @@ class CMessageQueue
     MsgNode *Head;
     MsgNode *Tail;
 
-   public:
+    public:
     CMessageQueue( void )
     {
         Head = Tail = NULL;
@@ -2565,9 +2565,9 @@ inline void CThreadMutex::SetTrace( bool fTrace )
 
 inline CThreadRWLock::CThreadRWLock()
     : m_CanRead( true ),
-      m_nWriters( 0 ),
-      m_nActiveReaders( 0 ),
-      m_nPendingReaders( 0 )
+    m_nWriters( 0 ),
+    m_nActiveReaders( 0 ),
+    m_nPendingReaders( 0 )
 {
 }
 

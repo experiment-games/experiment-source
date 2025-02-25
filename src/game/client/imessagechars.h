@@ -26,7 +26,7 @@ typedef uint32 HFont;
 
 abstract_class IMessageChars
 {
-   public:
+    public:
     enum
     {
         MESSAGESTRINGID_NONE = -1,

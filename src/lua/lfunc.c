@@ -91,7 +91,7 @@ UpVal *luaF_findupval (lua_State *L, StkId level) {
   while ((p = *pp) != NULL && uplevel(p) >= level) {  /* search for it */
     lua_assert(!isdead(G(L), p));
     if (uplevel(p) == level)  /* corresponding upvalue? */
-      return p;  /* return it */
+    return p;  /* return it */
     pp = &p->u.open.next;
   }
   /* not found: create a new upvalue after 'pp' */
@@ -159,7 +159,7 @@ static void prepcallclosemth (lua_State *L, StkId level, int status, int yy) {
 ** is used.)
 */
 #define MAXDELTA  \
-	((256ul << ((sizeof(L->stack.p->tbclist.delta) - 1) * 8)) - 1)
+    ((256ul << ((sizeof(L->stack.p->tbclist.delta) - 1) * 8)) - 1)
 
 
 /*
@@ -200,8 +200,8 @@ void luaF_closeupval (lua_State *L, StkId level) {
     setobj(L, slot, uv->v.p);  /* move value to upvalue slot */
     uv->v.p = slot;  /* now current value lives here */
     if (!iswhite(uv)) {  /* neither white nor dead? */
-      nw2black(uv);  /* closed upvalues cannot be gray */
-      luaC_barrier(L, uv, slot);
+    nw2black(uv);  /* closed upvalues cannot be gray */
+    luaC_barrier(L, uv, slot);
     }
   }
 }
@@ -284,11 +284,10 @@ const char *luaF_getlocalname (const Proto *f, int local_number, int pc) {
   int i;
   for (i = 0; i<f->sizelocvars && f->locvars[i].startpc <= pc; i++) {
     if (pc < f->locvars[i].endpc) {  /* is variable active? */
-      local_number--;
-      if (local_number == 0)
+    local_number--;
+    if (local_number == 0)
         return getstr(f->locvars[i].varname);
     }
   }
   return NULL;  /* not found */
 }
-

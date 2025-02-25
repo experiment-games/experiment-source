@@ -13,7 +13,7 @@ class CTFPlayer;
 //----------------------------------------------------------------------------
 class CTFBaseBossLocomotion : public NextBotGroundLocomotion
 {
-   public:
+    public:
     CTFBaseBossLocomotion( INextBot *bot )
         : NextBotGroundLocomotion( bot )
     {
@@ -42,7 +42,7 @@ class CTFBaseBossLocomotion : public NextBotGroundLocomotion
         m_flMaxJumpHeight = flMaxJumpHeight;
     }
 
-   private:
+    private:
     float m_flStepHeight = 100.0f;
     float m_flMaxJumpHeight = 100.0f;
 };
@@ -50,7 +50,7 @@ class CTFBaseBossLocomotion : public NextBotGroundLocomotion
 //----------------------------------------------------------------------------
 class CTFBaseBoss : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBaseBoss, NextBotCombatCharacter );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -127,14 +127,14 @@ class CTFBaseBoss : public NextBotCombatCharacter
 
     COutputEvent m_outputOnKilled;
 
-   protected:
+    protected:
     virtual void ModifyDamage( CTakeDamageInfo *info ) const {}
     int GetInitialHealth() const
     {
         return m_initialHealth;
     }
 
-   private:
+    private:
     int m_initialHealth;
     CNetworkVar( float, m_lastHealthPercentage );
     string_t m_modelString;

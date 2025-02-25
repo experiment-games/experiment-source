@@ -59,7 +59,7 @@ class IReplayScreenshotSystem;
 
 abstract_class IViewRender
 {
-   public:
+    public:
     // SETUP
     // Initialize view renderer
     virtual void Init( void ) = 0;

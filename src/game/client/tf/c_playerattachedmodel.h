@@ -25,7 +25,7 @@ class C_PlayerAttachedModel : public C_BaseAnimating
 {
     DECLARE_CLASS( C_PlayerAttachedModel, C_BaseAnimating );
 
-   public:
+    public:
     static C_PlayerAttachedModel *Create( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, Vector vecOffset, float flLifetime = 0.2, int iFlags = 0 );
 
     bool Initialize( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, Vector vecOffset, float flLifetime, int iFlags );
@@ -33,7 +33,7 @@ class C_PlayerAttachedModel : public C_BaseAnimating
     void ClientThink( void );
     void ApplyBoneMatrixTransform( matrix3x4_t &transform );
 
-   private:
+    private:
     float m_flExpiresAt;
     int m_iFlags;
     float m_flRotateAt;

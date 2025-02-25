@@ -23,7 +23,7 @@ class CAI_FearBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_FearBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_FearBehavior();
 
     void Precache( void );
@@ -78,8 +78,8 @@ class CAI_FearBehavior : public CAI_SimpleBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   public:
-   private:
+    public:
+    private:
     virtual int SelectSchedule();
 
     float m_flTimeToSafety;

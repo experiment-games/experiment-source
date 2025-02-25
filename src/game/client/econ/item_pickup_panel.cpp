@@ -471,16 +471,16 @@ void CItemPickupPanel::OnKeyCodePressed( vgui::KeyCode code )
     }
 
     else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-              nButtonCode == KEY_XSTICK1_RIGHT ||
-              nButtonCode == KEY_XSTICK2_RIGHT ||
-              nButtonCode == KEY_RIGHT )
+            nButtonCode == KEY_XSTICK1_RIGHT ||
+            nButtonCode == KEY_XSTICK2_RIGHT ||
+            nButtonCode == KEY_RIGHT )
     {
         OnCommand( "nextitem" );
     }
     else if ( nButtonCode == KEY_XBUTTON_LEFT ||
-              nButtonCode == KEY_XSTICK1_LEFT ||
-              nButtonCode == KEY_XSTICK2_LEFT ||
-              nButtonCode == KEY_LEFT )
+            nButtonCode == KEY_XSTICK1_LEFT ||
+            nButtonCode == KEY_XSTICK2_LEFT ||
+            nButtonCode == KEY_LEFT )
     {
         OnCommand( "previtem" );
     }

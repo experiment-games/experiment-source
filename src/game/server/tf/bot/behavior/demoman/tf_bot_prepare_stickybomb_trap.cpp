@@ -16,7 +16,7 @@ ConVar tf_bot_stickybomb_density( "tf_bot_stickybomb_density", "0.0001", FCVAR_C
 //---------------------------------------------------------------------------------------------
 class PlaceStickyBombReply : public INextBotReply
 {
-   public:
+    public:
     virtual void OnSuccess( INextBot *bot )  // invoked when process completed successfully
     {
         CTFBot *me = ToTFBot( bot->GetEntity() );

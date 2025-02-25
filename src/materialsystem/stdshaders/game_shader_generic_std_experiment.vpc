@@ -14,10 +14,10 @@ $Include "$SRCDIR\materialsystem\stdshaders\stdshader_dx9_inc.vpc"
 
 $Configuration
 {
-	$Compiler
-	{
-		$PreprocessorDefinitions		"$BASE;ASW_PROJECTED_TEXTURES"
-	}
+    $Compiler
+    {
+        $PreprocessorDefinitions		"$BASE;ASW_PROJECTED_TEXTURES"
+    }
 }
 
 $Project "Standard Shader Replacements (Experiment)"

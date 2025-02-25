@@ -66,24 +66,24 @@ public class NestedBuildersTest extends TestCase {
     Vehicle vehicle = vehicleBuilder.build();
     assertEquals(4, vehicle.getWheelCount());
     for (int i = 0; i < 4; i++) {
-      Wheel wheel = vehicle.getWheel(i);
-      assertEquals(4, wheel.getRadius());
-      assertEquals(i + 1, wheel.getWidth());
+    Wheel wheel = vehicle.getWheel(i);
+    assertEquals(4, wheel.getRadius());
+    assertEquals(i + 1, wheel.getWidth());
     }
     assertEquals(10, vehicle.getEngine().getLiters());
 
     for (int i = 0; i < 4; i++) {
-      vehicleBuilder.getWheelBuilder(i)
-          .setRadius(5)
-          .setWidth(i + 10);
+    vehicleBuilder.getWheelBuilder(i)
+        .setRadius(5)
+        .setWidth(i + 10);
     }
     vehicleBuilder.getEngineBuilder().setLiters(20);
 
     vehicle = vehicleBuilder.build();
     for (int i = 0; i < 4; i++) {
-      Wheel wheel = vehicle.getWheel(i);
-      assertEquals(5, wheel.getRadius());
-      assertEquals(i + 10, wheel.getWidth());
+    Wheel wheel = vehicle.getWheel(i);
+    assertEquals(5, wheel.getRadius());
+    assertEquals(i + 10, wheel.getWidth());
     }
     assertEquals(20, vehicle.getEngine().getLiters());
     assertTrue(vehicle.hasEngine());
@@ -107,15 +107,15 @@ public class NestedBuildersTest extends TestCase {
     // Make sure messages are cached.
     List<Wheel> wheels = new ArrayList<Wheel>(vehicleBuilder.getWheelList());
     for (int i = 0; i < wheels.size(); i++) {
-      assertSame(wheels.get(i), vehicleBuilder.getWheel(i));
+    assertSame(wheels.get(i), vehicleBuilder.getWheel(i));
     }
 
     // Now get builders and check they didn't change.
     for (int i = 0; i < wheels.size(); i++) {
-      vehicleBuilder.getWheel(i);
+    vehicleBuilder.getWheel(i);
     }
     for (int i = 0; i < wheels.size(); i++) {
-      assertSame(wheels.get(i), vehicleBuilder.getWheel(i));
+    assertSame(wheels.get(i), vehicleBuilder.getWheel(i));
     }
 
     // Change just one
@@ -124,11 +124,11 @@ public class NestedBuildersTest extends TestCase {
 
     // Now get wheels and check that only that one changed
     for (int i = 0; i < wheels.size(); i++) {
-      if (i < 3) {
+    if (i < 3) {
         assertSame(wheels.get(i), vehicleBuilder.getWheel(i));
-      } else {
+    } else {
         assertNotSame(wheels.get(i), vehicleBuilder.getWheel(i));
-      }
+    }
     }
   }
 

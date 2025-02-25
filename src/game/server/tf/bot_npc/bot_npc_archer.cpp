@@ -133,7 +133,7 @@ bool CBotNPCArcher::ShouldCollide( int collisionGroup, int contentsMask ) const
 //---------------------------------------------------------------------------------------------
 class CBotNPCArcherSurrender : public Action< CBotNPCArcher >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCArcher > OnStart( CBotNPCArcher *me, Action< CBotNPCArcher > *priorAction );
     virtual const char *GetName( void ) const
     {
@@ -158,7 +158,7 @@ inline ActionResult< CBotNPCArcher > CBotNPCArcherSurrender::OnStart( CBotNPCArc
 //---------------------------------------------------------------------------------------------
 class CBotNPCArcherShootBow : public Action< CBotNPCArcher >
 {
-   public:
+    public:
     CBotNPCArcherShootBow( CTFPlayer *target )
     {
         m_target = target;
@@ -172,7 +172,7 @@ class CBotNPCArcherShootBow : public Action< CBotNPCArcher >
         return "ShootBow";
     }  // return name of this action
 
-   private:
+    private:
     CHandle< CTFPlayer > m_target;
 };
 
@@ -236,7 +236,7 @@ ActionResult< CBotNPCArcher > CBotNPCArcherShootBow::Update( CBotNPCArcher *me, 
 //---------------------------------------------------------------------------------------------
 class CBotNPCArcherGuardSpot : public Action< CBotNPCArcher >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCArcher > OnStart( CBotNPCArcher *me, Action< CBotNPCArcher > *priorAction )
     {
         me->GetBodyInterface()->StartActivity( ACT_MP_STAND_ITEM2 );
@@ -321,7 +321,7 @@ class CBotNPCArcherGuardSpot : public Action< CBotNPCArcher >
         return "GuardSpot";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_shootTimer;
 };
 
@@ -329,7 +329,7 @@ class CBotNPCArcherGuardSpot : public Action< CBotNPCArcher >
 //---------------------------------------------------------------------------------------------
 class CBotNPCArcherMoveToMark : public Action< CBotNPCArcher >
 {
-   public:
+    public:
     virtual ActionResult< CBotNPCArcher > OnStart( CBotNPCArcher *me, Action< CBotNPCArcher > *priorAction )
     {
         ShortestPathCost cost;
@@ -357,7 +357,7 @@ class CBotNPCArcherMoveToMark : public Action< CBotNPCArcher >
         return "MoveToMark";
     }  // return name of this action
 
-   private:
+    private:
     PathFollower m_path;
 };
 
@@ -365,7 +365,7 @@ class CBotNPCArcherMoveToMark : public Action< CBotNPCArcher >
 //---------------------------------------------------------------------------------------------
 class CBotNPCArcherBehavior : public Action< CBotNPCArcher >
 {
-   public:
+    public:
     virtual Action< CBotNPCArcher > *InitialContainedAction( CBotNPCArcher *me )
     {
         return new CBotNPCArcherMoveToMark;

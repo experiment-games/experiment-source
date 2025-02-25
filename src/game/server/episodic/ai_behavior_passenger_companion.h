@@ -38,7 +38,7 @@ class CAI_PassengerBehaviorCompanion : public CAI_PassengerBehavior
     DECLARE_CLASS( CAI_PassengerBehaviorCompanion, CAI_PassengerBehavior );
     DECLARE_DATADESC()
 
-   public:
+    public:
     CAI_PassengerBehaviorCompanion( void );
 
     enum
@@ -99,7 +99,7 @@ class CAI_PassengerBehaviorCompanion : public CAI_PassengerBehavior
     virtual bool IsCurTaskContinuousMove( void );
     virtual bool IsCrouching( void );
 
-   private:
+    private:
     void SpeakVehicleConditions( void );
     virtual void OnExitVehicleFailed( void );
 
@@ -149,7 +149,7 @@ class CAI_PassengerBehaviorCompanion : public CAI_PassengerBehavior
     CAI_MoveMonitor m_VehicleMonitor;                     // Used to keep track of the vehicle's movement relative to a mark
     CUtlVector< FailPosition_t > m_FailedEntryPositions;  // Used to keep track of the vehicle's movement relative to a mark
 
-   protected:
+    protected:
     virtual int SelectTransitionSchedule( void );
 
     void ExtendFidgetDelay( float flDuration );

@@ -39,7 +39,7 @@ enum
 //-----------------------------------------------------------------------------
 class ScrollBarButton : public Button
 {
-   public:
+    public:
     ScrollBarButton( Panel *parent, const char *panelName, const char *text )
         : Button( parent, panelName, text )
     {

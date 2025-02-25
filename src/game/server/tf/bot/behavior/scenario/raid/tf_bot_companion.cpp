@@ -46,9 +46,9 @@ CTFPlayer *CTFBotCompanion::GetLeader( void )
 
         /*
             if ( player->IsPlayerClass( TF_CLASS_ENGINEER ) ||
-               player->IsPlayerClass( TF_CLASS_SNIPER ) ||
-               player->IsPlayerClass( TF_CLASS_MEDIC ) )
-              continue;
+                player->IsPlayerClass( TF_CLASS_SNIPER ) ||
+                player->IsPlayerClass( TF_CLASS_MEDIC ) )
+            continue;
         */
 
         if ( player->IsAlive() )

@@ -76,7 +76,7 @@ bool g_fTestSteering = 0;
 
 class CAI_NavInHintGroupFilter : public INearestNodeFilter
 {
-   public:
+    public:
     CAI_NavInHintGroupFilter( string_t iszGroup = NULL_STRING )
         : m_iszGroup( iszGroup )
     {
@@ -627,12 +627,12 @@ bool CAI_Navigator::SetWanderGoal( float minRadius, float maxRadius )
     if ( !GetOuter()->GetHintGroup() )
     {
         return ( SetWanderGoalByRandomVector( this, minRadius, maxRadius, 5 ) ||
-                 SetRandomGoal( 1 ) );
+                SetRandomGoal( 1 ) );
     }
     else
     {
         return ( SetRandomGoal( 1 ) ||
-                 SetWanderGoalByRandomVector( this, minRadius, maxRadius, 5 ) );
+                SetWanderGoalByRandomVector( this, minRadius, maxRadius, 5 ) );
     }
 }
 
@@ -1445,7 +1445,7 @@ AIMoveResult_t CAI_Navigator::MoveClimb()
     // Look for a block by another NPC, and attempt to recover
     AIMoveTrace_t moveTrace;
     if ( climbDist > 0.01 &&
-         !GetMoveProbe()->MoveLimit( NAV_CLIMB, GetLocalOrigin(), GetLocalOrigin() + ( climbDir * MIN( 0.1, climbDist - 0.005 ) ), MASK_NPCSOLID, GetNavTargetEntity(), &moveTrace ) )
+        !GetMoveProbe()->MoveLimit( NAV_CLIMB, GetLocalOrigin(), GetLocalOrigin() + ( climbDir * MIN( 0.1, climbDist - 0.005 ) ), MASK_NPCSOLID, GetNavTargetEntity(), &moveTrace ) )
     {
         CAI_BaseNPC *pOther = ( moveTrace.pObstruction ) ? moveTrace.pObstruction->MyNPCPointer() : NULL;
         if ( pOther )
@@ -1695,8 +1695,8 @@ bool CAI_Navigator::OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, float d
 #endif
         {
             if ( !fTargetIsGoal ||
-                 ( pMoveGoal->directTrace.fStatus != AIMR_BLOCKED_NPC ) ||
-                 ( !( ( CAI_BaseNPC * )pMoveGoal->directTrace.pObstruction )->IsMoving() ) )
+                ( pMoveGoal->directTrace.fStatus != AIMR_BLOCKED_NPC ) ||
+                ( !( ( CAI_BaseNPC * )pMoveGoal->directTrace.pObstruction )->IsMoving() ) )
             {
                 pMoveGoal->maxDist = distClear;
                 *pResult = AIMR_OK;
@@ -1720,10 +1720,10 @@ bool CAI_Navigator::OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, float d
     {
         // FIXME: This should change into a flag which forces an OBB route to be formed around the entity in question!
         AI_Waypoint_t *pOBB = GetPathfinder()->BuildOBBAvoidanceRoute( GetOuter()->GetAbsOrigin(),
-                                                                       GetGoalPos(),
-                                                                       pMoveGoal->directTrace.pObstruction,
-                                                                       GetNavTargetEntity(),
-                                                                       GetNavType() );
+                                                                        GetGoalPos(),
+                                                                        pMoveGoal->directTrace.pObstruction,
+                                                                        GetNavTargetEntity(),
+                                                                        GetNavType() );
 
         // See if we need to complete this navigation
         if ( pOBB == NULL )
@@ -1731,9 +1731,9 @@ bool CAI_Navigator::OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, float d
             /*
             if ( GetOuter()->ShouldFailNav( true ) == false )
             {
-              // Create a physics solver to allow us to pass
-              NPCPhysics_CreateSolver( GetOuter(), pMoveGoal->directTrace.pObstruction, true, 5.0f );
-              return true;
+            // Create a physics solver to allow us to pass
+            NPCPhysics_CreateSolver( GetOuter(), pMoveGoal->directTrace.pObstruction, true, 5.0f );
+            return true;
             }
             */
         }
@@ -1754,11 +1754,11 @@ bool CAI_Navigator::OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, float d
     }
 
     if ( !m_hBigStepGroundEnt.Get() &&
-         pMoveGoal->directTrace.pObstruction &&
-         distClear < GetHullWidth() &&
-         pMoveGoal->directTrace.pObstruction == GetOuter()->GetGroundEntity() &&
-         ( pMoveGoal->directTrace.pObstruction->IsPlayer() ||
-           dynamic_cast< CPhysicsProp * >( pMoveGoal->directTrace.pObstruction ) ) )
+        pMoveGoal->directTrace.pObstruction &&
+        distClear < GetHullWidth() &&
+        pMoveGoal->directTrace.pObstruction == GetOuter()->GetGroundEntity() &&
+        ( pMoveGoal->directTrace.pObstruction->IsPlayer() ||
+            dynamic_cast< CPhysicsProp * >( pMoveGoal->directTrace.pObstruction ) ) )
     {
         m_hBigStepGroundEnt = pMoveGoal->directTrace.pObstruction;
         *pResult = AIMR_CHANGE_TYPE;
@@ -1898,13 +1898,13 @@ bool CAI_Navigator::OnFailedSteer( AILocalMoveGoal_t *pMoveGoal, float distClear
     }
 
 #if 0
-	if ( pMoveGoal->directTrace.pObstruction->MyNPCPointer() &&
-		 !GetOuter()->IsUsingSmallHull() && 
-		 GetOuter()->SetHullSizeSmall() )
-	{
-		*pResult = AIMR_CHANGE_TYPE;
-		return true;
-	}
+    if ( pMoveGoal->directTrace.pObstruction->MyNPCPointer() &&
+        !GetOuter()->IsUsingSmallHull() &&
+        GetOuter()->SetHullSizeSmall() )
+    {
+        *pResult = AIMR_CHANGE_TYPE;
+        return true;
+    }
 #endif
 
     if ( !TestingSteering() && pMoveGoal->directTrace.fStatus == AIMR_BLOCKED_NPC && pMoveGoal->directTrace.vHitNormal != vec3_origin )
@@ -1938,8 +1938,8 @@ bool CAI_Navigator::OnFailedSteer( AILocalMoveGoal_t *pMoveGoal, float distClear
         m_timeBeginFailedSteer = gpGlobals->curtime;
     }
     else if ( GetNavType() == NAV_GROUND &&
-              gpGlobals->curtime - m_timeBeginFailedSteer > TIME_TOLERANCE &&
-              GetOuter()->m_flGroundSpeed * TIME_TOLERANCE > MOVE_TOLERANCE )
+            gpGlobals->curtime - m_timeBeginFailedSteer > TIME_TOLERANCE &&
+            GetOuter()->m_flGroundSpeed * TIME_TOLERANCE > MOVE_TOLERANCE )
     {
         *pResult = AIMR_ILLEGAL;
         return true;
@@ -2007,9 +2007,9 @@ bool CAI_Navigator::DelayNavigationFailure( const AIMoveTrace_t &trace )
                 {
                     trace_t bumpTrace;
                     pBlocker->GetMoveProbe()->TraceHull( pBlocker->GetAbsOrigin(),
-                                                         pBlocker->GetAbsOrigin() + Vector( 0, 0, 2.0 ),
-                                                         MASK_NPCSOLID,
-                                                         &bumpTrace );
+                                                        pBlocker->GetAbsOrigin() + Vector( 0, 0, 2.0 ),
+                                                        MASK_NPCSOLID,
+                                                        &bumpTrace );
                     if ( bumpTrace.fraction == 1.0 )
                     {
                         UTIL_SetOrigin( pBlocker, bumpTrace.endpos, true );
@@ -2100,11 +2100,11 @@ bool CAI_Navigator::OnMoveExecuteFailed( const AILocalMoveGoal_t &move, const AI
     }
 
     if ( !m_hBigStepGroundEnt.Get() &&
-         trace.pObstruction &&
-         trace.flTotalDist - trace.flDistObstructed < GetHullWidth() &&
-         trace.pObstruction == GetOuter()->GetGroundEntity() &&
-         ( trace.pObstruction->IsPlayer() ||
-           dynamic_cast< CPhysicsProp * >( trace.pObstruction ) ) )
+        trace.pObstruction &&
+        trace.flTotalDist - trace.flDistObstructed < GetHullWidth() &&
+        trace.pObstruction == GetOuter()->GetGroundEntity() &&
+        ( trace.pObstruction->IsPlayer() ||
+            dynamic_cast< CPhysicsProp * >( trace.pObstruction ) ) )
     {
         m_hBigStepGroundEnt = trace.pObstruction;
         *pResult = AIMR_CHANGE_TYPE;
@@ -2129,8 +2129,8 @@ bool CAI_Navigator::OnMoveExecuteFailed( const AILocalMoveGoal_t &move, const AI
 bool CAI_Navigator::OnMoveBlocked( AIMoveResult_t *pResult )
 {
     if ( *pResult == AIMR_BLOCKED_NPC &&
-         GetPath()->GetCurWaypoint() &&
-         ( GetPath()->GetCurWaypoint()->Flags() & bits_WP_TO_DOOR ) )
+        GetPath()->GetCurWaypoint() &&
+        ( GetPath()->GetCurWaypoint()->Flags() & bits_WP_TO_DOOR ) )
     {
         CBasePropDoor *pDoor = ( CBasePropDoor * )( CBaseEntity * )GetPath()->GetCurWaypoint()->GetEHandleData();
         if ( pDoor != NULL )
@@ -2408,8 +2408,8 @@ bool CAI_Navigator::Move( float flInterval )
         }
 
         bool fShouldMove = ( bHasGoal &&
-                             // !bIsTurning &&
-                             ActivityIsLocomotive( GetMovementActivity() ) );
+                            // !bIsTurning &&
+                            ActivityIsLocomotive( GetMovementActivity() ) );
         if ( fShouldMove )
         {
             AINavResult_t result = AINR_OK;
@@ -2729,13 +2729,13 @@ bool CAI_Navigator::ShouldSimplifyTo( bool passedDetour, const Vector &pos )
 
     AIMoveTrace_t moveTrace;
     GetMoveProbe()->MoveLimit( GetNavType(),
-                               GetLocalOrigin(),
-                               pos,
-                               MASK_NPCSOLID,
-                               GetPath()->GetTarget(),
-                               100,
-                               flags,
-                               &moveTrace );
+                                GetLocalOrigin(),
+                                pos,
+                                MASK_NPCSOLID,
+                                GetPath()->GetTarget(),
+                                100,
+                                flags,
+                                &moveTrace );
 
     return !IsMoveBlocked( moveTrace );
 }
@@ -2773,12 +2773,12 @@ void CAI_Navigator::SimplifyPathInsertSimplification( AI_Waypoint_t *pSegmentSta
 //-------------------------------------
 
 bool CAI_Navigator::SimplifyPathForwardScan( const CAI_Navigator::SimplifyForwardScanParams &params,
-                                             AI_Waypoint_t *pCurWaypoint,
-                                             const Vector &curPoint,
-                                             float distRemaining,
-                                             bool skipTest,
-                                             bool passedDetour,
-                                             int *pTestCount )
+                                            AI_Waypoint_t *pCurWaypoint,
+                                            const Vector &curPoint,
+                                            float distRemaining,
+                                            bool skipTest,
+                                            bool passedDetour,
+                                            int *pTestCount )
 {
     AI_Waypoint_t *pNextWaypoint = pCurWaypoint->GetNext();
 
@@ -2882,8 +2882,8 @@ bool CAI_Navigator::SimplifyPathForward( float maxDist )
         return true;
 
     if ( ShouldAttemptSimplifyTo( pNextWaypoint->GetPos() ) &&
-         ComputePathDistance( GetNavType(), GetLocalOrigin(), pNextWaypoint->GetPos() ) < scanParams.scanDist &&
-         ShouldSimplifyTo( ( ( pCurWaypoint->Flags() & bits_WP_TO_DETOUR ) != 0 ), pNextWaypoint->GetPos() ) )  // @TODO (toml 04-25-03): need to handle this better. this is here because forward scan may look out so far that a close obvious solution is skipped (due to test limiting)
+        ComputePathDistance( GetNavType(), GetLocalOrigin(), pNextWaypoint->GetPos() ) < scanParams.scanDist &&
+        ShouldSimplifyTo( ( ( pCurWaypoint->Flags() & bits_WP_TO_DETOUR ) != 0 ), pNextWaypoint->GetPos() ) )  // @TODO (toml 04-25-03): need to handle this better. this is here because forward scan may look out so far that a close obvious solution is skipped (due to test limiting)
     {
         delete pCurWaypoint;
         GetPath()->SetWaypoints( pNextWaypoint );
@@ -2908,10 +2908,10 @@ bool CAI_Navigator::SimplifyPathBacktrack()
     // connecting the first two waypoints
     // ------------------------------------------------------------------------
     if ( pCurWaypoint->GetNext() &&
-         ( pNextWaypoint->Flags() & bits_WP_TO_NODE ) &&
-         ( pNextWaypoint->NavType() == NAV_GROUND ) &&
-         ( pCurWaypoint->NavType() == NAV_GROUND ) &&
-         ( pCurWaypoint->Flags() & bits_WP_TO_NODE ) )
+        ( pNextWaypoint->Flags() & bits_WP_TO_NODE ) &&
+        ( pNextWaypoint->NavType() == NAV_GROUND ) &&
+        ( pCurWaypoint->NavType() == NAV_GROUND ) &&
+        ( pCurWaypoint->Flags() & bits_WP_TO_NODE ) )
     {
         Vector firstToMe = ( GetLocalOrigin() - pCurWaypoint->GetPos() );
         Vector firstToNext = pNextWaypoint->GetPos() - pCurWaypoint->GetPos();
@@ -3159,7 +3159,7 @@ bool CAI_Navigator::SimplifyFlyPath( const AI_ProgressFlyPathParams_t &params )
         GetMoveProbe()->MoveLimit( NAV_FLY, GetLocalOrigin(), GetPath()->NextWaypointPos(), params.collisionMask, params.pTarget, &moveTrace );
 
         if ( moveTrace.flDistObstructed - params.blockTolerance < 0.01 ||
-             ( ( params.blockHandling == AISF_IGNORE ) && ( moveTrace.fStatus == AIMR_BLOCKED_NPC ) ) )
+            ( ( params.blockHandling == AISF_IGNORE ) && ( moveTrace.fStatus == AIMR_BLOCKED_NPC ) ) )
         {
             AdvancePath();
             return true;
@@ -3227,7 +3227,7 @@ bool CAI_Navigator::CanFitAtNode( int nodeNum, unsigned int collisionMask )
     // Check climb exit nodes for standable bottom
     // -------------------------------------------------------------------
     if ( ( pTestNode->GetType() == NODE_CLIMB ) &&
-         ( pTestNode->m_eNodeInfo & ( bits_NODE_CLIMB_BOTTOM | bits_NODE_CLIMB_EXIT ) ) )
+        ( pTestNode->m_eNodeInfo & ( bits_NODE_CLIMB_BOTTOM | bits_NODE_CLIMB_EXIT ) ) )
     {
         if ( !GetMoveProbe()->CheckStandPosition( startPos, collisionMask ) )
         {
@@ -3408,11 +3408,11 @@ bool CAI_Navigator::MarkCurWaypointFailedLink( void )
         bool bBlockAll = false;
 
         if ( m_hLastBlockingEnt != NULL &&
-             !m_hLastBlockingEnt->IsPlayer() && !m_hLastBlockingEnt->IsNPC() &&
-             m_hLastBlockingEnt->GetMoveType() == MOVETYPE_VPHYSICS &&
-             m_hLastBlockingEnt->VPhysicsGetObject() &&
-             ( !m_hLastBlockingEnt->VPhysicsGetObject()->IsMoveable() ||
-               m_hLastBlockingEnt->VPhysicsGetObject()->GetMass() > 200 ) )
+            !m_hLastBlockingEnt->IsPlayer() && !m_hLastBlockingEnt->IsNPC() &&
+            m_hLastBlockingEnt->GetMoveType() == MOVETYPE_VPHYSICS &&
+            m_hLastBlockingEnt->VPhysicsGetObject() &&
+            ( !m_hLastBlockingEnt->VPhysicsGetObject()->IsMoveable() ||
+                m_hLastBlockingEnt->VPhysicsGetObject()->GetMass() > 200 ) )
         {
             // Make sure it's a "large" object
             //		- One dimension is >40
@@ -3534,17 +3534,17 @@ bool CAI_Navigator::DoFindPathToPos( void )
     }
 
     if ( pFirstWaypoint->IsReducible() && pFirstWaypoint->GetNext() && pFirstWaypoint->GetNext()->NavType() == GetNavType() &&
-         ShouldOptimizeInitialPathSegment( pFirstWaypoint ) )
+        ShouldOptimizeInitialPathSegment( pFirstWaypoint ) )
     {
         // If we're seemingly beyond the waypoint, and our hull is over the line, move on
         const float EPS = 0.1;
         Vector vClosest;
         CalcClosestPointOnLineSegment( origin,
-                                       pFirstWaypoint->GetPos(),
-                                       pFirstWaypoint->GetNext()->GetPos(),
-                                       vClosest );
+                                        pFirstWaypoint->GetPos(),
+                                        pFirstWaypoint->GetNext()->GetPos(),
+                                        vClosest );
         if ( ( pFirstWaypoint->GetPos() - vClosest ).Length() > EPS &&
-             ( origin - vClosest ).Length() < GetHullWidth() * 0.5 )
+            ( origin - vClosest ).Length() < GetHullWidth() * 0.5 )
         {
             pPath->Advance();
         }
@@ -3864,7 +3864,7 @@ bool CAI_Navigator::GetStoppingPath( CAI_WaypointList *pClippedWaypoints )
             while ( distRemaining > 0.01 && pNextPoint )
             {
                 if ( ( pNextPoint->NavType() == NAV_CLIMB || pNextPoint->NavType() == NAV_JUMP ) &&
-                     !bMustCompleteCurrent )
+                    !bMustCompleteCurrent )
                 {
                     break;
                 }

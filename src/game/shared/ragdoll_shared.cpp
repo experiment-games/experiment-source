@@ -51,8 +51,8 @@ void CRagdollLowViolenceManager::SetLowViolence( const char *pMapName )
     if ( hl2_episodic.GetBool() )
     {
         if ( Q_stricmp( pMapName, "ep1_citadel_02" ) == 0 ||
-             Q_stricmp( pMapName, "ep1_citadel_02b" ) == 0 ||
-             Q_stricmp( pMapName, "ep1_citadel_03" ) == 0 )
+            Q_stricmp( pMapName, "ep1_citadel_02b" ) == 0 ||
+            Q_stricmp( pMapName, "ep1_citadel_03" ) == 0 )
         {
             m_bLowViolence = false;
         }
@@ -60,9 +60,9 @@ void CRagdollLowViolenceManager::SetLowViolence( const char *pMapName )
     else
     {
         if ( Q_stricmp( pMapName, "d3_citadel_03" ) == 0 ||
-             Q_stricmp( pMapName, "d3_citadel_04" ) == 0 ||
-             Q_stricmp( pMapName, "d3_citadel_05" ) == 0 ||
-             Q_stricmp( pMapName, "d3_breen_01" ) == 0 )
+            Q_stricmp( pMapName, "d3_citadel_04" ) == 0 ||
+            Q_stricmp( pMapName, "d3_citadel_05" ) == 0 ||
+            Q_stricmp( pMapName, "d3_breen_01" ) == 0 )
         {
             m_bLowViolence = false;
         }
@@ -71,7 +71,7 @@ void CRagdollLowViolenceManager::SetLowViolence( const char *pMapName )
 
 class CRagdollCollisionRules : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     CRagdollCollisionRules( IPhysicsCollisionSet *pSet )
     {
         m_pSet = pSet;
@@ -105,14 +105,14 @@ class CRagdollCollisionRules : public IVPhysicsKeyHandler
     }
     virtual void SetDefaults( void *pData ) {}
 
-   private:
+    private:
     IPhysicsCollisionSet *m_pSet;
     bool m_bSelfCollisions;
 };
 
 class CRagdollAnimatedFriction : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     CRagdollAnimatedFriction( ragdoll_t *ragdoll )
     {
         m_ragdoll = ragdoll;
@@ -143,7 +143,7 @@ class CRagdollAnimatedFriction : public IVPhysicsKeyHandler
 
     virtual void SetDefaults( void *pData ) {}
 
-   private:
+    private:
     ragdoll_t *m_ragdoll;
 };
 
@@ -726,13 +726,13 @@ bool ShouldRemoveThisRagdoll( CBaseAnimating *pRagdoll )
 #ifdef CLIENT_DLL
 
     /* we no longer ignore enemies just because they are on fire -- a ragdoll in front of me
-       is always a higher priority for retention than a flaming zombie behind me. At the
-       time I put this in, the ragdolls do clean up their own effects if culled via SUB_Remove().
-       If you're encountering trouble with ragdolls leaving effects behind, try renabling the code below.
-      /////////////////////
+        is always a higher priority for retention than a flaming zombie behind me. At the
+        time I put this in, the ragdolls do clean up their own effects if culled via SUB_Remove().
+        If you're encountering trouble with ragdolls leaving effects behind, try renabling the code below.
+    /////////////////////
     //Just ignore it until we're done burning/dissolving.
     if ( pRagdoll->GetEffectEntity() )
-      return false;
+    return false;
     */
 
     // Bail if we have a null ragdoll pointer.

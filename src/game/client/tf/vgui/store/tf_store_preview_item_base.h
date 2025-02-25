@@ -24,11 +24,11 @@ class CTFStorePreviewItemPanelBase : public CStorePreviewItemPanel
 {
     DECLARE_CLASS_SIMPLE( CTFStorePreviewItemPanelBase, CStorePreviewItemPanel );
 
-   protected:
+    protected:
     // CTFStorePreviewItemPanelBase should not be intantiated directly
     CTFStorePreviewItemPanelBase( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner );
 
-   public:
+    public:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnCommand( const char *command );
     virtual void PerformLayout( void );
@@ -43,7 +43,7 @@ class CTFStorePreviewItemPanelBase : public CStorePreviewItemPanel
     MESSAGE_FUNC( OnHideClassIconMouseover, "HideClassIconMouseover" );
     MESSAGE_FUNC_PARAMS( OnShowClassIconMouseover, "ShowClassIconMouseover", data );
 
-   protected:
+    protected:
     void UpdateModelPanel();
     virtual void SetPlayerModelVisible( bool bVisible );
     virtual void UpdatePlayerModelButtons( void );

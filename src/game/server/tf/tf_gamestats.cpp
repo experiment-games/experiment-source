@@ -744,7 +744,7 @@ void CTFGameStats::Event_PlayerHealedOtherAssist( CTFPlayer *pPlayer, float amou
     {
         // Anti-farming in official matchmaking modes
         if ( gpGlobals->curtime - pPlayer->GetLastDamageReceivedTime() > 90.f ||
-             gpGlobals->curtime - pPlayer->GetLastEntityDamagedTime() > 90.f )
+            gpGlobals->curtime - pPlayer->GetLastEntityDamagedTime() > 90.f )
         {
             return;
         }
@@ -928,7 +928,7 @@ void CTFGameStats::Event_PlayerAwardBonusPoints( CTFPlayer *pPlayer, CBaseEntity
     {
         // Anti-farming in official matchmaking modes
         if ( gpGlobals->curtime - pPlayer->GetLastDamageReceivedTime() > 90.f ||
-             gpGlobals->curtime - pPlayer->GetLastEntityDamagedTime() > 90.f )
+            gpGlobals->curtime - pPlayer->GetLastEntityDamagedTime() > 90.f )
         {
             return;
         }
@@ -1662,7 +1662,7 @@ void CTFGameStats::FireGameEvent( IGameEvent *event )
         const char *cappers = event->GetString( "cappers" );
         for ( int i = 0; i < Q_strlen( cappers ); i++ )
         {
-          SW_CapEvent( event->GetInt( "cp" ), cappers[i], "point_start_capture", 0 );
+        SW_CapEvent( event->GetInt( "cp" ), cappers[i], "point_start_capture", 0 );
         }
         */
     }
@@ -1813,7 +1813,7 @@ bool CTFGameStats::GetVoteData( const char *szIssueName, int nNumOptions, CUtlVe
             int nItemTime = m_MapsPlaytime.Element( iIndex );
             // Exclude the next map (already added) and the current map (omitted)
             if ( Q_strcmp( szItemName, m_szNextMap ) != 0 &&
-                 Q_strcmp( szItemName, STRING( gpGlobals->mapname ) ) != 0 )
+                Q_strcmp( szItemName, STRING( gpGlobals->mapname ) ) != 0 )
             {
                 int iVec = vecMapsAndPlaytime.AddToTail();
                 vecMapsAndPlaytime[iVec].szName = szItemName;
@@ -1884,8 +1884,8 @@ bool CTFGameStats::IsRealGameplay( TF_Gamestats_LevelStats_t *game )
         return true;
 
     bool bIsRealGameplay = ( ( game->m_iPeakPlayerCount[TF_TEAM_RED] >= TFGameRules()->GetStatsMinimumPlayers() ) &&
-                             ( game->m_iPeakPlayerCount[TF_TEAM_BLUE] >= TFGameRules()->GetStatsMinimumPlayers() ) &&
-                             ( game->m_Header.m_iTotalTime >= TFGameRules()->GetStatsMinimumPlayedTime() ) && ( game->m_bIsRealServer ) );
+                            ( game->m_iPeakPlayerCount[TF_TEAM_BLUE] >= TFGameRules()->GetStatsMinimumPlayers() ) &&
+                            ( game->m_Header.m_iTotalTime >= TFGameRules()->GetStatsMinimumPlayedTime() ) && ( game->m_bIsRealServer ) );
 
     return bIsRealGameplay;
 }
@@ -2646,7 +2646,7 @@ void CTFGameStats::SW_GameStats_WriteKill( CTFPlayer *pKiller, CTFPlayer *pVicti
     int stunFlags = event->GetInt( "stun_flags" );
 
     bTest = ( pVictim->m_Shared.InCond( TF_COND_STUNNED ) &&
-              ( ( stunFlags & TF_STUN_LOSER_STATE ) || ( stunFlags & TF_STUN_CONTROLS ) ) );
+            ( ( stunFlags & TF_STUN_LOSER_STATE ) || ( stunFlags & TF_STUN_CONTROLS ) ) );
     if ( bTest )
     {
         pKVData->SetInt( "IsVictimBallStunned", bTest );
@@ -3372,8 +3372,8 @@ void CTFGameStats::SW_PasstimeRoundEnded()
     pKVData->SetBool( "MeleeOnlySuddenDeath", m_passtimeStats.summary.bMeleeOnlySuddenDeath );
 
     auto ballFracStats = Passtime_HistogramStats( m_passtimeStats.summary.arrBallFracHist,
-                                                  m_passtimeStats.summary.nBallFracHistSum,
-                                                  m_passtimeStats.summary.nBallFracSampleCount );
+                                                m_passtimeStats.summary.nBallFracHistSum,
+                                                m_passtimeStats.summary.nBallFracSampleCount );
     pKVData->SetInt( "BallFracHistMin", ( int )round( ballFracStats.min ) );
     pKVData->SetInt( "BallFracHistMax", ( int )round( ballFracStats.max ) );
     pKVData->SetInt( "BallFracHistMean", ( int )round( ballFracStats.mean ) );

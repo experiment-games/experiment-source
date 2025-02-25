@@ -23,7 +23,7 @@ class IQueryableReplayItem;
 
 class IReplayManager : public IBaseInterface
 {
-   public:
+    public:
     virtual CReplay *GetReplay( ReplayHandle_t hReplay ) = 0;
     virtual CReplay *GetPlayingReplay() = 0;
     virtual CReplay *GetReplayForCurrentLife() = 0;

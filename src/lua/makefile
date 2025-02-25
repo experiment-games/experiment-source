@@ -5,39 +5,39 @@
 
 # Warnings valid for both C and C++
 CWARNSCPP= \
-	-Wfatal-errors \
-	-Wextra \
-	-Wshadow \
-	-Wundef \
-	-Wwrite-strings \
-	-Wredundant-decls \
-	-Wdisabled-optimization \
-	-Wdouble-promotion \
-	-Wmissing-declarations \
+    -Wfatal-errors \
+    -Wextra \
+    -Wshadow \
+    -Wundef \
+    -Wwrite-strings \
+    -Wredundant-decls \
+    -Wdisabled-optimization \
+    -Wdouble-promotion \
+    -Wmissing-declarations \
         # the next warnings might be useful sometimes,
-	# but usually they generate too much noise
-	# -Werror \
-	# -pedantic   # warns if we use jump tables \
-	# -Wconversion  \
-	# -Wsign-conversion \
-	# -Wstrict-overflow=2 \
-	# -Wformat=2 \
-	# -Wcast-qual \
+    # but usually they generate too much noise
+    # -Werror \
+    # -pedantic   # warns if we use jump tables \
+    # -Wconversion  \
+    # -Wsign-conversion \
+    # -Wstrict-overflow=2 \
+    # -Wformat=2 \
+    # -Wcast-qual \
 
 
 # Warnings for gcc, not valid for clang
 CWARNGCC= \
-	-Wlogical-op \
-	-Wno-aggressive-loop-optimizations \
+    -Wlogical-op \
+    -Wno-aggressive-loop-optimizations \
 
 
 # The next warnings are neither valid nor needed for C++
 CWARNSC= -Wdeclaration-after-statement \
-	-Wmissing-prototypes \
-	-Wnested-externs \
-	-Wstrict-prototypes \
-	-Wc++-compat \
-	-Wold-style-definition \
+    -Wmissing-prototypes \
+    -Wnested-externs \
+    -Wstrict-prototypes \
+    -Wc++-compat \
+    -Wold-style-definition \
 
 
 CWARNS= $(CWARNSCPP) $(CWARNSC) $(CWARNGCC)
@@ -104,11 +104,11 @@ LIBS = -lm
 
 CORE_T=	liblua.a
 CORE_O=	lapi.o lcode.o lctype.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o \
-	lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o \
-	ltm.o lundump.o lvm.o lzio.o ltests.o
+    lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o \
+    ltm.o lundump.o lvm.o lzio.o ltests.o
 AUX_O=	lauxlib.o
 LIB_O=	lbaselib.o ldblib.o liolib.o lmathlib.o loslib.o ltablib.o lstrlib.o \
-	lutf8lib.o loadlib.o lcorolib.o linit.o
+    lutf8lib.o loadlib.o lcorolib.o linit.o
 
 LUA_T=	lua
 LUA_O=	lua.o
@@ -119,36 +119,36 @@ ALL_O= $(CORE_O) $(LUA_O) $(AUX_O) $(LIB_O)
 ALL_A= $(CORE_T)
 
 all:	$(ALL_T)
-	touch all
+    touch all
 
 o:	$(ALL_O)
 
 a:	$(ALL_A)
 
 $(CORE_T): $(CORE_O) $(AUX_O) $(LIB_O)
-	$(AR) $@ $?
-	$(RANLIB) $@
+    $(AR) $@ $?
+    $(RANLIB) $@
 
 $(LUA_T): $(LUA_O) $(CORE_T)
-	$(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(CORE_T) $(LIBS) $(MYLIBS) $(DL)
+    $(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(CORE_T) $(LIBS) $(MYLIBS) $(DL)
 
 
 clean:
-	$(RM) $(ALL_T) $(ALL_O)
+    $(RM) $(ALL_T) $(ALL_O)
 
 depend:
-	@$(CC) $(CFLAGS) -MM *.c
+    @$(CC) $(CFLAGS) -MM *.c
 
 echo:
-	@echo "CC = $(CC)"
-	@echo "CFLAGS = $(CFLAGS)"
-	@echo "AR = $(AR)"
-	@echo "RANLIB = $(RANLIB)"
-	@echo "RM = $(RM)"
-	@echo "MYCFLAGS = $(MYCFLAGS)"
-	@echo "MYLDFLAGS = $(MYLDFLAGS)"
-	@echo "MYLIBS = $(MYLIBS)"
-	@echo "DL = $(DL)"
+    @echo "CC = $(CC)"
+    @echo "CFLAGS = $(CFLAGS)"
+    @echo "AR = $(AR)"
+    @echo "RANLIB = $(RANLIB)"
+    @echo "RM = $(RM)"
+    @echo "MYCFLAGS = $(MYCFLAGS)"
+    @echo "MYLDFLAGS = $(MYLDFLAGS)"
+    @echo "MYLIBS = $(MYLIBS)"
+    @echo "DL = $(DL)"
 
 $(ALL_O): makefile ltests.h
 

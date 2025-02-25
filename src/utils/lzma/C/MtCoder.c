@@ -27,12 +27,12 @@ static THREAD_FUNC_RET_TYPE THREAD_FUNC_CALL_TYPE LoopThreadFunc(void *pp)
   for (;;)
   {
     if (Event_Wait(&p->startEvent) != 0)
-      return SZ_ERROR_THREAD;
+    return SZ_ERROR_THREAD;
     if (p->stop)
-      return 0;
+    return 0;
     p->res = p->func(p->param);
     if (Event_Set(&p->finishedEvent) != 0)
-      return SZ_ERROR_THREAD;
+    return SZ_ERROR_THREAD;
   }
 }
 
@@ -179,7 +179,7 @@ static SRes FullRead(ISeqInStream *stream, Byte *data, size_t *processedSize)
     size -= curSize;
     RINOK(res);
     if (curSize == 0)
-      return SZ_OK;
+    return SZ_OK;
   }
   return SZ_OK;
 }
@@ -192,9 +192,9 @@ static SRes MtThread_Process(CMtThread *p, Bool *stop)
   *stop = True;
   if (Event_Wait(&p->canRead) != 0)
     return SZ_ERROR_THREAD;
-  
+
   next = GET_NEXT_THREAD(p);
-  
+
   if (p->stopReading)
   {
     next->stopReading = True;
@@ -208,7 +208,7 @@ static SRes MtThread_Process(CMtThread *p, Bool *stop)
     RINOK(FullRead(p->mtCoder->inStream, p->inBuf, &size));
     next->stopReading = *stop = (size != p->mtCoder->blockSize);
     if (Event_Set(&next->canRead) != 0)
-      return SZ_ERROR_THREAD;
+    return SZ_ERROR_THREAD;
 
     RINOK(p->mtCoder->mtCallback->Code(p->mtCoder->mtCallback, p->index,
         p->outBuf, &destSize, p->inBuf, size, *stop));
@@ -216,11 +216,11 @@ static SRes MtThread_Process(CMtThread *p, Bool *stop)
     MtProgress_Reinit(&p->mtCoder->mtProgress, p->index);
 
     if (Event_Wait(&p->canWrite) != 0)
-      return SZ_ERROR_THREAD;
+    return SZ_ERROR_THREAD;
     if (p->stopWriting)
-      return SZ_ERROR_FAIL;
+    return SZ_ERROR_FAIL;
     if (p->mtCoder->outStream->Write(p->mtCoder->outStream, p->outBuf, destSize) != destSize)
-      return SZ_ERROR_WRITE;
+    return SZ_ERROR_WRITE;
     return Event_Set(&next->canWrite) == 0 ? SZ_OK : SZ_ERROR_THREAD;
   }
 }
@@ -235,16 +235,16 @@ static THREAD_FUNC_RET_TYPE THREAD_FUNC_CALL_TYPE ThreadFunc(void *pp)
     SRes res = MtThread_Process(p, &stop);
     if (res != SZ_OK)
     {
-      MtCoder_SetError(p->mtCoder, res);
-      MtProgress_SetError(&p->mtCoder->mtProgress, res);
-      next->stopReading = True;
-      next->stopWriting = True;
-      Event_Set(&next->canRead);
-      Event_Set(&next->canWrite);
-      return res;
+    MtCoder_SetError(p->mtCoder, res);
+    MtProgress_SetError(&p->mtCoder->mtProgress, res);
+    next->stopReading = True;
+    next->stopWriting = True;
+    Event_Set(&next->canRead);
+    Event_Set(&next->canWrite);
+    return res;
     }
     if (stop)
-      return 0;
+    return 0;
   }
 }
 
@@ -291,14 +291,14 @@ SRes MtCoder_Code(CMtCoder *p)
 
     if (!Thread_WasCreated(&lt->thread))
     {
-      lt->func = ThreadFunc;
-      lt->param = t;
+    lt->func = ThreadFunc;
+    lt->param = t;
 
-      if (LoopThread_Create(lt) != SZ_OK)
-      {
+    if (LoopThread_Create(lt) != SZ_OK)
+    {
         res = SZ_ERROR_THREAD;
         break;
-      }
+    }
     }
   }
 
@@ -307,20 +307,20 @@ SRes MtCoder_Code(CMtCoder *p)
     unsigned j;
     for (i = 0; i < numThreads; i++)
     {
-      CMtThread *t = &p->threads[i];
-      if (LoopThread_StartSubThread(&t->thread) != SZ_OK)
-      {
+    CMtThread *t = &p->threads[i];
+    if (LoopThread_StartSubThread(&t->thread) != SZ_OK)
+    {
         res = SZ_ERROR_THREAD;
         p->threads[0].stopReading = True;
         break;
-      }
+    }
     }
 
     Event_Set(&p->threads[0].canWrite);
     Event_Set(&p->threads[0].canRead);
 
     for (j = 0; j < i; j++)
-      LoopThread_WaitSubThread(&p->threads[j].thread);
+    LoopThread_WaitSubThread(&p->threads[j].thread);
   }
 
   for (i = 0; i < numThreads; i++)

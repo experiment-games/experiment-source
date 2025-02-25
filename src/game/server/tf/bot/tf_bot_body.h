@@ -11,7 +11,7 @@
 //----------------------------------------------------------------------------
 class CTFBotBody : public PlayerBody
 {
-   public:
+    public:
     CTFBotBody( INextBot *bot )
         : PlayerBody( bot )
     {

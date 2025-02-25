@@ -16,7 +16,7 @@ class C_WeaponPhysCannon : public C_BaseHLCombatWeapon
 {
     DECLARE_CLASS( C_WeaponPhysCannon, C_BaseHLCombatWeapon );
 
-   public:
+    public:
     C_WeaponPhysCannon( void );
 
     DECLARE_CLIENTCLASS();
@@ -31,7 +31,7 @@ class C_WeaponPhysCannon : public C_BaseHLCombatWeapon
         return true;
     }
 
-   private:
+    private:
     bool SetupEmitter( void );
 
     bool m_bIsCurrentlyUpgrading;

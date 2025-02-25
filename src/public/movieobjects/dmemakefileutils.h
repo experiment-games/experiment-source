@@ -50,15 +50,15 @@ enum CompilationStep_t
 //-----------------------------------------------------------------------------
 class CCompileFuncAdapterBase
 {
-   public:
+    public:
     virtual void InitializeAdapter() = 0;
     virtual bool PerformCompilationStep( CDmElement *pElement, CompilationStep_t step ) = 0;
 
-   protected:
+    protected:
     // Constructor, protected because these should never be instanced directly
     CCompileFuncAdapterBase() {}
 
-   public:
+    public:
     CUtlSymbol m_ElementType;
 
     CCompileFuncAdapterBase *m_pNext;
@@ -69,7 +69,7 @@ class CCompileFuncAdapter : public CCompileFuncAdapterBase
 {
     typedef CCompileFuncAdapterBase BaseClass;
 
-   public:
+    public:
     CCompileFuncAdapter()
     {
         // Hook into the list
@@ -100,15 +100,15 @@ class CCompileFuncAdapter : public CCompileFuncAdapterBase
 //-----------------------------------------------------------------------------
 class COpenEditorFuncAdapterBase
 {
-   public:
+    public:
     virtual void InitializeAdapter() = 0;
     virtual void OpenEditor( CDmElement *pElement ) = 0;
 
-   protected:
+    protected:
     // Constructor, protected because these should never be instanced directly
     COpenEditorFuncAdapterBase() {}
 
-   public:
+    public:
     CUtlSymbol m_ElementType;
     COpenEditorFuncAdapterBase *m_pNext;
 };
@@ -118,7 +118,7 @@ class COpenEditorFuncAdapter : public COpenEditorFuncAdapterBase
 {
     typedef COpenEditorFuncAdapterBase BaseClass;
 
-   public:
+    public:
     COpenEditorFuncAdapter()
     {
         // Hook into the list
@@ -146,7 +146,7 @@ class COpenEditorFuncAdapter : public COpenEditorFuncAdapterBase
 };
 
 #define DECLARE_DMEMAKEFILE_UTIL_CLASS_BASE( _className ) \
-   protected:                                             \
+    protected:                                             \
     typedef _className ThisClass;                         \
     static CompileFuncTree_t m_CompileFuncTree;           \
     static OpenEditorFuncTree_t m_OpenEditorFuncTree;     \
@@ -168,7 +168,7 @@ class COpenEditorFuncAdapter : public COpenEditorFuncAdapterBase
     DECLARE_DMEMAKEFILE_UTIL_CLASS_BASE( _className )                               \
     typedef _baseClass BaseClass;                                                   \
                                                                                     \
-   protected:                                                                       \
+    protected:                                                                       \
     virtual void InitializeFuncMaps()                                               \
     {                                                                               \
         m_pSingleton = this;                                                        \
@@ -181,7 +181,7 @@ class COpenEditorFuncAdapter : public COpenEditorFuncAdapterBase
 
 #define DECLARE_DMEMAKEFILE_UTIL_CLASS_ROOT( _className )          \
     DECLARE_DMEMAKEFILE_UTIL_CLASS_BASE( _className )              \
-   protected:                                                      \
+    protected:                                                      \
     virtual void InitializeFuncMaps()                              \
     {                                                              \
         m_pSingleton = this;                                       \
@@ -209,7 +209,7 @@ class COpenEditorFuncAdapter : public COpenEditorFuncAdapterBase
 //-----------------------------------------------------------------------------
 class CDmeMakefileUtils : public CTier3AppSystem< IDmeMakefileUtils >
 {
-   protected:
+    protected:
     struct CompileFuncTree_t
     {
         CCompileFuncAdapterBase *m_pFirstAdapter;
@@ -226,7 +226,7 @@ class CDmeMakefileUtils : public CTier3AppSystem< IDmeMakefileUtils >
 
     DECLARE_DMEMAKEFILE_UTIL_CLASS_ROOT( CDmeMakefileUtils );
 
-   public:
+    public:
     // Constructor, destructor
     CDmeMakefileUtils();
     virtual ~CDmeMakefileUtils();
@@ -244,7 +244,7 @@ class CDmeMakefileUtils : public CTier3AppSystem< IDmeMakefileUtils >
     virtual void PerformOpenEditor( CDmElement *pElement );
     virtual int GetExitCode();
 
-   protected:
+    protected:
     // Compile functions + editor functions
     DECLARE_COMPILEFUNC( CDmElement );
     DECLARE_COMPILEFUNC( CDmeMakefile );
@@ -260,7 +260,7 @@ class CDmeMakefileUtils : public CTier3AppSystem< IDmeMakefileUtils >
     // ( Call only in PERFORMING_COMPILATION )
     void SetCompileProcess( ProcessHandle_t hProcess );
 
-   private:
+    private:
     struct CompileInfo_t
     {
         CDmeHandle< CDmElement > m_hElement;

@@ -30,12 +30,12 @@ class CConfirmDeleteReplayDialog : public CConfirmDeleteDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmDeleteReplayDialog, CConfirmDeleteDialog );
 
-   public:
+    public:
     CConfirmDeleteReplayDialog( Panel *pParent, IReplayItemManager *pItemManager, int iPerformance )
         : BaseClass( pParent )
     {
         m_pTextId = iPerformance >= 0 ? "#Replay_DeleteEditConfirm" : pItemManager->AreItemsMovies() ? "#Replay_DeleteMovieConfirm"
-                                                                                                     : "#Replay_DeleteReplayConfirm";
+                                                                                                    : "#Replay_DeleteReplayConfirm";
     }
 
     const wchar_t *GetText()
@@ -51,7 +51,7 @@ class CConfirmDeleteReplayDialog : public CConfirmDeleteDialog
 //-----------------------------------------------------------------------------
 CReplayBrowserPanel::CReplayBrowserPanel( Panel *parent )
     : PropertyDialog( parent, "ReplayBrowser" ),
-      m_pConfirmDeleteDialog( NULL )
+    m_pConfirmDeleteDialog( NULL )
 {
     // Clear out delete info
     V_memset( &m_DeleteInfo, 0, sizeof( m_DeleteInfo ) );
@@ -363,7 +363,7 @@ static vgui::DHANDLE< CReplayBrowserPanel > g_ReplayBrowserPanel;
 // Purpose:
 //-----------------------------------------------------------------------------
 CReplayBrowserPanel *ReplayUI_OpenReplayBrowserPanel( ReplayHandle_t hReplayDetails,
-                                                      int iPerformance )
+                                                    int iPerformance )
 {
     if ( !g_ReplayBrowserPanel.Get() )
     {
@@ -412,7 +412,7 @@ void ReplayUI_CloseReplayBrowser()
 // Purpose:
 //-----------------------------------------------------------------------------
 void ReplayUI_ReloadBrowser( ReplayHandle_t hReplay /*=REPLAY_HANDLE_INVALID*/,
-                             int iPerformance /*=-1*/ )
+                            int iPerformance /*=-1*/ )
 {
     delete g_ReplayBrowserPanel.Get();
     g_ReplayBrowserPanel = NULL;

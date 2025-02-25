@@ -20,7 +20,7 @@ class INextBot;
                                                                                                         \
     class Actor##Intention : public IIntention                                                          \
     {                                                                                                   \
-       public:                                                                                          \
+        public:                                                                                          \
         Actor##Intention( Actor *me );                                                                  \
         virtual ~Actor##Intention();                                                                    \
         virtual void Reset( void );                                                                     \
@@ -34,20 +34,20 @@ class INextBot;
             return NULL;                                                                                \
         }                                                                                               \
                                                                                                         \
-       private:                                                                                         \
+        private:                                                                                         \
         Behavior< Actor > *m_behavior;                                                                  \
     };                                                                                                  \
                                                                                                         \
-   public:                                                                                              \
+    public:                                                                                              \
     virtual IIntention *GetIntentionInterface( void ) const                                             \
     {                                                                                                   \
         return m_intention;                                                                             \
     }                                                                                                   \
                                                                                                         \
-   private:                                                                                             \
+    private:                                                                                             \
     Actor##Intention *m_intention;                                                                      \
                                                                                                         \
-   public:
+    public:
 
 //
 // Use this macro to create the implementation code for the IIntention-derived class
@@ -101,7 +101,7 @@ class INextBot;
  */
 class IIntention : public INextBotComponent, public IContextualQuery
 {
-   public:
+    public:
     IIntention( INextBot *bot )
         : INextBotComponent( bot ) {}
     virtual ~IIntention() {}
@@ -121,10 +121,10 @@ class IIntention : public INextBotComponent, public IContextualQuery
     virtual Vector SelectTargetPoint( const INextBot *me, const CBaseCombatCharacter *subject ) const;  // given a subject, return the world space position we should aim at
     virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const;           // is the a place we can be?
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,  // the subject of the danger
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats, or NULL if we have no opinion
-                                                                                                 // NOTE: As further queries are added, update the Behavior class to propagate them
+                                                            const CBaseCombatCharacter *subject,  // the subject of the danger
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats, or NULL if we have no opinion
+                                                                                                // NOTE: As further queries are added, update the Behavior class to propagate them
 };
 
 inline QueryResultType IIntention::ShouldPickUp( const INextBot *me, CBaseEntity *item ) const

@@ -21,7 +21,7 @@ namespace GCSDK
 //----------------------------------------------------------------------------
 class CSharedObjectTypeCache
 {
-   public:
+    public:
     CSharedObjectTypeCache( int nTypeID );
     virtual ~CSharedObjectTypeCache();
 
@@ -59,7 +59,7 @@ class CSharedObjectTypeCache
     virtual void Validate( CValidator &validator, const char *pchName );
 #endif
 
-   private:
+    private:
     int FindSharedObjectIndex( const CSharedObject &soIndex ) const;
     void AddObjectInternal( CSharedObject *pObject );
 
@@ -75,7 +75,7 @@ class CSharedObjectTypeCache
 //----------------------------------------------------------------------------
 class CSharedObjectCache
 {
-   public:
+    public:
     CSharedObjectCache();
     virtual ~CSharedObjectCache();
 
@@ -131,7 +131,7 @@ class CSharedObjectCache
     virtual void Validate( CValidator &validator, const char *pchName );
 #endif
 
-   protected:
+    protected:
     virtual CSharedObjectTypeCache *AllocateTypeCache( int nClassID ) const = 0;
     CSharedObjectTypeCache *GetTypeCacheByIndex( int nIndex )
     {
@@ -157,7 +157,7 @@ class CSharedObjectCache
 
     uint64 m_ulVersion;
 
-   private:
+    private:
     CUtlMap< int, CSharedObjectTypeCache * > m_mapObjects;
 };
 

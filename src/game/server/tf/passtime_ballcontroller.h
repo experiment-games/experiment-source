@@ -20,7 +20,7 @@ struct gamevcollisionevent_t;
 //-----------------------------------------------------------------------------
 class CPasstimeBallController : public TAutoList< CPasstimeBallController >
 {
-   public:
+    public:
     // ApplyTo returns the number of controllers that were applied.
     // BallCollision happens from vphysics callbacks.
     // BallPickedUp happens after player gets ball, but before ball
@@ -38,7 +38,7 @@ class CPasstimeBallController : public TAutoList< CPasstimeBallController >
     bool IsEnabled() const;
     int GetPriority() const;
 
-   protected:
+    protected:
     virtual bool Apply( CPasstimeBall *pBall ) = 0;
     virtual bool IsActive() const = 0;
     virtual void OnBallCollision( CPasstimeBall *pBall, int iCollisionIndex, gamevcollisionevent_t *pEvent ) {}
@@ -48,7 +48,7 @@ class CPasstimeBallController : public TAutoList< CPasstimeBallController >
     virtual void OnEnabled() {}
     virtual void OnDisabled() {}
 
-   private:
+    private:
     bool m_bEnabled;
     int m_iPriority;  // higher priority comes first, must be > INT_MIN
 

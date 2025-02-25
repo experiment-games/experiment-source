@@ -21,7 +21,7 @@ class CDmeOperator : public IDmeOperator, public CDmElement
 {
     DEFINE_ELEMENT( CDmeOperator, CDmElement );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate() {}
 

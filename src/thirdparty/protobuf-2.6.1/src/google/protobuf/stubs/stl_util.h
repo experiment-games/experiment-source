@@ -52,7 +52,7 @@ namespace protobuf
 // stale pointer.
 template < class ForwardIterator >
 void STLDeleteContainerPointers( ForwardIterator begin,
-                                 ForwardIterator end )
+                                ForwardIterator end )
 {
     while ( begin != end )
     {

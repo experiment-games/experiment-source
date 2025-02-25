@@ -127,7 +127,7 @@ struct SourceLocation
 // Use DescriptorPool to construct your own descriptors.
 class LIBPROTOBUF_EXPORT Descriptor
 {
-   public:
+    public:
     // The name of the message type, not including its scope.
     const string& name() const;
 
@@ -282,7 +282,7 @@ class LIBPROTOBUF_EXPORT Descriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     typedef MessageOptions OptionsType;
 
     // Internal version of DebugString; controls the level of indenting for
@@ -345,7 +345,7 @@ class LIBPROTOBUF_EXPORT Descriptor
 // Use DescriptorPool to construct your own descriptors.
 class LIBPROTOBUF_EXPORT FieldDescriptor
 {
-   public:
+    public:
     // Identifies a field type.  0 is reserved for errors.  The order is weird
     // for historical reasons.  Types 12 and up are new in proto2.
     enum Type
@@ -395,7 +395,7 @@ class LIBPROTOBUF_EXPORT FieldDescriptor
         CPPTYPE_MESSAGE = 10,  // TYPE_MESSAGE, TYPE_GROUP
 
         MAX_CPPTYPE = 10,  // Constant useful for defining lookup tables
-                           // indexed by CppType.
+                            // indexed by CppType.
     };
 
     // Identifies whether the field is optional, required, or repeated.  0 is
@@ -455,9 +455,9 @@ class LIBPROTOBUF_EXPORT FieldDescriptor
     bool is_optional() const;  // shorthand for label() == LABEL_OPTIONAL
     bool is_repeated() const;  // shorthand for label() == LABEL_REPEATED
     bool is_packable() const;  // shorthand for is_repeated() &&
-                               //               IsTypePackable(type())
+                                //               IsTypePackable(type())
     bool is_packed() const;    // shorthand for is_packable() &&
-                               //               options().packed()
+                                //               options().packed()
 
     // Index of this field within the message's field array, or the file or
     // extension scope's extensions array.
@@ -560,7 +560,7 @@ class LIBPROTOBUF_EXPORT FieldDescriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     typedef FieldOptions OptionsType;
 
     // See Descriptor::DebugString().
@@ -636,7 +636,7 @@ class LIBPROTOBUF_EXPORT FieldDescriptor
 // Describes a oneof defined in a message type.
 class LIBPROTOBUF_EXPORT OneofDescriptor
 {
-   public:
+    public:
     const string& name() const;       // Name of this oneof.
     const string& full_name() const;  // Fully-qualified name of the oneof.
 
@@ -665,7 +665,7 @@ class LIBPROTOBUF_EXPORT OneofDescriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     // See Descriptor::DebugString().
     void DebugString( int depth, string* contents ) const;
 
@@ -695,7 +695,7 @@ class LIBPROTOBUF_EXPORT OneofDescriptor
 // to construct your own descriptors.
 class LIBPROTOBUF_EXPORT EnumDescriptor
 {
-   public:
+    public:
     // The name of this enum type in the containing scope.
     const string& name() const;
 
@@ -749,7 +749,7 @@ class LIBPROTOBUF_EXPORT EnumDescriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     typedef EnumOptions OptionsType;
 
     // See Descriptor::DebugString().
@@ -793,7 +793,7 @@ class LIBPROTOBUF_EXPORT EnumDescriptor
 // your own descriptors.
 class LIBPROTOBUF_EXPORT EnumValueDescriptor
 {
-   public:
+    public:
     const string& name() const;  // Name of this enum constant.
     int index() const;           // Index within the enums's Descriptor.
     int number() const;          // Numeric value of this enum constant.
@@ -828,7 +828,7 @@ class LIBPROTOBUF_EXPORT EnumValueDescriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     typedef EnumValueOptions OptionsType;
 
     // See Descriptor::DebugString().
@@ -860,7 +860,7 @@ class LIBPROTOBUF_EXPORT EnumValueDescriptor
 // ServiceDescriptor.  Use DescriptorPool to construct your own descriptors.
 class LIBPROTOBUF_EXPORT ServiceDescriptor
 {
-   public:
+    public:
     // The name of the service, not including its containing scope.
     const string& name() const;
     // The fully-qualified name of the service, scope delimited by periods.
@@ -899,7 +899,7 @@ class LIBPROTOBUF_EXPORT ServiceDescriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     typedef ServiceOptions OptionsType;
 
     // See Descriptor::DebugString().
@@ -933,7 +933,7 @@ class LIBPROTOBUF_EXPORT ServiceDescriptor
 // own descriptors.
 class LIBPROTOBUF_EXPORT MethodDescriptor
 {
-   public:
+    public:
     // Name of this method, not including containing scope.
     const string& name() const;
     // The fully-qualified name of the method, scope delimited by periods.
@@ -969,7 +969,7 @@ class LIBPROTOBUF_EXPORT MethodDescriptor
     // |*out_location| unchanged iff location information was not available.
     bool GetSourceLocation( SourceLocation* out_location ) const;
 
-   private:
+    private:
     typedef MethodOptions OptionsType;
 
     // See Descriptor::DebugString().
@@ -1001,7 +1001,7 @@ class LIBPROTOBUF_EXPORT MethodDescriptor
 // descriptor->file().  Use DescriptorPool to construct your own descriptors.
 class LIBPROTOBUF_EXPORT FileDescriptor
 {
-   public:
+    public:
     // The filename, relative to the source tree.
     // e.g. "google/protobuf/descriptor.proto"
     const string& name() const;
@@ -1104,7 +1104,7 @@ class LIBPROTOBUF_EXPORT FileDescriptor
     // with AllowUnknownDependencies() set.
     bool is_placeholder() const;
 
-   private:
+    private:
     // Source Location ---------------------------------------------------
 
     // Updates |*out_location| to the source location of the complete
@@ -1183,7 +1183,7 @@ class LIBPROTOBUF_EXPORT FileDescriptor
 // extensions by number.
 class LIBPROTOBUF_EXPORT DescriptorPool
 {
-   public:
+    public:
     // Create a normal, empty DescriptorPool.
     DescriptorPool();
 
@@ -1212,7 +1212,7 @@ class LIBPROTOBUF_EXPORT DescriptorPool
     //   in subsequent lookups in the DescriptorPool.
     class ErrorCollector;
     explicit DescriptorPool( DescriptorDatabase* fallback_database,
-                             ErrorCollector* error_collector = NULL );
+                            ErrorCollector* error_collector = NULL );
 
     ~DescriptorPool();
 
@@ -1249,7 +1249,7 @@ class LIBPROTOBUF_EXPORT DescriptorPool
     // Finds an extension of the given type by number.  The extendee must be
     // a member of this DescriptorPool or one of its underlays.
     const FieldDescriptor* FindExtensionByNumber( const Descriptor* extendee,
-                                                  int number ) const;
+                                                int number ) const;
 
     // Finds extensions of extendee. The extensions will be appended to
     // out in an undefined order. Only extensions defined directly in
@@ -1266,7 +1266,7 @@ class LIBPROTOBUF_EXPORT DescriptorPool
     // programmatically by implementing an ErrorCollector.
     class LIBPROTOBUF_EXPORT ErrorCollector
     {
-       public:
+        public:
         inline ErrorCollector() {}
         virtual ~ErrorCollector();
 
@@ -1309,7 +1309,7 @@ class LIBPROTOBUF_EXPORT DescriptorPool
         {
         }
 
-       private:
+        private:
         GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ErrorCollector );
     };
 
@@ -1415,7 +1415,7 @@ class LIBPROTOBUF_EXPORT DescriptorPool
     void AddUnusedImportTrackFile( const string& file_name );
     void ClearUnusedImportTrackFiles();
 
-   private:
+    private:
     friend class Descriptor;
     friend class FieldDescriptor;
     friend class EnumDescriptor;
@@ -1435,7 +1435,7 @@ class LIBPROTOBUF_EXPORT DescriptorPool
     bool TryFindFileInFallbackDatabase( const string& name ) const;
     bool TryFindSymbolInFallbackDatabase( const string& name ) const;
     bool TryFindExtensionInFallbackDatabase( const Descriptor* containing_type,
-                                             int field_number ) const;
+                                            int field_number ) const;
 
     // Like BuildFile() but called internally when the file has been loaded from
     // fallback_database_.  Declared const because it is called by (semantically)
@@ -1721,9 +1721,9 @@ inline const char* FieldDescriptor::CppTypeName( CppType cpp_type )
 inline bool FieldDescriptor::IsTypePackable( Type field_type )
 {
     return ( field_type != FieldDescriptor::TYPE_STRING &&
-             field_type != FieldDescriptor::TYPE_GROUP &&
-             field_type != FieldDescriptor::TYPE_MESSAGE &&
-             field_type != FieldDescriptor::TYPE_BYTES );
+            field_type != FieldDescriptor::TYPE_GROUP &&
+            field_type != FieldDescriptor::TYPE_MESSAGE &&
+            field_type != FieldDescriptor::TYPE_BYTES );
 }
 
 inline const FileDescriptor* FileDescriptor::dependency( int index ) const

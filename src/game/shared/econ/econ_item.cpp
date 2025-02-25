@@ -893,12 +893,12 @@ void CEconItem::SetTradableAfterDateTime( RTime32 rtTime )
     const GameItemDefinition_t* pItemDef = GetItemDefinition();
     if( pItemDef )
     {
-      static CSchemaAttributeDefHandle pAttrib_CannotTrade( "cannot trade" );
-      uint32 unCannotTrade = 0;
-      if( ::FindAttribute( pItemDef, pAttrib_CannotTrade, &unCannotTrade ) )
-      {
+    static CSchemaAttributeDefHandle pAttrib_CannotTrade( "cannot trade" );
+    uint32 unCannotTrade = 0;
+    if( ::FindAttribute( pItemDef, pAttrib_CannotTrade, &unCannotTrade ) )
+    {
         return;
-      }
+    }
     }
     */
 

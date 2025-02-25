@@ -30,7 +30,7 @@ enum
 
 class CWeapon_SLAM : public CBaseExperimentCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeapon_SLAM, CBaseExperimentCombatWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -82,7 +82,7 @@ class CWeapon_SLAM : public CBaseExperimentCombatWeapon
     DECLARE_DATADESC();
 #endif
 
-   private:
+    private:
     CWeapon_SLAM( const CWeapon_SLAM & );
 };
 

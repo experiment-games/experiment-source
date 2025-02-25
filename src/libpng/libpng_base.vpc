@@ -24,38 +24,38 @@ $MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
 
 $Configuration	"Debug"
 {
-	$General
-	{
-		$OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
-		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
+    $General
+    {
+        $OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
+        $IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
 
-		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
-		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
-	}
+        $OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+        $IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+    }
 }
 
 $Configuration	"Release"
 {
-	$General
-	{
-		$OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
-		$IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
+    $General
+    {
+        $OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
+        $IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
 
-		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
-		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
-	}
+        $OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+        $IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+    }
 }
 
 $Configuration
 {
-	$Compiler
-	{
-		$AdditionalIncludeDirectories       "$BASE;./zlib-1.3.1"
+    $Compiler
+    {
+        $AdditionalIncludeDirectories       "$BASE;./zlib-1.3.1"
         $EnableFloatingPointExceptions  "0"
         $DisableSpecificWarnings "4127;4244;4244"
 
-		"$CompileAs"    "Compile as C Code (/TC)"
-	}
+        "$CompileAs"    "Compile as C Code (/TC)"
+    }
 
     $CustomBuildStep
     {
@@ -69,8 +69,8 @@ $Configuration
 
 $Project "libpng"
 {
-	$Folder	"Source Files"
-	{
+    $Folder	"Source Files"
+    {
         $File	"png.c"
         $File	"pngerror.c"
         $File	"pngget.c"
@@ -88,8 +88,8 @@ $Project "libpng"
         $File	"pngwutil.c"
     }
 
-	$Folder	"zlib"
-	{
+    $Folder	"zlib"
+    {
         $File	"zlib-1.3.1/adler32.c"
         $File	"zlib-1.3.1/compress.c"
         $File	"zlib-1.3.1/crc32.c"

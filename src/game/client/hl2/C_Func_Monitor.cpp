@@ -11,12 +11,12 @@
 
 class C_FuncMonitor : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncMonitor, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     // C_BaseEntity.
-   public:
+    public:
     virtual bool ShouldDraw();
 };
 

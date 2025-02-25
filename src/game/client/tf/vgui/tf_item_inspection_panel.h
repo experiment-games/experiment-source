@@ -26,7 +26,7 @@ class CPaintKitDefinition;
 class CTFItemInspectionPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFItemInspectionPanel, EditablePanel )
-   public:
+    public:
     CTFItemInspectionPanel( Panel *pPanel, const char *pszName );
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
@@ -42,7 +42,7 @@ class CTFItemInspectionPanel : public EditablePanel
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
     MESSAGE_FUNC_PARAMS( OnSliderMoved, "SliderMoved", data );
 
-   private:
+    private:
     // we always want to copy item with SetItemCopy to make sure that we use high res skin
     void SetItem( CEconItemView *pItem, bool bReset );
     void RecompositeItem();

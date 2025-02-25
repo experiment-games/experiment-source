@@ -24,7 +24,7 @@
 
 class CAmmoPack : public CTFPowerup
 {
-   public:
+    public:
     DECLARE_CLASS( CAmmoPack, CTFPowerup );
 
     void Spawn( void );
@@ -62,7 +62,7 @@ class CAmmoPack : public CTFPowerup
 
 class CAmmoPackSmall : public CAmmoPack
 {
-   public:
+    public:
     DECLARE_CLASS( CAmmoPackSmall, CAmmoPack );
     powerupsize_t GetPowerupSize( void )
     {
@@ -101,7 +101,7 @@ class CAmmoPackSmall : public CAmmoPack
 
 class CAmmoPackMedium : public CAmmoPack
 {
-   public:
+    public:
     DECLARE_CLASS( CAmmoPackMedium, CAmmoPack );
     powerupsize_t GetPowerupSize( void )
     {

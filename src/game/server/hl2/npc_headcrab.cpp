@@ -885,14 +885,14 @@ bool CBaseHeadcrab::HasHeadroom()
     UTIL_TraceEntity( this, GetAbsOrigin(), GetAbsOrigin() + Vector( 0, 0, 1 ), MASK_NPCSOLID, this, GetCollisionGroup(), &tr );
 
 #if 0
-	if( tr.fraction == 1.0f )
-	{
-		Msg("Headroom\n");
-	}
-	else
-	{
-		Msg("NO Headroom\n");
-	}
+    if( tr.fraction == 1.0f )
+    {
+        Msg("Headroom\n");
+    }
+    else
+    {
+        Msg("NO Headroom\n");
+    }
 #endif
 
     return ( tr.fraction == 1.0 );
@@ -1068,9 +1068,9 @@ void CBaseHeadcrab::PrescheduleThink( void )
     // Make sure we've turned off our burrow state if we're not in it
     Activity eActivity = GetActivity();
     if ( m_bBurrowed &&
-         ( eActivity != ACT_HEADCRAB_BURROW_IDLE ) &&
-         ( eActivity != ACT_HEADCRAB_BURROW_OUT ) &&
-         ( eActivity != ACT_HEADCRAB_BURROW_IN ) )
+        ( eActivity != ACT_HEADCRAB_BURROW_IDLE ) &&
+        ( eActivity != ACT_HEADCRAB_BURROW_OUT ) &&
+        ( eActivity != ACT_HEADCRAB_BURROW_IN ) )
     {
         DevMsg( "Headcrab failed to unburrow properly!\n" );
         Assert( 0 );
@@ -1249,7 +1249,7 @@ void CBaseHeadcrab::JumpFromCanister()
         vecDirToEnemy.z = 0.0f;
         float flDist = VectorNormalize( vecDirToEnemy );
         if ( ( flDist < HEADCRAB_ATTACK_PLAYER_FROM_CANISTER_DIST ) &&
-             ( DotProduct( vecDirToEnemy, vecForward ) >= HEADCRAB_ATTACK_PLAYER_FROM_CANISTER_COSANGLE ) )
+            ( DotProduct( vecDirToEnemy, vecForward ) >= HEADCRAB_ATTACK_PLAYER_FROM_CANISTER_COSANGLE ) )
         {
             GrabHintNode( NULL );
             JumpAttack( false, pEnemy->EyePosition(), false );
@@ -1645,7 +1645,7 @@ void CBaseHeadcrab::Touch( CBaseEntity *pOther )
             AI_TraceLine( GetAbsOrigin(), GetAbsOrigin() + vecDir * 100, MASK_SOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &tr );
             float dotPr = DotProduct( vecDir, tr.plane.normal );
             if ( ( tr.fraction != 1.0 ) &&
-                 ( dotPr < -0.8 ) )
+                ( dotPr < -0.8 ) )
             {
                 CTakeDamageInfo info( GetWorldEntity(), GetWorldEntity(), 100.0f, DMG_CRUSH );
 
@@ -1906,9 +1906,9 @@ int CBaseHeadcrab::SelectSchedule( void )
                 }
             }
             else if ( HasCondition( COND_HEAR_DANGER ) ||
-                      HasCondition( COND_HEAR_PLAYER ) ||
-                      HasCondition( COND_HEAR_WORLD ) ||
-                      HasCondition( COND_HEAR_COMBAT ) )
+                    HasCondition( COND_HEAR_PLAYER ) ||
+                    HasCondition( COND_HEAR_WORLD ) ||
+                    HasCondition( COND_HEAR_COMBAT ) )
             {
                 return SCHED_ALERT_FACE_BESTSOUND;
             }
@@ -2081,7 +2081,7 @@ bool CBaseHeadcrab::HandleInteraction( int interactionType, void *data, CBaseCom
         return true;
     }
     else if ( interactionType == g_interactionVortigauntKick
-              /* || (interactionType ==	g_interactionBullsquidThrow) */
+            /* || (interactionType ==	g_interactionBullsquidThrow) */
     )
     {
         SetIdealState( NPC_STATE_PRONE );
@@ -3280,7 +3280,7 @@ void CBlackHeadcrab::Panic( float flDuration )
 bool CBlackHeadcrab::FInViewCone( CBaseEntity *pEntity )
 {
     if ( IsCurSchedule( SCHED_HEADCRAB_AMBUSH ) &&
-         ( ( pEntity->IsNPC() || pEntity->IsPlayer() ) && pEntity->GetAbsOrigin().DistToSqr( GetAbsOrigin() ) <= CRAB_360_VIEW_DIST_SQR ) )
+        ( ( pEntity->IsNPC() || pEntity->IsPlayer() ) && pEntity->GetAbsOrigin().DistToSqr( GetAbsOrigin() ) <= CRAB_360_VIEW_DIST_SQR ) )
     {
         // Only see players and NPC's with 360 cone
         // For instance, DON'T tell the eyeball/head tracking code that you can see an object that is behind you!
@@ -3767,8 +3767,8 @@ DEFINE_SCHEDULE(
     "	Interrupts"
     "		COND_TASK_FAILED"
     "		COND_NEW_ENEMY"  // HACK: We don't actually choose a new schedule on new enemy, but
-                         // we need this interrupt so that the headcrab actually acquires
-                         // new enemies while burrowed. (look in ai_basenpc.cpp for "DO NOT mess")
+                        // we need this interrupt so that the headcrab actually acquires
+                        // new enemies while burrowed. (look in ai_basenpc.cpp for "DO NOT mess")
     "		COND_CAN_RANGE_ATTACK1" )
 
 //==================================================

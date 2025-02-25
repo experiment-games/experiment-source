@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CPhysicsPushedEntities
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CPhysicsPushedEntities );
 
     CPhysicsPushedEntities( void );
@@ -35,7 +35,7 @@ class CPhysicsPushedEntities
     void StoreMovedEntities( physicspushlist_t &list );
     void BeginPush( CBaseEntity *pRootEntity );
 
-   protected:
+    protected:
     // describes the per-frame incremental motion of a rotating MOVETYPE_PUSH
     struct RotatingPushMove_t
     {
@@ -111,7 +111,7 @@ class CPhysicsPushedEntities
 
     bool IsPushedPositionValid( CBaseEntity *pBlocker );
 
-   protected:
+    protected:
     CUtlVector< PhysicsPusherInfo_t > m_rgPusher;
     CUtlVector< PhysicsPushedInfo_t > m_rgMoved;
     int m_nBlocker;
@@ -128,7 +128,7 @@ class CTraceFilterPushMove : public CTraceFilterSimple
 {
     DECLARE_CLASS( CTraceFilterPushMove, CTraceFilterSimple );
 
-   public:
+    public:
     CTraceFilterPushMove( CBaseEntity *pEntity, int nCollisionGroup )
         : CTraceFilterSimple( pEntity, nCollisionGroup )
     {
@@ -144,13 +144,13 @@ class CTraceFilterPushMove : public CTraceFilterSimple
             return false;
 
         if ( pTestEntity->GetMoveType() == MOVETYPE_VPHYSICS &&
-             pTestEntity->VPhysicsGetObject() && pTestEntity->VPhysicsGetObject()->IsMoveable() )
+            pTestEntity->VPhysicsGetObject() && pTestEntity->VPhysicsGetObject()->IsMoveable() )
             return false;
 
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-   private:
+    private:
     CBaseEntity *m_pRootParent;
 };
 

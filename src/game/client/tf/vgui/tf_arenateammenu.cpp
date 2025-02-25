@@ -125,8 +125,8 @@ void CTFArenaTeamMenu::ShowPanel( bool bShow )
             return;
 
         if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
-             C_TFPlayer::GetLocalTFPlayer() &&
-             C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam() && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED )
+            C_TFPlayer::GetLocalTFPlayer() &&
+            C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam() && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED )
         {
             SetVisible( false );
 
@@ -271,9 +271,9 @@ void CTFArenaTeamMenu::LoadMapPage( const char *mapName )
 void CTFArenaTeamMenu::OnKeyCodePressed( KeyCode code )
 {
     if ( ( m_iTeamMenuKey != BUTTON_CODE_INVALID && m_iTeamMenuKey == code ) ||
-         code == KEY_XBUTTON_BACK ||
-         code == KEY_XBUTTON_B ||
-         code == STEAMCONTROLLER_B )
+        code == KEY_XBUTTON_BACK ||
+        code == KEY_XBUTTON_B ||
+        code == STEAMCONTROLLER_B )
     {
         C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 

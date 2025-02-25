@@ -438,7 +438,7 @@ void CWaveStatusPanel::OnTick( void )
         return;
 
     if ( m_nWaveCount != TFObjectiveResource()->GetMannVsMachineWaveCount() ||
-         m_nMaxWaveCount != TFObjectiveResource()->GetMannVsMachineMaxWaveCount() || m_bPanelDirty )
+        m_nMaxWaveCount != TFObjectiveResource()->GetMannVsMachineMaxWaveCount() || m_bPanelDirty )
     {
         m_nWaveCount = TFObjectiveResource()->GetMannVsMachineWaveCount();
         m_nMaxWaveCount = TFObjectiveResource()->GetMannVsMachineMaxWaveCount();
@@ -629,9 +629,9 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 
     CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
     bool bVerbose = ( m_bVerbose ||
-                      ( TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) ||
-                      ( pLocalPlayer && ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ) ||
-                      cl_mvm_wave_status_visible_during_wave.GetBool() );
+                    ( TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) ||
+                    ( pLocalPlayer && ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ) ||
+                    cl_mvm_wave_status_visible_during_wave.GetBool() );
     if ( !bVerbose )
     {
         nNumEnemyTypes = nNumNonVerboseTypes;
@@ -1002,7 +1002,7 @@ bool CCurrencyStatusPanel::ShouldDraw( void )
         // in MvM the money panel stays up when you are dead.
         // So I am not mirroring the IsAlive change for the non-MvM stuff.
         if ( pLocalPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS ||
-             pLocalPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED )
+            pLocalPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED )
         {
             return false;
         }
@@ -1010,9 +1010,9 @@ bool CCurrencyStatusPanel::ShouldDraw( void )
     else
     {
         if ( !pLocalPlayer->IsAlive() ||
-             pLocalPlayer->GetTeamNumber() == TEAM_UNASSIGNED ||
-             pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ||
-             pLocalPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED )
+            pLocalPlayer->GetTeamNumber() == TEAM_UNASSIGNED ||
+            pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ||
+            pLocalPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED )
         {
             return false;
         }
@@ -1112,7 +1112,7 @@ void CInWorldCurrencyStatus::OnTick( void )
 
     C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
     if ( !pLocalPlayer || pLocalPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED ||
-         pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR )
+        pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR )
     {
         if ( IsVisible() )
         {

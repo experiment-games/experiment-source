@@ -24,7 +24,7 @@ class CEconNotificationQueue;
  */
 class CEconNotification
 {
-   public:
+    public:
     CEconNotification();
     virtual ~CEconNotification();
 
@@ -119,7 +119,7 @@ class CEconNotification
         return m_iKVVersion;
     }
 
-   protected:
+    protected:
     const char *m_pText;
     const char *m_pSoundFilename;
     float m_flExpireTime;
@@ -128,7 +128,7 @@ class CEconNotification
     CSteamID m_steamID;
     bool m_bCreateMainMenuPanel = true;
 
-   private:
+    private:
     friend class CEconNotificationQueue;
     int m_iID;
     bool m_bInUse;
@@ -146,7 +146,7 @@ typedef bool ( *NotificationFilterFunc )( CEconNotification *pNotification );
  */
 class CEconNotificationVisitor
 {
-   public:
+    public:
     virtual void Visit( CEconNotification &notification ) = 0;
 };
 

@@ -258,7 +258,7 @@ bool CKickIssue::RequestCallVote( int iEntIndex, const char *pszDetails, vote_cr
 
     // Don't kick the host or an admin
     if ( ( !engine->IsDedicatedServer() && m_hPlayerTarget->entindex() == 1 ) ||
-         m_hPlayerTarget->IsAutoKickDisabled() )
+        m_hPlayerTarget->IsAutoKickDisabled() )
     {
         nFailCode = VOTE_FAILED_CANNOT_KICK_ADMIN;
         return false;
@@ -535,18 +535,18 @@ CBaseIssue::EVoteAction CKickIssue::ProcessResults( const CUtlVector< const char
 void CKickIssue::NotifyGCAdHocKick( bool bKickedSuccessfully )
 {
 #if 0   // No longer being collected, see GC job comment
-	if ( m_steamIDVoteCaller.IsValid() && m_steamIDVoteTarget.IsValid() && m_steamIDVoteTarget.BIndividualAccount() )
-	{
-		GCSDK::CProtoBufMsg<CMsgTFVoteKickBanPlayerResult> msg( k_EMsgGCVoteKickBanPlayerResult );
-		msg.Body().set_account_id_initiator( m_steamIDVoteCaller.GetAccountID() );
-		msg.Body().set_account_id_subject( m_steamIDVoteTarget.GetAccountID() );
-		msg.Body().set_kick_successful( bKickedSuccessfully );
-		msg.Body().set_kick_reason( m_unKickReason );
-		msg.Body().set_num_yes_votes( m_iNumYesVotes );
-		msg.Body().set_num_no_votes( m_iNumNoVotes );
-		msg.Body().set_num_possible_votes( m_iNumPotentialVotes );
-		GCClientSystem()->BSendMessage( msg );
-	}
+    if ( m_steamIDVoteCaller.IsValid() && m_steamIDVoteTarget.IsValid() && m_steamIDVoteTarget.BIndividualAccount() )
+    {
+        GCSDK::CProtoBufMsg<CMsgTFVoteKickBanPlayerResult> msg( k_EMsgGCVoteKickBanPlayerResult );
+        msg.Body().set_account_id_initiator( m_steamIDVoteCaller.GetAccountID() );
+        msg.Body().set_account_id_subject( m_steamIDVoteTarget.GetAccountID() );
+        msg.Body().set_kick_successful( bKickedSuccessfully );
+        msg.Body().set_kick_reason( m_unKickReason );
+        msg.Body().set_num_yes_votes( m_iNumYesVotes );
+        msg.Body().set_num_no_votes( m_iNumNoVotes );
+        msg.Body().set_num_possible_votes( m_iNumPotentialVotes );
+        GCClientSystem()->BSendMessage( msg );
+    }
 #endif  // 0 // Disabled
 }
 
@@ -1342,9 +1342,9 @@ bool CMannVsMachineChangeChallengeIssue::RequestCallVote( int iEntIndex, const c
     {
         CUtlString fullPath;
         if ( !g_pPopulationManager->FindPopulationFileByShortName( pszDetails, fullPath ) ||
-             // did we fall back to something other than what we asked for?
-             ( !FStrEq( pszDetails, "normal" ) && !Q_stristr( fullPath, pszDetails ) ) ||
-             !g_pPopulationManager->IsValidPopfile( fullPath ) )
+            // did we fall back to something other than what we asked for?
+            ( !FStrEq( pszDetails, "normal" ) && !Q_stristr( fullPath, pszDetails ) ) ||
+            !g_pPopulationManager->IsValidPopfile( fullPath ) )
         {
             nFailCode = VOTE_FAILED_INVALID_ARGUMENT;
             return false;

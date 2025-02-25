@@ -15,7 +15,7 @@
 
 class CTFDespawn : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual const char *GetName( void ) const
     {
@@ -28,14 +28,14 @@ class CTFDespawn : public Action< CTFBot >
 
 class CTFTrainingAttackSentryActionPoint : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual const char *GetName( void ) const
     {
         return "Despawn";
     };
 
-   private:
+    private:
     CountdownTimer m_repathTimer;
     PathFollower m_path;
 };
@@ -44,7 +44,7 @@ class CTFTrainingAttackSentryActionPoint : public Action< CTFBot >
 // Tells a bot to go an Action Point and run any command it has
 class CTFGotoActionPoint : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual const char *GetName( void ) const
@@ -52,7 +52,7 @@ class CTFGotoActionPoint : public Action< CTFBot >
         return "GotoActionPoint";
     };
 
-   private:
+    private:
     CountdownTimer m_stayTimer;
     CountdownTimer m_repathTimer;
     PathFollower m_path;

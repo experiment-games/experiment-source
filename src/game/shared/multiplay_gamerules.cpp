@@ -86,8 +86,8 @@ void MPTimeLimitCallback( IConVar *var, const char *pOldString, float flOldValue
 
 ConVar mp_timelimit( "mp_timelimit", "0", FCVAR_NOTIFY | FCVAR_REPLICATED, "game time per map in minutes"
 #ifdef GAME_DLL
-                     ,
-                     MPTimeLimitCallback
+                    ,
+                    MPTimeLimitCallback
 #endif
 );
 
@@ -140,12 +140,12 @@ ConVar mp_clan_readyrestart( "mp_clan_readyrestart", "0", FCVAR_GAMEDLL, "If non
 ConVar mp_clan_ready_signal( "mp_clan_ready_signal", "ready", FCVAR_GAMEDLL, "Text that team leader from each team must speak for the match to begin" );
 
 ConVar nextlevel( "nextlevel",
-                  "",
-                  FCVAR_GAMEDLL | FCVAR_NOTIFY,
+                "",
+                FCVAR_GAMEDLL | FCVAR_NOTIFY,
 #if defined( CSTRIKE_DLL ) || defined( TF_DLL )
-                  "If set to a valid map name, will trigger a changelevel to the specified map at the end of the round" );
+                "If set to a valid map name, will trigger a changelevel to the specified map at the end of the round" );
 #else
-                  "If set to a valid map name, will change to this map during the next changelevel" );
+                "If set to a valid map name, will change to this map during the next changelevel" );
 #endif  // CSTRIKE_DLL || TF_DLL
 
 #endif
@@ -1079,10 +1079,10 @@ CBaseEntity *CMultiplayRules::GetPlayerSpawnSpot( CBasePlayer *pPlayer )
 
     //!! replace this with an Event
     /*
-      if ( IsMultiplayer() && pentSpawnSpot->m_target )
-      {
+    if ( IsMultiplayer() && pentSpawnSpot->m_target )
+    {
         FireTargets( STRING(pentSpawnSpot->m_target), pPlayer, pPlayer, USE_TOGGLE, 0 ); // dvsents2: what is this code supposed to do?
-      }
+    }
     */
 
     return pentSpawnSpot;
@@ -1237,7 +1237,7 @@ void CMultiplayRules::DetermineMapCycleFilename( char *pszResult, int nSizeResul
     V_sprintf_safe( szRecommendedNameWithSlash, "/cfg/%s", pszVar );
     char *pszRecommendedName = szRecommendedNameWithSlash + 1;
     if ( !V_RemoveDotSlashes( szRecommendedNameWithSlash ) ||
-         szRecommendedNameWithSlash[0] != CORRECT_PATH_SEPARATOR || !*pszRecommendedName )
+        szRecommendedNameWithSlash[0] != CORRECT_PATH_SEPARATOR || !*pszRecommendedName )
     {
         if ( bForceSpew || V_stricmp( szLastResult, "__novar" ) )
         {
@@ -1510,8 +1510,8 @@ void CMultiplayRules::LoadMapCycleFile( void )
     // when reloading a map cycle that has the current map in it multiple times.
     int nOldPreviousMap = ( nOldCycleIndex == 0 ) ? ( m_MapList.Count() - 1 ) : ( nOldCycleIndex - 1 );
     if ( nOldCycleIndex >= 0 && nOldCycleIndex < m_MapList.Count() &&
-         nOldPreviousMap >= 0 && nOldPreviousMap < m_MapList.Count() &&
-         V_strcmp( STRING( gpGlobals->mapname ), m_MapList[nOldPreviousMap] ) == 0 )
+        nOldPreviousMap >= 0 && nOldPreviousMap < m_MapList.Count() &&
+        V_strcmp( STRING( gpGlobals->mapname ), m_MapList[nOldPreviousMap] ) == 0 )
     {
         // The old index is still valid, and falls after our current map in the new cycle, use it
         m_nMapCycleindex = nOldCycleIndex;

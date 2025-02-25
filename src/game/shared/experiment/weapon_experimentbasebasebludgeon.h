@@ -28,7 +28,7 @@ class CBaseExperimentBludgeonWeapon : public CBaseExperimentCombatWeapon
 {
     DECLARE_CLASS( CBaseExperimentBludgeonWeapon, CBaseExperimentCombatWeapon );
 
-   public:
+    public:
     CBaseExperimentBludgeonWeapon();
 
     DECLARE_NETWORKCLASS();
@@ -68,10 +68,10 @@ class CBaseExperimentBludgeonWeapon : public CBaseExperimentCombatWeapon
 
     CBaseExperimentBludgeonWeapon( const CBaseExperimentBludgeonWeapon & );
 
-   protected:
+    protected:
     virtual void ImpactEffect( trace_t &trace );
 
-   private:
+    private:
     bool ImpactWater( const Vector &start, const Vector &end );
     void Swing( int bIsSecondary );
     void Hit( trace_t &traceHit, Activity nHitActivity );

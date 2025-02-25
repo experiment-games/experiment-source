@@ -19,7 +19,7 @@
 
 class CStringTableSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     void Init( INetworkStringTable *pNetworkStringTable )
     {
         m_pStringTable = pNetworkStringTable;
@@ -56,7 +56,7 @@ class CStringTableSaveRestoreOps : public CDefSaveRestoreOps
         return *pStringIndex == INVALID_STRING_INDEX;
     }
 
-   private:
+    private:
     INetworkStringTable *m_pStringTable;
 };
 

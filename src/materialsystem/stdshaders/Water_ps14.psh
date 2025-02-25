@@ -26,7 +26,7 @@ texld r1, t5                  ; <---- Normalizing CUBE MAP here!!!
 ; reflection/refraction scale (x,y)
 texcrd r0.xyz, t4.xyz
 
-; perturb coords by constant displacement 
+; perturb coords by constant displacement
 ; and by normal map alpha (which has 1/(2**miplevel in it)
 mul r0.rg, r0, r3.a
 #if REFLECT
@@ -93,4 +93,3 @@ mov r0.rgba, r4
 ; reflection * fresnel + refraction * ( 1 - fresnel )
 lrp r0.rgba, r0.a, r4, r2
 #endif
-

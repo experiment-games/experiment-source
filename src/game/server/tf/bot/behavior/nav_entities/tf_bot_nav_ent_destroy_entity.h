@@ -12,7 +12,7 @@
 
 class CTFBotNavEntDestroyEntity : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotNavEntDestroyEntity( const CFuncNavPrerequisite *prereq );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -24,7 +24,7 @@ class CTFBotNavEntDestroyEntity : public Action< CTFBot >
         return "NavEntDestroyEntity";
     };
 
-   private:
+    private:
     CHandle< CFuncNavPrerequisite > m_prereq;
     PathFollower m_path;  // how we get to the target
     CountdownTimer m_repathTimer;

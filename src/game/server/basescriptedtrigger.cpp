@@ -46,7 +46,7 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
     END_DATADESC()
 
         static CUtlDict< CEntityFactory< CBaseScriptedTrigger > *,
-                         unsigned short > m_TriggerFactoryDatabase;
+                        unsigned short > m_TriggerFactoryDatabase;
 
 // Experiment; Commented to instead go ask Lua when we encounter a non-C-registered entities.
 // void RegisterScriptedTrigger( const char *className )
@@ -72,8 +72,8 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
 void ResetTriggerFactoryDatabase( void )
 {
     for ( int i = m_TriggerFactoryDatabase.First();
-          i != m_TriggerFactoryDatabase.InvalidIndex();
-          i = m_TriggerFactoryDatabase.Next( i ) )
+        i != m_TriggerFactoryDatabase.InvalidIndex();
+        i = m_TriggerFactoryDatabase.Next( i ) )
     {
         delete m_TriggerFactoryDatabase[i];
     }
@@ -124,9 +124,9 @@ void CBaseScriptedTrigger::InitScriptedTrigger( void )
 {
 #ifdef LUA_SDK
 #if 0
-	// Let the instance reinitialize itself for the client.
-	if (lua_isrefvalid(L, m_nTableReference))
-		return;
+    // Let the instance reinitialize itself for the client.
+    if (lua_isrefvalid(L, m_nTableReference))
+        return;
 #endif
 
     SetThink( &CBaseScriptedTrigger::Think );

@@ -44,7 +44,7 @@ class IRecipientFilter;
 
 abstract_class CSoundEnvelopeController
 {
-   public:
+    public:
     virtual void SystemReset( void ) = 0;
     virtual void SystemUpdate( void ) = 0;
     virtual void Play( CSoundPatch * pSound, float volume, float pitch, float flStartTime = 0 ) = 0;

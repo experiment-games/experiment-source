@@ -50,7 +50,7 @@ class CAchievementTFSpy_SpyBackstabSnipers : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             ResetTracking();
         }
@@ -588,7 +588,7 @@ class CAchievementTFSpy_SpyBackstabQuickKills : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlVector< float > m_Times;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabQuickKills, ACHIEVEMENT_TF_SPY_BACKSTAB_QUICK_KILLS, "TF_SPY_BACKSTAB_QUICK_KILLS", 5 );
@@ -725,7 +725,7 @@ class CAchievementTFSpy_FYIMedic : public CBaseTFAchievement
         m_hTargets[iMedic].flRemoveTime = gpGlobals->curtime + 5.0f;
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hTarget;
@@ -762,7 +762,7 @@ class CAchievementTFSpy_KillMedicPair : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             m_hTargets.Purge();
         }
@@ -849,7 +849,7 @@ class CAchievementTFSpy_KillMedicPair : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hTarget;
@@ -888,9 +888,9 @@ class CAchievementTFSpy_SapBuildingGrind : public CBaseTFAchievement
                 const char *pWeapon = event->GetString( "weapon" );
 
                 if ( FStrEq( "obj_attachment_sapper", pWeapon ) ||
-                     FStrEq( "snack_attack", pWeapon ) ||
-                     FStrEq( "psapper", pWeapon ) ||
-                     FStrEq( "recorder", pWeapon ) )
+                    FStrEq( "snack_attack", pWeapon ) ||
+                    FStrEq( "psapper", pWeapon ) ||
+                    FStrEq( "recorder", pWeapon ) )
                 {
                     IncrementCount();
                 }
@@ -950,7 +950,7 @@ class CAchievementTFSpy_FeignDeathKill : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iKillerIndex;
     float m_flTriggerTime;
 };
@@ -1006,7 +1006,7 @@ class CAchievementTFSpy_ShieldKill : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iBlockerIndex;
     float m_flAttackTime;
 };
@@ -1091,7 +1091,7 @@ class CAchievementTFSpy_TFSpySurviveBurning : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     bool m_bIsThinking;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSpy_TFSpySurviveBurning, ACHIEVEMENT_TF_SPY_SURVIVE_BURNING, "TF_SPY_SURVIVE_BURNING", 5 );
@@ -1179,13 +1179,13 @@ class CAchievementTFSpy_SpyBackstabEnemySwitchPyro : public CBaseTFAchievementSi
             }
         }
         else if ( FStrEq( pszEventName, "localplayer_changeclass" ) ||
-                  FStrEq( pszEventName, "localplayer_changeteam" ) )
+                FStrEq( pszEventName, "localplayer_changeteam" ) )
         {
             ResetBackstabbedPlayers();
         }
     }
 
-   private:
+    private:
     CUtlVector< int > m_BackstabbedPlayers;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabEnemySwitchPyro, ACHIEVEMENT_TF_SPY_BACKSTAB_ENEMY_SWITCH_PYRO, "TF_SPY_BACKSTAB_ENEMY_SWITCH_PYRO", 5 );
@@ -1333,7 +1333,7 @@ class CAchievementTFSpy_SpyBackstabEngySapBuilding : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hEngy;
@@ -1442,7 +1442,7 @@ class CAchievementTFSpy_SpySapBuildingBackstabEngy : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hEngy;
@@ -1563,7 +1563,7 @@ class CAchievementTFSpy_SapperTeamwork : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct teammates_t
     {
         int nSpy;      // who built the sapper
@@ -1617,7 +1617,7 @@ class CAchievementTFSpy_SpyCampPosition : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             ResetData();
         }
@@ -1686,7 +1686,7 @@ class CAchievementTFSpy_SpyCampPosition : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hEnemy;
@@ -1701,7 +1701,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyCampPosition, ACHIEVEMENT_TF_SPY_CAMP_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSpy_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1714,7 +1714,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_AchieveProgress1, ACHIEVEMENT_TF_SPY_ACHI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSpy_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1727,7 +1727,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_AchieveProgress2, ACHIEVEMENT_TF_SPY_ACHI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSpy_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {
@@ -1740,7 +1740,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_AchieveProgress3, ACHIEVEMENT_TF_SPY_ACHI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_KillBackScatterScout : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );

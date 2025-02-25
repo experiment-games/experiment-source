@@ -18,7 +18,7 @@
 // Use this to disable range checks within a scope.
 class CDisableRangeChecks
 {
-   public:
+    public:
     CDisableRangeChecks();
     ~CDisableRangeChecks();
 };
@@ -48,7 +48,7 @@ inline void RangeCheck( const Vector &value, int minValue, int maxValue )
 template < class T, int minValue, int maxValue, int startValue >
 class CRangeCheckedVar
 {
-   public:
+    public:
     inline CRangeCheckedVar()
     {
         m_Val = startValue;
@@ -105,7 +105,7 @@ class CRangeCheckedVar
         return ( *this = m_Val / value );
     }
 
-   private:
+    private:
     T m_Val;
 };
 

@@ -396,7 +396,7 @@ bool CTeamControlPointMaster::SelectSpecificRound( void )
             if ( pRound )
             {
                 if ( ( m_ControlPointRounds.Find( pRound ) == m_ControlPointRounds.InvalidIndex() ) ||
-                     ( !pRound->IsPlayable() && !pRound->MakePlayable() ) )
+                    ( !pRound->IsPlayable() && !pRound->MakePlayable() ) )
                 {
                     pRound = NULL;
                 }
@@ -668,8 +668,8 @@ void CTeamControlPointMaster::CheckWinConditions( void )
         // this will reset the round and will reset all the points
         int iWinners = TeamOwnsAllPoints();
         if ( ( m_iInvalidCapWinner != 1 ) &&
-             ( iWinners >= FIRST_GAME_TEAM ) &&
-             ( iWinners != m_iInvalidCapWinner ) )
+            ( iWinners >= FIRST_GAME_TEAM ) &&
+            ( iWinners != m_iInvalidCapWinner ) )
         {
             bool bWinner = true;
 
@@ -818,13 +818,13 @@ void CTeamControlPointMaster::InputRoundSpawn( inputdata_t &input )
     {
         /*		if ( m_bFirstRoundAfterRestart )
             {
-              CTeamplayRoundBasedRules *pRules = dynamic_cast<CTeamplayRoundBasedRules*>( GameRules() );
-              if ( pRules && ( pRules->GetRoundToPlayNext() == NULL_STRING ) )
-              {
+            CTeamplayRoundBasedRules *pRules = dynamic_cast<CTeamplayRoundBasedRules*>( GameRules() );
+            if ( pRules && ( pRules->GetRoundToPlayNext() == NULL_STRING ) )
+            {
                 // we only want to handle the random points if we don't have a specific round to play next
                 // (prevents points being randomized again after "waiting for players" has finished and we're going to play the same round)
                 HandleRandomOwnerControlPoints();
-              }
+            }
             }
         */
         SetContextThink( &CTeamControlPointMaster::CPMThink, gpGlobals->curtime + 0.1, CPM_THINK );
@@ -1097,7 +1097,7 @@ int CTeamControlPointMaster::GetBaseControlPoint( int iTeam )
     {
         // which point is owned by this team?
         if ( ( pLowestPoint->GetDefaultOwner() == iTeam && pHighestPoint->GetDefaultOwner() == iTeam ) ||  // if the same team owns both, take the highest value to be the last point
-             ( pHighestPoint->GetDefaultOwner() == iTeam ) )
+            ( pHighestPoint->GetDefaultOwner() == iTeam ) )
         {
             iRetVal = nHighestValue;
         }

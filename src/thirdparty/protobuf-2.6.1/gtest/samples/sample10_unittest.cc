@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
     check_for_leaks = true;
   else
     printf("%s\n", "Run this program with --check_for_leaks to enable "
-           "custom leak checking in the tests.");
+            "custom leak checking in the tests.");
 
   // If we are given the --check_for_leaks command line flag, installs the
   // leak checker.

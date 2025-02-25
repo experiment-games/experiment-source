@@ -25,7 +25,7 @@ class CFuncNoBuild : public CBaseTrigger, public IFuncNoBuildAutoList
 {
     DECLARE_CLASS( CFuncNoBuild, CBaseTrigger );
 
-   public:
+    public:
     CFuncNoBuild();
 
     DECLARE_DATADESC();
@@ -45,7 +45,7 @@ class CFuncNoBuild : public CBaseTrigger, public IFuncNoBuildAutoList
     // bool	IsEmpty( void );
     bool PreventsBuildOf( int iObjectType );
 
-   private:
+    private:
     bool m_bAllowSentry;
     bool m_bAllowDispenser;
     bool m_bAllowTeleporters;

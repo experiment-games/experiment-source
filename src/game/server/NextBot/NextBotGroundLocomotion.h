@@ -19,7 +19,7 @@ class NextBotCombatCharacter;
  */
 class NextBotGroundLocomotion : public ILocomotion
 {
-   public:
+    public:
     DECLARE_CLASS( NextBotGroundLocomotion, ILocomotion );
 
     NextBotGroundLocomotion( INextBot *bot );
@@ -84,7 +84,7 @@ class NextBotGroundLocomotion : public ILocomotion
     virtual void OnMoveToSuccess( const Path *path );                            // invoked when an bot reaches its MoveTo goal
     virtual void OnMoveToFailure( const Path *path, MoveToFailureType reason );  // invoked when an bot fails to reach a MoveTo goal
 
-   private:
+    private:
     void UpdatePosition( const Vector &newPos );  // move to newPos, resolving any collisions along the way
     void UpdateGroundConstraint( void );          // keep ground solid
     Vector ResolveCollisionV0( Vector from, Vector to, int recursionLimit );
@@ -101,7 +101,7 @@ class NextBotGroundLocomotion : public ILocomotion
     virtual float GetFrictionSideways( void ) const;  // return magnitude of lateral friction
     virtual float GetMaxYawRate( void ) const;        // return max rate of yaw rotation
 
-   private:
+    private:
     NextBotCombatCharacter *m_nextBot;
 
     Vector m_priorPos;      // last update's position

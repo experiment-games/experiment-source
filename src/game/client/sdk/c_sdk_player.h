@@ -17,7 +17,7 @@
 
 class C_SDKPlayer : public C_BasePlayer, public ISDKPlayerAnimStateHelpers
 {
-   public:
+    public:
     DECLARE_CLASS( C_SDKPlayer, C_BasePlayer );
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
@@ -34,7 +34,7 @@ class C_SDKPlayer : public C_BasePlayer, public ISDKPlayerAnimStateHelpers
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     // Called by shared code.
-   public:
+    public:
     // ISDKPlayerAnimState overrides.
     virtual CWeaponSDKBase* SDKAnim_GetActiveWeapon();
     virtual bool SDKAnim_CanMove();
@@ -68,7 +68,7 @@ class C_SDKPlayer : public C_BasePlayer, public ISDKPlayerAnimStateHelpers
         float x,
         float y );
 
-   private:
+    private:
     C_SDKPlayer( const C_SDKPlayer& );
 };
 

@@ -22,7 +22,7 @@ class CNPC_WpnScanner : public CNPC_BaseScanner
 {
     DECLARE_CLASS( CNPC_WpnScanner, CNPC_BaseScanner );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
@@ -33,20 +33,20 @@ class CNPC_WpnScanner : public CNPC_BaseScanner
     float MinGroundDist( void );
     void MoveToAttack( float flInterval );
 
-   private:
+    private:
     string_t m_iszProjectileModel;
     int m_iMuzzleAttachment;
 
-   private:
+    private:
     DEFINE_CUSTOM_AI;
 
     /*
     // Custom interrupt conditions
     enum
     {
-      COND_CSCANNER_HAVE_INSPECT_TARGET = BaseClass::NEXT_CONDITION,
+    COND_CSCANNER_HAVE_INSPECT_TARGET = BaseClass::NEXT_CONDITION,
 
-      NEXT_CONDITION,
+    NEXT_CONDITION,
     };
     */
 

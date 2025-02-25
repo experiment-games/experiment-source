@@ -46,7 +46,7 @@ class CTFConfirmTrainingDialog : public CConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFConfirmTrainingDialog, CConfirmDialog );
 
-   public:
+    public:
     CTFConfirmTrainingDialog( const char* pText, const char* pTitle, vgui::Panel* parent )
         : BaseClass( parent ), m_pText( pText ), m_pTitle( pTitle ) {}
 
@@ -76,7 +76,7 @@ class CTFConfirmTrainingDialog : public CConfirmDialog
         }
     }
 
-   protected:
+    protected:
     const char* m_pText;
     const char* m_pTitle;
 };
@@ -85,7 +85,7 @@ Panel* GetBackgroundDimmer()
 {
     class CDimmerButton : public Button
     {
-       public:
+        public:
         CDimmerButton()
             : Button( NULL, "DashboardDimmer", ( const char* )NULL )
         {
@@ -121,7 +121,7 @@ REGISTER_FUNC_FOR_DASHBOARD_PANEL_TYPE( GetBackgroundDimmer, k_eBGDimmer );
 
 class CTooltipEditablePanel : public EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTooltipEditablePanel, EditablePanel );
     CTooltipEditablePanel( EMMTooltips eTipType )
         : EditablePanel( NULL, "TooltipPanel" ), m_eTipType( eTipType )
@@ -159,7 +159,7 @@ class CTooltipEditablePanel : public EditablePanel
         SetMouseInputEnabled( false );
     }
 
-   private:
+    private:
     EMMTooltips m_eTipType;
 };
 
@@ -175,7 +175,7 @@ CTFTextToolTip* GetDashboardTooltip( EMMTooltips eTipType )
     //
     class CTFDashboardTooltip : public CTFTextToolTip
     {
-       public:
+        public:
         CTFDashboardTooltip()
             : CTFTextToolTip( NULL, NULL )
         {
@@ -689,10 +689,10 @@ void SpewInvitePanelThing( bool bCreated, const CInviteNotification* pInvite )
 #if defined( STAGING_ONLY ) || defined( DEBUG )
     auto key = pInvite->GetKey();
     CFmtStr str( "%s %s %s invite for %s",
-                 bCreated ? "Created" : "Deleted",
-                 std::get< 2 >( key ) ? "INCOMING" : "OUTGOING",
-                 std::get< 1 >( key ) == CTFParty::EPendingType::ePending_Invite ? "INVITE" : "JOIN_REQUEST",
-                 SteamFriends()->GetFriendPersonaName( std::get< 0 >( key ) ) );
+                bCreated ? "Created" : "Deleted",
+                std::get< 2 >( key ) ? "INCOMING" : "OUTGOING",
+                std::get< 1 >( key ) == CTFParty::EPendingType::ePending_Invite ? "INVITE" : "JOIN_REQUEST",
+                SteamFriends()->GetFriendPersonaName( std::get< 0 >( key ) ) );
     ConColorMsg( bCreated ? Color( 100, 255, 190, 255 ) : Color( 255, 100, 190, 255 ), "%s\n", str.Get() );
 #endif  // defined (STAGING_ONLY) || defined (DEBUG)
 }
@@ -1099,13 +1099,13 @@ void CTFMatchmakingDashboard::PositionNotifications()
     }
 
     m_vecNotifications.SortPredicate( []( const CTFDashboardNotification* pLeft, const CTFDashboardNotification* pRight )
-                                      {
-		if ( pLeft->GetType() != pRight->GetType() )
-		{
-			return pLeft->GetType() < pRight->GetType();
-		}
+                                    {
+        if ( pLeft->GetType() != pRight->GetType() )
+        {
+            return pLeft->GetType() < pRight->GetType();
+        }
 
-		return pLeft->GetCreationTime() < pRight->GetCreationTime(); } );
+        return pLeft->GetCreationTime() < pRight->GetCreationTime(); } );
 
     auto lambdaPosition = [&]( int i )
     {
@@ -1336,27 +1336,27 @@ void GetQueuedString( wchar_t* pwszBuff, int nSize )
     if ( GTFPartyClient()->BInStandbyQueue() )
     {
         g_pVGuiLocalize->ConstructString( pwszBuff,
-                                          nSize,
-                                          g_pVGuiLocalize->Find( "#TF_MM_QueueState_Standby" ),
-                                          0 );
+                                        nSize,
+                                        g_pVGuiLocalize->Find( "#TF_MM_QueueState_Standby" ),
+                                        0 );
     }
     else
     {
         if ( GTFPartyClient()->GetNumQueuedMatchGroups() > 1 )
         {
             g_pVGuiLocalize->ConstructString( pwszBuff,
-                                              nSize,
-                                              g_pVGuiLocalize->Find( "#TF_MM_QueueState_Multiple" ),
-                                              0 );
+                                            nSize,
+                                            g_pVGuiLocalize->Find( "#TF_MM_QueueState_Multiple" ),
+                                            0 );
         }
         else if ( GTFPartyClient()->GetNumQueuedMatchGroups() == 1 )
         {
             auto pMatchGroup = GetMatchGroupDescription( GTFPartyClient()->GetQueuedMatchGroupByIdx( 0 ) );
             g_pVGuiLocalize->ConstructString( pwszBuff,
-                                              nSize,
-                                              g_pVGuiLocalize->Find( "#TF_MM_QueueState_Format" ),
-                                              1,
-                                              g_pVGuiLocalize->Find( pMatchGroup->GetNameLocToken() ) );
+                                            nSize,
+                                            g_pVGuiLocalize->Find( "#TF_MM_QueueState_Format" ),
+                                            1,
+                                            g_pVGuiLocalize->Find( pMatchGroup->GetNameLocToken() ) );
         }
     }
 }
@@ -1369,7 +1369,7 @@ class CQueueHUDStatus : public EditablePanel,
 {
     DECLARE_CLASS_SIMPLE( CQueueHUDStatus, EditablePanel );
 
-   public:
+    public:
     CQueueHUDStatus( const char* pElementName )
         : CHudElement( pElementName ), EditablePanel( NULL, "QueueHUDStatus" )
     {

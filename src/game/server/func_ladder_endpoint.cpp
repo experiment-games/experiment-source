@@ -15,12 +15,12 @@
 //-----------------------------------------------------------------------------
 class CFuncLadderEndPoint : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncLadderEndPoint, CBaseEntity );
 
     virtual void Activate();
 
-   private:
+    private:
     bool Validate();
 };
 

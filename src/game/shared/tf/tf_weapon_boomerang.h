@@ -22,7 +22,7 @@
 //
 class CTFBoomerang : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBoomerang, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -33,7 +33,7 @@ class CTFBoomerang : public CTFWeaponBaseMelee
         return TF_WEAPON_BOOMERANG;
     }
 
-   private:
+    private:
     CTFBoomerang( const CTFBoomerang& ) {}
 };
 

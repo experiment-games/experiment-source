@@ -28,7 +28,7 @@ class CEnvEntityMaker : public CPointEntity
 {
     DECLARE_CLASS( CEnvEntityMaker, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_ENT_SCRIPTDESC();
 
@@ -45,7 +45,7 @@ class CEnvEntityMaker : public CPointEntity
     void SpawnEntityAtNamedEntityOriginFromScript( const char *pszName );
     void SpawnEntityAtLocationFromScript( const Vector &vecAlternateOrigin, const Vector &vecAlternateAngles );
 
-   private:
+    private:
     CPointTemplate *FindTemplate();
 
     bool HasRoomToSpawn();

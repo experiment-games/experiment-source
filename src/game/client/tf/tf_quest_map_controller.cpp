@@ -19,7 +19,7 @@ using namespace GCSDK;
 template < typename MSG_TYPE, ETFGCMsg E_MSG_TYPE >
 class CQuestRequestBase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     typedef CProtoBufMsg< MSG_TYPE > Msg_t;
     typedef CProtoBufMsg< CMsgGCQuestResponse > Reply_t;
 
@@ -61,7 +61,7 @@ class CQuestRequestBase : public GCSDK::CGCClientJob
         return bSuccess;
     }
 
-   protected:
+    protected:
     Msg_t m_msg;
     Reply_t m_msgReply;
 };
@@ -84,7 +84,7 @@ void CQuestMapController::RedeemLootForNode( const CSOQuestMapNode& node )
         return;
 
     class CQuestRequestTurnInNode : public CQuestRequestBase< CMsgGCQuestNodeTurnIn,
-                                                              k_EMsgGCQuestNodeTurnIn >
+                                                            k_EMsgGCQuestNodeTurnIn >
     {
     };
 
@@ -107,7 +107,7 @@ void CQuestMapController::SelectNodeQuest( const CSOQuestMapNode& node, uint32 n
         return;
 
     class CQuestRequestUnlockNode : public CQuestRequestBase< CMsgGCQuestMapUnlockNode,
-                                                              k_EMsgGC_QuestMapUnlockNode >
+                                                            k_EMsgGC_QuestMapUnlockNode >
     {
     };
 
@@ -124,7 +124,7 @@ void CQuestMapController::PurchaseReward( const CQuestMapStoreItem* pStoreItemDe
         return;
 
     class CQuestPurchaseRewardItem : public CQuestRequestBase< CMsgGCQuestMapPurchaseReward,
-                                                               k_EMsgGC_QuestMapPurchaseReward >
+                                                                k_EMsgGC_QuestMapPurchaseReward >
     {
     };
 
@@ -176,7 +176,7 @@ void CQuestMapController::DestroyedSOObject( const GCSDK::CSharedObject* pObject
 
 class CGCClientQuestProgressReport : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientQuestProgressReport( GCSDK::CGCClient* pGCClient )
         : GCSDK::CGCClientJob( pGCClient ) {}
 

@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class C_TEConcussiveExplosion : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEConcussiveExplosion, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 

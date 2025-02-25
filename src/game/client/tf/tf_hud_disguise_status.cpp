@@ -41,7 +41,7 @@ class CDisguiseStatus : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CDisguiseStatus, EditablePanel );
 
-   public:
+    public:
     CDisguiseStatus( const char *pElementName );
 
     void Init( void );
@@ -57,7 +57,7 @@ class CDisguiseStatus : public CHudElement, public EditablePanel
     void CheckWeapon( void );
     void CheckHealth( void );
 
-   private:
+    private:
     CPanelAnimationVar( HFont, m_hFont, "TextFont", "TargetID" );
 
     CTFImagePanel *m_pBGPanel;
@@ -316,20 +316,20 @@ void CDisguiseStatus::PerformLayout( void )
 
     if ( m_pTargetNameLabel && m_pTargetDataLabel )
     {
-      m_pTargetNameLabel->GetContentSize( iTextW, iTextH );
-      m_pTargetDataLabel->GetContentSize( iDataW, iDataH );
-      iWidth += max(iTextW,iDataW);
+    m_pTargetNameLabel->GetContentSize( iTextW, iTextH );
+    m_pTargetDataLabel->GetContentSize( iDataW, iDataH );
+    iWidth += max(iTextW,iDataW);
 
-      SetSize( iWidth, GetTall() );
+    SetSize( iWidth, GetTall() );
 
-      int nOffset = m_bArenaPanelVisible ? YRES (120) : 0; // HACK: move the targetID up a bit so it won't overlap the panel
+    int nOffset = m_bArenaPanelVisible ? YRES (120) : 0; // HACK: move the targetID up a bit so it won't overlap the panel
 
-      SetPos( (ScreenWidth() - iWidth) * 0.5, m_nOriginalY - nOffset );
+    SetPos( (ScreenWidth() - iWidth) * 0.5, m_nOriginalY - nOffset );
 
-      if ( m_pBGPanel )
-      {
+    if ( m_pBGPanel )
+    {
         m_pBGPanel->SetSize( iWidth, GetTall() );
-      }
+    }
     }
     */
 

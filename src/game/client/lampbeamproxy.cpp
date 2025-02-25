@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 class CLampBeamProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CLampBeamProxy( void );
     virtual ~CLampBeamProxy( void );
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -28,7 +28,7 @@ class CLampBeamProxy : public CEntityMaterialProxy
 
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pFadeValue;
 };
 

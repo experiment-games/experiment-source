@@ -44,7 +44,7 @@ struct vbs_sound_update_t
 // -----------------------------------------
 class CPassengerInfo
 {
-   public:
+    public:
     CPassengerInfo( void )
         : m_nRole( -1 ), m_nSeat( -1 ), m_strRoleName( NULL_STRING ), m_strSeatName( NULL_STRING ) {}
 
@@ -63,7 +63,7 @@ class CPassengerInfo
         return m_hPassenger;
     }
 
-   private:
+    private:
     int m_nRole;                                   // Role (by index)
     int m_nSeat;                                   // Seat (by index)
     string_t m_strRoleName;                        // Used in restoration for fix-up
@@ -79,7 +79,7 @@ class CPassengerInfo
 
 class CPassengerSeatTransition
 {
-   public:
+    public:
     CPassengerSeatTransition( void )
         : m_strAnimationName( NULL_STRING ), m_nPriority( -1 ){};
 
@@ -92,7 +92,7 @@ class CPassengerSeatTransition
         return m_nPriority;
     }
 
-   private:
+    private:
     string_t m_strAnimationName;  // Name of animation to play
     int m_nPriority;              // Priority of the transition
 
@@ -104,7 +104,7 @@ class CPassengerSeatTransition
 // -----------------------------------------
 class CPassengerSeat
 {
-   public:
+    public:
     CPassengerSeat( void )
         : m_nAttachmentID( -1 ){};
     int GetAttachmentID( void ) const
@@ -112,7 +112,7 @@ class CPassengerSeat
         return m_nAttachmentID;
     }
 
-   private:
+    private:
     string_t m_strSeatName;                                     // Used for save/load fixup
     int m_nAttachmentID;                                        // Goal attachment
     CUtlVector< CPassengerSeatTransition > m_EntryTransitions;  // Entry information
@@ -126,7 +126,7 @@ class CPassengerSeat
 // -----------------------------------------
 class CPassengerRole
 {
-   public:
+    public:
     CPassengerRole( void )
         : m_strName( NULL_STRING ){};
     string_t GetName( void ) const
@@ -134,7 +134,7 @@ class CPassengerRole
         return m_strName;
     }
 
-   private:
+    private:
     string_t m_strName;                             // Name of the set
     CUtlVector< CPassengerSeat > m_PassengerSeats;  // Passenger info
 
@@ -147,7 +147,7 @@ class CPassengerRole
 //-----------------------------------------------------------------------------
 class CBaseServerVehicle : public IServerVehicle
 {
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
     DECLARE_CLASS_NOBASE( CBaseServerVehicle );
 
@@ -157,7 +157,7 @@ class CBaseServerVehicle : public IServerVehicle
     virtual void Precache( void );
 
     // IVehicle
-   public:
+    public:
     virtual CBaseCombatCharacter *GetPassenger( int nRole = VEHICLE_ROLE_DRIVER );
 
     virtual int GetPassengerRole( CBaseCombatCharacter *pPassenger );
@@ -172,7 +172,7 @@ class CBaseServerVehicle : public IServerVehicle
     virtual void ItemPostFrame( CBasePlayer *pPlayer );
 
     // IServerVehicle
-   public:
+    public:
     virtual CBaseEntity *GetVehicleEnt( void )
     {
         return m_pVehicle;
@@ -277,7 +277,7 @@ class CBaseServerVehicle : public IServerVehicle
     // ----------------------------------------------------------------------------
     // NPC passenger data
 
-   public:
+    public:
     bool NPC_AddPassenger( CBaseCombatCharacter *pPassenger, string_t strRoleName, int nSeat );
     bool NPC_RemovePassenger( CBaseCombatCharacter *pPassenger );
     virtual bool NPC_GetPassengerSeatPosition( CBaseCombatCharacter *pPassenger, Vector *vecResultPos, QAngle *vecResultAngle );
@@ -294,13 +294,13 @@ class CBaseServerVehicle : public IServerVehicle
         return m_savedViewOffset;
     }
 
-   private:
+    private:
     // Vehicle entering/exiting
     void ParseNPCRoles( KeyValues *pModelKeyValues );
     void ParseNPCPassengerSeat( KeyValues *pSetKeyValues, CPassengerSeat *pSeat );
     void ParseNPCSeatTransition( KeyValues *pTransitionKeyValues, CPassengerSeatTransition *pTransition );
 
-   protected:
+    protected:
     int FindRoleIndexByName( string_t strRoleName );
     int FindSeatIndexByName( int nRoleIndex, string_t strSeatName );
     int NPC_GetAvailableSeat_Any( CBaseCombatCharacter *pPassenger, int nRoleID );
@@ -313,7 +313,7 @@ class CBaseServerVehicle : public IServerVehicle
 
     // ----------------------------------------------------------------------------
     void ReloadScript();  // debug/tuning
-   public:
+    public:
     void UseLegacyExitChecks( bool bState )
     {
         m_bUseLegacyExitChecks = bState;
@@ -349,7 +349,7 @@ class CBaseServerVehicle : public IServerVehicle
     virtual void StartEngineRumble();
     virtual void StopEngineRumble();
 
-   public:
+    public:
     CBaseEntity *m_pVehicle;
     IDrivableVehicle *m_pDrivableVehicle;
 
@@ -388,7 +388,7 @@ class CBaseServerVehicle : public IServerVehicle
     // sound state
     vehiclesounds_t m_vehicleSounds;
 
-   private:
+    private:
     float m_flVehicleVolume;
     int m_iSoundGear;  // The sound "gear" that we're currently in
     float m_flSpeedPercentage;

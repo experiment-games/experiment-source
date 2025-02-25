@@ -61,4 +61,3 @@ enum ImportEnum {
   IMPORT_BAR = 8;
   IMPORT_BAZ = 9;
 }
-

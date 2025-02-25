@@ -25,7 +25,7 @@ extern IReplayMovieManager *g_pReplayMovieManager;
 
 class CReplayItemManager : public IReplayItemManager
 {
-   public:
+    public:
     virtual int GetItemCount()
     {
         return g_pReplayManager->GetReplayCount();
@@ -56,7 +56,7 @@ class CReplayItemManager : public IReplayItemManager
 
 class CMovieItemManager : public IReplayItemManager
 {
-   public:
+    public:
     virtual int GetItemCount()
     {
         return g_pReplayMovieManager->GetMovieCount();

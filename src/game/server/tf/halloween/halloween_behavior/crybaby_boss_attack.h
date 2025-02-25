@@ -12,7 +12,7 @@
 //---------------------------------------------------------------------------------------------
 class CCryBabyBossAttack : public Action< CHeadlessHatman >
 {
-   public:
+    public:
     CCryBabyBossAttack( CTFPlayer *victim );
     virtual ~CCryBabyBossAttack() {}
 
@@ -27,7 +27,7 @@ class CCryBabyBossAttack : public Action< CHeadlessHatman >
         return "CryBabyBossAttack";
     }  // return name of this action
 
-   private:
+    private:
     ChasePath m_chasePath;
     CHandle< CTFPlayer > m_victim;
 

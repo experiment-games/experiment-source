@@ -22,7 +22,7 @@
 
 class INetChannelInfo
 {
-   public:
+    public:
     enum
     {
         GENERIC = 0,   // must be first and is default group

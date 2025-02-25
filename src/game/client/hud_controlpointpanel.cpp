@@ -28,7 +28,7 @@ extern ConVar mp_blockstyle;
 //-----------------------------------------------------------------------------
 class CHudCapturePanelProgressBar : public vgui::ImagePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudCapturePanelProgressBar, vgui::ImagePanel );
 
     CHudCapturePanelProgressBar( vgui::Panel *parent, const char *name );
@@ -40,7 +40,7 @@ class CHudCapturePanelProgressBar : public vgui::ImagePanel
         m_flPercent = flPercentage;
     }
 
-   private:
+    private:
     float m_flPercent;
     int m_iTexture;
 
@@ -53,7 +53,7 @@ class CHudCapturePanelProgressBar : public vgui::ImagePanel
 //-----------------------------------------------------------------------------
 class CHudCapturePanelIcon : public vgui::ImagePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudCapturePanelIcon, vgui::ImagePanel );
 
     CHudCapturePanelIcon( vgui::Panel *parent, const char *name );
@@ -65,7 +65,7 @@ class CHudCapturePanelIcon : public vgui::ImagePanel
         m_bActive = state;
     }
 
-   private:
+    private:
     bool m_bActive;
     int m_iTexture;
 
@@ -78,7 +78,7 @@ class CHudCapturePanelIcon : public vgui::ImagePanel
 //-----------------------------------------------------------------------------
 class CHudCapturePanel : public CHudElement, public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudCapturePanel, vgui::EditablePanel );
 
     CHudCapturePanel( const char *pElementName );
@@ -90,7 +90,7 @@ class CHudCapturePanel : public CHudElement, public vgui::EditablePanel
     virtual void OnScreenSizeChanged( int iOldWide, int iOldTall );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     int m_iCurrentCP;  // the index of the control point the local is currently in
 
     int m_iOriginalYPos;
@@ -607,7 +607,7 @@ void CHudCapturePanel::OnThink()
         // if we already own this capture point and there are no enemies in the area
         // or we're playing minirounds and the current cap zone is not in the current round
         if ( ( nOwningTeam == nPlayerTeam && !bEnemyTeamReadyToCap ) ||
-             ( ObjectiveResource()->PlayingMiniRounds() && !ObjectiveResource()->IsInMiniRound( m_iCurrentCP ) ) )
+            ( ObjectiveResource()->PlayingMiniRounds() && !ObjectiveResource()->IsInMiniRound( m_iCurrentCP ) ) )
         {
             // don't need to do anything
             if ( IsVisible() )

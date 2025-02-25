@@ -27,7 +27,7 @@ float StandardGlowBlend( const pixelvis_queryparams_t &params, pixelvis_handle_t
 // Interface from engine to tools for manipulating entities
 class CClientTools : public IClientTools, public IClientEntityListener
 {
-   public:
+    public:
     CClientTools();
 
     virtual HTOOLHANDLE AttachToEntity( EntitySearchResult entityToAttach );
@@ -58,13 +58,13 @@ class CClientTools : public IClientTools, public IClientEntityListener
     virtual void MarkClientRenderableDirty( IClientRenderable *pRenderable );
 
     virtual bool DrawSprite( IClientRenderable *pRenderable,
-                             float scale,
-                             float frame,
-                             int rendermode,
-                             int renderfx,
-                             const Color &color,
-                             float flProxyRadius,
-                             int *pVisHandle );
+                            float scale,
+                            float frame,
+                            int rendermode,
+                            int renderfx,
+                            const Color &color,
+                            float flProxyRadius,
+                            int *pVisHandle );
 
     virtual bool GetLocalPlayerEyePosition( Vector &org, QAngle &ang, float &fov );
     virtual EntitySearchResult GetLocalPlayer();
@@ -113,14 +113,14 @@ class CClientTools : public IClientTools, public IClientEntityListener
     // Is the game rendering in 3rd person mode?
     virtual bool IsRenderingThirdPerson() const;
 
-   public:
+    public:
     C_BaseEntity *LookupEntity( HTOOLHANDLE handle );
 
     // IClientEntityListener methods
     void OnEntityDeleted( C_BaseEntity *pEntity );
     void OnEntityCreated( C_BaseEntity *pEntity );
 
-   private:
+    private:
     struct HToolEntry_t
     {
         HToolEntry_t()

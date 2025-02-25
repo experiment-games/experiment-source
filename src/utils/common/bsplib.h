@@ -230,7 +230,7 @@ typedef unsigned short GameLumpHandle_t;
 
 class CGameLump
 {
-   public:
+    public:
     //-----------------------------------------------------------------------------
     // Convert four-CC code to a handle	+ back
     //-----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ class CGameLump
     void DestroyGameLump( GameLumpHandle_t handle );
     void DestroyAllGameLumps();
 
-   private:
+    private:
     CUtlLinkedList< GameLump_t, GameLumpHandle_t > m_GameLumps;
 };
 
@@ -354,7 +354,7 @@ ISpatialQuery *ToolBSPTree();
 
 class IBSPNodeEnumerator
 {
-   public:
+    public:
     // call back with a node and a context
     virtual bool EnumerateNode( int node, Ray_t const &ray, float f, int context ) = 0;
 

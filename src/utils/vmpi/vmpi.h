@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -39,7 +39,7 @@ typedef void ( *VMPI_Disconnect_Handler )( int procID, const char *pReason );
 // Instantiate one of these to register a dispatch.
 class CDispatchReg
 {
-   public:
+    public:
     CDispatchReg( int iPacketID, VMPIDispatchFn fn );
 };
 
@@ -241,12 +241,12 @@ void VMPI_QueryRegistryForWorkers( CUtlVector< VMPIWorkerInfo_t > &registeredWor
 
 class CVMPIPacketIDReg
 {
-   public:
+    public:
     CVMPIPacketIDReg( int nPacketID, int nSubPacketID, const char *pName );
 
     static void Lookup( int nPacketID, int nSubPacketID, char *pPacketIDString, int nPacketIDStringSize, char *pSubPacketIDString, int nSubPacketIDStringSize );
 
-   private:
+    private:
     int m_nPacketID;
     int m_nSubPacketID;
     const char *m_pName;

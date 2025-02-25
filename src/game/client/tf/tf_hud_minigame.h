@@ -22,14 +22,14 @@ class CHudMiniGame : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudMiniGame, vgui::EditablePanel );
 
-   public:
+    public:
     CHudMiniGame( const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme ) OVERRIDE;
     virtual bool ShouldDraw( void ) OVERRIDE;
     virtual void OnTick() OVERRIDE;
 
-   private:
+    private:
     CTFMiniGame *m_pActiveMinigame;
     char m_szResFilename[MAX_PATH];
 };

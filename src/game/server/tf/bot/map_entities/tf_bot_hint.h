@@ -13,7 +13,7 @@ class CTFBot;
  */
 class CTFBotHint : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTFBotHint, CBaseEntity );
 
@@ -40,7 +40,7 @@ class CTFBotHint : public CBaseEntity
         return !m_isDisabled;
     }
 
-   protected:
+    protected:
     int m_team;
     int m_hint;
     bool m_isDisabled;

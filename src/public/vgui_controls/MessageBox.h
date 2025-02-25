@@ -30,7 +30,7 @@ class MessageBox : public Frame
 {
     DECLARE_CLASS_SIMPLE( MessageBox, Frame );
 
-   public:
+    public:
     // title - Text to be displayed in the title bar of the window
     // text - Text message in the message box
     // startMinimized - wether message box starts minimized. Starts invisible by default
@@ -71,16 +71,16 @@ class MessageBox : public Frame
     // Shows the message box over the cursor
     void ShowMessageBoxOverCursor( bool bEnable );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
-   protected:
+    protected:
     Button *m_pOkButton;
     Button *m_pCancelButton;
     Label *m_pMessageLabel;
 
-   private:
+    private:
     MESSAGE_FUNC( OnShutdownRequest, "ShutdownRequest" );
 
     void Init();

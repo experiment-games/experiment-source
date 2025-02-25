@@ -21,7 +21,7 @@ class CTFGSLobby : public CTFLobbyShared, public GCSDK::CProtoBufSharedObject< C
 {
     typedef GCSDK::CProtoBufSharedObject< CSOTFGameServerLobby, k_EProtoObjectTFGameServerLobby > BaseClass;
 
-   public:
+    public:
     virtual ~CTFGSLobby() {}
 
     virtual void Dump() const OVERRIDE;
@@ -31,7 +31,7 @@ class CTFGSLobby : public CTFLobbyShared, public GCSDK::CProtoBufSharedObject< C
         return this;
     }
 
-   private:
+    private:
     virtual const CSOTFGameServerLobby &GSObj() const OVERRIDE final
     {
         return Obj();

@@ -93,7 +93,7 @@ class C_AntlionGib : public C_Gib
 {
     typedef C_Gib BaseClass;
 
-   public:
+    public:
     static C_AntlionGib *CreateClientsideGib( const char *pszModelName, Vector vecOrigin, Vector vecForceDir, AngularImpulse vecAngularImp, float m_flLifetime = DEFAULT_GIB_LIFETIME )
     {
         C_AntlionGib *pGib = new C_AntlionGib;
@@ -119,7 +119,7 @@ class C_AntlionGib : public C_Gib
 
         if (index >= 0 )
         {
-          effects->DecalShoot( index, pOther->entindex(), pOther->GetModel(), pOther->GetAbsOrigin(), pOther->GetAbsAngles(), GetAbsOrigin(), 0, 0 );
+        effects->DecalShoot( index, pOther->entindex(), pOther->GetModel(), pOther->GetAbsOrigin(), pOther->GetAbsAngles(), GetAbsOrigin(), 0, 0 );
         }
         */
     }

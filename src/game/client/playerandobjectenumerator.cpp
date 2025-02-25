@@ -51,7 +51,7 @@ IterationRetval_t CPlayerAndObjectEnumerator::EnumElement( IHandleEntity *pHandl
         return ITERATION_CONTINUE;
 
     if ( !pEnt->IsPlayer() &&
-         !pEnt->IsNPC() )
+        !pEnt->IsNPC() )
     {
         return ITERATION_CONTINUE;
     }

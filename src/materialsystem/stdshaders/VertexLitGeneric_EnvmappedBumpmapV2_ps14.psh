@@ -36,4 +36,3 @@ mul	   r1.rgb, r0, r0
 lrp	   r0.rgb, c1, r1, r0 ; blend between color and color * color
 dp3		r1.rgb, r0, c3
 lrp		r0.rgb, c2, r0, r1 ; blend between color and greyscale
-

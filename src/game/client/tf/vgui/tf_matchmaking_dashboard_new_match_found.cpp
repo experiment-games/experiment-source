@@ -21,7 +21,7 @@ using namespace GCSDK;
 
 class CJoinMatchNotification : public CEconNotification
 {
-   public:
+    public:
     CJoinMatchNotification( Panel* pDispatcher )
     {
         m_pDispatcher.Set( pDispatcher );
@@ -53,20 +53,20 @@ class CMatchInviteNotification : public CTFDashboardNotification, public CGameEv
 {
     DECLARE_CLASS_SIMPLE( CMatchInviteNotification, CTFDashboardNotification );
 
-   public:
+    public:
     CMatchInviteNotification( PlayerGroupID_t groupID )
         : CTFDashboardNotification( CTFDashboardNotification::TYPE_LOBBY_INVITE,
                                     CTFDashboardNotification::CENTER,
                                     0.f,
                                     "NewMatchFound" ),
-          m_GroupID( groupID ),
-          m_flAutoJoinTime( 0.f )
+        m_GroupID( groupID ),
+        m_flAutoJoinTime( 0.f )
     {
         m_pBGPanel = new EditablePanel( this, "BGPanel" );
 
         // If the lobby is here already, then we prompt differently
         m_eState = GTFGCClientSystem()->GetLiveMatchLobbyID() == m_GroupID ? STATE_LOBBY_PRESENT_PROMPT
-                                                                           : STATE_LOBBY_INVITE_PROMPT;
+                                                                            : STATE_LOBBY_INVITE_PROMPT;
         ListenForGameEvent( "match_invites_updated" );
         ListenForGameEvent( "lobby_updated" );
         PlaySoundEntry( "MatchMaking.Join" );
@@ -140,10 +140,10 @@ class CMatchInviteNotification : public CTFDashboardNotification, public CGameEv
             pKV->SetWString( "matchtype", g_pVGuiLocalize->Find( pMatchDesc->GetNameLocToken() ) );
             // Craft the "Your Casual match is ready" string
             g_pVGuiLocalize->ConstructString_safe( wszBuff,
-                                                   g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewTypedMatchReady" ),
-                                                   pKV );
+                                                    g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewTypedMatchReady" ),
+                                                    pKV );
             m_pBGPanel->SetDialogVariable( "match_type",
-                                           wszBuff );
+                                            wszBuff );
 
             // Make sure we have our in-game notification
             if ( NotificationQueue_Get( m_nNotificationID ) == NULL )
@@ -159,7 +159,7 @@ class CMatchInviteNotification : public CTFDashboardNotification, public CGameEv
         {
             Assert( false );  // This should not happen.  Use generic "Your match is ready"
             m_pBGPanel->SetDialogVariable( "match_type",
-                                           g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewMatchReady" ) );
+                                            g_pVGuiLocalize->Find( "#TF_Matchmaking_RollingQueue_NewMatchReady" ) );
         }
     }
 
@@ -260,7 +260,7 @@ class CMatchInviteNotification : public CTFDashboardNotification, public CGameEv
         MarkForDeletion();
     }
 
-   private:
+    private:
     void AcceptMatch()
     {
         switch ( m_eState )
@@ -365,7 +365,7 @@ class CMatchInviteNotification : public CTFDashboardNotification, public CGameEv
 //
 class CLobbyInviteManager : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CLobbyInviteManager()
         : m_mapInvitePanels( DefLessFunc( PlayerGroupID_t ) )
     {
@@ -386,7 +386,7 @@ class CLobbyInviteManager : public CAutoGameSystemPerFrame
         }
     }
 
-   private:
+    private:
     //
     // Need a panel for any lobby that's present in our SOCache
     //

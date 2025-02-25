@@ -32,7 +32,7 @@ char token[1204];
 
 class CEffectScriptElement
 {
-   public:
+    public:
     CEffectScriptElement();
 
     char m_szEffectName[128];
@@ -68,7 +68,7 @@ class CEffectScriptElement
         m_bActive = false;
     }
 
-   private:
+    private:
     bool m_bActive;
 };
 
@@ -97,7 +97,7 @@ CEffectScriptElement::CEffectScriptElement()
 //-----------------------------------------------------------------------------
 class CEnvEffectsScript : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvEffectsScript, CBaseAnimating );
     DECLARE_DATADESC();
 
@@ -124,7 +124,7 @@ class CEnvEffectsScript : public CBaseAnimating
 
     CEffectScriptElement *GetScriptElementByName( const char *pName );
 
-   private:
+    private:
     string_t m_iszScriptName;
 
     CUtlVector< CEffectScriptElement > m_ScriptElements;

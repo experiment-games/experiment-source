@@ -29,7 +29,7 @@ typedef uintp UtlHandle_t;
 template < class T, int HandleBits >
 class CUtlHandleTable
 {
-   public:
+    public:
     CUtlHandleTable();
 
     // Allocate, deallocate handles
@@ -53,7 +53,7 @@ class CUtlHandleTable
     void MarkHandleInvalid( UtlHandle_t h );
     void MarkHandleValid( UtlHandle_t h );
 
-   private:
+    private:
     struct HandleType_t
     {
         HandleType_t( unsigned int i, unsigned int s )
@@ -268,7 +268,7 @@ const typename CUtlHandleTable< T, HandleBits >::EntryType_t *CUtlHandleTable< T
         return NULL;
 
     if ( checkValidity &&
-         ( 1 == entry.nInvalid ) )
+        ( 1 == entry.nInvalid ) )
         return NULL;
 
     return &entry;
@@ -327,7 +327,7 @@ void CUtlHandleTable< T, HandleBits >::MarkHandleValid( UtlHandle_t handle )
 template < class T >
 class CUtlHandle
 {
-   public:
+    public:
     // Constructors
     CUtlHandle();
     explicit CUtlHandle( T *pObject );
@@ -362,7 +362,7 @@ class CUtlHandle
     bool operator!=( T *pObject ) const;
     bool operator!=( UtlHandle_t h ) const;
 
-   private:
+    private:
     UtlHandle_t m_handle;
 };
 
@@ -528,7 +528,7 @@ bool CUtlHandle< T >::operator!=( UtlHandle_t h ) const
 // Add this macro to a class definition to hook in handles for it!
 //-----------------------------------------------------------------------------
 #define DECLARE_HANDLES( _className, _handleBitCount )   \
-   public:                                               \
+    public:                                               \
     UtlHandle_t GetHandle()                              \
     {                                                    \
         return m_Handle;                                 \
@@ -541,8 +541,8 @@ bool CUtlHandle< T >::operator!=( UtlHandle_t h ) const
     {                                                    \
         return m_HandleTable.IsHandleValid( h );         \
     }                                                    \
-                                                         \
-   private:                                              \
+                                                        \
+    private:                                              \
     UtlHandle_t m_Handle;                                \
     static CUtlHandleTable< _className, _handleBitCount > m_HandleTable
 

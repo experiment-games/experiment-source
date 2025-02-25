@@ -29,14 +29,14 @@ class CConfirmItemPreviewDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmItemPreviewDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmItemPreviewDialog( vgui::Panel *pParent, CEconItemView *pPreviewItem );
     ~CConfirmItemPreviewDialog();
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Apply( void );
 
-   private:
+    private:
     CEconItemView *m_pPreviewItem;
 };
 
@@ -104,7 +104,7 @@ void CConfirmItemPreviewDialog::Apply( void )
 //-----------------------------------------------------------------------------
 class CGCItemPreviewStatusResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCItemPreviewStatusResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -151,7 +151,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCItemPreviewStatusResponse, "CGCItemPreviewStatu
 //-----------------------------------------------------------------------------
 class CGCItemPreviewRequestResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCItemPreviewRequestResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -230,7 +230,7 @@ void CEconPreviewExpiredNotification::Trigger()
 //-----------------------------------------------------------------------------
 class CGCItemPreviewExpireNotification : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCItemPreviewExpireNotification( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -253,7 +253,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCItemPreviewExpireNotification, "CGCItemPreviewE
 //-----------------------------------------------------------------------------
 class CGCItemPreviewItemBoughtNotification : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCItemPreviewItemBoughtNotification( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

@@ -68,12 +68,12 @@ public class LiteTest extends TestCase {
     // stuff to make sure the lite message is actually here and usable.
 
     TestAllTypesLite message =
-      TestAllTypesLite.newBuilder()
-                      .setOptionalInt32(123)
-                      .addRepeatedString("hello")
-                      .setOptionalNestedMessage(
-                          TestAllTypesLite.NestedMessage.newBuilder().setBb(7))
-                      .build();
+    TestAllTypesLite.newBuilder()
+                    .setOptionalInt32(123)
+                    .addRepeatedString("hello")
+                    .setOptionalNestedMessage(
+                        TestAllTypesLite.NestedMessage.newBuilder().setBb(7))
+                    .build();
 
     ByteString data = message.toByteString();
 
@@ -91,7 +91,7 @@ public class LiteTest extends TestCase {
     //   should probably test them more thoroughly.
 
     TestAllExtensionsLite message =
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .setExtension(UnittestLite.optionalInt32ExtensionLite, 123)
         .addExtension(UnittestLite.repeatedStringExtensionLite, "hello")
         .setExtension(UnittestLite.optionalNestedEnumExtensionLite,
@@ -122,17 +122,17 @@ public class LiteTest extends TestCase {
   public void testSerialize() throws Exception {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     TestAllTypesLite expected =
-      TestAllTypesLite.newBuilder()
-                      .setOptionalInt32(123)
-                      .addRepeatedString("hello")
-                      .setOptionalNestedMessage(
-                          TestAllTypesLite.NestedMessage.newBuilder().setBb(7))
-                      .build();
+    TestAllTypesLite.newBuilder()
+                    .setOptionalInt32(123)
+                    .addRepeatedString("hello")
+                    .setOptionalNestedMessage(
+                        TestAllTypesLite.NestedMessage.newBuilder().setBb(7))
+                    .build();
     ObjectOutputStream out = new ObjectOutputStream(baos);
     try {
-      out.writeObject(expected);
+    out.writeObject(expected);
     } finally {
-      out.close();
+    out.close();
     }
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ObjectInputStream in = new ObjectInputStream(bais);

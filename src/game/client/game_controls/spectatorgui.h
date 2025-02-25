@@ -44,7 +44,7 @@ class CSpectatorGUI : public vgui::EditablePanel, public IViewPortPanel
 {
     DECLARE_CLASS_SIMPLE( CSpectatorGUI, vgui::EditablePanel );
 
-   public:
+    public:
     CSpectatorGUI( IViewPort *pViewPort );
     virtual ~CSpectatorGUI();
 
@@ -103,14 +103,14 @@ class CSpectatorGUI : public vgui::EditablePanel, public IViewPortPanel
         return GAME_ACTION_SET_SPECTATOR;
     }
 
-   protected:
+    protected:
     void SetLabelText( const char *textEntryName, const char *text );
     void SetLabelText( const char *textEntryName, wchar_t *text );
     void MoveLabelToFront( const char *textEntryName );
     void UpdateTimer();
     void SetLogoImage( const char *image );
 
-   protected:
+    protected:
     enum
     {
         INSET_OFFSET = 2
@@ -144,7 +144,7 @@ class CSpectatorMenu : public vgui::Frame, public IViewPortPanel, public CGameEv
 {
     DECLARE_CLASS_SIMPLE( CSpectatorMenu, vgui::Frame );
 
-   public:
+    public:
     CSpectatorMenu( IViewPort *pViewPort );
     ~CSpectatorMenu() {}
 
@@ -188,7 +188,7 @@ class CSpectatorMenu : public vgui::Frame, public IViewPortPanel, public CGameEv
         return GAME_ACTION_SET_SPECTATOR;
     }
 
-   private:
+    private:
     // VGUI2 overrides
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
     virtual void OnCommand( const char *command );

@@ -8,7 +8,7 @@ class CTFBotHintTeleporterExit;
 
 class CTFBotMvMEngineerBuildTeleportExit : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMvMEngineerBuildTeleportExit( CTFBotHintTeleporterExit *hint );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -19,7 +19,7 @@ class CTFBotMvMEngineerBuildTeleportExit : public Action< CTFBot >
         return "MvMEngineerBuildTeleportExit";
     };
 
-   private:
+    private:
     CHandle< CTFBotHintTeleporterExit > m_teleporterBuildHint;
 
     CountdownTimer m_delayBuildTime;

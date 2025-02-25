@@ -1429,7 +1429,7 @@ void CObjectSentrygun::OnKilledEnemy( CBasePlayer *pVictim )
     }
 
     if ( ( gpGlobals->curtime - GetCarryDeployTime() < tf_sentrygun_kill_after_redeploy_time_achievement.GetInt() ) &&
-         GetUpgradeLevel() == 3 )
+        GetUpgradeLevel() == 3 )
     {
         pOwner->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_MOVE_SENTRY_GET_KILL );
     }
@@ -1446,9 +1446,9 @@ bool CObjectSentrygun::Fire()
 
     // Level 3 Turrets fire rockets every 3 seconds
     if ( m_iUpgradeLevel == 3 &&
-         m_iAmmoRockets > 0 &&
-         m_flNextRocketAttack < gpGlobals->curtime &&
-         !m_bPlayerControlled )
+        m_iAmmoRockets > 0 &&
+        m_flNextRocketAttack < gpGlobals->curtime &&
+        !m_bPlayerControlled )
     {
         FireRocket();
     }
@@ -1896,7 +1896,7 @@ bool CObjectSentrygun::MoveTurret( void )
         if ( flDir == -1 )
         {
             if ( ( bReversed == false && m_vecGoalAngles.y > m_vecCurAngles.y ) ||
-                 ( bReversed == true && m_vecGoalAngles.y < m_vecCurAngles.y ) )
+                ( bReversed == true && m_vecGoalAngles.y < m_vecCurAngles.y ) )
             {
                 m_vecCurAngles.y = m_vecGoalAngles.y;
             }
@@ -1904,7 +1904,7 @@ bool CObjectSentrygun::MoveTurret( void )
         else
         {
             if ( ( bReversed == false && m_vecGoalAngles.y < m_vecCurAngles.y ) ||
-                 ( bReversed == true && m_vecGoalAngles.y > m_vecCurAngles.y ) )
+                ( bReversed == true && m_vecGoalAngles.y > m_vecCurAngles.y ) )
             {
                 m_vecCurAngles.y = m_vecGoalAngles.y;
             }
@@ -2064,8 +2064,8 @@ void CObjectSentrygun::Killed( const CTakeDamageInfo &info )
     {
         CTFBotHintSentrygun *sentryHint;
         for ( sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( NULL, "bot_hint_sentrygun" ) );
-              sentryHint;
-              sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
+            sentryHint;
+            sentryHint = static_cast< CTFBotHintSentrygun * >( gEntList.FindEntityByClassname( sentryHint, "bot_hint_sentrygun" ) ) )
         {
             if ( sentryHint->IsEnabled() && sentryHint->InSameTeam( this ) )
             {

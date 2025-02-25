@@ -27,7 +27,7 @@ class C_BaseCombatCharacter : public C_BaseFlex
 {
     DECLARE_CLASS( C_BaseCombatCharacter, C_BaseFlex );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
 
@@ -130,10 +130,10 @@ class C_BaseCombatCharacter : public C_BaseFlex
     }
 #endif  // GLOWS_ENABLE
 
-   public:
+    public:
     float m_flNextAttack;
 
-   protected:
+    protected:
 #ifdef GLOWS_ENABLE
     virtual void UpdateGlowEffect( void );
     virtual void DestroyGlowEffect( void );
@@ -141,7 +141,7 @@ class C_BaseCombatCharacter : public C_BaseFlex
 
     int m_bloodColor;  // color of blood particless
 
-   private:
+    private:
     bool ComputeLOS( const Vector &vecEyePosition, const Vector &vecTarget ) const;
 
     CNetworkArray( int, m_iAmmo, MAX_AMMO_TYPES );
@@ -156,12 +156,12 @@ class C_BaseCombatCharacter : public C_BaseFlex
     CGlowObject *m_pGlowEffect;
 #endif  // GLOWS_ENABLE
 
-   private:
+    private:
     C_BaseCombatCharacter( const C_BaseCombatCharacter & );  // not defined, not accessible
 
 //-----------------------
 #ifdef INVASION_CLIENT_DLL
-   public:
+    public:
     virtual void Release( void );
     virtual void SetDormant( bool bDormant );
     virtual void OnPreDataChanged( DataUpdateType_t updateType );
@@ -187,7 +187,7 @@ class C_BaseCombatCharacter : public C_BaseFlex
 
     C_WeaponCombatShield *GetShield( void );
 
-   public:
+    public:
     int m_iPowerups;
     int m_iPrevPowerups;
 #endif

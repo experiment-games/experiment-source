@@ -12,7 +12,7 @@ class CWeaponMedigun;
 
 class CTFBotMedicHeal : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual ActionResult< CTFBot > OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
@@ -31,7 +31,7 @@ class CTFBotMedicHeal : public Action< CTFBot >
         return "Heal";
     };
 
-   private:
+    private:
     ChasePath m_chasePath;
 
     CTFPlayer *SelectPatient( CTFBot *me, CTFPlayer *current );

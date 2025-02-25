@@ -23,7 +23,7 @@
 
 class CWeaponAR2 : public CHL2MPMachineGun
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponAR2, CHL2MPMachineGun );
 
     CWeaponAR2();
@@ -77,10 +77,10 @@ class CWeaponAR2 : public CHL2MPMachineGun
 
     const WeaponProficiencyInfo_t *GetProficiencyValues();
 
-   private:
+    private:
     CWeaponAR2( const CWeaponAR2 & );
 
-   protected:
+    protected:
     CNetworkVar( float, m_flDelayedFire );
     CNetworkVar( bool, m_bShotDelayed );
     int m_nVentPose;

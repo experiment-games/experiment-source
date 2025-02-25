@@ -14,7 +14,7 @@ class CTFTauntProp : public CBaseCombatCharacter
 {
     DECLARE_CLASS( CTFTauntProp, CBaseCombatCharacter );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CTFTauntProp();
@@ -41,7 +41,7 @@ class CTFTauntProp : public CBaseCombatCharacter
         return m_hScene.Get();
     }
 
-   private:
+    private:
     EHANDLE m_hScene;
     bool m_bAutoRemove;
 };

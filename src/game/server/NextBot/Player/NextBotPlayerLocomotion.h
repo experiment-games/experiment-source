@@ -18,7 +18,7 @@ class CBasePlayer;
  */
 class PlayerLocomotion : public ILocomotion
 {
-   public:
+    public:
     DECLARE_CLASS( PlayerLocomotion, ILocomotion );
 
     PlayerLocomotion( INextBot *bot );
@@ -85,10 +85,10 @@ class PlayerLocomotion : public ILocomotion
 
     virtual const Vector &GetVelocity( void ) const;  // return current world space velocity
 
-   protected:
+    protected:
     virtual void AdjustPosture( const Vector &moveGoal );
 
-   private:
+    private:
     CBasePlayer *m_player;  // the player we are locomoting
 
     mutable bool m_isJumping;

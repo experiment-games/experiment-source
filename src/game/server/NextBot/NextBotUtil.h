@@ -17,7 +17,7 @@
  */
 class INextBotEntityFilter
 {
-   public:
+    public:
     // return true if the given entity passes this filter
     virtual bool IsAllowed( CBaseEntity *entity ) const = 0;
 };
@@ -32,7 +32,7 @@ bool IgnoreActorsTraceFilterFunction( IHandleEntity *pServerEntity, int contents
  */
 class NextBotTraceFilterIgnoreActors : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotTraceFilterIgnoreActors( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup, IgnoreActorsTraceFilterFunction )
     {
@@ -45,7 +45,7 @@ class NextBotTraceFilterIgnoreActors : public CTraceFilterSimple
  */
 class NextBotVisionTraceFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotVisionTraceFilter( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup, VisionTraceFilterFunction )
     {
@@ -58,7 +58,7 @@ class NextBotVisionTraceFilter : public CTraceFilterSimple
  */
 class NextBotTraceFilterIgnoreNextBots : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotTraceFilterIgnoreNextBots( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -87,7 +87,7 @@ class NextBotTraceFilterIgnoreNextBots : public CTraceFilterSimple
  */
 class NextBotTraceFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotTraceFilter( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -108,7 +108,7 @@ class NextBotTraceFilter : public CTraceFilterSimple
 
             // Skip players on the same team - they're not solid to us, and we'll avoid them
             if ( entity->IsPlayer() && m_passBot && m_passBot->GetEntity() &&
-                 m_passBot->GetEntity()->GetTeamNumber() == entity->GetTeamNumber() )
+                m_passBot->GetEntity()->GetTeamNumber() == entity->GetTeamNumber() )
                 return false;
 
             INextBot *bot = entity->MyNextBotPointer();
@@ -127,7 +127,7 @@ class NextBotTraceFilter : public CTraceFilterSimple
  */
 class NextBotTraceFilterOnlyActors : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotTraceFilterOnlyActors( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -165,7 +165,7 @@ class NextBotTraceFilterOnlyActors : public CTraceFilterSimple
  */
 class NextBotTraversableTraceFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotTraversableTraceFilter( INextBot *bot, ILocomotion::TraverseWhenType when = ILocomotion::EVENTUALLY )
         : CTraceFilterSimple( bot->GetEntity(), COLLISION_GROUP_NONE )
     {
@@ -190,7 +190,7 @@ class NextBotTraversableTraceFilter : public CTraceFilterSimple
         return false;
     }
 
-   private:
+    private:
     INextBot *m_bot;
     ILocomotion::TraverseWhenType m_when;
 };
@@ -234,7 +234,7 @@ inline CBaseEntity *SelectClosestEntityByTravelDistance( INextBot *me, const CUt
  */
 class NextBotMovementAvoidanceTraceFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     NextBotMovementAvoidanceTraceFilter( INextBot *bot )
         : CTraceFilterSimple( bot->GetEntity(), COLLISION_GROUP_NONE )
     {
@@ -264,7 +264,7 @@ class NextBotMovementAvoidanceTraceFilter : public CTraceFilterSimple
         return false;
     }
 
-   private:
+    private:
     INextBot *m_bot;
 };
 #endif

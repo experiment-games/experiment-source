@@ -37,7 +37,7 @@ class CHudTrainingInfoMsg : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTrainingInfoMsg, EditablePanel );
 
-   public:
+    public:
     CHudTrainingInfoMsg( const char *pElementName );
 
     virtual void Init( void );
@@ -48,7 +48,7 @@ class CHudTrainingInfoMsg : public CHudElement, public EditablePanel
     void MsgFunc_TrainingInfoMsg( bf_read &msg );
     void LocalizeAndDisplay( const char *szRawString );
 
-   private:
+    private:
     Label *m_pGoalLabel;
     // Color			m_cRegularColor;
 };

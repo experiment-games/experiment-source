@@ -14,7 +14,7 @@
  */
 class C_EyeballBoss : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_EyeballBoss, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
@@ -36,7 +36,7 @@ class C_EyeballBoss : public C_NextBotCombatCharacter
     virtual QAngle const& GetRenderAngles( void );
     virtual int InternalDrawModel( int flags );
 
-   private:
+    private:
     C_EyeballBoss( const C_EyeballBoss& );  // not defined, not accessible
 
     Vector m_lookAtSpot;

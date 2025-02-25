@@ -10,7 +10,7 @@
 
 class CTFBotSpyBackstab : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -21,7 +21,7 @@ class CTFBotSpyBackstab : public Action< CTFBot >
         return "SpyBackstab";
     };
 
-   private:
+    private:
 };
 
 #endif  // TF_BOT_SPY_BACKSTAB_H

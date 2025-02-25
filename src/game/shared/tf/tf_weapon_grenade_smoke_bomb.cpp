@@ -56,28 +56,28 @@ extern ConVar tf_smoke_bomb_time;
 CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
 #if 0
-	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
+    CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
 
-	if ( pTFPlayer )
-	{
-		CDisablePredictionFiltering disabler;
+    if ( pTFPlayer )
+    {
+        CDisablePredictionFiltering disabler;
 
-		// Explosion effect on client
-		CEffectData explosionData;
-		explosionData.m_vOrigin = pPlayer->GetAbsOrigin();
-		explosionData.m_vAngles = pPlayer->GetAbsAngles();
-		explosionData.m_fFlags = GetWeaponID();
+        // Explosion effect on client
+        CEffectData explosionData;
+        explosionData.m_vOrigin = pPlayer->GetAbsOrigin();
+        explosionData.m_vAngles = pPlayer->GetAbsAngles();
+        explosionData.m_fFlags = GetWeaponID();
 //		DispatchEffect( "TF_Explosion", explosionData );
 
-		// give them the smoke bomb condition
-		// ( invis for X seconds, able to move full speed )
-		// ( attacking removes the condition )
+        // give them the smoke bomb condition
+        // ( invis for X seconds, able to move full speed )
+        // ( attacking removes the condition )
 
-		if ( pTFPlayer->CanGoInvisible() )
-		{
-			pTFPlayer->m_Shared.AddCond( TF_COND_SMOKE_BOMB, tf_smoke_bomb_time.GetFloat() );
-		}
-	}
+        if ( pTFPlayer->CanGoInvisible() )
+        {
+            pTFPlayer->m_Shared.AddCond( TF_COND_SMOKE_BOMB, tf_smoke_bomb_time.GetFloat() );
+        }
+    }
 #endif
 
     return NULL;

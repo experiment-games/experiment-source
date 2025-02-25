@@ -36,7 +36,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
 m4_if([$1], [1.14.1], [],
-      [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
+    [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
 # _AM_AUTOCONF_VERSION(VERSION)
@@ -123,7 +123,7 @@ am_aux_dir=`cd $ac_aux_dir && pwd`
 AC_DEFUN([AM_CONDITIONAL],
 [AC_PREREQ([2.52])dnl
  m4_if([$1], [TRUE],  [AC_FATAL([$0: invalid condition: $1])],
-       [$1], [FALSE], [AC_FATAL([$0: invalid condition: $1])])dnl
+        [$1], [FALSE], [AC_FATAL([$0: invalid condition: $1])])dnl
 AC_SUBST([$1_TRUE])dnl
 AC_SUBST([$1_FALSE])dnl
 _AM_SUBST_NOTMAKE([$1_TRUE])dnl
@@ -173,15 +173,15 @@ AC_REQUIRE([AM_MAKE_INCLUDE])dnl
 AC_REQUIRE([AM_DEP_TRACK])dnl
 
 m4_if([$1], [CC],   [depcc="$CC"   am_compiler_list=],
-      [$1], [CXX],  [depcc="$CXX"  am_compiler_list=],
-      [$1], [OBJC], [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
-      [$1], [OBJCXX], [depcc="$OBJCXX" am_compiler_list='gcc3 gcc'],
-      [$1], [UPC],  [depcc="$UPC"  am_compiler_list=],
-      [$1], [GCJ],  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
+    [$1], [CXX],  [depcc="$CXX"  am_compiler_list=],
+    [$1], [OBJC], [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
+    [$1], [OBJCXX], [depcc="$OBJCXX" am_compiler_list='gcc3 gcc'],
+    [$1], [UPC],  [depcc="$UPC"  am_compiler_list=],
+    [$1], [GCJ],  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
                     [depcc="$$1"   am_compiler_list=])
 
 AC_CACHE_CHECK([dependency style of $depcc],
-               [am_cv_$1_dependencies_compiler_type],
+                [am_cv_$1_dependencies_compiler_type],
 [if test -z "$AMDEP_TRUE" && test -f "$am_depcomp"; then
   # We make a subdir and do the tests there.  Otherwise we can end up
   # making bogus files that we don't know about and never remove.  For
@@ -204,17 +204,17 @@ AC_CACHE_CHECK([dependency style of $depcc],
 
   am_cv_$1_dependencies_compiler_type=none
   if test "$am_compiler_list" = ""; then
-     am_compiler_list=`sed -n ['s/^#*\([a-zA-Z0-9]*\))$/\1/p'] < ./depcomp`
+    am_compiler_list=`sed -n ['s/^#*\([a-zA-Z0-9]*\))$/\1/p'] < ./depcomp`
   fi
   am__universal=false
   m4_case([$1], [CC],
     [case " $depcc " in #(
-     *\ -arch\ *\ -arch\ *) am__universal=true ;;
-     esac],
+    *\ -arch\ *\ -arch\ *) am__universal=true ;;
+    esac],
     [CXX],
     [case " $depcc " in #(
-     *\ -arch\ *\ -arch\ *) am__universal=true ;;
-     esac])
+    *\ -arch\ *\ -arch\ *) am__universal=true ;;
+    esac])
 
   for depmode in $am_compiler_list; do
     # Setup a source with many dependencies, because some compilers
@@ -226,10 +226,10 @@ AC_CACHE_CHECK([dependency style of $depcc],
     # This happens at least with the AIX C compiler.
     : > sub/conftest.c
     for i in 1 2 3 4 5 6; do
-      echo '#include "conftst'$i'.h"' >> sub/conftest.c
-      # Using ": > sub/conftst$i.h" creates only sub/conftst1.h with
-      # Solaris 10 /bin/sh.
-      echo '/* dummy */' > sub/conftst$i.h
+    echo '#include "conftst'$i'.h"' >> sub/conftest.c
+    # Using ": > sub/conftst$i.h" creates only sub/conftst1.h with
+    # Solaris 10 /bin/sh.
+    echo '/* dummy */' > sub/conftst$i.h
     done
     echo "${am__include} ${am__quote}sub/conftest.Po${am__quote}" > confmf
 
@@ -241,48 +241,48 @@ AC_CACHE_CHECK([dependency style of $depcc],
     am__minus_obj="-o $am__obj"
     case $depmode in
     gcc)
-      # This depmode causes a compiler race in universal mode.
-      test "$am__universal" = false || continue
-      ;;
+    # This depmode causes a compiler race in universal mode.
+    test "$am__universal" = false || continue
+    ;;
     nosideeffect)
-      # After this tag, mechanisms are not by side-effect, so they'll
-      # only be used when explicitly requested.
-      if test "x$enable_dependency_tracking" = xyes; then
-	continue
-      else
-	break
-      fi
-      ;;
+    # After this tag, mechanisms are not by side-effect, so they'll
+    # only be used when explicitly requested.
+    if test "x$enable_dependency_tracking" = xyes; then
+    continue
+    else
+    break
+    fi
+    ;;
     msvc7 | msvc7msys | msvisualcpp | msvcmsys)
-      # This compiler won't grok '-c -o', but also, the minuso test has
-      # not run yet.  These depmodes are late enough in the game, and
-      # so weak that their functioning should not be impacted.
-      am__obj=conftest.${OBJEXT-o}
-      am__minus_obj=
-      ;;
+    # This compiler won't grok '-c -o', but also, the minuso test has
+    # not run yet.  These depmodes are late enough in the game, and
+    # so weak that their functioning should not be impacted.
+    am__obj=conftest.${OBJEXT-o}
+    am__minus_obj=
+    ;;
     none) break ;;
     esac
     if depmode=$depmode \
-       source=sub/conftest.c object=$am__obj \
-       depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
-       $SHELL ./depcomp $depcc -c $am__minus_obj sub/conftest.c \
-         >/dev/null 2>conftest.err &&
-       grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
-       grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
-       grep $am__obj sub/conftest.Po > /dev/null 2>&1 &&
-       ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
-      # icc doesn't choke on unknown options, it will just issue warnings
-      # or remarks (even with -Werror).  So we grep stderr for any message
-      # that says an option was ignored or not supported.
-      # When given -MP, icc 7.0 and 7.1 complain thusly:
-      #   icc: Command line warning: ignoring option '-M'; no argument required
-      # The diagnosis changed in icc 8.0:
-      #   icc: Command line remark: option '-MP' not supported
-      if (grep 'ignoring option' conftest.err ||
-          grep 'not supported' conftest.err) >/dev/null 2>&1; then :; else
+        source=sub/conftest.c object=$am__obj \
+        depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
+        $SHELL ./depcomp $depcc -c $am__minus_obj sub/conftest.c \
+        >/dev/null 2>conftest.err &&
+        grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
+        grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
+        grep $am__obj sub/conftest.Po > /dev/null 2>&1 &&
+        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
+    # icc doesn't choke on unknown options, it will just issue warnings
+    # or remarks (even with -Werror).  So we grep stderr for any message
+    # that says an option was ignored or not supported.
+    # When given -MP, icc 7.0 and 7.1 complain thusly:
+    #   icc: Command line warning: ignoring option '-M'; no argument required
+    # The diagnosis changed in icc 8.0:
+    #   icc: Command line remark: option '-MP' not supported
+    if (grep 'ignoring option' conftest.err ||
+        grep 'not supported' conftest.err) >/dev/null 2>&1; then :; else
         am_cv_$1_dependencies_compiler_type=$depmode
         break
-      fi
+    fi
     fi
   done
 
@@ -364,9 +364,9 @@ AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS],
     # Grep'ing the whole file is not good either: AIX grep has a line
     # limit of 2048, but all sed's we know have understand at least 4000.
     if sed -n 's,^#.*generated by automake.*,X,p' "$mf" | grep X >/dev/null 2>&1; then
-      dirpart=`AS_DIRNAME("$mf")`
+    dirpart=`AS_DIRNAME("$mf")`
     else
-      continue
+    continue
     fi
     # Extract the definition of DEPDIR, am__include, and am__quote
     # from the Makefile without running 'make'.
@@ -380,14 +380,14 @@ AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS],
     # simplest approach to changing $(DEPDIR) to its actual value in the
     # expansion.
     for file in `sed -n "
-      s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
-	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g'`; do
-      # Make sure the directory exists.
-      test -f "$dirpart/$file" && continue
-      fdir=`AS_DIRNAME(["$file"])`
-      AS_MKDIR_P([$dirpart/$fdir])
-      # echo "creating $dirpart/$file"
-      echo '# dummy' > "$dirpart/$file"
+    s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
+    sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g'`; do
+    # Make sure the directory exists.
+    test -f "$dirpart/$file" && continue
+    fdir=`AS_DIRNAME(["$file"])`
+    AS_MKDIR_P([$dirpart/$fdir])
+    # echo "creating $dirpart/$file"
+    echo '# dummy' > "$dirpart/$file"
     done
   done
 }
@@ -403,8 +403,8 @@ AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS],
 # need in order to bootstrap the dependency handling code.
 AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 [AC_CONFIG_COMMANDS([depfiles],
-     [test x"$AMDEP_TRUE" != x"" || _AM_OUTPUT_DEPENDENCY_COMMANDS],
-     [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
+    [test x"$AMDEP_TRUE" != x"" || _AM_OUTPUT_DEPENDENCY_COMMANDS],
+    [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
 ])
 
 # Do all the work for Automake.                             -*- Autoconf -*-
@@ -466,7 +466,7 @@ AC_SUBST([CYGPATH_W])
 dnl Distinguish between old-style and new-style calls.
 m4_ifval([$2],
 [AC_DIAGNOSE([obsolete],
-             [$0: two- and three-arguments forms are deprecated.])
+            [$0: two- and three-arguments forms are deprecated.])
 m4_ifval([$3], [_AM_SET_OPTION([no-define])])dnl
  AC_SUBST([PACKAGE], [$1])dnl
  AC_SUBST([VERSION], [$2])],
@@ -505,25 +505,25 @@ AC_REQUIRE([AC_PROG_AWK])dnl
 AC_REQUIRE([AC_PROG_MAKE_SET])dnl
 AC_REQUIRE([AM_SET_LEADING_DOT])dnl
 _AM_IF_OPTION([tar-ustar], [_AM_PROG_TAR([ustar])],
-	      [_AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])],
-			     [_AM_PROG_TAR([v7])])])
+        [_AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])],
+                [_AM_PROG_TAR([v7])])])
 _AM_IF_OPTION([no-dependencies],,
 [AC_PROVIDE_IFELSE([AC_PROG_CC],
-		  [_AM_DEPENDENCIES([CC])],
-		  [m4_define([AC_PROG_CC],
-			     m4_defn([AC_PROG_CC])[_AM_DEPENDENCIES([CC])])])dnl
+        [_AM_DEPENDENCIES([CC])],
+        [m4_define([AC_PROG_CC],
+                m4_defn([AC_PROG_CC])[_AM_DEPENDENCIES([CC])])])dnl
 AC_PROVIDE_IFELSE([AC_PROG_CXX],
-		  [_AM_DEPENDENCIES([CXX])],
-		  [m4_define([AC_PROG_CXX],
-			     m4_defn([AC_PROG_CXX])[_AM_DEPENDENCIES([CXX])])])dnl
+        [_AM_DEPENDENCIES([CXX])],
+        [m4_define([AC_PROG_CXX],
+                m4_defn([AC_PROG_CXX])[_AM_DEPENDENCIES([CXX])])])dnl
 AC_PROVIDE_IFELSE([AC_PROG_OBJC],
-		  [_AM_DEPENDENCIES([OBJC])],
-		  [m4_define([AC_PROG_OBJC],
-			     m4_defn([AC_PROG_OBJC])[_AM_DEPENDENCIES([OBJC])])])dnl
+        [_AM_DEPENDENCIES([OBJC])],
+        [m4_define([AC_PROG_OBJC],
+                m4_defn([AC_PROG_OBJC])[_AM_DEPENDENCIES([OBJC])])])dnl
 AC_PROVIDE_IFELSE([AC_PROG_OBJCXX],
-		  [_AM_DEPENDENCIES([OBJCXX])],
-		  [m4_define([AC_PROG_OBJCXX],
-			     m4_defn([AC_PROG_OBJCXX])[_AM_DEPENDENCIES([OBJCXX])])])dnl
+        [_AM_DEPENDENCIES([OBJCXX])],
+        [m4_define([AC_PROG_OBJCXX],
+                m4_defn([AC_PROG_OBJCXX])[_AM_DEPENDENCIES([OBJCXX])])])dnl
 ])
 AC_REQUIRE([AM_SILENT_RULES])dnl
 dnl The testsuite driver may need to know about EXEEXT, so add the
@@ -595,9 +595,9 @@ _am_stamp_count=1
 for _am_header in $config_headers :; do
   case $_am_header in
     $_am_arg | $_am_arg:* )
-      break ;;
+    break ;;
     * )
-      _am_stamp_count=`expr $_am_stamp_count + 1` ;;
+    _am_stamp_count=`expr $_am_stamp_count + 1` ;;
   esac
 done
 echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
@@ -657,7 +657,7 @@ AC_DEFUN([AM_MAKE_INCLUDE],
 [am_make=${MAKE-make}
 cat > confinc << 'END'
 am__doit:
-	@echo this is the am__doit target
+    @echo this is the am__doit target
 .PHONY: am__doit
 END
 # If we don't find an include directive, just comment out the code.
@@ -677,14 +677,14 @@ case `$am_make -s -f confmf 2> /dev/null` in #(
 esac
 # Now try BSD make style include.
 if test "$am__include" = "#"; then
-   echo '.include "confinc"' > confmf
-   case `$am_make -s -f confmf 2> /dev/null` in #(
-   *the\ am__doit\ target*)
-     am__include=.include
-     am__quote="\""
-     _am_result=BSD
-     ;;
-   esac
+    echo '.include "confinc"' > confmf
+    case `$am_make -s -f confmf 2> /dev/null` in #(
+    *the\ am__doit\ target*)
+    am__include=.include
+    am__quote="\""
+    _am_result=BSD
+    ;;
+    esac
 fi
 AC_SUBST([am__include])
 AC_SUBST([am__quote])
@@ -787,22 +787,22 @@ AC_CACHE_CHECK(
   am_cv_prog_cc_c_o=yes
   for am_i in 1 2; do
     if AM_RUN_LOG([$CC -c conftest.$ac_ext -o conftest2.$ac_objext]) \
-         && test -f conftest2.$ac_objext; then
-      : OK
+        && test -f conftest2.$ac_objext; then
+    : OK
     else
-      am_cv_prog_cc_c_o=no
-      break
+    am_cv_prog_cc_c_o=no
+    break
     fi
   done
   rm -f core conftest*
   unset am_i])
 if test "$am_cv_prog_cc_c_o" != yes; then
-   # Losing compiler, so override with the script.
-   # FIXME: It is wrong to rewrite CC.
-   # But if we don't then we get into trouble of one sort or another.
-   # A longer-term fix would be to have automake use am__CC in this case,
-   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
-   CC="$am_aux_dir/compile $CC"
+    # Losing compiler, so override with the script.
+    # FIXME: It is wrong to rewrite CC.
+    # But if we don't then we get into trouble of one sort or another.
+    # A longer-term fix would be to have automake use am__CC in this case,
+    # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
+    CC="$am_aux_dir/compile $CC"
 fi
 AC_LANG_POP([C])])
 
@@ -852,35 +852,35 @@ AC_DEFUN([AM_PATH_PYTHON],
     dnl No version check is needed.
     # Find any Python interpreter.
     if test -z "$PYTHON"; then
-      AC_PATH_PROGS([PYTHON], _AM_PYTHON_INTERPRETER_LIST, :)
+    AC_PATH_PROGS([PYTHON], _AM_PYTHON_INTERPRETER_LIST, :)
     fi
     am_display_PYTHON=python
   ], [
     dnl A version check is needed.
     if test -n "$PYTHON"; then
-      # If the user set $PYTHON, use it and don't search something else.
-      AC_MSG_CHECKING([whether $PYTHON version is >= $1])
-      AM_PYTHON_CHECK_VERSION([$PYTHON], [$1],
-			      [AC_MSG_RESULT([yes])],
-			      [AC_MSG_RESULT([no])
-			       AC_MSG_ERROR([Python interpreter is too old])])
-      am_display_PYTHON=$PYTHON
+    # If the user set $PYTHON, use it and don't search something else.
+    AC_MSG_CHECKING([whether $PYTHON version is >= $1])
+    AM_PYTHON_CHECK_VERSION([$PYTHON], [$1],
+                [AC_MSG_RESULT([yes])],
+                [AC_MSG_RESULT([no])
+                    AC_MSG_ERROR([Python interpreter is too old])])
+    am_display_PYTHON=$PYTHON
     else
-      # Otherwise, try each interpreter until we find one that satisfies
-      # VERSION.
-      AC_CACHE_CHECK([for a Python interpreter with version >= $1],
-	[am_cv_pathless_PYTHON],[
-	for am_cv_pathless_PYTHON in _AM_PYTHON_INTERPRETER_LIST none; do
-	  test "$am_cv_pathless_PYTHON" = none && break
-	  AM_PYTHON_CHECK_VERSION([$am_cv_pathless_PYTHON], [$1], [break])
-	done])
-      # Set $PYTHON to the absolute path of $am_cv_pathless_PYTHON.
-      if test "$am_cv_pathless_PYTHON" = none; then
-	PYTHON=:
-      else
+    # Otherwise, try each interpreter until we find one that satisfies
+    # VERSION.
+    AC_CACHE_CHECK([for a Python interpreter with version >= $1],
+    [am_cv_pathless_PYTHON],[
+    for am_cv_pathless_PYTHON in _AM_PYTHON_INTERPRETER_LIST none; do
+    test "$am_cv_pathless_PYTHON" = none && break
+    AM_PYTHON_CHECK_VERSION([$am_cv_pathless_PYTHON], [$1], [break])
+    done])
+    # Set $PYTHON to the absolute path of $am_cv_pathless_PYTHON.
+    if test "$am_cv_pathless_PYTHON" = none; then
+    PYTHON=:
+    else
         AC_PATH_PROG([PYTHON], [$am_cv_pathless_PYTHON])
-      fi
-      am_display_PYTHON=$am_cv_pathless_PYTHON
+    fi
+    am_display_PYTHON=$am_cv_pathless_PYTHON
     fi
   ])
 
@@ -942,12 +942,12 @@ except ImportError:
   AC_CACHE_CHECK([for $am_display_PYTHON script directory],
     [am_cv_python_pythondir],
     [if test "x$prefix" = xNONE
-     then
-       am_py_prefix=$ac_default_prefix
-     else
-       am_py_prefix=$prefix
-     fi
-     am_cv_python_pythondir=`$PYTHON -c "
+    then
+        am_py_prefix=$ac_default_prefix
+    else
+        am_py_prefix=$prefix
+    fi
+    am_cv_python_pythondir=`$PYTHON -c "
 $am_python_setup_sysconfig
 if can_use_sysconfig:
     sitedir = sysconfig.get_path('purelib', vars={'base':'$am_py_prefix'})
@@ -955,20 +955,20 @@ else:
     from distutils import sysconfig
     sitedir = sysconfig.get_python_lib(0, 0, prefix='$am_py_prefix')
 sys.stdout.write(sitedir)"`
-     case $am_cv_python_pythondir in
-     $am_py_prefix*)
-       am__strip_prefix=`echo "$am_py_prefix" | sed 's|.|.|g'`
-       am_cv_python_pythondir=`echo "$am_cv_python_pythondir" | sed "s,^$am__strip_prefix,$PYTHON_PREFIX,"`
-       ;;
-     *)
-       case $am_py_prefix in
-         /usr|/System*) ;;
-         *)
-	  am_cv_python_pythondir=$PYTHON_PREFIX/lib/python$PYTHON_VERSION/site-packages
-	  ;;
-       esac
-       ;;
-     esac
+    case $am_cv_python_pythondir in
+    $am_py_prefix*)
+        am__strip_prefix=`echo "$am_py_prefix" | sed 's|.|.|g'`
+        am_cv_python_pythondir=`echo "$am_cv_python_pythondir" | sed "s,^$am__strip_prefix,$PYTHON_PREFIX,"`
+        ;;
+    *)
+        case $am_py_prefix in
+        /usr|/System*) ;;
+        *)
+    am_cv_python_pythondir=$PYTHON_PREFIX/lib/python$PYTHON_VERSION/site-packages
+    ;;
+        esac
+        ;;
+    esac
     ])
   AC_SUBST([pythondir], [$am_cv_python_pythondir])
 
@@ -984,12 +984,12 @@ sys.stdout.write(sitedir)"`
   AC_CACHE_CHECK([for $am_display_PYTHON extension module directory],
     [am_cv_python_pyexecdir],
     [if test "x$exec_prefix" = xNONE
-     then
-       am_py_exec_prefix=$am_py_prefix
-     else
-       am_py_exec_prefix=$exec_prefix
-     fi
-     am_cv_python_pyexecdir=`$PYTHON -c "
+    then
+        am_py_exec_prefix=$am_py_prefix
+    else
+        am_py_exec_prefix=$exec_prefix
+    fi
+    am_cv_python_pyexecdir=`$PYTHON -c "
 $am_python_setup_sysconfig
 if can_use_sysconfig:
     sitedir = sysconfig.get_path('platlib', vars={'platbase':'$am_py_prefix'})
@@ -997,20 +997,20 @@ else:
     from distutils import sysconfig
     sitedir = sysconfig.get_python_lib(1, 0, prefix='$am_py_prefix')
 sys.stdout.write(sitedir)"`
-     case $am_cv_python_pyexecdir in
-     $am_py_exec_prefix*)
-       am__strip_prefix=`echo "$am_py_exec_prefix" | sed 's|.|.|g'`
-       am_cv_python_pyexecdir=`echo "$am_cv_python_pyexecdir" | sed "s,^$am__strip_prefix,$PYTHON_EXEC_PREFIX,"`
-       ;;
-     *)
-       case $am_py_exec_prefix in
-         /usr|/System*) ;;
-         *)
-	   am_cv_python_pyexecdir=$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/site-packages
-	   ;;
-       esac
-       ;;
-     esac
+    case $am_cv_python_pyexecdir in
+    $am_py_exec_prefix*)
+        am__strip_prefix=`echo "$am_py_exec_prefix" | sed 's|.|.|g'`
+        am_cv_python_pyexecdir=`echo "$am_cv_python_pyexecdir" | sed "s,^$am__strip_prefix,$PYTHON_EXEC_PREFIX,"`
+        ;;
+    *)
+        case $am_py_exec_prefix in
+        /usr|/System*) ;;
+        *)
+        am_cv_python_pyexecdir=$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/site-packages
+        ;;
+        esac
+        ;;
+    esac
     ])
   AC_SUBST([pyexecdir], [$am_cv_python_pyexecdir])
 
@@ -1056,10 +1056,10 @@ sys.exit(sys.hexversion < minverhex)"
 # (This has been adapted from Autoconf's _AC_RUN_LOG macro.)
 AC_DEFUN([AM_RUN_LOG],
 [{ echo "$as_me:$LINENO: $1" >&AS_MESSAGE_LOG_FD
-   ($1) >&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
-   ac_status=$?
-   echo "$as_me:$LINENO: \$? = $ac_status" >&AS_MESSAGE_LOG_FD
-   (exit $ac_status); }])
+    ($1) >&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+    ac_status=$?
+    echo "$as_me:$LINENO: \$? = $ac_status" >&AS_MESSAGE_LOG_FD
+    (exit $ac_status); }])
 
 # Check to make sure that the build environment is sane.    -*- Autoconf -*-
 
@@ -1092,38 +1092,38 @@ esac
 # (eg FreeBSD returns the mod time of the symlink's containing
 # directory).
 if (
-   am_has_slept=no
-   for am_try in 1 2; do
-     echo "timestamp, slept: $am_has_slept" > conftest.file
-     set X `ls -Lt "$srcdir/configure" conftest.file 2> /dev/null`
-     if test "$[*]" = "X"; then
-	# -L didn't work.
-	set X `ls -t "$srcdir/configure" conftest.file`
-     fi
-     if test "$[*]" != "X $srcdir/configure conftest.file" \
-	&& test "$[*]" != "X conftest.file $srcdir/configure"; then
+    am_has_slept=no
+    for am_try in 1 2; do
+    echo "timestamp, slept: $am_has_slept" > conftest.file
+    set X `ls -Lt "$srcdir/configure" conftest.file 2> /dev/null`
+    if test "$[*]" = "X"; then
+    # -L didn't work.
+    set X `ls -t "$srcdir/configure" conftest.file`
+    fi
+    if test "$[*]" != "X $srcdir/configure conftest.file" \
+    && test "$[*]" != "X conftest.file $srcdir/configure"; then
 
-	# If neither matched, then we have a broken ls.  This can happen
-	# if, for instance, CONFIG_SHELL is bash and it inherits a
-	# broken ls alias from the environment.  This has actually
-	# happened.  Such a system could not be considered "sane".
-	AC_MSG_ERROR([ls -t appears to fail.  Make sure there is not a broken
+    # If neither matched, then we have a broken ls.  This can happen
+    # if, for instance, CONFIG_SHELL is bash and it inherits a
+    # broken ls alias from the environment.  This has actually
+    # happened.  Such a system could not be considered "sane".
+    AC_MSG_ERROR([ls -t appears to fail.  Make sure there is not a broken
   alias in your environment])
-     fi
-     if test "$[2]" = conftest.file || test $am_try -eq 2; then
-       break
-     fi
-     # Just in case.
-     sleep 1
-     am_has_slept=yes
-   done
-   test "$[2]" = conftest.file
-   )
+    fi
+    if test "$[2]" = conftest.file || test $am_try -eq 2; then
+        break
+    fi
+    # Just in case.
+    sleep 1
+    am_has_slept=yes
+    done
+    test "$[2]" = conftest.file
+    )
 then
-   # Ok.
-   :
+    # Ok.
+    :
 else
-   AC_MSG_ERROR([newly created file is older than distributed files!
+    AC_MSG_ERROR([newly created file is older than distributed files!
 Check your system clock])
 fi
 AC_MSG_RESULT([yes])
@@ -1136,11 +1136,11 @@ if grep 'slept: no' conftest.file >/dev/null 2>&1; then
 fi
 AC_CONFIG_COMMANDS_PRE(
   [AC_MSG_CHECKING([that generated files are newer than configure])
-   if test -n "$am_sleep_pid"; then
-     # Hide warnings about reused PIDs.
-     wait $am_sleep_pid 2>/dev/null
-   fi
-   AC_MSG_RESULT([done])])
+    if test -n "$am_sleep_pid"; then
+    # Hide warnings about reused PIDs.
+    wait $am_sleep_pid 2>/dev/null
+    fi
+    AC_MSG_RESULT([done])])
 rm -f conftest.file
 ])
 
@@ -1165,7 +1165,7 @@ AS_HELP_STRING(
 ])
 case $enable_silent_rules in @%:@ (((
   yes) AM_DEFAULT_VERBOSITY=0;;
-   no) AM_DEFAULT_VERBOSITY=1;;
+    no) AM_DEFAULT_VERBOSITY=1;;
     *) AM_DEFAULT_VERBOSITY=m4_if([$1], [yes], [0], [1]);;
 esac
 dnl
@@ -1174,13 +1174,13 @@ dnl do not support nested variable expansions.
 dnl See automake bug#9928 and bug#10237.
 am_make=${MAKE-make}
 AC_CACHE_CHECK([whether $am_make supports nested variables],
-   [am_cv_make_support_nested_variables],
-   [if AS_ECHO([['TRUE=$(BAR$(V))
+    [am_cv_make_support_nested_variables],
+    [if AS_ECHO([['TRUE=$(BAR$(V))
 BAR0=false
 BAR1=true
 V=1
 am__doit:
-	@$(TRUE)
+    @$(TRUE)
 .PHONY: am__doit']]) | $am_make -f - >/dev/null 2>&1; then
   am_cv_make_support_nested_variables=yes
 else
@@ -1284,32 +1284,32 @@ m4_if([$1], [v7],
 
   [m4_case([$1],
     [ustar],
-     [# The POSIX 1988 'ustar' format is defined with fixed-size fields.
-      # There is notably a 21 bits limit for the UID and the GID.  In fact,
-      # the 'pax' utility can hang on bigger UID/GID (see automake bug#8343
-      # and bug#13588).
-      am_max_uid=2097151 # 2^21 - 1
-      am_max_gid=$am_max_uid
-      # The $UID and $GID variables are not portable, so we need to resort
-      # to the POSIX-mandated id(1) utility.  Errors in the 'id' calls
-      # below are definitely unexpected, so allow the users to see them
-      # (that is, avoid stderr redirection).
-      am_uid=`id -u || echo unknown`
-      am_gid=`id -g || echo unknown`
-      AC_MSG_CHECKING([whether UID '$am_uid' is supported by ustar format])
-      if test $am_uid -le $am_max_uid; then
-         AC_MSG_RESULT([yes])
-      else
-         AC_MSG_RESULT([no])
-         _am_tools=none
-      fi
-      AC_MSG_CHECKING([whether GID '$am_gid' is supported by ustar format])
-      if test $am_gid -le $am_max_gid; then
-         AC_MSG_RESULT([yes])
-      else
+    [# The POSIX 1988 'ustar' format is defined with fixed-size fields.
+    # There is notably a 21 bits limit for the UID and the GID.  In fact,
+    # the 'pax' utility can hang on bigger UID/GID (see automake bug#8343
+    # and bug#13588).
+    am_max_uid=2097151 # 2^21 - 1
+    am_max_gid=$am_max_uid
+    # The $UID and $GID variables are not portable, so we need to resort
+    # to the POSIX-mandated id(1) utility.  Errors in the 'id' calls
+    # below are definitely unexpected, so allow the users to see them
+    # (that is, avoid stderr redirection).
+    am_uid=`id -u || echo unknown`
+    am_gid=`id -g || echo unknown`
+    AC_MSG_CHECKING([whether UID '$am_uid' is supported by ustar format])
+    if test $am_uid -le $am_max_uid; then
+        AC_MSG_RESULT([yes])
+    else
         AC_MSG_RESULT([no])
         _am_tools=none
-      fi],
+    fi
+    AC_MSG_CHECKING([whether GID '$am_gid' is supported by ustar format])
+    if test $am_gid -le $am_max_gid; then
+        AC_MSG_RESULT([yes])
+    else
+        AC_MSG_RESULT([no])
+        _am_tools=none
+    fi],
 
   [pax],
     [],
@@ -1325,36 +1325,36 @@ m4_if([$1], [v7],
   for _am_tool in $_am_tools; do
     case $_am_tool in
     gnutar)
-      for _am_tar in tar gnutar gtar; do
+    for _am_tar in tar gnutar gtar; do
         AM_RUN_LOG([$_am_tar --version]) && break
-      done
-      am__tar="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$$tardir"'
-      am__tar_="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$tardir"'
-      am__untar="$_am_tar -xf -"
-      ;;
+    done
+    am__tar="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$$tardir"'
+    am__tar_="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$tardir"'
+    am__untar="$_am_tar -xf -"
+    ;;
     plaintar)
-      # Must skip GNU tar: if it does not support --format= it doesn't create
-      # ustar tarball either.
-      (tar --version) >/dev/null 2>&1 && continue
-      am__tar='tar chf - "$$tardir"'
-      am__tar_='tar chf - "$tardir"'
-      am__untar='tar xf -'
-      ;;
+    # Must skip GNU tar: if it does not support --format= it doesn't create
+    # ustar tarball either.
+    (tar --version) >/dev/null 2>&1 && continue
+    am__tar='tar chf - "$$tardir"'
+    am__tar_='tar chf - "$tardir"'
+    am__untar='tar xf -'
+    ;;
     pax)
-      am__tar='pax -L -x $1 -w "$$tardir"'
-      am__tar_='pax -L -x $1 -w "$tardir"'
-      am__untar='pax -r'
-      ;;
+    am__tar='pax -L -x $1 -w "$$tardir"'
+    am__tar_='pax -L -x $1 -w "$tardir"'
+    am__untar='pax -r'
+    ;;
     cpio)
-      am__tar='find "$$tardir" -print | cpio -o -H $1 -L'
-      am__tar_='find "$tardir" -print | cpio -o -H $1 -L'
-      am__untar='cpio -i -H $1 -d'
-      ;;
+    am__tar='find "$$tardir" -print | cpio -o -H $1 -L'
+    am__tar_='find "$tardir" -print | cpio -o -H $1 -L'
+    am__untar='cpio -i -H $1 -d'
+    ;;
     none)
-      am__tar=false
-      am__tar_=false
-      am__untar=false
-      ;;
+    am__tar=false
+    am__tar_=false
+    am__untar=false
+    ;;
     esac
 
     # If the value was cached, stop now.  We just wanted to have am__tar
@@ -1368,9 +1368,9 @@ m4_if([$1], [v7],
     AM_RUN_LOG([tardir=conftest.dir && eval $am__tar_ >conftest.tar])
     rm -rf conftest.dir
     if test -s conftest.tar; then
-      AM_RUN_LOG([$am__untar <conftest.tar])
-      AM_RUN_LOG([cat conftest.dir/file])
-      grep GrepMe conftest.dir/file >/dev/null 2>&1 && break
+    AM_RUN_LOG([$am__untar <conftest.tar])
+    AM_RUN_LOG([cat conftest.dir/file])
+    grep GrepMe conftest.dir/file >/dev/null 2>&1 && break
     fi
   done
   rm -rf conftest.dir

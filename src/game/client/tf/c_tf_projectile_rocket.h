@@ -21,7 +21,7 @@ class C_TFProjectile_Rocket : public C_TFBaseRocket
 {
     DECLARE_CLASS( C_TFProjectile_Rocket, C_TFBaseRocket );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     C_TFProjectile_Rocket();
@@ -36,7 +36,7 @@ class C_TFProjectile_Rocket : public C_TFBaseRocket
         return m_bCritical;
     }
 
-   private:
+    private:
     bool m_bCritical;
 
     CNewParticleEffect *pEffect;

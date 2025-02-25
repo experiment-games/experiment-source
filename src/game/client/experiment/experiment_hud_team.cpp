@@ -25,17 +25,17 @@ class CTeamPlayHud : public vgui::Panel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CTeamPlayHud, vgui::Panel );
 
-   public:
+    public:
     CTeamPlayHud( const char *pElementName );
     void Reset();
 
     virtual void PerformLayout();
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnThink();
 
-   private:
+    private:
     vgui::HFont m_hFont;
     Color m_bgColor;
 

@@ -39,7 +39,7 @@ class CReliableMessageQueue
 {
     friend class IJobReliableMessage;
 
-   public:
+    public:
     // Check for pending messages
     int NumPendingMessages() const;
 
@@ -54,7 +54,7 @@ class CReliableMessageQueue
 
     const IJobReliableMessage *CurrentMessage() const;
 
-   private:
+    private:
     void OnReliableMessageComplete( IJobReliableMessage *pReliable );
     void OnReliableMessageStalled( IJobReliableMessage *pReliable );
 
@@ -72,13 +72,13 @@ class IJobReliableMessage : public GCSDK::CGCClientJob
 {
     friend class CReliableMessageQueue;
 
-   public:
+    public:
     IJobReliableMessage( CGCClient *pGCClient )
         : CGCClientJob( pGCClient )
     {
     }
 
-   protected:
+    protected:
     void SetComplete()
     {
         Queue().OnReliableMessageComplete( this );
@@ -93,7 +93,7 @@ class IJobReliableMessage : public GCSDK::CGCClientJob
         return *m_pQueue;
     }
 
-   private:
+    private:
     // Should only be called by the queue in question
     void OnAddedToQueue( CReliableMessageQueue *pQueue )
     {
@@ -111,7 +111,7 @@ class IJobReliableMessage : public GCSDK::CGCClientJob
 template < typename RELIABLE_MSG_CLASS, typename MSG_TYPE, ETFGCMsg E_MSG_TYPE, typename REPLY_TYPE, ETFGCMsg E_REPLY_TYPE >
 class CJobReliableMessageBase : public IJobReliableMessage
 {
-   public:
+    public:
     typedef CProtoBufMsg< MSG_TYPE > Msg_t;
     typedef CProtoBufMsg< REPLY_TYPE > Reply_t;
     typedef MSG_TYPE MsgProto_t;
@@ -163,25 +163,25 @@ class CJobReliableMessageBase : public IJobReliableMessage
                 {
                     case BYLDREPLY_SUCCESS:
                         MMLog( "[ReliableMsg] %s successfully sent for %s\n",
-                               GetMsgName(),
-                               DebugString() );
+                                GetMsgName(),
+                                DebugString() );
                         // Trigger OnReply
                         ReliableMsg()->OnReply( m_msgReply );
                         return true;
                     case BYLDREPLY_SEND_FAILED:
                         MMLog( "[ReliableMsg] %s send FAILED for %s -- retrying\n",
-                               GetMsgName(),
-                               DebugString() );
+                                GetMsgName(),
+                                DebugString() );
                         break;
                     case BYLDREPLY_TIMEOUT:
                         MMLog( "[ReliableMsg] %s send TIMEOUT for %s -- retrying\n",
-                               GetMsgName(),
-                               DebugString() );
+                                GetMsgName(),
+                                DebugString() );
                         break;
                     case BYLDREPLY_MSG_TYPE_MISMATCH:
                         MMLog( "[ReliableMsg] %s send TYPE MISMATCH for %s\n",
-                               GetMsgName(),
-                               DebugString() );
+                                GetMsgName(),
+                                DebugString() );
                         Assert( !"Mismatched response type in reliable message" );
                         return true;
                 }
@@ -189,8 +189,8 @@ class CJobReliableMessageBase : public IJobReliableMessage
             else
             {
                 MMLog( "[ReliableMsg] %s send STALLED for %s -- No GC session, retrying\n",
-                       GetMsgName(),
-                       DebugString() );
+                        GetMsgName(),
+                        DebugString() );
             }
 
             // Looping to retry, inform queue we are stalled
@@ -205,7 +205,7 @@ class CJobReliableMessageBase : public IJobReliableMessage
         }
     }
 
-   protected:
+    protected:
     // Overrides
 
     // Must be overridden by reliable message implementers. Debug string is e.g. "Match 12345, Lobby 4"
@@ -220,7 +220,7 @@ class CJobReliableMessageBase : public IJobReliableMessage
     // Called before sending, after previous messages in queue have flushed
     void OnPrepare() {}
 
-   private:
+    private:
     // Upcast ourselves to the message
     RELIABLE_MSG_CLASS *ReliableMsg()
     {
@@ -254,12 +254,12 @@ class CJobReliableMessageBase : public IJobReliableMessage
         // (ifdef OSX because I don't have time to figure out what criteria the OS X toolchain has to not blow this)
 #if __cplusplus >= 201103L && !defined( OSX )
         static_assert( std::is_base_of< decltype( *this ), RELIABLE_MSG_CLASS >::value,
-                       "RELIABLE_MSG_CLASS Must be an override of this base" );
+                        "RELIABLE_MSG_CLASS Must be an override of this base" );
         static_assert( !std::is_same< decltype( &( decltype( *this )::InitDebugString ) ),
-                                      decltype( &RELIABLE_MSG_CLASS::InitDebugString ) >::value &&
-                           !std::is_same< decltype( &( decltype( *this )::MsgName ) ),
-                                          decltype( &RELIABLE_MSG_CLASS::MsgName ) >::value,
-                       "RELIABLE_MSG_CLASS class must override DebugString and MsgName" );
+                                    decltype( &RELIABLE_MSG_CLASS::InitDebugString ) >::value &&
+                            !std::is_same< decltype( &( decltype( *this )::MsgName ) ),
+                                        decltype( &RELIABLE_MSG_CLASS::MsgName ) >::value,
+                        "RELIABLE_MSG_CLASS class must override DebugString and MsgName" );
 #endif  // __cplusplus >= 201103L && !defined ( OSX )
     }
 };

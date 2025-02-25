@@ -29,7 +29,7 @@ struct CameraThirdData_t
 
 abstract_class IInput
 {
-   public:
+    public:
     // Initialization/shutdown of the subsystem
     virtual void Init_All( void ) = 0;
     virtual void Shutdown_All( void ) = 0;

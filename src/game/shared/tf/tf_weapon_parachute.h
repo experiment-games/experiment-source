@@ -26,7 +26,7 @@
 //
 class CTFParachute : public CTFBuffItem
 {
-   public:
+    public:
     DECLARE_CLASS( CTFParachute, CTFBuffItem );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -57,7 +57,7 @@ class CTFParachute : public CTFBuffItem
     void ParachuteAnimThink( void );
 #endif  // CLIENT_DLL
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     int m_iParachuteAnimState;
     float m_flParachuteToIdleTime;
@@ -68,7 +68,7 @@ class CTFParachute : public CTFBuffItem
 // Parachute Primary (demo)
 class CTFParachute_Primary : public CTFParachute
 {
-   public:
+    public:
     DECLARE_CLASS( CTFParachute_Primary, CTFParachute );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -77,7 +77,7 @@ class CTFParachute_Primary : public CTFParachute
 // Parachute Secondary (soldier)
 class CTFParachute_Secondary : public CTFParachute
 {
-   public:
+    public:
     DECLARE_CLASS( CTFParachute_Secondary, CTFParachute );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

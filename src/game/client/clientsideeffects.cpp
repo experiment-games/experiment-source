@@ -101,7 +101,7 @@ void CClientSideEffect::Destroy( void )
 //-----------------------------------------------------------------------------
 class CEffectsList : public IEffectsList
 {
-   public:
+    public:
     CEffectsList( void );
     virtual ~CEffectsList( void );
 
@@ -114,7 +114,7 @@ class CEffectsList : public IEffectsList
     // Flush out all effects from the list
     void Flush( void );
 
-   private:
+    private:
     void RemoveEffect( int effectIndex );
     // Current number of effects
     int m_nEffects;
@@ -148,15 +148,15 @@ CEffectsList::~CEffectsList( void )
 void CEffectsList::AddEffect( CClientSideEffect *effect )
 {
 #if 0
-	if ( FXCreationAllowed() == false )
-	{
-		//NOTENOTE: If you've hit this, you may not add a client effect where you have attempted to.
-		//			Most often this means that you have added it in an entity's DrawModel function.
-		//			Move this to the ClientThink function instead!
+    if ( FXCreationAllowed() == false )
+    {
+        //NOTENOTE: If you've hit this, you may not add a client effect where you have attempted to.
+        //			Most often this means that you have added it in an entity's DrawModel function.
+        //			Move this to the ClientThink function instead!
 
-		Assert(0);
-		return;
-	}
+        Assert(0);
+        return;
+    }
 #endif
 
     if ( effect == NULL )

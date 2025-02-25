@@ -56,7 +56,7 @@ DECLARE_AUTO_LIST( IBreakablePropAutoList );
 //-----------------------------------------------------------------------------
 class CBreakable : public CBaseEntity, public IBreakableWithPropData, public CDefaultPlayerPickupVPhysics, public IBreakablePropAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CBreakable, CBaseEntity );
 
     // basic functions
@@ -110,7 +110,7 @@ class CBreakable : public CBaseEntity, public IBreakableWithPropData, public CDe
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     // IBreakableWithPropData
     void SetDmgModBullet( float flDmgMod )
     {
@@ -227,12 +227,12 @@ class CBreakable : public CBaseEntity, public IBreakableWithPropData, public CDe
         return MULTIPLAYER_BREAK_DEFAULT;
     }
 
-   protected:
+    protected:
     float m_angle;
     Materials m_Material;
     EHANDLE m_hBreaker;  // The entity that broke us. Held as a data member because sometimes breaking is delayed.
 
-   private:
+    private:
     Explosions m_Explosion;
     QAngle m_GibDir;
     string_t m_iszGibModel;
@@ -245,7 +245,7 @@ class CBreakable : public CBaseEntity, public IBreakableWithPropData, public CDe
     string_t m_iszPropData;
     string_t m_iszModelName;
 
-   protected:
+    protected:
     bool UpdateHealth( int iNewHealth, CBaseEntity *pActivator );
 
     float m_impactEnergyScale;
@@ -269,13 +269,13 @@ class CBreakable : public CBaseEntity, public IBreakableWithPropData, public CDe
 
     float m_explodeRadius;
 
-   public:
+    public:
     // IPlayerPickupVPhysics
     virtual void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
     virtual void OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason );
     virtual CBasePlayer *HasPhysicsAttacker( float dt );
 
-   private:
+    private:
     CHandle< CBasePlayer > m_hPhysicsAttacker;
     float m_flLastPhysicsInfluenceTime;
 };

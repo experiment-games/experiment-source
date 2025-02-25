@@ -18,7 +18,7 @@
 // Bypass vision system
 class CDisableVision : public IVision
 {
-   public:
+    public:
     CDisableVision( INextBot *bot )
         : IVision( bot ) {}
     virtual ~CDisableVision() {}
@@ -30,7 +30,7 @@ class CDisableVision : public IVision
 //----------------------------------------------------------------------------
 class CNextBotFlyingLocomotion : public ILocomotion
 {
-   public:
+    public:
     CNextBotFlyingLocomotion( INextBot *bot );
     virtual ~CNextBotFlyingLocomotion();
 
@@ -52,7 +52,7 @@ class CNextBotFlyingLocomotion : public ILocomotion
 
     void Deflect( CBaseEntity *deflector );
 
-   protected:
+    protected:
     float m_desiredSpeed;
     float m_currentSpeed;
     Vector m_forward;
@@ -84,7 +84,7 @@ inline void CNextBotFlyingLocomotion::SetVelocity( const Vector &velocity )
 //----------------------------------------------------------------------------
 class CBotNPCMinion : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CBotNPCMinion, NextBotCombatCharacter );
     DECLARE_SERVERCLASS();
 
@@ -141,7 +141,7 @@ class CBotNPCMinion : public NextBotCombatCharacter
     bool IsAlert( void ) const;
     void BecomeAlert( void );
 
-   private:
+    private:
     CNextBotFlyingLocomotion *m_locomotor;
     CBotNPCBody *m_body;
     CDisableVision *m_vision;

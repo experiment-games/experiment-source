@@ -31,7 +31,7 @@ class C_PlasmaBeamNode;
 // ##################################################################
 class CPlasmaSpray : public CSimpleEmitter
 {
-   public:
+    public:
     CPlasmaSpray( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -43,7 +43,7 @@ class CPlasmaSpray : public CSimpleEmitter
     EHANDLE m_pOwner;
     CParticleCollision m_ParticleCollision;
 
-   private:
+    private:
     CPlasmaSpray( const CPlasmaSpray & );
 };
 
@@ -54,14 +54,14 @@ class CPlasmaSpray : public CSimpleEmitter
 // ##################################################################
 class C_PlasmaBeamNode : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_PlasmaBeamNode, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_PlasmaBeamNode();
     ~C_PlasmaBeamNode( void );
 
-   public:
+    public:
     void ClientThink( void );
     void AddEntity( void );
     void OnDataChanged( DataUpdateType_t updateType );

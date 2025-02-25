@@ -127,7 +127,7 @@ class CSniperTarget : public CPointEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CSniperTarget, CPointEntity );
 
     bool KeyValue( const char *szKeyName, const char *szValue );
@@ -148,7 +148,7 @@ DEFINE_FIELD( m_iszGroupName, FIELD_STRING ),
     //=========================================================
     class CSniperBullet : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CSniperBullet, CBaseEntity );
 
     CSniperBullet( void )
@@ -183,7 +183,7 @@ DEFINE_FIELD( m_iszGroupName, FIELD_STRING ),
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     // Only one shot per sniper at a time. If a bullet hasn't
     // hit, the shooter must wait.
     bool m_fActive;
@@ -200,7 +200,7 @@ class CProtoSniper : public CAI_BaseNPC
 {
     DECLARE_CLASS( CProtoSniper, CAI_BaseNPC );
 
-   public:
+    public:
     CProtoSniper( void );
     void Precache( void );
     void Spawn( void );
@@ -280,7 +280,7 @@ class CProtoSniper : public CAI_BaseNPC
 
     void NotifyShotMissedTarget();
 
-   private:
+    private:
     bool ShouldSnapShot( void );
     void ClearTargetGroup( void );
 
@@ -324,7 +324,7 @@ class CProtoSniper : public CAI_BaseNPC
 
     bool IsPlayerAllySniper();
 
-   private:
+    private:
     /// This is the variable from which m_flPaintTime gets set.
     /// How long to aim at someone before shooting them.
     float m_flKeyfieldPaintTime;
@@ -548,7 +548,7 @@ enum
 
 CProtoSniper::CProtoSniper( void )
     : m_flKeyfieldPaintTime( SNIPER_DEFAULT_PAINT_ENEMY_TIME ),
-      m_flKeyfieldPaintTimeNoise( SNIPER_DEFAULT_PAINT_NPC_TIME_NOISE )
+    m_flKeyfieldPaintTimeNoise( SNIPER_DEFAULT_PAINT_NPC_TIME_NOISE )
 {
 #ifdef _DEBUG
     m_vecPaintCursor.Init();
@@ -725,17 +725,17 @@ float CProtoSniper::GetPositionParameter( float flTime, bool fLinear )
 void CProtoSniper::GetPaintAim( const Vector &vecStart, const Vector &vecGoal, float flParameter, Vector *pProgress )
 {
 #if 0
-	Vector vecDelta;
+    Vector vecDelta;
 
-	vecDelta = vecGoal - vecStart;
+    vecDelta = vecGoal - vecStart;
 
-	float flDist = VectorNormalize( vecDelta );
+    float flDist = VectorNormalize( vecDelta );
 
-	vecDelta = vecStart + vecDelta * (flDist * flParameter);
+    vecDelta = vecStart + vecDelta * (flDist * flParameter);
 
-	vecDelta = (vecDelta - GetBulletOrigin() ).Normalize();
+    vecDelta = (vecDelta - GetBulletOrigin() ).Normalize();
 
-	*pProgress = vecDelta;
+    *pProgress = vecDelta;
 #else
     // Quaternions
     Vector vecIdealDir;
@@ -1210,14 +1210,14 @@ Vector CProtoSniper::GetBulletOrigin( void )
 void CProtoSniper::ClearOldDecoys( void )
 {
 #if 0
-	int i;
+    int i;
 
-	for( i = 0 ; i < NUM_OLDDECOYS ; i++ )
-	{
-		m_pOldDecoys[ i ] = NULL;
-	}
+    for( i = 0 ; i < NUM_OLDDECOYS ; i++ )
+    {
+        m_pOldDecoys[ i ] = NULL;
+    }
 
-	m_iOldDecoySlot = 0;
+    m_iOldDecoySlot = 0;
 #endif
 }
 
@@ -1226,15 +1226,15 @@ void CProtoSniper::ClearOldDecoys( void )
 bool CProtoSniper::HasOldDecoy( CBaseEntity *pDecoy )
 {
 #if 0
-	int i;
+    int i;
 
-	for( i = 0 ; i < NUM_OLDDECOYS ; i++ )
-	{
-		if( m_pOldDecoys[ i ] == pDecoy )
-		{
-			return true;
-		}
-	}
+    for( i = 0 ; i < NUM_OLDDECOYS ; i++ )
+    {
+        if( m_pOldDecoys[ i ] == pDecoy )
+        {
+            return true;
+        }
+    }
 #endif
 
     return false;
@@ -1248,13 +1248,13 @@ bool CProtoSniper::HasOldDecoy( CBaseEntity *pDecoy )
 void CProtoSniper::AddOldDecoy( CBaseEntity *pDecoy )
 {
 #if 0
-	m_pOldDecoys[ m_iOldDecoySlot ] = pDecoy;
-	m_iOldDecoySlot++;
+    m_pOldDecoys[ m_iOldDecoySlot ] = pDecoy;
+    m_iOldDecoySlot++;
 
-	if( m_iOldDecoySlot == NUM_OLDDECOYS )
-	{
-		m_iOldDecoySlot = 0;
-	}
+    if( m_iOldDecoySlot == NUM_OLDDECOYS )
+    {
+        m_iOldDecoySlot = 0;
+    }
 #endif
 }
 
@@ -1514,40 +1514,40 @@ void CProtoSniper::OnListened()
                 SetCondition( COND_HEAR_DANGER );
             }
 #if 0
-			if( pCurrentSound->IsSoundType( SOUND_BULLET_IMPACT ) )
-			{
-				// Clip this bullet to the shield.
-				if( pCurrentSound->m_hOwner )
-				{
-					Ray_t		ray;
-					cplane_t	plane;
+            if( pCurrentSound->IsSoundType( SOUND_BULLET_IMPACT ) )
+            {
+                // Clip this bullet to the shield.
+                if( pCurrentSound->m_hOwner )
+                {
+                    Ray_t		ray;
+                    cplane_t	plane;
 
-					ray.Init( pCurrentSound->m_hOwner->EyePosition(), pCurrentSound->GetSoundOrigin(), Vector( 0, 0, 0 ), Vector( 0, 0, 0 ) );
+                    ray.Init( pCurrentSound->m_hOwner->EyePosition(), pCurrentSound->GetSoundOrigin(), Vector( 0, 0, 0 ), Vector( 0, 0, 0 ) );
 
-					plane.normal = forward;
-					plane.type = PLANE_ANYX;
-					plane.dist = DotProduct( plane.normal, WorldSpaceCenter() + forward * m_flShieldDist );
-					plane.signbits = SignbitsForPlane(&plane);
+                    plane.normal = forward;
+                    plane.type = PLANE_ANYX;
+                    plane.dist = DotProduct( plane.normal, WorldSpaceCenter() + forward * m_flShieldDist );
+                    plane.signbits = SignbitsForPlane(&plane);
 
-					float fraction = IntersectRayWithPlane( ray, plane );
+                    float fraction = IntersectRayWithPlane( ray, plane );
 
-					Vector vecImpactPoint = ray.m_Start + ray.m_Delta * fraction;
+                    Vector vecImpactPoint = ray.m_Start + ray.m_Delta * fraction;
 
-					float flDist = (vecImpactPoint - (WorldSpaceCenter() + forward * m_flShieldDist)).LengthSqr();
+                    float flDist = (vecImpactPoint - (WorldSpaceCenter() + forward * m_flShieldDist)).LengthSqr();
 
-					if( flDist <= (m_flShieldRadius * m_flShieldRadius) )
-					{
-						CEffectData data;
+                    if( flDist <= (m_flShieldRadius * m_flShieldRadius) )
+                    {
+                        CEffectData data;
 
-						data.m_vOrigin = vecImpactPoint;
-						data.m_vNormal = vec3_origin;
-						data.m_vAngles = vec3_angle;
-						data.m_nColor = COMMAND_POINT_YELLOW;
+                        data.m_vOrigin = vecImpactPoint;
+                        data.m_vNormal = vec3_origin;
+                        data.m_vAngles = vec3_angle;
+                        data.m_nColor = COMMAND_POINT_YELLOW;
 
-						DispatchEffect( "CommandPointer", data );
-					}
-				}
-			}
+                        DispatchEffect( "CommandPointer", data );
+                    }
+                }
+            }
 #endif
         }
 
@@ -1623,7 +1623,7 @@ bool CProtoSniper::FindDecoyObject( void )
 
             // But have we shot at this item recently? If we HAVE, don't add it.
 #if 0
-			if( !HasOldDecoy( pCurrent ) )
+            if( !HasOldDecoy( pCurrent ) )
 #endif
             {
                 pDecoys[iIterator] = pCurrent;
@@ -2225,7 +2225,7 @@ void CProtoSniper::RunTask( const Task_t *pTask )
                 }
 
 #if 0
-			NDebugOverlay::Line(GetBulletOrigin(), m_hSweepTarget->GetLocalOrigin(), 0,255,0, true, 20 );
+            NDebugOverlay::Line(GetBulletOrigin(), m_hSweepTarget->GetLocalOrigin(), 0,255,0, true, 20 );
 #endif
             }
             else
@@ -2458,7 +2458,7 @@ Vector CProtoSniper::LeadTarget( CBaseEntity *pTarget )
     trace_t tr;
 
     /*
-      NDebugOverlay::EntityBounds(pTarget,
+    NDebugOverlay::EntityBounds(pTarget,
         255,255,0,96,0.1f);
     */
     if ( sniperLines.GetBool() )
@@ -2557,19 +2557,19 @@ Vector CProtoSniper::LeadTarget( CBaseEntity *pTarget )
     }
 
     /*
-      UTIL_TraceLine( vecBulletOrigin, vecAdjustedShot, MASK_SHOT, this, &tr );
+    UTIL_TraceLine( vecBulletOrigin, vecAdjustedShot, MASK_SHOT, this, &tr );
 
-      actualShotDist = (tr.endpos - vecBulletOrigin ).Length();
-      adjustedShotDist = ( vecAdjustedShot - vecBulletOrigin ).Length();
+    actualShotDist = (tr.endpos - vecBulletOrigin ).Length();
+    adjustedShotDist = ( vecAdjustedShot - vecBulletOrigin ).Length();
 
-      /////////////////////////////////////////////
-      // the shot taken should hit within 10% of the sniper's distance to projected target.
-      // else, shoot straight. (there's some object in the way of the adjusted shot)
-      /////////////////////////////////////////////
-      if( actualShotDist <= adjustedShotDist * 0.9 )
-      {
+    /////////////////////////////////////////////
+    // the shot taken should hit within 10% of the sniper's distance to projected target.
+    // else, shoot straight. (there's some object in the way of the adjusted shot)
+    /////////////////////////////////////////////
+    if( actualShotDist <= adjustedShotDist * 0.9 )
+    {
         vecAdjustedShot = vecTarget;
-      }
+    }
     */
     return vecAdjustedShot;
 }
@@ -2690,7 +2690,7 @@ bool CProtoSniper::FindFrustratedShot( float flNoise )
     }
 
 #if 0
-	NDebugOverlay::Line(vecStart, tr.endpos, 0,255,0, true, 20 );
+    NDebugOverlay::Line(vecStart, tr.endpos, 0,255,0, true, 20 );
 #endif
 
     return true;
@@ -2752,7 +2752,7 @@ bool CProtoSniper::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntity **
     UTIL_TraceLine( EyePosition(), pEntity->EyePosition() + vecEye, MASK_BLOCKLOS, this, COLLISION_GROUP_NONE, &tr );
 
 #if 0
-	NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
+    NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
 #endif
 
     bool fCheckFailed = false;
@@ -2769,7 +2769,7 @@ bool CProtoSniper::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntity **
         UTIL_TraceLine( EyePosition(), pEntity->EyePosition() + vecEye, MASK_BLOCKLOS, this, COLLISION_GROUP_NONE, &tr );
 
 #if 0
-		NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
+        NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
 #endif
 
         if ( tr.fraction != 1.0 )
@@ -3297,22 +3297,22 @@ bool CSniperBullet::Start( const Vector &vecOrigin, const Vector &vecTarget, CBa
     return true;
 
     /*
-      int i;
+    int i;
 
-      // Try to find all of the things the bullet can go through along the way.
-      //-------------------------------
-      //-------------------------------
-      m_vecDir = vecTarget - vecOrigin;
-      VectorNormalize( m_vecDir );
+    // Try to find all of the things the bullet can go through along the way.
+    //-------------------------------
+    //-------------------------------
+    m_vecDir = vecTarget - vecOrigin;
+    VectorNormalize( m_vecDir );
 
-      trace_t	tr;
+    trace_t	tr;
 
 
-      // Elapsed time counts how long the bullet is in motion through this simulation.
-      float flElapsedTime = 0;
+    // Elapsed time counts how long the bullet is in motion through this simulation.
+    float flElapsedTime = 0;
 
-      for( i = 0 ; i < NUM_PENETRATIONS ; i++ )
-      {
+    for( i = 0 ; i < NUM_PENETRATIONS ; i++ )
+    {
         // Trace to the target.
         UTIL_TraceLine( GetAbsOrigin(), vecTarget, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 
@@ -3336,19 +3336,19 @@ bool CSniperBullet::Start( const Vector &vecOrigin, const Vector &vecTarget, CBa
         pEnt = tr.m_pEnt;
 
         if( !pEnt												||
-          pEnt->MyNPCPointer()								||
-          UTIL_DistApprox2D( tr.endpos, vecTarget ) <= 4		||
-          FClassnameIs( pEnt, "prop_physics" ) )
+        pEnt->MyNPCPointer()								||
+        UTIL_DistApprox2D( tr.endpos, vecTarget ) <= 4		||
+        FClassnameIs( pEnt, "prop_physics" ) )
         {
-          // If we're close to the target, assume the shot is going to hit
-          // the target and stop penetrating.
-          //
-          // If we're going to hit an NPC, stop penetrating.
-          //
-          // If we hit a physics prop, stop penetrating.
-          //
-          // Otherwise, keep looping.
-          break;
+        // If we're close to the target, assume the shot is going to hit
+        // the target and stop penetrating.
+        //
+        // If we're going to hit an NPC, stop penetrating.
+        //
+        // If we hit a physics prop, stop penetrating.
+        //
+        // Otherwise, keep looping.
+        break;
         }
 
         // We're going to try to penetrate whatever the bullet has hit.
@@ -3364,28 +3364,28 @@ bool CSniperBullet::Start( const Vector &vecOrigin, const Vector &vecTarget, CBa
     #if 1
         if( tr.startsolid )
         {
-          // The cursor is inside the solid. Solid is too thick to penetrate.
+        // The cursor is inside the solid. Solid is too thick to penetrate.
     #ifdef SNIPER_DEBUG
-          Msg( "SNIPER STARTSOLID\n" );
+        Msg( "SNIPER STARTSOLID\n" );
     #endif
-          break;
+        break;
         }
     #endif
 
         // Now put the bullet at this point and continue.
         UTIL_SetOrigin( this, vecCursor );
-      }
-      //-------------------------------
-      //-------------------------------
+    }
+    //-------------------------------
+    //-------------------------------
     */
 
     /*
     #ifdef SNIPER_DEBUG
-      Msg( "PENETRATING %d items", i );
+    Msg( "PENETRATING %d items", i );
     #endif // SNIPER_DEBUG
 
     #ifdef SNIPER_DEBUG
-      Msg( "Dist: %f Travel Time: %f\n", flShotDist, m_ImpactTime );
+    Msg( "Dist: %f Travel Time: %f\n", flShotDist, m_ImpactTime );
     #endif // SNIPER_DEBUG
     */
 }

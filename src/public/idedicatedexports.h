@@ -16,7 +16,7 @@
 
 abstract_class IDedicatedExports : public IAppSystem
 {
-   public:
+    public:
     virtual void Sys_Printf( char *text ) = 0;
     virtual void RunServer() = 0;
 };

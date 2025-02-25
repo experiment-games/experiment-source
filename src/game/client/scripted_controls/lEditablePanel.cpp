@@ -202,10 +202,10 @@ LUA_BINDING_END( "boolean", "True if the panel is modal" )
 LUA_BINDING_BEGIN( EditablePanel, GetControlInt, "class", "Gets an integer value from a control" )
 {
     lua_pushinteger( L,
-                     LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
-                         ->GetControlInt(
-                             LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ),
-                             LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "default" ) ) );
+                    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )
+                        ->GetControlInt(
+                            LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "control" ),
+                            LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "default" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The control integer value" )
@@ -315,7 +315,7 @@ LUA_BINDING_END( "boolean", "True if the previous panel received focus" )
 LUA_BINDING_BEGIN( EditablePanel, RequestInfoFromChild, "class", "Requests info from a child panel" )
 {
     lua_pushboolean( L,
-                     LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestInfoFromChild( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "childName" ), LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 3, "keyValues" ) ) );
+                    LUA_BINDING_ARGUMENT( luaL_checkeditablepanel, 1, "editablePanel" )->RequestInfoFromChild( LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "childName" ), LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 3, "keyValues" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "True if the request was successful" )

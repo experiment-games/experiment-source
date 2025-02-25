@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class CNPC_Kleiner : public CAI_BaseActor
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Kleiner, CAI_BaseActor );
 
     void Spawn( void );

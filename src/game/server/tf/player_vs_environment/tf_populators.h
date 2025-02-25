@@ -18,7 +18,7 @@ class CSpawnLocation;
 //-----------------------------------------------------------------------
 class CSpawnLocation
 {
-   public:
+    public:
     CSpawnLocation();
 
     bool Parse( KeyValues *data );
@@ -27,7 +27,7 @@ class CSpawnLocation
 
     SpawnLocationResult FindSpawnLocation( Vector &vSpawnPosition );
 
-   private:
+    private:
     CTFNavArea *SelectSpawnArea( void ) const;
 
     RelativePositionType m_relative;
@@ -56,7 +56,7 @@ extern CHandle< CPopulatorInternalSpawnPoint > g_internalSpawnPoint;
 // A Populator manages the populating of entities in the environment.
 class IPopulator
 {
-   public:
+    public:
     IPopulator( CPopulationManager *manager )
     {
         m_manager = manager;
@@ -97,7 +97,7 @@ class IPopulator
 
     IPopulationSpawner *m_spawner;
 
-   private:
+    private:
     CPopulationManager *m_manager;
 };
 
@@ -105,7 +105,7 @@ class IPopulator
 // Invokes its spawner when mission conditions are met
 class CMissionPopulator : public IPopulator
 {
-   public:
+    public:
     CMissionPopulator( CPopulationManager *manager );
     virtual ~CMissionPopulator() {}
 
@@ -128,7 +128,7 @@ class CMissionPopulator : public IPopulator
         return m_mission;
     }
 
-   private:
+    private:
     CTFBot::MissionType m_mission;
     CSpawnLocation m_where;
 
@@ -158,7 +158,7 @@ class CMissionPopulator : public IPopulator
 // the environment at PostInitialize()
 class CRandomPlacementPopulator : public IPopulator
 {
-   public:
+    public:
     CRandomPlacementPopulator( CPopulationManager *manager );
     virtual ~CRandomPlacementPopulator() {}
 
@@ -175,7 +175,7 @@ class CRandomPlacementPopulator : public IPopulator
 // Invokes its spawner periodically
 class CPeriodicSpawnPopulator : public IPopulator
 {
-   public:
+    public:
     CPeriodicSpawnPopulator( CPopulationManager *manager );
     virtual ~CPeriodicSpawnPopulator() {}
 
@@ -189,7 +189,7 @@ class CPeriodicSpawnPopulator : public IPopulator
     float m_minInterval;
     float m_maxInterval;
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 
@@ -197,7 +197,7 @@ class CPeriodicSpawnPopulator : public IPopulator
 // Spawns a group of entities within a Wave
 class CWaveSpawnPopulator : public IPopulator
 {
-   public:
+    public:
     CWaveSpawnPopulator( CPopulationManager *manager );
     virtual ~CWaveSpawnPopulator();
 
@@ -270,7 +270,7 @@ class CWaveSpawnPopulator : public IPopulator
     int GetCurrencyAmountPerDeath( void );
     void OnNonSupportWavesDone( void );
 
-   private:
+    private:
     bool IsFinishedSpawning( void );
 
     CountdownTimer m_timer;
@@ -315,7 +315,7 @@ struct WaveClassCount_t
 // The wave is done when all contained WaveSpawns are done.
 class CWave : public IPopulator
 {
-   public:
+    public:
     CWave( CPopulationManager *manager );
     virtual ~CWave();
 
@@ -369,7 +369,7 @@ class CWave : public IPopulator
     int NumEngineersTeleportSpawned( void ) const;
     void IncrementEngineerTeleportSpawned( void );
 
-   private:
+    private:
     bool IsDoneWithNonSupportWaves( void );
 
     void ActiveWaveUpdate();

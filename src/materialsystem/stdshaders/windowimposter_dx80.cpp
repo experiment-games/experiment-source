@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( WindowImposter, WindowImposter_DX80 )
 
 BEGIN_VS_SHADER( WindowImposter_DX80,
-                 "Help for WindowImposter_DX80" )
+                "Help for WindowImposter_DX80" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( ENVMAP, SHADER_PARAM_TYPE_TEXTURE, "shadertest/shadertest_env", "envmap" )

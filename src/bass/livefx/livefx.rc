@@ -10,7 +10,7 @@ BEGIN
     CONTROL         "Manage buffer level",15,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,38,
                     80,10
     CTEXT           "",18,85,37,50,12,SS_CENTERIMAGE | SS_SUNKEN
-    CONTROL         "",14,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | 
+    CONTROL         "",14,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS |
                     WS_TABSTOP,5,52,130,11
     CONTROL         "Reverb",20,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,
                     42,10

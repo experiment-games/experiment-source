@@ -20,7 +20,7 @@ class Vector;
 //-----------------------------------------------------------------------------
 abstract_class IRotorWashShooter
 {
-   public:
+    public:
     virtual CBaseEntity *DoWashPush( float flWashStartTime, const Vector &vecForce ) = 0;
 };
 
@@ -33,7 +33,7 @@ class CEnvQuadraticBeam : public CPointEntity
 {
     DECLARE_CLASS( CEnvQuadraticBeam, CPointEntity );
 
-   public:
+    public:
     void Spawn();
     void SetSpline( const Vector &control, const Vector &target )
     {
@@ -50,7 +50,7 @@ class CEnvQuadraticBeam : public CPointEntity
         m_flWidth = width;
     }
 
-   private:
+    private:
     CNetworkVector( m_targetPosition );
     CNetworkVector( m_controlPosition );
     CNetworkVar( float, m_scrollRate );

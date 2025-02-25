@@ -15,7 +15,7 @@ class LModelImagePanel : public EditablePanel
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LModelImagePanel, "ModelImagePanel" );
 
-   public:
+    public:
     LModelImagePanel( Panel *parent, const char *panelName, lua_State *L = nullptr );
     virtual ~LModelImagePanel();
 
@@ -24,7 +24,7 @@ class LModelImagePanel : public EditablePanel
 
     virtual void Paint();
 
-   protected:
+    protected:
     const char *m_pszModelImagePath;
     const char *m_pszModelPath;
     int m_iSkin;
@@ -41,7 +41,7 @@ class LModelImagePanel : public EditablePanel
         BaseClass::ApplySchemeSettings( pScheme );
     }
 
-   public:
+    public:
     virtual void SetModel( const char *modelPath, int skin = 0, const char *bodyGroups = NULL )
     {
         m_pszModelPath = modelPath;

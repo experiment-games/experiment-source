@@ -10,7 +10,7 @@
 
 class CTFBotSniperAttack : public Action< CTFBot >
 {
-   public:
+    public:
     static bool IsPossible( CTFBot *me );  // return true if this Action has what it needs to perform right now
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -22,16 +22,16 @@ class CTFBotSniperAttack : public Action< CTFBot >
     virtual Vector SelectTargetPoint( const INextBot *me, const CBaseCombatCharacter *subject ) const;  // given a subject, return the world space position we should aim at
 
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
     virtual const char *GetName( void ) const
     {
         return "SniperAttack";
     };
 
-   private:
+    private:
     CountdownTimer m_lingerTimer;
 
     bool IsImmediateThreat( const CBaseCombatCharacter *subject, const CKnownEntity *threat ) const;

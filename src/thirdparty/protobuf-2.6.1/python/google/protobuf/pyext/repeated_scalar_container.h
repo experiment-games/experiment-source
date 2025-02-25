@@ -106,7 +106,7 @@ PyObject* Extend( RepeatedScalarContainer* self, PyObject* value );
 
 // Set the owner field of self and any children of self.
 void SetOwner( RepeatedScalarContainer* self,
-               const shared_ptr< Message >& new_owner );
+                const shared_ptr< Message >& new_owner );
 
 }  // namespace repeated_scalar_container
 }  // namespace python

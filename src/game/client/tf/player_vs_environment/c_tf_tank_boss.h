@@ -7,7 +7,7 @@
 
 class C_TFTankBoss : public C_TFBaseBoss
 {
-   public:
+    public:
     DECLARE_CLASS( C_TFTankBoss, C_TFBaseBoss );
     DECLARE_CLIENTCLASS();
 

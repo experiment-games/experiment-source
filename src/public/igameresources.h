@@ -13,7 +13,7 @@ class Vector;
 
 abstract_class IGameResources
 {
-   public:
+    public:
     virtual ~IGameResources(){};
 
     // Team data access

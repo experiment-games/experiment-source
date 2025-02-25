@@ -533,8 +533,8 @@ AIMotorMoveResult_t CAI_BlendedMotor::MoveGroundExecute( const AILocalMoveGoal_t
     /*
     if (1 || flNewSpeed > GetIdealSpeed())
     {
-      // DevMsg( "%6.2f : Speed %.1f : %.1f (%.1f) :  %d\n", gpGlobals->curtime, flNewSpeed, move.maxDist, move.transitionDist, GetOuter()->m_pHintNode != NULL );
-      // DevMsg( "%6.2f : Speed %.1f : %.1f\n", gpGlobals->curtime, flNewSpeed, GetIdealSpeed() );
+    // DevMsg( "%6.2f : Speed %.1f : %.1f (%.1f) :  %d\n", gpGlobals->curtime, flNewSpeed, move.maxDist, move.transitionDist, GetOuter()->m_pHintNode != NULL );
+    // DevMsg( "%6.2f : Speed %.1f : %.1f\n", gpGlobals->curtime, flNewSpeed, GetIdealSpeed() );
     }
     */
 
@@ -543,7 +543,7 @@ AIMotorMoveResult_t CAI_BlendedMotor::MoveGroundExecute( const AILocalMoveGoal_t
     /*
     if ((GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT))
     {
-      DevMsg( "%6.2f : Speed %.1f : %.1f : %.2f\n", gpGlobals->curtime, flNewSpeed, GetIdealSpeed(), flNewSpeed / GetIdealSpeed() );
+    DevMsg( "%6.2f : Speed %.1f : %.1f : %.2f\n", gpGlobals->curtime, flNewSpeed, GetIdealSpeed(), flNewSpeed / GetIdealSpeed() );
     }
     */
 
@@ -731,34 +731,34 @@ void CAI_BlendedMotor::BuildMoveScript( const AILocalMoveGoal_t &move, AIMoveTra
     BuildTurnScript( move );
 
     /*
-      if (GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
-      {
+    if (GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
+    {
         int i;
     #if 1
 
         for (i = 1; i < m_scriptMove.Count(); i++)
         {
-          NDebugOverlay::Line( m_scriptMove[i-1].vecLocation, m_scriptMove[i].vecLocation, 255,255,255, true, 0.1 );
+        NDebugOverlay::Line( m_scriptMove[i-1].vecLocation, m_scriptMove[i].vecLocation, 255,255,255, true, 0.1 );
 
-          NDebugOverlay::Box( m_scriptMove[i].vecLocation, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0,255,255, 0, 0.1 );
+        NDebugOverlay::Box( m_scriptMove[i].vecLocation, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0,255,255, 0, 0.1 );
 
-          //NDebugOverlay::Line( m_scriptMove[i].vecLocation, m_scriptMove[i].vecLocation + Vector( 0,0,m_scriptMove[i].flMaxVelocity), 0,255,255, true, 0.1 );
+        //NDebugOverlay::Line( m_scriptMove[i].vecLocation, m_scriptMove[i].vecLocation + Vector( 0,0,m_scriptMove[i].flMaxVelocity), 0,255,255, true, 0.1 );
 
-          Vector vecMidway = m_scriptMove[i].vecLocation + ((m_scriptMove[i-1].vecLocation - m_scriptMove[i].vecLocation) * 0.5);
-          NDebugOverlay::Text( vecMidway, UTIL_VarArgs( "%d", i ), false, 0.1 );
+        Vector vecMidway = m_scriptMove[i].vecLocation + ((m_scriptMove[i-1].vecLocation - m_scriptMove[i].vecLocation) * 0.5);
+        NDebugOverlay::Text( vecMidway, UTIL_VarArgs( "%d", i ), false, 0.1 );
         }
     #endif
     #if 0
         for (i = 1; i < m_scriptTurn.Count(); i++)
         {
-          NDebugOverlay::Line( m_scriptTurn[i-1].vecLocation, m_scriptTurn[i].vecLocation, 255,255,255, true, 0.1 );
+        NDebugOverlay::Line( m_scriptTurn[i-1].vecLocation, m_scriptTurn[i].vecLocation, 255,255,255, true, 0.1 );
 
-          NDebugOverlay::Box( m_scriptTurn[i].vecLocation, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255,0,0, 0, 0.1 );
+        NDebugOverlay::Box( m_scriptTurn[i].vecLocation, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255,0,0, 0, 0.1 );
 
-          NDebugOverlay::Line( m_scriptTurn[i].vecLocation + Vector( 0,0,1), m_scriptTurn[i].vecLocation + Vector( 0,0,1) + UTIL_YawToVector( m_scriptTurn[i].flYaw ) * 32, 255,0,0, true, 0.1 );
+        NDebugOverlay::Line( m_scriptTurn[i].vecLocation + Vector( 0,0,1), m_scriptTurn[i].vecLocation + Vector( 0,0,1) + UTIL_YawToVector( m_scriptTurn[i].flYaw ) * 32, 255,0,0, true, 0.1 );
         }
     #endif
-      }
+    }
     */
 }
 
@@ -1024,8 +1024,8 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
         /*
         if ((GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT))
         {
-          Msg("m_flPredictiveSpeedAdjust %.3f  %.1f %.1f\n", m_flPredictiveSpeedAdjust, flHeight, flDist );
-          NDebugOverlay::Box( move.directTrace.vEndPosition, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0,255,255, 0, 0.12 );
+        Msg("m_flPredictiveSpeedAdjust %.3f  %.1f %.1f\n", m_flPredictiveSpeedAdjust, flHeight, flDist );
+        NDebugOverlay::Box( move.directTrace.vEndPosition, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 0,255,255, 0, 0.12 );
         }
         */
     }
@@ -1064,9 +1064,9 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
         /*
         if ((GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT))
         {
-          NDebugOverlay::Box( m_vecPrevOrigin2, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255,0,255, 0, 0.12 );
-          NDebugOverlay::Box( move.thinkTrace.vEndPosition, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255,0,255, 0, 0.12 );
-          Msg("m_flReactiveSpeedAdjust %.3f  %.1f %.1f\n", m_flReactiveSpeedAdjust, flHeight, flDist );
+        NDebugOverlay::Box( m_vecPrevOrigin2, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255,0,255, 0, 0.12 );
+        NDebugOverlay::Box( move.thinkTrace.vEndPosition, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255,0,255, 0, 0.12 );
+        Msg("m_flReactiveSpeedAdjust %.3f  %.1f %.1f\n", m_flReactiveSpeedAdjust, flHeight, flDist );
         }
         */
     }
@@ -1120,9 +1120,9 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
                         /*
                         if (m_scriptMove.Count() > 1)
                         {
-                          int i = m_scriptMove.Count() - 1;
-                          m_scriptMove[i].vecLocation = pCurWaypoint->vecLocation;
-                          m_scriptMove[i].pWaypoint = pCurWaypoint;
+                        int i = m_scriptMove.Count() - 1;
+                        m_scriptMove[i].vecLocation = pCurWaypoint->vecLocation;
+                        m_scriptMove[i].pWaypoint = pCurWaypoint;
                         }
                         */
                         pCurWaypoint = pNext;
@@ -1172,11 +1172,11 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
                     CAI_Node *pClimbNode = GetNavigator()->GetNetwork()->GetNode(pNext->iNodeID);
 
                     check: pClimbNode->m_eNodeInfo
-                      bits_NODE_CLIMB_BOTTOM,
-                      bits_NODE_CLIMB_ON,
-                      bits_NODE_CLIMB_OFF_FORWARD,
-                      bits_NODE_CLIMB_OFF_LEFT,
-                      bits_NODE_CLIMB_OFF_RIGHT
+                    bits_NODE_CLIMB_BOTTOM,
+                    bits_NODE_CLIMB_ON,
+                    bits_NODE_CLIMB_OFF_FORWARD,
+                    bits_NODE_CLIMB_OFF_LEFT,
+                    bits_NODE_CLIMB_OFF_RIGHT
                     */
 
                     script.flMaxVelocity = 0;
@@ -1184,9 +1184,9 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
                 break;
                     /*
                     case NAV_FLY:
-                      // FIXME: can there be a NAV_GROUND -> NAV_FLY transition?
-                      script.flMaxVelocity = 0;
-                      break;
+                    // FIXME: can there be a NAV_GROUND -> NAV_FLY transition?
+                    script.flMaxVelocity = 0;
+                    break;
                     */
             }
         }
@@ -1242,15 +1242,15 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
         /*
         if ((GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT))
         {
-          Vector tmp = m_scriptMove[1].vecLocation - m_scriptMove[0].vecLocation;
-          VectorNormalize( tmp );
-          NDebugOverlay::Line( m_scriptMove[0].vecLocation + Vector( 0, 0, 10 ), m_scriptMove[0].vecLocation + tmp * 32 + Vector( 0, 0, 10 ), 255,255,255, true, 0.1 );
+        Vector tmp = m_scriptMove[1].vecLocation - m_scriptMove[0].vecLocation;
+        VectorNormalize( tmp );
+        NDebugOverlay::Line( m_scriptMove[0].vecLocation + Vector( 0, 0, 10 ), m_scriptMove[0].vecLocation + tmp * 32 + Vector( 0, 0, 10 ), 255,255,255, true, 0.1 );
 
-          NDebugOverlay::Line( m_scriptMove[0].vecLocation + Vector( 0, 0, 10 ), m_scriptMove[1].vecLocation + Vector( 0, 0, 10 ), 255,0,0, true, 0.1 );
+        NDebugOverlay::Line( m_scriptMove[0].vecLocation + Vector( 0, 0, 10 ), m_scriptMove[1].vecLocation + Vector( 0, 0, 10 ), 255,0,0, true, 0.1 );
 
-          tmp = GetCurVel();
-          VectorNormalize( tmp );
-          NDebugOverlay::Line( m_scriptMove[0].vecLocation + Vector( 0, 0, 10 ), m_scriptMove[0].vecLocation + tmp * 32 + Vector( 0, 0, 10 ), 0,0,255, true, 0.1 );
+        tmp = GetCurVel();
+        VectorNormalize( tmp );
+        NDebugOverlay::Line( m_scriptMove[0].vecLocation + Vector( 0, 0, 10 ), m_scriptMove[0].vecLocation + tmp * 32 + Vector( 0, 0, 10 ), 0,0,255, true, 0.1 );
         }
         */
 
@@ -1322,8 +1322,8 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
     /*
     for (i = 0; i < m_scriptMove.Count(); i++)
     {
-      NDebugOverlay::Text( m_scriptMove[i].vecLocation, (const char *)CFmtStr( "%.2f ", m_scriptMove[i].flMaxVelocity  ), false, 0.1 );
-      // DevMsg("%.2f ", m_scriptMove[i].flMaxVelocity );
+    NDebugOverlay::Text( m_scriptMove[i].vecLocation, (const char *)CFmtStr( "%.2f ", m_scriptMove[i].flMaxVelocity  ), false, 0.1 );
+    // DevMsg("%.2f ", m_scriptMove[i].flMaxVelocity );
     }
     // DevMsg("\n");
     */
@@ -1451,10 +1451,10 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
         /*
         if (m_scriptMove[i].flDist < 0.01)
         {
-          // Assert( m_scriptMove[i+1].pWaypoint == NULL );
+        // Assert( m_scriptMove[i+1].pWaypoint == NULL );
 
-          m_scriptMove.Remove( i + 1 );
-          continue;
+        m_scriptMove.Remove( i + 1 );
+        continue;
         }
         */
 
@@ -1466,8 +1466,8 @@ void CAI_BlendedMotor::BuildVelocityScript( const AILocalMoveGoal_t &move )
     /*
     for (i = 0; i < m_scriptMove.Count(); i++)
     {
-      DevMsg("(%.2f : %.2f : %.2f)", m_scriptMove[i].flMaxVelocity, m_scriptMove[i].flDist, m_scriptMove[i].flTime );
-      // DevMsg("(%.2f:%.2f)", m_scriptMove[i].flTime, m_scriptMove[i].flElapsedTime );
+    DevMsg("(%.2f : %.2f : %.2f)", m_scriptMove[i].flMaxVelocity, m_scriptMove[i].flDist, m_scriptMove[i].flTime );
+    // DevMsg("(%.2f:%.2f)", m_scriptMove[i].flTime, m_scriptMove[i].flElapsedTime );
     }
     DevMsg("\n");
     */
@@ -1615,7 +1615,7 @@ bool CAI_BlendedMotor::AddTurnGesture( float flYD )
         /*
         if ( GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT )
         {
-          Msg( "%.1f : [ %.2f ]\n", flYD, m_flNextTurnAct - gpGlobals->curtime );
+        Msg( "%.1f : [ %.2f ]\n", flYD, m_flNextTurnAct - gpGlobals->curtime );
         }
         */
         return false;
@@ -1721,7 +1721,7 @@ bool CAI_BlendedMotor::AddTurnGesture( float flYD )
             /*
             if ( GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT )
             {
-              Msg( "%.1f : %.2f %.2f : %.2f (%.2f)\n", flYD, weight, speed, actualDuration, turnCompletion * actualDuration );
+            Msg( "%.1f : %.2f %.2f : %.2f (%.2f)\n", flYD, weight, speed, actualDuration, turnCompletion * actualDuration );
             }
             */
             return true;
@@ -1739,35 +1739,35 @@ bool CAI_BlendedMotor::AddTurnGesture( float flYD )
 #if 0
 Activity CAI_BlendedMotor::GetTransitionActivity( )
 {
-	AI_Waypoint_t *waypoint = GetNavigator()->GetPath()->GetTransitionWaypoint();
+    AI_Waypoint_t *waypoint = GetNavigator()->GetPath()->GetTransitionWaypoint();
 
-	if ( waypoint->Flags() & bits_WP_TO_GOAL )
-	{
-		if ( waypoint->activity != ACT_INVALID)
-		{
-			return waypoint->activity;
-		}
+    if ( waypoint->Flags() & bits_WP_TO_GOAL )
+    {
+        if ( waypoint->activity != ACT_INVALID)
+        {
+            return waypoint->activity;
+        }
 
-		return GetStoppedActivity( );
-	}
+        return GetStoppedActivity( );
+    }
 
-	if (waypoint)
-		waypoint = waypoint->GetNext();
+    if (waypoint)
+        waypoint = waypoint->GetNext();
 
-	switch(waypoint->NavType() )
-	{
-	case NAV_JUMP:
-		return ACT_JUMP; // are jumps going to get a movement track added to them?
+    switch(waypoint->NavType() )
+    {
+    case NAV_JUMP:
+        return ACT_JUMP; // are jumps going to get a movement track added to them?
 
-	case NAV_GROUND:
-		return GetNavigator()->GetMovementActivity(); // yuck
+    case NAV_GROUND:
+        return GetNavigator()->GetMovementActivity(); // yuck
 
-	case NAV_CLIMB:
-		return ACT_CLIMB_UP; // depends on specifics of climb node
+    case NAV_CLIMB:
+        return ACT_CLIMB_UP; // depends on specifics of climb node
 
-	default:
-		return ACT_IDLE;
-	}
+    default:
+        return ACT_IDLE;
+    }
 }
 #endif
 

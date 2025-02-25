@@ -136,7 +136,7 @@ float CEnvMeteorShared::GetDamageRadius( void )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CEnvMeteorShared::CalcEnterAndExitTimes( const Vector &vecTriggerMins,
-                                              const Vector &vecTriggerMaxs )
+                                            const Vector &vecTriggerMaxs )
 {
 #define METEOR_TRIGGER_EPSILON 0.001f
 
@@ -334,8 +334,8 @@ float CEnvMeteorSpawnerShared::MeteorThink( float flTime )
 
             // Get a random meteor position.
             Vector meteorOrigin( GetRandomFloat( m_vecMinBounds.GetX(), m_vecMaxBounds.GetX() ) /* x */,
-                                 GetRandomFloat( m_vecMinBounds.GetY(), m_vecMaxBounds.GetY() ) /* y */,
-                                 GetRandomFloat( m_vecMinBounds.GetZ(), m_vecMaxBounds.GetZ() ) /* z */ );
+                                GetRandomFloat( m_vecMinBounds.GetY(), m_vecMaxBounds.GetY() ) /* y */,
+                                GetRandomFloat( m_vecMinBounds.GetZ(), m_vecMaxBounds.GetZ() ) /* z */ );
 
             // Calculate the direction of the meteor based on "targets."
             Vector vecDirection( 0.0f, 0.0f, -1.0f );

@@ -43,7 +43,7 @@ class CBaseTrigger : public CBaseToggle
 {
     DECLARE_CLASS( CBaseTrigger, CBaseToggle );
 
-   public:
+    public:
     CBaseTrigger();
 
     void Activate( void );
@@ -90,7 +90,7 @@ class CBaseTrigger : public CBaseToggle
     string_t m_iFilterName;
     CHandle< class CBaseFilter > m_hFilter;
 
-   protected:
+    protected:
     // Outputs
     COutputEvent m_OnStartTouch;
     COutputEvent m_OnStartTouchAll;
@@ -114,7 +114,7 @@ class CTriggerMultiple : public CBaseTrigger
 {
     DECLARE_CLASS( CTriggerMultiple, CBaseTrigger );
 
-   public:
+    public:
     void Spawn( void );
     void MultiTouch( CBaseEntity *pOther );
     void MultiWaitOver( void );
@@ -140,7 +140,7 @@ class CBaseVPhysicsTrigger : public CBaseEntity
 {
     DECLARE_CLASS( CBaseVPhysicsTrigger, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Spawn();
@@ -159,7 +159,7 @@ class CBaseVPhysicsTrigger : public CBaseEntity
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   protected:
+    protected:
     bool m_bDisabled;
     string_t m_iFilterName;
     CHandle< class CBaseFilter > m_hFilter;
@@ -176,7 +176,7 @@ class CTriggerHurtShim : public CBaseTrigger
     virtual void RadiationThink( void ) = 0;
     virtual void HurtThink( void ) = 0;
 
-   public:
+    public:
     void RadiationThinkShim( void )
     {
         RadiationThink();
@@ -190,7 +190,7 @@ class CTriggerHurtShim : public CBaseTrigger
 DECLARE_AUTO_LIST( ITriggerHurtAutoList );
 class CTriggerHurt : public CTriggerHurtShim, public ITriggerHurtAutoList
 {
-   public:
+    public:
     CTriggerHurt()
     {
         // This field came along after levels were built so the field defaults to 20 here in the constructor.

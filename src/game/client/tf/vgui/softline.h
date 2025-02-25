@@ -16,7 +16,7 @@ class SoftLine : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( SoftLine, vgui::Panel );
 
-   public:
+    public:
     SoftLine( vgui::Panel *parent, const char *panelName, Color col );
     virtual void Paint();
     void DrawSoftLine( float x, float y, float x2, float y2, Color c );

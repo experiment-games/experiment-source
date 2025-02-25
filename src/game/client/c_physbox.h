@@ -16,7 +16,7 @@
 
 class C_PhysBox : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_PhysBox, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -24,7 +24,7 @@ class C_PhysBox : public C_BaseEntity
     virtual ~C_PhysBox();
     virtual ShadowType_t ShadowCastType();
 
-   public:
+    public:
     float m_mass;  // TEST..
 };
 

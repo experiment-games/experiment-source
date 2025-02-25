@@ -22,7 +22,7 @@
 
 class CWeaponShotgun : public CWeaponSDKBase
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponShotgun, CWeaponSDKBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -38,7 +38,7 @@ class CWeaponShotgun : public CWeaponSDKBase
         return WEAPON_SHOTGUN;
     }
 
-   private:
+    private:
     CWeaponShotgun( const CWeaponShotgun & );
 
     float m_flPumpTime;

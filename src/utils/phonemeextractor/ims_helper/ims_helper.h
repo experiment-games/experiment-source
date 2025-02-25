@@ -18,7 +18,7 @@
 
 class IImsHelper
 {
-   public:
+    public:
     // Must be the first function called when using TalkBack.
     virtual TALKBACK_ERR TalkBackStartupLibrary(
         char const *iCoreDataDir ) = 0;  // IN:      full path of folder containing TalkBack data files.
@@ -356,8 +356,8 @@ class IImsHelper
         TALKBACK_PHONEME iPhoneme,     // IN:      enumeration of phoneme to insert.
         long iInsertPosition,          // IN:      position (phoneme number) at which to insert.
         int iInsertBefore ) = 0;       // IN:      manner of insertion:
-                                       //            0 means put phoneme after insert position;
-                                       //            1 means put phoneme before insert position.
+                                        //            0 means put phoneme after insert position;
+                                        //            1 means put phoneme before insert position.
 
     // Deletes the specified phoneme.
     virtual TALKBACK_ERR  // RETURNS: TALKBACK_NOERR if successful, TalkBack error code if not.

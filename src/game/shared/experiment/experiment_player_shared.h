@@ -37,6 +37,6 @@ enum ExperimentPlayerState
 // the same structure for both. Returns true on success. If returns false, the
 // out value will not be set.
 bool PlayerAnimToPlayerAnimEvent( const PLAYER_ANIM playerAnim,
-                                  PlayerAnimEvent_t& outAnimEvent );
+                                PlayerAnimEvent_t& outAnimEvent );
 
 #endif  // Experiment_PLAYER_SHARED_h

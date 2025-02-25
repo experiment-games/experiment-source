@@ -255,7 +255,7 @@ static void UpdatePaintKitItemDefinitionVariables( CMsgPaintKit_ItemDefinition *
 }
 
 bool BConvertPaintKitItemDefinition( google::protobuf::Message *pMsgSource,
-                                     const google::protobuf::Message *pMsgCompiled )
+                                    const google::protobuf::Message *pMsgCompiled )
 {
     auto &header = GetHeaderFromMessage( pMsgCompiled );
     CMsgPaintKit_ItemDefinition *pItemDefMsg = assert_cast< CMsgPaintKit_ItemDefinition * >( pMsgSource );
@@ -294,10 +294,10 @@ KeyValues *HandleOperationToKVMsg( const google::protobuf::Message *pMsg, const 
         return pSubKV;
     }
     else if ( BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_TextureStage::descriptor() ) ||
-              BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_CombineStage::descriptor() ) ||
-              BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_SelectStage::descriptor() ) ||
-              BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_StickerStage::descriptor() ) ||
-              BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_Sticker::descriptor() ) )
+            BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_CombineStage::descriptor() ) ||
+            BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_SelectStage::descriptor() ) ||
+            BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_StickerStage::descriptor() ) ||
+            BMessagesTypesAreTheSame( pMsg->GetDescriptor(), CMsgPaintKit_Operation_Sticker::descriptor() ) )
     {
         if ( !pSubMsg )
         {

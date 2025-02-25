@@ -27,7 +27,7 @@ class IVideoRecorder;
 
 class CReplayRenderer : public IReplayMovieRenderer
 {
-   public:
+    public:
     CReplayRenderer( CReplayRenderOverlay *pOverlay );
     ~CReplayRenderer();
 
@@ -47,7 +47,7 @@ class CReplayRenderer : public IReplayMovieRenderer
     virtual bool IsAudioSyncFrame();
     virtual float GetRecordingFrameDuration();
 
-   private:
+    private:
     bool IsDepthOfFieldEnabled() const;
     bool IsAntialiasingEnabled() const;
     bool IsHDR() const;

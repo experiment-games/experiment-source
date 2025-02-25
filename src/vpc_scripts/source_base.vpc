@@ -12,24 +12,24 @@ $Macro "DEFAULT_RUN_ARGS" "-dev -w 1920 -h 1080 -windowed"
 
 $Configuration "Debug"
 {
-	$Compiler
-	{
-		// Pass on appropriate branch define to preprocessor
-		$PreprocessorDefinitions		"VPC"
-		// Pass /Define:USE_MEM_DEBUG along, as it is off by default (and scattered everywhere)
-		$PreprocessorDefinitions		"$BASE;USE_MEM_DEBUG" [$USE_MEM_DEBUG]
-		$PreprocessorDefinitions		"$BASE;SOURCESDK" [$SOURCESDK]
-		$PreprocessorDefinitions		"$BASE;SOURCE_HAS_FREETYPE"
-	}
+    $Compiler
+    {
+        // Pass on appropriate branch define to preprocessor
+        $PreprocessorDefinitions		"VPC"
+        // Pass /Define:USE_MEM_DEBUG along, as it is off by default (and scattered everywhere)
+        $PreprocessorDefinitions		"$BASE;USE_MEM_DEBUG" [$USE_MEM_DEBUG]
+        $PreprocessorDefinitions		"$BASE;SOURCESDK" [$SOURCESDK]
+        $PreprocessorDefinitions		"$BASE;SOURCE_HAS_FREETYPE"
+    }
 }
 
 $Configuration "Release"
 {
-	$Compiler
-	{
-		// Pass on appropriate branch define to preprocessor
-		$PreprocessorDefinitions		"VPC"
-		$PreprocessorDefinitions		"$BASE;SOURCESDK" [$SOURCESDK]
-		$PreprocessorDefinitions		"$BASE;SOURCE_HAS_FREETYPE"
-	}
+    $Compiler
+    {
+        // Pass on appropriate branch define to preprocessor
+        $PreprocessorDefinitions		"VPC"
+        $PreprocessorDefinitions		"$BASE;SOURCESDK" [$SOURCESDK]
+        $PreprocessorDefinitions		"$BASE;SOURCE_HAS_FREETYPE"
+    }
 }

@@ -58,7 +58,7 @@ struct CaptionLookup_t
 
 class CCaptionLookupLess
 {
-   public:
+    public:
     bool Less( const CaptionLookup_t &lhs, const CaptionLookup_t &rhs, void *pContext )
     {
         return lhs.hash < rhs.hash;

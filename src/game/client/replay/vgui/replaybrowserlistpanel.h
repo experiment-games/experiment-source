@@ -34,7 +34,7 @@ class CReplayListPanel : public PanelListPanel
 {
     DECLARE_CLASS_SIMPLE( CReplayListPanel, PanelListPanel );
 
-   public:
+    public:
     CReplayListPanel( Panel *pParent, const char *pName );
     ~CReplayListPanel();
 
@@ -57,10 +57,10 @@ class CReplayListPanel : public PanelListPanel
 
     void ApplyFilter( const wchar_t *pFilterText );
 
-   protected:
+    protected:
     virtual void OnMouseWheeled( int delta );
 
-   private:
+    private:
     const IQueryableReplayItem *FindItem( ReplayItemHandle_t hItem, int *pItemManagerIndex );
     CBaseThumbnailCollection *FindOrAddReplayThumbnailCollection( const IQueryableReplayItem *pItem, IReplayItemManager *pItemManager );
     CReplayBrowserThumbnail *FindThumbnailAtCursor( int x, int y );

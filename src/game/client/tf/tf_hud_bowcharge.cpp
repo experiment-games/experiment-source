@@ -31,7 +31,7 @@ class CHudBowChargeMeter : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudBowChargeMeter, EditablePanel );
 
-   public:
+    public:
     CHudBowChargeMeter( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -40,7 +40,7 @@ class CHudBowChargeMeter : public CHudElement, public EditablePanel
     virtual void Init( void );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     vgui::ContinuousProgressBar *m_pChargeMeter;
 };
 

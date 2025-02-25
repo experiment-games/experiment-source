@@ -11,16 +11,16 @@ $Include "$SRCDIR\vpc_scripts\source_exe_con_base.vpc"
 
 $Project "VTF Diff"
 {
-	$Folder	"Source Files"
-	{
-		$File	"vtfdiff.cpp"
-	}
+    $Folder	"Source Files"
+    {
+        $File	"vtfdiff.cpp"
+    }
 
-	$Folder	"Link Libraries"
-	{
-		$Lib bitmap
-		$Lib mathlib
-		$Lib tier2
-		$Lib vtf
-	}
+    $Folder	"Link Libraries"
+    {
+        $Lib bitmap
+        $Lib mathlib
+        $Lib tier2
+        $Lib vtf
+    }
 }

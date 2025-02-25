@@ -21,7 +21,7 @@ class C_EnvProjectedTexture : public C_BaseEntity
 {
     DECLARE_CLASS( C_EnvProjectedTexture, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_EnvProjectedTexture();
@@ -38,7 +38,7 @@ class C_EnvProjectedTexture : public C_BaseEntity
 
     float GetFOV();
 
-   private:
+    private:
     ClientShadowHandle_t m_LightHandle;
 
     EHANDLE m_hTargetEntity;
@@ -56,7 +56,7 @@ class C_EnvProjectedTexture : public C_BaseEntity
     int m_nShadowQuality;
     bool m_bCurrentShadow;
 
-   public:
+    public:
     C_EnvProjectedTexture* m_pNext;
 };
 

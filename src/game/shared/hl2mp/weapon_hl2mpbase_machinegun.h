@@ -22,7 +22,7 @@
 //=========================================================
 class CHL2MPMachineGun : public CBaseHL2MPCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPMachineGun, CBaseHL2MPCombatWeapon );
     DECLARE_DATADESC();
 
@@ -45,10 +45,10 @@ class CHL2MPMachineGun : public CBaseHL2MPCombatWeapon
     // utility function
     static void DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, float maxVerticleKickAngle, float fireDurationTime, float slideLimitTime );
 
-   private:
+    private:
     CHL2MPMachineGun( const CHL2MPMachineGun & );
 
-   protected:
+    protected:
     int m_nShotsFired;  // Number of consecutive shots fired
 
     float m_flNextSoundTime;  // real-time clock of when to make next sound

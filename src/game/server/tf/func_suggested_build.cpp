@@ -34,7 +34,7 @@ class CFuncSuggestedBuild : public CBaseTrigger
 {
     DECLARE_CLASS( CFuncSuggestedBuild, CBaseTrigger );
 
-   public:
+    public:
     CFuncSuggestedBuild();
 
     DECLARE_DATADESC();
@@ -59,7 +59,7 @@ class CFuncSuggestedBuild : public CBaseTrigger
     void OnBuildInAreaNotFacing( CBaseObject &baseObject );
     void OnBuildingUpgraded( CBaseObject &baseObject );
 
-   private:
+    private:
     bool m_bActive;
     int m_iObjectType;
     string_t m_sFaceEntityName;

@@ -32,7 +32,7 @@ static const ExternalTestBuffer_t k_unExternalTestBufferInvalid = 0;
 //-----------------------------------------------------------------------------
 class IExternalTestClient
 {
-   public:
+    public:
     virtual ~IExternalTestClient() {}
     virtual void *GetISteamGenericInterface( const char *pchInterfaceVersion ) = 0;
     virtual ISteamUserStats *GetISteamUserStats( const char *pchVersion ) = 0;
@@ -95,7 +95,7 @@ class IExternalTestClient
 //-----------------------------------------------------------------------------
 class IExternalTestUtils
 {
-   public:
+    public:
     virtual ~IExternalTestUtils() {}
 
     // creates a single user client that is logged into an optional gameserver
@@ -223,7 +223,7 @@ class IExternalTestUtils
 //-----------------------------------------------------------------------------
 class IExternalTest
 {
-   public:
+    public:
     // returns the number of tests present in this DLL
     virtual uint32 GetTestCount() = 0;
 
@@ -258,7 +258,7 @@ static const uint32 k_unETFlag_ValidForRegression = 1 << 1;
 //-----------------------------------------------------------------------------
 class IExternalTestInitialize
 {
-   public:
+    public:
     virtual bool BDoBundleInit() = 0;                                           // called once *PER ATS* at DLL Load time
     virtual bool BDoOneTimeInit( IExternalTestUtils *pExternalTestUtils ) = 0;  // called once PER TEST RUN by ATS0
     virtual bool BDoPerATSInit( IExternalTestUtils *pExternalTestUtils ) = 0;   // called once PER TEST RUN PER ATS
@@ -272,7 +272,7 @@ class IExternalTestInitialize
 //-----------------------------------------------------------------------------
 class IExternalTestValidation
 {
-   public:
+    public:
     virtual void Validate( CValidator &validator, const char *pchName ) = 0;
 };
 #define EXTERNALTEST_VALIDATION_INTERFACE_VERSION "IExternalTestValidation001"

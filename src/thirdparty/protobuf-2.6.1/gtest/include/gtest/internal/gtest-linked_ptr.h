@@ -90,7 +90,7 @@ GTEST_API_ GTEST_DECLARE_STATIC_MUTEX_( g_linked_ptr_mutex );
 // DO NOT USE THIS CLASS DIRECTLY YOURSELF.  Use linked_ptr<T>.
 class linked_ptr_internal
 {
-   public:
+    public:
     // Create a new circle that includes only this instance.
     void join_new()
     {
@@ -134,14 +134,14 @@ class linked_ptr_internal
         return false;
     }
 
-   private:
+    private:
     mutable linked_ptr_internal const* next_;
 };
 
 template < typename T >
 class linked_ptr
 {
-   public:
+    public:
     typedef T element_type;
 
     // Take over ownership of a raw pointer.  This should happen as soon as
@@ -224,7 +224,7 @@ class linked_ptr
         return value_ != ptr.get();
     }
 
-   private:
+    private:
     template < typename U >
     friend class linked_ptr;
 

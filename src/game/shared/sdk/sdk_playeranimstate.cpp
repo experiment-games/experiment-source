@@ -51,7 +51,7 @@
 
 class CSDKPlayerAnimState : public CBasePlayerAnimState, public ISDKPlayerAnimState
 {
-   public:
+    public:
     DECLARE_CLASS( CSDKPlayerAnimState, CBasePlayerAnimState );
     friend ISDKPlayerAnimState *CreatePlayerAnimState( CBaseAnimatingOverlay *pEntity, ISDKPlayerAnimStateHelpers *pHelpers, LegAnimType_t legAnimType, bool bUseAimSequences );
 
@@ -70,7 +70,7 @@ class CSDKPlayerAnimState : public CBasePlayerAnimState, public ISDKPlayerAnimSt
 
     void InitSDK( CBaseAnimatingOverlay *pPlayer, ISDKPlayerAnimStateHelpers *pHelpers, LegAnimType_t legAnimType, bool bUseAimSequences );
 
-   protected:
+    protected:
     int CalcFireLayerSequence( PlayerAnimEvent_t event );
     void ComputeFireSequence( CStudioHdr *pStudioHdr );
 
@@ -88,7 +88,7 @@ class CSDKPlayerAnimState : public CBasePlayerAnimState, public ISDKPlayerAnimSt
 
     void UpdateLayerSequenceGeneric( CStudioHdr *pStudioHdr, int iLayer, bool &bEnabled, float &flCurCycle, int &iSequence, bool bWaitAtEnd );
 
-   private:
+    private:
     // Current state variables.
     bool m_bJumping;  // Set on a jump event.
     float m_flJumpStartTime;
@@ -101,7 +101,7 @@ class CSDKPlayerAnimState : public CBasePlayerAnimState, public ISDKPlayerAnimSt
 
     // This is set to true if ANY animation is being played in the fire layer.
     bool m_bFiring;       // If this is on, then it'll continue the fire animation in the fire layer
-                          // until it completes.
+                        // until it completes.
     int m_iFireSequence;  // (For any sequences in the fire layer, including grenade throw).
     float m_flFireCycle;
 
@@ -160,7 +160,7 @@ void CSDKPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
     Assert( event != PLAYERANIMEVENT_THROW_GRENADE );
 
     if ( event == PLAYERANIMEVENT_FIRE_GUN_PRIMARY ||
-         event == PLAYERANIMEVENT_FIRE_GUN_SECONDARY )
+        event == PLAYERANIMEVENT_FIRE_GUN_SECONDARY )
     {
         // Regardless of what we're doing in the fire layer, restart it.
         m_flFireCycle = 0;
@@ -223,15 +223,15 @@ int CSDKPlayerAnimState::CalcReloadLayerSequence()
 
     // SDKTODO
     /*
-      // Ok, look for generic categories.. pistol, shotgun, rifle, etc.
-      if ( pWeapon->GetSDKWpnData().m_WeaponType == WEAPONTYPE_PISTOL )
-      {
+    // Ok, look for generic categories.. pistol, shotgun, rifle, etc.
+    if ( pWeapon->GetSDKWpnData().m_WeaponType == WEAPONTYPE_PISTOL )
+    {
         Q_snprintf( szName, sizeof( szName ), "reload_pistol" );
         iReloadSequence = m_pOuter->LookupSequence( szName );
         if ( iReloadSequence != -1 )
-          return iReloadSequence;
-      }
-      */
+        return iReloadSequence;
+    }
+    */
 
     // Fall back to reload_m4.
     iReloadSequence = CalcSequenceIndex( "reload_m4" );

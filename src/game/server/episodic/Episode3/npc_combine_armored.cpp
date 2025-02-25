@@ -22,7 +22,7 @@ class CArmorPiece : public CBaseAnimating
 {
     DECLARE_CLASS( CArmorPiece, CBaseAnimating );
 
-   public:
+    public:
     void Spawn( void )
     {
         BaseClass::Spawn();
@@ -63,7 +63,7 @@ class CNPC_Combine_Armored : public CNPC_CombineS
 {
     DECLARE_CLASS( CNPC_Combine_Armored, CNPC_CombineS );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 

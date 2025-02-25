@@ -386,8 +386,8 @@ void CTFStorePreviewItemPanelBase::SetState( preview_state_t iState )
 int CTFStorePreviewItemPanelBase::GetPreviewTeam() const
 {
     return m_pPlayerModelPanel
-               ? m_pPlayerModelPanel->GetTeam()
-               : TF_TEAM_RED;
+                ? m_pPlayerModelPanel->GetTeam()
+                : TF_TEAM_RED;
 }
 
 //-----------------------------------------------------------------------------

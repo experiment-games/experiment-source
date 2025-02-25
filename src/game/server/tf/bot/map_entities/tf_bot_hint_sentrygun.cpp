@@ -32,7 +32,7 @@ bool CTFBotHintSentrygun::IsAvailableForSelection( CTFPlayer *pRequestingPlayer 
     // sentry hint is eligible as long as there is no owner (or the owner is no longer an engineer)
     // if the hint is enabled and the hint is not in use and it is on the same team as me
     if ( ( GetPlayerOwner() == NULL || !GetPlayerOwner()->IsPlayerClass( TF_CLASS_ENGINEER ) ) &&
-         ( IsEnabled() && IsInUse() == false && InSameTeam( pRequestingPlayer ) ) )
+        ( IsEnabled() && IsInUse() == false && InSameTeam( pRequestingPlayer ) ) )
     {
         return true;
     }

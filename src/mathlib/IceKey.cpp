@@ -11,7 +11,7 @@
 /* Structure of a single round subkey */
 class IceSubkey
 {
-   public:
+    public:
     unsigned long val[3];
 };
 

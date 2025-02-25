@@ -27,10 +27,10 @@ using namespace vgui;
 
 class CTFWinPanel : public EditablePanel, public CHudElement
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFWinPanel, EditablePanel );
 
-   public:
+    public:
     CTFWinPanel( const char *pElementName );
 
     virtual void Reset();
@@ -47,10 +47,10 @@ class CTFWinPanel : public EditablePanel, public CHudElement
         return 70;
     }
 
-   private:
+    private:
     void UpdateTeamInfo();
 
-   private:
+    private:
     EditablePanel *m_pTeamScorePanel;
     CExLabel *m_pRedTeamName;
     CExLabel *m_pBlueTeamName;

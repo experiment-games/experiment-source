@@ -814,9 +814,9 @@ void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_B
         {
             int nTeam;
             if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND ||
-                 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
-                 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
-                 pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
+                pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
+                pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
+                pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
             {
                 nTeam = ( ( GetLocalPlayerTeam() == TF_TEAM_BLUE ) ? ( TF_TEAM_BLUE ) : ( TF_TEAM_RED ) );
             }
@@ -1387,13 +1387,13 @@ bool CTFFlagCalloutPanel::ShouldShowFlagIconToLocalPlayer( void )
 
     // In "show all" mode, don't show flags on the local player's team that are being carried
     if ( m_hFlag->IsStolen() &&
-         m_hFlag->InSameTeam( pLocalTFPlayer ) &&
-         nDisplayMode == FLAG_CALLER_DISPLAY_ALL )
+        m_hFlag->InSameTeam( pLocalTFPlayer ) &&
+        nDisplayMode == FLAG_CALLER_DISPLAY_ALL )
         return false;
 
     // In all other modes, don't show flags on the local player's team
     if ( m_hFlag->InSameTeam( pLocalTFPlayer ) &&
-         nDisplayMode < FLAG_CALLER_DISPLAY_ALL )
+        nDisplayMode < FLAG_CALLER_DISPLAY_ALL )
         return false;
 
     // Don't show the player running this flag

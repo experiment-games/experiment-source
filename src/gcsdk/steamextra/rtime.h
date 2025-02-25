@@ -50,7 +50,7 @@ enum ETimeUnit
 // This represents wall clock time
 class CRTime
 {
-   public:
+    public:
     // default constructor initializes to the current time
     CRTime();
     CRTime( RTime32 nTime )
@@ -269,7 +269,7 @@ class CRTime
         return m_bGMT;
     }
 
-   private:
+    private:
     // prevent assignment or copy construction from the server time type
     const CRTime &operator=( const CSTime &val )
     {

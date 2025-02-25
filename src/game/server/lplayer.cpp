@@ -714,9 +714,9 @@ LUA_BINDING_BEGIN( Player, GiveItem, "class", "Give the named weapon to the play
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     CBaseEntity::PushLuaInstanceSafe( L,
-                                      player->GiveNamedItem(
-                                          LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ),
-                                          LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, 0, "amount" ) ) );
+                                    player->GiveNamedItem(
+                                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "name" ),
+                                        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optinteger, 3, 0, "amount" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The item given to the player." )

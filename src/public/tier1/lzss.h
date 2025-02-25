@@ -25,7 +25,7 @@ class CUtlBuffer;
 
 class CLZSS
 {
-   public:
+    public:
     unsigned char *Compress( const unsigned char *pInput, int inputlen, unsigned int *pOutputSize );
     unsigned char *CompressNoAlloc( const unsigned char *pInput, int inputlen, unsigned char *pOutput, unsigned int *pOutputSize );
     unsigned int Uncompress( const unsigned char *pInput, unsigned char *pOutput );
@@ -38,7 +38,7 @@ class CLZSS
     // windowsize must be a power of two.
     FORCEINLINE CLZSS( int nWindowSize = DEFAULT_LZSS_WINDOW_SIZE );
 
-   private:
+    private:
     // expected to be sixteen bytes
     struct lzss_node_t
     {

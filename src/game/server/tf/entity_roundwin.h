@@ -17,7 +17,7 @@
 
 class CTeamplayRoundWin : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTeamplayRoundWin, CPointEntity );
 
     CTeamplayRoundWin();
@@ -25,10 +25,10 @@ class CTeamplayRoundWin : public CPointEntity
     // Input
     void InputRoundWin( inputdata_t &inputdata );
 
-   private:
+    private:
     void RoundWin( void );
 
-   private:
+    private:
     bool m_bForceMapReset;
     bool m_bSwitchTeamsOnWin;
     int m_iWinReason;

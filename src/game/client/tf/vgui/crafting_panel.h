@@ -36,10 +36,10 @@ class CImageButton;
 //-----------------------------------------------------------------------------
 class CRecipeButton : public CExButton
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CRecipeButton, CExButton );
 
-   public:
+    public:
     CRecipeButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
         : CExButton( parent, name, text, pActionSignalTarget, cmd )
     {
@@ -69,7 +69,7 @@ class CRecipeButton : public CExButton
         BaseClass::OnCursorExited();
     }
 
-   public:
+    public:
     int m_iRecipeDefIndex;
 };
 
@@ -80,7 +80,7 @@ class CCraftingPanel : public CBaseLoadoutPanel
 {
     DECLARE_CLASS_SIMPLE( CCraftingPanel, CBaseLoadoutPanel );
 
-   public:
+    public:
     CCraftingPanel( vgui::Panel *parent, const char *panelName );
     ~CCraftingPanel( void );
 
@@ -136,7 +136,7 @@ class CCraftingPanel : public CBaseLoadoutPanel
 
     virtual ConVar *GetExplanationConVar( void );
 
-   private:
+    private:
     // Items in the input model panels
     itemid_t m_InputItems[CRAFTING_SLOTS_INPUTPANELS];
     const CItemSelectionCriteria *m_ItemPanelCriteria[CRAFTING_SLOTS_INPUTPANELS];
@@ -188,7 +188,7 @@ class CCraftingStatusDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCraftingStatusDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CCraftingStatusDialog( vgui::Panel *pParent, const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -197,7 +197,7 @@ class CCraftingStatusDialog : public vgui::EditablePanel
     void UpdateSchemeForVersion( bool bRecipe );
     void ShowStatusUpdate( bool bAnimateEllipses, bool bAllowed, bool bShowOnExit );
 
-   private:
+    private:
     bool m_bShowOnExit;
     bool m_bAnimateEllipses;
     int m_iNumEllipses;

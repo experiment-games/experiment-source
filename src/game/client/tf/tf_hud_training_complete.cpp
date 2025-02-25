@@ -46,10 +46,10 @@ extern CAchievementMgr g_AchievementMgrTF;  // global achievement mgr for TF
 
 class CTFTrainingComplete : public EditablePanel, public CHudElement
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFTrainingComplete, EditablePanel );
 
-   public:
+    public:
     CTFTrainingComplete( const char *pElementName );
 
     virtual void Reset();
@@ -67,11 +67,11 @@ class CTFTrainingComplete : public EditablePanel, public CHudElement
         return 70;
     }
 
-   protected:
+    protected:
     // vgui overrides
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     void SetUpResults( IGameEvent *event );
 
     CExButton *m_pReplay;

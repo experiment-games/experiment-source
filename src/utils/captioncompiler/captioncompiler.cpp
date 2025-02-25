@@ -163,9 +163,9 @@ void printusage( void )
 {
     vprint( 0,
             "usage:  captioncompiler closecaptionfile.txt\n\
-		\t-v = verbose output\n\
-		\t-l = log to file log.txt\n\
-		\ne.g.:  kvc -l u:/xbox/game/hl2x/resource/closecaption_english.txt" );
+        \t-v = verbose output\n\
+        \t-l = log to file log.txt\n\
+        \ne.g.:  kvc -l u:/xbox/game/hl2x/resource/closecaption_english.txt" );
 
     // Exit app
     exit( 1 );
@@ -196,7 +196,7 @@ class CCompileCaptionsApp : public CTier3SteamApp
 {
     typedef CTier3SteamApp BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool Create();
     virtual bool PreInit();
@@ -204,7 +204,7 @@ class CCompileCaptionsApp : public CTier3SteamApp
     virtual void PostShutdown();
     virtual void Destroy();
 
-   private:
+    private:
     // Sets up the search paths
     bool SetupSearchPaths();
 
@@ -414,7 +414,7 @@ void CCompileCaptionsApp::CompileCaptionFile( char const *infile, char const *ou
     // Jeep: this function no longer exisits
     /*if ( bX360 )
     {
-      UpdateOrCreateCaptionFile_X360( g_pFullFileSystem, outfile, NULL, true );
+    UpdateOrCreateCaptionFile_X360( g_pFullFileSystem, outfile, NULL, true );
     }*/
 }
 

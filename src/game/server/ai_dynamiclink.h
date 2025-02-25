@@ -33,7 +33,7 @@ class CAI_DynamicLink : public CServerOnlyEntity
 {
     DECLARE_CLASS( CAI_DynamicLink, CServerOnlyEntity );
 
-   public:
+    public:
     static void InitDynamicLinks( void );
     static void ResetDynamicLinks( void );
     static void PurgeDynamicLinks( void );
@@ -84,7 +84,7 @@ class CAI_DynamicLinkController : public CServerOnlyEntity
 {
     DECLARE_CLASS( CAI_DynamicLinkController, CServerOnlyEntity );
 
-   public:
+    public:
     void GenerateLinksFromVolume();
 
     // ----------------
@@ -110,13 +110,13 @@ class CAI_RadialLinkController : public CBaseEntity
 {
     DECLARE_CLASS( CAI_RadialLinkController, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
     void Activate();
     void PollMotionThink();
     void ModifyNodeLinks( bool bMakeStale );
 
-   public:
+    public:
     float m_flRadius;
     Vector m_vecAtRestOrigin;
     bool m_bAtRest;

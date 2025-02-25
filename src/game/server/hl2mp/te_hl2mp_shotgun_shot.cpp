@@ -20,14 +20,14 @@
 //-----------------------------------------------------------------------------
 class CTEHL2MPFireBullets : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEHL2MPFireBullets, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
     CTEHL2MPFireBullets( const char *name );
     virtual ~CTEHL2MPFireBullets( void );
 
-   public:
+    public:
     CNetworkVar( int, m_iPlayer );
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecDir );

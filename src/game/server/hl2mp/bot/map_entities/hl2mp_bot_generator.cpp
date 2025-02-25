@@ -316,37 +316,37 @@ void CHL2MPBotGenerator::SpawnBot( void )
 
         // XXX(misyl): TODO!!!!!
 #if 0
-		// pick a team and force the team change
-		// HandleCommand_JoinTeam() may fail, but this should always succeed
-		int iTeam = TEAM_UNASSIGNED;
-		if ( FStrEq( m_teamName.ToCStr(), "auto" ) )
-		{
-			iTeam = bot->GetAutoTeam();
-		}
-		else if ( FStrEq( m_teamName.ToCStr(), "spectate" ) )
-		{
-			iTeam = TEAM_SPECTATOR;
-		}
-		else
-		{
-			for ( int i = 0; i < TF_TEAM_COUNT; ++i )
-			{
-				COMPILE_TIME_ASSERT( TF_TEAM_COUNT == ARRAYSIZE( g_aTeamNames ) );
-				if ( FStrEq( m_teamName.ToCStr(), g_aTeamNames[i] ) )
-				{
-					iTeam = i;
-					break;
-				}
-			}
-		}
-		if ( iTeam == TEAM_UNASSIGNED )
-		{
-			iTeam = bot->GetAutoTeam();
-		}
-		bot->ChangeTeam( iTeam, false, false );
-		
-		const char* pClassName =  m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
-		bot->HandleCommand_JoinClass( pClassName );
+        // pick a team and force the team change
+        // HandleCommand_JoinTeam() may fail, but this should always succeed
+        int iTeam = TEAM_UNASSIGNED;
+        if ( FStrEq( m_teamName.ToCStr(), "auto" ) )
+        {
+            iTeam = bot->GetAutoTeam();
+        }
+        else if ( FStrEq( m_teamName.ToCStr(), "spectate" ) )
+        {
+            iTeam = TEAM_SPECTATOR;
+        }
+        else
+        {
+            for ( int i = 0; i < TF_TEAM_COUNT; ++i )
+            {
+                COMPILE_TIME_ASSERT( TF_TEAM_COUNT == ARRAYSIZE( g_aTeamNames ) );
+                if ( FStrEq( m_teamName.ToCStr(), g_aTeamNames[i] ) )
+                {
+                    iTeam = i;
+                    break;
+                }
+            }
+        }
+        if ( iTeam == TEAM_UNASSIGNED )
+        {
+            iTeam = bot->GetAutoTeam();
+        }
+        bot->ChangeTeam( iTeam, false, false );
+
+        const char* pClassName =  m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
+        bot->HandleCommand_JoinClass( pClassName );
 #endif
 
         if ( bot->IsAlive() == false )

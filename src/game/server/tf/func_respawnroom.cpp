@@ -28,7 +28,7 @@ class CFuncRespawnRoomVisualizer : public CFuncBrush, public IFuncRespawnRoomVis
 {
     DECLARE_CLASS( CFuncRespawnRoomVisualizer, CFuncBrush );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -50,7 +50,7 @@ class CFuncRespawnRoomVisualizer : public CFuncBrush, public IFuncRespawnRoomVis
 
     void SetActive( bool bActive );
 
-   protected:
+    protected:
     string_t m_iszRespawnRoomName;
     CHandle< CFuncRespawnRoom > m_hRespawnRoom;
     bool m_bSolid;

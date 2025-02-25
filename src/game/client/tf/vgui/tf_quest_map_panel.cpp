@@ -35,7 +35,7 @@ extern ConVar tf_quest_map_zoom_rest_scale;
 
 class CQuestMapTooltip : public CTFTextToolTip
 {
-   public:
+    public:
     CQuestMapTooltip( vgui::Panel* parent )
         : CTFTextToolTip( parent ) {}
     // Force the panel to reposition itself every frame.  If the tooltip is coming
@@ -673,8 +673,8 @@ void CQuestMapPanel::FireGameEvent( IGameEvent* event )
         auto& msgReport = GetQuestMapController().GetMostRecentProgressReport();
 
         auto lambdaShowGainsOverPanel = [&]( const char* pszPanelName,
-                                             const char* pszToken,
-                                             int nGain )
+                                            const char* pszToken,
+                                            int nGain )
         {
             Panel* pPanel = m_pMapAreaPanel->FindChildByName( pszPanelName, true );
             if ( pPanel && nGain )
@@ -683,13 +683,13 @@ void CQuestMapPanel::FireGameEvent( IGameEvent* event )
                 pPanel->GetPos( nX, nY );
                 pPanel->ParentLocalToScreen( nX, nY );
                 CreateScrollingIndicator( nX,
-                                          nY - YRES( 20 ),
-                                          LocalizeNumberWithToken( pszToken, nGain ),
-                                          "MatchMaking.XPChime",
-                                          0.f,
-                                          0,
-                                          -25,
-                                          true );
+                                        nY - YRES( 20 ),
+                                        LocalizeNumberWithToken( pszToken, nGain ),
+                                        "MatchMaking.XPChime",
+                                        0.f,
+                                        0,
+                                        -25,
+                                        true );
             }
         };
 
@@ -995,7 +995,7 @@ void CQuestMapPanel::UpdateControls( bool bIgnoreInvalidLayout )
         return;
 
     if ( !steamapicontext ||
-         !steamapicontext->SteamUser() )
+        !steamapicontext->SteamUser() )
     {
         return;
     }
@@ -1035,29 +1035,29 @@ void CQuestMapPanel::UpdateControls( bool bIgnoreInvalidLayout )
         }
 
         m_vecRewardsShopItemPanels.SortPredicate( []( const CQuestMapItemAdPanel* pLeft, const CQuestMapItemAdPanel* pRight )
-                                                  {
-			uint32 nLeftGrup = pLeft->GetDefinition()->GetTypedMsg().sort_group();
-			uint32 nRightGrup = pRight->GetDefinition()->GetTypedMsg().sort_group();
+                                                {
+            uint32 nLeftGrup = pLeft->GetDefinition()->GetTypedMsg().sort_group();
+            uint32 nRightGrup = pRight->GetDefinition()->GetTypedMsg().sort_group();
 
-			if ( nLeftGrup != nRightGrup )
-				return nLeftGrup < nRightGrup;
+            if ( nLeftGrup != nRightGrup )
+                return nLeftGrup < nRightGrup;
 
-			uint8 rarityLeft = pLeft->GetItem().GetRarity();
-			uint8 rarityRight = pRight->GetItem().GetRarity();
+            uint8 rarityLeft = pLeft->GetItem().GetRarity();
+            uint8 rarityRight = pRight->GetItem().GetRarity();
 
-			if ( rarityLeft != rarityRight )
-				return rarityLeft < rarityRight;
+            if ( rarityLeft != rarityRight )
+                return rarityLeft < rarityRight;
 
 
-			CUtlString strLeft = CStrAutoEncode( pLeft->GetItem().GetItemName() ).ToString();
-			CUtlString strRight = CStrAutoEncode( pRight->GetItem().GetItemName() ).ToString();
+            CUtlString strLeft = CStrAutoEncode( pLeft->GetItem().GetItemName() ).ToString();
+            CUtlString strRight = CStrAutoEncode( pRight->GetItem().GetItemName() ).ToString();
 
-			int nDif = V_strnicmp( strLeft, strRight, Min( V_strlen( strLeft ), V_strlen( strRight ) ) );
+            int nDif = V_strnicmp( strLeft, strRight, Min( V_strlen( strLeft ), V_strlen( strRight ) ) );
 
-			if ( nDif == 0 )
-				return false;
+            if ( nDif == 0 )
+                return false;
 
-			return nDif < 0; } );
+            return nDif < 0; } );
     }
     else
     {

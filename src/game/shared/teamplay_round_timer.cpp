@@ -959,7 +959,7 @@ void CTeamRoundTimer::RoundTimerThink( void )
 
     // Don't do anything when the game has been won or if we're loading a bugbait report
     if ( TeamplayRoundBasedRules()->RoundHasBeenWon() ||
-         TeamplayRoundBasedRules()->IsLoadingBugBaitReport() )
+        TeamplayRoundBasedRules()->IsLoadingBugBaitReport() )
     {
         // We want to stop timers when the round has been won, but we don't want to
         // force mapmakers to deal with having to unpause it. This little hack works around that.

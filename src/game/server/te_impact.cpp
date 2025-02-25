@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEImpact : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEImpact, CBaseTempEntity );
 
     DECLARE_SERVERCLASS();
@@ -32,7 +32,7 @@ class CTEImpact : public CBaseTempEntity
     void Precache( void );
     void Test( const Vector& current_origin, const Vector& current_normal );
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecNormal );  // NOTENOTE: In a multi-play setup we'll probably want non-oriented effects for bandwidth
     CNetworkVar( int, m_iType );

@@ -258,7 +258,7 @@ void CChoreoActor::SaveToBuffer( CUtlBuffer &buf, CChoreoScene *pScene, IChoreoS
     /*
     if ( Q_strlen( a->GetFacePoserModelName() ) > 0 )
     {
-      FilePrintf( buf, level + 1, "faceposermodel \"%s\"\n", a->GetFacePoserModelName() );
+    FilePrintf( buf, level + 1, "faceposermodel \"%s\"\n", a->GetFacePoserModelName() );
     }
     */
     buf.PutChar( GetActive() ? 1 : 0 );

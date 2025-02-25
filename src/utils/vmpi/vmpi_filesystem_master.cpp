@@ -102,7 +102,7 @@ RETRY:;
 
 class CVMPIFile_PassThru : public IVMPIFile
 {
-   public:
+    public:
     void Init( IBaseFileSystem *pPassThru, FileHandle_t fp )
     {
         m_pPassThru = pPassThru;
@@ -145,7 +145,7 @@ class CVMPIFile_PassThru : public IVMPIFile
         return m_pPassThru->Write( pInput, size, m_fp );
     }
 
-   private:
+    private:
     IBaseFileSystem *m_pPassThru;
     FileHandle_t m_fp;
 };
@@ -162,7 +162,7 @@ static char s_cTransmitRateMgrPacket[] = { 2, 6, -3, 2, 1, -66 };
 
 class CTransmitRateMgr
 {
-   public:
+    public:
     CTransmitRateMgr();
 
     void ReadPackets();
@@ -170,10 +170,10 @@ class CTransmitRateMgr
 
     double GetMicrosecondsPerByte() const;
 
-   private:
+    private:
     class CMachineRecord
     {
-       public:
+        public:
         unsigned long m_UniqueID;
         float m_flLastTime;
     };
@@ -222,7 +222,7 @@ void CTransmitRateMgr::ReadPackets()
             break;
 
         if ( len == sizeof( s_cTransmitRateMgrPacket ) + sizeof( unsigned long ) &&
-             memcmp( data, s_cTransmitRateMgrPacket, sizeof( s_cTransmitRateMgrPacket ) ) == 0 )
+            memcmp( data, s_cTransmitRateMgrPacket, sizeof( s_cTransmitRateMgrPacket ) ) == 0 )
         {
             unsigned long id = *( ( unsigned long * )&data[sizeof( s_cTransmitRateMgrPacket )] );
             if ( id == m_UniqueID )
@@ -293,13 +293,13 @@ inline double CTransmitRateMgr::GetMicrosecondsPerByte() const
 
 class CRateLimiter
 {
-   public:
+    public:
     CRateLimiter();
 
     void GiveUpTimeSlice();
     void NoteExcessTimeTaken( unsigned long excessTimeInMicroseconds );
 
-   public:
+    public:
     DWORD m_SleepIntervalMS;  // Give up a timeslice every N milliseconds.
 
     // Since we sleep once in a while, we time how long the sleep took and we beef
@@ -370,7 +370,7 @@ void CRateLimiter::NoteExcessTimeTaken( unsigned long excessTimeInMicroseconds )
 
 class CMasterMulticastThread
 {
-   public:
+    public:
     CMasterMulticastThread();
     ~CMasterMulticastThread();
 
@@ -400,10 +400,10 @@ class CMasterMulticastThread
 
     void CreateVirtualFile( const char *pFilename, const void *pData, unsigned long fileLength );
 
-   private:
+    private:
     class CChunkInfo
     {
-       public:
+        public:
         unsigned short m_iChunk;
         unsigned short m_RefCount;            // How many clients want this chunk.
         unsigned short m_iActiveChunksIndex;  // Index into m_ActiveChunks.
@@ -412,13 +412,13 @@ class CMasterMulticastThread
     // This stores a client's reference to a file so it knows which pieces of the file the client needs.
     class CClientFileInfo
     {
-       public:
+        public:
         bool NeedsChunk( int i ) const
         {
             return ( m_ChunksToSend[i >> 3] & ( 1 << ( i & 7 ) ) ) != 0;
         }
 
-       public:
+        public:
         int m_ClientID;
         CUtlVector< unsigned char > m_ChunksToSend;  // One bit for each chunk that this client still wants.
         int m_nChunksLeft;
@@ -430,16 +430,16 @@ class CMasterMulticastThread
         float m_flTransmitStartTime;
 
         float m_flLastAckTime;   // Last time we heard an ack back from this client about this file.
-                                 // If this goes for too long, then we assume that the client is
-                                 // in a screwed state, and we stop sending the file to him.
+                                // If this goes for too long, then we assume that the client is
+                                // in a screwed state, and we stop sending the file to him.
         int m_nTimesFileCycled;  // How many times has the master multicast thread cycled over this file?
-                                 // We won't kick the client until we've cycled over the file a few times
-                                 // after the client asked for it.
+                                // We won't kick the client until we've cycled over the file a few times
+                                // after the client asked for it.
     };
 
     class CMulticastFile
     {
-       public:
+        public:
         ~CMulticastFile()
         {
             m_Clients.PurgeAndDeleteElements();
@@ -454,7 +454,7 @@ class CMasterMulticastThread
             return m_PathID.Base();
         }
 
-       public:
+        public:
         int m_nCycles;  // How many times has the multicast thread visited this file?
 
         // This is sent along with every packet. If a client gets a chunk and doesn't have that file's
@@ -488,7 +488,7 @@ class CMasterMulticastThread
         CUtlLinkedList< CClientFileInfo *, int > m_Clients;
     };
 
-   private:
+    private:
     static DWORD WINAPI StaticMulticastThread( LPVOID pParameter );
     DWORD MulticastThread();
 
@@ -513,7 +513,7 @@ class CMasterMulticastThread
     bool FindWarningSuppression( const char *pFilename );
     void AddWarningSuppression( const char *pFilename );
 
-   private:
+    private:
     CUtlLinkedList< CMulticastFile *, int > m_Files;
 
     unsigned long m_nCurMemoryUsage;  // Total of all the file data we have loaded.
@@ -901,10 +901,10 @@ bool CMasterMulticastThread::CheckClientTimeouts()
             }
 
             Warning( "\nClient %s timed out on file %s (latest: %.2f / cur: %.2f).\n",
-                     VMPI_GetMachineName( pInfo->m_ClientID ),
-                     pFile->GetFilename(),
-                     flMostRecentTime,
-                     flCurTime );
+                    VMPI_GetMachineName( pInfo->m_ClientID ),
+                    pFile->GetFilename(),
+                    flMostRecentTime,
+                    flCurTime );
             OnClientDisconnect( pInfo->m_ClientID, false );
             bRet = true;  // yes, we booted a client.
         }
@@ -939,9 +939,9 @@ inline bool CMasterMulticastThread::Thread_SendFileChunk_Multicast( int *pnBytes
     bool bSuccess;
 
     if ( m_MulticastAddr.sin_addr.S_un.S_un_b.s_b1 == 127 &&
-         m_MulticastAddr.sin_addr.S_un.S_un_b.s_b2 == 0 &&
-         m_MulticastAddr.sin_addr.S_un.S_un_b.s_b3 == 0 &&
-         m_MulticastAddr.sin_addr.S_un.S_un_b.s_b4 == 1 )
+        m_MulticastAddr.sin_addr.S_un.S_un_b.s_b2 == 0 &&
+        m_MulticastAddr.sin_addr.S_un.S_un_b.s_b3 == 0 &&
+        m_MulticastAddr.sin_addr.S_un.S_un_b.s_b4 == 1 )
     {
         // For some mysterious reason, WSASendTo only sends the first buffer
         // if we're sending to 127.0.0.1 (ie: in local mode).
@@ -986,15 +986,15 @@ inline bool CMasterMulticastThread::Thread_SendFileChunk_Multicast( int *pnBytes
 
             char *lpMsgBuf;
             if ( FormatMessage(
-                     FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                         FORMAT_MESSAGE_FROM_SYSTEM |
-                         FORMAT_MESSAGE_IGNORE_INSERTS,
-                     NULL,
-                     GetLastError(),
-                     MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
-                     ( char * )&lpMsgBuf,
-                     0,
-                     NULL ) )
+                    FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                        FORMAT_MESSAGE_FROM_SYSTEM |
+                        FORMAT_MESSAGE_IGNORE_INSERTS,
+                    NULL,
+                    GetLastError(),
+                    MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),  // Default language
+                    ( char * )&lpMsgBuf,
+                    0,
+                    NULL ) )
             {
                 Warning( "%s", lpMsgBuf );
                 LocalFree( lpMsgBuf );
@@ -1022,7 +1022,7 @@ void CMasterMulticastThread::Thread_SeekToNextActiveChunk()
     while ( 1 )
     {
         if ( m_iCurActiveChunk == m_Files[m_iCurFile]->m_ActiveChunks.InvalidIndex() ||
-             m_Files[m_iCurFile]->m_ActiveChunks[m_iCurActiveChunk]->m_RefCount == 0 )
+            m_Files[m_iCurFile]->m_ActiveChunks[m_iCurActiveChunk]->m_RefCount == 0 )
         {
             // Now check for client timeouts.
             // (This is kicking clients unjustly for some reason.. need to debug).
@@ -1336,7 +1336,7 @@ const CUtlVector< char > &CMasterMulticastThread::GetFileData( int iFile ) const
 
 class CMasterVMPIFileSystem : public CBaseVMPIFileSystem
 {
-   public:
+    public:
     CMasterVMPIFileSystem();
     virtual ~CMasterVMPIFileSystem();
 
@@ -1355,10 +1355,10 @@ class CMasterVMPIFileSystem : public CBaseVMPIFileSystem
     virtual CSysModule *LoadModule( const char *pFileName, const char *pPathID, bool bValidatedDllOnly );
     virtual void UnloadModule( CSysModule *pModule );
 
-   private:
+    private:
     static void OnClientDisconnect( int procID, const char *pReason );
 
-   private:
+    private:
     CMasterMulticastThread m_MasterThread;
     IFileSystem *m_pMasterVMPIFileSystemPassThru;
 

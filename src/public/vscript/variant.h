@@ -68,7 +68,7 @@ enum SVFlags_t
 
 class CVariantDefaultAllocator
 {
-   public:
+    public:
     enum
     {
         ALWAYS_COPY = 0
@@ -88,7 +88,7 @@ class CVariantDefaultAllocator
 template < class CValueAllocator = CVariantDefaultAllocator >
 class CVariantBase
 {
-   public:
+    public:
     CVariantBase()
         : m_flags( 0 ), m_type( FIELD_VOID )
     {
@@ -400,7 +400,7 @@ class CVariantBase
 
     void ConvertToCopiedData( bool silent = false );
 
-   private:
+    private:
     void *Allocate( uint nSize );
     template < typename T >
     T *Allocate();
@@ -827,7 +827,7 @@ inline bool CVariantBase< CValueAllocator >::AssignTo( T *pDest ) const
     }
 
     if ( m_type != FIELD_VECTOR2D && m_type != FIELD_VECTOR && /*m_type != FIELD_VECTOR4D &&*/ m_type != FIELD_QANGLE && m_type != FIELD_QUATERNION && m_type != FIELD_CSTRING &&
-         destType != FIELD_VECTOR2D && destType != FIELD_VECTOR && /*destType != FIELD_VECTOR4D &&*/ destType != FIELD_QANGLE && destType != FIELD_QUATERNION && destType != FIELD_CSTRING )
+        destType != FIELD_VECTOR2D && destType != FIELD_VECTOR && /*destType != FIELD_VECTOR4D &&*/ destType != FIELD_QANGLE && destType != FIELD_QUATERNION && destType != FIELD_CSTRING )
     {
         switch ( m_type )
         {
@@ -856,8 +856,8 @@ inline bool CVariantBase< CValueAllocator >::AssignTo( T *pDest ) const
     else
     {
         Warning( "No free conversion of %s variant to %s right now\n",
-                 VariantFieldTypeName( m_type ),
-                 VariantFieldTypeName< T >() );
+                VariantFieldTypeName( m_type ),
+                VariantFieldTypeName< T >() );
         if ( destType != FIELD_VECTOR )
         {
             *pDest = 0;

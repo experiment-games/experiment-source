@@ -94,7 +94,7 @@ class DiskSourceTree;    // importer.h
 // For a full description of the command-line syntax, invoke it with --help.
 class LIBPROTOC_EXPORT CommandLineInterface
 {
-   public:
+    public:
     CommandLineInterface();
     ~CommandLineInterface();
 
@@ -190,7 +190,7 @@ class LIBPROTOC_EXPORT CommandLineInterface
         version_info_ = text;
     }
 
-   private:
+    private:
     // -----------------------------------------------------------------
 
     class ErrorPrinter;
@@ -232,7 +232,7 @@ class LIBPROTOC_EXPORT CommandLineInterface
 
     // Interprets arguments parsed with ParseArgument.
     ParseArgumentStatus InterpretArgument( const string& name,
-                                           const string& value );
+                                            const string& value );
 
     // Print the --help text to stderr.
     void PrintHelpText();
@@ -240,13 +240,13 @@ class LIBPROTOC_EXPORT CommandLineInterface
     // Generate the given output file from the given input.
     struct OutputDirective;  // see below
     bool GenerateOutput( const vector< const FileDescriptor* >& parsed_files,
-                         const OutputDirective& output_directive,
-                         GeneratorContext* generator_context );
+                        const OutputDirective& output_directive,
+                        GeneratorContext* generator_context );
     bool GeneratePluginOutput( const vector< const FileDescriptor* >& parsed_files,
-                               const string& plugin_name,
-                               const string& parameter,
-                               GeneratorContext* generator_context,
-                               string* error );
+                                const string& plugin_name,
+                                const string& parameter,
+                                GeneratorContext* generator_context,
+                                string* error );
 
     // Implements --encode and --decode.
     bool EncodeOrDecode( const DescriptorPool* pool );

@@ -891,11 +891,11 @@ inline void SetupFPUControlWordForceExceptions()
     uint16 tmpCtrlW;
     __asm
     {
-				fnclex /* clear all current exceptions */
-				fnstcw word ptr [tmpCtrlW] /* get current control word */
-				and [tmpCtrlW], 0FCC0h /* Keep infinity control + rounding control */
-				or [tmpCtrlW], 0230h /* set to 53-bit, mask only inexact, underflow */
-				fldcw word ptr [tmpCtrlW] /* put new control word in FPU */
+                fnclex /* clear all current exceptions */
+                fnstcw word ptr [tmpCtrlW] /* get current control word */
+                and [tmpCtrlW], 0FCC0h /* Keep infinity control + rounding control */
+                or [tmpCtrlW], 0230h /* set to 53-bit, mask only inexact, underflow */
+                fldcw word ptr [tmpCtrlW] /* put new control word in FPU */
     }
 }
 
@@ -914,10 +914,10 @@ inline void SetupFPUControlWord()
     uint16 tmpCtrlW;
     __asm
     {
-					fnstcw word ptr [tmpCtrlW] /* get current control word */
-					and [tmpCtrlW], 0FCC0h /* Keep infinity control + rounding control */
-					or [tmpCtrlW], 023Fh /* set to 53-bit, mask only inexact, underflow */
-					fldcw word ptr [tmpCtrlW] /* put new control word in FPU */
+                    fnstcw word ptr [tmpCtrlW] /* get current control word */
+                    and [tmpCtrlW], 0FCC0h /* Keep infinity control + rounding control */
+                    or [tmpCtrlW], 023Fh /* set to 53-bit, mask only inexact, underflow */
+                    fldcw word ptr [tmpCtrlW] /* put new control word in FPU */
     }
 }
 
@@ -965,7 +965,7 @@ inline void SetupFPUControlWord()
     a;  //	Avoid compiler warning
     __asm
     {
-			mtvscr a;  // Clear the Vector Status & Control Register to zero
+            mtvscr a;  // Clear the Vector Status & Control Register to zero
     }
 }
 
@@ -1337,14 +1337,14 @@ inline uint64 Plat_Rdtsc()
 
 // Protect against bad auto operator=
 #define DISALLOW_OPERATOR_EQUAL( _classname )    \
-   private:                                      \
+    private:                                      \
     _classname &operator=( const _classname & ); \
-                                                 \
-   public:
+                                                \
+    public:
 
 // Define a reasonable operator=
 #define IMPLEMENT_OPERATOR_EQUAL( _classname )      \
-   public:                                          \
+    public:                                          \
     _classname &operator=( const _classname &src )  \
     {                                               \
         memcpy( this, &src, sizeof( _classname ) ); \
@@ -1588,7 +1588,7 @@ inline const char *GetPlatformExt( void )
 
 class CReuseVaList
 {
-   public:
+    public:
     CReuseVaList( va_list List )
     {
 #if defined( LINUX ) || defined( OSX )
@@ -1733,7 +1733,7 @@ constexpr RemoveReference< T > &&Move( T &&arg )
 template < typename LambdaType >
 class CScopeGuardLambdaImpl
 {
-   public:
+    public:
     explicit CScopeGuardLambdaImpl( LambdaType &&lambda )
         : m_lambda( Move( lambda ) ) {}
     ~CScopeGuardLambdaImpl()
@@ -1741,7 +1741,7 @@ class CScopeGuardLambdaImpl
         m_lambda();
     }
 
-   private:
+    private:
     LambdaType m_lambda;
 };
 
@@ -1787,8 +1787,8 @@ CScopeGuardLambdaImpl< LambdaType > MakeScopeGuardLambda( LambdaType &&lambda )
 /*	TEMPLATE_FUNCTION_TABLE()
 
     (Note added to platform.h so platforms that correctly support templated
-   functions can handle portions as templated functions rather than wrapped
-   functions)
+    functions can handle portions as templated functions rather than wrapped
+    functions)
 
   Helps automate the process of creating an array of function
   templates that are all specialized by a single integer.
@@ -1813,7 +1813,7 @@ CScopeGuardLambdaImpl< LambdaType > MakeScopeGuardLambda( LambdaType &&lambda )
   public:
     int Function( int blah, int blah )
     {
-      return argument*argument;
+    return argument*argument;
     }
   }
 
@@ -1844,15 +1844,15 @@ CScopeGuardLambdaImpl< LambdaType > MakeScopeGuardLambda( LambdaType &&lambda )
 PLATFORM_INTERFACE bool vtune( bool resume );
 
 #define TEMPLATE_FUNCTION_TABLE( RETURN_TYPE, NAME, ARGS, COUNT ) \
-                                                                  \
+                                                                \
     typedef RETURN_TYPE( FASTCALL *__Type_##NAME ) ARGS;          \
-                                                                  \
+                                                                \
     template < const int nArgument >                              \
     struct __Function_##NAME                                      \
     {                                                             \
         static RETURN_TYPE FASTCALL Run ARGS;                     \
     };                                                            \
-                                                                  \
+                                                                \
     template < const int i >                                      \
     struct __MetaLooper_##NAME : __MetaLooper_##NAME< i - 1 >     \
     {                                                             \
@@ -1862,7 +1862,7 @@ PLATFORM_INTERFACE bool vtune( bool resume );
             func = __Function_##NAME< i >::Run;                   \
         }                                                         \
     };                                                            \
-                                                                  \
+                                                                \
     template <>                                                   \
     struct __MetaLooper_##NAME< 0 >                               \
     {                                                             \
@@ -1872,13 +1872,13 @@ PLATFORM_INTERFACE bool vtune( bool resume );
             func = __Function_##NAME< 0 >::Run;                   \
         }                                                         \
     };                                                            \
-                                                                  \
+                                                                \
     class NAME                                                    \
     {                                                             \
-       private:                                                   \
+        private:                                                   \
         static const __MetaLooper_##NAME< COUNT > m;              \
-                                                                  \
-       public:                                                    \
+                                                                \
+        public:                                                    \
         enum                                                      \
         {                                                         \
             count = COUNT                                         \
@@ -1911,22 +1911,22 @@ template <typename FUNCPTR_TYPE>
 class CDynamicFunction
 {
 public:
-	CDynamicFunction( const char *pszModule, const char *pszName, FUNCPTR_TYPE pfnFallback = NULL )
-	{
-		m_pfn = pfnFallback;
-		void *pAddr = Plat_GetProcAddress( pszModule, pszName );
-		if ( pAddr )
-		{
-			m_pfn = (FUNCPTR_TYPE)pAddr;
-		}
-	}
+    CDynamicFunction( const char *pszModule, const char *pszName, FUNCPTR_TYPE pfnFallback = NULL )
+    {
+        m_pfn = pfnFallback;
+        void *pAddr = Plat_GetProcAddress( pszModule, pszName );
+        if ( pAddr )
+        {
+            m_pfn = (FUNCPTR_TYPE)pAddr;
+        }
+    }
 
-	operator bool()			{ return m_pfn != NULL;	}
-	bool operator !()		{ return !m_pfn;	}
-	operator FUNCPTR_TYPE()	{ return m_pfn; }
+    operator bool()			{ return m_pfn != NULL;	}
+    bool operator !()		{ return !m_pfn;	}
+    operator FUNCPTR_TYPE()	{ return m_pfn; }
 
 private:
-	FUNCPTR_TYPE m_pfn;
+    FUNCPTR_TYPE m_pfn;
 };
 #endif
 
@@ -2014,7 +2014,7 @@ struct AlignedByteArray_t : public AlignedByteArrayExplicit_t< NUM, T, VALIGNOF_
             return ( const T * )&m_Data;                                                                                                    \
         }                                                                                                                                   \
                                                                                                                                             \
-       private:                                                                                                                             \
+        private:                                                                                                                             \
         byte m_Data[NUM * sizeof( T )];                                                                                                     \
     } ALIGN_N_POST( ALIGN );
 

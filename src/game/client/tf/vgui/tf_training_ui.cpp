@@ -409,10 +409,10 @@ class CTrainingBasePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTrainingBasePanel, EditablePanel );
 
-   public:
+    public:
     CTrainingBasePanel( Panel *pParent, const char *pName )
         : EditablePanel( pParent, pName ),
-          m_pPrevPagePanel( NULL )
+        m_pPrevPagePanel( NULL )
     {
     }
 
@@ -495,18 +495,18 @@ class CTrainingBasePanel : public EditablePanel
             Go();
         }
         else if ( nButtonCode == KEY_XBUTTON_LEFT ||
-                  nButtonCode == KEY_XSTICK1_LEFT ||
-                  nButtonCode == KEY_XSTICK2_LEFT ||
-                  nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-                  nButtonCode == KEY_LEFT )
+                nButtonCode == KEY_XSTICK1_LEFT ||
+                nButtonCode == KEY_XSTICK2_LEFT ||
+                nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
+                nButtonCode == KEY_LEFT )
         {
             GoPrev();
         }
         else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-                  nButtonCode == KEY_XSTICK1_RIGHT ||
-                  nButtonCode == KEY_XSTICK2_RIGHT ||
-                  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-                  nButtonCode == KEY_RIGHT )
+                nButtonCode == KEY_XSTICK1_RIGHT ||
+                nButtonCode == KEY_XSTICK2_RIGHT ||
+                nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
+                nButtonCode == KEY_RIGHT )
         {
             GoNext();
         }
@@ -572,7 +572,7 @@ class CTrainingBasePanel : public EditablePanel
         return false;
     }
 
-   protected:
+    protected:
     CUtlString m_strTitleToken;
     CUtlString m_strSubTitleToken;
     CTrainingBasePanel *m_pPrevPagePanel;
@@ -584,10 +584,10 @@ class CTrainingBaseCarouselPanel : public CTrainingBasePanel
 {
     DECLARE_CLASS_SIMPLE( CTrainingBaseCarouselPanel, CTrainingBasePanel );
 
-   public:
+    public:
     CTrainingBaseCarouselPanel( Panel *pParent, const char *pName )
         : CTrainingBasePanel( pParent, pName ),
-          m_iPage( 0 )
+        m_iPage( 0 )
     {
     }
 
@@ -638,16 +638,16 @@ class CTrainingBaseCarouselPanel : public CTrainingBasePanel
         ButtonCode_t nButtonCode = GetBaseButtonCode( nCode );
 
         if ( nButtonCode == KEY_XBUTTON_LEFT ||
-             nButtonCode == KEY_XSTICK1_LEFT ||
-             nButtonCode == KEY_XSTICK2_LEFT ||
-             nButtonCode == KEY_LEFT )
+            nButtonCode == KEY_XSTICK1_LEFT ||
+            nButtonCode == KEY_XSTICK2_LEFT ||
+            nButtonCode == KEY_LEFT )
         {
             GoPrev();
         }
         else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-                  nButtonCode == KEY_XSTICK1_RIGHT ||
-                  nButtonCode == KEY_XSTICK2_RIGHT ||
-                  nButtonCode == KEY_RIGHT )
+                nButtonCode == KEY_XSTICK1_RIGHT ||
+                nButtonCode == KEY_XSTICK2_RIGHT ||
+                nButtonCode == KEY_RIGHT )
         {
             GoNext();
         }
@@ -678,7 +678,7 @@ class CTrainingBaseCarouselPanel : public CTrainingBasePanel
 
     virtual int GetNumPages() const = 0;
 
-   protected:
+    protected:
     int m_iPage;
 };
 
@@ -688,7 +688,7 @@ class CModePanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CModePanel, EditablePanel );
 
-   public:
+    public:
     CModePanel( Panel *pParent, const char *pName )
         : EditablePanel( pParent, pName )
     {
@@ -745,7 +745,7 @@ class CModePanel : public EditablePanel
         GetParent()->NavigateTo();
     }
 
-   private:
+    private:
     CUtlString m_strModeNameToken;
     CUtlString m_strDescriptionToken;
     CUtlString m_strImageToken;
@@ -760,7 +760,7 @@ class CModeSelectionPanel : public CTrainingBasePanel
 {
     DECLARE_CLASS_SIMPLE( CModeSelectionPanel, CTrainingBasePanel );
 
-   public:
+    public:
     CModeSelectionPanel( Panel *pParent, const char *pName )
         : CTrainingBasePanel( pParent, pName )
     {
@@ -811,11 +811,11 @@ class CBasicTraining_ClassPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBasicTraining_ClassPanel, EditablePanel );
 
-   public:
+    public:
     CBasicTraining_ClassPanel( Panel *pParent, const char *pName )
         : EditablePanel( pParent, pName ),
-          m_pImagePanel( NULL ),
-          m_pSelectButton( NULL )
+        m_pImagePanel( NULL ),
+        m_pSelectButton( NULL )
     {
         SetProportional( true );
     }
@@ -920,7 +920,7 @@ class CBasicTraining_ClassPanel : public EditablePanel
         }
     }
 
-   private:
+    private:
     ImagePanel *m_pImagePanel;
     CExButton *m_pSelectButton;
     CExLabel *m_pProgressLabel;
@@ -946,7 +946,7 @@ class CBasicTraining_ClassSelectionPanel : public CTrainingBasePanel
 {
     DECLARE_CLASS_SIMPLE( CBasicTraining_ClassSelectionPanel, CTrainingBasePanel );
 
-   public:
+    public:
     CBasicTraining_ClassSelectionPanel( Panel *pParent, const char *pName )
         : CTrainingBasePanel( pParent, pName )
     {
@@ -1039,7 +1039,7 @@ class CBasicTraining_ClassSelectionPanel : public CTrainingBasePanel
         return true;
     }
 
-   private:
+    private:
     struct ClassPanelInfo_t
     {
         CBasicTraining_ClassPanel *m_pPanel;
@@ -1057,11 +1057,11 @@ class CBasicTraining_ClassDetailsPanel : public CTrainingBasePanel
 {
     DECLARE_CLASS_SIMPLE( CBasicTraining_ClassDetailsPanel, CTrainingBasePanel );
 
-   public:
+    public:
     CBasicTraining_ClassDetailsPanel( Panel *pParent, const char *pName )
         : CTrainingBasePanel( pParent, pName ),
-          m_iClass( TF_CLASS_UNDEFINED ),
-          m_pStartTrainingButton( NULL )
+        m_iClass( TF_CLASS_UNDEFINED ),
+        m_pStartTrainingButton( NULL )
     {
         SetProportional( true );
     }
@@ -1195,7 +1195,7 @@ class CBasicTraining_ClassDetailsPanel : public CTrainingBasePanel
         }
     }
 
-   private:
+    private:
     char m_szClassName[16];
     int m_iClass;
     CExButton *m_pStartTrainingButton;
@@ -1209,10 +1209,10 @@ class COfflinePractice_ModeSelectionPanel : public CTrainingBaseCarouselPanel
 {
     DECLARE_CLASS_SIMPLE( COfflinePractice_ModeSelectionPanel, CTrainingBaseCarouselPanel );
 
-   public:
+    public:
     COfflinePractice_ModeSelectionPanel( Panel *pParent, const char *pName )
         : CTrainingBaseCarouselPanel( pParent, pName ),
-          m_pGameModeImagePanel( NULL )
+        m_pGameModeImagePanel( NULL )
     {
         SetProportional( true );
     }
@@ -1290,7 +1290,7 @@ class COfflinePractice_ModeSelectionPanel : public CTrainingBaseCarouselPanel
         return m_ModeInfos[m_iPage].m_nId;
     }
 
-   private:
+    private:
     enum Consts_t
     {
         NUM_PRACTICE_MODES = 3,
@@ -1324,14 +1324,14 @@ class COfflinePractice_MapSelectionPanel : public CTrainingBaseCarouselPanel
         int m_aPlayerRange[2];
     };
 
-   public:
+    public:
     COfflinePractice_MapSelectionPanel( Panel *pParent, const char *pName )
         : CTrainingBaseCarouselPanel( pParent, pName ),
-          m_pMapImagePanel( NULL ),
-          m_pDefaultsData( NULL ),
-          m_pDifficultyComboBox( NULL ),
-          m_pSavedData( NULL ),
-          m_iGameMode( MODE_INVALID )
+        m_pMapImagePanel( NULL ),
+        m_pDefaultsData( NULL ),
+        m_pDifficultyComboBox( NULL ),
+        m_pSavedData( NULL ),
+        m_iGameMode( MODE_INVALID )
     {
         SetProportional( true );
         LoadMapData();
@@ -1459,16 +1459,16 @@ class COfflinePractice_MapSelectionPanel : public CTrainingBaseCarouselPanel
             }
         }
         else if ( nButtonCode == KEY_XBUTTON_UP ||
-                  nButtonCode == KEY_XSTICK1_UP ||
-                  nButtonCode == KEY_XSTICK2_UP ||
-                  nButtonCode == KEY_UP )
+                nButtonCode == KEY_XSTICK1_UP ||
+                nButtonCode == KEY_XSTICK2_UP ||
+                nButtonCode == KEY_UP )
         {
             SetControlInt( "NumPlayersTextEntry", clamp( GetControlInt( "NumPlayersTextEntry", 0 ) + 1, 1, 31 ) );
         }
         else if ( nButtonCode == KEY_XBUTTON_DOWN ||
-                  nButtonCode == KEY_XSTICK1_DOWN ||
-                  nButtonCode == KEY_XSTICK2_DOWN ||
-                  nButtonCode == KEY_RIGHT )
+                nButtonCode == KEY_XSTICK1_DOWN ||
+                nButtonCode == KEY_XSTICK2_DOWN ||
+                nButtonCode == KEY_RIGHT )
         {
             SetControlInt( "NumPlayersTextEntry", clamp( GetControlInt( "NumPlayersTextEntry", 0 ) - 1, 1, 31 ) );
         }
@@ -1540,7 +1540,7 @@ class COfflinePractice_MapSelectionPanel : public CTrainingBaseCarouselPanel
         return true;
     }
 
-   private:
+    private:
     virtual KeyValues *GetTitleFormatData() const
     {
         KeyValues *pResult = new KeyValues( "data" );
@@ -1743,21 +1743,21 @@ class CTrainingDialog : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTrainingDialog, EditablePanel );
 
-   public:
+    public:
     CTrainingDialog( Panel *parent )
         : EditablePanel( parent, TRAINING_DIALOG_NAME ),
-          m_pBackButton( NULL ),
-          m_pCancelButton( NULL ),
-          m_pGradientBgPanel( NULL ),
-          m_pModeSelectionPanel( NULL ),
-          m_pCurrentPagePanel( NULL ),
-          m_pBasicTraining_ClassSelectionPanel( NULL ),
-          m_pBasicTraining_ClassDetailsPanel( NULL ),
-          m_pOfflinePractice_ModeSelectionPanel( NULL ),
-          m_pOfflinePractice_MapSelectionPanel( NULL ),
-          m_pTrainingData( NULL ),
-          m_bStartTraining( false ),
-          m_bContinue( false )
+        m_pBackButton( NULL ),
+        m_pCancelButton( NULL ),
+        m_pGradientBgPanel( NULL ),
+        m_pModeSelectionPanel( NULL ),
+        m_pCurrentPagePanel( NULL ),
+        m_pBasicTraining_ClassSelectionPanel( NULL ),
+        m_pBasicTraining_ClassDetailsPanel( NULL ),
+        m_pOfflinePractice_ModeSelectionPanel( NULL ),
+        m_pOfflinePractice_MapSelectionPanel( NULL ),
+        m_pTrainingData( NULL ),
+        m_bStartTraining( false ),
+        m_bContinue( false )
     {
         HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme" );
         SetScheme( scheme );
@@ -2157,7 +2157,7 @@ class CTrainingDialog : public EditablePanel
         }
     }
 
-   protected:
+    protected:
     void Close()
     {
         SetVisible( false );
@@ -2165,7 +2165,7 @@ class CTrainingDialog : public EditablePanel
         MarkForDeletion();
     }
 
-   private:
+    private:
     EditablePanel *m_pContainer;
     CModeSelectionPanel *m_pModeSelectionPanel;
     CBasicTraining_ClassSelectionPanel *m_pBasicTraining_ClassSelectionPanel;

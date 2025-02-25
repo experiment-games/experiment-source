@@ -174,7 +174,7 @@ void CEntityPanel::GetEntityPosition( int &sx, int &sy )
 bool CEntityPanel::ShouldDraw()
 {
     return ( ( IsLocalPlayerInTactical() && ClientModeCommander()->ShouldDrawEntity( m_pBaseEntity ) ) ||
-             ( !IsLocalPlayerInTactical() && m_bShowInNormal ) );
+            ( !IsLocalPlayerInTactical() && m_bShowInNormal ) );
 }
 
 //-----------------------------------------------------------------------------

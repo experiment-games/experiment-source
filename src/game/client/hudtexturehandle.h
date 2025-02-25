@@ -14,7 +14,7 @@ class CHudTexture;
 
 class CHudTextureHandle
 {
-   public:
+    public:
     CHudTextureHandle()
     {
         m_pValue = NULL;
@@ -52,7 +52,7 @@ class CHudTextureHandle
         return m_pValue;
     }
 
-   private:
+    private:
     CHudTexture *m_pValue;
 };
 

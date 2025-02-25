@@ -26,7 +26,7 @@ typedef unsigned int CRC32_t;
 //-----------------------------------------------------------------------------
 class CKeyboardKey
 {
-   public:
+    public:
     // Name for key
     char name[32];
     // Pointer to the underlying structure
@@ -40,7 +40,7 @@ class ConVar;
 class CInput : public IInput
 {
     // Interface
-   public:
+    public:
     CInput( void );
     ~CInput( void );
 
@@ -135,7 +135,7 @@ class CInput : public IInput
     virtual bool IsSteamControllerActive();
 
     // Private Implementation
-   protected:
+    protected:
     // Implementation specific initialization
     void Init_Camera( void );
     void Init_Keyboard( void );
@@ -179,7 +179,7 @@ class CInput : public IInput
     void ValidateUserCmd( CUserCmd *usercmd, int sequence_number );
 
     // Private Data
-   private:
+    private:
     typedef struct
     {
         unsigned int AxisFlags;
@@ -288,7 +288,7 @@ class CInput : public IInput
 
     class CVerifiedUserCmd
     {
-       public:
+        public:
         CUserCmd m_cmd;
         CRC32_t m_crc;
     };

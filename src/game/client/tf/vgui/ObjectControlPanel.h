@@ -32,14 +32,14 @@ class CObjectControlPanel : public CVGuiScreenPanel
 {
     DECLARE_CLASS( CObjectControlPanel, CVGuiScreenPanel );
 
-   public:
+    public:
     CObjectControlPanel( vgui::Panel *parent, const char *panelName );
 
     virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
     virtual void OnCommand( const char *command );
     virtual void OnTick();
 
-   protected:
+    protected:
     // Method to add controls to particular panels
     vgui::Panel *GetActivePanel()
     {
@@ -57,7 +57,7 @@ class CObjectControlPanel : public CVGuiScreenPanel
     // Send a message to the owner.
     void SendToServerObject( const char *pMsg );
 
-   private:
+    private:
     vgui::EditablePanel *m_pActivePanel;
 
     vgui::Panel *m_pCurrentPanel;
@@ -68,7 +68,7 @@ class CCommandChainingPanel : public vgui::EditablePanel
 {
     typedef vgui::EditablePanel BaseClass;
 
-   public:
+    public:
     CCommandChainingPanel( vgui::Panel *parent, const char *panelName )
         : BaseClass( parent, panelName )
     {
@@ -92,15 +92,15 @@ class CRotatingObjectControlPanel : public CObjectControlPanel
 {
     DECLARE_CLASS( CRotatingObjectControlPanel, CObjectControlPanel );
 
-   public:
+    public:
     CRotatingObjectControlPanel( vgui::Panel *parent, const char *panelName );
 
     virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
 
-   protected:
+    protected:
     virtual void OnTickActive( C_BaseObject *pObj, C_TFPlayer *pLocalPlayer );
 
-   private:
+    private:
     CRotationSlider *m_pRotationSlider;
     vgui::Label *m_pRotationLabel;
 };

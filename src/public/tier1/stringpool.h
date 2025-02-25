@@ -23,7 +23,7 @@
 template < typename K >
 class CStringPoolBase
 {
-   public:
+    public:
     typedef K KeyType;
 
     CStringPoolBase();
@@ -37,7 +37,7 @@ class CStringPoolBase
     // searches for a string already in the pool
     const char* Find( const char* pszValue );
 
-   protected:
+    protected:
     typedef CUtlRBTree< const char*, KeyType > CStrSet;
 
     CStrSet m_Strings;
@@ -59,7 +59,7 @@ extern template class CStringPoolBase< uint32_t >;
 //-----------------------------------------------------------------------------
 class CCountedStringPool
 {
-   public:  // HACK, hash_item_t structure should not be public.
+    public:  // HACK, hash_item_t structure should not be public.
     struct hash_item_t
     {
         char* pString;
@@ -79,7 +79,7 @@ class CCountedStringPool
     CUtlVector< hash_item_t > m_Elements;
     unsigned short m_FreeListStart;
 
-   public:
+    public:
     CCountedStringPool();
     virtual ~CCountedStringPool();
 

@@ -421,10 +421,10 @@ CAI_Link *CAI_DynamicLink::FindLink()
             CAI_Link *pLink = pSrcNode->GetLinkByIndex( i );
 
             if ( ( ( pLink->m_iSrcID == m_nSrcID ) &&
-                   ( pLink->m_iDestID == m_nDestID ) ) ||
+                    ( pLink->m_iDestID == m_nDestID ) ) ||
 
-                 ( ( pLink->m_iSrcID == m_nDestID ) &&
-                   ( pLink->m_iDestID == m_nSrcID ) ) )
+                ( ( pLink->m_iSrcID == m_nDestID ) &&
+                    ( pLink->m_iDestID == m_nSrcID ) ) )
             {
                 return pLink;
             }
@@ -506,7 +506,7 @@ CAI_DynamicLink *CAI_DynamicLink::GetDynamicLink( int nSrcID, int nDstID )
     while ( pDynamicLink )
     {
         if ( ( nSrcID == pDynamicLink->m_nSrcID && nDstID == pDynamicLink->m_nDestID ) ||
-             ( nSrcID == pDynamicLink->m_nDestID && nDstID == pDynamicLink->m_nSrcID ) )
+            ( nSrcID == pDynamicLink->m_nDestID && nDstID == pDynamicLink->m_nSrcID ) )
         {
             return pDynamicLink;
         }

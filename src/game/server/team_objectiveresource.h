@@ -23,7 +23,7 @@ class CBaseTeamObjectiveResource : public CBaseEntity
 {
     DECLARE_CLASS( CBaseTeamObjectiveResource, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -38,7 +38,7 @@ class CBaseTeamObjectiveResource : public CBaseEntity
     //--------------------------------------------------------------------
     // CONTROL POINT DATA
     //--------------------------------------------------------------------
-   public:
+    public:
     void ResetControlPoints( void );
 
     // Data functions, called to set up the state at the beginning of a round
@@ -197,7 +197,7 @@ class CBaseTeamObjectiveResource : public CBaseEntity
         }
     }
 
-   private:
+    private:
     CNetworkVar( int, m_iTimerToShowInHUD );
     CNetworkVar( int, m_iStopWatchTimer );
 

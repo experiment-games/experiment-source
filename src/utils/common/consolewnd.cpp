@@ -19,7 +19,7 @@
 
 class CConsoleWnd : public IConsoleWnd
 {
-   public:
+    public:
     CConsoleWnd();
     ~CConsoleWnd();
 
@@ -36,7 +36,7 @@ class CConsoleWnd : public IConsoleWnd
 
     virtual void SetDeleteOnClose( bool bDelete );
 
-   private:
+    private:
     int WindowProc(
         HWND hwndDlg,   // handle to dialog box
         UINT uMsg,      // message
@@ -53,7 +53,7 @@ class CConsoleWnd : public IConsoleWnd
 
     void RepositionEditControl();
 
-   private:
+    private:
     HWND m_hWnd;
     HWND m_hEditControl;
     bool m_bVisible;

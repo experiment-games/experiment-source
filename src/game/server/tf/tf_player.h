@@ -45,7 +45,7 @@ extern const float tf_afterburn_max_duration;
 //
 class CPlayerStateInfo
 {
-   public:
+    public:
     int m_nPlayerState;
     const char *m_pStateName;
 
@@ -71,7 +71,7 @@ enum EAmmoSource
 //
 class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public IInventoryUpdateListener
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPlayer, CBaseMultiplayerPlayer );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -109,11 +109,11 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     static void PrecacheMvM();
     static void PrecacheKart();
 
-   private:
+    private:
     static void PrecachePlayerModels();
     static void PrecacheTFPlayer();
 
-   public:
+    public:
     virtual void Precache();
     virtual bool IsReadyToPlay( void );
     virtual bool IsReadyToSpawn( void );
@@ -781,12 +781,12 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     CVoteController *GetTeamVoteController() OVERRIDE;
 
-   protected:
+    protected:
     CNetworkVarEmbedded( CAttributeContainerPlayer, m_AttributeManager );
 
     //----------------------------
     // INVENTORY MANAGEMENT
-   public:
+    public:
     // IInventoryUpdateListener
     virtual void InventoryUpdated( CPlayerInventory *pInventory );
 
@@ -801,12 +801,12 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
         return &m_Inventory;
     }
 
-   private:
+    private:
     CTFPlayerInventory m_Inventory;
     // Items that have been equipped on this player instance (the inventory loadout may have changed)
     itemid_t m_EquippedLoadoutItemIndices[CLASS_LOADOUT_POSITION_COUNT];
 
-   public:
+    public:
     void UpdateInventory( bool bInit );
     void VerifySOCache();
 
@@ -864,12 +864,12 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     bool IsFireproof( void ) const;
     bool AddToSpyKnife( float value, bool force );
 
-   private:
+    private:
     void GetHorriblyHackedRailgunPosition( const Vector &vStart, Vector *out_pvStartPos );
     void MaybeDrawRailgunBeam( IRecipientFilter *pFilter, CTFWeaponBase *pWeapon, const Vector &vStartPos, const Vector &vEndPos );
 
     // Taunts
-   public:
+    public:
     bool IsReadyToTauntWithPartner( void ) const
     {
         return m_bIsReadyToHighFive;
@@ -1204,7 +1204,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     void ScriptStunPlayer( float flTime, float flReductionAmount, int iStunFlags = TF_STUN_MOVEMENT, HSCRIPT hAttacker = NULL );
 
-   private:
+    private:
     void GetReadyToTauntWithPartner( void );
     void CancelTauntWithPartner( void );
     void StopTauntSoundLoop();
@@ -1265,7 +1265,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     float m_flNextReflectZap;
 
-   public:
+    public:
     virtual int GetSpecialDSP( void );
 
     virtual float PlayScene( const char *pszScene, float flDelay = 0.0f, AI_Response *response = NULL, IRecipientFilter *filter = NULL );
@@ -1415,13 +1415,13 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     }
 
     // Item Testing
-   public:
+    public:
     void ItemTesting_Start( KeyValues *pKV );
     void ItemTesting_UpdateBots( KeyValues *pKV );
     CEconItemView *ItemTesting_GetTestItem( int iClass, int iSlot );
     void ItemTesting_DeleteItems();
 
-   public:
+    public:
     struct itemtest_t
     {
         KeyValues *pKV;
@@ -1586,7 +1586,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     // Talk control
     virtual bool CanPlayerTalk() OVERRIDE;
 
-   protected:
+    protected:
     // Creation/Destruction.
     virtual void InitClass( void );
     void GiveDefaultItems();
@@ -1608,7 +1608,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     virtual void Internal_HandleMapEvent( inputdata_t &inputdata ) OVERRIDE;
 
-   private:
+    private:
     float m_flAccumulatedHealthRegen;  // Regeneration can be in small amounts, so we accumulate it and apply when it's > 1
     float m_flNextAmmoRegenAt;
     float m_flLastHealthRegenAt;
@@ -1649,7 +1649,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     bool GetResponseSceneFromConcept( int iConcept, char *chSceneBuffer, int numSceneBufferBytes );
 
-   public:
+    public:
     const QAngle &GetNetworkEyeAngles() const
     {
         return m_angEyeAngles;
@@ -1659,7 +1659,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     CAchievementData m_AchievementData;
     CTFPlayerAnimState *m_PlayerAnimState;
 
-   private:
+    private:
     // Map introductions
     int m_iIntroStep;
     CHandle< CIntroViewpoint > m_hIntroView;
@@ -1759,7 +1759,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     int m_nPrevRoundTeamNum;
 
-   public:
+    public:
     bool IsGoingFeignDeath( void )
     {
         return m_bGoingFeignDeath;
@@ -1779,7 +1779,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
         m_bPendingMerasmusPlayerBombExplode = true;
     }
 
-   private:
+    private:
     // Achievement data
     CUtlVector< EHANDLE > m_aPunchVictims;
     CUtlVector< EHANDLE > m_aBurnFromBackAttackers;
@@ -1831,7 +1831,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     CUtlVector< CUpgradeInfo > *GetPlayerUpgradeHistory( void );
     CUtlVector< CUpgradeInfo > m_LocalUpgradeHistory;
 
-   public:
+    public:
     void GrantOrRemoveAllUpgrades( bool bRemove, bool bRefund );
 
     // Marking for death.
@@ -1840,7 +1840,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     CountdownTimer m_playerMovementStuckTimer;  // for destroying stuck bots in MvM
 
     QAngle m_qPreviousChargeEyeAngle;  // Previous EyeAngles to compute deltas for legal mouse movement
-   private:
+    private:
     //=============================================================================
     // HPE_BEGIN:
     // [msmith]	Added a player type so we can distinguish between bots and humans.
@@ -1860,7 +1860,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     mutable char m_bIsCalculatingMaximumSpeed;
 
-   public:
+    public:
     float GetDesiredHeadScale() const;
     float GetHeadScaleSpeed() const;
     float GetDesiredTorsoScale() const;
@@ -1910,7 +1910,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     // Wrenchmotron teleport
     bool m_bIsTeleportingUsingEurekaEffect;
 
-   private:
+    private:
     void UpdateHalloween( void );
 
     Vector m_vHalloweenKartPush;
@@ -1969,10 +1969,10 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     CNetworkVar( bool, m_bForcedSkin );
     CNetworkVar( int, m_nForcedSkin );
 
-   private:
+    private:
     CHandle< CTFReviveMarker > m_hReviveMarker;
 
-   public:
+    public:
     CTFReviveMarker *GetReviveMarker( void )
     {
         return m_hReviveMarker;
@@ -2080,7 +2080,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
         return m_nMaxHealthDrainBucket != 0.0;
     }
 
-   private:
+    private:
     bool PickupWeaponFromOther( CTFDroppedWeapon *pDroppedWeapon );
     bool TryToPickupDroppedWeapon();
     float m_flSendPickupWeaponMessageTime;
@@ -2129,7 +2129,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     bool m_bAlreadyUsedExtendFreezeThisDeath = false;
 
     // begin passtime
-   public:
+    public:
     bool SayAskForBall();
     bool m_bPasstimeBallSlippery;
     // end passtime
@@ -2313,7 +2313,7 @@ class CObserverPoint : public CPointEntity
 {
     DECLARE_CLASS( CObserverPoint, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CObserverPoint();
@@ -2338,7 +2338,7 @@ class CObserverPoint : public CPointEntity
         m_bDisabled = bDisabled;
     }
 
-   public:
+    public:
     bool m_bDisabled;
     bool m_bDefaultWelcome;
     EHANDLE m_hAssociatedTeamEntity;

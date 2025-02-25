@@ -20,7 +20,7 @@ using namespace GCSDK;
 
 class CGCReplicateConVars : public CGCClientJob
 {
-   public:
+    public:
     CGCReplicateConVars( CGCClient *pClient )
         : CGCClientJob( pClient ) {}
 
@@ -47,7 +47,7 @@ GC_REG_JOB( CGCClient, CGCReplicateConVars, "CGCReplicateConVars", k_EMsgGCRepli
 
 class CGCUpdateConVar : public CGCClientJob
 {
-   public:
+    public:
     CGCUpdateConVar( CGCClient *pClient )
         : CGCClientJob( pClient ) {}
 

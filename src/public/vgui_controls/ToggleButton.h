@@ -25,7 +25,7 @@ class ToggleButton : public Button
 {
     DECLARE_CLASS_SIMPLE( ToggleButton, Button );
 
-   public:
+    public:
 #ifdef LUA_SDK
     ToggleButton( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
 #else
@@ -35,7 +35,7 @@ class ToggleButton : public Button
     virtual void DoClick();
 
     /* messages sent (get via AddActionSignalTarget()):
-      "ButtonToggled"
+    "ButtonToggled"
         int "state"
     */
 
@@ -44,7 +44,7 @@ class ToggleButton : public Button
         return true;
     }
 
-   protected:
+    protected:
     // overrides
     virtual void OnMouseDoublePressed( MouseCode code );
 
@@ -54,7 +54,7 @@ class ToggleButton : public Button
     virtual bool CanBeDefaultButton( void );
     virtual void OnKeyCodePressed( KeyCode code );
 
-   private:
+    private:
     Color _selectedColor;
 };
 

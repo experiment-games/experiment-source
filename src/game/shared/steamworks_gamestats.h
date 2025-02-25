@@ -40,7 +40,7 @@ struct ClientServerSession_t
 // used to drive most of the game stat event handlers as well as track basic stats under the hood of CBaseGameStats
 class CSteamWorksGameStatsUploader : public CAutoGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
 #ifdef CLIENT_DLL
     // Called before rendering
     virtual void PreRender() {}
@@ -166,7 +166,7 @@ class CSteamWorksGameStatsUploader : public CAutoGameSystemPerFrame, public CGam
     }
     void ClearSessionID();
 
-   private:
+    private:
     void UploadCvars();
     void Reset();
     bool VerifyInterface();

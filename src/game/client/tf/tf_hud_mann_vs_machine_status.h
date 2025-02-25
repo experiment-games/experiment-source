@@ -41,7 +41,7 @@ class CEnemyCountPanel : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CEnemyCountPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CEnemyCountPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -57,7 +57,7 @@ class CEnemyCountPanel : public vgui::EditablePanel, public CGameEventListener
     Panel *m_pEnemyCountImageBG;
     CTFImagePanel *m_pEnemyCountCritBG;
 
-   private:
+    private:
     bool m_bFlashing;
 };
 
@@ -66,7 +66,7 @@ class CMvMBossProgressBar : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMBossProgressBar, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMBossProgressBar( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -74,7 +74,7 @@ class CMvMBossProgressBar : public vgui::EditablePanel
     void SetPercentage( float flPercentage );
     void SetImage( const char *pszImageName );
 
-   private:
+    private:
     float m_flPercentage;
     float m_flOldPercentage;
     int m_nBarOrgX;
@@ -98,13 +98,13 @@ class CMvMBossStatusPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMBossStatusPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMBossStatusPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnTick( void );
 
-   private:
+    private:
     vgui::ScalableImagePanel *m_pBackground;
     CUtlVector< CMvMBossProgressBar * > m_ProgressBars;
     int m_nBackgroundOriginalX;
@@ -123,7 +123,7 @@ class CCurrencyStatusPanel : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCurrencyStatusPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CCurrencyStatusPanel( const char *pszElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -132,7 +132,7 @@ class CCurrencyStatusPanel : public CHudElement, public vgui::EditablePanel
 
     virtual bool UpdateHUD( void );
 
-   private:
+    private:
     int m_nCurrency;
     int m_nTargetCurrency;
 };
@@ -142,13 +142,13 @@ class CInWorldCurrencyStatus : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CInWorldCurrencyStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CInWorldCurrencyStatus( Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnTick( void );
 
-   private:
+    private:
     vgui::Label *m_pGood;
     vgui::Label *m_pBad;
 };
@@ -158,19 +158,19 @@ class CWaveStatusPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CWaveStatusPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CWaveStatusPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnTick( void );
 
-   private:
+    private:
     void UpdateEnemyCounts( void );
 
     void AddClassIconBeingUsed( CUtlVector< const char * > &vector, const char *pchIcon ) const;  // used temporarily to track the icons we're showing
     bool IsClassIconBeingUsed( CUtlVector< const char * > &vector, const char *pchIcon ) const;   // used temporarily to track the icons we're showing
 
-   private:
+    private:
     int m_nEnemyRemainingNoSupport;
     int m_nBarOrgX;
     int m_nBarOrgY;
@@ -213,7 +213,7 @@ class CWarningSwoop : public vgui::ImagePanel
 {
     DECLARE_CLASS_SIMPLE( CWarningSwoop, vgui::ImagePanel );
 
-   public:
+    public:
     CWarningSwoop( Panel *parent, const char *name );
 
     virtual void PaintBackground( void );
@@ -221,7 +221,7 @@ class CWarningSwoop : public vgui::ImagePanel
 
     void StartSwoop( void );
 
-   private:
+    private:
     float m_flStartCapAnimStart;
 
     CPanelAnimationVar( float, m_flSwoopTime, "time", "0.3" );
@@ -232,7 +232,7 @@ class CWaveCompleteSummaryPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CWaveCompleteSummaryPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CWaveCompleteSummaryPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -240,7 +240,7 @@ class CWaveCompleteSummaryPanel : public vgui::EditablePanel
 
     void ShowWaveSummary( int nWaveNumber );
 
-   private:
+    private:
     enum
     {
         CREDITS_COLLECT = 0,
@@ -289,13 +289,13 @@ class CVictorySplash : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CVictorySplash, vgui::EditablePanel );
 
-   public:
+    public:
     CVictorySplash( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnTick( void );
 
-   private:
+    private:
 };
 
 //=========================================================
@@ -303,7 +303,7 @@ class CMvMBombCarrierProgress : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMBombCarrierProgress, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMBombCarrierProgress( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -314,7 +314,7 @@ class CTFHudMannVsMachineStatus : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudMannVsMachineStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudMannVsMachineStatus( const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -348,7 +348,7 @@ class CTFHudMannVsMachineStatus : public CHudElement, public vgui::EditablePanel
         return m_pWaveCompletePanel && m_pWaveCompletePanel->IsVisible();
     }
 
-   private:
+    private:
     void UpdateBombCarrierProgress( void );
 
     void UpdateServerMessage( void );

@@ -64,8 +64,8 @@ struct MMRatingData_t
     inline bool operator==( const MMRatingData_t &b ) const
     {
         return this->unRatingPrimary == b.unRatingPrimary &&
-               this->unRatingSecondary == b.unRatingSecondary &&
-               this->unRatingTertiary == b.unRatingTertiary;
+                this->unRatingSecondary == b.unRatingSecondary &&
+                this->unRatingTertiary == b.unRatingTertiary;
     }
 };
 
@@ -391,7 +391,7 @@ inline bool IsIncompleteMatchPool( int nGameServerPool )
 // Store a set of MvM challenges (search criteria, etc)
 class CMvMMissionSet
 {
-   public:
+    public:
     CMvMMissionSet();
     CMvMMissionSet( const CMvMMissionSet &x );
     ~CMvMMissionSet();
@@ -415,7 +415,7 @@ class CMvMMissionSet
     /// Return true if any challenges are selected
     bool IsEmpty() const;
 
-   private:
+    private:
     COMPILE_TIME_ASSERT( MAX_MVM_CHALLENGES <= 64 );
 
     // Just use a plain old uint64 for now.  We can make this into a proper bitfield class at some point
@@ -444,7 +444,7 @@ struct MapDef_t;
 //-----------------------------------------------------------------------------
 class CCasualCriteriaHelper
 {
-   public:
+    public:
     CCasualCriteriaHelper( const CTFCasualMatchCriteria &criteria );
 
     bool IsMapSelected( const MapDef_t *pMapDef ) const;
@@ -470,10 +470,10 @@ class CCasualCriteriaHelper
         return m_mapsBits != other.m_mapsBits;
     }
 
-   private:
+    private:
     bool IsMapInValidCategory( uint32 nMapDefIndex ) const;
 
-   private:
+    private:
     CLargeVarBitVec m_mapsBits;
 };
 

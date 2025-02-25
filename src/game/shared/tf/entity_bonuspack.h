@@ -30,9 +30,9 @@ class CBonusPack
     : public C_BaseAnimating
 #endif
     ,
-      public IBonusPackAutoList
+    public IBonusPackAutoList
 {
-   public:
+    public:
     DECLARE_DATADESC();
 #ifdef GAME_DLL
     DECLARE_CLASS( CBonusPack, CCurrencyPack );
@@ -58,7 +58,7 @@ class CBonusPack
         return "models/bots/bot_worker/bot_worker_powercore.mdl";
     }
 
-   private:
+    private:
     void BlinkThink();
 
     int m_nBlinkCount;

@@ -20,7 +20,7 @@
 
 class CBaseSDKGrenade : public CWeaponSDKBase
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseSDKGrenade, CWeaponSDKBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -57,12 +57,12 @@ class CBaseSDKGrenade : public CWeaponSDKBase
     virtual void EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer );
 #endif
 
-   protected:
+    protected:
     CNetworkVar( bool, m_bRedraw );      // Draw the weapon again after throwing a grenade
     CNetworkVar( bool, m_bPinPulled );   // Set to true when the pin has been pulled but the grenade hasn't been thrown yet.
     CNetworkVar( float, m_fThrowTime );  // the time at which the grenade will be thrown.  If this value is 0 then the time hasn't been set yet.
 
-   private:
+    private:
     CBaseSDKGrenade( const CBaseSDKGrenade & ) {}
 };
 

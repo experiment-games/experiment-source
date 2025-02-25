@@ -109,7 +109,7 @@ struct vehiclescript_t
 
 class CPhysicsHook : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     virtual const char *Name()
     {
         return "CPhysicsHook";
@@ -169,8 +169,8 @@ bool CPhysicsHook::Init( void )
         return false;
 
     if ( ( physics = ( IPhysics * )factories.physicsFactory( VPHYSICS_INTERFACE_VERSION, NULL ) ) == NULL ||
-         ( physcollision = ( IPhysicsCollision * )factories.physicsFactory( VPHYSICS_COLLISION_INTERFACE_VERSION, NULL ) ) == NULL ||
-         ( physprops = ( IPhysicsSurfaceProps * )factories.physicsFactory( VPHYSICS_SURFACEPROPS_INTERFACE_VERSION, NULL ) ) == NULL )
+        ( physcollision = ( IPhysicsCollision * )factories.physicsFactory( VPHYSICS_COLLISION_INTERFACE_VERSION, NULL ) ) == NULL ||
+        ( physprops = ( IPhysicsSurfaceProps * )factories.physicsFactory( VPHYSICS_SURFACEPROPS_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
 
     PhysParseSurfaceData( physprops, filesystem );
@@ -185,29 +185,29 @@ bool CPhysicsHook::Init( void )
 #if 0
 struct physcheck_t
 {
-	IPhysicsObject *pPhys;
-	char			string[512];
+    IPhysicsObject *pPhys;
+    char			string[512];
 };
 
 CUtlVector< physcheck_t > physCheck;
 
 void PhysCheckAdd( IPhysicsObject *pPhys, const char *pString )
 {
-	physcheck_t tmp;
-	tmp.pPhys = pPhys;
-	Q_strncpy( tmp.string, pString ,sizeof(tmp.string));
-	physCheck.AddToTail( tmp );
+    physcheck_t tmp;
+    tmp.pPhys = pPhys;
+    Q_strncpy( tmp.string, pString ,sizeof(tmp.string));
+    physCheck.AddToTail( tmp );
 }
 
 const char *PhysCheck( IPhysicsObject *pPhys )
 {
-	for ( int i = 0; i < physCheck.Size(); i++ )
-	{
-		if ( physCheck[i].pPhys == pPhys )
-			return physCheck[i].string;
-	}
+    for ( int i = 0; i < physCheck.Size(); i++ )
+    {
+        if ( physCheck[i].pPhys == pPhys )
+            return physCheck[i].string;
+    }
 
-	return "unknown";
+    return "unknown";
 }
 #endif
 
@@ -571,8 +571,8 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
 
     // AI movers don't collide with the world/static/pinned objects or other AI movers
     if ( ( aiMove0 && !pObj1->IsMoveable() ) ||
-         ( aiMove1 && !pObj0->IsMoveable() ) ||
-         ( aiMove0 && aiMove1 ) )
+        ( aiMove1 && !pObj0->IsMoveable() ) ||
+        ( aiMove0 && aiMove1 ) )
         return 0;
 
     // two objects under shadow control should not collide.  The AI will figure it out
@@ -599,11 +599,11 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
     }
 
     if ( ( nSolidFlags0 & FSOLID_TRIGGER ) &&
-         !( solid1 == SOLID_VPHYSICS || solid1 == SOLID_BSP || movetype1 == MOVETYPE_VPHYSICS ) )
+        !( solid1 == SOLID_VPHYSICS || solid1 == SOLID_BSP || movetype1 == MOVETYPE_VPHYSICS ) )
         return 0;
 
     if ( ( nSolidFlags1 & FSOLID_TRIGGER ) &&
-         !( solid0 == SOLID_VPHYSICS || solid0 == SOLID_BSP || movetype0 == MOVETYPE_VPHYSICS ) )
+        !( solid0 == SOLID_VPHYSICS || solid0 == SOLID_BSP || movetype0 == MOVETYPE_VPHYSICS ) )
         return 0;
 
     if ( !g_pGameRules->ShouldCollide( pEntity0->GetCollisionGroup(), pEntity1->GetCollisionGroup() ) )
@@ -997,7 +997,7 @@ int CCollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObje
 
     // NPC vs. physics object.  Create a game DLL solver and remove this event
     if ( ( pEntity0->MyNPCPointer() && CanResolvePenetrationWithNPC( pEntity1, pObj1 ) ) ||
-         ( pEntity1->MyNPCPointer() && CanResolvePenetrationWithNPC( pEntity0, pObj0 ) ) )
+        ( pEntity1->MyNPCPointer() && CanResolvePenetrationWithNPC( pEntity0, pObj0 ) ) )
     {
         event.collisionState = COLLSTATE_TRYNPCSOLVER;
     }
@@ -1121,7 +1121,7 @@ void CCollisionEvent::FluidEndTouch( IPhysicsObject *pObject, IPhysicsFluidContr
 
 class CSkipKeys : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     virtual void ParseKeyValue( void *pData, const char *pKey, const char *pValue ) {}
     virtual void SetDefaults( void *pData ) {}
 };
@@ -1355,7 +1355,7 @@ static void OutputVPhysicsDebugInfo( CBaseEntity *pEntity )
 
 class CConstraintFloodEntry
 {
-   public:
+    public:
     CConstraintFloodEntry()
         : isMarked( false ), isConstraint( false ) {}
 
@@ -1366,7 +1366,7 @@ class CConstraintFloodEntry
 
 class CConstraintFloodList
 {
-   public:
+    public:
     CConstraintFloodList()
     {
         SetDefLessFunc( m_list );
@@ -2144,18 +2144,18 @@ void CCollisionEvent::UpdateDamageEvents( void )
         iEntBits |= event.pEntity->IsMarkedForDeletion() ? 0x0002 : 0;
         iEntBits |= ( event.pEntity->GetSolidFlags() & FSOLID_NOT_SOLID ) ? 0x0004 : 0;
 #if 0
-		// Go ahead and compute the current static stress when hit by a large object (with a force high enough to do damage).
-		// That way you die from the impact rather than the stress of the object resting on you whenever possible.
-		// This makes the damage effects cleaner.
-		if ( event.pInflictorPhysics && event.pInflictorPhysics->GetMass() > VPHYSICS_LARGE_OBJECT_MASS )
-		{
-			CBaseCombatCharacter *pCombat = event.pEntity->MyCombatCharacterPointer();
-			if ( pCombat )
-			{
-				vphysics_objectstress_t stressOut;
-				event.info.AddDamage( pCombat->CalculatePhysicsStressDamage( &stressOut, pCombat->VPhysicsGetObject() ) );
-			}
-		}
+        // Go ahead and compute the current static stress when hit by a large object (with a force high enough to do damage).
+        // That way you die from the impact rather than the stress of the object resting on you whenever possible.
+        // This makes the damage effects cleaner.
+        if ( event.pInflictorPhysics && event.pInflictorPhysics->GetMass() > VPHYSICS_LARGE_OBJECT_MASS )
+        {
+            CBaseCombatCharacter *pCombat = event.pEntity->MyCombatCharacterPointer();
+            if ( pCombat )
+            {
+                vphysics_objectstress_t stressOut;
+                event.info.AddDamage( pCombat->CalculatePhysicsStressDamage( &stressOut, pCombat->VPhysicsGetObject() ) );
+            }
+        }
 #endif
 
         event.pEntity->TakeDamage( event.info );
@@ -2582,7 +2582,7 @@ void PhysCollisionScreenShake( gamevcollisionevent_t *pEvent, int index )
     int otherIndex = !index;
     float mass = pEvent->pObjects[index]->GetMass();
     if ( mass >= VPHYSICS_LARGE_OBJECT_MASS && pEvent->pObjects[otherIndex]->IsStatic() &&
-         !( pEvent->pObjects[index]->GetGameFlags() & FVPHYSICS_PENETRATING ) )
+        !( pEvent->pObjects[index]->GetGameFlags() & FVPHYSICS_PENETRATING ) )
     {
         mass = clamp( mass, VPHYSICS_LARGE_OBJECT_MASS, 2000.f );
         if ( pEvent->collisionSpeed > 30 && pEvent->deltaCollisionTime > 0.25f )
@@ -2871,32 +2871,32 @@ void DebugDrawContactPoints( IPhysicsObject *pPhysics )
 //-----------------------------------------------------------------------------
 void DumpCollideToGlView( CPhysCollide *pCollide, const Vector &origin, const QAngle &angles, const char *pFilename )
 {
-	if ( !pCollide )
-		return;
+    if ( !pCollide )
+        return;
 
-	printf("Writing %s...\n", pFilename );
-	Vector *outVerts;
-	int vertCount = physcollision->CreateDebugMesh( pCollide, &outVerts );
-	FileHandle_t fp = filesystem->Open( pFilename, "ab" );
-	int triCount = vertCount / 3;
-	int vert = 0;
-	VMatrix tmp = SetupMatrixOrgAngles( origin, angles );
-	int i;
-	for ( i = 0; i < vertCount; i++ )
-	{
-		outVerts[i] = tmp.VMul4x3( outVerts[i] );
-	}
-	for ( i = 0; i < triCount; i++ )
-	{
-		filesystem->FPrintf( fp, "3\n" );
-		filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f 1 0 0\n", outVerts[vert].x, outVerts[vert].y, outVerts[vert].z );
-		vert++;
-		filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f 0 1 0\n", outVerts[vert].x, outVerts[vert].y, outVerts[vert].z );
-		vert++;
-		filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f 0 0 1\n", outVerts[vert].x, outVerts[vert].y, outVerts[vert].z );
-		vert++;
-	}
-	filesystem->Close( fp );
-	physcollision->DestroyDebugMesh( vertCount, outVerts );
+    printf("Writing %s...\n", pFilename );
+    Vector *outVerts;
+    int vertCount = physcollision->CreateDebugMesh( pCollide, &outVerts );
+    FileHandle_t fp = filesystem->Open( pFilename, "ab" );
+    int triCount = vertCount / 3;
+    int vert = 0;
+    VMatrix tmp = SetupMatrixOrgAngles( origin, angles );
+    int i;
+    for ( i = 0; i < vertCount; i++ )
+    {
+        outVerts[i] = tmp.VMul4x3( outVerts[i] );
+    }
+    for ( i = 0; i < triCount; i++ )
+    {
+        filesystem->FPrintf( fp, "3\n" );
+        filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f 1 0 0\n", outVerts[vert].x, outVerts[vert].y, outVerts[vert].z );
+        vert++;
+        filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f 0 1 0\n", outVerts[vert].x, outVerts[vert].y, outVerts[vert].z );
+        vert++;
+        filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f 0 0 1\n", outVerts[vert].x, outVerts[vert].y, outVerts[vert].z );
+        vert++;
+    }
+    filesystem->Close( fp );
+    physcollision->DestroyDebugMesh( vertCount, outVerts );
 }
 #endif

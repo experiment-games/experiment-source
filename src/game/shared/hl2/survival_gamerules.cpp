@@ -33,21 +33,21 @@ ConVar gamerules_survival( "gamerules_survival", "0", FCVAR_REPLICATED );
 
 class CHalfLife2SurvivalProxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CHalfLife2SurvivalProxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 };
 
 class CSurvivalAmmo
 {
-   public:
+    public:
     char m_szAmmoName[256];
     int m_iAmount;
 };
 
 class CSurvivalSettings
 {
-   public:
+    public:
     CSurvivalSettings();
 
     CUtlVector< char *, CUtlMemory< char * > > m_Loadout;
@@ -63,7 +63,7 @@ CSurvivalSettings::CSurvivalSettings()
 
 class CHalfLife2Survival : public CHalfLife2
 {
-   public:
+    public:
     DECLARE_CLASS( CHalfLife2Survival, CHalfLife2 );
 
 #ifdef CLIENT_DLL
@@ -86,7 +86,7 @@ class CHalfLife2Survival : public CHalfLife2
     void ParseSurvivalSettings( KeyValues *pSubKey );
     void ParseSurvivalAmmo( KeyValues *pSubKey );
 
-   private:
+    private:
     bool m_bActive;
     CSurvivalSettings m_SurvivalSettings;
 #endif

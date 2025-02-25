@@ -70,7 +70,7 @@ void CSimpleBitString::AppendBits( uint64 u64Data, uint32 NumSignificantLowBitsO
         uint8 BitsForThisByte = ( u64Data >> ( NumSignificantLowBitsOfData - NumBitsToPutInThisByte ) ) & ( ( 1ULL << NumBitsToPutInThisByte ) - 1 );
 
         m_vecU8[Idx] |= ( BitsForThisByte
-                          << ( NumAvailableBitsInLastByte - NumBitsToPutInThisByte ) );
+                        << ( NumAvailableBitsInLastByte - NumBitsToPutInThisByte ) );
 
         m_uNumBits += NumBitsToPutInThisByte;
 

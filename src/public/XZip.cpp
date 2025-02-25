@@ -442,7 +442,7 @@ typedef struct tree_desc
 
 class TTreeState
 {
-   public:
+    public:
     TTreeState();
 
     ct_data dyn_ltree[HEAP_SIZE];        // literal and length tree
@@ -528,7 +528,7 @@ TTreeState::TTreeState()
 
 class TBitState
 {
-   public:
+    public:
     int flush_flg;
     //
     unsigned bi_buf;
@@ -549,7 +549,7 @@ class TBitState
 
 class TDeflateState
 {
-   public:
+    public:
     TDeflateState()
     {
         window_size = 0;
@@ -639,7 +639,7 @@ typedef unsigned ( *FLUSHFUNC )( void *param, const char *buf, unsigned *size );
 typedef unsigned ( *WRITEFUNC )( void *param, const char *buf, unsigned size );
 class TState
 {
-   public:
+    public:
     TState()
     {
         err = 0;
@@ -744,9 +744,9 @@ void ct_init( TState &state, ush *attr )
     }
     Assert( state, length == 256, "ct_init: length != 256" );
     /* Note that the length 255 (match length 258) can be represented
-     * in two different ways: code 284 + 5 bits or code 285, so we
-     * overwrite length_code[255] to use the best encoding:
-     */
+    * in two different ways: code 284 + 5 bits or code 285, so we
+    * overwrite length_code[255] to use the best encoding:
+    */
     state.ts.length_code[length - 1] = ( uch )code;
 
     /* Initialize the mapping dist (0..32K) -> dist code (0..29) */
@@ -779,9 +779,9 @@ void ct_init( TState &state, ush *attr )
     while ( n <= 279 ) state.ts.static_ltree[n++].dl.len = 7, state.ts.bl_count[7]++;
     while ( n <= 287 ) state.ts.static_ltree[n++].dl.len = 8, state.ts.bl_count[8]++;
     /* fc.codes 286 and 287 do not exist, but we must include them in the
-     * tree construction to get a canonical Huffman tree (longest code
-     * all ones)
-     */
+    * tree construction to get a canonical Huffman tree (longest code
+    * all ones)
+    */
     gen_codes( state, ( ct_data * )state.ts.static_ltree, L_CODES + 1 );
 
     /* The static distance tree is trivial: */
@@ -834,7 +834,7 @@ void init_block( TState &state )
  */
 #define smaller( tree, n, m )              \
     ( tree[n].fc.freq < tree[m].fc.freq || \
-      ( tree[n].fc.freq == tree[m].fc.freq && state.ts.depth[n] <= state.ts.depth[m] ) )
+    ( tree[n].fc.freq == tree[m].fc.freq && state.ts.depth[n] <= state.ts.depth[m] ) )
 
 /* ===========================================================================
  * Restore the heap property by moving down the tree starting at node k,
@@ -895,8 +895,8 @@ void gen_bitlen( TState &state, tree_desc *desc )
     for ( bits = 0; bits <= MAX_BITS; bits++ ) state.ts.bl_count[bits] = 0;
 
     /* In a first pass, compute the optimal bit lengths (which may
-     * overflow in the case of the bit length tree).
-     */
+    * overflow in the case of the bit length tree).
+    */
     tree[state.ts.heap[state.ts.heap_max]].dl.len = 0; /* root of the heap */
 
     for ( h = state.ts.heap_max + 1; h < HEAP_SIZE; h++ )
@@ -930,16 +930,16 @@ void gen_bitlen( TState &state, tree_desc *desc )
         state.ts.bl_count[bits + 1] += ( ush )2; /* move one overflow item as its brother */
         state.ts.bl_count[max_length]--;
         /* The brother of the overflow item also moves one step up,
-         * but this does not affect bl_count[max_length]
-         */
+        * but this does not affect bl_count[max_length]
+        */
         overflow -= 2;
     } while ( overflow > 0 );
 
     /* Now recompute all bit lengths, scanning in increasing frequency.
-     * h is still equal to HEAP_SIZE. (It is simpler to reconstruct all
-     * lengths instead of fixing only the wrong ones. This idea is taken
-     * from 'ar' written by Haruhiko Okumura.)
-     */
+    * h is still equal to HEAP_SIZE. (It is simpler to reconstruct all
+    * lengths instead of fixing only the wrong ones. This idea is taken
+    * from 'ar' written by Haruhiko Okumura.)
+    */
     for ( bits = max_length; bits != 0; bits-- )
     {
         n = state.ts.bl_count[bits];
@@ -974,15 +974,15 @@ void gen_codes( TState &state, ct_data *tree, int max_code )
     int n;                       /* code index */
 
     /* The distribution counts are first used to generate the code values
-     * without bit reversal.
-     */
+    * without bit reversal.
+    */
     for ( bits = 1; bits <= MAX_BITS; bits++ )
     {
         next_code[bits] = code = ( ush )( ( code + state.ts.bl_count[bits - 1] ) << 1 );
     }
     /* Check that the bit counts in bl_count are consistent. The last code
-     * must be all ones.
-     */
+    * must be all ones.
+    */
     Assert( state, code + state.ts.bl_count[MAX_BITS] - 1 == ( 1 << ( ( ush )MAX_BITS ) ) - 1, "inconsistent bit counts" );
     Trace( "\ngen_codes: max_code %d ", max_code );
 
@@ -1015,9 +1015,9 @@ void build_tree( TState &state, tree_desc *desc )
     int node = elems;  /* next internal node of the tree */
 
     /* Construct the initial heap, with least frequent element in
-     * heap[SMALLEST]. The sons of heap[n] are heap[2*n] and heap[2*n+1].
-     * heap[0] is not used.
-     */
+    * heap[SMALLEST]. The sons of heap[n] are heap[2*n] and heap[2*n+1].
+    * heap[0] is not used.
+    */
     state.ts.heap_len = 0, state.ts.heap_max = HEAP_SIZE;
 
     for ( n = 0; n < elems; n++ )
@@ -1034,10 +1034,10 @@ void build_tree( TState &state, tree_desc *desc )
     }
 
     /* The pkzip format requires that at least one distance code exists,
-     * and that at least one bit should be sent even if there is only one
-     * possible code. So to avoid special checks later on we force at least
-     * two codes of non zero frequency.
-     */
+    * and that at least one bit should be sent even if there is only one
+    * possible code. So to avoid special checks later on we force at least
+    * two codes of non zero frequency.
+    */
     while ( state.ts.heap_len < 2 )
     {
         int newcp = state.ts.heap[++state.ts.heap_len] = ( max_code < 2 ? ++max_code : 0 );
@@ -1050,13 +1050,13 @@ void build_tree( TState &state, tree_desc *desc )
     desc->max_code = max_code;
 
     /* The elements heap[heap_len/2+1 .. heap_len] are leaves of the tree,
-     * establish sub-heaps of increasing lengths:
-     */
+    * establish sub-heaps of increasing lengths:
+    */
     for ( n = state.ts.heap_len / 2; n >= 1; n-- ) pqdownheap( state, tree, n );
 
     /* Construct the Huffman tree by repeatedly combining the least two
-     * frequent nodes.
-     */
+    * frequent nodes.
+    */
     do
     {
         pqremove( tree, n );         /* n = node of least frequency */
@@ -1078,8 +1078,8 @@ void build_tree( TState &state, tree_desc *desc )
     state.ts.heap[--state.ts.heap_max] = state.ts.heap[SMALLEST];
 
     /* At this point, the fields freq and dad are set. We can now
-     * generate the bit lengths.
-     */
+    * generate the bit lengths.
+    */
     gen_bitlen( state, ( tree_desc * )desc );
 
     /* The field len is now set, we can generate the bit codes */
@@ -1232,13 +1232,13 @@ int build_bl_tree( TState &state )
     /* Build the bit length tree: */
     build_tree( state, ( tree_desc * )( &state.ts.bl_desc ) );
     /* opt_len now includes the length of the tree representations, except
-     * the lengths of the bit lengths codes and the 5+5+4 bits for the counts.
-     */
+    * the lengths of the bit lengths codes and the 5+5+4 bits for the counts.
+    */
 
     /* Determine the number of bit length codes to send. The pkzip format
-     * requires that at least 4 bit length codes be sent. (appnote.txt says
-     * 3 but the actual value used is 4.)
-     */
+    * requires that at least 4 bit length codes be sent. (appnote.txt says
+    * 3 but the actual value used is 4.)
+    */
     for ( max_blindex = BL_CODES - 1; max_blindex >= 3; max_blindex-- )
     {
         if ( state.ts.bl_tree[bl_order[max_blindex]].dl.len != 0 ) break;
@@ -1302,12 +1302,12 @@ ulg flush_block( TState &state, char *buf, ulg stored_len, int eof )
     build_tree( state, ( tree_desc * )( &state.ts.d_desc ) );
     Trace( "\ndist data: dyn %ld, stat %ld", state.ts.opt_len, state.ts.static_len );
     /* At this point, opt_len and static_len are the total bit lengths of
-     * the compressed block data, excluding the tree representations.
-     */
+    * the compressed block data, excluding the tree representations.
+    */
 
     /* Build the bit length tree for the above two trees, and get the index
-     * in bl_order of the last bit length code to send.
-     */
+    * in bl_order of the last bit length code to send.
+    */
     max_blindex = build_bl_tree( state );
 
     /* Determine the best encoding. Compute first the block length in bytes */
@@ -1316,13 +1316,13 @@ ulg flush_block( TState &state, char *buf, ulg stored_len, int eof )
     state.ts.input_len += stored_len; /* for debugging only */
 
     Trace( "\nopt %lu(%lu) stat %lu(%lu) stored %lu lit %u dist %u ",
-           opt_lenb,
-           state.ts.opt_len,
-           static_lenb,
-           state.ts.static_len,
-           stored_len,
-           state.ts.last_lit,
-           state.ts.last_dist );
+            opt_lenb,
+            state.ts.opt_len,
+            static_lenb,
+            state.ts.static_len,
+            stored_len,
+            state.ts.last_lit,
+            state.ts.last_dist );
 
     if ( static_lenb <= opt_lenb ) opt_lenb = static_lenb;
 
@@ -1345,11 +1345,11 @@ ulg flush_block( TState &state, char *buf, ulg stored_len, int eof )
     {
         /* 4: two words for the lengths */
         /* The test buf != NULL is only necessary if LIT_BUFSIZE > WSIZE.
-         * Otherwise we can't have processed more than WSIZE input bytes since
-         * the last block flush, because compression would have been
-         * successful. If LIT_BUFSIZE <= WSIZE, it is never too late to
-         * transform a block into a stored block.
-         */
+        * Otherwise we can't have processed more than WSIZE input bytes since
+        * the last block flush, because compression would have been
+        * successful. If LIT_BUFSIZE <= WSIZE, it is never too late to
+        * transform a block into a stored block.
+        */
         send_bits( state, ( STORED_BLOCK << 1 ) + eof, 3 ); /* send block type */
         state.ts.cmpr_bytelen += ( ( state.ts.cmpr_len_bits + 3 + 7 ) >> 3 ) + stored_len + 4;
         state.ts.cmpr_len_bits = 0L;
@@ -1432,18 +1432,18 @@ int ct_tally( TState &state, int dist, int lc )
         }
         out_length >>= 3;
         Trace( "\nlast_lit %u, last_dist %u, in %ld, out ~%ld(%ld%%) ",
-               state.ts.last_lit,
-               state.ts.last_dist,
-               in_length,
-               out_length,
-               100L - out_length * 100L / in_length );
+                state.ts.last_lit,
+                state.ts.last_dist,
+                in_length,
+                out_length,
+                100L - out_length * 100L / in_length );
         if ( state.ts.last_dist < state.ts.last_lit / 2 && out_length < in_length / 2 ) return 1;
     }
     return ( state.ts.last_lit == LIT_BUFSIZE - 1 || state.ts.last_dist == DIST_BUFSIZE );
     /* We avoid equality with LIT_BUFSIZE because of wraparound at 64K
-     * on 16 bit machines and because stored blocks are restricted to
-     * 64K-1 bytes.
-     */
+    * on 16 bit machines and because stored blocks are restricted to
+    * 64K-1 bytes.
+    */
 }
 
 /* ===========================================================================
@@ -1539,10 +1539,10 @@ void send_bits( TState &state, int value, int length )
     Assert( state, length > 0 && length <= 15, "invalid length" );
     state.bs.bits_sent += ( ulg )length;
     /* If not enough room in bi_buf, use (bi_valid) bits from bi_buf and
-     * (Buf_size - bi_valid) bits from value to flush the filled bi_buf,
-     * then fill in the rest of (value), leaving (length - (Buf_size-bi_valid))
-     * unused bits in bi_buf.
-     */
+    * (Buf_size - bi_valid) bits from value to flush the filled bi_buf,
+    * then fill in the rest of (value), leaving (length - (Buf_size-bi_valid))
+    * unused bits in bi_buf.
+    */
     state.bs.bi_buf |= ( value << state.bs.bi_valid );
     state.bs.bi_valid += length;
     if ( state.bs.bi_valid > ( int )Buf_size )
@@ -1650,8 +1650,8 @@ int longest_match( TState &state, IPos cur_match );
  */
 #define INSERT_STRING( s, match_head )                                           \
     ( UPDATE_HASH( state.ds.ins_h, state.ds.window[( s ) + ( MIN_MATCH - 1 )] ), \
-      state.ds.prev[( s ) & WMASK] = match_head = state.ds.head[state.ds.ins_h], \
-      state.ds.head[state.ds.ins_h] = ( s ) )
+    state.ds.prev[( s ) & WMASK] = match_head = state.ds.head[state.ds.ins_h], \
+    state.ds.head[state.ds.ins_h] = ( s ) )
 
 /* ===========================================================================
  * Initialize the "longest match" routines for a new file
@@ -1669,8 +1669,8 @@ void lm_init( TState &state, int pack_level, ush *flags )
     Assert( state, pack_level >= 1 && pack_level <= 8, "bad pack level" );
 
     /* Do not slide the window if the whole input is already in memory
-     * (window_size > 0)
-     */
+    * (window_size > 0)
+    */
     state.ds.sliding = 0;
     if ( state.ds.window_size == 0L )
     {
@@ -1679,13 +1679,13 @@ void lm_init( TState &state, int pack_level, ush *flags )
     }
 
     /* Initialize the hash table (avoiding 64K overflow for 16 bit systems).
-     * prev[] will be initialized on the fly.
-     */
+    * prev[] will be initialized on the fly.
+    */
     state.ds.head[HASH_SIZE - 1] = NIL;
     memset( ( char * )state.ds.head, NIL, ( unsigned )( HASH_SIZE - 1 ) * sizeof( *state.ds.head ) );
 
     /* Set the default configuration parameters:
-     */
+    */
     state.ds.max_lazy_match = configuration_table[pack_level].max_lazy;
     state.ds.good_match = configuration_table[pack_level].good_length;
     state.ds.nice_match = configuration_table[pack_level].nice_length;
@@ -1714,15 +1714,15 @@ void lm_init( TState &state, int pack_level, ush *flags )
     }
     state.ds.eofile = 0;
     /* Make sure that we always have enough lookahead. This is important
-     * if input comes from a device such as a tty.
-     */
+    * if input comes from a device such as a tty.
+    */
     if ( state.ds.lookahead < MIN_LOOKAHEAD ) fill_window( state );
 
     state.ds.ins_h = 0;
     for ( j = 0; j < MIN_MATCH - 1; j++ ) UPDATE_HASH( state.ds.ins_h, state.ds.window[j] );
     /* If lookahead < MIN_MATCH, ins_h is garbage, but this is
-     * not important since only literal bytes will be emitted.
-     */
+    * not important since only literal bytes will be emitted.
+    */
 }
 
 /* ===========================================================================
@@ -1745,8 +1745,8 @@ int longest_match( TState &state, IPos cur_match )
     int best_len = state.ds.prev_length;                 /* best match length so far */
     IPos limit = state.ds.strstart > ( IPos )MAX_DIST ? state.ds.strstart - ( IPos )MAX_DIST : NIL;
     /* Stop when cur_match becomes <= limit. To simplify the code,
-     * we prevent matches with the string of window index 0.
-     */
+    * we prevent matches with the string of window index 0.
+    */
 
     // The code is optimized for HASH_BITS >= 8 and MAX_MATCH-2 multiple of 16.
     // It is easy to get rid of this optimization if necessary.
@@ -1770,31 +1770,31 @@ int longest_match( TState &state, IPos cur_match )
         match = state.ds.window + cur_match;
 
         /* Skip to next match if the match length cannot increase
-         * or if the match length is less than 2:
-         */
+        * or if the match length is less than 2:
+        */
         if ( match[best_len] != scan_end ||
-             match[best_len - 1] != scan_end1 ||
-             *match != *scan ||
-             *++match != scan[1] ) continue;
+            match[best_len - 1] != scan_end1 ||
+            *match != *scan ||
+            *++match != scan[1] ) continue;
 
         /* The check at best_len-1 can be removed because it will be made
-         * again later. (This heuristic is not always a win.)
-         * It is not necessary to compare scan[2] and match[2] since they
-         * are always equal when the other bytes match, given that
-         * the hash keys are equal and that HASH_BITS >= 8.
-         */
+        * again later. (This heuristic is not always a win.)
+        * It is not necessary to compare scan[2] and match[2] since they
+        * are always equal when the other bytes match, given that
+        * the hash keys are equal and that HASH_BITS >= 8.
+        */
         scan += 2, match++;
 
         /* We check for insufficient lookahead only every 8th comparison;
-         * the 256th check will be made at strstart+258.
-         */
+        * the 256th check will be made at strstart+258.
+        */
         do
         {
         } while ( *++scan == *++match && *++scan == *++match &&
-                  *++scan == *++match && *++scan == *++match &&
-                  *++scan == *++match && *++scan == *++match &&
-                  *++scan == *++match && *++scan == *++match &&
-                  scan < strend );
+                *++scan == *++match && *++scan == *++match &&
+                *++scan == *++match && *++scan == *++match &&
+                *++scan == *++match && *++scan == *++match &&
+                scan < strend );
 
         Assert( state, scan <= state.ds.window + ( unsigned )( state.ds.window_size - 1 ), "wild scan" );
 
@@ -1850,25 +1850,25 @@ void fill_window( TState &state )
         more = ( unsigned )( state.ds.window_size - ( ulg )state.ds.lookahead - ( ulg )state.ds.strstart );
 
         /* If the window is almost full and there is insufficient lookahead,
-         * move the upper half to the lower one to make room in the upper half.
-         */
+        * move the upper half to the lower one to make room in the upper half.
+        */
         if ( more == ( unsigned )EOF )
         {
             /* Very unlikely, but possible on 16 bit machine if strstart == 0
-             * and lookahead == 1 (input done one byte at time)
-             */
+            * and lookahead == 1 (input done one byte at time)
+            */
             more--;
 
             /* For MMAP or BIG_MEM, the whole input file is already in memory so
-             * we must not perform sliding. We must however call (*read_buf)() in
-             * order to compute the crc, update lookahead and possibly set eofile.
-             */
+            * we must not perform sliding. We must however call (*read_buf)() in
+            * order to compute the crc, update lookahead and possibly set eofile.
+            */
         }
         else if ( state.ds.strstart >= WSIZE + MAX_DIST && state.ds.sliding )
         {
             /* By the IN assertion, the window is not empty so we can't confuse
-             * more == 0 with more == 64K on a 16 bit machine.
-             */
+            * more == 0 with more == 64K on a 16 bit machine.
+            */
             memcpy( ( char * )state.ds.window, ( char * )state.ds.window + WSIZE, ( unsigned )WSIZE );
             state.ds.match_start -= WSIZE;
             state.ds.strstart -= WSIZE; /* we now have strstart >= MAX_DIST: */
@@ -1885,24 +1885,24 @@ void fill_window( TState &state )
                 m = state.ds.prev[n];
                 state.ds.prev[n] = ( Pos )( m >= WSIZE ? m - WSIZE : NIL );
                 /* If n is not on any hash chain, prev[n] is garbage but
-                 * its value will never be used.
-                 */
+                * its value will never be used.
+                */
             }
             more += WSIZE;
         }
         if ( state.ds.eofile ) return;
 
         /* If there was no sliding:
-         *    strstart <= WSIZE+MAX_DIST-1 && lookahead <= MIN_LOOKAHEAD - 1 &&
-         *    more == window_size - lookahead - strstart
-         * => more >= window_size - (MIN_LOOKAHEAD-1 + WSIZE + MAX_DIST-1)
-         * => more >= window_size - 2*WSIZE + 2
-         * In the MMAP or BIG_MEM case (not yet supported in gzip),
-         *   window_size == input_size + MIN_LOOKAHEAD  &&
-         *   strstart + lookahead <= input_size => more >= MIN_LOOKAHEAD.
-         * Otherwise, window_size == 2*WSIZE so more >= 2.
-         * If there was sliding, more >= WSIZE. So in all cases, more >= 2.
-         */
+        *    strstart <= WSIZE+MAX_DIST-1 && lookahead <= MIN_LOOKAHEAD - 1 &&
+        *    more == window_size - lookahead - strstart
+        * => more >= window_size - (MIN_LOOKAHEAD-1 + WSIZE + MAX_DIST-1)
+        * => more >= window_size - 2*WSIZE + 2
+        * In the MMAP or BIG_MEM case (not yet supported in gzip),
+        *   window_size == input_size + MIN_LOOKAHEAD  &&
+        *   strstart + lookahead <= input_size => more >= MIN_LOOKAHEAD.
+        * Otherwise, window_size == 2*WSIZE so more >= 2.
+        * If there was sliding, more >= WSIZE. So in all cases, more >= 2.
+        */
         Assert( state, more >= 2, "more < 2" );
 
         n = state.readfunc( state, ( char * )state.ds.window + state.ds.strstart + state.ds.lookahead, more );
@@ -1941,23 +1941,23 @@ ulg deflate_fast( TState &state )
     while ( state.ds.lookahead != 0 )
     {
         /* Insert the string window[strstart .. strstart+2] in the
-         * dictionary, and set hash_head to the head of the hash chain:
-         */
+        * dictionary, and set hash_head to the head of the hash chain:
+        */
         if ( state.ds.lookahead >= MIN_MATCH )
             INSERT_STRING( state.ds.strstart, hash_head );
 
         /* Find the longest match, discarding those <= prev_length.
-         * At this point we have always match_length < MIN_MATCH
-         */
+        * At this point we have always match_length < MIN_MATCH
+        */
         if ( hash_head != NIL && state.ds.strstart - hash_head <= MAX_DIST )
         {
             /* To simplify the code, we prevent matches with the string
-             * of window index 0 (in particular we have to avoid a match
-             * of the string with itself at the start of the input file).
-             */
+            * of window index 0 (in particular we have to avoid a match
+            * of the string with itself at the start of the input file).
+            */
             /* Do not look for matches beyond the end of the input.
-             * This is necessary to make deflate deterministic.
-             */
+            * This is necessary to make deflate deterministic.
+            */
             if ( ( unsigned )state.ds.nice_match > state.ds.lookahead ) state.ds.nice_match = ( int )state.ds.lookahead;
             match_length = longest_match( state, hash_head );
             /* longest_match() sets match_start */
@@ -1972,8 +1972,8 @@ ulg deflate_fast( TState &state )
             state.ds.lookahead -= match_length;
 
             /* Insert new strings in the hash table only if the match length
-             * is not too large. This saves time but degrades compression.
-             */
+            * is not too large. This saves time but degrades compression.
+            */
             if ( match_length <= state.ds.max_insert_length && state.ds.lookahead >= MIN_MATCH )
             {
                 match_length--; /* string at strstart already in hash table */
@@ -1982,8 +1982,8 @@ ulg deflate_fast( TState &state )
                     state.ds.strstart++;
                     INSERT_STRING( state.ds.strstart, hash_head );
                     /* strstart never exceeds WSIZE-MAX_MATCH, so there are
-                     * always MIN_MATCH bytes ahead.
-                     */
+                    * always MIN_MATCH bytes ahead.
+                    */
                 } while ( --match_length != 0 );
                 state.ds.strstart++;
             }
@@ -2006,10 +2006,10 @@ ulg deflate_fast( TState &state )
         if ( flush ) FLUSH_BLOCK( state, 0 ), state.ds.block_start = state.ds.strstart;
 
         /* Make sure that we always have enough lookahead, except
-         * at the end of the input file. We need MAX_MATCH bytes
-         * for the next match, plus MIN_MATCH bytes to insert the
-         * string following the next match.
-         */
+        * at the end of the input file. We need MAX_MATCH bytes
+        * for the next match, plus MIN_MATCH bytes to insert the
+        * string following the next match.
+        */
         if ( state.ds.lookahead < MIN_LOOKAHEAD ) fill_window( state );
     }
     return FLUSH_BLOCK( state, 1 ); /* eof */
@@ -2034,26 +2034,26 @@ ulg deflate( TState &state )
     while ( state.ds.lookahead != 0 )
     {
         /* Insert the string window[strstart .. strstart+2] in the
-         * dictionary, and set hash_head to the head of the hash chain:
-         */
+        * dictionary, and set hash_head to the head of the hash chain:
+        */
         if ( state.ds.lookahead >= MIN_MATCH )
             INSERT_STRING( state.ds.strstart, hash_head );
 
         /* Find the longest match, discarding those <= prev_length.
-         */
+        */
         state.ds.prev_length = match_length, prev_match = state.ds.match_start;
         match_length = MIN_MATCH - 1;
 
         if ( hash_head != NIL && state.ds.prev_length < state.ds.max_lazy_match &&
-             state.ds.strstart - hash_head <= MAX_DIST )
+            state.ds.strstart - hash_head <= MAX_DIST )
         {
             /* To simplify the code, we prevent matches with the string
-             * of window index 0 (in particular we have to avoid a match
-             * of the string with itself at the start of the input file).
-             */
+            * of window index 0 (in particular we have to avoid a match
+            * of the string with itself at the start of the input file).
+            */
             /* Do not look for matches beyond the end of the input.
-             * This is necessary to make deflate deterministic.
-             */
+            * This is necessary to make deflate deterministic.
+            */
             if ( ( unsigned )state.ds.nice_match > state.ds.lookahead ) state.ds.nice_match = ( int )state.ds.lookahead;
             match_length = longest_match( state, hash_head );
             /* longest_match() sets match_start */
@@ -2063,14 +2063,14 @@ ulg deflate( TState &state )
             if ( match_length == MIN_MATCH && state.ds.strstart - state.ds.match_start > TOO_FAR )
             {
                 /* If prev_match is also MIN_MATCH, match_start is garbage
-                 * but we will ignore the current match anyway.
-                 */
+                * but we will ignore the current match anyway.
+                */
                 match_length = MIN_MATCH - 1;
             }
         }
         /* If there was a match at the previous step and the current
-         * match is not better, output the previous match:
-         */
+        * match is not better, output the previous match:
+        */
         if ( state.ds.prev_length >= MIN_MATCH && match_length <= state.ds.prev_length )
         {
             unsigned max_insert = state.ds.strstart + state.ds.lookahead - MIN_MATCH;
@@ -2078,8 +2078,8 @@ ulg deflate( TState &state )
             flush = ct_tally( state, state.ds.strstart - 1 - prev_match, state.ds.prev_length - MIN_MATCH );
 
             /* Insert in hash table all strings up to the end of the match.
-             * strstart-1 and strstart are already inserted.
-             */
+            * strstart-1 and strstart are already inserted.
+            */
             state.ds.lookahead -= state.ds.prev_length - 1;
             state.ds.prev_length -= 2;
             do
@@ -2088,8 +2088,8 @@ ulg deflate( TState &state )
                 {
                     INSERT_STRING( state.ds.strstart, hash_head );
                     /* strstart never exceeds WSIZE-MAX_MATCH, so there are
-                     * always MIN_MATCH bytes ahead.
-                     */
+                    * always MIN_MATCH bytes ahead.
+                    */
                 }
             } while ( --state.ds.prev_length != 0 );
             state.ds.strstart++;
@@ -2101,9 +2101,9 @@ ulg deflate( TState &state )
         else if ( match_available )
         {
             /* If there was no match at the previous position, output a
-             * single literal. If there was a match but the current match
-             * is longer, truncate the previous match to a single literal.
-             */
+            * single literal. If there was a match but the current match
+            * is longer, truncate the previous match to a single literal.
+            */
             if ( ct_tally( state, 0, state.ds.window[state.ds.strstart - 1] ) )
             {
                 FLUSH_BLOCK( state, 0 ), state.ds.block_start = state.ds.strstart;
@@ -2114,8 +2114,8 @@ ulg deflate( TState &state )
         else
         {
             /* There is no previous match to compare with, wait for
-             * the next step to decide.
-             */
+            * the next step to decide.
+            */
             match_available = 1;
             state.ds.strstart++;
             state.ds.lookahead--;
@@ -2123,10 +2123,10 @@ ulg deflate( TState &state )
         //        Assert(state,strstart <= isize && lookahead <= isize, "a bit too far");
 
         /* Make sure that we always have enough lookahead, except
-         * at the end of the input file. We need MAX_MATCH bytes
-         * for the next match, plus MIN_MATCH bytes to insert the
-         * string following the next match.
-         */
+        * at the end of the input file. We need MAX_MATCH bytes
+        * for the next match, plus MIN_MATCH bytes to insert the
+        * string following the next match.
+        */
         if ( state.ds.lookahead < MIN_LOOKAHEAD ) fill_window( state );
     }
     if ( match_available ) ct_tally( state, 0, state.ds.window[state.ds.strstart - 1] );
@@ -2184,8 +2184,8 @@ int putcentral( struct zlist far *z, WRITEFUNC wfunc, void *param )
     PUTLG( z->atx, f );
     PUTLG( z->off, f );
     if ( ( size_t )wfunc( param, z->iname, ( unsigned int )z->nam ) != z->nam ||
-         ( z->cext && ( size_t )wfunc( param, z->cextra, ( unsigned int )z->cext ) != z->cext ) ||
-         ( z->com && ( size_t )wfunc( param, z->comment, ( unsigned int )z->com ) != z->com ) )
+        ( z->cext && ( size_t )wfunc( param, z->cextra, ( unsigned int )z->cext ) != z->cext ) ||
+        ( z->com && ( size_t )wfunc( param, z->comment, ( unsigned int )z->com ) != z->com ) )
         return ZE_TEMP;
     return ZE_OK;
 }
@@ -2644,7 +2644,7 @@ int timet_to_timestamp( time_t time )
 
 class TZip
 {
-   public:
+    public:
     TZip()
         : hfout( 0 ), hmapout( 0 ), zfis( 0 ), obuf( 0 ), hfin( 0 ), writ( 0 ), oerr( false ), hasputcen( false ), ooffset( 0 ) {}
     ~TZip() {}

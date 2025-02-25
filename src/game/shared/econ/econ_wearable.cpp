@@ -249,7 +249,7 @@ bool CEconWearable::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
     int iBodyGroup = pOwner->FindBodygroupByName( pszBodyGroup );
 
     if ( iBodyGroup == -1 )
-      continue;
+    continue;
 
     pOwner->SetBodygroup( iBodyGroup, iState );
   }
@@ -463,7 +463,7 @@ RenderGroup_t CEconWearable::GetRenderGroup()
 //-----------------------------------------------------------------------------
 class CProxyItemTintColor : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -517,10 +517,10 @@ class CProxyItemTintColor : public CResultProxy
             if ( pScriptItem && pScriptItem->IsValid() )
             {
                 const bool bAltColor = pEntity && pEntity->GetTeam() != nullptr
-                                           ? pEntity->GetTeam()->GetTeamNumber() == TF_TEAM_BLUE
-                                       : pScriptItem->GetFlags() & kEconItemFlagClient_ForceBlueTeam
-                                           ? true
-                                           : false;
+                                            ? pEntity->GetTeam()->GetTeamNumber() == TF_TEAM_BLUE
+                                        : pScriptItem->GetFlags() & kEconItemFlagClient_ForceBlueTeam
+                                            ? true
+                                            : false;
 
                 int iModifiedRGB = pScriptItem->GetModifiedRGBValue( bAltColor );
                 if ( iModifiedRGB )
@@ -789,71 +789,71 @@ static CUtlVector< const char * > s_possibleModels;
 static CUtlVector< const GameItemDefinition_t * > s_possibleDefinitions;
 void Dbg_TestDynamicWearableGibs( void )
 {
-	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( !pLocalPlayer )
-		return;
+    C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
+    if ( !pLocalPlayer )
+        return;
 
-	C_EconWearableGib *pEntity = new C_EconWearableGib();
-	if ( !pEntity )
-		return;
+    C_EconWearableGib *pEntity = new C_EconWearableGib();
+    if ( !pEntity )
+        return;
 
-	Vector forward;
-	pLocalPlayer->EyeVectors( &forward );
-	trace_t tr;
-	UTIL_TraceLine( pLocalPlayer->EyePosition(), pLocalPlayer->EyePosition() + (forward * 256), MASK_NPCSOLID, pLocalPlayer, COLLISION_GROUP_NONE, &tr );
+    Vector forward;
+    pLocalPlayer->EyeVectors( &forward );
+    trace_t tr;
+    UTIL_TraceLine( pLocalPlayer->EyePosition(), pLocalPlayer->EyePosition() + (forward * 256), MASK_NPCSOLID, pLocalPlayer, COLLISION_GROUP_NONE, &tr );
 
-	Vector position = tr.endpos;
+    Vector position = tr.endpos;
 
-	if ( s_possibleModels.Count() == 0 )
-	{
-		FOR_EACH_MAP( ItemSystem()->GetItemSchema()->GetItemDefinitionMap(), nDefn )
-		{
-			const GameItemDefinition_t *pDefn = dynamic_cast<GameItemDefinition_t *>( ItemSystem()->GetItemSchema()->GetItemDefinitionMap()[nDefn] );
-			if ( !pDefn )
-				continue;
+    if ( s_possibleModels.Count() == 0 )
+    {
+        FOR_EACH_MAP( ItemSystem()->GetItemSchema()->GetItemDefinitionMap(), nDefn )
+        {
+            const GameItemDefinition_t *pDefn = dynamic_cast<GameItemDefinition_t *>( ItemSystem()->GetItemSchema()->GetItemDefinitionMap()[nDefn] );
+            if ( !pDefn )
+                continue;
 
-			const char *pszModel = pDefn->GetPlayerDisplayModel( 0 );
-			if ( pszModel && pszModel[0] && pszModel[0] != '?' && pDefn->BLoadOnDemand() && pDefn->GetDropType() == ITEM_DROP_TYPE_DROP )
-			{
-				s_possibleModels.AddToTail( pszModel );
-				s_possibleDefinitions.AddToTail( pDefn );
-			}
-		}
-	}
+            const char *pszModel = pDefn->GetPlayerDisplayModel( 0 );
+            if ( pszModel && pszModel[0] && pszModel[0] != '?' && pDefn->BLoadOnDemand() && pDefn->GetDropType() == ITEM_DROP_TYPE_DROP )
+            {
+                s_possibleModels.AddToTail( pszModel );
+                s_possibleDefinitions.AddToTail( pDefn );
+            }
+        }
+    }
 
-	Assert( s_possibleModels.Count() );
+    Assert( s_possibleModels.Count() );
 
-	int spawnIndex = random->RandomInt( 0, s_possibleModels.Count() - 1 );
-	const char *pszModelName = s_possibleModels[ spawnIndex ];
-	const GameItemDefinition_t *pDefn = s_possibleDefinitions[ spawnIndex ];
-	Msg( "Spawning: %s\n", pszModelName );
-	pEntity->SetModelName( AllocPooledString( pszModelName ) );
-	pEntity->SetAbsOrigin( position );
-	pEntity->SetAbsAngles( vec3_angle );
-	pEntity->SetOwnerEntity( pLocalPlayer );
-	pEntity->ChangeTeam( pLocalPlayer->GetTeamNumber() );						// our gibs will match our team; this will probably not be used for anything besides team coloring
-	// Copy the script created item data over
-	pEntity->GetAttributeContainer()->GetItem()->Init( pDefn->GetDefinitionIndex(), pDefn->GetQuality(), pDefn->GetMinLevel(), true );
+    int spawnIndex = random->RandomInt( 0, s_possibleModels.Count() - 1 );
+    const char *pszModelName = s_possibleModels[ spawnIndex ];
+    const GameItemDefinition_t *pDefn = s_possibleDefinitions[ spawnIndex ];
+    Msg( "Spawning: %s\n", pszModelName );
+    pEntity->SetModelName( AllocPooledString( pszModelName ) );
+    pEntity->SetAbsOrigin( position );
+    pEntity->SetAbsAngles( vec3_angle );
+    pEntity->SetOwnerEntity( pLocalPlayer );
+    pEntity->ChangeTeam( pLocalPlayer->GetTeamNumber() );						// our gibs will match our team; this will probably not be used for anything besides team coloring
+    // Copy the script created item data over
+    pEntity->GetAttributeContainer()->GetItem()->Init( pDefn->GetDefinitionIndex(), pDefn->GetQuality(), pDefn->GetMinLevel(), true );
 
-	if ( !pEntity->Initialize( false ) )
-	{
-		pEntity->Release();
-		return;
-	}
+    if ( !pEntity->Initialize( false ) )
+    {
+        pEntity->Release();
+        return;
+    }
 
-	pEntity->StartFadeOut( 15.0f );
-	return;
+    pEntity->StartFadeOut( 15.0f );
+    return;
 
-	IPhysicsObject *pPhysicsObject = pEntity->VPhysicsGetObject();
-	if ( !pPhysicsObject )
-	{
-		pEntity->Release();
-		return;
-	}
+    IPhysicsObject *pPhysicsObject = pEntity->VPhysicsGetObject();
+    if ( !pPhysicsObject )
+    {
+        pEntity->Release();
+        return;
+    }
 
-	// randomize velocity by 5%
-	Vector rndVel = Vector(0,0,100);
-	pPhysicsObject->AddVelocity( &rndVel, &vec3_origin );
+    // randomize velocity by 5%
+    Vector rndVel = Vector(0,0,100);
+    pPhysicsObject->AddVelocity( &rndVel, &vec3_origin );
 }
 static ConCommand dbg_testdynamicwearablegib( "dbg_testdynamicwearablegib", Dbg_TestDynamicWearableGibs, "", FCVAR_CHEAT );
 #endif  // _DEBUG

@@ -23,7 +23,7 @@
 //
 class CTFGrenadeNail : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeNail, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -46,7 +46,7 @@ class CTFGrenadeNail : public CTFWeaponBaseGrenade
 
 #endif
 
-   public:
+    public:
     CTFGrenadeNail( const CTFGrenadeNail & ) {}
 };
 
@@ -60,13 +60,13 @@ class CNailGrenadeController : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     virtual simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
-   public:
+    public:
     void SetDesiredPosAndOrientation( Vector pos, QAngle orientation );
 
-   private:
+    private:
     Vector m_vecDesiredPosition;
     QAngle m_angDesiredOrientation;
 
@@ -76,7 +76,7 @@ class CNailGrenadeController : public IMotionEvent
 
 class CTFGrenadeNailProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     ~CTFGrenadeNailProjectile();
 
     DECLARE_CLASS( CTFGrenadeNailProjectile, CTFWeaponBaseGrenadeProj );
@@ -104,7 +104,7 @@ class CTFGrenadeNailProjectile : public CTFWeaponBaseGrenadeProj
     CNailGrenadeController m_GrenadeController;
     IPhysicsMotionController *m_pMotionController;
 
-   public:
+    public:
     bool m_bActivated;
     float m_flNailAngle;
     int m_iNumNailBurstsLeft;

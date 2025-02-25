@@ -35,7 +35,7 @@ class CTFDecapitationMeleeWeaponBase : public CTFWeaponBaseMelee, public CGameEv
 class CTFDecapitationMeleeWeaponBase : public CTFWeaponBaseMelee
 #endif
 {
-   public:
+    public:
     DECLARE_CLASS( CTFDecapitationMeleeWeaponBase, CTFWeaponBaseMelee );
 
     CTFDecapitationMeleeWeaponBase();
@@ -66,10 +66,10 @@ class CTFDecapitationMeleeWeaponBase : public CTFWeaponBaseMelee
     virtual int DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags );
 #endif  // CLIENT_DLL
 
-   protected:
+    protected:
     bool m_bHolstering;
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     EHANDLE m_hShield;
 #endif  // CLIENT_DLL
@@ -81,7 +81,7 @@ class CTFDecapitationMeleeWeaponBase : public CTFWeaponBaseMelee
 //
 class CTFSword : public CTFDecapitationMeleeWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFSword, CTFDecapitationMeleeWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -111,7 +111,7 @@ class CTFSword : public CTFDecapitationMeleeWeaponBase
     virtual void WeaponIdle( void );
 #endif
 
-   private:
+    private:
     CTFSword( const CTFSword & ) {}
 
 #ifdef CLIENT_DLL
@@ -126,7 +126,7 @@ class CTFSword : public CTFDecapitationMeleeWeaponBase
 //
 class CTFKatana : public CTFDecapitationMeleeWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFKatana, CTFDecapitationMeleeWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -140,10 +140,10 @@ class CTFKatana : public CTFDecapitationMeleeWeaponBase
 
     virtual int GetActivityWeaponRole() const OVERRIDE;
 
-   protected:
+    protected:
     virtual int GetSkinOverride() const;
 
-   private:
+    private:
     CNetworkVar( bool, m_bIsBloody );
 };
 

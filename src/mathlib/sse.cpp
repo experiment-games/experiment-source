@@ -90,8 +90,8 @@ float _SSE_Sqrt( float x )
 #ifdef _WIN32
     _asm
         {
-		sqrtss		xmm0, x
-		movss		root, xmm0
+        sqrtss		xmm0, x
+        movss		root, xmm0
         }
 #elif POSIX
     _mm_store_ss( &root, _mm_sqrt_ss( _mm_load_ss( &x ) ) );
@@ -105,16 +105,16 @@ float _SSE_Sqrt( float x )
 #if 0
 float _SSE_RSqrtAccurate(float x)
 {
-	Assert( s_bMathlibInitialized );
+    Assert( s_bMathlibInitialized );
 
-	float rroot;
-	_asm
-	{
-		rsqrtss	xmm0, x
-		movss	rroot, xmm0
-	}
+    float rroot;
+    _asm
+    {
+        rsqrtss	xmm0, x
+        movss	rroot, xmm0
+    }
 
-	return (0.5f * rroot) * (3.f - (x * rroot) * rroot);
+    return (0.5f * rroot) * (3.f - (x * rroot) * rroot);
 }
 #else
 
@@ -133,18 +133,18 @@ float _SSE_RSqrtAccurate( float a )
 
     __asm
     {
-		movss   xmm3, a;
-		movss   xmm1, half;
-		movss   xmm2, three;
-		rsqrtss xmm0, xmm3;
+        movss   xmm3, a;
+        movss   xmm1, half;
+        movss   xmm2, three;
+        rsqrtss xmm0, xmm3;
 
-		mulss   xmm3, xmm0;
-		mulss   xmm1, xmm0;
-		mulss   xmm3, xmm0;
-		subss   xmm2, xmm3;
-		mulss   xmm1, xmm2;
+        mulss   xmm3, xmm0;
+        mulss   xmm1, xmm0;
+        mulss   xmm3, xmm0;
+        subss   xmm2, xmm3;
+        mulss   xmm1, xmm2;
 
-		movss   x,    xmm1;
+        movss   x,    xmm1;
     }
 
     return x;
@@ -177,8 +177,8 @@ float _SSE_RSqrtFast( float x )
 #ifdef _WIN32
     _asm
     {
-		rsqrtss	xmm0, x
-		movss	rroot, xmm0
+        rsqrtss	xmm0, x
+        movss	rroot, xmm0
     }
 #elif POSIX
     __asm__ __volatile__( "rsqrtss %0, %1" : "=x"( rroot ) : "x"( x ) );
@@ -214,27 +214,27 @@ float FASTCALL _SSE_VectorNormalize( Vector &vec )
 #ifdef _WIN32
         _asm
         {
-			mov			eax, v
-			mov			edx, r
+            mov			eax, v
+            mov			edx, r
 #ifdef ALIGNED_VECTOR
-			movaps		xmm4, [eax]  // r4 = vx, vy, vz, X
-			movaps		xmm1, xmm4  // r1 = r4
+            movaps		xmm4, [eax]  // r4 = vx, vy, vz, X
+            movaps		xmm1, xmm4  // r1 = r4
 #else
-			movups		xmm4, [eax]  // r4 = vx, vy, vz, X
-			movaps		xmm1, xmm4  // r1 = r4
+            movups		xmm4, [eax]  // r4 = vx, vy, vz, X
+            movaps		xmm1, xmm4  // r1 = r4
 #endif
-			mulps		xmm1, xmm4  // r1 = vx * vx, vy * vy, vz * vz, X
-			movhlps		xmm3, xmm1  // r3 = vz * vz, X, X, X
-			movaps		xmm2, xmm1  // r2 = r1
-			shufps		xmm2, xmm2, 1  // r2 = vy * vy, X, X, X
-			addss		xmm1, xmm2  // r1 = (vx * vx) + (vy * vy), X, X, X
-			addss		xmm1, xmm3  // r1 = (vx * vx) + (vy * vy) + (vz * vz), X, X, X
-			sqrtss		xmm1, xmm1  // r1 = sqrt((vx * vx) + (vy * vy) + (vz * vz)), X, X, X
-			movss		radius, xmm1  // radius = sqrt((vx * vx) + (vy * vy) + (vz * vz))
-			rcpss		xmm1, xmm1  // r1 = 1/radius, X, X, X
-			shufps		xmm1, xmm1, 0  // r1 = 1/radius, 1/radius, 1/radius, X
-			mulps		xmm4, xmm1  // r4 = vx * 1/radius, vy * 1/radius, vz * 1/radius, X
-			movaps		[edx], xmm4  // v = vx * 1/radius, vy * 1/radius, vz * 1/radius, X
+            mulps		xmm1, xmm4  // r1 = vx * vx, vy * vy, vz * vz, X
+            movhlps		xmm3, xmm1  // r3 = vz * vz, X, X, X
+            movaps		xmm2, xmm1  // r2 = r1
+            shufps		xmm2, xmm2, 1  // r2 = vy * vy, X, X, X
+            addss		xmm1, xmm2  // r1 = (vx * vx) + (vy * vy), X, X, X
+            addss		xmm1, xmm3  // r1 = (vx * vx) + (vy * vy) + (vz * vz), X, X, X
+            sqrtss		xmm1, xmm1  // r1 = sqrt((vx * vx) + (vy * vy) + (vz * vz)), X, X, X
+            movss		radius, xmm1  // radius = sqrt((vx * vx) + (vy * vy) + (vz * vz))
+            rcpss		xmm1, xmm1  // r1 = 1/radius, X, X, X
+            shufps		xmm1, xmm1, 0  // r1 = 1/radius, 1/radius, 1/radius, X
+            mulps		xmm4, xmm1  // r4 = vx * 1/radius, vy * 1/radius, vz * 1/radius, X
+            movaps		[edx], xmm4  // v = vx * 1/radius, vy * 1/radius, vz * 1/radius, X
         }
 #elif POSIX
         __asm__ __volatile__(
@@ -285,23 +285,23 @@ float _SSE_InvRSquared( const float *v )
     float inv_r2 = 1.f;
 #ifdef _WIN32
     _asm {  // Intel SSE only routine
-		mov			eax, v
-		movss		xmm5, inv_r2  // x5 = 1.0, 0, 0, 0
+        mov			eax, v
+        movss		xmm5, inv_r2  // x5 = 1.0, 0, 0, 0
 #ifdef ALIGNED_VECTOR
-		movaps		xmm4, [eax]   // x4 = vx, vy, vz, X
+        movaps		xmm4, [eax]   // x4 = vx, vy, vz, X
 #else
-		movups		xmm4, [eax]  // x4 = vx, vy, vz, X
+        movups		xmm4, [eax]  // x4 = vx, vy, vz, X
 #endif
-		movaps		xmm1, xmm4  // x1 = x4
-		mulps		xmm1, xmm4  // x1 = vx * vx, vy * vy, vz * vz, X
-		movhlps		xmm3, xmm1  // x3 = vz * vz, X, X, X
-		movaps		xmm2, xmm1  // x2 = x1
-		shufps		xmm2, xmm2, 1  // x2 = vy * vy, X, X, X
-		addss		xmm1, xmm2  // x1 = (vx * vx) + (vy * vy), X, X, X
-		addss		xmm1, xmm3  // x1 = (vx * vx) + (vy * vy) + (vz * vz), X, X, X
-		maxss		xmm1, xmm5  // x1 = max( 1.0, x1 )
-		rcpss		xmm0, xmm1  // x0 = 1 / max( 1.0, x1 )
-		movss		inv_r2, xmm0  // inv_r2 = x0
+        movaps		xmm1, xmm4  // x1 = x4
+        mulps		xmm1, xmm4  // x1 = vx * vx, vy * vy, vz * vz, X
+        movhlps		xmm3, xmm1  // x3 = vz * vz, X, X, X
+        movaps		xmm2, xmm1  // x2 = x1
+        shufps		xmm2, xmm2, 1  // x2 = vy * vy, X, X, X
+        addss		xmm1, xmm2  // x1 = (vx * vx) + (vy * vy), X, X, X
+        addss		xmm1, xmm3  // x1 = (vx * vx) + (vy * vy) + (vz * vz), X, X, X
+        maxss		xmm1, xmm5  // x1 = max( 1.0, x1 )
+        rcpss		xmm0, xmm1  // x0 = 1 / max( 1.0, x1 )
+        movss		inv_r2, xmm0  // inv_r2 = x0
     }
 #elif POSIX
     __asm__ __volatile__(
@@ -385,85 +385,85 @@ void _SSE_SinCos( float x, float *s, float *c )
 
     __asm
         {
-		movss	xmm0, x
-		movss	t12, xmm0
-		movss	xmm1, _ps_am_inv_sign_mask
-		mov		eax, t12
-		mulss	xmm0, _ps_am_2_o_pi
-		andps	xmm0, xmm1
-		and		eax, 0x80000000
+        movss	xmm0, x
+        movss	t12, xmm0
+        movss	xmm1, _ps_am_inv_sign_mask
+        mov		eax, t12
+        mulss	xmm0, _ps_am_2_o_pi
+        andps	xmm0, xmm1
+        and		eax, 0x80000000
 
-		cvttss2si	edx, xmm0
-		mov		ecx, edx
-		mov		t12, esi
-		mov		esi, edx
-		add		edx, 0x1	
-		shl		ecx, (31 - 1)
-		shl		edx, (31 - 1)
+        cvttss2si	edx, xmm0
+        mov		ecx, edx
+        mov		t12, esi
+        mov		esi, edx
+        add		edx, 0x1
+        shl		ecx, (31 - 1)
+        shl		edx, (31 - 1)
 
-		movss	xmm4, _ps_am_1
-		cvtsi2ss	xmm3, esi
-		mov		t8, eax
-		and		esi, 0x1
+        movss	xmm4, _ps_am_1
+        cvtsi2ss	xmm3, esi
+        mov		t8, eax
+        and		esi, 0x1
 
-		subss	xmm0, xmm3
-		movss	xmm3, _sincos_inv_masks[esi * 4]
-		minss	xmm0, xmm4
+        subss	xmm0, xmm3
+        movss	xmm3, _sincos_inv_masks[esi * 4]
+        minss	xmm0, xmm4
 
-		subss	xmm4, xmm0
+        subss	xmm4, xmm0
 
-		movss	xmm6, xmm4
-		andps	xmm4, xmm3
-		and		ecx, 0x80000000
-		movss	xmm2, xmm3
-		andnps	xmm3, xmm0
-		and		edx, 0x80000000
-		movss	xmm7, t8
-		andps	xmm0, xmm2
-		mov		t8, ecx
-		mov		t4, edx
-		orps	xmm4, xmm3
+        movss	xmm6, xmm4
+        andps	xmm4, xmm3
+        and		ecx, 0x80000000
+        movss	xmm2, xmm3
+        andnps	xmm3, xmm0
+        and		edx, 0x80000000
+        movss	xmm7, t8
+        andps	xmm0, xmm2
+        mov		t8, ecx
+        mov		t4, edx
+        orps	xmm4, xmm3
 
-		mov		eax, s  // mov eax, [esp + 4 + 16]
-		mov		edx, c  // mov edx, [esp + 4 + 16 + 4]
+        mov		eax, s  // mov eax, [esp + 4 + 16]
+        mov		edx, c  // mov edx, [esp + 4 + 16 + 4]
 
-		andnps	xmm2, xmm6
-		orps	xmm0, xmm2
+        andnps	xmm2, xmm6
+        orps	xmm0, xmm2
 
-		movss	xmm2, t8
-		movss	xmm1, xmm0
-		movss	xmm5, xmm4
-		xorps	xmm7, xmm2
-		movss	xmm3, _ps_sincos_p3
-		mulss	xmm0, xmm0
-		mulss	xmm4, xmm4
-		movss	xmm2, xmm0
-		movss	xmm6, xmm4
-		orps	xmm1, xmm7
-		movss	xmm7, _ps_sincos_p2
-		mulss	xmm0, xmm3
-		mulss	xmm4, xmm3
-		movss	xmm3, _ps_sincos_p1
-		addss	xmm0, xmm7
-		addss	xmm4, xmm7
-		movss	xmm7, _ps_sincos_p0
-		mulss	xmm0, xmm2
-		mulss	xmm4, xmm6
-		addss	xmm0, xmm3
-		addss	xmm4, xmm3
-		movss	xmm3, t4
-		mulss	xmm0, xmm2
-		mulss	xmm4, xmm6
-		orps	xmm5, xmm3
-		mov		esi, t12
-		addss	xmm0, xmm7
-		addss	xmm4, xmm7
-		mulss	xmm0, xmm1
-		mulss	xmm4, xmm5
+        movss	xmm2, t8
+        movss	xmm1, xmm0
+        movss	xmm5, xmm4
+        xorps	xmm7, xmm2
+        movss	xmm3, _ps_sincos_p3
+        mulss	xmm0, xmm0
+        mulss	xmm4, xmm4
+        movss	xmm2, xmm0
+        movss	xmm6, xmm4
+        orps	xmm1, xmm7
+        movss	xmm7, _ps_sincos_p2
+        mulss	xmm0, xmm3
+        mulss	xmm4, xmm3
+        movss	xmm3, _ps_sincos_p1
+        addss	xmm0, xmm7
+        addss	xmm4, xmm7
+        movss	xmm7, _ps_sincos_p0
+        mulss	xmm0, xmm2
+        mulss	xmm4, xmm6
+        addss	xmm0, xmm3
+        addss	xmm4, xmm3
+        movss	xmm3, t4
+        mulss	xmm0, xmm2
+        mulss	xmm4, xmm6
+        orps	xmm5, xmm3
+        mov		esi, t12
+        addss	xmm0, xmm7
+        addss	xmm4, xmm7
+        mulss	xmm0, xmm1
+        mulss	xmm4, xmm5
 
                 // use full stores since caller might reload with full loads
-		movss	[eax], xmm0
-		movss	[edx], xmm4
+        movss	[eax], xmm0
+        movss	[edx], xmm4
         }
 #elif POSIX
 
@@ -516,7 +516,7 @@ void _SSE_SinCos( float x, float *s, float *c )
     COPY_MM_TO_XMM( mm2, mm3, poly_mask );
 
     /* The magic pass: "Extended precision modular arithmetic"
-     x = ((x - y * DP1) - y * DP2) - y * DP3; */
+    x = ((x - y * DP1) - y * DP2) - y * DP3; */
     xmm1 = *( v4sf* )_ps_minus_cephes_DP1;
     xmm2 = *( v4sf* )_ps_minus_cephes_DP2;
     xmm3 = *( v4sf* )_ps_minus_cephes_DP3;
@@ -590,49 +590,49 @@ float _SSE_cos( float x )
     float temp;
     __asm
         {
-		movss	xmm0, x
-		movss	xmm1, _ps_am_inv_sign_mask
-		andps	xmm0, xmm1
-		addss	xmm0, _ps_am_pi_o_2
-		mulss	xmm0, _ps_am_2_o_pi
+        movss	xmm0, x
+        movss	xmm1, _ps_am_inv_sign_mask
+        andps	xmm0, xmm1
+        addss	xmm0, _ps_am_pi_o_2
+        mulss	xmm0, _ps_am_2_o_pi
 
-		cvttss2si	ecx, xmm0
-		movss	xmm5, _ps_am_1
-		mov		edx, ecx
-		shl		edx, (31 - 1)
-		cvtsi2ss	xmm1, ecx
-		and		edx, 0x80000000
-		and		ecx, 0x1
+        cvttss2si	ecx, xmm0
+        movss	xmm5, _ps_am_1
+        mov		edx, ecx
+        shl		edx, (31 - 1)
+        cvtsi2ss	xmm1, ecx
+        and		edx, 0x80000000
+        and		ecx, 0x1
 
-		subss	xmm0, xmm1
-		movss	xmm6, _sincos_masks[ecx * 4]
-		minss	xmm0, xmm5
+        subss	xmm0, xmm1
+        movss	xmm6, _sincos_masks[ecx * 4]
+        minss	xmm0, xmm5
 
-		movss	xmm1, _ps_sincos_p3
-		subss	xmm5, xmm0
+        movss	xmm1, _ps_sincos_p3
+        subss	xmm5, xmm0
 
-		andps	xmm5, xmm6
-		movss	xmm7, _ps_sincos_p2
-		andnps	xmm6, xmm0
-		mov		temp, edx
-		orps	xmm5, xmm6
-		movss	xmm0, xmm5
+        andps	xmm5, xmm6
+        movss	xmm7, _ps_sincos_p2
+        andnps	xmm6, xmm0
+        mov		temp, edx
+        orps	xmm5, xmm6
+        movss	xmm0, xmm5
 
-		mulss	xmm5, xmm5
-		movss	xmm4, _ps_sincos_p1
-		movss	xmm2, xmm5
-		mulss	xmm5, xmm1
-		movss	xmm1, _ps_sincos_p0
-		addss	xmm5, xmm7
-		mulss	xmm5, xmm2
-		movss	xmm3, temp
-		addss	xmm5, xmm4
-		mulss	xmm5, xmm2
-		orps	xmm0, xmm3
-		addss	xmm5, xmm1
-		mulss	xmm0, xmm5
-		
-		movss   x,    xmm0
+        mulss	xmm5, xmm5
+        movss	xmm4, _ps_sincos_p1
+        movss	xmm2, xmm5
+        mulss	xmm5, xmm1
+        movss	xmm1, _ps_sincos_p0
+        addss	xmm5, xmm7
+        mulss	xmm5, xmm2
+        movss	xmm3, temp
+        addss	xmm5, xmm4
+        mulss	xmm5, xmm2
+        orps	xmm0, xmm3
+        addss	xmm5, xmm1
+        mulss	xmm0, xmm5
+
+        movss   x,    xmm0
 
         }
 #elif POSIX
@@ -666,7 +666,7 @@ float _SSE_cos( float x )
     mm3 = _mm_sub_pi32( mm3, *( v2si* )_pi32_2 );
 
     /* get the swap sign flag in mm0:mm1 and the
-     polynom selection mask in mm2:mm3 */
+    polynom selection mask in mm2:mm3 */
 
     mm0 = _mm_andnot_si64( mm2, *( v2si* )_pi32_4 );
     mm1 = _mm_andnot_si64( mm3, *( v2si* )_pi32_4 );
@@ -685,7 +685,7 @@ float _SSE_cos( float x )
     _mm_empty(); /* good-bye mmx */
 
     /* The magic pass: "Extended precision modular arithmetic"
-     x = ((x - y * DP1) - y * DP2) - y * DP3; */
+    x = ((x - y * DP1) - y * DP2) - y * DP3; */
     xmm1 = *( v4sf* )_ps_minus_cephes_DP1;
     xmm2 = *( v4sf* )_ps_minus_cephes_DP2;
     xmm3 = *( v4sf* )_ps_minus_cephes_DP3;
@@ -746,78 +746,78 @@ void _SSE2_SinCos( float x, float *s, float *c )  // any x
 #ifdef _WIN32
     __asm
         {
-		movss	xmm0, x
-		movaps	xmm7, xmm0
-		movss	xmm1, _ps_am_inv_sign_mask
-		movss	xmm2, _ps_am_sign_mask
-		movss	xmm3, _ps_am_2_o_pi
-		andps	xmm0, xmm1
-		andps	xmm7, xmm2
-		mulss	xmm0, xmm3
+        movss	xmm0, x
+        movaps	xmm7, xmm0
+        movss	xmm1, _ps_am_inv_sign_mask
+        movss	xmm2, _ps_am_sign_mask
+        movss	xmm3, _ps_am_2_o_pi
+        andps	xmm0, xmm1
+        andps	xmm7, xmm2
+        mulss	xmm0, xmm3
 
-		pxor	xmm3, xmm3
-		movd	xmm5, _epi32_1
-		movss	xmm4, _ps_am_1
+        pxor	xmm3, xmm3
+        movd	xmm5, _epi32_1
+        movss	xmm4, _ps_am_1
 
-		cvttps2dq	xmm2, xmm0
-		pand	xmm5, xmm2
-		movd	xmm1, _epi32_2
-		pcmpeqd	xmm5, xmm3
-		movd	xmm3, _epi32_1
-		cvtdq2ps	xmm6, xmm2
-		paddd	xmm3, xmm2
-		pand	xmm2, xmm1
-		pand	xmm3, xmm1
-		subss	xmm0, xmm6
-		pslld	xmm2, (31 - 1)
-		minss	xmm0, xmm4
+        cvttps2dq	xmm2, xmm0
+        pand	xmm5, xmm2
+        movd	xmm1, _epi32_2
+        pcmpeqd	xmm5, xmm3
+        movd	xmm3, _epi32_1
+        cvtdq2ps	xmm6, xmm2
+        paddd	xmm3, xmm2
+        pand	xmm2, xmm1
+        pand	xmm3, xmm1
+        subss	xmm0, xmm6
+        pslld	xmm2, (31 - 1)
+        minss	xmm0, xmm4
 
-		mov		eax, s  // mov eax, [esp + 4 + 16]
-		mov		edx, c  // mov edx, [esp + 4 + 16 + 4]
+        mov		eax, s  // mov eax, [esp + 4 + 16]
+        mov		edx, c  // mov edx, [esp + 4 + 16 + 4]
 
-		subss	xmm4, xmm0
-		pslld	xmm3, (31 - 1)
+        subss	xmm4, xmm0
+        pslld	xmm3, (31 - 1)
 
-		movaps	xmm6, xmm4
-		xorps	xmm2, xmm7
-		movaps	xmm7, xmm5
-		andps	xmm6, xmm7
-		andnps	xmm7, xmm0
-		andps	xmm0, xmm5
-		andnps	xmm5, xmm4
-		movss	xmm4, _ps_sincos_p3
-		orps	xmm6, xmm7
-		orps	xmm0, xmm5
-		movss	xmm5, _ps_sincos_p2
+        movaps	xmm6, xmm4
+        xorps	xmm2, xmm7
+        movaps	xmm7, xmm5
+        andps	xmm6, xmm7
+        andnps	xmm7, xmm0
+        andps	xmm0, xmm5
+        andnps	xmm5, xmm4
+        movss	xmm4, _ps_sincos_p3
+        orps	xmm6, xmm7
+        orps	xmm0, xmm5
+        movss	xmm5, _ps_sincos_p2
 
-		movaps	xmm1, xmm0
-		movaps	xmm7, xmm6
-		mulss	xmm0, xmm0
-		mulss	xmm6, xmm6
-		orps	xmm1, xmm2
-		orps	xmm7, xmm3
-		movaps	xmm2, xmm0
-		movaps	xmm3, xmm6
-		mulss	xmm0, xmm4
-		mulss	xmm6, xmm4
-		movss	xmm4, _ps_sincos_p1
-		addss	xmm0, xmm5
-		addss	xmm6, xmm5
-		movss	xmm5, _ps_sincos_p0
-		mulss	xmm0, xmm2
-		mulss	xmm6, xmm3
-		addss	xmm0, xmm4
-		addss	xmm6, xmm4
-		mulss	xmm0, xmm2
-		mulss	xmm6, xmm3
-		addss	xmm0, xmm5
-		addss	xmm6, xmm5
-		mulss	xmm0, xmm1
-		mulss	xmm6, xmm7
+        movaps	xmm1, xmm0
+        movaps	xmm7, xmm6
+        mulss	xmm0, xmm0
+        mulss	xmm6, xmm6
+        orps	xmm1, xmm2
+        orps	xmm7, xmm3
+        movaps	xmm2, xmm0
+        movaps	xmm3, xmm6
+        mulss	xmm0, xmm4
+        mulss	xmm6, xmm4
+        movss	xmm4, _ps_sincos_p1
+        addss	xmm0, xmm5
+        addss	xmm6, xmm5
+        movss	xmm5, _ps_sincos_p0
+        mulss	xmm0, xmm2
+        mulss	xmm6, xmm3
+        addss	xmm0, xmm4
+        addss	xmm6, xmm4
+        mulss	xmm0, xmm2
+        mulss	xmm6, xmm3
+        addss	xmm0, xmm5
+        addss	xmm6, xmm5
+        mulss	xmm0, xmm1
+        mulss	xmm6, xmm7
 
                 // use full stores since caller might reload with full loads
-		movss	[eax], xmm0
-		movss	[edx], xmm6
+        movss	[eax], xmm0
+        movss	[edx], xmm6
         }
 #elif POSIX
 #warning "_SSE2_SinCos NOT implemented!"
@@ -834,48 +834,48 @@ float _SSE2_cos( float x )
 #ifdef _WIN32
     __asm
         {
-		movss	xmm0, x
-		movss	xmm1, _ps_am_inv_sign_mask
-		movss	xmm2, _ps_am_pi_o_2
-		movss	xmm3, _ps_am_2_o_pi
-		andps	xmm0, xmm1
-		addss	xmm0, xmm2
-		mulss	xmm0, xmm3
+        movss	xmm0, x
+        movss	xmm1, _ps_am_inv_sign_mask
+        movss	xmm2, _ps_am_pi_o_2
+        movss	xmm3, _ps_am_2_o_pi
+        andps	xmm0, xmm1
+        addss	xmm0, xmm2
+        mulss	xmm0, xmm3
 
-		pxor	xmm3, xmm3
-		movd	xmm5, _epi32_1
-		movss	xmm4, _ps_am_1
-		cvttps2dq	xmm2, xmm0
-		pand	xmm5, xmm2
-		movd	xmm1, _epi32_2
-		pcmpeqd	xmm5, xmm3
-		cvtdq2ps	xmm6, xmm2
-		pand	xmm2, xmm1
-		pslld	xmm2, (31 - 1)
+        pxor	xmm3, xmm3
+        movd	xmm5, _epi32_1
+        movss	xmm4, _ps_am_1
+        cvttps2dq	xmm2, xmm0
+        pand	xmm5, xmm2
+        movd	xmm1, _epi32_2
+        pcmpeqd	xmm5, xmm3
+        cvtdq2ps	xmm6, xmm2
+        pand	xmm2, xmm1
+        pslld	xmm2, (31 - 1)
 
-		subss	xmm0, xmm6
-		movss	xmm3, _ps_sincos_p3
-		minss	xmm0, xmm4
-		subss	xmm4, xmm0
-		andps	xmm0, xmm5
-		andnps	xmm5, xmm4
-		orps	xmm0, xmm5
+        subss	xmm0, xmm6
+        movss	xmm3, _ps_sincos_p3
+        minss	xmm0, xmm4
+        subss	xmm4, xmm0
+        andps	xmm0, xmm5
+        andnps	xmm5, xmm4
+        orps	xmm0, xmm5
 
-		movaps	xmm1, xmm0
-		movss	xmm4, _ps_sincos_p2
-		mulss	xmm0, xmm0
-		movss	xmm5, _ps_sincos_p1
-		orps	xmm1, xmm2
-		movaps	xmm7, xmm0
-		mulss	xmm0, xmm3
-		movss	xmm6, _ps_sincos_p0
-		addss	xmm0, xmm4
-		mulss	xmm0, xmm7
-		addss	xmm0, xmm5
-		mulss	xmm0, xmm7
-		addss	xmm0, xmm6
-		mulss	xmm0, xmm1
-		movss   x,    xmm0
+        movaps	xmm1, xmm0
+        movss	xmm4, _ps_sincos_p2
+        mulss	xmm0, xmm0
+        movss	xmm5, _ps_sincos_p1
+        orps	xmm1, xmm2
+        movaps	xmm7, xmm0
+        mulss	xmm0, xmm3
+        movss	xmm6, _ps_sincos_p0
+        addss	xmm0, xmm4
+        mulss	xmm0, xmm7
+        addss	xmm0, xmm5
+        mulss	xmm0, xmm7
+        addss	xmm0, xmm6
+        mulss	xmm0, xmm1
+        movss   x,    xmm0
         }
 #elif POSIX
 #warning "_SSE2_cos NOT implemented!"
@@ -892,56 +892,56 @@ float _SSE2_cos( float x )
 // SSE Version of VectorTransform
 void VectorTransformSSE(const float *in1, const matrix3x4_t& in2, float *out1)
 {
-	Assert( s_bMathlibInitialized );
-	Assert( in1 != out1 );
+    Assert( s_bMathlibInitialized );
+    Assert( in1 != out1 );
 
 #ifdef _WIN32
-	__asm
-	{
-		mov eax, in1;
-		mov ecx, in2;
-		mov edx, out1;
+    __asm
+    {
+        mov eax, in1;
+        mov ecx, in2;
+        mov edx, out1;
 
-		movss xmm0, [eax];
-		mulss xmm0, [ecx];
-		movss xmm1, [eax+4];
-		mulss xmm1, [ecx+4];
-		movss xmm2, [eax+8];
-		mulss xmm2, [ecx+8];
-		addss xmm0, xmm1;
-		addss xmm0, xmm2;
-		addss xmm0, [ecx+12]
- 		movss [edx], xmm0;
-		add ecx, 16;
+        movss xmm0, [eax];
+        mulss xmm0, [ecx];
+        movss xmm1, [eax+4];
+        mulss xmm1, [ecx+4];
+        movss xmm2, [eax+8];
+        mulss xmm2, [ecx+8];
+        addss xmm0, xmm1;
+        addss xmm0, xmm2;
+        addss xmm0, [ecx+12]
+        movss [edx], xmm0;
+        add ecx, 16;
 
-		movss xmm0, [eax];
-		mulss xmm0, [ecx];
-		movss xmm1, [eax+4];
-		mulss xmm1, [ecx+4];
-		movss xmm2, [eax+8];
-		mulss xmm2, [ecx+8];
-		addss xmm0, xmm1;
-		addss xmm0, xmm2;
-		addss xmm0, [ecx+12]
-		movss [edx+4], xmm0;
-		add ecx, 16;
+        movss xmm0, [eax];
+        mulss xmm0, [ecx];
+        movss xmm1, [eax+4];
+        mulss xmm1, [ecx+4];
+        movss xmm2, [eax+8];
+        mulss xmm2, [ecx+8];
+        addss xmm0, xmm1;
+        addss xmm0, xmm2;
+        addss xmm0, [ecx+12]
+        movss [edx+4], xmm0;
+        add ecx, 16;
 
-		movss xmm0, [eax];
-		mulss xmm0, [ecx];
-		movss xmm1, [eax+4];
-		mulss xmm1, [ecx+4];
-		movss xmm2, [eax+8];
-		mulss xmm2, [ecx+8];
-		addss xmm0, xmm1;
-		addss xmm0, xmm2;
-		addss xmm0, [ecx+12]
-		movss [edx+8], xmm0;
-	}
+        movss xmm0, [eax];
+        mulss xmm0, [ecx];
+        movss xmm1, [eax+4];
+        mulss xmm1, [ecx+4];
+        movss xmm2, [eax+8];
+        mulss xmm2, [ecx+8];
+        addss xmm0, xmm1;
+        addss xmm0, xmm2;
+        addss xmm0, [ecx+12]
+        movss [edx+8], xmm0;
+    }
 #elif POSIX
 #warning "VectorTransformSSE C implementation only"
-		out1[0] = DotProduct(in1, in2[0]) + in2[0][3];
-		out1[1] = DotProduct(in1, in2[1]) + in2[1][3];
-		out1[2] = DotProduct(in1, in2[2]) + in2[2][3];
+        out1[0] = DotProduct(in1, in2[0]) + in2[0][3];
+        out1[1] = DotProduct(in1, in2[1]) + in2[1][3];
+        out1[2] = DotProduct(in1, in2[2]) + in2[2][3];
 #else
 #error "Not Implemented"
 #endif
@@ -951,53 +951,53 @@ void VectorTransformSSE(const float *in1, const matrix3x4_t& in2, float *out1)
 #if 0
 void VectorRotateSSE( const float *in1, const matrix3x4_t& in2, float *out1 )
 {
-	Assert( s_bMathlibInitialized );
-	Assert( in1 != out1 );
+    Assert( s_bMathlibInitialized );
+    Assert( in1 != out1 );
 
 #ifdef _WIN32
-	__asm
-	{
-		mov eax, in1;
-		mov ecx, in2;
-		mov edx, out1;
+    __asm
+    {
+        mov eax, in1;
+        mov ecx, in2;
+        mov edx, out1;
 
-		movss xmm0, [eax];
-		mulss xmm0, [ecx];
-		movss xmm1, [eax+4];
-		mulss xmm1, [ecx+4];
-		movss xmm2, [eax+8];
-		mulss xmm2, [ecx+8];
-		addss xmm0, xmm1;
-		addss xmm0, xmm2;
- 		movss [edx], xmm0;
-		add ecx, 16;
+        movss xmm0, [eax];
+        mulss xmm0, [ecx];
+        movss xmm1, [eax+4];
+        mulss xmm1, [ecx+4];
+        movss xmm2, [eax+8];
+        mulss xmm2, [ecx+8];
+        addss xmm0, xmm1;
+        addss xmm0, xmm2;
+        movss [edx], xmm0;
+        add ecx, 16;
 
-		movss xmm0, [eax];
-		mulss xmm0, [ecx];
-		movss xmm1, [eax+4];
-		mulss xmm1, [ecx+4];
-		movss xmm2, [eax+8];
-		mulss xmm2, [ecx+8];
-		addss xmm0, xmm1;
-		addss xmm0, xmm2;
-		movss [edx+4], xmm0;
-		add ecx, 16;
+        movss xmm0, [eax];
+        mulss xmm0, [ecx];
+        movss xmm1, [eax+4];
+        mulss xmm1, [ecx+4];
+        movss xmm2, [eax+8];
+        mulss xmm2, [ecx+8];
+        addss xmm0, xmm1;
+        addss xmm0, xmm2;
+        movss [edx+4], xmm0;
+        add ecx, 16;
 
-		movss xmm0, [eax];
-		mulss xmm0, [ecx];
-		movss xmm1, [eax+4];
-		mulss xmm1, [ecx+4];
-		movss xmm2, [eax+8];
-		mulss xmm2, [ecx+8];
-		addss xmm0, xmm1;
-		addss xmm0, xmm2;
-		movss [edx+8], xmm0;
-	}
+        movss xmm0, [eax];
+        mulss xmm0, [ecx];
+        movss xmm1, [eax+4];
+        mulss xmm1, [ecx+4];
+        movss xmm2, [eax+8];
+        mulss xmm2, [ecx+8];
+        addss xmm0, xmm1;
+        addss xmm0, xmm2;
+        movss [edx+8], xmm0;
+    }
 #elif POSIX
 #warning "VectorRotateSSE C implementation only"
-		out1[0] = DotProduct( in1, in2[0] );
-		out1[1] = DotProduct( in1, in2[1] );
-		out1[2] = DotProduct( in1, in2[2] );
+        out1[0] = DotProduct( in1, in2[0] );
+        out1[1] = DotProduct( in1, in2[1] );
+        out1[2] = DotProduct( in1, in2[2] );
 #else
 #error "Not Implemented"
 #endif
@@ -1012,24 +1012,24 @@ void _declspec( naked ) _SSE_VectorMA( const float *start, float scale, const fl
 
     Assert( s_bMathlibInitialized );
     _asm {  // Intel SSE only routine
-		mov	eax, DWORD PTR [esp+0x04]	; *start, s0..s2
-		mov ecx, DWORD PTR [esp+0x0c]	; *direction, d0..d2
-		mov edx, DWORD PTR [esp+0x10]	; *dest
-		movss	xmm2, [esp+0x08]		; x2 = scale, 0, 0, 0
+        mov	eax, DWORD PTR [esp+0x04]	; *start, s0..s2
+        mov ecx, DWORD PTR [esp+0x0c]	; *direction, d0..d2
+        mov edx, DWORD PTR [esp+0x10]	; *dest
+        movss	xmm2, [esp+0x08]		; x2 = scale, 0, 0, 0
 #ifdef ALIGNED_VECTOR
-		movaps	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
-		pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
-		movaps	xmm1, [eax]				; x1 = start1, start2, start3, X
-		mulps	xmm3, xmm2				; x3 *= x2
-		addps	xmm3, xmm1				; x3 += x1
-		movaps	[edx], xmm3				; *dest = x3
+        movaps	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
+        pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
+        movaps	xmm1, [eax]				; x1 = start1, start2, start3, X
+        mulps	xmm3, xmm2				; x3 *= x2
+        addps	xmm3, xmm1				; x3 += x1
+        movaps	[edx], xmm3				; *dest = x3
 #else
-		movups	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
-		pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
-		movups	xmm1, [eax]				; x1 = start1, start2, start3, X
-		mulps	xmm3, xmm2				; x3 *= x2
-		addps	xmm3, xmm1				; x3 += x1
-		movups	[edx], xmm3				; *dest = x3
+        movups	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
+        pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
+        movups	xmm1, [eax]				; x1 = start1, start2, start3, X
+        mulps	xmm3, xmm2				; x3 *= x2
+        addps	xmm3, xmm1				; x3 += x1
+        movups	[edx], xmm3				; *dest = x3
 #endif
     }
 }
@@ -1046,24 +1046,24 @@ void _declspec( naked ) __cdecl _SSE_VectorMA( const Vector &start, float scale,
     _asm
     {
         // Intel SSE only routine
-		mov	eax, DWORD PTR [esp+0x04]	; *start, s0..s2
-		mov ecx, DWORD PTR [esp+0x0c]	; *direction, d0..d2
-		mov edx, DWORD PTR [esp+0x10]	; *dest
-		movss	xmm2, [esp+0x08]		; x2 = scale, 0, 0, 0
+        mov	eax, DWORD PTR [esp+0x04]	; *start, s0..s2
+        mov ecx, DWORD PTR [esp+0x0c]	; *direction, d0..d2
+        mov edx, DWORD PTR [esp+0x10]	; *dest
+        movss	xmm2, [esp+0x08]		; x2 = scale, 0, 0, 0
 #ifdef ALIGNED_VECTOR
-		movaps	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
-		pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
-		movaps	xmm1, [eax]				; x1 = start1, start2, start3, X
-		mulps	xmm3, xmm2				; x3 *= x2
-		addps	xmm3, xmm1				; x3 += x1
-		movaps	[edx], xmm3				; *dest = x3
+        movaps	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
+        pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
+        movaps	xmm1, [eax]				; x1 = start1, start2, start3, X
+        mulps	xmm3, xmm2				; x3 *= x2
+        addps	xmm3, xmm1				; x3 += x1
+        movaps	[edx], xmm3				; *dest = x3
 #else
-		movups	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
-		pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
-		movups	xmm1, [eax]				; x1 = start1, start2, start3, X
-		mulps	xmm3, xmm2				; x3 *= x2
-		addps	xmm3, xmm1				; x3 += x1
-		movups	[edx], xmm3				; *dest = x3
+        movups	xmm3, [ecx]				; x3 = dir0,dir1,dir2,X
+        pshufd	xmm2, xmm2, 0			; x2 = scale, scale, scale, scale
+        movups	xmm1, [eax]				; x1 = start1, start2, start3, X
+        mulps	xmm3, xmm2				; x3 *= x2
+        addps	xmm3, xmm1				; x3 += x1
+        movups	[edx], xmm3				; *dest = x3
 #endif
     }
 }

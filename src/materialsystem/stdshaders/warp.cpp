@@ -21,7 +21,7 @@
 
 class CWarp_DX9_Context : public CBasePerMaterialContextData
 {
-   public:
+    public:
     uint8 *m_pStaticCmds;
     CCommandBufferBuilder< CFixedCommandStorageBuffer< 1000 > > m_SemiStaticCmdsOut;
 

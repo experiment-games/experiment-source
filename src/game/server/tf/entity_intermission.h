@@ -17,7 +17,7 @@
 
 class CTFIntermission : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFIntermission, CLogicalEntity );
 
     void InputActivate( inputdata_t &inputdata );

@@ -1,9 +1,9 @@
 $Configuration
 {
-	$General
-	{
-		$ConfigurationType                                      "Static Library (.lib)"
-	}
+    $General
+    {
+        $ConfigurationType                                      "Static Library (.lib)"
+    }
 
 }
 
@@ -13,9 +13,8 @@ $MacroRequired          "OUTLIBNAME"    "$PROJECTNAME"
 
 $Configuration
 {
-	$Librarian
-	{
-		$OutputFile                                             "$OUTLIBDIR/$OUTLIBNAME$_STATICLIB_EXT"
-	}
+    $Librarian
+    {
+        $OutputFile                                             "$OUTLIBDIR/$OUTLIBNAME$_STATICLIB_EXT"
+    }
 }
-

@@ -22,7 +22,7 @@
 
 #define PISTOL_ACCURACY_SHOT_PENALTY_TIME \
     0.2f  // Applied amount of time each shot adds to the time we must recover
-          // from
+        // from
 #define PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME \
     1.5f  // Maximum penalty to deal out
 
@@ -36,7 +36,7 @@
 
 class CWeaponPistol : public CExperimentMachineGun
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponPistol, CExperimentMachineGun );
 
     CWeaponPistol( void );
@@ -87,13 +87,13 @@ class CWeaponPistol : public CExperimentMachineGun
     }
     DECLARE_ACTTABLE();
 
-   private:
+    private:
     CNetworkVar( float, m_flSoonestPrimaryAttack );
     CNetworkVar( float, m_flLastAttackTime );
     CNetworkVar( float, m_flAccuracyPenalty );
     CNetworkVar( int, m_nNumShotsFired );
 
-   private:
+    private:
     CWeaponPistol( const CWeaponPistol & );
 };
 
@@ -228,7 +228,7 @@ void CWeaponPistol::UpdatePenaltyTime( void )
 
     // Check our penalty time decay
     if ( ( ( pOwner->m_nButtons & IN_ATTACK ) == false ) &&
-         ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
+        ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
     {
         m_flAccuracyPenalty -= gpGlobals->frametime;
         m_flAccuracyPenalty = clamp( m_flAccuracyPenalty, 0.0f, PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME );
@@ -280,13 +280,13 @@ void CWeaponPistol::ItemPostFrame( void )
 
     // Allow a refire as fast as the player can click
     if ( ( ( pOwner->m_nButtons & IN_ATTACK ) == false ) &&
-         ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
+        ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
     {
         m_flNextPrimaryAttack = gpGlobals->curtime - 0.1f;
     }
     else if ( ( pOwner->m_nButtons & IN_ATTACK ) &&
-              ( m_flNextPrimaryAttack < gpGlobals->curtime ) &&
-              ( m_iClip1 <= 0 ) )
+            ( m_flNextPrimaryAttack < gpGlobals->curtime ) &&
+            ( m_iClip1 <= 0 ) )
     {
         DryFire();
     }

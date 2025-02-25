@@ -123,7 +123,7 @@ class CBaseHudChatLine : public vgui::RichText
 {
     typedef vgui::RichText BaseClass;
 
-   public:
+    public:
     CBaseHudChatLine( vgui::Panel *parent, const char *panelName );
     ~CBaseHudChatLine();
 
@@ -166,7 +166,7 @@ class CBaseHudChatLine : public vgui::RichText
         m_iNameStart = iStart;
     }
 
-   protected:
+    protected:
     int m_iNameLength;
     vgui::HFont m_hFont;
 
@@ -180,13 +180,13 @@ class CBaseHudChatLine : public vgui::RichText
 
     int m_iNameStart;
 
-   private:
+    private:
     float m_flStartTime;
     int m_nCount;
 
     vgui::HFont m_hFontMarlett;
 
-   private:
+    private:
     CBaseHudChatLine( const CBaseHudChatLine & );  // not defined, not accessible
 };
 
@@ -194,7 +194,7 @@ class CHudChatHistory : public vgui::RichText
 {
     DECLARE_CLASS_SIMPLE( CHudChatHistory, vgui::RichText );
 
-   public:
+    public:
     CHudChatHistory( vgui::Panel *pParent, const char *panelName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -204,7 +204,7 @@ class CHudChatFilterButton : public vgui::Button
 {
     DECLARE_CLASS_SIMPLE( CHudChatFilterButton, vgui::Button );
 
-   public:
+    public:
     CHudChatFilterButton( vgui::Panel *pParent, const char *pName, const char *pText );
 
     virtual void DoClick( void );
@@ -214,7 +214,7 @@ class CHudChatFilterCheckButton : public vgui::CheckButton
 {
     DECLARE_CLASS_SIMPLE( CHudChatFilterCheckButton, vgui::CheckButton );
 
-   public:
+    public:
     CHudChatFilterCheckButton( vgui::Panel *pParent, const char *pName, const char *pText, int iFlag );
 
     int GetFilterFlag( void )
@@ -222,7 +222,7 @@ class CHudChatFilterCheckButton : public vgui::CheckButton
         return m_iFlag;
     }
 
-   private:
+    private:
     int m_iFlag;
 };
 
@@ -233,7 +233,7 @@ class CBaseHudChat : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseHudChat, vgui::EditablePanel );
 
-   public:
+    public:
     DECLARE_MULTIPLY_INHERITED();
 
     enum
@@ -331,7 +331,7 @@ class CBaseHudChat : public CHudElement, public vgui::EditablePanel
     }
     void SetCustomColor( const char *pszColorName );
 
-   protected:
+    protected:
     CBaseHudChatLine *FindUnusedChatLine( void );
 
     CBaseHudChatInputLine *m_pChatInput;
@@ -345,7 +345,7 @@ class CBaseHudChat : public CHudElement, public vgui::EditablePanel
 
     Color m_ColorCustom;
 
-   private:
+    private:
     void Clear( void );
 
     int ComputeBreakChar( int width, const char *text, int textlen );
@@ -364,7 +364,7 @@ class CBaseHudChatEntry : public vgui::TextEntry
 {
     typedef vgui::TextEntry BaseClass;
 
-   public:
+    public:
     CBaseHudChatEntry( vgui::Panel *parent, char const *panelName, vgui::Panel *pChat )
         : BaseClass( parent, panelName )
     {
@@ -411,7 +411,7 @@ class CBaseHudChatEntry : public vgui::TextEntry
         }
     }
 
-   private:
+    private:
     vgui::Panel *m_pHudChat;
 };
 
@@ -422,7 +422,7 @@ class CBaseHudChatInputLine : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     CBaseHudChatInputLine( vgui::Panel *parent, char const *panelName );
 
     void SetPrompt( const wchar_t *prompt );
@@ -449,7 +449,7 @@ class CBaseHudChatInputLine : public vgui::Panel
         return m_pPrompt;
     }
 
-   protected:
+    protected:
     vgui::Label *m_pPrompt;
     CBaseHudChatEntry *m_pInput;
 };
@@ -458,7 +458,7 @@ class CHudChatFilterPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudChatFilterPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CHudChatFilterPanel( vgui::Panel *pParent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -471,7 +471,7 @@ class CHudChatFilterPanel : public vgui::EditablePanel
 
     virtual void SetVisible( bool state );
 
-   private:
+    private:
 };
 
 #endif  // HUD_BASECHAT_H

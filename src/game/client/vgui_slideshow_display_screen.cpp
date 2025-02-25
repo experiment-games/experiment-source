@@ -24,7 +24,7 @@ class CSlideshowDisplayScreen : public CVGuiScreenPanel
 {
     DECLARE_CLASS( CSlideshowDisplayScreen, CVGuiScreenPanel );
 
-   public:
+    public:
     CSlideshowDisplayScreen( vgui::Panel *parent, const char *panelName );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -32,10 +32,10 @@ class CSlideshowDisplayScreen : public CVGuiScreenPanel
     virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
     virtual void OnTick();
 
-   private:
+    private:
     void Update( C_SlideshowDisplay *pSlideshowDisplay );
 
-   private:
+    private:
     vgui::Label *m_pDisplayTextLabel;
     CUtlVector< ImagePanel * > m_pSlideshowImages;
 

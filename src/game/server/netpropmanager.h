@@ -19,10 +19,10 @@
 // Gets and sets SendTable/DataMap netprops and caches results
 class CNetPropManager
 {
-   public:
+    public:
     ~CNetPropManager();
 
-   private:
+    private:
     // This class manages both SendProps and DataMap props,
     // so we will need an enum to hold type info
     enum NetPropType
@@ -50,7 +50,7 @@ class CNetPropManager
     // Holds prop information that is valid throughout the life of the engine
     struct PropInfo_t
     {
-       public:
+        public:
         int m_nOffset;       /**< A SendProp holds the offset from the "this" pointer of an entity */
         int m_nBitCount;     /**< Usually the number of bits to transmit. */
         int m_nTransFlags;   /**< Entity transmission flags */
@@ -83,12 +83,12 @@ class CNetPropManager
     // Iterates through the DataMap and stores prop names in a table
     inline void CollectNestedDataMaps( datamap_t *pMap, CBaseEntity *pBaseEntity, int iOffset, HSCRIPT hTable );
 
-   private:
+    private:
     // Prop/offset dictionary
     typedef CUtlDict< PropInfo_t, int > PropInfoDict_t;
     CUtlDict< PropInfoDict_t *, int > m_PropCache;
 
-   public:
+    public:
     // Gets an integer netprop value for the provided entity
     int GetPropInt( HSCRIPT hEnt, const char *pstrProperty );
 

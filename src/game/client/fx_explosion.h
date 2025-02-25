@@ -23,10 +23,10 @@
 //-----------------------------------------------------------------------------
 class C_BaseExplosionEffect
 {
-   private:
+    private:
     static C_BaseExplosionEffect m_instance;
 
-   public:
+    public:
     ~C_BaseExplosionEffect( void ) {}
 
     static C_BaseExplosionEffect &Instance( void )
@@ -36,7 +36,7 @@ class C_BaseExplosionEffect
 
     virtual void Create( const Vector &position, float force, float scale, int flags );
 
-   protected:
+    protected:
     C_BaseExplosionEffect( void );
 
     virtual void PlaySound( void );
@@ -51,7 +51,7 @@ class C_BaseExplosionEffect
     float Probe( const Vector &origin, Vector *direction, float strength );
     void GetForceDirection( const Vector &origin, float magnitude, Vector *resultDirection, float *resultForce );
 
-   protected:
+    protected:
     Vector m_vecOrigin;
     Vector m_vecDirection;
     float m_flForce;
@@ -71,10 +71,10 @@ extern C_BaseExplosionEffect &BaseExplosionEffect( void );
 
 class CExplosionOverlay : public CWarpOverlay
 {
-   public:
+    public:
     virtual bool Update( void );
 
-   public:
+    public:
     float m_flLifetime;
     Vector m_vBaseColors[MAX_SUN_LAYERS];
 };
@@ -86,7 +86,7 @@ class C_WaterExplosionEffect : public C_BaseExplosionEffect
 {
     typedef C_BaseExplosionEffect BaseClass;
 
-   public:
+    public:
     static C_WaterExplosionEffect &Instance( void )
     {
         return m_waterinstance;
@@ -94,13 +94,13 @@ class C_WaterExplosionEffect : public C_BaseExplosionEffect
 
     virtual void Create( const Vector &position, float force, float scale, int flags );
 
-   protected:
+    protected:
     virtual void CreateCore( void );
     virtual void CreateDebris( void );
     virtual void CreateMisc( void );
     virtual void PlaySound( void );
 
-   private:
+    private:
     Vector m_vecWaterSurface;
     float m_flDepth;       // Depth below the water surface (used for surface effect)
     Vector m_vecColor;     // Lighting tint information
@@ -119,20 +119,20 @@ class C_MegaBombExplosionEffect : public C_BaseExplosionEffect
 {
     typedef C_BaseExplosionEffect BaseClass;
 
-   public:
+    public:
     static C_MegaBombExplosionEffect &Instance( void )
     {
         return m_megainstance;
     }
 
-   protected:
+    protected:
     virtual void CreateCore( void );
 
     virtual void CreateDebris( void ){};
     virtual void CreateMisc( void ){};
     virtual void PlaySound( void ){};
 
-   private:
+    private:
     static C_MegaBombExplosionEffect m_megainstance;
 };
 

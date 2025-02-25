@@ -119,9 +119,9 @@ TEST(TemplateUtilTest, TestTemplateAndOr) {
 
 TEST(TemplateUtilTest, TestIdentity) {
   EXPECT_TRUE(
-      (type_equals_<GOOGLE_NAMESPACE::identity_<int>::type, int>::value));
+    (type_equals_<GOOGLE_NAMESPACE::identity_<int>::type, int>::value));
   EXPECT_TRUE(
-      (type_equals_<GOOGLE_NAMESPACE::identity_<void>::type, void>::value));
+    (type_equals_<GOOGLE_NAMESPACE::identity_<void>::type, void>::value));
 }
 
 }  // anonymous namespace

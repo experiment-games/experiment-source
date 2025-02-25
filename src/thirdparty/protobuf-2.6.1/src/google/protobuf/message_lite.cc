@@ -58,19 +58,19 @@ namespace {
 // of the message.  This function attempts to distinguish between the two and
 // provide a useful error message.
 void ByteSizeConsistencyError(int byte_size_before_serialization,
-                              int byte_size_after_serialization,
-                              int bytes_produced_by_serialization) {
+                            int byte_size_after_serialization,
+                            int bytes_produced_by_serialization) {
   GOOGLE_CHECK_EQ(byte_size_before_serialization, byte_size_after_serialization)
-      << "Protocol message was modified concurrently during serialization.";
+    << "Protocol message was modified concurrently during serialization.";
   GOOGLE_CHECK_EQ(bytes_produced_by_serialization, byte_size_before_serialization)
-      << "Byte size calculation and serialization were inconsistent.  This "
-         "may indicate a bug in protocol buffers or it may be caused by "
-         "concurrent modification of the message.";
+    << "Byte size calculation and serialization were inconsistent.  This "
+        "may indicate a bug in protocol buffers or it may be caused by "
+        "concurrent modification of the message.";
   GOOGLE_LOG(FATAL) << "This shouldn't be called if all the sizes are equal.";
 }
 
 string InitializationErrorMessage(const char* action,
-                                  const MessageLite& message) {
+                                const MessageLite& message) {
   // Note:  We want to avoid depending on strutil in the lite library, otherwise
   //   we'd use:
   //
@@ -101,17 +101,17 @@ string InitializationErrorMessage(const char* action,
 // Note:  GCC only allows GOOGLE_ATTRIBUTE_ALWAYS_INLINE on declarations, not
 //   definitions.
 inline bool InlineMergeFromCodedStream(io::CodedInputStream* input,
-                                       MessageLite* message)
-                                       GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
+                                        MessageLite* message)
+                                        GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
 inline bool InlineParseFromCodedStream(io::CodedInputStream* input,
-                                       MessageLite* message)
-                                       GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
+                                        MessageLite* message)
+                                        GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
 inline bool InlineParsePartialFromCodedStream(io::CodedInputStream* input,
-                                              MessageLite* message)
-                                              GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
+                                            MessageLite* message)
+                                            GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
 inline bool InlineParseFromArray(const void* data, int size,
-                                 MessageLite* message)
-                                 GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
+                                MessageLite* message)
+                                GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
 inline bool InlineParsePartialFromArray(const void* data, int size,
                                         MessageLite* message)
                                         GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
@@ -133,7 +133,7 @@ bool InlineParseFromCodedStream(io::CodedInputStream* input,
 }
 
 bool InlineParsePartialFromCodedStream(io::CodedInputStream* input,
-                                       MessageLite* message) {
+                                        MessageLite* message) {
   message->Clear();
   return message->MergePartialFromCodedStream(input);
 }
@@ -141,14 +141,14 @@ bool InlineParsePartialFromCodedStream(io::CodedInputStream* input,
 bool InlineParseFromArray(const void* data, int size, MessageLite* message) {
   io::CodedInputStream input(reinterpret_cast<const uint8*>(data), size);
   return InlineParseFromCodedStream(&input, message) &&
-         input.ConsumedEntireMessage();
+        input.ConsumedEntireMessage();
 }
 
 bool InlineParsePartialFromArray(const void* data, int size,
-                                 MessageLite* message) {
+                                MessageLite* message) {
   io::CodedInputStream input(reinterpret_cast<const uint8*>(data), size);
   return InlineParsePartialFromCodedStream(&input, message) &&
-         input.ConsumedEntireMessage();
+        input.ConsumedEntireMessage();
 }
 
 }  // namespace
@@ -174,7 +174,7 @@ bool MessageLite::ParsePartialFromZeroCopyStream(
     io::ZeroCopyInputStream* input) {
   io::CodedInputStream decoder(input);
   return ParsePartialFromCodedStream(&decoder) &&
-         decoder.ConsumedEntireMessage();
+        decoder.ConsumedEntireMessage();
 }
 
 bool MessageLite::ParseFromBoundedZeroCopyStream(
@@ -182,8 +182,8 @@ bool MessageLite::ParseFromBoundedZeroCopyStream(
   io::CodedInputStream decoder(input);
   decoder.PushLimit(size);
   return ParseFromCodedStream(&decoder) &&
-         decoder.ConsumedEntireMessage() &&
-         decoder.BytesUntilLimit() == 0;
+        decoder.ConsumedEntireMessage() &&
+        decoder.BytesUntilLimit() == 0;
 }
 
 bool MessageLite::ParsePartialFromBoundedZeroCopyStream(
@@ -191,8 +191,8 @@ bool MessageLite::ParsePartialFromBoundedZeroCopyStream(
   io::CodedInputStream decoder(input);
   decoder.PushLimit(size);
   return ParsePartialFromCodedStream(&decoder) &&
-         decoder.ConsumedEntireMessage() &&
-         decoder.BytesUntilLimit() == 0;
+        decoder.ConsumedEntireMessage() &&
+        decoder.BytesUntilLimit() == 0;
 }
 
 bool MessageLite::ParseFromString(const string& data) {
@@ -237,20 +237,20 @@ bool MessageLite::SerializePartialToCodedStream(
   if (buffer != NULL) {
     uint8* end = SerializeWithCachedSizesToArray(buffer);
     if (end - buffer != size) {
-      ByteSizeConsistencyError(size, ByteSize(), end - buffer);
+    ByteSizeConsistencyError(size, ByteSize(), end - buffer);
     }
     return true;
   } else {
     int original_byte_count = output->ByteCount();
     SerializeWithCachedSizes(output);
     if (output->HadError()) {
-      return false;
+    return false;
     }
     int final_byte_count = output->ByteCount();
 
     if (final_byte_count - original_byte_count != size) {
-      ByteSizeConsistencyError(size, ByteSize(),
-                               final_byte_count - original_byte_count);
+    ByteSizeConsistencyError(size, ByteSize(),
+                                final_byte_count - original_byte_count);
     }
 
     return true;
@@ -279,7 +279,7 @@ bool MessageLite::AppendPartialToString(string* output) const {
   int byte_size = ByteSize();
   STLStringResizeUninitialized(output, old_size + byte_size);
   uint8* start =
-      reinterpret_cast<uint8*>(io::mutable_string_data(output) + old_size);
+    reinterpret_cast<uint8*>(io::mutable_string_data(output) + old_size);
   uint8* end = SerializeWithCachedSizesToArray(start);
   if (end - start != byte_size) {
     ByteSizeConsistencyError(byte_size, ByteSize(), end - start);

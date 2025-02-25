@@ -104,7 +104,7 @@ struct GestureSlot_t
 inline bool IsCustomPlayerAnimEvent( PlayerAnimEvent_t event )
 {
     return ( event == PLAYERANIMEVENT_CUSTOM ) || ( event == PLAYERANIMEVENT_CUSTOM_GESTURE ) ||
-           ( event == PLAYERANIMEVENT_CUSTOM_SEQUENCE ) || ( event == PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE );
+            ( event == PLAYERANIMEVENT_CUSTOM_SEQUENCE ) || ( event == PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE );
 }
 
 struct MultiPlayerPoseData_t
@@ -167,7 +167,7 @@ struct MultiPlayerMovementData_t
 //
 class CMultiPlayerAnimState
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CMultiPlayerAnimState );
 
     // Creation/Destruction
@@ -228,7 +228,7 @@ class CMultiPlayerAnimState
     // TODO: Fix this after Halloween 2014.
     bool m_bForceAimYaw;
 
-   protected:
+    protected:
     virtual void Init( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData );
     CBasePlayer *GetBasePlayer( void )
     {
@@ -258,11 +258,11 @@ class CMultiPlayerAnimState
     void AddToGestureSlot( int iGestureSlot, Activity iGestureActivity, bool bAutoKill );
 
 #ifdef LUA_SDK
-   public:
+    public:
 #endif
     virtual void RestartGesture( int iGestureSlot, Activity iGestureActivity, bool bAutoKill = true );
 #ifdef LUA_SDK
-   protected:
+    protected:
 #endif
     void ComputeGestureSequence( CStudioHdr *pStudioHdr );
     void UpdateGestureLayer( CStudioHdr *pStudioHdr, GestureSlot_t *pGesture );
@@ -319,7 +319,7 @@ class CMultiPlayerAnimState
 
 #endif
 
-   protected:
+    protected:
     CBasePlayer *m_pPlayer;
 
     QAngle m_angRender;

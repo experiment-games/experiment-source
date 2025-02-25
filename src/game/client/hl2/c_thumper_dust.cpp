@@ -24,7 +24,7 @@ extern IPhysicsSurfaceProps *physprops;
 
 class ThumperDustEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     ThumperDustEmitter( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -62,7 +62,7 @@ class ThumperDustEmitter : public CSimpleEmitter
         return ( pParticle->m_uchStartAlpha / 255.0f ) + ( ( float )( pParticle->m_uchEndAlpha / 255.0f ) - ( float )( pParticle->m_uchStartAlpha / 255.0f ) ) * ( pParticle->m_flLifetime / pParticle->m_flDieTime );
     }
 
-   private:
+    private:
     ThumperDustEmitter( const ThumperDustEmitter & );
 };
 

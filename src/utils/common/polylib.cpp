@@ -402,7 +402,7 @@ void ClipWindingEpsilon( winding_t *in, const Vector &normal, vec_t dist, vec_t 
     }
 
     maxpts = in->numpoints + 4;  // cant use counts[0]+2 because
-                                 // of fp grouping errors
+                                // of fp grouping errors
 
     *front = f = AllocWinding( maxpts );
     *back = b = AllocWinding( maxpts );
@@ -554,7 +554,7 @@ void ClassifyWindingEpsilon( winding_t *in, const Vector &normal, vec_t dist, ve
     }
 
     maxpts = in->numpoints + 4;  // cant use counts[0]+2 because
-                                 // of fp grouping errors
+                                // of fp grouping errors
 
     *front = f = AllocWinding( maxpts );
     *back = b = AllocWinding( maxpts );
@@ -664,7 +664,7 @@ void ChopWindingInPlace( winding_t **inout, const Vector &normal, vec_t dist, ve
         return;  // inout stays the same
 
     maxpts = in->numpoints + 4;  // cant use counts[0]+2 because
-                                 // of fp grouping errors
+                                // of fp grouping errors
 
     f = AllocWinding( maxpts );
 
@@ -847,26 +847,26 @@ bool PointInWinding( const Vector &pt, winding_t *pWinding )
         return false;
 
 #if 0
-	//
-	// NOTE: this will be a quicker way to calculate this, however I don't
-	//       know the trick off hand (post dot product tests??)  
-	// TODO: look in graphics gems!!!! (cab)
-	//
+    //
+    // NOTE: this will be a quicker way to calculate this, however I don't
+    //       know the trick off hand (post dot product tests??)
+    // TODO: look in graphics gems!!!! (cab)
+    //
 
-	Vector edge1, edge2;
-	for( int ndxPt = 0; ndxPt < pWinding->numpoints; ndxPt++ )
-	{
-		edge1 = pWinding->p[ndxPt] - pt;
-		edge2 = pWinding->p[(ndxPt+1)%pWinding->numpoints] - pt;
-		
-		VectorNormalize( edge1 );
-		VectorNormalize( edge2 );
+    Vector edge1, edge2;
+    for( int ndxPt = 0; ndxPt < pWinding->numpoints; ndxPt++ )
+    {
+        edge1 = pWinding->p[ndxPt] - pt;
+        edge2 = pWinding->p[(ndxPt+1)%pWinding->numpoints] - pt;
 
-		if( edge2.Dot( edge1 ) < 0.0f )
-			return false;
-	}
+        VectorNormalize( edge1 );
+        VectorNormalize( edge2 );
 
-	return true;
+        if( edge2.Dot( edge1 ) < 0.0f )
+            return false;
+    }
+
+    return true;
 
 #else
     Vector edge, toPt, cross, testCross;

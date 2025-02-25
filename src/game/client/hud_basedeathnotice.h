@@ -85,7 +85,7 @@ class CHudBaseDeathNotice : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudBaseDeathNotice, vgui::Panel );
 
-   public:
+    public:
     CHudBaseDeathNotice( const char *pElementName );
 
     void VidInit( void );
@@ -102,7 +102,7 @@ class CHudBaseDeathNotice : public CHudElement, public vgui::Panel
         return true;
     }
 
-   protected:
+    protected:
     virtual Color GetTeamColor( int iTeamNumber, bool bLocalPlayerInvolved = false );
     virtual void OnGameEvent( IGameEvent *event, int iDeathNoticeMsg ){};
     void DrawText( int x, int y, vgui::HFont hFont, Color clr, const wchar_t *szText );

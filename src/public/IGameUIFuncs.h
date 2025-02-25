@@ -15,7 +15,7 @@
 
 abstract_class IGameUIFuncs
 {
-   public:
+    public:
     virtual bool IsKeyDown( const char *keyname, bool &isdown ) = 0;
     virtual const char *GetBindingForButtonCode( ButtonCode_t code ) = 0;
     virtual ButtonCode_t GetButtonCodeForBind( const char *pBind ) = 0;

@@ -22,11 +22,11 @@ class C_FuncPasstimeGoal;
 //-----------------------------------------------------------------------------
 class C_PasstimeReticle
 {
-   public:
+    public:
     virtual ~C_PasstimeReticle();
     void OnClientThink();
 
-   protected:
+    protected:
     C_PasstimeReticle() {}
     virtual bool Update() = 0;
 
@@ -43,7 +43,7 @@ class C_PasstimeReticle
 
     CUtlVector< CFXQuad* > m_pSprites;
 
-   private:
+    private:
     // noncopyable
     C_PasstimeReticle( const C_PasstimeReticle& ) = delete;
     C_PasstimeReticle( C_PasstimeReticle&& ) = delete;
@@ -54,20 +54,20 @@ class C_PasstimeReticle
 //-----------------------------------------------------------------------------
 class C_PasstimeBallReticle : public C_PasstimeReticle
 {
-   public:
+    public:
     C_PasstimeBallReticle();
 
-   private:
+    private:
     virtual bool Update() OVERRIDE;
 };
 
 //-----------------------------------------------------------------------------
 class C_PasstimeGoalReticle : public C_PasstimeReticle
 {
-   public:
+    public:
     C_PasstimeGoalReticle( C_FuncPasstimeGoal* pGoal );
 
-   private:
+    private:
     virtual bool Update() OVERRIDE;
     CHandle< C_FuncPasstimeGoal > m_hGoal;
 };
@@ -75,10 +75,10 @@ class C_PasstimeGoalReticle : public C_PasstimeReticle
 //-----------------------------------------------------------------------------
 class C_PasstimePassReticle : public C_PasstimeReticle
 {
-   public:
+    public:
     C_PasstimePassReticle();
 
-   private:
+    private:
     virtual bool Update() OVERRIDE;
     void FindPassHintTarget( C_TFPlayer* pLocalPlayer );
     float m_flTargetScore;
@@ -88,22 +88,22 @@ class C_PasstimePassReticle : public C_PasstimeReticle
 //-----------------------------------------------------------------------------
 class C_PasstimeBounceReticle : public C_PasstimeReticle
 {
-   public:
+    public:
     C_PasstimeBounceReticle();
     void Show( const Vector& pos, const Vector& normal );
     void Hide();
 
-   private:
+    private:
     virtual bool Update() OVERRIDE;
 };
 
 //-----------------------------------------------------------------------------
 class C_PasstimePlayerReticle : public C_PasstimeReticle
 {
-   public:
+    public:
     C_PasstimePlayerReticle( C_TFPlayer* pPlayer );
 
-   private:
+    private:
     virtual bool Update() OVERRIDE;
     CHandle< C_TFPlayer > m_hPlayer;
 };
@@ -111,10 +111,10 @@ class C_PasstimePlayerReticle : public C_PasstimeReticle
 //-----------------------------------------------------------------------------
 class C_PasstimeAskForBallReticle : public C_PasstimeReticle
 {
-   public:
+    public:
     C_PasstimeAskForBallReticle( C_TFPlayer* pPlayer );
 
-   private:
+    private:
     virtual bool Update() OVERRIDE;
     CHandle< C_TFPlayer > m_hPlayer;
 };

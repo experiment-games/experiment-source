@@ -20,7 +20,7 @@ static CSmartPtr< CFireParticle > g_pFireSingleton[2];
 
 class CEZParticleInit : public CAutoGameSystem
 {
-   public:
+    public:
     CEZParticleInit()
         : CAutoGameSystem( "CEZParticleInit" )
     {

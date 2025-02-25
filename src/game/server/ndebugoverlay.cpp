@@ -222,12 +222,12 @@ void UTIL_DrawOverlayLines( void )
             if ( m_debugOverlayLine[i]->draw )
             {
                 NDebugOverlay::Line( m_debugOverlayLine[i]->origin,
-                                     m_debugOverlayLine[i]->dest,
-                                     m_debugOverlayLine[i]->r,
-                                     m_debugOverlayLine[i]->g,
-                                     m_debugOverlayLine[i]->b,
-                                     m_debugOverlayLine[i]->noDepthTest,
-                                     0 );
+                                    m_debugOverlayLine[i]->dest,
+                                    m_debugOverlayLine[i]->r,
+                                    m_debugOverlayLine[i]->g,
+                                    m_debugOverlayLine[i]->b,
+                                    m_debugOverlayLine[i]->noDepthTest,
+                                    0 );
             }
         }
     }

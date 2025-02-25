@@ -23,7 +23,7 @@
 //
 class CTFGrenadeConcussion : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeConcussion, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -56,7 +56,7 @@ class CTFGrenadeConcussion : public CTFWeaponBaseGrenade
 
 class CTFGrenadeConcussionProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeConcussionProjectile, CTFWeaponBaseGrenadeProj );
 
     // Unique identifier.
@@ -75,7 +75,7 @@ class CTFGrenadeConcussionProjectile : public CTFWeaponBaseGrenadeProj
     virtual void Explode( trace_t *pTrace, int bitsDamageType );
     virtual void Detonate();
 
-   private:
+    private:
     float m_flDetonateTime;
 };
 

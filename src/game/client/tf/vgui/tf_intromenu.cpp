@@ -196,8 +196,8 @@ void CTFIntroMenu::OnTick()
 
                 // only open the class menu if they're not on team Spectator and they haven't already picked a class
                 if ( pPlayer &&
-                     ( GetLocalPlayerTeam() != TEAM_SPECTATOR ) &&
-                     ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED ) )
+                    ( GetLocalPlayerTeam() != TEAM_SPECTATOR ) &&
+                    ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED ) )
                 {
                     if ( tf_arena_force_class.GetBool() == false )
                     {

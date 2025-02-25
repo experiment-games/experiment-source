@@ -13,7 +13,7 @@
 
 class MovieExplosion : public CBaseParticleEntity
 {
-   public:
+    public:
     DECLARE_CLASS( MovieExplosion, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 

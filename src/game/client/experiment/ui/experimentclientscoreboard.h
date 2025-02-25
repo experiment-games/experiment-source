@@ -18,14 +18,14 @@
 //-----------------------------------------------------------------------------
 class CExperimentClientScoreBoardDialog : public CClientScoreBoardDialog
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CExperimentClientScoreBoardDialog, CClientScoreBoardDialog );
 
-   public:
+    public:
     CExperimentClientScoreBoardDialog( IViewPort *pViewPort );
     ~CExperimentClientScoreBoardDialog();
 
-   protected:
+    protected:
     // scoreboard overrides
     virtual void InitScoreboardSections();
     virtual void UpdateTeamInfo();
@@ -37,7 +37,7 @@ class CExperimentClientScoreBoardDialog : public CClientScoreBoardDialog
     virtual void PaintBorder();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     virtual void AddHeader();                                 // add the start header of the scoreboard
     virtual void AddSection( int teamType, int teamNumber );  // add a new section header for a team
 

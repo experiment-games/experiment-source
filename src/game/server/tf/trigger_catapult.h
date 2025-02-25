@@ -22,7 +22,7 @@ class CTriggerCatapult : public CBaseTrigger
     DECLARE_DATADESC();
     // DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CTriggerCatapult( void );
 
     virtual void Spawn( void );
@@ -36,7 +36,7 @@ class CTriggerCatapult : public CBaseTrigger
     void PlayerPassesTriggerFiltersThink( void );
     static const char *s_szPlayerPassesTriggerFiltersThinkContext;
 
-   private:
+    private:
     void InputSetPlayerSpeed( inputdata_t &in );
     void InputSetPhysicsSpeed( inputdata_t &in );
     void InputSetLaunchTarget( inputdata_t &in );

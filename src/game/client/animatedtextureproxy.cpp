@@ -12,7 +12,7 @@
 
 class CAnimatedTextureProxy : public CBaseAnimatedTextureProxy
 {
-   public:
+    public:
     CAnimatedTextureProxy() {}
     virtual ~CAnimatedTextureProxy() {}
     virtual float GetAnimationStartTime( void* pBaseEntity );

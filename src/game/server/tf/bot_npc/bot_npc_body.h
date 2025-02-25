@@ -13,7 +13,7 @@ class INextBot;
  */
 class CBotNPCBody : public IBody
 {
-   public:
+    public:
     CBotNPCBody( INextBot *bot );
     virtual ~CBotNPCBody() {}
 
@@ -24,20 +24,20 @@ class CBotNPCBody : public IBody
     virtual bool IsActivity( Activity act ) const;  // return true if currently animating activity matches the given one
 
     virtual void AimHeadTowards( const Vector &lookAtPos,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // aim the bot's head towards the given goal
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // aim the bot's head towards the given goal
     virtual void AimHeadTowards( CBaseEntity *subject,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // continually aim the bot's head towards the given subject
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // continually aim the bot's head towards the given subject
 
     virtual unsigned int GetSolidMask( void ) const;  // return the bot's collision mask (hack until we get a general hull trace abstraction here or in the locomotion interface)
     virtual unsigned int GetCollisionGroup( void ) const;
 
-   private:
+    private:
     int m_currentActivity;
     int m_moveXPoseParameter;
     int m_moveYPoseParameter;

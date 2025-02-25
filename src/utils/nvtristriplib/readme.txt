@@ -1,7 +1,7 @@
 README for NvTriStrip, library version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use: 
+To use:
 -#include "NvTriStrip.h"
 -put nvtristrip.lib in your library path (the pragma in nvtristrip.h will automatically look for the library).
 
@@ -19,14 +19,13 @@ Features:
 
 On cache sizes:
 Note that it's better to UNDERESTIMATE the cache size instead of OVERESTIMATING.
-So, if you're targetting GeForce1, 2, and 3, be conservative and use the GeForce1_2 cache 
+So, if you're targetting GeForce1, 2, and 3, be conservative and use the GeForce1_2 cache
 size, NOT the GeForce3 cache size.
 This will make sure you don't "blow" the cache of the GeForce1 and 2.
 Also note that the cache size you specify is the "actual" cache size, not the "effective"
 cache size you may of heard about.  This is 16 for GeForce1 and 2, and 24 for GeForce3.
 
-Credit goes to Curtis Beeson and Joe Demers for the basis for this stripifier and to Jason Regier and 
+Credit goes to Curtis Beeson and Joe Demers for the basis for this stripifier and to Jason Regier and
 Jon Stone at Blizzard for providing a much cleaner version of CreateStrips().
 
 Questions/comments email cem@nvidia.com
-

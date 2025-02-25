@@ -15,7 +15,7 @@ class CWarStandingPanel : public EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CWarStandingPanel, EditablePanel );
 
-   public:
+    public:
     CWarStandingPanel( Panel *pParent, const char *pszPanelname );
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
@@ -24,7 +24,7 @@ class CWarStandingPanel : public EditablePanel, public CGameEventListener
     virtual void PerformLayout() OVERRIDE;
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     float GetPercentAnimated() const;
 
     struct TeamScore_t
@@ -56,7 +56,7 @@ class CWarLandingPanel : public EditablePanel, public CLocalSteamSharedObjectLis
 {
     DECLARE_CLASS_SIMPLE( CWarLandingPanel, EditablePanel );
 
-   public:
+    public:
     CWarLandingPanel( Panel *pParent, const char *pszPanelName );
 
     virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
@@ -80,7 +80,7 @@ class CWarLandingPanel : public EditablePanel, public CLocalSteamSharedObjectLis
 
     virtual void SetVisible( bool bVisible ) OVERRIDE;
 
-   private:
+    private:
     enum EJoiningState_t
     {
         NO_ACTION = 0,

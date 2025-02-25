@@ -49,7 +49,7 @@ const char *WeaponIDToAlias( int id );
 
 class CWeaponSDKBase : public CBaseCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponSDKBase, CBaseCombatWeapon );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -83,7 +83,7 @@ class CWeaponSDKBase : public CBaseCombatWeapon
     virtual void SendReloadEvents();
 #endif
 
-   private:
+    private:
     CWeaponSDKBase( const CWeaponSDKBase & );
 };
 

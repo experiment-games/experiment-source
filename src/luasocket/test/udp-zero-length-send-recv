@@ -34,4 +34,3 @@ if not ok or string.len(ok) ~= 0 then
 end
 
 print"ok"
-

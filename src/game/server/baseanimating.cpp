@@ -63,7 +63,7 @@ class CIKSaveRestoreOps : public CClassPtrSaveRestoreOps
 //-----------------------------------------------------------------------------
 class CInfoLightingRelative : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CInfoLightingRelative, CBaseEntity );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -72,7 +72,7 @@ class CInfoLightingRelative : public CBaseEntity
     virtual void SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways );
     virtual int UpdateTransmitState( void );
 
-   private:
+    private:
     CNetworkHandle( CBaseEntity, m_hLightingLandmark );
     string_t m_strLightingLandmark;
 };
@@ -264,7 +264,7 @@ IMPLEMENT_SERVERCLASS_ST( CBaseAnimating, DT_BaseAnimating )
 
     // Experiment; material override
     SendPropString( SENDINFO( m_MaterialOverride ) ),
-	SendPropArray( SendPropString( SENDINFO_ARRAY( m_SubMaterialOverrides ), 0, SendProxy_String_tToString ), m_SubMaterialOverrides ),
+    SendPropArray( SendPropString( SENDINFO_ARRAY( m_SubMaterialOverrides ), 0, SendProxy_String_tToString ), m_SubMaterialOverrides ),
 
 END_SEND_TABLE()
 
@@ -485,7 +485,7 @@ void CBaseAnimating::StudioFrameAdvanceInternal( CStudioHdr *pStudioHdr, float f
 
     /*
     if (!IsPlayer())
-      Msg("%s %6.3f : %6.3f %6.3f (%.3f) %.3f\n",
+    Msg("%s %6.3f : %6.3f %6.3f (%.3f) %.3f\n",
         GetClassname(), gpGlobals->curtime,
         m_flAnimTime.Get(), m_flPrevAnimTime, flInterval, GetCycle() );
     */
@@ -1198,7 +1198,7 @@ void CBaseAnimating::DispatchAnimEvents( CBaseAnimating *eventHandler )
     /*
     if (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
     {
-      Msg( "%s:%s : checking %.2f %.2f (%d)\n", STRING(GetModelName()), pstudiohdr->pSeqdesc( GetSequence() ).pszLabel(), flStart, flEnd, m_bSequenceFinished );
+    Msg( "%s:%s : checking %.2f %.2f (%d)\n", STRING(GetModelName()), pstudiohdr->pSeqdesc( GetSequence() ).pszLabel(), flStart, flEnd, m_bSequenceFinished );
     }
     */
 
@@ -1221,7 +1221,7 @@ void CBaseAnimating::DispatchAnimEvents( CBaseAnimating *eventHandler )
         /*
         if (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
         {
-          Msg( "dispatch %i (%i) cycle %f event cycle %f cyclerate %f\n",
+        Msg( "dispatch %i (%i) cycle %f event cycle %f cyclerate %f\n",
             (int)(index - 1),
             (int)event.event,
             (float)GetCycle(),
@@ -1457,7 +1457,7 @@ bool CBaseAnimating::HasPoseParameter( int iSequence, int iParameter )
 
     mstudioseqdesc_t &seqdesc = pstudiohdr->pSeqdesc( iSequence );
     if ( pstudiohdr->GetSharedPoseParameter( iSequence, seqdesc.paramindex[0] ) == iParameter ||
-         pstudiohdr->GetSharedPoseParameter( iSequence, seqdesc.paramindex[1] ) == iParameter )
+        pstudiohdr->GetSharedPoseParameter( iSequence, seqdesc.paramindex[1] ) == iParameter )
     {
         return true;
     }
@@ -1577,7 +1577,7 @@ void CBaseAnimating::GetBoneTransform( int iBone, matrix3x4_t &pBoneToWorld )
 
 class CTraceFilterSkipNPCs : public CTraceFilterSimple
 {
-   public:
+    public:
     CTraceFilterSkipNPCs( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -1641,7 +1641,7 @@ void CBaseAnimating::UpdateStepOrigin()
     /*
     if (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
     {
-      Msg("%x : %x\n", GetMoveParent(), GetGroundEntity() );
+    Msg("%x : %x\n", GetMoveParent(), GetGroundEntity() );
     }
     */
 
@@ -3034,9 +3034,9 @@ void CBaseAnimating::GetInputDispatchEffectPosition( const char *sInputString, V
         if ( !GetAttachment( iAttachment, pOrigin, pAngles ) )
         {
             Msg( "ERROR: Mapmaker tried to spawn DispatchEffect %s, but %s has no attachment %d\n",
-                 sInputString,
-                 STRING( GetModelName() ),
-                 iAttachment );
+                sInputString,
+                STRING( GetModelName() ),
+                iAttachment );
         }
         return;
     }

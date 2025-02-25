@@ -8,7 +8,7 @@
 // =============================================================================
 // Interface to the LIPSinc TalkBack 1.1 library (TalkBack_*.lib).
 //
-// Copyright © 1998-2002 LIPSinc. All rights reserved.
+// Copyright ï¿½ 1998-2002 LIPSinc. All rights reserved.
 
 #if !defined( TalkBack_h )
 #define TalkBack_h
@@ -685,8 +685,8 @@ extern "C"
         TALKBACK_PHONEME iPhoneme,     // IN:      enumeration of phoneme to insert.
         long iInsertPosition,          // IN:      position (phoneme number) at which to insert.
         int iInsertBefore );           // IN:      manner of insertion:
-                                       //            0 means put phoneme after insert position;
-                                       //            1 means put phoneme before insert position.
+                                        //            0 means put phoneme after insert position;
+                                        //            1 means put phoneme before insert position.
 
     // Deletes the specified phoneme.
     TALKBACK_ERR  // RETURNS: TALKBACK_NOERR if successful, TalkBack error code if not.

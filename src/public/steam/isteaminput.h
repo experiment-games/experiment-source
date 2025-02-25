@@ -591,7 +591,7 @@ enum ESteamInputGlyphStyle
 {
     // Base-styles - cannot mix
     ESteamInputGlyphStyle_Knockout = 0x0,  // Face buttons will have colored labels/outlines on a knocked out background
-                                           // Rest of inputs will have white detail/borders on a knocked out background
+                                            // Rest of inputs will have white detail/borders on a knocked out background
     ESteamInputGlyphStyle_Light = 0x1,     // Black detail/borders on a white background
     ESteamInputGlyphStyle_Dark = 0x2,      // White detail/borders on a black background
 
@@ -698,7 +698,7 @@ typedef void ( *SteamInputActionEventCallbackPointer )( SteamInputActionEvent_t 
 //-----------------------------------------------------------------------------
 class ISteamInput
 {
-   public:
+    public:
     // Init and Shutdown must be called when starting/ending use of this interface.
     // if bExplicitlyCallRunFrame is called then you will need to manually call RunFrame
     // each frame, otherwise Steam Input will updated when SteamAPI_RunCallbacks() is called
@@ -965,9 +965,9 @@ struct SteamInputConfigurationLoaded_t
     AppId_t m_unAppID;
     InputHandle_t m_ulDeviceHandle;  // Handle for device
     CSteamID m_ulMappingCreator;     // May differ from local user when using
-                                     // an unmodified community or official config
+                                    // an unmodified community or official config
     uint32 m_unMajorRevision;        // Binding revision from In-game Action File.
-                                     // Same value as queried by GetDeviceBindingRevision
+                                    // Same value as queried by GetDeviceBindingRevision
     uint32 m_unMinorRevision;
     bool m_bUsesSteamInputAPI;  // Does the configuration contain any Analog/Digital actions?
     bool m_bUsesGamepadAPI;     // Does the configuration contain any Xinput bindings?

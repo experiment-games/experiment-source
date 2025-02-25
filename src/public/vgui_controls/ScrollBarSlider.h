@@ -27,7 +27,7 @@ class ScrollBarSlider : public Panel
 {
     DECLARE_CLASS_SIMPLE( ScrollBarSlider, Panel );
 
-   public:
+    public:
     ScrollBarSlider( Panel *parent, const char *panelName, bool vertical );
 
     // Set the ScrollBarSlider value of the nob.
@@ -66,13 +66,13 @@ class ScrollBarSlider : public Panel
 
     virtual void ApplySettings( KeyValues *pInResourceData );
 
-   protected:
+    protected:
     virtual void Paint();
     virtual void PaintBackground();
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
-   private:
+    private:
     virtual void RecomputeNobPosFromValue();
     virtual void RecomputeValueFromNobPos();
     virtual void SendScrollBarSliderMovedMessage();

@@ -7,19 +7,19 @@
 CFG=ims_helper - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ims_helper.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ims_helper.mak" CFG="ims_helper - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "ims_helper - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ims_helper - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -61,10 +61,10 @@ InputPath=.\Release\ims_helper.dll
 SOURCE="$(InputPath)"
 
 "..\..\..\..\game\bin\phonemeextractors\$(TargetName).dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	if exist ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll attrib -r ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll 
-	copy "$(TargetPath)" ..\..\..\..\game\bin\phonemeextractors 
-	if exist "$(TargetDir)""$(TargetName)".map copy "$(TargetDir)""$(TargetName)".map ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".map 
-	
+    if exist ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll attrib -r ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll
+    copy "$(TargetPath)" ..\..\..\..\game\bin\phonemeextractors
+    if exist "$(TargetDir)""$(TargetName)".map copy "$(TargetDir)""$(TargetName)".map ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".map
+
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "ims_helper - Win32 Debug"
@@ -100,13 +100,13 @@ InputPath=.\Debug\ims_helper.dll
 SOURCE="$(InputPath)"
 
 "..\..\..\..\game\bin\phonemeextractors\$(TargetName).dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	if exist ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll attrib -r ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll 
-	copy "$(TargetPath)" ..\..\..\..\game\bin\phonemeextractors 
-	if exist "$(TargetDir)""$(TargetName)".map copy "$(TargetDir)""$(TargetName)".map ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".map 
-	
+    if exist ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll attrib -r ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".dll
+    copy "$(TargetPath)" ..\..\..\..\game\bin\phonemeextractors
+    if exist "$(TargetDir)""$(TargetName)".map copy "$(TargetDir)""$(TargetName)".map ..\..\..\..\game\bin\phonemeextractors\"$(TargetName)".map
+
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 

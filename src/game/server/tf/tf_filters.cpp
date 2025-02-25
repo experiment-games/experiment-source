@@ -21,13 +21,13 @@ class CFilterTFTeam : public CBaseFilter
 {
     DECLARE_CLASS( CFilterTFTeam, CBaseFilter );
 
-   public:
+    public:
     void InputRoundSpawn( inputdata_t &inputdata );
     void InputRoundActivate( inputdata_t &inputdata );
 
     inline bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity );
 
-   private:
+    private:
     string_t m_iszControlPointName;
 
     DECLARE_DATADESC();
@@ -53,8 +53,8 @@ bool CFilterTFTeam::PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity
     // is the entity we're asking about on the winning
     // team during the bonus time? (winners pass all filters)
     if ( TFGameRules() &&
-         ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN ) &&
-         ( TFGameRules()->GetWinningTeam() == pEntity->GetTeamNumber() ) )
+        ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN ) &&
+        ( TFGameRules()->GetWinningTeam() == pEntity->GetTeamNumber() ) )
     {
         // this should open all doors for the winners
         if ( m_bNegated )
@@ -103,7 +103,7 @@ class CFilterTFCanCap : public CBaseFilter
 {
     DECLARE_CLASS( CFilterTFCanCap, CBaseFilter );
 
-   public:
+    public:
     inline bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
     {
         CTFPlayer *pPlayer = ToTFPlayer( pEntity );
@@ -132,7 +132,7 @@ class CFilterTFCanCap : public CBaseFilter
         return ( GetTeamNumber() == TEAM_UNASSIGNED || ( pPlayer->GetTeamNumber() == GetTeamNumber() ) );
     }
 
-   private:
+    private:
     DECLARE_DATADESC();
 };
 
@@ -149,7 +149,7 @@ class FilterDamagedByWeaponInSlot : public CBaseFilter
     DECLARE_CLASS( FilterDamagedByWeaponInSlot, CBaseFilter );
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
     {
         ASSERT( false );
@@ -187,7 +187,7 @@ DEFINE_KEYFIELD( m_iWeaponSlot, FIELD_INTEGER, "weaponSlot" ),
     DECLARE_CLASS( CFilterTFBotHasTag, CBaseFilter );
     DECLARE_DATADESC();
 
-   public:
+    public:
     inline virtual void Spawn()
     {
         BaseClass::Spawn();
@@ -228,7 +228,7 @@ DEFINE_KEYFIELD( m_iWeaponSlot, FIELD_INTEGER, "weaponSlot" ),
         return bPasses;
     }
 
-   private:
+    private:
     CUtlStringList m_tags;
     string_t m_iszTags;
     bool m_bRequireAllTags;
@@ -251,7 +251,7 @@ class CFilterTFCondition : public CBaseFilter
 {
     DECLARE_CLASS( CFilterTFCondition, CBaseFilter );
 
-   public:
+    public:
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
     {
         if ( !pEntity->IsPlayer() )
@@ -261,7 +261,7 @@ class CFilterTFCondition : public CBaseFilter
         return pTFPlayer && pTFPlayer->m_Shared.InCond( ( ETFCond )m_nCondition );
     }
 
-   private:
+    private:
     int m_nCondition;
 
     DECLARE_DATADESC();
@@ -281,7 +281,7 @@ class CFilterTFClass : public CBaseFilter
 {
     DECLARE_CLASS( CFilterTFClass, CBaseFilter );
 
-   public:
+    public:
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
     {
         if ( !pEntity->IsPlayer() )
@@ -291,7 +291,7 @@ class CFilterTFClass : public CBaseFilter
         return pTFPlayer && !pTFPlayer->IsObserver() && pTFPlayer->IsPlayerClass( m_nClass );
     }
 
-   private:
+    private:
     int m_nClass;
 
     DECLARE_DATADESC();

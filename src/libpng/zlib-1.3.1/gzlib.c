@@ -18,14 +18,14 @@
 #if defined UNDER_CE
 
 /* Map the Windows error number in ERROR to a locale-dependent error message
-   string and return a pointer to it.  Typically, the values for ERROR come
-   from GetLastError.
+    string and return a pointer to it.  Typically, the values for ERROR come
+    from GetLastError.
 
-   The string pointed to shall not be modified by the application, but may be
-   overwritten by a subsequent call to gz_strwinerror
+    The string pointed to shall not be modified by the application, but may be
+    overwritten by a subsequent call to gz_strwinerror
 
-   The gz_strwinerror function does not change the current setting of
-   GetLastError. */
+    The gz_strwinerror function does not change the current setting of
+    GetLastError. */
 char ZLIB_INTERNAL *gz_strwinerror(DWORD error) {
     static char buf[1024];
 
@@ -218,14 +218,14 @@ local gzFile gz_open(const void *path, int fd, const char *mode) {
         (cloexec ? O_CLOEXEC : 0) |
 #endif
         (state->mode == GZ_READ ?
-         O_RDONLY :
-         (O_WRONLY | O_CREAT |
+        O_RDONLY :
+        (O_WRONLY | O_CREAT |
 #ifdef O_EXCL
-          (exclusive ? O_EXCL : 0) |
+        (exclusive ? O_EXCL : 0) |
 #endif
-          (state->mode == GZ_WRITE ?
-           O_TRUNC :
-           O_APPEND)));
+        (state->mode == GZ_WRITE ?
+            O_TRUNC :
+            O_APPEND)));
 
     /* open the file with the appropriate flags (or just use fd) */
     state->fd = fd > -1 ? fd : (
@@ -498,7 +498,7 @@ const char * ZEXPORT gzerror(gzFile file, int *errnum) {
     if (errnum != NULL)
         *errnum = state->err;
     return state->err == Z_MEM_ERROR ? "out of memory" :
-                                       (state->msg == NULL ? "" : state->msg);
+                                        (state->msg == NULL ? "" : state->msg);
 }
 
 /* -- see zlib.h -- */
@@ -521,11 +521,11 @@ void ZEXPORT gzclearerr(gzFile file) {
 }
 
 /* Create an error message in allocated memory and set state->err and
-   state->msg accordingly.  Free any previous error message already there.  Do
-   not try to free or allocate space if the error is Z_MEM_ERROR (out of
-   memory).  Simply save the error message as a static string.  If there is an
-   allocation failure constructing the error message, then convert the error to
-   out of memory. */
+    state->msg accordingly.  Free any previous error message already there.  Do
+    not try to free or allocate space if the error is Z_MEM_ERROR (out of
+    memory).  Simply save the error message as a static string.  If there is an
+    allocation failure constructing the error message, then convert the error to
+    out of memory. */
 void ZLIB_INTERNAL gz_error(gz_statep state, int err, const char *msg) {
     /* free previously allocated message and clear */
     if (state->msg != NULL) {
@@ -555,7 +555,7 @@ void ZLIB_INTERNAL gz_error(gz_statep state, int err, const char *msg) {
     }
 #if !defined(NO_snprintf) && !defined(NO_vsnprintf)
     (void)snprintf(state->msg, strlen(state->path) + strlen(msg) + 3,
-                   "%s%s%s", state->path, ": ", msg);
+                    "%s%s%s", state->path, ": ", msg);
 #else
     strcpy(state->msg, state->path);
     strcat(state->msg, ": ");
@@ -564,9 +564,9 @@ void ZLIB_INTERNAL gz_error(gz_statep state, int err, const char *msg) {
 }
 
 /* portably return maximum value for an int (when limits.h presumed not
-   available) -- we need to do this to cover cases where 2's complement not
-   used, since C standard permits 1's complement and sign-bit representations,
-   otherwise we could just use ((unsigned)-1) >> 1 */
+    available) -- we need to do this to cover cases where 2's complement not
+    used, since C standard permits 1's complement and sign-bit representations,
+    otherwise we could just use ((unsigned)-1) >> 1 */
 unsigned ZLIB_INTERNAL gz_intmax(void) {
 #ifdef INT_MAX
     return INT_MAX;

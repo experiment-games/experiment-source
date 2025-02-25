@@ -20,7 +20,7 @@
 
 class CWeaponPistol : public CWeaponSDKBase
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponPistol, CWeaponSDKBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -37,7 +37,7 @@ class CWeaponPistol : public CWeaponSDKBase
         return FM_SEMIAUTOMATIC;
     }
 
-   private:
+    private:
     CWeaponPistol( const CWeaponPistol& );
 };
 

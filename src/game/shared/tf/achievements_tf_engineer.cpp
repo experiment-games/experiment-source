@@ -27,10 +27,10 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_RevengeCritForSentryKiller : public CBaseTFAchievement
 {
-   protected:
+    protected:
     CBaseEntity *m_pSentryKiller;
 
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_RevengeCritForSentryKiller, CBaseAchievement );
 
     virtual void Init()
@@ -54,8 +54,8 @@ class CAchievementTFEngineer_RevengeCritForSentryKiller : public CBaseTFAchievem
         // if the local player has killed the thing that killed it's sentry,
         // give the achievement
         if ( pAttacker == C_BasePlayer::GetLocalPlayer() &&
-             pVictim == m_pSentryKiller &&
-             event->GetInt( "customkill" ) == TF_DMG_CUSTOM_SHOTGUN_REVENGE_CRIT )
+            pVictim == m_pSentryKiller &&
+            event->GetInt( "customkill" ) == TF_DMG_CUSTOM_SHOTGUN_REVENGE_CRIT )
         {
             AwardAchievement();
         }
@@ -102,7 +102,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_RevengeCritForSentryKiller, ACHIEVEM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_ManualSentryKillsBeyondRange : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_ManualSentryKillsBeyondRange, CBaseAchievement );
 
     virtual void Init()
@@ -120,7 +120,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_ManualSentryKillsBeyondRange, ACHIEV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_ManualSentryAbsorbDamage : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_ManualSentryAbsorbDamage, CBaseAchievement );
 
     virtual void Init()
@@ -137,7 +137,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_ManualSentryAbsorbDamage, ACHIEVEMEN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_HelpTeammateBuildStructure : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_HelpTeammateBuildStructure, CBaseAchievement );
 
     virtual void Init()
@@ -154,7 +154,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_HelpTeammateBuildStructure, ACHIEVEM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_ShotgunKillPreviousSentryTarget : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_ShotgunKillPreviousSentryTarget, CBaseAchievement );
 
     virtual void Init()
@@ -171,11 +171,11 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_ShotgunKillPreviousSentryTarget, ACH
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_SentryAvengesYou : public CBaseTFAchievement
 {
-   protected:
+    protected:
     CBaseEntity *m_pPlayerKiller;
     float m_flPlayerDeathStartTime;
 
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_SentryAvengesYou, CBaseAchievement );
 
     virtual void Init()
@@ -222,7 +222,7 @@ class CAchievementTFEngineer_SentryAvengesYou : public CBaseTFAchievement
             C_ObjectSentrygun *pSentry = dynamic_cast< C_ObjectSentrygun * >( pRealInflictor );
             C_TFProjectile_SentryRocket *pSentryRocket = dynamic_cast< C_TFProjectile_SentryRocket * >( pRealInflictor );
             if ( ( pSentry && pSentry->GetOwner() == pLocalPlayer ) ||
-                 ( pSentryRocket && pSentryRocket->GetOwnerEntity() == pLocalPlayer ) )
+                ( pSentryRocket && pSentryRocket->GetOwnerEntity() == pLocalPlayer ) )
             {
                 ResetTracking();
                 AwardAchievement();
@@ -267,7 +267,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_SentryAvengesYou, ACHIEVEMENT_TF_ENG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_RepairRecentlyDamagedSentryWhileBeingHealed : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_RepairRecentlyDamagedSentryWhileBeingHealed, CBaseAchievement );
 
     virtual void Init()
@@ -284,7 +284,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_RepairRecentlyDamagedSentryWhileBein
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_SentryKillPlayersCapturingPoint : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_SentryKillPlayersCapturingPoint, CBaseAchievement );
 
     virtual void Init()
@@ -302,7 +302,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_SentryKillPlayersCapturingPoint, ACH
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_DestroySappersOnNonOwnedBuildings : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_DestroySappersOnNonOwnedBuildings, CBaseAchievement );
 
     virtual void Init()
@@ -320,7 +320,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_DestroySappersOnNonOwnedBuildings, A
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_HelpManualSentry : public CBaseTFAchievement
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_HelpManualSentry, CBaseAchievement );
 
     virtual void Init()
@@ -349,7 +349,7 @@ class CAchievementTFEngineer_RevengeCritLife : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             ResetTracking();
         }
@@ -373,7 +373,7 @@ class CAchievementTFEngineer_RevengeCritLife : public CBaseTFAchievement
         m_iKills = 0;
     }
 
-   private:
+    private:
     int m_iKills;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFEngineer_RevengeCritLife, ACHIEVEMENT_TF_ENGINEER_REVENGE_CRIT_LIFE, "TF_ENGINEER_REVENGE_CRIT_LIFE", 5 );
@@ -528,9 +528,9 @@ class CAchievementTFEngineer_SentryKillLifetimeGrind : public CBaseTFAchievement
 
         const char *killer_weapon_name = event->GetString( "weapon" );
         if ( ( 0 == Q_strcmp( killer_weapon_name, "tf_projectile_sentryrocket" ) ) ||
-             ( 0 == Q_strncmp( killer_weapon_name, "obj_sentrygun", 13 ) ) ||
-             ( 0 == Q_strcmp( killer_weapon_name, "wrangler_kill" ) ) ||
-             ( 0 == Q_strcmp( killer_weapon_name, "obj_minisentry" ) ) )
+            ( 0 == Q_strncmp( killer_weapon_name, "obj_sentrygun", 13 ) ) ||
+            ( 0 == Q_strcmp( killer_weapon_name, "wrangler_kill" ) ) ||
+            ( 0 == Q_strcmp( killer_weapon_name, "obj_minisentry" ) ) )
         {
             IncrementCount();
         }
@@ -603,8 +603,8 @@ class CAchievementTFEngineer_KillDisguisedSpy : public CBaseTFAchievement
             return;
 
         if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_SPY ) &&
-             pTFVictim->m_Shared.InCond( TF_COND_DISGUISED ) &&
-             event->GetInt( "weaponid" ) == TF_WEAPON_WRENCH )
+            pTFVictim->m_Shared.InCond( TF_COND_DISGUISED ) &&
+            event->GetInt( "weaponid" ) == TF_WEAPON_WRENCH )
         {
             AwardAchievement();
         }
@@ -657,7 +657,7 @@ class CAchievementTFEngineer_KillSpyTwoSappers : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             ResetTracking();
         }
@@ -668,7 +668,7 @@ class CAchievementTFEngineer_KillSpyTwoSappers : public CBaseTFAchievement
                 return;
 
             if ( event->GetInt( "objecttype" ) == OBJ_ATTACHMENT_SAPPER &&
-                 event->GetInt( "attacker" ) == pLocalPlayer->GetUserID() )
+                event->GetInt( "attacker" ) == pLocalPlayer->GetUserID() )
             {
                 SetTime();
                 m_iSapperCount++;
@@ -771,8 +771,8 @@ class CAchievementTFEngineer_RemoveSapperLongDist : public CBaseTFAchievement
         else if ( FStrEq( event->GetName(), "object_destroyed" ) )
         {
             if ( event->GetInt( "objecttype" ) == OBJ_ATTACHMENT_SAPPER &&
-                 event->GetInt( "attacker" ) == pLocalPlayer->GetUserID() &&
-                 event->GetInt( "index" ) == iSapperIndex )
+                event->GetInt( "attacker" ) == pLocalPlayer->GetUserID() &&
+                event->GetInt( "index" ) == iSapperIndex )
             {
                 float flDist = pLocalPlayer->GetAbsOrigin().DistTo( m_vecStart );
                 if ( flDist > 700 )
@@ -843,7 +843,7 @@ class CAchievementTFEngineer_KillSnipersSentry : public CBaseTFAchievement
             return;
 
         if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_SNIPER ) &&
-             event->GetInt( "customkill" ) == TF_DMG_CUSTOM_PLAYER_SENTRY )
+            event->GetInt( "customkill" ) == TF_DMG_CUSTOM_PLAYER_SENTRY )
         {
             IncrementCount();
         }
@@ -871,8 +871,8 @@ class CAchievementTFEngineer_KillSentryWithSentry : public CBaseTFAchievement
         {
             const char *weaponstr = event->GetString( "weapon" );
             if ( event->GetInt( "objecttype" ) == OBJ_SENTRYGUN &&
-                 event->GetInt( "attacker" ) == pLocalPlayer->GetUserID() &&
-                 FStrEq( weaponstr, "wrangler_kill" ) )
+                event->GetInt( "attacker" ) == pLocalPlayer->GetUserID() &&
+                FStrEq( weaponstr, "wrangler_kill" ) )
             {
                 AwardAchievement();
             }
@@ -977,9 +977,9 @@ class CAchievementTFEngineer_KillAssist : public CBaseTFAchievement
             // A sentry gun must have been the killing weapon.
             const char *killer_weapon_name = event->GetString( "weapon" );
             if ( ( 0 == Q_strcmp( killer_weapon_name, "tf_projectile_sentryrocket" ) ) ||
-                 ( 0 == Q_strncmp( killer_weapon_name, "obj_sentrygun", 13 ) ) ||
-                 ( 0 == Q_strcmp( killer_weapon_name, "wrangler_kill" ) ) ||
-                 ( 0 == Q_strcmp( killer_weapon_name, "obj_minisentry" ) ) )
+                ( 0 == Q_strncmp( killer_weapon_name, "obj_sentrygun", 13 ) ) ||
+                ( 0 == Q_strcmp( killer_weapon_name, "wrangler_kill" ) ) ||
+                ( 0 == Q_strcmp( killer_weapon_name, "obj_minisentry" ) ) )
             {
                 if ( pAttacker == C_BasePlayer::GetLocalPlayer() && pAssister->IsPlayerClass( TF_CLASS_ENGINEER ) )
                 {
@@ -1057,7 +1057,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_HeavyAssist, ACHIEVEMENT_TF_ENGINEER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1070,7 +1070,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_AchieveProgress1, ACHIEVEMENT_TF_ENG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1083,7 +1083,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_AchieveProgress2, ACHIEVEMENT_TF_ENG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFEngineer_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {

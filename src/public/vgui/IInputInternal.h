@@ -29,7 +29,7 @@ typedef int HInputContext;
 
 class IInputInternal : public IInput
 {
-   public:
+    public:
     // processes input for a frame
     virtual void RunFrame() = 0;
 

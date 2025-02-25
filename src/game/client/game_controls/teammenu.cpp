@@ -331,7 +331,7 @@ void CTeamMenu::MakeTeamButtons(void)
     const char *teamname = GameResources()->GetTeamName( i );
 
     if ( !teamname || !teamname[0] )
-      return; // no more teams
+    return; // no more teams
 
     char buttonText[32];
     Q_snprintf( buttonText, sizeof(buttonText), "&%i %s", i +1, teamname );
@@ -359,12 +359,12 @@ void CTeamMenu::OnTeamButton( int team )
   {
     if( team == m_iNumTeams ) // first extra team is auto assign
     {
-      Q_snprintf( cmd, sizeof( cmd ), "jointeam 5" );
+    Q_snprintf( cmd, sizeof( cmd ), "jointeam 5" );
     }
     else // next is spectate
     {
-      // DuckMessage( "#Spec_Duck" );
-      gViewPortInterface->ShowBackGround( false );
+    // DuckMessage( "#Spec_Duck" );
+    gViewPortInterface->ShowBackGround( false );
     }
   }
   else

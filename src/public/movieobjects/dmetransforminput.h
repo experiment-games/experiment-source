@@ -19,14 +19,14 @@ class CDmeTranslationInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeTranslationInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
     virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
     virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
-   protected:
+    protected:
     CDmaVar< Vector > m_translation;
 };
 
@@ -37,7 +37,7 @@ class CDmeRotationInput : public CDmeInput
 {
     DEFINE_ELEMENT( CDmeRotationInput, CDmeInput );
 
-   public:
+    public:
     virtual bool IsDirty();  // ie needs to operate
     virtual void Operate();
 
@@ -48,7 +48,7 @@ class CDmeRotationInput : public CDmeInput
     void SetRotation( const Quaternion &quat );
     void SetRotation( const QAngle &qangle );
 
-   protected:
+    protected:
     CDmaVar< Quaternion > m_orientation;
     CDmaVar< QAngle > m_angles;
 };

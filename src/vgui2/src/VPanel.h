@@ -31,7 +31,7 @@ struct SerialPanel_t;
 //-----------------------------------------------------------------------------
 class VPanel
 {
-   public:
+    public:
     VPanel();
     virtual ~VPanel();
 
@@ -110,11 +110,11 @@ class VPanel
     // sibling pins
     virtual void SetSiblingPin( VPanel *newSibling, byte iMyCornerToPin = 0, byte iSiblingCornerToPinTo = 0 );
 
-   public:
+    public:
     virtual void GetInternalAbsPos( int &x, int &y );
     virtual void TraverseLevel( int val );
 
-   private:
+    private:
     Dar< VPanel * > _childDar;
     VPanel *_parent;
     SurfacePlat *_plat;  // platform-specific data

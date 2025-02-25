@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CTFPlayerPanelGUIHealth : public CTFSpectatorGUIHealth
 {
-   public:
+    public:
     CTFPlayerPanelGUIHealth( Panel *parent, const char *name )
         : CTFSpectatorGUIHealth( parent, name )
     {
@@ -36,7 +36,7 @@ class CTFPlayerPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFPlayerPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFPlayerPanel( vgui::Panel *parent, const char *name );
 
     virtual void Reset( void );
@@ -62,7 +62,7 @@ class CTFPlayerPanel : public vgui::EditablePanel
         return m_steamID;
     }
 
-   protected:
+    protected:
     int m_iPlayerIndex;
     CUtlString m_sPlayerName;
     CSteamID m_steamID;

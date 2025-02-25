@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class IFileReadBinary
 {
-   public:
+    public:
     virtual FileHandle_t open( const char *pFileName ) = 0;
     virtual int read( void *pOutput, int size, FileHandle_t file ) = 0;
     virtual void close( FileHandle_t file ) = 0;
@@ -38,7 +38,7 @@ class IFileReadBinary
 //-----------------------------------------------------------------------------
 class InFileRIFF
 {
-   public:
+    public:
     InFileRIFF( const char *pFileName, IFileReadBinary &io );
     ~InFileRIFF( void );
 
@@ -60,7 +60,7 @@ class InFileRIFF
         return m_file != 0;
     }
 
-   private:
+    private:
     const InFileRIFF &operator=( const InFileRIFF & );
 
     IFileReadBinary &m_io;
@@ -74,7 +74,7 @@ class InFileRIFF
 //-----------------------------------------------------------------------------
 class IterateRIFF
 {
-   public:
+    public:
     IterateRIFF( InFileRIFF &riff, int size );
     IterateRIFF( IterateRIFF &parent );
 
@@ -91,7 +91,7 @@ class IterateRIFF
         return m_chunkPosition;
     }
 
-   private:
+    private:
     const IterateRIFF &operator=( const IterateRIFF & );
 
     void ChunkSetup( void );
@@ -108,7 +108,7 @@ class IterateRIFF
 
 class IFileWriteBinary
 {
-   public:
+    public:
     virtual FileHandle_t create( const char *pFileName ) = 0;
     virtual int write( void *pData, int size, FileHandle_t file ) = 0;
     virtual void close( FileHandle_t file ) = 0;
@@ -121,7 +121,7 @@ class IFileWriteBinary
 //-----------------------------------------------------------------------------
 class OutFileRIFF
 {
-   public:
+    public:
     OutFileRIFF( const char *pFileName, IFileWriteBinary &io );
     ~OutFileRIFF( void );
 
@@ -136,7 +136,7 @@ class OutFileRIFF
 
     void HasLISETData( int position );
 
-   private:
+    private:
     const OutFileRIFF &operator=( const OutFileRIFF & );
 
     IFileWriteBinary &m_io;
@@ -155,7 +155,7 @@ class OutFileRIFF
 //-----------------------------------------------------------------------------
 class IterateOutputRIFF
 {
-   public:
+    public:
     IterateOutputRIFF( OutFileRIFF &riff );
     IterateOutputRIFF( IterateOutputRIFF &parent );
 
@@ -178,7 +178,7 @@ class IterateOutputRIFF
 
     void SetLISETData( int position );
 
-   private:
+    private:
     const IterateOutputRIFF &operator=( const IterateOutputRIFF & );
 
     OutFileRIFF &m_riff;

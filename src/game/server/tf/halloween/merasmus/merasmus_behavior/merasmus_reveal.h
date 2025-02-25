@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CMerasmusReveal : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
     virtual const char *GetName( void ) const

@@ -183,8 +183,8 @@ QueryResultType CTFBotSpySap::ShouldAttack( const INextBot *meBot, const CKnownE
     }
 
     if ( !me->m_Shared.InCond( TF_COND_DISGUISED ) &&
-         !me->m_Shared.InCond( TF_COND_DISGUISING ) &&
-         !me->m_Shared.IsStealthed() )
+        !me->m_Shared.InCond( TF_COND_DISGUISING ) &&
+        !me->m_Shared.IsStealthed() )
     {
         // our cover is blown!
         return ANSWER_YES;

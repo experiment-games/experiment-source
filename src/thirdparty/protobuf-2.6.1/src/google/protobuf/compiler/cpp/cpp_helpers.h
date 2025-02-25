@@ -137,8 +137,8 @@ string EscapeTrigraphs( const string& to_escape );
 
 // Escaped function name to eliminate naming conflict.
 string SafeFunctionName( const Descriptor* descriptor,
-                         const FieldDescriptor* field,
-                         const string& prefix );
+                        const FieldDescriptor* field,
+                        const string& prefix );
 
 // Do message classes in this file use UnknownFieldSet?
 // Otherwise, messages will store unknown fields in a string
@@ -167,8 +167,8 @@ inline bool HasDescriptorMethods( const FileDescriptor* file )
 inline bool HasGenericServices( const FileDescriptor* file )
 {
     return file->service_count() > 0 &&
-           file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
-           file->options().cc_generic_services();
+            file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
+            file->options().cc_generic_services();
 }
 
 // Should string fields in this file verify that their contents are UTF-8?

@@ -22,15 +22,15 @@ AC_DEFUN([ACX_USE_SYSTEM_EXTENSIONS],[
 # undef _TANDEM_SOURCE
 #endif])
     AC_CACHE_CHECK([whether it is safe to define __EXTENSIONS__],
-      [ac_cv_safe_to_define___extensions__],
-      [AC_COMPILE_IFELSE(
-         [AC_LANG_PROGRAM([
+    [ac_cv_safe_to_define___extensions__],
+    [AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([
 #           define __EXTENSIONS__ 1
             AC_INCLUDES_DEFAULT])],
-         [ac_cv_safe_to_define___extensions__=yes],
-         [ac_cv_safe_to_define___extensions__=no])])
+        [ac_cv_safe_to_define___extensions__=yes],
+        [ac_cv_safe_to_define___extensions__=no])])
     test $ac_cv_safe_to_define___extensions__ = yes &&
-      AC_DEFINE([__EXTENSIONS__])
+    AC_DEFINE([__EXTENSIONS__])
     AC_DEFINE([_POSIX_PTHREAD_SEMANTICS])
     AC_DEFINE([_TANDEM_SOURCE])
   ])

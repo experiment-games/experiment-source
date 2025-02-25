@@ -56,7 +56,7 @@ class CSurveyQuestionPanel* CreateSurveyQuestionPanel( Panel* pParent, const CMs
 //-----------------------------------------------------------------------------
 class CSurveyQuestionPanel : public EditablePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CSurveyQuestionPanel, EditablePanel );
     CSurveyQuestionPanel( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion );
     ~CSurveyQuestionPanel();
@@ -65,7 +65,7 @@ class CSurveyQuestionPanel : public EditablePanel, public CGameEventListener
     virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
     virtual void ApplySchemeSettings( IScheme* pScheme ) OVERRIDE;
 
-   private:
+    private:
     virtual void Submit() = 0;
     virtual const char* GetResFile() const = 0;
 
@@ -78,11 +78,11 @@ class CSurveyQuestionPanel : public EditablePanel, public CGameEventListener
 //-----------------------------------------------------------------------------
 class CMultipleChoiceSurveyQuestionPanel : public CSurveyQuestionPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CMultipleChoiceSurveyQuestionPanel, CSurveyQuestionPanel );
     CMultipleChoiceSurveyQuestionPanel( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion, uint16 nSurveyResponses );
 
-   private:
+    private:
     virtual void Think() OVERRIDE;
     virtual void Submit() OVERRIDE;
 
@@ -95,7 +95,7 @@ class CMultipleChoiceSurveyQuestionPanel : public CSurveyQuestionPanel
 //-----------------------------------------------------------------------------
 class CMatchQualitySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
-   public:
+    public:
     CMatchQualitySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion )
         : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 5 ) {}
     virtual const char* GetResFile() const OVERRIDE
@@ -110,7 +110,7 @@ class CMatchQualitySurvey : public CMultipleChoiceSurveyQuestionPanel
 //-----------------------------------------------------------------------------
 class CMapQualitySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
-   public:
+    public:
     CMapQualitySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion )
         : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 5 ) {}
 
@@ -127,7 +127,7 @@ class CMapQualitySurvey : public CMultipleChoiceSurveyQuestionPanel
 //-----------------------------------------------------------------------------
 class CCompInquirySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
-   public:
+    public:
     CCompInquirySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion )
         : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 6 ) {}
 
@@ -142,7 +142,7 @@ class CCompInquirySurvey : public CMultipleChoiceSurveyQuestionPanel
 //-----------------------------------------------------------------------------
 class CCasualInquirySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
-   public:
+    public:
     CCasualInquirySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion )
         : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 6 ) {}
 
@@ -157,7 +157,7 @@ class CCasualInquirySurvey : public CMultipleChoiceSurveyQuestionPanel
 //-----------------------------------------------------------------------------
 class CRandomCritSurvey : public CMultipleChoiceSurveyQuestionPanel
 {
-   public:
+    public:
     CRandomCritSurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion )
         : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 6 ) {}
 

@@ -311,10 +311,10 @@ Disposition_t CNPC_PlayerCompanion::IRelationType( CBaseEntity *pTarget )
             }
         }
         else if ( baseRelationship == D_HT &&
-                  pTarget->IsNPC() &&
-                  ( ( CAI_BaseNPC * )pTarget )->GetActiveWeapon() &&
-                  ( ( CAI_BaseNPC * )pTarget )->GetActiveWeapon()->ClassMatches( gm_iszShotgunClassname ) &&
-                  ( !GetActiveWeapon() || !GetActiveWeapon()->ClassMatches( gm_iszShotgunClassname ) ) )
+                pTarget->IsNPC() &&
+                ( ( CAI_BaseNPC * )pTarget )->GetActiveWeapon() &&
+                ( ( CAI_BaseNPC * )pTarget )->GetActiveWeapon()->ClassMatches( gm_iszShotgunClassname ) &&
+                ( !GetActiveWeapon() || !GetActiveWeapon()->ClassMatches( gm_iszShotgunClassname ) ) )
         {
             if ( ( pTarget->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr() < Square( 25 * 12 ) )
             {
@@ -383,17 +383,17 @@ void CNPC_PlayerCompanion::GatherConditions()
         m_flBoostSpeed = 0;
 
         if ( m_AnnounceAttackTimer.Expired() &&
-             ( GetLastEnemyTime() == 0.0 || gpGlobals->curtime - GetLastEnemyTime() > 20 ) )
+            ( GetLastEnemyTime() == 0.0 || gpGlobals->curtime - GetLastEnemyTime() > 20 ) )
         {
             // Always delay when an encounter begins
             m_AnnounceAttackTimer.Set( 4, 8 );
         }
 
         if ( GetFollowBehavior().GetFollowTarget() &&
-             ( GetFollowBehavior().GetFollowTarget()->IsPlayer() || GetCommandGoal() != vec3_invalid ) &&
-             GetFollowBehavior().IsMovingToFollowTarget() &&
-             GetFollowBehavior().GetGoalRange() > 0.1 &&
-             BaseClass::GetIdealSpeed() > 0.1 )
+            ( GetFollowBehavior().GetFollowTarget()->IsPlayer() || GetCommandGoal() != vec3_invalid ) &&
+            GetFollowBehavior().IsMovingToFollowTarget() &&
+            GetFollowBehavior().GetGoalRange() > 0.1 &&
+            BaseClass::GetIdealSpeed() > 0.1 )
         {
             Vector vPlayerToFollower = GetAbsOrigin() - pPlayer->GetAbsOrigin();
             float dist = vPlayerToFollower.NormalizeInPlace();
@@ -459,7 +459,7 @@ void CNPC_PlayerCompanion::GatherConditions()
     }
 
     if ( GetMotor()->IsDeceleratingToGoal() && IsCurTaskContinuousMove() &&
-         HasCondition( COND_PLAYER_PUSHING ) && IsCurSchedule( SCHED_MOVE_AWAY ) )
+        HasCondition( COND_PLAYER_PUSHING ) && IsCurSchedule( SCHED_MOVE_AWAY ) )
     {
         ClearSchedule( "Being pushed by player" );
     }
@@ -489,7 +489,7 @@ void CNPC_PlayerCompanion::GatherConditions()
 
     // Handle speech AI. Don't do AI speech if we're in scripts unless permitted by the EnableSpeakWhileScripting input.
     if ( m_NPCState == NPC_STATE_IDLE || m_NPCState == NPC_STATE_ALERT || m_NPCState == NPC_STATE_COMBAT ||
-         ( ( m_NPCState == NPC_STATE_SCRIPT ) && CanSpeakWhileScripting() ) )
+        ( ( m_NPCState == NPC_STATE_SCRIPT ) && CanSpeakWhileScripting() ) )
     {
         DoCustomSpeechAI();
     }
@@ -572,15 +572,15 @@ void CNPC_PlayerCompanion::BuildScheduleTestBits()
     }
 
     if ( ( ConditionInterruptsCurSchedule( COND_GIVE_WAY ) ||
-           IsCurSchedule( SCHED_HIDE_AND_RELOAD ) ||
-           IsCurSchedule( SCHED_RELOAD ) ||
-           IsCurSchedule( SCHED_STANDOFF ) ||
-           IsCurSchedule( SCHED_TAKE_COVER_FROM_ENEMY ) ||
-           IsCurSchedule( SCHED_COMBAT_FACE ) ||
-           IsCurSchedule( SCHED_ALERT_FACE ) ||
-           IsCurSchedule( SCHED_COMBAT_STAND ) ||
-           IsCurSchedule( SCHED_ALERT_FACE_BESTSOUND ) ||
-           IsCurSchedule( SCHED_ALERT_STAND ) ) )
+            IsCurSchedule( SCHED_HIDE_AND_RELOAD ) ||
+            IsCurSchedule( SCHED_RELOAD ) ||
+            IsCurSchedule( SCHED_STANDOFF ) ||
+            IsCurSchedule( SCHED_TAKE_COVER_FROM_ENEMY ) ||
+            IsCurSchedule( SCHED_COMBAT_FACE ) ||
+            IsCurSchedule( SCHED_ALERT_FACE ) ||
+            IsCurSchedule( SCHED_COMBAT_STAND ) ||
+            IsCurSchedule( SCHED_ALERT_FACE_BESTSOUND ) ||
+            IsCurSchedule( SCHED_ALERT_STAND ) ) )
     {
         SetCustomInterruptCondition( COND_HEAR_MOVE_AWAY );
         SetCustomInterruptCondition( COND_PLAYER_PUSHING );
@@ -644,8 +644,8 @@ bool CNPC_PlayerCompanion::QuerySeeEntity( CBaseEntity *pEntity, bool bOnlyHateO
 {
     CAI_BaseNPC *pOther = pEntity->MyNPCPointer();
     if ( pOther &&
-         ( pOther->GetState() == NPC_STATE_ALERT || GetState() == NPC_STATE_ALERT || pOther->GetState() == NPC_STATE_COMBAT || GetState() == NPC_STATE_COMBAT ) &&
-         pOther->IsPlayerAlly() )
+        ( pOther->GetState() == NPC_STATE_ALERT || GetState() == NPC_STATE_ALERT || pOther->GetState() == NPC_STATE_COMBAT || GetState() == NPC_STATE_COMBAT ) &&
+        pOther->IsPlayerAlly() )
     {
         return true;
     }
@@ -667,7 +667,7 @@ bool CNPC_PlayerCompanion::ShouldIgnoreSound( CSound *pSound )
         if ( pSound->m_hOwner && pSound->m_hOwner->GetServerVehicle() != NULL )
         {
             if ( m_PassengerBehavior.GetPassengerState() == PASSENGER_STATE_INSIDE &&
-                 m_PassengerBehavior.GetTargetVehicle() == pSound->m_hOwner->GetServerVehicle()->GetVehicleEnt() )
+                m_PassengerBehavior.GetTargetVehicle() == pSound->m_hOwner->GetServerVehicle()->GetVehicleEnt() )
                 return true;
         }
 #endif  // HL2_EPISODIC
@@ -778,12 +778,12 @@ int CNPC_PlayerCompanion::SelectScheduleDanger()
     }
 
     if ( GetEnemy() &&
-         m_FakeOutMortarTimer.Expired() &&
-         GetFollowBehavior().GetFollowTarget() &&
-         IsMortar( GetEnemy() ) &&
-         assert_cast< CAI_BaseNPC * >( GetEnemy() )->GetEnemy() == this &&
-         assert_cast< CAI_BaseNPC * >( GetEnemy() )->FInViewCone( this ) &&
-         assert_cast< CAI_BaseNPC * >( GetEnemy() )->FVisible( this ) )
+        m_FakeOutMortarTimer.Expired() &&
+        GetFollowBehavior().GetFollowTarget() &&
+        IsMortar( GetEnemy() ) &&
+        assert_cast< CAI_BaseNPC * >( GetEnemy() )->GetEnemy() == this &&
+        assert_cast< CAI_BaseNPC * >( GetEnemy() )->FInViewCone( this ) &&
+        assert_cast< CAI_BaseNPC * >( GetEnemy() )->FVisible( this ) )
     {
         m_FakeOutMortarTimer.Set( 7 );
         return SCHED_PC_FAKEOUT_MORTAR;
@@ -813,8 +813,8 @@ int CNPC_PlayerCompanion::SelectSchedulePriorityAction()
         }
 
         if ( GetGroundEntity()->IsNPC() &&
-             IRelationType( GetGroundEntity() ) == D_LI &&
-             WorldSpaceCenter().z - GetGroundEntity()->WorldSpaceCenter().z > GetHullHeight() * .5 )
+            IRelationType( GetGroundEntity() ) == D_LI &&
+            WorldSpaceCenter().z - GetGroundEntity()->WorldSpaceCenter().z > GetHullHeight() * .5 )
         {
             return SCHED_PC_GET_OFF_COMPANION;
         }
@@ -970,8 +970,8 @@ int CNPC_PlayerCompanion::TranslateSchedule( int scheduleType )
                         CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
                         pWeapon = pPlayer->GetActiveWeapon();
                         if ( pWeapon && pWeapon->UsesClipsForAmmo1() &&
-                             pWeapon->Clip1() < ( pWeapon->GetMaxClip1() * .75 ) &&
-                             pPlayer->GetAmmoCount( pWeapon->GetPrimaryAmmoType() ) )
+                            pWeapon->Clip1() < ( pWeapon->GetMaxClip1() * .75 ) &&
+                            pPlayer->GetAmmoCount( pWeapon->GetPrimaryAmmoType() ) )
                         {
                             SpeakIfAllowed( TLK_PLRELOAD );
                         }
@@ -1102,8 +1102,8 @@ void CNPC_PlayerCompanion::StartTask( const Task_t *pTask )
             UTIL_TraceHull( GetAbsOrigin(), GetAbsOrigin(), GetHullMins(), GetHullMaxs(), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
             if ( tr.startsolid && tr.m_pEnt == GetGroundEntity() )
             {
-              // Allow us to move through the entity for a short time
-              NPCPhysics_CreateSolver( this, GetGroundEntity(), true, 2.0f );
+            // Allow us to move through the entity for a short time
+            NPCPhysics_CreateSolver( this, GetGroundEntity(), true, 2.0f );
             }
             */
         }
@@ -1291,8 +1291,8 @@ Activity CNPC_PlayerCompanion::TranslateActivityReadiness( Activity activity )
         return activity;
 
     if ( m_bReadinessCapable &&
-         ( GetReadinessUse() == AIRU_ALWAYS ||
-           ( GetReadinessUse() == AIRU_ONLY_PLAYER_SQUADMATES && ( IsInPlayerSquad() || Classify() == CLASS_PLAYER_ALLY_VITAL ) ) ) )
+        ( GetReadinessUse() == AIRU_ALWAYS ||
+            ( GetReadinessUse() == AIRU_ONLY_PLAYER_SQUADMATES && ( IsInPlayerSquad() || Classify() == CLASS_PLAYER_ALLY_VITAL ) ) ) )
     {
         bool bShouldAim = ShouldBeAiming();
 
@@ -1484,14 +1484,14 @@ bool CNPC_PlayerCompanion::HandleInteraction( int interactionType, void *data, C
 int CNPC_PlayerCompanion::GetSoundInterests()
 {
     return SOUND_WORLD |
-           SOUND_COMBAT |
-           SOUND_PLAYER |
-           SOUND_DANGER |
-           SOUND_BULLET_IMPACT |
-           SOUND_MOVE_AWAY |
-           SOUND_READINESS_LOW |
-           SOUND_READINESS_MEDIUM |
-           SOUND_READINESS_HIGH;
+            SOUND_COMBAT |
+            SOUND_PLAYER |
+            SOUND_DANGER |
+            SOUND_BULLET_IMPACT |
+            SOUND_MOVE_AWAY |
+            SOUND_READINESS_LOW |
+            SOUND_READINESS_MEDIUM |
+            SOUND_READINESS_HIGH;
 }
 
 //------------------------------------------------------------------------------
@@ -1817,11 +1817,11 @@ void CNPC_PlayerCompanion::SetAimTarget( CBaseEntity *pTarget )
     }
 
 #if 0
-	if( m_hAimTarget )
-	{
-		Msg("New Aim Target: %s\n", m_hAimTarget->GetClassname() );
-		NDebugOverlay::Line(EyePosition(), m_hAimTarget->WorldSpaceCenter(), 255, 255, 0, false, 0.1 );
-	}
+    if( m_hAimTarget )
+    {
+        Msg("New Aim Target: %s\n", m_hAimTarget->GetClassname() );
+        NDebugOverlay::Line(EyePosition(), m_hAimTarget->WorldSpaceCenter(), 255, 255, 0, false, 0.1 );
+    }
 #endif
 }
 
@@ -1830,10 +1830,10 @@ void CNPC_PlayerCompanion::SetAimTarget( CBaseEntity *pTarget )
 void CNPC_PlayerCompanion::StopAiming( char *pszReason )
 {
 #if 0
-	if( pszReason )
-	{	
-		Msg("Stopped aiming because %s\n", pszReason );
-	}
+    if( pszReason )
+    {
+        Msg("Stopped aiming because %s\n", pszReason );
+    }
 #endif
 
     SetAimTarget( NULL );
@@ -1994,9 +1994,9 @@ void CNPC_PlayerCompanion::OnNewLookTarget()
             if ( pHint )
             {
                 if ( pHint->HintType() == HINT_WORLD_VISUALLY_INTERESTING &&
-                     ( pHint->GetAbsOrigin() - GetAbsOrigin() ).Length2D() > COMPANION_AIMTARGET_NEAREST &&
-                     FInAimCone( pHint->GetAbsOrigin() ) &&
-                     HasAimLOS( pHint ) )
+                    ( pHint->GetAbsOrigin() - GetAbsOrigin() ).Length2D() > COMPANION_AIMTARGET_NEAREST &&
+                    FInAimCone( pHint->GetAbsOrigin() ) &&
+                    HasAimLOS( pHint ) )
                 {
                     SetAimTarget( pHint );
                     return;
@@ -2230,14 +2230,14 @@ bool CNPC_PlayerCompanion::IsSafeFromFloorTurret( const Vector &vecLocation, CBa
         if ( !pTurret->MyNPCPointer()->FInViewCone( vecLocation ) )
         {
 #if 0  // Draws a green line to turrets I'm safe from
-			NDebugOverlay::Line( vecLocation, pTurret->WorldSpaceCenter(), 0, 255, 0, false, 0.1 );
+            NDebugOverlay::Line( vecLocation, pTurret->WorldSpaceCenter(), 0, 255, 0, false, 0.1 );
 #endif
             return true;
         }
     }
 
 #if 0  // Draws a red lines to ones I'm not safe from.
-	NDebugOverlay::Line( vecLocation, pTurret->WorldSpaceCenter(), 255, 0, 0, false, 0.1 );
+    NDebugOverlay::Line( vecLocation, pTurret->WorldSpaceCenter(), 255, 0, 0, false, 0.1 );
 #endif
     return false;
 }
@@ -2599,10 +2599,10 @@ bool CNPC_PlayerCompanion::FindMortarCoverPos( CSound *pSound, Vector *pResult )
     if ( !result )
     {
         result = GetTacticalServices()->FindCoverPos( pSound->GetSoundOrigin(),
-                                                      pSound->GetSoundOrigin(),
-                                                      0,
-                                                      CoverRadius(),
-                                                      pResult );
+                                                    pSound->GetSoundOrigin(),
+                                                    0,
+                                                    CoverRadius(),
+                                                    pResult );
     }
     gm_fCoverSearchType = CT_NORMAL;
 
@@ -2760,9 +2760,9 @@ void CNPC_PlayerCompanion::OnFriendDamaged( CBaseCombatCharacter *pSquadmate, CB
     if ( pAttacker )
     {
         bool bDirect = ( pSquadmate->FInViewCone( pAttacker ) &&
-                         ( ( pSquadmate->IsPlayer() && HasCondition( COND_SEE_PLAYER ) ) ||
-                           ( pSquadmate->MyNPCPointer() && pSquadmate->MyNPCPointer()->IsPlayerAlly() &&
-                             GetSenses()->DidSeeEntity( pSquadmate ) ) ) );
+                        ( ( pSquadmate->IsPlayer() && HasCondition( COND_SEE_PLAYER ) ) ||
+                            ( pSquadmate->MyNPCPointer() && pSquadmate->MyNPCPointer()->IsPlayerAlly() &&
+                            GetSenses()->DidSeeEntity( pSquadmate ) ) ) );
         if ( bDirect )
         {
             UpdateEnemyMemory( pAttacker, pAttacker->GetAbsOrigin(), pSquadmate );
@@ -3025,16 +3025,16 @@ bool CNPC_PlayerCompanion::OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, 
     {
         CAI_BaseNPC *pBlocker = pMoveGoal->directTrace.pObstruction->MyNPCPointer();
         if ( pBlocker && pBlocker->IsPlayerAlly() && !pBlocker->IsMoving() && !pBlocker->IsInAScript() &&
-             ( IsCurSchedule( SCHED_NEW_WEAPON ) ||
-               IsCurSchedule( SCHED_GET_HEALTHKIT ) ||
-               pBlocker->IsCurSchedule( SCHED_FAIL ) ||
-               ( IsInPlayerSquad() && !pBlocker->IsInPlayerSquad() ) ||
-               Classify() == CLASS_PLAYER_ALLY_VITAL ||
-               IsInAScript() ) )
+            ( IsCurSchedule( SCHED_NEW_WEAPON ) ||
+                IsCurSchedule( SCHED_GET_HEALTHKIT ) ||
+                pBlocker->IsCurSchedule( SCHED_FAIL ) ||
+                ( IsInPlayerSquad() && !pBlocker->IsInPlayerSquad() ) ||
+                Classify() == CLASS_PLAYER_ALLY_VITAL ||
+                IsInAScript() ) )
 
         {
             if ( pBlocker->ConditionInterruptsCurSchedule( COND_GIVE_WAY ) ||
-                 pBlocker->ConditionInterruptsCurSchedule( COND_PLAYER_PUSHING ) )
+                pBlocker->ConditionInterruptsCurSchedule( COND_PLAYER_PUSHING ) )
             {
                 // HACKHACK
                 pBlocker->GetMotor()->SetIdealYawToTarget( WorldSpaceCenter() );
@@ -3841,7 +3841,7 @@ AI_END_CUSTOM_NPC()
 
 class COverrideMoveCache : public IEntityListener
 {
-   public:
+    public:
     void LevelInitPreEntity( void )
     {
         CacheClassnames();
@@ -3942,7 +3942,7 @@ class COverrideMoveCache : public IEntityListener
         }
     }
 
-   private:
+    private:
     inline void CacheClassnames( void )
     {
         m_Classname[0] = AllocPooledString( "env_fire" );

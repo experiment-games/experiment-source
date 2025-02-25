@@ -39,7 +39,7 @@ class CColorPickerPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CColorPickerPanel, vgui::EditablePanel );
 
-   public:
+    public:
     // constructor
     CColorPickerPanel( vgui::Panel *pParent, const char *pName );
     void SetInitialColor( Color initialColor );
@@ -50,7 +50,7 @@ class CColorPickerPanel : public vgui::EditablePanel
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnMousePressed( vgui::MouseCode code );
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnRadioButtonChecked, "RadioButtonChecked", kv );
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
     MESSAGE_FUNC_PARAMS( OnHSVSelected, "HSVSelected", data );
@@ -94,7 +94,7 @@ class CColorPickerFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CColorPickerFrame, vgui::Frame );
 
-   public:
+    public:
     CColorPickerFrame( vgui::Panel *pParent, const char *pTitle );
     ~CColorPickerFrame();
 
@@ -110,7 +110,7 @@ class CColorPickerFrame : public vgui::Frame
     // Gets the initial color
     void GetInitialColor( Color *pColor );
 
-   private:
+    private:
     void CleanUpMessage();
 
     CColorPickerPanel *m_pPicker;
@@ -130,12 +130,12 @@ class CColorPickerButton : public vgui::Button
     NOTE: Sends ColorPickerPicked message when a color is picked
         color - picked color
         Sends ColorPickerPreview message when a color is previewed
-          color - current preview color
+        color - current preview color
         Sends ColorPickerCancelled message when the cancel button was hit
-          startingColor - color before the picking occurred
+        startingColor - color before the picking occurred
     */
 
-   public:
+    public:
     CColorPickerButton( vgui::Panel *pParent, const char *pName, vgui::Panel *pActionSignalTarget = NULL );
     ~CColorPickerButton();
 
@@ -149,7 +149,7 @@ class CColorPickerButton : public vgui::Button
         return m_CurrentColor;
     }
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnPicked, "ColorPickerPicked", data );
     MESSAGE_FUNC_PARAMS( OnPreview, "ColorPickerPreview", data );
     MESSAGE_FUNC( OnCancelled, "ColorPickerCancel" );

@@ -73,7 +73,7 @@ struct game_shadowcontrol_params_t : public hlshadowcontrol_params_t
 
 class CPhysCannonEffect
 {
-   public:
+    public:
     CPhysCannonEffect( void )
         : m_vecColor( 255, 255, 255 ), m_bVisible( true ), m_nAttachment( -1 ){};
 
@@ -124,7 +124,7 @@ class CPhysCannonEffect
         return m_Scale;
     }
 
-   private:
+    private:
     CInterpolatedValue m_Alpha;
     CInterpolatedValue m_Scale;
 
@@ -140,7 +140,7 @@ class CPhysCannonEffect
 
 class CPhysCannonEffectBeam
 {
-   public:
+    public:
     CPhysCannonEffectBeam( void )
         : m_pBeam( NULL ){};
 
@@ -215,7 +215,7 @@ class CPhysCannonEffectBeam
         m_pBeam->brightness = ( state ) ? 255.0f : 0.0f;
     }
 
-   private:
+    private:
     Beam_t *m_pBeam;
 };
 
@@ -224,7 +224,7 @@ class CPhysCannonEffectBeam
 //-----------------------------------------------------------------------------
 class CGrabController : public IMotionEvent
 {
-   public:
+    public:
     CGrabController( void );
     ~CGrabController( void );
     void AttachEntity( CBasePlayer *pPlayer, CBaseEntity *pEntity, IPhysicsObject *pPhys, bool bIsMegaPhysCannon, const Vector &vGrabPosition, bool bUseGrabPosition );
@@ -261,7 +261,7 @@ class CGrabController : public IMotionEvent
     QAngle m_attachedAnglesPlayerSpace;
     Vector m_attachedPositionObjectSpace;
 
-   private:
+    private:
     // Compute the max speed for an attached object
     void ComputeMaxSpeed( CBaseEntity *pEntity, IPhysicsObject *pPhysics );
 
@@ -298,7 +298,7 @@ class CGrabController;
 
 class CWeaponPhysCannon : public CBaseHL2MPCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponPhysCannon, CBaseHL2MPCombatWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -351,7 +351,7 @@ class CWeaponPhysCannon : public CBaseHL2MPCombatWeapon
 
     bool CanPickupObject( CBaseEntity *pTarget );
 
-   protected:
+    protected:
     enum FindObjectResult_t
     {
         OBJECT_FOUND = 0,
@@ -488,7 +488,7 @@ class CWeaponPhysCannon : public CBaseHL2MPCombatWeapon
     float m_flRepuntObjectTime;
     EHANDLE m_hLastPuntedObject;
 
-   private:
+    private:
     CWeaponPhysCannon( const CWeaponPhysCannon & );
 
 #ifndef CLIENT_DLL

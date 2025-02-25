@@ -18,7 +18,7 @@ ConVar hl2mp_bot_debug_health_scavenging( "hl2mp_bot_debug_ammo_scavenging", "0"
 //---------------------------------------------------------------------------------------------
 class CHealthFilter : public INextBotFilter
 {
-   public:
+    public:
     CHealthFilter( CHL2MPBot *me )
     {
         m_me = me;

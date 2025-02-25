@@ -45,7 +45,7 @@ const uint32 kWinsPerLevel = 10;
 //---------------------------------------------------------------------------------
 class CTFDuelSummary : public GCSDK::CProtoBufSharedObject< CSOTFDuelSummary, k_EEconTypeDuelSummary >
 {
-   public:
+    public:
 };
 
 #endif  // TFDUELSUMMARY_H

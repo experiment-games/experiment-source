@@ -51,7 +51,7 @@ class CWeaponStunStick : public CBaseHL2MPBludgeonWeapon
 {
     DECLARE_CLASS( CWeaponStunStick, CBaseHL2MPBludgeonWeapon );
 
-   public:
+    public:
     CWeaponStunStick();
 
     DECLARE_NETWORKCLASS();
@@ -106,7 +106,7 @@ class CWeaponStunStick : public CBaseHL2MPBludgeonWeapon
 
     CWeaponStunStick( const CWeaponStunStick & );
 
-   private:
+    private:
 #ifdef CLIENT_DLL
 
 #define NUM_BEAM_ATTACHMENTS 9
@@ -303,13 +303,13 @@ int CWeaponStunStick::WeaponMeleeAttack1Condition( float flDot, float flDist )
         }
     }
     /*
-      if( metropolice_move_and_melee.GetBool() )
-      {
+    if( metropolice_move_and_melee.GetBool() )
+    {
         if( pNPC->IsMoving() )
         {
-          flTargetDist *= 1.5f;
+        flTargetDist *= 1.5f;
         }
-      }
+    }
     */
     float flTargetDist = 48.0f;
     if ( ( flDist > flTargetDist ) && ( flExtrapolatedDist > flTargetDist ) )
@@ -696,9 +696,9 @@ bool C_WeaponStunStick::InSwing( void )
 
     // These are the swing activities this weapon can play
     if ( activity == GetPrimaryAttackActivity() ||
-         activity == GetSecondaryAttackActivity() ||
-         activity == ACT_VM_MISSCENTER ||
-         activity == ACT_VM_MISSCENTER2 )
+        activity == GetSecondaryAttackActivity() ||
+        activity == ACT_VM_MISSCENTER ||
+        activity == ACT_VM_MISSCENTER2 )
         return true;
 
     return false;

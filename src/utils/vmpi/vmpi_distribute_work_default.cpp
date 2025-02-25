@@ -35,17 +35,17 @@ void VMPI_SetWorkUnitsPartitionSize( int numWusToDeal )
 
 class CWorkUnitInfo
 {
-   public:
+    public:
     WUIndexType m_iWorkUnit;
 };
 
 class CWULookupInfo
 {
-   public:
+    public:
     CWULookupInfo()
         : m_iWUInfo( -1 ), m_iPartition( -222222 ), m_iPartitionListIndex( -1 ) {}
 
-   public:
+    public:
     int m_iWUInfo;              // Index into m_WUInfo.
     int m_iPartition;           // Which partition it's in.
     int m_iPartitionListIndex;  // Index into its partition's m_WUs.
@@ -53,10 +53,10 @@ class CWULookupInfo
 
 class CPartitionInfo
 {
-   public:
+    public:
     typedef CUtlLinkedList< WUIndexType, int > PartitionWUs;
 
-   public:
+    public:
     int m_iPartition;    // Index into m_Partitions.
     int m_iWorker;       // Who owns this partition?
     PartitionWUs m_WUs;  // Which WUs are in this partition?
@@ -65,10 +65,10 @@ class CPartitionInfo
 // Work units tracker to track consecutive finished blocks
 class CWorkUnitsTracker
 {
-   public:
+    public:
     CWorkUnitsTracker() {}
 
-   public:
+    public:
     // Initializes the unit tracker to receive numUnits in future
     void PrepareForWorkUnits( uint64 numUnits );
     // Signals that a work unit has been finished
@@ -78,7 +78,7 @@ class CWorkUnitsTracker
     // returns 0 to indicate that this work unit is a "faster processed future work unit".
     uint64 WorkUnitFinished( uint64 iWorkUnit );
 
-   public:
+    public:
     enum WUInfo
     {
         kNone,
@@ -176,7 +176,7 @@ static bool CompareSoonestWorkUnitSets( CPartitionInfo::PartitionWUs *const &x, 
 
 class CDistributor_DefaultMaster : public IWorkUnitDistributorMaster
 {
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -312,8 +312,8 @@ class CDistributor_DefaultMaster : public IWorkUnitDistributorMaster
             /*
             int nHalf = !!( ( k % 2 ) || ( k >= nCount - 1 ) );
             if ( k == 5 ) // no more than 2 jobs to branch off
-              arrNewParts[ 1 ] = arrNewParts[ 0 ];
-              */
+            arrNewParts[ 1 ] = arrNewParts[ 0 ];
+            */
             int nHalf = !( k < nCount / 2 );
             CPartitionInfo *pTo = arrNewParts[nHalf];
 
@@ -494,7 +494,7 @@ class CDistributor_DefaultMaster : public IWorkUnitDistributorMaster
         return false;
     }
 
-   private:
+    private:
     CDSInfo *m_pInfo;
 
     CUtlLinkedList< CPartitionInfo *, int > m_Partitions;
@@ -504,7 +504,7 @@ class CDistributor_DefaultMaster : public IWorkUnitDistributorMaster
 
 class CDistributor_DefaultWorker : public IWorkUnitDistributorWorker
 {
-   public:
+    public:
     virtual void Release()
     {
         delete this;

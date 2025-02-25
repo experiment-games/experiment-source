@@ -28,7 +28,7 @@ class CBaseParticleEntity : public CBaseEntity
                             public IParticleEffect
 #endif
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseParticleEntity, CBaseEntity );
     DECLARE_PREDICTABLE();
     DECLARE_NETWORKCLASS();
@@ -37,12 +37,12 @@ class CBaseParticleEntity : public CBaseEntity
     virtual ~CBaseParticleEntity();
 
     // CBaseEntity overrides.
-   public:
+    public:
 #if !defined( CLIENT_DLL )
     virtual int UpdateTransmitState( void );
 #else
     // Default IParticleEffect overrides.
-   public:
+    public:
     virtual bool ShouldSimulate() const
     {
         return m_bSimulate;
@@ -56,7 +56,7 @@ class CBaseParticleEntity : public CBaseEntity
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual const Vector &GetSortOrigin();
 
-   public:
+    public:
     CParticleEffectBinding m_ParticleEffect;
 #endif
 
@@ -73,19 +73,19 @@ class CBaseParticleEntity : public CBaseEntity
     int AllocateToolParticleEffectId();
     int GetToolParticleEffectId() const;
 
-   private:
+    private:
     int m_nToolParticleEffectId;
     bool m_bSimulate;
 #endif
 
-   public:
+    public:
     void FollowEntity( CBaseEntity *pEntity );
 
     // UTIL_Remove will be called after the specified amount of time.
     // If you pass in -1, the entity will never go away automatically.
     void SetLifetime( float lifetime );
 
-   private:
+    private:
     CBaseParticleEntity( const CBaseParticleEntity & );  // not defined, not accessible
 };
 

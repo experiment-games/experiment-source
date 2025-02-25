@@ -62,7 +62,7 @@ inline float SkewedRandomValue( void )
 //-----------------------------------------------------------------------
 class CMvMBotUpgrade
 {
-   public:
+    public:
     char szAttrib[MAX_ATTRIBUTE_DESCRIPTION_LENGTH];  // Debug
     int iAttribIndex;
     float flValue;
@@ -75,7 +75,7 @@ class CMvMBotUpgrade
 //-----------------------------------------------------------------------
 class CTFNavAreaIncursionLess
 {
-   public:
+    public:
     bool Less( const CTFNavArea *a, const CTFNavArea *b, void *pCtx )
     {
         return a->GetIncursionDistance( TF_TEAM_BLUE ) < b->GetIncursionDistance( TF_TEAM_BLUE );
@@ -88,7 +88,7 @@ class CTFNavAreaIncursionLess
 // If 'result' is non-NULL, spawned entities are added to this vector.
 class IPopulationSpawner
 {
-   public:
+    public:
     // We need a virtual destructor or else the derived-class destructors won't be called,
     // leading to memory leaks. Found via clang warning.
     virtual ~IPopulationSpawner()
@@ -140,7 +140,7 @@ class IPopulationSpawner
 
     static IPopulationSpawner *ParseSpawner( IPopulator *populator, KeyValues *data );
 
-   protected:
+    protected:
     IPopulator *m_populator;
 };
 
@@ -149,7 +149,7 @@ class IPopulationSpawner
 // vector at random and invokes it to spawn entities.
 class CRandomChoiceSpawner : public IPopulationSpawner
 {
-   public:
+    public:
     CRandomChoiceSpawner( IPopulator *populator );
     virtual ~CRandomChoiceSpawner();
 
@@ -177,7 +177,7 @@ class CRandomChoiceSpawner : public IPopulationSpawner
 //-----------------------------------------------------------------------
 class CTFBotSpawner : public IPopulationSpawner
 {
-   public:
+    public:
     CTFBotSpawner( IPopulator *populator );
     virtual ~CTFBotSpawner() {}
 
@@ -211,7 +211,7 @@ class CTFBotSpawner : public IPopulationSpawner
 //-----------------------------------------------------------------------
 class CTankSpawner : public IPopulationSpawner
 {
-   public:
+    public:
     CTankSpawner( IPopulator *populator );
 
     virtual string_t GetClassIcon( int nSpawnNum = -1 )
@@ -254,7 +254,7 @@ class CTankSpawner : public IPopulationSpawner
 //-----------------------------------------------------------------------
 class CSentryGunSpawner : public IPopulationSpawner
 {
-   public:
+    public:
     CSentryGunSpawner( IPopulator *populator );
 
     virtual bool Parse( KeyValues *data );
@@ -271,7 +271,7 @@ class CSentryGunSpawner : public IPopulationSpawner
 //-----------------------------------------------------------------------
 class CSquadSpawner : public IPopulationSpawner
 {
-   public:
+    public:
     CSquadSpawner( IPopulator *populator );
     virtual ~CSquadSpawner();
 
@@ -299,7 +299,7 @@ class CSquadSpawner : public IPopulationSpawner
 //-----------------------------------------------------------------------
 class CMobSpawner : public IPopulationSpawner
 {
-   public:
+    public:
     CMobSpawner( IPopulator *populator );
     virtual ~CMobSpawner();
 
@@ -310,7 +310,7 @@ class CMobSpawner : public IPopulationSpawner
     int m_count;
     IPopulationSpawner *m_spawner;
 
-   private:
+    private:
     // TODO: Rethink this, since spawners are one-shot, and mobs need to spawn over time...
     CountdownTimer m_mobSpawnTimer;
     CountdownTimer m_mobLifetimeTimer;

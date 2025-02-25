@@ -25,7 +25,7 @@
 
 class TrailParticle : public Particle
 {
-   public:
+    public:
     Vector m_vecVelocity;
     color32 m_color;     // Particle color
     float m_flDieTime;   // How long it lives for.
@@ -73,7 +73,7 @@ class CTrailParticles : public CSimpleEmitter
 {
     DECLARE_CLASS( CTrailParticles, CSimpleEmitter );
 
-   public:
+    public:
     CTrailParticles( const char *pDebugName );
 
     static CTrailParticles *Create( const char *pDebugName )
@@ -110,11 +110,11 @@ class CTrailParticles : public CSimpleEmitter
 
     CParticleCollision m_ParticleCollision;
 
-   protected:
+    protected:
     int m_fFlags;
     float m_flVelocityDampen;
 
-   private:
+    private:
     CTrailParticles( const CTrailParticles & );  // not defined, not accessible
 };
 
@@ -126,7 +126,7 @@ class CSphereTrails : public CSimpleEmitter
 {
     DECLARE_CLASS( CSphereTrails, CSimpleEmitter );
 
-   public:
+    public:
     CSphereTrails( const char *pDebugName, const Vector &origin, float innerRadius, float outerRadius, float speed, int entityIndex, int attachment );
 
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
@@ -149,7 +149,7 @@ class CSphereTrails : public CSimpleEmitter
     Vector m_boneOrigin;
     float m_dieTime;
 
-   private:
+    private:
     CSphereTrails( const CSphereTrails & );  // not defined, not accessible
 };
 
@@ -158,14 +158,14 @@ class CSimpleGlowEmitter : public CSimpleEmitter
 {
     DECLARE_CLASS( CSimpleGlowEmitter, CSimpleEmitter );
 
-   public:
+    public:
     CSimpleGlowEmitter( const char *pDebugName, const Vector &sortOrigin, float flDeathTime );
     static CSimpleGlowEmitter *Create( const char *pDebugName, const Vector &sortOrigin, float flDeathTime );
 
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
 
-   protected:
+    protected:
     bool WasTestedInView( unsigned char viewMask );
     bool IsVisibleInView( unsigned char viewMask );
     void SetTestedInView( unsigned char viewMask, bool bTested );
@@ -176,11 +176,11 @@ class CSimpleGlowEmitter : public CSimpleEmitter
     float m_startTime;
     pixelvis_handle_t m_queryHandle;
 
-   private:
+    private:
     unsigned char m_wasTested;
     unsigned char m_isVisible;
 
-   private:
+    private:
     CSimpleGlowEmitter( const CSimpleGlowEmitter & );  // not defined, not accessible
 };
 

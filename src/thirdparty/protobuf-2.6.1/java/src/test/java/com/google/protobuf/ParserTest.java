@@ -58,14 +58,14 @@ import java.io.InputStream;
 public class ParserTest extends TestCase {
   public void testGeneratedMessageParserSingleton() throws Exception {
     for (int i = 0; i < 10; i++) {
-      assertEquals(TestAllTypes.PARSER,
-                   TestUtil.getAllSet().getParserForType());
+    assertEquals(TestAllTypes.PARSER,
+                    TestUtil.getAllSet().getParserForType());
     }
   }
 
   private void assertRoundTripEquals(MessageLite message,
-                                     ExtensionRegistryLite registry)
-      throws Exception {
+                                    ExtensionRegistryLite registry)
+    throws Exception {
     final byte[] data = message.toByteArray();
     final int offset = 20;
     final int length = data.length;
@@ -104,12 +104,12 @@ public class ParserTest extends TestCase {
   }
 
   private void assertMessageEquals(
-      MessageLite expected, MessageLite actual)
-      throws Exception {
+    MessageLite expected, MessageLite actual)
+    throws Exception {
     if (expected instanceof Message) {
-      assertEquals(expected, actual);
+    assertEquals(expected, actual);
     } else {
-      assertEquals(expected.toByteString(), actual.toByteString());
+    assertEquals(expected.toByteString(), actual.toByteString());
     }
   }
 
@@ -130,7 +130,7 @@ public class ParserTest extends TestCase {
   }
 
   private <T extends MessageLite> void assertParsePartial(
-      Parser<T> parser, T partialMessage) throws Exception {
+    Parser<T> parser, T partialMessage) throws Exception {
     final String errorString =
         "Should throw exceptions when the parsed message isn't initialized.";
 
@@ -146,51 +146,51 @@ public class ParserTest extends TestCase {
 
     // parseFrom(ByteArray)
     try {
-      parser.parseFrom(partialMessage.toByteArray());
-      fail(errorString);
+    parser.parseFrom(partialMessage.toByteArray());
+    fail(errorString);
     } catch (InvalidProtocolBufferException e) {
-      // pass.
+    // pass.
     }
 
     // parseFrom(ByteString)
     try {
-      parser.parseFrom(partialMessage.toByteString());
-      fail(errorString);
+    parser.parseFrom(partialMessage.toByteString());
+    fail(errorString);
     } catch (InvalidProtocolBufferException e) {
-      // pass.
+    // pass.
     }
 
     // parseFrom(InputStream)
     try {
-      parser.parseFrom(new ByteArrayInputStream(partialMessage.toByteArray()));
-      fail(errorString);
+    parser.parseFrom(new ByteArrayInputStream(partialMessage.toByteArray()));
+    fail(errorString);
     } catch (IOException e) {
-      // pass.
+    // pass.
     }
 
     // parseFrom(CodedInputStream)
     try {
-      parser.parseFrom(CodedInputStream.newInstance(
-          partialMessage.toByteArray()));
-      fail(errorString);
+    parser.parseFrom(CodedInputStream.newInstance(
+        partialMessage.toByteArray()));
+    fail(errorString);
     } catch (IOException e) {
-      // pass.
+    // pass.
     }
   }
 
   public void testParseExtensions() throws Exception {
     assertRoundTripEquals(TestUtil.getAllExtensionsSet(),
-                          TestUtil.getExtensionRegistry());
+                        TestUtil.getExtensionRegistry());
     assertRoundTripEquals(TestUtil.getAllLiteExtensionsSet(),
-                          TestUtil.getExtensionRegistryLite());
+                        TestUtil.getExtensionRegistryLite());
   }
 
   public void testParsePacked() throws Exception {
     assertRoundTripEquals(TestUtil.getPackedSet());
     assertRoundTripEquals(TestUtil.getPackedExtensionsSet(),
-                          TestUtil.getExtensionRegistry());
+                        TestUtil.getExtensionRegistry());
     assertRoundTripEquals(TestUtil.getLitePackedExtensionsSet(),
-                          TestUtil.getExtensionRegistryLite());
+                        TestUtil.getExtensionRegistryLite());
   }
 
   public void testParseDelimitedTo() throws Exception {
@@ -240,7 +240,7 @@ public class ParserTest extends TestCase {
 
   /** Helper method for {@link #testParsingMerge()}.*/
   private void assertMessageMerged(TestAllTypes allTypes)
-      throws Exception {
+    throws Exception {
     assertEquals(3, allTypes.getOptionalInt32());
     assertEquals(2, allTypes.getOptionalInt64());
     assertEquals("hello", allTypes.getOptionalString());
@@ -248,7 +248,7 @@ public class ParserTest extends TestCase {
 
   /** Helper method for {@link #testParsingMergeLite()}.*/
   private void assertMessageMerged(TestAllTypesLite allTypes)
-      throws Exception {
+    throws Exception {
     assertEquals(3, allTypes.getOptionalInt32());
     assertEquals(2, allTypes.getOptionalInt64());
     assertEquals("hello", allTypes.getOptionalString());

@@ -25,7 +25,7 @@ class CHL2MP_Player;
 //=============================================================================
 class CHL2MPPlayerStateInfo
 {
-   public:
+    public:
     HL2MPPlayerState m_iPlayerState;
     const char *m_pStateName;
 
@@ -37,7 +37,7 @@ class CHL2MPPlayerStateInfo
 
 class CHL2MP_Player : public CHL2_Player
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MP_Player, CHL2_Player );
 
     CHL2MP_Player();
@@ -154,7 +154,7 @@ class CHL2MP_Player : public CHL2_Player
     bool IsThreatAimingTowardMe( CBaseEntity *threat, float cosTolerance = 0.8f ) const;
     bool IsThreatFiringAtMe( CBaseEntity *threat ) const;
 
-   private:
+    private:
     CNetworkQAngle( m_angEyeAngles );
     CPlayerAnimState m_PlayerAnimState;
 

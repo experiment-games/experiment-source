@@ -84,7 +84,7 @@ struct ragdollparams_t
 //-----------------------------------------------------------------------------
 class CRagdollLRURetirement : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CRagdollLRURetirement( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -107,7 +107,7 @@ class CRagdollLRURetirement : public CAutoGameSystemPerFrame
         return bOnlySimulatingRagdolls ? m_iSimulatedRagdollCount : m_iRagdollCount;
     }
 
-   private:
+    private:
     typedef CHandle< CBaseAnimating > CRagdollHandle;
     CUtlLinkedList< CRagdollHandle > m_LRU;
     CUtlLinkedList< CRagdollHandle > m_LRUImportantRagdolls;
@@ -122,7 +122,7 @@ extern CRagdollLRURetirement s_RagdollLRU;
 // Manages ragdolls fading for the low violence versions
 class CRagdollLowViolenceManager
 {
-   public:
+    public:
     CRagdollLowViolenceManager()
     {
         m_bLowViolence = false;
@@ -135,7 +135,7 @@ class CRagdollLowViolenceManager
         return m_bLowViolence;
     }
 
-   private:
+    private:
     bool m_bLowViolence;
 };
 

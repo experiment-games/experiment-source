@@ -59,7 +59,7 @@ class Tokenizer;
 // to stdout.
 class LIBPROTOBUF_EXPORT ErrorCollector
 {
-   public:
+    public:
     inline ErrorCollector() {}
     virtual ~ErrorCollector();
 
@@ -73,7 +73,7 @@ class LIBPROTOBUF_EXPORT ErrorCollector
     // 1 to each before printing them.
     virtual void AddWarning( int /* line */, int /* column */, const string& /* message */ ) {}
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ErrorCollector );
 };
 
@@ -85,7 +85,7 @@ class LIBPROTOBUF_EXPORT ErrorCollector
 // calling set_comment_style().
 class LIBPROTOBUF_EXPORT Tokenizer
 {
-   public:
+    public:
     // Construct a Tokenizer that reads and tokenizes text from the given
     // input stream and writes errors to the given error_collector.
     // The caller keeps ownership of input and error_collector.
@@ -98,24 +98,24 @@ class LIBPROTOBUF_EXPORT Tokenizer
         TYPE_END,    // End of input reached.  "text" is empty.
 
         TYPE_IDENTIFIER,  // A sequence of letters, digits, and underscores, not
-                          // starting with a digit.  It is an error for a number
-                          // to be followed by an identifier with no space in
-                          // between.
+                        // starting with a digit.  It is an error for a number
+                        // to be followed by an identifier with no space in
+                        // between.
         TYPE_INTEGER,     // A sequence of digits representing an integer.  Normally
-                          // the digits are decimal, but a prefix of "0x" indicates
-                          // a hex number and a leading zero indicates octal, just
-                          // like with C numeric literals.  A leading negative sign
-                          // is NOT included in the token; it's up to the parser to
-                          // interpret the unary minus operator on its own.
+                        // the digits are decimal, but a prefix of "0x" indicates
+                        // a hex number and a leading zero indicates octal, just
+                        // like with C numeric literals.  A leading negative sign
+                        // is NOT included in the token; it's up to the parser to
+                        // interpret the unary minus operator on its own.
         TYPE_FLOAT,       // A floating point literal, with a fractional part and/or
-                          // an exponent.  Always in decimal.  Again, never
-                          // negative.
+                        // an exponent.  Always in decimal.  Again, never
+                        // negative.
         TYPE_STRING,      // A quoted sequence of escaped characters.  Either single
-                          // or double quotes can be used, but they must match.
-                          // A string literal cannot cross a line break.
+                        // or double quotes can be used, but they must match.
+                        // A string literal cannot cross a line break.
         TYPE_SYMBOL,      // Any other printable character, like '!' or '+'.
-                          // Symbols are always a single character, so "!+$%" is
-                          // four tokens.
+                        // Symbols are always a single character, so "!+$%" is
+                        // four tokens.
     };
 
     // Structure representing a token read from the token stream.
@@ -123,8 +123,8 @@ class LIBPROTOBUF_EXPORT Tokenizer
     {
         TokenType type;
         string text;  // The exact text of the token as it appeared in
-                      // the input.  e.g. tokens of TYPE_STRING will still
-                      // be escaped and in quotes.
+                    // the input.  e.g. tokens of TYPE_STRING will still
+                    // be escaped and in quotes.
 
         // "line" and "column" specify the position of the first character of
         // the token within the input stream.  They are zero-based.
@@ -189,8 +189,8 @@ class LIBPROTOBUF_EXPORT Tokenizer
     //    * grault. */
     //   optional int32 grault = 6;
     bool NextWithComments( string* prev_trailing_comments,
-                           vector< string >* detached_comments,
-                           string* next_leading_comments );
+                            vector< string >* detached_comments,
+                            string* next_leading_comments );
 
     // Parse helpers ---------------------------------------------------
 
@@ -259,7 +259,7 @@ class LIBPROTOBUF_EXPORT Tokenizer
     static bool IsIdentifier( const string& text );
 
     // -----------------------------------------------------------------
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( Tokenizer );
 
     Token current_;   // Returned by current().

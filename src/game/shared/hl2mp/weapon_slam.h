@@ -30,7 +30,7 @@ enum
 
 class CWeapon_SLAM : public CBaseHL2MPCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeapon_SLAM, CBaseHL2MPCombatWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -84,7 +84,7 @@ class CWeapon_SLAM : public CBaseHL2MPCombatWeapon
     DECLARE_DATADESC();
 #endif
 
-   private:
+    private:
     CWeapon_SLAM( const CWeapon_SLAM & );
 
     CUtlVector< CBaseEntity * > m_SatchelVector;

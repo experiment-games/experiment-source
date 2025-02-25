@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2008, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. =======
 //
 // Purpose:
 //
@@ -117,8 +117,8 @@ inline ESteamAPIInitResult SteamGameServer_InitEx( uint32 unIP, uint16 usGamePor
         STEAMUTILS_INTERFACE_VERSION "\0" STEAMNETWORKINGUTILS_INTERFACE_VERSION "\0"
 
         STEAMGAMESERVER_INTERFACE_VERSION "\0" STEAMGAMESERVERSTATS_INTERFACE_VERSION "\0" STEAMHTTP_INTERFACE_VERSION "\0" STEAMINVENTORY_INTERFACE_VERSION "\0" STEAMNETWORKING_INTERFACE_VERSION "\0" STEAMNETWORKINGMESSAGES_INTERFACE_VERSION "\0" STEAMNETWORKINGSOCKETS_INTERFACE_VERSION "\0" STEAMUGC_INTERFACE_VERSION
-                                     "\0"
-                                     "\0";
+                                    "\0"
+                                    "\0";
     return SteamInternal_GameServer_Init_V2( unIP, usGamePort, usQueryPort, eServerMode, pchVersionString, pszInternalCheckInterfaceVersions, pOutErrMsg );
 }
 inline void SteamGameServer_ReleaseCurrentThreadMemory()

@@ -10,20 +10,20 @@ Compiling and Installing
 2) Choose "Debug" or "Release" configuration as desired.*
 3) From the Build menu, choose "Build Solution".  Wait for compiling to finish.
 4) From a command shell, run tests.exe and lite-test.exe and check that all
-   tests pass.
+	tests pass.
 5) Run extract_includes.bat to copy all the public headers into a separate
-   "include" directory (under the top-level package directory).
+	"include" directory (under the top-level package directory).
 6) Copy the contents of the include directory to wherever you want to put
-   headers.
+	headers.
 7) Copy protoc.exe wherever you put build tools (probably somewhere in your
-   PATH).
+	PATH).
 8) Copy libprotobuf.lib, libprotobuf-lite.lib, and libprotoc.lib wherever you
-   put libraries.
+	put libraries.
 
 * To avoid conflicts between the MSVC debug and release runtime libraries, when
-  compiling a debug build of your application, you may need to link against a
-  debug build of libprotobuf.lib.  Similarly, release builds should link against
-  release libs.
+	compiling a debug build of your application, you may need to link against a
+	debug build of libprotobuf.lib.  Similarly, release builds should link against
+	release libs.
 
 DLLs vs. static linking
 =======================
@@ -35,15 +35,15 @@ recommended that you use static linkage only.  However, it is possible to
 build libprotobuf and libprotoc as DLLs if you really want.  To do this,
 do the following:
 
-  1) Open protobuf.sln in MSVC.
-  2) For each of the projects libprotobuf, libprotobuf-lite, and libprotoc, do
-     the following:
-    2a) Right-click the project and choose "properties".
-    2b) From the side bar, choose "General", under "Configuration Properties".
-    2c) Change the "Configuration Type" to "Dynamic Library (.dll)".
-    2d) From the side bar, choose "Preprocessor", under "C/C++".
-    2e) Add PROTOBUF_USE_DLLS to the list of preprocessor defines.
-  3) When compiling your project, make sure to #define PROTOBUF_USE_DLLS.
+	1) Open protobuf.sln in MSVC.
+	2) For each of the projects libprotobuf, libprotobuf-lite, and libprotoc, do
+		the following:
+	2a) Right-click the project and choose "properties".
+	2b) From the side bar, choose "General", under "Configuration Properties".
+	2c) Change the "Configuration Type" to "Dynamic Library (.dll)".
+	2d) From the side bar, choose "Preprocessor", under "C/C++".
+	2e) Add PROTOBUF_USE_DLLS to the list of preprocessor defines.
+	3) When compiling your project, make sure to #define PROTOBUF_USE_DLLS.
 
 When distributing your software to end users, we strongly recommend that you
 do NOT install libprotobuf.dll or libprotoc.dll to any shared location.
@@ -66,21 +66,21 @@ additional steps:
 
 1) Obtain a copy of the zlib library.  The pre-compiled DLL at zlib.net works.
 2) Make sure zlib's two headers are in your include path and that the .lib file
-   is in your library path.  You could place all three files directly into the
-   vsproject directory to compile libprotobuf, but they need to be visible to
-   your own project as well, so you should probably just put them into the
-   VC shared icnlude and library directories.
+	is in your library path.  You could place all three files directly into the
+	vsproject directory to compile libprotobuf, but they need to be visible to
+	your own project as well, so you should probably just put them into the
+	VC shared icnlude and library directories.
 3) Right-click on the "tests" project and choose "properties".  Navigate the
-   sidebar to "Configuration Properties" -> "Linker" -> "Input".
+	sidebar to "Configuration Properties" -> "Linker" -> "Input".
 4) Under "Additional Dependencies", add the name of the zlib .lib file (e.g.
-   zdll.lib).  Make sure to update both the Debug and Release configurations.
+	zdll.lib).  Make sure to update both the Debug and Release configurations.
 5) If you are compiling libprotobuf and libprotoc as DLLs (see previous
-   section), repeat steps 2 and 3 for the libprotobuf and libprotoc projects.
-   If you are compiling them as static libraries, then you will need to link
-   against the zlib library directly from your own app.
+	section), repeat steps 2 and 3 for the libprotobuf and libprotoc projects.
+	If you are compiling them as static libraries, then you will need to link
+	against the zlib library directly from your own app.
 6) Edit config.h (in the vsprojects directory) and un-comment the line that
-   #defines HAVE_ZLIB.  (Or, alternatively, define this macro via the project
-   settings.)
+	#defines HAVE_ZLIB.  (Or, alternatively, define this macro via the project
+	settings.)
 
 Notes on Compiler Warnings
 ==========================
@@ -93,7 +93,7 @@ C4018 - 'expression' : signed/unsigned mismatch
 C4146 - unary minus operator applied to unsigned type, result still unsigned
 C4244 - Conversion from 'type1' to 'type2', possible loss of data.
 C4251 - 'identifier' : class 'type' needs to have dll-interface to be used by
-        clients of class 'type2'
+			clients of class 'type2'
 C4267 - Conversion from 'size_t' to 'type', possible loss of data.
 C4305 - 'identifier' : truncation from 'type1' to 'type2'
 C4355 - 'this' : used in base member initializer list

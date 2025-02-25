@@ -53,13 +53,13 @@ class CJobMgr;
 //-----------------------------------------------------------------------------
 class CWorkItem : public CRefCount
 {
-   public:
+    public:
     CWorkItem()
         : m_JobID( k_GIDNil ),
-          m_bRunning( false ),
-          m_bResubmit( false ),
-          m_bCanceled( false ),
-          m_ulSequenceNumber( 0 )
+        m_bRunning( false ),
+        m_bResubmit( false ),
+        m_bCanceled( false ),
+        m_ulSequenceNumber( 0 )
     {
         m_jobtimeTimeout.SetLTime( 0 );
         m_jobtimeQueued.SetToJobTime();
@@ -67,10 +67,10 @@ class CWorkItem : public CRefCount
 
     CWorkItem( JobID_t jobID )
         : m_JobID( jobID ),
-          m_bRunning( false ),
-          m_bResubmit( false ),
-          m_bCanceled( false ),
-          m_ulSequenceNumber( 0 )
+        m_bRunning( false ),
+        m_bResubmit( false ),
+        m_bCanceled( false ),
+        m_ulSequenceNumber( 0 )
     {
         m_jobtimeTimeout.SetLTime( 0 );
         m_jobtimeQueued.SetToJobTime();
@@ -78,10 +78,10 @@ class CWorkItem : public CRefCount
 
     CWorkItem( JobID_t jobID, int64 cTimeoutMicroseconds )
         : m_JobID( jobID ),
-          m_bRunning( false ),
-          m_bResubmit( false ),
-          m_bCanceled( false ),
-          m_ulSequenceNumber( 0 )
+        m_bRunning( false ),
+        m_bResubmit( false ),
+        m_bCanceled( false ),
+        m_ulSequenceNumber( 0 )
     {
         SetPreExecuteTimeout( cTimeoutMicroseconds );
         m_jobtimeQueued.SetToJobTime();
@@ -158,7 +158,7 @@ class CWorkItem : public CRefCount
     virtual void Validate( CValidator &validator, const char *pchName ) {}  // Validate our internal structures
 #endif
 
-   protected:
+    protected:
     // note: destructor is private.  This is a ref-counted object, private destructor ensures callers can't accidentally delete
     // directly, or declare on stack
     virtual ~CWorkItem() {}
@@ -168,7 +168,7 @@ class CWorkItem : public CRefCount
     uint64 m_ulSequenceNumber;  // Sequence number for the work item, used when enforcing output ordering as matching input order
     CCycleCount m_CycleCount;   // A record of how long it took to execute this particular work item !
 
-   private:
+    private:
     bool m_bResubmit;           // true if the item should be resubmitted after last run
     volatile bool m_bRunning;   // true if the work item is running right now
     bool m_bCanceled;           // true if the work was canceled due to timeout
@@ -185,7 +185,7 @@ class CWorkThreadPool;
 //-----------------------------------------------------------------------------
 class CWorkThread : public CThread
 {
-   public:
+    public:
     CWorkThread( CWorkThreadPool *pThreadPool );
     CWorkThread( CWorkThreadPool *pThreadPool, const char *pszName );
 
@@ -199,7 +199,7 @@ class CWorkThread : public CThread
     {
     }
 
-   protected:
+    protected:
     CWorkThreadPool *m_pThreadPool;  // parent pool
     volatile bool m_bExitThread;     // set by CWorkThreadPool::StopWorkerThreads and possibly by subclasses of CWorkThread
     volatile bool m_bFinished;       // set by CWorkThread::Run [note: must still check IsThreadRunning, and/or call Join]
@@ -207,7 +207,7 @@ class CWorkThread : public CThread
     virtual void OnExit() {}
 
 #ifdef DBGFLAG_VALIDATE
-   public:
+    public:
     virtual void Validate( CValidator &validator, const char *pchName )
     {
         VALIDATE_SCOPE();
@@ -222,7 +222,7 @@ class CWorkThread : public CThread
 //-----------------------------------------------------------------------------
 class IWorkThreadFactory
 {
-   public:
+    public:
     virtual CWorkThread *CreateWorkerThread( class CWorkThreadPool *pWorkThreadPool ) = 0;
 };
 
@@ -232,7 +232,7 @@ class IWorkThreadFactory
 template < class T >
 class CWorkThreadFactory : public IWorkThreadFactory
 {
-   public:
+    public:
     virtual CWorkThread *CreateWorkerThread( class CWorkThreadPool *pWorkThreadPool )
     {
         return new T( pWorkThreadPool );
@@ -245,7 +245,7 @@ class CWorkThreadFactory : public IWorkThreadFactory
 //-----------------------------------------------------------------------------
 class IWorkThreadPoolSignal
 {
-   public:
+    public:
     virtual void Signal() = 0;
 };
 
@@ -256,7 +256,7 @@ class CWorkThreadPool
 {
     friend class CWorkThread;
 
-   public:
+    public:
     static void SetWorkItemCompletedSignal( IWorkThreadPoolSignal *pObject )
     {
         sm_pWorkItemsCompletedSignal = pObject;
@@ -331,15 +331,15 @@ class CWorkThreadPool
     }
 
 #if 0
-	uint64 GetAveExecutionTime() const
-	{
-		return m_StatExecutionTime.GetUlAvg();
-	}
-	uint64 GetAveWaitTime() const
-	{
-		return m_StatWaitTime.GetUlAvg();
-	}
-	uint64 GetCurrentBacklogTime() const;
+    uint64 GetAveExecutionTime() const
+    {
+        return m_StatExecutionTime.GetUlAvg();
+    }
+    uint64 GetAveWaitTime() const
+    {
+        return m_StatWaitTime.GetUlAvg();
+    }
+    uint64 GetCurrentBacklogTime() const;
 #endif
 
     int CountCompletedSuccess() const
@@ -378,7 +378,7 @@ class CWorkThreadPool
         return m_WorkThreads[iIndex];
     }
 
-   protected:
+    protected:
     // STATICS
     static IWorkThreadPoolSignal *sm_pWorkItemsCompletedSignal;
 
@@ -434,13 +434,13 @@ class CWorkThreadPool
     int m_cFailures;
     int m_cRetries;
 #if 0
-	CStat m_StatExecutionTime;
-	CStat m_StatWaitTime;
+    CStat m_StatExecutionTime;
+    CStat m_StatWaitTime;
 #endif
     CLimitTimer m_LimitTimerCreateNewThreads;
 
 #ifdef DBGFLAG_VALIDATE
-   public:
+    public:
     void Validate( CValidator &validator, const char *pchName );
 #endif
 };

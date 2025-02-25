@@ -20,11 +20,11 @@ DECLARE_BUILD_FACTORY( CSlideshowPanel );
 
 CCrossfadableImagePanel::CCrossfadableImagePanel( Panel *pParent, const char *pName )
     : EditablePanel( pParent, pName ),
-      m_iSrcImg( 0 ),
-      m_flBlend( 0.0f ),
-      m_flBlendTime( 0.0f ),
-      m_flStartBlendTime( 0.0f ),
-      m_bBlending( false )
+    m_iSrcImg( 0 ),
+    m_flBlend( 0.0f ),
+    m_flBlendTime( 0.0f ),
+    m_flStartBlendTime( 0.0f ),
+    m_bBlending( false )
 {
     m_pImages[0] = new ImagePanel( this, "Image0" );
     m_pImages[1] = new ImagePanel( this, "Image1" );
@@ -189,9 +189,9 @@ void CCrossfadableImagePanel::OnTick()
 
 CSlideshowPanel::CSlideshowPanel( Panel *pParent, const char *pName )
     : EditablePanel( pParent, pName ),
-      m_iCurImg( 0 ),
-      m_flInterval( 3.0f ),
-      m_flTransitionLength( 0.5f )
+    m_iCurImg( 0 ),
+    m_flInterval( 3.0f ),
+    m_flTransitionLength( 0.5f )
 {
     m_pImagePanel = new CCrossfadableImagePanel( this, "CrossfadableImage" );
 

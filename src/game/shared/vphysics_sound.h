@@ -62,7 +62,7 @@ void PlayImpactSounds( soundlist_t &list )
             if ( pHit && psurf->sounds.impactSoft )
             {
                 if ( pHit->audio.hardnessFactor < psurf->audio.hardThreshold ||
-                     ( psurf->audio.hardVelocityThreshold > 0 && psurf->audio.hardVelocityThreshold > sound.impactSpeed ) )
+                    ( psurf->audio.hardVelocityThreshold > 0 && psurf->audio.hardVelocityThreshold > sound.impactSpeed ) )
                 {
                     soundName = psurf->sounds.impactSoft;
                 }

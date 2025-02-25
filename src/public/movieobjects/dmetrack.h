@@ -33,7 +33,7 @@ class CDmeTrack : public CDmElement
 {
     DEFINE_ELEMENT( CDmeTrack, CDmElement );
 
-   public:
+    public:
     // Methods of IDmElement
     virtual void OnAttributeChanged( CDmAttribute *pAttribute );
 
@@ -119,10 +119,10 @@ class CDmeTrack : public CDmElement
     // Fills all gaps in a film track with slugs
     void FillAllGapsWithSlugs( const char *pSlugName, DmeTime_t startTime, DmeTime_t endTime );
 
-   private:
+    private:
     class CSuppressAutoFixup
     {
-       public:
+        public:
         CSuppressAutoFixup( CDmeTrack *pTrack, int nFlags )
             : m_pTrack( pTrack ), m_nFlags( nFlags )
         {
@@ -134,7 +134,7 @@ class CDmeTrack : public CDmElement
             m_pTrack->m_Flags.ClearFlag( m_nFlags );
         }
 
-       private:
+        private:
         CDmeTrack *m_pTrack;
         int m_nFlags;
     };

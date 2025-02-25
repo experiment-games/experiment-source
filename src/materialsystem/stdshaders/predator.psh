@@ -5,7 +5,3 @@ tex t0 ; refraction
 
 
 mul r0, t0, c2
-
-
-
-

@@ -170,7 +170,7 @@ struct IsValidAttributeValueType : public IsValidAttributeValueTypeImpl< typenam
 //-----------------------------------------------------------------------------
 class IEconItemAttributeIterator
 {
-   public:
+    public:
     virtual ~IEconItemAttributeIterator() {}
 
     // Returns whether to continue iteration after this element.
@@ -233,7 +233,7 @@ class CEconItemSpecificAttributeIterator : public IEconItemAttributeIterator
 //-----------------------------------------------------------------------------
 class IEconItemUntypedAttributeIterator : public IEconItemAttributeIterator
 {
-   public:
+    public:
     virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t ) OVERRIDE
     {
         return OnIterateAttributeValueUntyped( pAttrDef );
@@ -269,7 +269,7 @@ class IEconItemUntypedAttributeIterator : public IEconItemAttributeIterator
         return OnIterateAttributeValueUntyped( pAttrDef );
     }
 
-   private:
+    private:
     virtual bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef ) = 0;
 };
 
@@ -280,7 +280,7 @@ class IEconItemUntypedAttributeIterator : public IEconItemAttributeIterator
 //-----------------------------------------------------------------------------
 class CAttributeIterator_HasAttribute : public IEconItemUntypedAttributeIterator
 {
-   public:
+    public:
     CAttributeIterator_HasAttribute( const CEconItemAttributeDefinition *pAttrDef )
         : m_pAttrDef( pAttrDef ), m_bFound( false )
     {
@@ -292,7 +292,7 @@ class CAttributeIterator_HasAttribute : public IEconItemUntypedAttributeIterator
         return m_bFound;
     }
 
-   private:
+    private:
     bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef ) OVERRIDE
     {
         // We don't assert because we might be reusing the same iterator between calls.
@@ -306,7 +306,7 @@ class CAttributeIterator_HasAttribute : public IEconItemUntypedAttributeIterator
         return !m_bFound;
     }
 
-   private:
+    private:
     const CEconItemAttributeDefinition *m_pAttrDef;
     bool m_bFound;
 };
@@ -335,7 +335,7 @@ class CAttributeIterator_HasAttribute : public IEconItemUntypedAttributeIterator
 template < typename TActualTypeInMemory, typename TTreatAsThisType = TActualTypeInMemory >
 class CAttributeIterator_GetTypedAttributeValue : public IEconItemAttributeIterator
 {
-   public:
+    public:
     CAttributeIterator_GetTypedAttributeValue( const CEconItemAttributeDefinition *pAttrDef, TTreatAsThisType *outpValue )
         : m_pAttrDef( pAttrDef ), m_outpValue( outpValue ), m_bFound( false )
     {
@@ -355,8 +355,8 @@ class CAttributeIterator_GetTypedAttributeValue : public IEconItemAttributeItera
         // a different type" behavior code when dealing with attributes using the old storage system
         // (attrib_value_t) or when we're trying to get the pointer to buffer contents for a string.
         COMPILE_TIME_ASSERT( ( ( AreTypesIdentical< TActualTypeInMemory, attrib_value_t >::kValue && AreTypesIdentical< TTreatAsThisType, float >::kValue ) ||
-                               ( AreTypesIdentical< TActualTypeInMemory, CAttribute_String >::kValue && AreTypesIdentical< TTreatAsThisType, const char * >::kValue ) ||
-                               AreTypesIdentical< TActualTypeInMemory, TTreatAsThisType >::kValue ) );
+                                ( AreTypesIdentical< TActualTypeInMemory, CAttribute_String >::kValue && AreTypesIdentical< TTreatAsThisType, const char * >::kValue ) ||
+                                AreTypesIdentical< TActualTypeInMemory, TTreatAsThisType >::kValue ) );
 
         Assert( m_pAttrDef );
         Assert( outpValue );
@@ -402,7 +402,7 @@ class CAttributeIterator_GetTypedAttributeValue : public IEconItemAttributeItera
         return m_bFound;
     }
 
-   private:
+    private:
     // Generic template function for handling any attribute value of any type besides the one that we're looking
     // for. For example, if we say "we're looking for attribute 'damage multiplier' and give me back a float", then
     // all other attribute value types (strings, structures, etc.) will go through this code, which does nothing
@@ -444,7 +444,7 @@ class CAttributeIterator_GetTypedAttributeValue : public IEconItemAttributeItera
         return !m_bFound;
     }
 
-   private:
+    private:
     static void CopyAttributeValueToOutput( const TActualTypeInMemory *pValue, TTreatAsThisType *out_pValue )
     {
         // Even if we are using the old attribute type system, we need to guarantee that the type
@@ -458,7 +458,7 @@ class CAttributeIterator_GetTypedAttributeValue : public IEconItemAttributeItera
         *out_pValue = *reinterpret_cast< const TTreatAsThisType * >( pValue );
     }
 
-   private:
+    private:
     const CEconItemAttributeDefinition *m_pAttrDef;
     TTreatAsThisType *m_outpValue;
     bool m_bFound;
@@ -533,7 +533,7 @@ bool FindAttribute( const TAttributeContainerType *pSomethingThatHasAnIterateAtt
 //-----------------------------------------------------------------------------
 class IEconItemInterface
 {
-   public:
+    public:
     virtual ~IEconItemInterface() {}
 
     // Is an attribute present? We neither know nor care anything about the attribute
@@ -601,7 +601,7 @@ class IEconItemInterface
 
     virtual IMaterial *GetMaterialOverride( int iTeam ) = 0;
 
-   protected:
+    protected:
     bool IsPermanentlyUntradable() const;
     bool IsTemporarilyUntradable() const;
 };
@@ -638,7 +638,7 @@ const CEconItemCollectionDefinition *GetCollection( const IEconItemInterface *pI
 template < typename TBaseClass >
 class CMaterialOverrideContainer : public TBaseClass
 {
-   public:
+    public:
     virtual IMaterial *GetMaterialOverride( int iTeam ) OVERRIDE
     {
 #ifdef CLIENT_DLL
@@ -678,7 +678,7 @@ class CMaterialOverrideContainer : public TBaseClass
         return NULL;
     }
 
-   protected:
+    protected:
     void ResetMaterialOverrides()
     {
 #ifdef CLIENT_DLL
@@ -690,7 +690,7 @@ class CMaterialOverrideContainer : public TBaseClass
 #endif  // CLIENT_DLL
     }
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     CMaterialReference m_materialOverrides[TF_TEAM_COUNT];
     bool m_bInitMaterialOverride[TF_TEAM_COUNT];

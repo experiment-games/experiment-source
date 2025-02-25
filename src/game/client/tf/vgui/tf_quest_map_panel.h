@@ -33,7 +33,7 @@ class Slider;
 
 class CQuestMapItemAdPanel : public CItemAdPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CQuestMapItemAdPanel, CItemAdPanel );
     CQuestMapItemAdPanel( Panel* pParent, const char* pszName, const CQuestMapStoreItem* pStoreItemDef );
 
@@ -47,7 +47,7 @@ class CQuestMapItemAdPanel : public CItemAdPanel
         return m_pStoreItemDef;
     }
 
-   private:
+    private:
     const CQuestMapStoreItem* m_pStoreItemDef;
 };
 
@@ -58,7 +58,7 @@ class CQuestMapPanel : public EditablePanel, public CGameEventListener, public C
 {
     DECLARE_CLASS_SIMPLE( CQuestMapPanel, EditablePanel );
 
-   public:
+    public:
     CQuestMapPanel( Panel* pParent, const char* pszPanelName );
     ~CQuestMapPanel();
 
@@ -92,7 +92,7 @@ class CQuestMapPanel : public EditablePanel, public CGameEventListener, public C
 
     void GoToCurrentQuest();
 
-   private:
+    private:
     void MapStateChangeSequence();
     void SetRegion( const CQuestMapRegion* pRegion, bool bZoomIn );
     void UpdateIntroState();

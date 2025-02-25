@@ -24,7 +24,7 @@ class CTFDisconnectConfirmDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFDisconnectConfirmDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CTFDisconnectConfirmDialog( const char *pTitle,
                                 const char *pTextKey,
                                 const char *pConfirmBtnText,
@@ -39,7 +39,7 @@ class CTFDisconnectConfirmDialog : public CTFGenericConfirmDialog
     void AddConfirmCommand( const char *command );
     void AddCancelCommand( const char *command );
 
-   private:
+    private:
     CUtlVector< CUtlString > m_confirmCommands;
     CUtlVector< CUtlString > m_cancelCommands;
 
@@ -52,7 +52,7 @@ class CTFRejoinConfirmDialog : public CTFGenericConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CTFRejoinConfirmDialog, CTFGenericConfirmDialog );
 
-   public:
+    public:
     CTFRejoinConfirmDialog( const char *pTitle,
                             const char *pTextKey,
                             const char *pConfirmBtnText,
@@ -64,7 +64,7 @@ class CTFRejoinConfirmDialog : public CTFGenericConfirmDialog
 
     void CloseRejoinWindow();
 
-   private:
+    private:
     EAbandonGameStatus m_eAbandonStatus;
 };
 CTFRejoinConfirmDialog *BuildRejoinConfirmDialog();

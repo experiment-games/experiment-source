@@ -41,7 +41,7 @@ struct cart_item_t
 //-----------------------------------------------------------------------------
 class CStoreCart
 {
-   public:
+    public:
     CStoreCart( void );
 
     void AddToCart( const econ_store_entry_t *pEntry, const char *pszPageName, ECartItemType eCartItemType );
@@ -67,10 +67,10 @@ class CStoreCart
     bool ContainsChanceRestrictedItems() const;
     bool ContainsItemDefinition( item_definition_index_t unItemDef ) const;
 
-   private:
+    private:
     int GetIndexForEntry( const econ_store_entry_t *pEntry, ECartItemType eCartItemType ) const;
 
-   private:
+    private:
     CUtlVector< cart_item_t > m_Items;
 };
 
@@ -81,7 +81,7 @@ class CStorePanel : public vgui::PropertyDialog, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CStorePanel, vgui::PropertyDialog );
 
-   public:
+    public:
     CStorePanel( Panel *parent );
     virtual ~CStorePanel();
 
@@ -218,7 +218,7 @@ class CStorePanel : public vgui::PropertyDialog, public CGameEventListener
     MESSAGE_FUNC_PARAMS( OnJumpToItem, "JumpToItem", pParams );
     MESSAGE_FUNC( DoCheckout, "DoCheckout" );
 
-   protected:
+    protected:
     void ParseStoreKV( void );
     CStorePage *AddPageFromPriceSheet( int iPage );
 
@@ -232,7 +232,7 @@ class CStorePanel : public vgui::PropertyDialog, public CGameEventListener
 
     bool ShouldShowDx8PurchaseWarning() const;
 
-   protected:
+    protected:
     static void ConfirmCheckout( bool bConfirmed, void *pContext );
     static void ProceedCheckout_DecoderWarning( bool bConfirmed, void *pContext );
 
@@ -266,12 +266,12 @@ void CloseStoreStatusDialog( void );
 //-----------------------------------------------------------------------------
 class CGCClientJobGetUserData : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobGetUserData( GCSDK::CGCClient *pGCClient, RTime32 rTimeVersion )
         : GCSDK::CGCClientJob( pGCClient ), m_RTimeVersion( rTimeVersion ) {}
     virtual bool BYieldingRunJob( void *pvStartParam );
 
-   private:
+    private:
     RTime32 m_RTimeVersion;
 };
 
@@ -280,7 +280,7 @@ class CGCClientJobGetUserData : public GCSDK::CGCClientJob
 //-----------------------------------------------------------------------------
 class CGCClientJobInitPurchase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobInitPurchase( GCSDK::CGCClient *pGCClient )
         : GCSDK::CGCClientJob( pGCClient ) {}
     virtual bool BYieldingRunJob( void *pvStartParam );
@@ -291,12 +291,12 @@ class CGCClientJobInitPurchase : public GCSDK::CGCClientJob
 //-----------------------------------------------------------------------------
 class CGCClientJobCancelPurchase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobCancelPurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID )
         : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
     virtual bool BYieldingRunJob( void *pvStartParam );
 
-   private:
+    private:
     uint64 m_ulTxnID;
 };
 
@@ -305,12 +305,12 @@ class CGCClientJobCancelPurchase : public GCSDK::CGCClientJob
 //-----------------------------------------------------------------------------
 class CGCClientJobFinalizePurchase : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClientJobFinalizePurchase( GCSDK::CGCClient *pGCClient, uint64 ulTxnID )
         : GCSDK::CGCClientJob( pGCClient ), m_ulTxnID( ulTxnID ) {}
     virtual bool BYieldingRunJob( void *pvStartParam );
 
-   private:
+    private:
     uint64 m_ulTxnID;
 };
 

@@ -12,7 +12,7 @@
 
 class CTEAntlionDust : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTEAntlionDust, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 

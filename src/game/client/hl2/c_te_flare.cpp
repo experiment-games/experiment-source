@@ -26,7 +26,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_Flare : public C_BaseCombatCharacter, CSimpleEmitter
 {
-   public:
+    public:
     DECLARE_CLASS( C_Flare, C_BaseCombatCharacter );
     DECLARE_CLIENTCLASS();
 
@@ -45,7 +45,7 @@ class C_Flare : public C_BaseCombatCharacter, CSimpleEmitter
     bool m_bPropFlare;
     pixelvis_handle_t m_queryHandle;
 
-   private:
+    private:
     C_Flare( const C_Flare & );
     TimedEvent m_teSmokeSpawn;
 

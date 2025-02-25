@@ -18,21 +18,21 @@
 
 class C_FuncAreaPortalWindow : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_FuncAreaPortalWindow, C_BaseEntity );
 
     // Overrides.
-   public:
+    public:
     virtual void ComputeFxBlend();
     virtual bool IsTransparent();
     virtual int DrawModel( int flags );
     virtual bool ShouldReceiveProjectedTextures( int flags );
 
-   private:
+    private:
     float GetDistanceBlend();
 
-   public:
+    public:
     float m_flFadeStartDist;  // Distance at which it starts fading (when <= this, alpha=m_flTranslucencyLimit).
     float m_flFadeDist;       // Distance at which it becomes solid.
 

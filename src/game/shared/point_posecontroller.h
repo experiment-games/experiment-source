@@ -28,7 +28,7 @@ enum PoseController_FModType_t
 
 class CPoseController : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPoseController, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -69,7 +69,7 @@ class CPoseController : public CBaseEntity
     void InputRandomizeFMod( inputdata_t &inputdata );
     void InputGetFMod( inputdata_t &inputdata );
 
-   private:
+    private:
     CNetworkArray( EHANDLE, m_hProps, MAX_POSE_CONTROLLED_PROPS );             // Handles to controlled models
     CNetworkArray( unsigned char, m_chPoseIndex, MAX_POSE_CONTROLLED_PROPS );  // Pose parameter indices for each model
 
@@ -103,7 +103,7 @@ class CPoseController : public CBaseEntity
 
 class C_PoseController : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_PoseController, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -112,7 +112,7 @@ class C_PoseController : public C_BaseEntity
 
     virtual void ClientThink( void );
 
-   private:
+    private:
     void UpdateModulation( void );
     void UpdatePoseCycle( float fCycleAmount );
     void SetCurrentPose( float fCurrentPoseValue );

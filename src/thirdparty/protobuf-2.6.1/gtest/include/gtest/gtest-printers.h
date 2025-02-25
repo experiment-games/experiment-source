@@ -114,8 +114,8 @@ namespace internal2
 // Prints the given number of bytes in the given object to the given
 // ostream.
 GTEST_API_ void PrintBytesInObjectTo( const unsigned char* obj_bytes,
-                                      size_t count,
-                                      ::std::ostream* os );
+                                    size_t count,
+                                    ::std::ostream* os );
 
 // For selecting which printer to use when a given type has neither <<
 // nor PrintTo().
@@ -134,13 +134,13 @@ enum TypeKind
 template < typename T, TypeKind kTypeKind >
 class TypeWithoutFormatter
 {
-   public:
+    public:
     // This default version is called when kTypeKind is kOtherType.
     static void PrintValue( const T& value, ::std::ostream* os )
     {
         PrintBytesInObjectTo( reinterpret_cast< const unsigned char* >( &value ),
-                              sizeof( value ),
-                              os );
+                            sizeof( value ),
+                            os );
     }
 };
 
@@ -152,7 +152,7 @@ const size_t kProtobufOneLinerMaxLength = 50;
 template < typename T >
 class TypeWithoutFormatter< T, kProtobuf >
 {
-   public:
+    public:
     static void PrintValue( const T& value, ::std::ostream* os )
     {
         const ::testing::internal::string short_str = value.ShortDebugString();
@@ -165,7 +165,7 @@ class TypeWithoutFormatter< T, kProtobuf >
 template < typename T >
 class TypeWithoutFormatter< T, kConvertibleToInteger >
 {
-   public:
+    public:
     // Since T has no << operator or PrintTo() but can be implicitly
     // converted to BiggestInt, we print it as a BiggestInt.
     //
@@ -210,7 +210,7 @@ template < typename Char, typename CharTraits, typename T >
     const T& x )
 {
     TypeWithoutFormatter< T,
-                          ( internal::IsAProtocolMessage< T >::value ? kProtobuf : internal::ImplicitlyConvertible< const T&, internal::BiggestInt >::value ? kConvertibleToInteger
+                        ( internal::IsAProtocolMessage< T >::value ? kProtobuf : internal::ImplicitlyConvertible< const T&, internal::BiggestInt >::value ? kConvertibleToInteger
                                                                                                                                                             : kOtherType ) >::PrintValue( x, &os );
     return os;
 }
@@ -281,16 +281,16 @@ void UniversalPrint( const T& value, ::std::ostream* os );
 // a PrintTo() for it.
 template < typename C >
 void DefaultPrintTo( IsContainer /* dummy */,
-                     false_type /* is not a pointer */,
-                     const C& container,
-                     ::std::ostream* os )
+                    false_type /* is not a pointer */,
+                    const C& container,
+                    ::std::ostream* os )
 {
     const size_t kMaxCount = 32;  // The maximum number of elements to print.
     *os << '{';
     size_t count = 0;
     for ( typename C::const_iterator it = container.begin();
-          it != container.end();
-          ++it, ++count )
+        it != container.end();
+        ++it, ++count )
     {
         if ( count > 0 )
         {
@@ -322,9 +322,9 @@ void DefaultPrintTo( IsContainer /* dummy */,
 // bytes.)
 template < typename T >
 void DefaultPrintTo( IsNotContainer /* dummy */,
-                     true_type /* is a pointer */,
-                     T* p,
-                     ::std::ostream* os )
+                    true_type /* is a pointer */,
+                    T* p,
+                    ::std::ostream* os )
 {
     if ( p == NULL )
     {
@@ -362,9 +362,9 @@ void DefaultPrintTo( IsNotContainer /* dummy */,
 // doesn't define PrintTo() for it.
 template < typename T >
 void DefaultPrintTo( IsNotContainer /* dummy */,
-                     false_type /* is not a pointer */,
-                     const T& value,
-                     ::std::ostream* os )
+                    false_type /* is not a pointer */,
+                    const T& value,
+                    ::std::ostream* os )
 {
     ::testing_internal::DefaultPrintNonContainerTo( value, os );
 }
@@ -571,35 +571,35 @@ void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4 >& t, ::std::ostream* os )
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
@@ -631,7 +631,7 @@ void PrintTo( const ::std::pair< T1, T2 >& value, ::std::ostream* os )
 template < typename T >
 class UniversalPrinter
 {
-   public:
+    public:
     // MSVC warns about adding const to a function type, so we want to
     // disable the warning.
 #ifdef _MSC_VER
@@ -707,7 +707,7 @@ GTEST_API_ void UniversalPrintArray(
 template < typename T, size_t N >
 class UniversalPrinter< T[N] >
 {
-   public:
+    public:
     // Prints the given array, omitting some elements when there are too
     // many.
     static void Print( const T ( &a )[N], ::std::ostream* os )
@@ -720,7 +720,7 @@ class UniversalPrinter< T[N] >
 template < typename T >
 class UniversalPrinter< T& >
 {
-   public:
+    public:
     // MSVC warns about adding const to a function type, so we want to
     // disable the warning.
 #ifdef _MSC_VER
@@ -750,7 +750,7 @@ class UniversalPrinter< T& >
 template < typename T >
 class UniversalTersePrinter
 {
-   public:
+    public:
     static void Print( const T& value, ::std::ostream* os )
     {
         UniversalPrint( value, os );
@@ -759,7 +759,7 @@ class UniversalTersePrinter
 template < typename T >
 class UniversalTersePrinter< T& >
 {
-   public:
+    public:
     static void Print( const T& value, ::std::ostream* os )
     {
         UniversalPrint( value, os );
@@ -768,7 +768,7 @@ class UniversalTersePrinter< T& >
 template < typename T, size_t N >
 class UniversalTersePrinter< T[N] >
 {
-   public:
+    public:
     static void Print( const T ( &value )[N], ::std::ostream* os )
     {
         UniversalPrinter< T[N] >::Print( value, os );
@@ -777,7 +777,7 @@ class UniversalTersePrinter< T[N] >
 template <>
 class UniversalTersePrinter< const char* >
 {
-   public:
+    public:
     static void Print( const char* str, ::std::ostream* os )
     {
         if ( str == NULL )
@@ -793,7 +793,7 @@ class UniversalTersePrinter< const char* >
 template <>
 class UniversalTersePrinter< char* >
 {
-   public:
+    public:
     static void Print( char* str, ::std::ostream* os )
     {
         UniversalTersePrinter< const char* >::Print( str, os );
@@ -804,7 +804,7 @@ class UniversalTersePrinter< char* >
 template <>
 class UniversalTersePrinter< const wchar_t* >
 {
-   public:
+    public:
     static void Print( const wchar_t* str, ::std::ostream* os )
     {
         if ( str == NULL )
@@ -822,7 +822,7 @@ class UniversalTersePrinter< const wchar_t* >
 template <>
 class UniversalTersePrinter< wchar_t* >
 {
-   public:
+    public:
     static void Print( wchar_t* str, ::std::ostream* os )
     {
         UniversalTersePrinter< const wchar_t* >::Print( str, os );

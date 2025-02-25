@@ -37,7 +37,7 @@
 // remaining work units to evenly distribute them amongst the workers.
 class CWorkUnitWalker
 {
-   public:
+    public:
     CWorkUnitWalker()
     {
         m_nWorkUnits = 0;
@@ -95,10 +95,10 @@ class CWorkUnitWalker
         return true;
     }
 
-   private:
+    private:
     class CWorkerInfo
     {
-       public:
+        public:
         WUIndexType m_iStartWorkUnit;
         WUIndexType m_iWorkUnitOffset;  // Which work unit in my list of work units am I working on?
     };
@@ -111,7 +111,7 @@ class CWorkUnitWalker
 
 class IShuffleRequester
 {
-   public:
+    public:
     virtual void RequestShuffle() = 0;
 };
 
@@ -120,7 +120,7 @@ class IShuffleRequester
 // and it'll avoid returning that work unit from GetNextWorkUnit again, but it WON'T
 class CShuffledWorkUnitWalker
 {
-   public:
+    public:
     void Init( WUIndexType nWorkUnits, IShuffleRequester *pRequester )
     {
         m_iLastShuffleRequest = 0;
@@ -302,7 +302,7 @@ class CShuffledWorkUnitWalker
         }
     }
 
-   private:
+    private:
     // These are PENDING WU completions until we call Shuffle() again, at which point we actually reorder the list
     // based on the completed WUs.
     CUtlVector< byte > m_CompletedWUBits;  // Bit vector of completed WUs.
@@ -325,7 +325,7 @@ class CShuffledWorkUnitWalker
 
 class CDistributor_SDKMaster : public IWorkUnitDistributorMaster, public IShuffleRequester
 {
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -558,19 +558,19 @@ class CDistributor_SDKMaster : public IWorkUnitDistributorMaster, public IShuffl
         m_WorkersReadyCS.Unlock();
     }
 
-   public:
+    public:
     CDSInfo *m_pInfo;
 
     class CWorkersReady
     {
-       public:
+        public:
         CUtlVector< int > m_WorkersReady;  // The list of workers who have said they're ready to participate.
     };
     CCriticalSectionData< CWorkersReady > m_WorkersReadyCS;
 
     class CWUsCompleted
     {
-       public:
+        public:
         CUtlVector< WUIndexType > m_Completed;  // WUs completed that we have sent to workers.
         CUtlVector< WUIndexType > m_Pending;    // WUs completed that we haven't sent to workers.
     };
@@ -587,7 +587,7 @@ class CDistributor_SDKMaster : public IWorkUnitDistributorMaster, public IShuffl
 
 class CDistributor_SDKWorker : public IWorkUnitDistributorWorker, public IShuffleRequester
 {
-   public:
+    public:
     virtual void Init( CDSInfo *pInfo )
     {
         m_iMyWorkUnitWalkerID = -1;
@@ -669,7 +669,7 @@ class CDistributor_SDKWorker : public IWorkUnitDistributorWorker, public IShuffl
         VMPI_SendData( mb.data, mb.getLen(), VMPI_MASTER_ID );
     }
 
-   private:
+    private:
     CDSInfo *m_pInfo;
     CShuffledWorkUnitWalker m_WorkUnitWalker;
     int m_iMyWorkUnitWalkerID;

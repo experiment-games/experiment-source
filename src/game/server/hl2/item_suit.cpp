@@ -24,7 +24,7 @@
 
 class CItemSuit : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CItemSuit, CItem );
 
     void Spawn( void )

@@ -45,7 +45,7 @@ ZeroCopyOutputStream::~ZeroCopyOutputStream() {}
 
 
 bool ZeroCopyOutputStream::WriteAliasedRaw(const void* /* data */,
-                                           int /* size */) {
+                                            int /* size */) {
   GOOGLE_LOG(FATAL) << "This ZeroCopyOutputStream doesn't support aliasing. "
                 "Reaching here usually means a ZeroCopyOutputStream "
                 "implementation bug.";

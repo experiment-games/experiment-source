@@ -43,11 +43,11 @@ in CALL instructions to increase the compression ratio.
     UInt32 ip = 0;
     for ()
     {
-      ; size must be >= Alignment + LookAhead, if it's not last block
-      SizeT processed = Convert(data, size, ip, 1);
-      data += processed;
-      size -= processed;
-      ip += processed;
+    ; size must be >= Alignment + LookAhead, if it's not last block
+    SizeT processed = Convert(data, size, ip, 1);
+    data += processed;
+    size -= processed;
+    ip += processed;
     }
 */
 

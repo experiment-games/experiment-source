@@ -268,7 +268,7 @@ static char *GetBaseDir( const char *pszBuffer )
     if ( j > 0 )
     {
         if ( ( basedir[j - 1] == '\\' ) ||
-             ( basedir[j - 1] == '/' ) )
+            ( basedir[j - 1] == '/' ) )
         {
             basedir[j - 1] = 0;
         }
@@ -300,8 +300,8 @@ std::wstring GetExeName()
     auto n = fullPath.find_last_of( L'\\' );
 
     return ( n != std::wstring::npos )
-               ? fullPath.substr( n + 1 )
-               : fullPath;
+                ? fullPath.substr( n + 1 )
+                : fullPath;
 }
 
 std::wstring GetDefaultGameName()
@@ -310,8 +310,8 @@ std::wstring GetDefaultGameName()
     auto n = sName.find_last_of( L'.' );
 
     return ( n != std::wstring::npos )
-               ? sName.substr( 0, n )
-               : sName;
+                ? sName.substr( 0, n )
+                : sName;
 }
 
 static void RelaunchAs64Bit( std::vector< std::wstring > &args )

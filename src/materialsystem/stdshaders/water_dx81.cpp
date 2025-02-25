@@ -17,7 +17,7 @@
 DEFINE_FALLBACK_SHADER( Water, Water_DX81 )
 
 BEGIN_VS_SHADER( Water_DX81,
-                 "Help for Water_DX81" )
+                "Help for Water_DX81" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( REFRACTTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "" )
@@ -182,9 +182,9 @@ inline void DrawReflectionRefraction( IMaterialVar** params, IShaderShadow* pSha
 
         // reflection/refraction scale
         float reflectionRefractionScale[4] = { params[REFLECTAMOUNT]->GetFloatValue(),
-                                               params[REFRACTAMOUNT]->GetFloatValue(),
-                                               0.0f,
-                                               0.0f };
+                                                params[REFRACTAMOUNT]->GetFloatValue(),
+                                                0.0f,
+                                                0.0f };
         pShaderAPI->SetPixelShaderConstant( 5, reflectionRefractionScale, 1 );
         pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4, reflectionRefractionScale, 1 );
 

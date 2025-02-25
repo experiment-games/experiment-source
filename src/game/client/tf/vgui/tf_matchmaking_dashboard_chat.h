@@ -21,7 +21,7 @@ class ChatTextEntry : public vgui::TextEntry
 {
     DECLARE_CLASS_SIMPLE( ChatTextEntry, vgui::TextEntry );
 
-   public:
+    public:
     ChatTextEntry( vgui::Panel *parent, const char *name );
     virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
     virtual void OnKeyCodeTyped( vgui::KeyCode code ) OVERRIDE;
@@ -32,7 +32,7 @@ class CPartyChatPanel : public CExpandablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CPartyChatPanel, CExpandablePanel );
 
-   public:
+    public:
     CPartyChatPanel( Panel *parent, const char *panelName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
@@ -44,7 +44,7 @@ class CPartyChatPanel : public CExpandablePanel, public CGameEventListener
 
     virtual void OnToggleCollapse( bool bIsExpanded ) OVERRIDE;
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnShowChatEntry, "ShowChatEntry", params );
 
     void PositionPopupStack();

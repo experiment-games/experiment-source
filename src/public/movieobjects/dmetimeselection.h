@@ -20,7 +20,7 @@ class CDmeTimeSelection : public CDmElement
 {
     DEFINE_ELEMENT( CDmeTimeSelection, CDmElement );
 
-   public:
+    public:
     bool IsEnabled() const;
     void SetEnabled( bool state );
 
@@ -53,7 +53,7 @@ class CDmeTimeSelection : public CDmElement
     void SetRecordingState( RecordingState_t state );
     RecordingState_t GetRecordingState() const;
 
-   private:
+    private:
     CDmeTimeSelection& operator=( const CDmeTimeSelection& src );
 
     void ConvertToRelative( DmeTime_t time );

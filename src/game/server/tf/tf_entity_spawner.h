@@ -14,7 +14,7 @@ class CEntitySpawnManager;
 
 class CEntitySpawnPoint : public CServerOnlyPointEntity, public IEntityListener
 {
-   public:
+    public:
     DECLARE_CLASS( CEntitySpawnPoint, CServerOnlyPointEntity );
     DECLARE_DATADESC();
 
@@ -34,7 +34,7 @@ class CEntitySpawnPoint : public CServerOnlyPointEntity, public IEntityListener
 
     virtual void OnEntityDeleted( CBaseEntity* pEntity );
 
-   private:
+    private:
     string_t m_iszSpawnManagerName;
     float m_flNodeFree;
 
@@ -44,7 +44,7 @@ class CEntitySpawnPoint : public CServerOnlyPointEntity, public IEntityListener
 
 class CEntitySpawnManager : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEntitySpawnManager, CLogicalEntity );
     DECLARE_DATADESC();
 
@@ -60,11 +60,11 @@ class CEntitySpawnManager : public CLogicalEntity
         return m_iRespawnTime;
     }
 
-   private:
+    private:
     int GetRandomUnusedIndex( void );
     bool SpawnEntityAt( int iIndex );
 
-   private:
+    private:
     string_t m_iszEntityName;
     int m_iEntityCount;
     int m_iRespawnTime;

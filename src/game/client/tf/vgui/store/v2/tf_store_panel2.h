@@ -22,7 +22,7 @@ class CTFStorePanel2 : public CTFBaseStorePanel
 {
     DECLARE_CLASS_SIMPLE( CTFStorePanel2, CTFBaseStorePanel );
 
-   public:
+    public:
     CTFStorePanel2( vgui::Panel *parent );
 
     // UI Layout
@@ -35,7 +35,7 @@ class CTFStorePanel2 : public CTFBaseStorePanel
     // GC Management
     virtual void PostTransactionCompleted( void );
 
-   private:
+    private:
     virtual CStorePage *CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
 };
 

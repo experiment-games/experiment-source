@@ -16,18 +16,18 @@ sampler cBTextureSampler	: register( s2 );
 
 struct PS_INPUT
 {
-	HALF2 baseTexCoord					: TEXCOORD0;
-	HALF4 worldPos_projPosZ				: TEXCOORD1;
-	float4 fogFactorW					: COLOR1;
+    HALF2 baseTexCoord					: TEXCOORD0;
+    HALF4 worldPos_projPosZ				: TEXCOORD1;
+    float4 fogFactorW					: COLOR1;
 };
 
 #if 0
 static float yuvtorgb[] =
 {
-   1.164123535f,  1.595794678f,  0.0f,         -0.87065506f,
-   1.164123535f, -0.813476563f, -0.391448975f,  0.529705048f,
-   1.164123535f,  0.0f,          2.017822266f, -1.081668854f,
-   1.0f, 0.0f, 0.0f, 0.0f
+    1.164123535f,  1.595794678f,  0.0f,         -0.87065506f,
+    1.164123535f, -0.813476563f, -0.391448975f,  0.529705048f,
+    1.164123535f,  0.0f,          2.017822266f, -1.081668854f,
+    1.0f, 0.0f, 0.0f, 0.0f
 };
 " sampler tex0   : register( s0 );      "
 " sampler tex1   : register( s1 );      "
@@ -62,35 +62,35 @@ static float yuvtorgb[] =
 
 float4 main( PS_INPUT i ) : COLOR
 {
-	half y, cR, cB;
-	y = tex2D( YTextureSampler, i.baseTexCoord.xy );
-	cR = tex2D( cRTextureSampler, i.baseTexCoord.xy );
-	cB = tex2D( cBTextureSampler, i.baseTexCoord.xy );
+    half y, cR, cB;
+    y = tex2D( YTextureSampler, i.baseTexCoord.xy );
+    cR = tex2D( cRTextureSampler, i.baseTexCoord.xy );
+    cB = tex2D( cBTextureSampler, i.baseTexCoord.xy );
 //	half a = tex2D( ATextureSampler, i.baseTexCoord.xy );
-	
-	HALF4 c;
-	c = float4( y, cR, cB, 1.0f );
 
-	float4 tor = float4( 1.164123535f,  1.595794678f,  0.0f,         -0.87065506f );
-	float4 tog = float4( 1.164123535f, -0.813476563f, -0.391448975f,  0.529705048f );
-	float4 tob = float4( 1.164123535f,  0.0f,          2.017822266f, -1.081668854f );
+    HALF4 c;
+    c = float4( y, cR, cB, 1.0f );
 
-	HALF4 rgba;
-	
-	rgba.r = dot( c, tor );
-	rgba.g = dot( c, tog );
-	rgba.b = dot( c, tob );
-	rgba.a = 1.0f;
+    float4 tor = float4( 1.164123535f,  1.595794678f,  0.0f,         -0.87065506f );
+    float4 tog = float4( 1.164123535f, -0.813476563f, -0.391448975f,  0.529705048f );
+    float4 tob = float4( 1.164123535f,  0.0f,          2.017822266f, -1.081668854f );
 
-	float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos_SpecExponent.z, i.worldPos_projPosZ.z, i.worldPos_projPosZ.w );
-	float4 result = FinalOutput( rgba, fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE );
+    HALF4 rgba;
 
-	// The 360 will do an sRGB write to put the linear values into 360 gamma space, but the PC just outputs gamma values directly
-	#if defined( _X360 )
-		result.r = SrgbGammaToLinear( result.r );
-		result.g = SrgbGammaToLinear( result.g );
-		result.b = SrgbGammaToLinear( result.b );
-	#endif
+    rgba.r = dot( c, tor );
+    rgba.g = dot( c, tog );
+    rgba.b = dot( c, tob );
+    rgba.a = 1.0f;
 
-	return result.rgba;
+    float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos_SpecExponent.z, i.worldPos_projPosZ.z, i.worldPos_projPosZ.w );
+    float4 result = FinalOutput( rgba, fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE );
+
+    // The 360 will do an sRGB write to put the linear values into 360 gamma space, but the PC just outputs gamma values directly
+    #if defined( _X360 )
+        result.r = SrgbGammaToLinear( result.r );
+        result.g = SrgbGammaToLinear( result.g );
+        result.b = SrgbGammaToLinear( result.b );
+    #endif
+
+    return result.rgba;
 }

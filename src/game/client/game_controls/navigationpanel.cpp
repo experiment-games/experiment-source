@@ -25,7 +25,7 @@ class CNavButton : public CExImageButton
 {
     DECLARE_CLASS_SIMPLE( CNavButton, CExImageButton );
 
-   public:
+    public:
     CNavButton( Panel *parent, const char *name, const char *text = "", Panel *pActionSignalTarget = NULL, const char *cmd = NULL )
         : CExImageButton( parent, name, text, pActionSignalTarget, cmd ), m_iUserData( -1 ) {}
 
@@ -50,12 +50,12 @@ class CNavButton : public CExImageButton
 
 CNavigationPanel::CNavigationPanel( Panel *pParent, const char *pName, bool bAddParentAsActionSignalTarget /*=true*/ )
     : BaseClass( pParent, pName ),
-      m_bAutoLayout( false ),
-      m_bAutoScale( true ),
-      m_bDisplayVertical( false ),
-      m_iSelectedButton( 0 ),
-      //	m_nAlignment( ALIGN_CENTER ),
-      m_pKVButtonSettings( NULL )
+    m_bAutoLayout( false ),
+    m_bAutoScale( true ),
+    m_bDisplayVertical( false ),
+    m_iSelectedButton( 0 ),
+    //	m_nAlignment( ALIGN_CENTER ),
+    m_pKVButtonSettings( NULL )
 {
     if ( bAddParentAsActionSignalTarget && pParent )
     {
@@ -90,18 +90,18 @@ void CNavigationPanel::ApplySettings( KeyValues *pInResourceData )
     const char *pAlignment = pInResourceData->GetString( "align", NULL );
     if ( pAlignment )
     {
-      if ( !V_strnicmp( pAlignment, "west", 4 ) )
-      {
+    if ( !V_strnicmp( pAlignment, "west", 4 ) )
+    {
         m_nAlignment = ALIGN_WEST;
-      }
-      else if ( !V_strnicmp( pAlignment, "center", 6 ) )
-      {
+    }
+    else if ( !V_strnicmp( pAlignment, "center", 6 ) )
+    {
         m_nAlignment = ALIGN_CENTER;
-      }
-      else if ( !V_strnicmp( pAlignment, "east", 4 ) )
-      {
+    }
+    else if ( !V_strnicmp( pAlignment, "east", 4 ) )
+    {
         AssertMsg( 0, "This type of alignment is not supported." );
-      }
+    }
     }
     */
 
@@ -294,7 +294,7 @@ class CNavPanelTest : public Frame
 {
     DECLARE_CLASS_SIMPLE( CNavPanelTest, Frame );
 
-   public:
+    public:
     CNavPanelTest( vgui::Panel *pParent )
         : Frame( pParent, "NavPanelTest" )
     {

@@ -27,7 +27,7 @@ struct flame_point_t : tf_point_t
 //-----------------------------------------------------------------------------
 class CFlameEntityEnum : public IEntityEnumerator
 {
-   public:
+    public:
     CFlameEntityEnum( CBaseEntity *pShooter )
     {
         m_pShooter = pShooter;
@@ -40,7 +40,7 @@ class CFlameEntityEnum : public IEntityEnumerator
         return m_Targets;
     }
 
-   public:
+    public:
     CBaseEntity *m_pShooter;
     CUtlVector< CBaseEntity * > m_Targets;
 };
@@ -57,7 +57,7 @@ class CTFFlameManager : public CTFPointManager, public ITFFlameManager
 {
     DECLARE_CLASS( CTFFlameManager, CTFPointManager );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
     DECLARE_PREDICTABLE();
@@ -89,7 +89,7 @@ class CTFFlameManager : public CTFPointManager, public ITFFlameManager
         return m_hAttacker.Get();
     }
 
-   protected:
+    protected:
     virtual void InitializePoint( tf_point_t *pPoint, int nPointIndex ) OVERRIDE;
     virtual Vector GetInitialPosition() const OVERRIDE;
     virtual Vector GetInitialVelocity() const OVERRIDE;
@@ -126,7 +126,7 @@ class CTFFlameManager : public CTFPointManager, public ITFFlameManager
         return 30;
     }  // this should match with the number of CP defined in particle system
 
-   private:
+    private:
     float GetFlameSizeMult( const tf_point_t *pPoint ) const;
     float GetStartSizeMult() const;
     float GetEndSizeMult() const;

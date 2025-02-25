@@ -23,7 +23,7 @@ class CReplayPerformance;
 
 class IReplayPerformanceRecorder : public IBaseInterface
 {
-   public:
+    public:
     virtual void BeginPerformanceRecord( CReplay *pReplay ) = 0;
     virtual void EndPerformanceRecord() = 0;
 

@@ -11,7 +11,7 @@
 
 class CTFBotNavEntMoveTo : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotNavEntMoveTo( const CFuncNavPrerequisite *prereq );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -22,7 +22,7 @@ class CTFBotNavEntMoveTo : public Action< CTFBot >
         return "NavEntMoveTo";
     };
 
-   private:
+    private:
     CHandle< CFuncNavPrerequisite > m_prereq;
     Vector m_goalPosition;  // specific position within entity to move to
     CTFNavArea *m_pGoalArea;

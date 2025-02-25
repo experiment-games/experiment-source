@@ -44,7 +44,7 @@ enum EParachuteStates
 
 class CTFBuffItem : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBuffItem, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -103,13 +103,13 @@ class CTFBuffItem : public CTFWeaponBaseMelee
     }
     bool EffectMeterShouldFlash( void );
 
-   protected:
+    protected:
 #ifdef CLIENT_DLL
     CHandle< C_TFBuffBanner > m_hBannerEntity;
     int m_iBuffType;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     CTFBuffItem( const CTFBuffItem& ) {}
 
     bool m_bPlayingHorn;

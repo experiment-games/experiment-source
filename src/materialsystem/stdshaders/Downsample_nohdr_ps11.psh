@@ -19,5 +19,4 @@ mad r1.rgb, t3, c0.a, r1
 dp3 r0, r1, c1
 
 // r0.rgb = color = average*(luminance)
-mul r0.rgb, r1, r0.a 
-
+mul r0.rgb, r1, r0.a

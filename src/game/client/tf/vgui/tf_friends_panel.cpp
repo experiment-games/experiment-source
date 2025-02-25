@@ -171,7 +171,7 @@ void CSteamFriendPanel::UpdateControls()
                 const char *pszRichMap = pSteamFriends->GetFriendRichPresence( m_steamID, "currentmap" );
                 // If they have at least state, see if we can build a status from the keys
                 if ( pszRichState && pszRichState[0] &&
-                     GetClientModeTFNormal()->BuildRichPresenceStatus( wzRichPresenceBuf, pszRichState, pszRichMatchGroupLoc, pszRichMap ) )
+                    GetClientModeTFNormal()->BuildRichPresenceStatus( wzRichPresenceBuf, pszRichState, pszRichMatchGroupLoc, pszRichMap ) )
                 {
                     pwzStatus = wzRichPresenceBuf;
                 }
@@ -368,7 +368,7 @@ void CSteamFriendsListPanel::UpdateFriendsList()
         {
             // If we're no longer friends with this steamID, remove their panel
             if ( pSteamFriends->GetFriendRelationship( steamIDFriend ) != k_EFriendRelationshipFriend ||
-                 potentialFriend.bShow == false )
+                potentialFriend.bShow == false )
             {
                 m_mapFriendsPanels[nExistingIndex]->MarkForDeletion();
                 m_mapFriendsPanels.RemoveAt( nExistingIndex );
@@ -435,38 +435,38 @@ void CSteamFriendsListPanel::GetSortedFriends( CUtlVector< CSteamFriendPanel * >
     // Within the above buckets alphabetize
     vecSortedFriends.SortPredicate( [&pSteamFriends]( const CSteamFriendPanel *pLeft, const CSteamFriendPanel *pRight )
                                     {
-		EPersonaState eLeftState = pSteamFriends->GetFriendPersonaState( pLeft->GetFriendSteamID() );
-		EPersonaState eRightState = pSteamFriends->GetFriendPersonaState( pRight->GetFriendSteamID() );
+        EPersonaState eLeftState = pSteamFriends->GetFriendPersonaState( pLeft->GetFriendSteamID() );
+        EPersonaState eRightState = pSteamFriends->GetFriendPersonaState( pRight->GetFriendSteamID() );
 
-		bool bLeftPlayingTF = BSteamIDIsPlayingTF2( pLeft->GetFriendSteamID() );
-		bool bRightPlayingTF = BSteamIDIsPlayingTF2( pRight->GetFriendSteamID() );
+        bool bLeftPlayingTF = BSteamIDIsPlayingTF2( pLeft->GetFriendSteamID() );
+        bool bRightPlayingTF = BSteamIDIsPlayingTF2( pRight->GetFriendSteamID() );
 
-		if ( bLeftPlayingTF != bRightPlayingTF )
-		{
-			if ( bLeftPlayingTF )
-				return true;
-			else
-				return false;
-		}
+        if ( bLeftPlayingTF != bRightPlayingTF )
+        {
+            if ( bLeftPlayingTF )
+                return true;
+            else
+                return false;
+        }
 
-		std::string strLeftName = pSteamFriends->GetFriendPersonaName( pLeft->GetFriendSteamID() );
-		std::string strRightName = pSteamFriends->GetFriendPersonaName( pRight->GetFriendSteamID() );
+        std::string strLeftName = pSteamFriends->GetFriendPersonaName( pLeft->GetFriendSteamID() );
+        std::string strRightName = pSteamFriends->GetFriendPersonaName( pRight->GetFriendSteamID() );
 
-		bool bAlphaLeft = V_strcasecmp( strLeftName.c_str(), strRightName.c_str() ) < 0;
+        bool bAlphaLeft = V_strcasecmp( strLeftName.c_str(), strRightName.c_str() ) < 0;
 
-		if ( eLeftState != eRightState )
-		{
-			if ( eLeftState == k_EPersonaStateOnline )	return true;
-			if ( eRightState == k_EPersonaStateOnline ) return false;
-			if ( eLeftState == k_EPersonaStateBusy )	return true;
-			if ( eRightState == k_EPersonaStateBusy )	return false;
-			if ( eLeftState == k_EPersonaStateAway )	return true;
-			if ( eRightState == k_EPersonaStateAway )	return false;
-			if ( eLeftState == k_EPersonaStateSnooze )	return true;
-			if ( eRightState == k_EPersonaStateSnooze )	return false;
-		}
+        if ( eLeftState != eRightState )
+        {
+            if ( eLeftState == k_EPersonaStateOnline )	return true;
+            if ( eRightState == k_EPersonaStateOnline ) return false;
+            if ( eLeftState == k_EPersonaStateBusy )	return true;
+            if ( eRightState == k_EPersonaStateBusy )	return false;
+            if ( eLeftState == k_EPersonaStateAway )	return true;
+            if ( eRightState == k_EPersonaStateAway )	return false;
+            if ( eLeftState == k_EPersonaStateSnooze )	return true;
+            if ( eRightState == k_EPersonaStateSnooze )	return false;
+        }
 
-		return bAlphaLeft; } );
+        return bAlphaLeft; } );
 }
 
 void CSteamFriendsListPanel::DirtyPotentialFriendsList()
@@ -585,7 +585,7 @@ void CSteamFriendsListPanel::FriendStateChange( CSteamID steamIDFriend )
 
     // Don't create a panel for ourselves!
     if ( !steamapicontext->SteamUser() ||
-         steamIDFriend == steamapicontext->SteamUser()->GetSteamID().ConvertToUint64() )
+        steamIDFriend == steamapicontext->SteamUser()->GetSteamID().ConvertToUint64() )
         return;
 
     auto idxFriend = m_mapKnownFriends.Find( steamIDFriend );

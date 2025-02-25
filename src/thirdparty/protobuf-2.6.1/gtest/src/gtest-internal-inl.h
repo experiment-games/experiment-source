@@ -160,7 +160,7 @@ inline int GetNextRandomSeed( int seed )
 // restores them in its d'tor.
 class GTestFlagSaver
 {
-   public:
+    public:
     // The c'tor.
     GTestFlagSaver()
     {
@@ -205,7 +205,7 @@ class GTestFlagSaver
         GTEST_FLAG( throw_on_failure ) = throw_on_failure_;
     }
 
-   private:
+    private:
     // Fields for saving the original values of flags.
     bool also_run_disabled_tests_;
     bool break_on_failure_;
@@ -265,8 +265,8 @@ void WriteToShardStatusFileIfNeeded();
 // disabled because it must only be applied to the original test
 // process. Otherwise, we could filter out death tests we intended to execute.
 GTEST_API_ bool ShouldShard( const char* total_shards_str,
-                             const char* shard_index_str,
-                             bool in_subprocess_for_death_test );
+                            const char* shard_index_str,
+                            bool in_subprocess_for_death_test );
 
 // Parses the environment variable var as an Int32. If it is unset,
 // returns default_val. If it is not an Int32, prints an error and
@@ -360,7 +360,7 @@ static void Delete( T* x )
 // TestPropertyKeyIs is copyable.
 class TestPropertyKeyIs
 {
-   public:
+    public:
     // Constructor.
     //
     // TestPropertyKeyIs has NO default constructor.
@@ -373,7 +373,7 @@ class TestPropertyKeyIs
         return test_property.key() == key_;
     }
 
-   private:
+    private:
     std::string key_;
 };
 
@@ -389,7 +389,7 @@ class TestPropertyKeyIs
 // former.
 class GTEST_API_ UnitTestOptions
 {
-   public:
+    public:
     // Functions for processing the gtest_output flag.
 
     // Returns the output format, or "" for normal printed output.
@@ -412,7 +412,7 @@ class GTEST_API_ UnitTestOptions
     // Returns true iff the user-specified filter matches the test case
     // name and the test name.
     static bool FilterMatchesTest( const std::string& test_case_name,
-                                   const std::string& test_name );
+                                    const std::string& test_name );
 
 #if GTEST_OS_WINDOWS
     // Function for supporting the gtest_catch_exception flag.
@@ -435,7 +435,7 @@ GTEST_API_ FilePath GetCurrentExecutableName();
 // The role interface for getting the OS stack trace as a string.
 class OsStackTraceGetterInterface
 {
-   public:
+    public:
     OsStackTraceGetterInterface() {}
     virtual ~OsStackTraceGetterInterface() {}
 
@@ -452,14 +452,14 @@ class OsStackTraceGetterInterface
     // CurrentStackTrace() will use to find and hide Google Test stack frames.
     virtual void UponLeavingGTest() = 0;
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( OsStackTraceGetterInterface );
 };
 
 // A working implementation of the OsStackTraceGetterInterface interface.
 class OsStackTraceGetter : public OsStackTraceGetterInterface
 {
-   public:
+    public:
     OsStackTraceGetter()
         : caller_frame_( NULL ) {}
 
@@ -472,7 +472,7 @@ class OsStackTraceGetter : public OsStackTraceGetterInterface
     // Google Test's implementation.
     static const char* const kElidedFramesMarker;
 
-   private:
+    private:
     Mutex mutex_;  // protects all internal state
 
     // We save the stack frame below the frame that calls user code.
@@ -497,13 +497,13 @@ struct TraceInfo
 class DefaultGlobalTestPartResultReporter
     : public TestPartResultReporterInterface
 {
-   public:
+    public:
     explicit DefaultGlobalTestPartResultReporter( UnitTestImpl* unit_test );
     // Implements the TestPartResultReporterInterface. Reports the test part
     // result in the current test.
     virtual void ReportTestPartResult( const TestPartResult& result );
 
-   private:
+    private:
     UnitTestImpl* const unit_test_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( DefaultGlobalTestPartResultReporter );
@@ -514,13 +514,13 @@ class DefaultGlobalTestPartResultReporter
 class DefaultPerThreadTestPartResultReporter
     : public TestPartResultReporterInterface
 {
-   public:
+    public:
     explicit DefaultPerThreadTestPartResultReporter( UnitTestImpl* unit_test );
     // Implements the TestPartResultReporterInterface. The implementation just
     // delegates to the current global test part result reporter of *unit_test_.
     virtual void ReportTestPartResult( const TestPartResult& result );
 
-   private:
+    private:
     UnitTestImpl* const unit_test_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( DefaultPerThreadTestPartResultReporter );
@@ -532,7 +532,7 @@ class DefaultPerThreadTestPartResultReporter
 // proper locking.
 class GTEST_API_ UnitTestImpl
 {
-   public:
+    public:
     explicit UnitTestImpl( UnitTest* parent );
     virtual ~UnitTestImpl();
 
@@ -678,9 +678,9 @@ class GTEST_API_ UnitTestImpl
     //   set_up_tc:      pointer to the function that sets up the test case
     //   tear_down_tc:   pointer to the function that tears down the test case
     TestCase* GetTestCase( const char* test_case_name,
-                           const char* type_param,
-                           Test::SetUpTestCaseFunc set_up_tc,
-                           Test::TearDownTestCaseFunc tear_down_tc );
+                            const char* type_param,
+                            Test::SetUpTestCaseFunc set_up_tc,
+                            Test::TearDownTestCaseFunc tear_down_tc );
 
     // Adds a TestInfo to the unit test.
     //
@@ -690,8 +690,8 @@ class GTEST_API_ UnitTestImpl
     //   tear_down_tc: pointer to the function that tears down the test case
     //   test_info:    the TestInfo object
     void AddTestInfo( Test::SetUpTestCaseFunc set_up_tc,
-                      Test::TearDownTestCaseFunc tear_down_tc,
-                      TestInfo* test_info )
+                    Test::TearDownTestCaseFunc tear_down_tc,
+                    TestInfo* test_info )
     {
         // In order to support thread-safe death tests, we need to
         // remember the original working directory when the test program
@@ -708,9 +708,9 @@ class GTEST_API_ UnitTestImpl
         }
 
         GetTestCase( test_info->test_case_name(),
-                     test_info->type_param(),
-                     set_up_tc,
-                     tear_down_tc )
+                    test_info->type_param(),
+                    set_up_tc,
+                    tear_down_tc )
             ->AddTestInfo( test_info );
     }
 
@@ -878,7 +878,7 @@ class GTEST_API_ UnitTestImpl
         return catch_exceptions_;
     }
 
-   private:
+    private:
     friend class ::testing::UnitTest;
 
     // Used by UnitTest::Run() to capture the state of
@@ -1047,7 +1047,7 @@ GTEST_API_ std::string GetLastErrnoDescription();
 // Provides leak-safe Windows kernel handle ownership.
 class AutoHandle
 {
-   public:
+    public:
     AutoHandle()
         : handle_( INVALID_HANDLE_VALUE ) {}
     explicit AutoHandle( HANDLE handle )
@@ -1076,7 +1076,7 @@ class AutoHandle
         }
     }
 
-   private:
+    private:
     HANDLE handle_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( AutoHandle );
@@ -1140,7 +1140,7 @@ bool ParseNaturalNumber( const ::std::string& str, Integer* number )
 // constructs. Do not use it in user tests, either directly or indirectly.
 class TestResultAccessor
 {
-   public:
+    public:
     static void RecordProperty( TestResult* test_result,
                                 const TestProperty& property )
     {

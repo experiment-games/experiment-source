@@ -442,14 +442,14 @@ GameItemDefinition_t *CEconItemView::GetStaticData( void ) const
 int32 CEconItemView::GetQuality() const
 {
     return GetSOCData()
-               ? GetSOCData()->GetQuality()
+                ? GetSOCData()->GetQuality()
 #ifdef TF_CLIENT_DLL
-           : GetFlags() & kEconItemFlagClient_StoreItem
-               ? AE_UNIQUE
+            : GetFlags() & kEconItemFlagClient_StoreItem
+                ? AE_UNIQUE
 #endif
-           : GetOrigin() != kEconItemOrigin_Invalid
-               ? GetItemQuality()
-               : AE_NORMAL;
+            : GetOrigin() != kEconItemOrigin_Invalid
+                ? GetItemQuality()
+                : AE_NORMAL;
 }
 
 //-----------------------------------------------------------------------------
@@ -540,7 +540,7 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
     // that exist on us.
     class CEconItemAttributeIterator_EconItemViewWrapper : public IEconItemAttributeIterator
     {
-       public:
+        public:
         CEconItemAttributeIterator_EconItemViewWrapper( const CEconItemView *pEconItemView, IEconItemAttributeIterator *pIterator )
             : m_pEconItemView( pEconItemView ), m_pIterator( pIterator )
         {
@@ -553,8 +553,8 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value )
@@ -562,8 +562,8 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64 &value )
@@ -571,8 +571,8 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String &value )
@@ -580,8 +580,8 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent &value )
@@ -589,8 +589,8 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria &value )
@@ -598,8 +598,8 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement &value )
@@ -607,11 +607,11 @@ void CEconItemView::IterateAttributes( class IEconItemAttributeIterator *pIterat
             Assert( pAttrDef );
 
             return m_pEconItemView->GetAttributeList()->GetAttributeByID( pAttrDef->GetDefinitionIndex() )
-                       ? true
-                       : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+                        ? true
+                        : m_pIterator->OnIterateAttributeValue( pAttrDef, value );
         }
 
-       private:
+        private:
         const CEconItemView *m_pEconItemView;
         IEconItemAttributeIterator *m_pIterator;
     };
@@ -1192,7 +1192,7 @@ void CEconItemView::InitNetworkedDynamicAttributesForDemos( void )
 
     class CEconDynamicAttributesForDemosIterator : public CEconItemSpecificAttributeIterator
     {
-       public:
+        public:
         CEconDynamicAttributesForDemosIterator( CAttributeList *out_NetworkedDynamicAttributesForDemos )
             : m_NetworkedDynamicAttributesForDemos( out_NetworkedDynamicAttributesForDemos )
         {
@@ -1220,7 +1220,7 @@ void CEconItemView::InitNetworkedDynamicAttributesForDemos( void )
             return m_bAdded;
         }
 
-       private:
+        private:
         bool m_bAdded;
         CAttributeList *m_NetworkedDynamicAttributesForDemos;
     };
@@ -3214,7 +3214,7 @@ uint64 CEconItemView::GetCustomUserTextureID()
 
     uint32 unLowVal, unHighVal;
     const bool bHasLowVal = FindAttribute( pAttr_CustomTextureLo, &unLowVal ),
-               bHasHighVal = FindAttribute( pAttr_CustomTextureHi, &unHighVal );
+                bHasHighVal = FindAttribute( pAttr_CustomTextureHi, &unHighVal );
 
     // We should have both, or neither.  We should never have just one
     Assert( bHasLowVal == bHasHighVal );

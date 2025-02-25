@@ -1592,7 +1592,7 @@ Go to the trouble of combining multiple pellets into a single damage call.
 #if defined( GAME_DLL )
 class CBulletsTraceFilter : public CTraceFilterSimpleList
 {
-   public:
+    public:
     CBulletsTraceFilter( int collisionGroup )
         : CTraceFilterSimpleList( collisionGroup ) {}
 
@@ -1603,8 +1603,8 @@ class CBulletsTraceFilter : public CTraceFilterSimpleList
             CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
             CBaseEntity *pPassEntity = EntityFromEntityHandle( m_PassEntities[0] );
             if ( pEntity && pPassEntity && pEntity->GetOwnerEntity() == pPassEntity &&
-                 pPassEntity->IsSolidFlagSet( FSOLID_NOT_SOLID ) && pPassEntity->IsSolidFlagSet( FSOLID_CUSTOMBOXTEST ) &&
-                 pPassEntity->IsSolidFlagSet( FSOLID_CUSTOMRAYTEST ) )
+                pPassEntity->IsSolidFlagSet( FSOLID_NOT_SOLID ) && pPassEntity->IsSolidFlagSet( FSOLID_CUSTOMBOXTEST ) &&
+                pPassEntity->IsSolidFlagSet( FSOLID_CUSTOMRAYTEST ) )
             {
                 // It's a bone follower of the entity to ignore (toml 8/3/2007)
                 return false;

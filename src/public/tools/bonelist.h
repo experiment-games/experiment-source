@@ -14,36 +14,36 @@
 
 class CBoneList
 {
-   public:
+    public:
     CBoneList();
 
     void Release();
 
     static CBoneList *Alloc();
 
-   public:
+    public:
     int m_nBones;
     Vector m_vecPos[MAXSTUDIOBONES];
     Quaternion m_quatRot[MAXSTUDIOBONES];
 
-   private:
+    private:
     bool m_bShouldDelete;
 };
 
 class CFlexList
 {
-   public:
+    public:
     CFlexList();
 
     void Release();
 
     static CFlexList *Alloc();
 
-   public:
+    public:
     int m_nNumFlexes;
     float m_flexWeights[MAXSTUDIOFLEXCTRL];
 
-   private:
+    private:
     bool m_bShouldDelete;
 };
 

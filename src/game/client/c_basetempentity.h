@@ -23,7 +23,7 @@
 class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
 
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -31,7 +31,7 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
     virtual ~C_BaseTempEntity( void );
 
     // IClientUnknown implementation.
-   public:
+    public:
     virtual void SetRefEHandle( const CBaseHandle &handle )
     {
         Assert( false );
@@ -71,7 +71,7 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
     }
 
     // IClientNetworkable overrides.
-   public:
+    public:
     virtual void Release();
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
     virtual void PreDataUpdate( DataUpdateType_t updateType );
@@ -86,7 +86,7 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
     virtual void *GetDataTableBasePtr();
     virtual void SetDestroyedOnRecreateEntities( void );
 
-   public:
+    public:
     // Dummy for CNetworkVars.
     void NetworkStateChanged() {}
     void NetworkStateChanged( void *pVar ) {}
@@ -127,7 +127,7 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
     }
 
     // Static members
-   public:
+    public:
     // List of dynamically allocated temp entis
     static C_BaseTempEntity *GetDynamicList();
 
@@ -138,7 +138,7 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
 
     static void CheckDynamicTempEnts( void );
 
-   private:
+    private:
     // Next in chain
     C_BaseTempEntity *m_pNext;
     C_BaseTempEntity *m_pNextDynamic;

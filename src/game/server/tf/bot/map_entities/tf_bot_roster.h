@@ -10,7 +10,7 @@ class CTFBotRoster : public CPointEntity
 {
     DECLARE_CLASS( CTFBotRoster, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTFBotRoster( void );
@@ -31,7 +31,7 @@ class CTFBotRoster : public CPointEntity
     bool IsClassAllowed( int iBotClass ) const;
     bool IsClassChangeAllowed() const;
 
-   public:
+    public:
     string_t m_teamName;
     bool m_bAllowClassChanges;
     bool m_bAllowedClasses[TF_LAST_NORMAL_CLASS];

@@ -28,8 +28,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files: src/filter_sse2_intrinsics.c
 Copyright: 2018 Cosmin Truta
-           2016 Google, Inc.
-           2014,2016 Glenn Randers-Pehrson
+            2016 Google, Inc.
+            2014,2016 Glenn Randers-Pehrson
 License: libpng2
 
 Files: tests/images:

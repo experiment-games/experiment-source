@@ -47,7 +47,7 @@ FORCEINLINE_TEMPLATE T &AnalyzeMapRef( T &ref )
 
 struct base_utlmap_t
 {
-   public:
+    public:
     // This enum exists so that FOR_EACH_MAP and FOR_EACH_MAP_FAST cannot accidentally
     // be used on a type that is not a CUtlMap. If the code compiles then all is well.
     // The check for IsUtlMap being true should be free.
@@ -62,7 +62,7 @@ struct base_utlmap_t
 template < typename K, typename T, typename I = unsigned short, typename LessFunc_t = bool ( * )( const K &, const K & ) >
 class CUtlMap : public base_utlmap_t
 {
-   public:
+    public:
     typedef K KeyType_t;
     typedef T ElemType_t;
     typedef I IndexType_t;
@@ -309,7 +309,7 @@ class CUtlMap : public base_utlmap_t
 
         Node_t( const Node_t &from )
             : key( from.key ),
-              elem( from.elem )
+            elem( from.elem )
         {
         }
 
@@ -319,7 +319,7 @@ class CUtlMap : public base_utlmap_t
 
     class CKeyLess
     {
-       public:
+        public:
         CKeyLess( const LessFunc_t &lessFunc )
             : m_LessFunc( lessFunc ) {}
 
@@ -343,7 +343,7 @@ class CUtlMap : public base_utlmap_t
         return &m_Tree;
     }
 
-   protected:
+    protected:
     CTree m_Tree;
 };
 

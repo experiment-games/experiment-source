@@ -21,7 +21,7 @@ class C_TFProjectile_Flare : public C_TFBaseRocket
 {
     DECLARE_CLASS( C_TFProjectile_Flare, C_TFBaseRocket );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     C_TFProjectile_Flare();
@@ -31,7 +31,7 @@ class C_TFProjectile_Flare : public C_TFBaseRocket
 
     void CreateTrails( void );
 
-   private:
+    private:
     bool m_bCritical;
     CNewParticleEffect *pEffect;
 };

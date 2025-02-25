@@ -65,11 +65,11 @@ namespace {
     const int expected_val = (expected);\
     const int actual_val = (actual);\
     if (::testing::internal::IsTrue(expected_val != actual_val)) {\
-      ::std::cout << "Value of: " #actual "\n"\
-                  << "  Actual: " << actual_val << "\n"\
-                  << "Expected: " #expected "\n"\
-                  << "Which is: " << expected_val << "\n";\
-      ::testing::internal::posix::Abort();\
+    ::std::cout << "Value of: " #actual "\n"\
+                << "  Actual: " << actual_val << "\n"\
+                << "Expected: " #expected "\n"\
+                << "Which is: " << expected_val << "\n";\
+    ::testing::internal::posix::Abort();\
     }\
   } while (::testing::internal::AlwaysFalse())
 

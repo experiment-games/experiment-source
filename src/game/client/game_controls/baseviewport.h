@@ -29,7 +29,7 @@ class CBaseViewport : public vgui::EditablePanel, public IViewPort, public IGame
 {
     DECLARE_CLASS_SIMPLE( CBaseViewport, vgui::EditablePanel );
 
-   public:
+    public:
     CBaseViewport();
     virtual ~CBaseViewport();
 
@@ -95,19 +95,19 @@ class CBaseViewport : public vgui::EditablePanel, public IViewPort, public IGame
     // Check if the named panel is visible
     virtual bool IsPanelVisible( const char *panel );
 
-   public:  // IGameEventListener:
+    public:  // IGameEventListener:
     virtual void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     bool LoadHudAnimations( void );
 
 #ifndef _XBOX
     class CBackGroundPanel : public vgui::Frame
     {
-       private:
+        private:
         typedef vgui::Frame BaseClass;
 
-       public:
+        public:
         CBackGroundPanel( vgui::Panel *parent )
             : Frame( parent, "ViewPortBackGround" )
         {
@@ -119,7 +119,7 @@ class CBaseViewport : public vgui::EditablePanel, public IViewPort, public IGame
             SetProportional( true );
         }
 
-       private:
+        private:
         virtual void ApplySchemeSettings( IScheme *pScheme )
         {
             BaseClass::ApplySchemeSettings( pScheme );
@@ -144,13 +144,13 @@ class CBaseViewport : public vgui::EditablePanel, public IViewPort, public IGame
         }
     };
 #endif
-   protected:
+    protected:
     virtual void Paint();
     virtual void OnThink();
     virtual void OnScreenSizeChanged( int iOldWide, int iOldTall );
     void PostMessageToPanel( IViewPortPanel *pPanel, KeyValues *pKeyValues );
 
-   protected:
+    protected:
     IGameUIFuncs *m_GameuiFuncs;  // for key binding details
     IGameEventManager2 *m_GameEventManager;
 #ifndef _XBOX

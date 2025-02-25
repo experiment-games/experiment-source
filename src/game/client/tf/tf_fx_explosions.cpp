@@ -175,7 +175,7 @@ void TFExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal, int 
 //-----------------------------------------------------------------------------
 class C_TETFExplosion : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TETFExplosion, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -183,7 +183,7 @@ class C_TETFExplosion : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecNormal;
     int m_iWeaponID;

@@ -34,7 +34,7 @@ class C_ObjectSentrygun : public C_BaseObject
 {
     DECLARE_CLASS( C_ObjectSentrygun, C_BaseObject );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ObjectSentrygun();
@@ -95,15 +95,15 @@ class C_ObjectSentrygun : public C_BaseObject
     void CheckNearMiss( Vector vecStart, Vector vecEnd );
 
     // ITargetIDProvidesHint
-   public:
+    public:
     virtual void DisplayHintTo( C_BasePlayer *pPlayer );
 
     virtual void BuildTransformations( CStudioHdr *hdr, Vector *pos, Quaternion q[], const matrix3x4_t &cameraTransform, int boneMask, CBoneBitList &boneComputed );
 
-   private:
+    private:
     virtual void UpgradeLevelChanged();
 
-   private:
+    private:
     int m_iState;
 
     int m_iAmmoShells;
@@ -143,7 +143,7 @@ class C_ObjectSentrygun : public C_BaseObject
 
     Vector m_vecLaserBeamPos;
 
-   private:
+    private:
     C_ObjectSentrygun( const C_ObjectSentrygun & );  // not defined, not accessible
 };
 
@@ -151,7 +151,7 @@ class C_TFProjectile_SentryRocket : public C_TFProjectile_Rocket
 {
     DECLARE_CLASS( C_TFProjectile_SentryRocket, C_TFProjectile_Rocket );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     virtual void CreateRocketTrails( void ) {}

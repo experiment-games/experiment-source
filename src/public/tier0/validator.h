@@ -18,7 +18,7 @@
 
 class CValidator
 {
-   public:
+    public:
     // Constructors & destructors
     CValidator( void );
     ~CValidator( void );
@@ -55,7 +55,7 @@ class CValidator
 
     void Validate( CValidator &validator, tchar *pchName );  // Validate our internal structures
 
-   private:
+    private:
     CValObject *m_pValObjectFirst;  // Linked list of all ValObjects
     CValObject *m_pValObjectLast;   // Last ValObject on the linked list
 

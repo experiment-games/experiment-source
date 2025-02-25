@@ -33,7 +33,7 @@
 
 class CStdStringSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     enum
     {
         MAX_SAVE_LEN = 4096,

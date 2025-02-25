@@ -19,7 +19,7 @@ ConVar tf_bot_health_search_far_range( "tf_bot_health_search_far_range", "2000",
 //---------------------------------------------------------------------------------------------
 class CHealthFilter : public INextBotFilter
 {
-   public:
+    public:
     CHealthFilter( CTFBot *me )
     {
         m_me = me;
@@ -55,7 +55,7 @@ class CHealthFilter : public INextBotFilter
             }
 
             if ( ( m_me->GetTeamNumber() == TF_TEAM_RED && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) ) ||
-                 ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) ) )
+                ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) ) )
             {
                 // the supply cabinet is in my spawn room
                 return true;

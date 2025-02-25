@@ -29,7 +29,7 @@ class CDmeParticleFunction : public CDmElement
 {
     DEFINE_ELEMENT( CDmeParticleFunction, CDmElement );
 
-   public:
+    public:
     virtual const char *GetFunctionType() const
     {
         return NULL;
@@ -48,10 +48,10 @@ class CDmeParticleFunction : public CDmElement
     // from recompiling themselves a zillion times
     void MarkNewInstance();
 
-   protected:
+    protected:
     void UpdateAttributes( const DmxElementUnpackStructure_t *pUnpack );
 
-   private:
+    private:
     // Defines widgets to edit this bad boy
     CDmeHandle< CDmeEditorTypeDictionary > m_hTypeDictionary;
     bool m_bSkipNextResolve;
@@ -64,14 +64,14 @@ class CDmeParticleOperator : public CDmeParticleFunction
 {
     DEFINE_ELEMENT( CDmeParticleOperator, CDmeParticleFunction );
 
-   public:
+    public:
     // Sets the particle operator
     void SetFunction( IParticleOperatorDefinition *pDefinition );
 
     // Returns the function type
     virtual const char *GetFunctionType() const;
 
-   private:
+    private:
     CDmaString m_FunctionName;
 };
 
@@ -82,7 +82,7 @@ class CDmeParticleChild : public CDmeParticleFunction
 {
     DEFINE_ELEMENT( CDmeParticleChild, CDmeParticleFunction );
 
-   public:
+    public:
     // Sets the particle operator
     void SetChildParticleSystem( CDmeParticleSystemDefinition *pDef, IParticleOperatorDefinition *pDefinition );
 
@@ -99,7 +99,7 @@ class CDmeParticleSystemDefinition : public CDmElement
 {
     DEFINE_ELEMENT( CDmeParticleSystemDefinition, CDmElement );
 
-   public:
+    public:
     virtual void OnElementUnserialized();
     virtual void Resolve();
 
@@ -135,7 +135,7 @@ class CDmeParticleSystemDefinition : public CDmElement
     // Should we use name-based lookup?
     bool UseNameBasedLookup() const;
 
-   private:
+    private:
     CDmaElementArray< CDmeParticleFunction > m_ParticleFunction[PARTICLE_FUNCTION_COUNT];
     CDmaVar< bool > m_bPreventNameBasedLookup;
 

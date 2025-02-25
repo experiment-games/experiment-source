@@ -37,7 +37,7 @@ enum
 //
 class CTFGrenadePipebombProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadePipebombProjectile, CTFWeaponBaseGrenadeProj );
     DECLARE_NETWORKCLASS();
 
@@ -178,11 +178,11 @@ class CTFGrenadePipebombProjectile : public CTFWeaponBaseGrenadeProj
     virtual int UpdateTransmitState() OVERRIDE;
     virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
 
-   public:
+    public:
     bool m_bFizzle;
     bool m_bWallShatter;
 
-   private:
+    private:
     float m_flMinSleepTime;
     float m_flDeflectedTime;
     bool m_bSendPlayerDestroyedEvent;

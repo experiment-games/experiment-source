@@ -24,8 +24,8 @@ enum CommandBufferCommand_t
     // flow control commands.
     CBCMD_END = 0,   // end of stream
     CBCMD_JUMP = 1,  // int cmd, void *adr. jump to another
-                     // stream. Can be used to implement
-                     // non-sequentially allocated storage
+                    // stream. Can be used to implement
+                    // non-sequentially allocated storage
     CBCMD_JSR = 2,   // int cmd, void *adr. subroutine call to another stream.
 
     // constant setting commands

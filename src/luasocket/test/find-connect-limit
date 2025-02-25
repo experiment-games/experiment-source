@@ -29,4 +29,3 @@ repeat
 	print("connection #", #connections, c, "fd", c:getfd())
 
 until false
-

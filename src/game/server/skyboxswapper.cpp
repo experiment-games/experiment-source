@@ -16,7 +16,7 @@ class CSkyboxSwapper : public CServerOnlyPointEntity
 {
     DECLARE_CLASS( CSkyboxSwapper, CServerOnlyPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Spawn( void );
@@ -24,7 +24,7 @@ class CSkyboxSwapper : public CServerOnlyPointEntity
 
     void InputTrigger( inputdata_t &inputdata );
 
-   protected:
+    protected:
     string_t m_iszSkyboxName;
 };
 

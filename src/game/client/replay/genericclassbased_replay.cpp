@@ -345,8 +345,8 @@ bool CGenericClassBasedReplay::GetFriendIdFromUserId( int nPlayerIndex, uint32 &
 {
     player_info_t pi;
     if ( !steamapicontext->SteamFriends() ||
-         !steamapicontext->SteamUtils() ||
-         !engine->GetPlayerInfo( nPlayerIndex, &pi ) )
+        !steamapicontext->SteamUtils() ||
+        !engine->GetPlayerInfo( nPlayerIndex, &pi ) )
     {
         AssertMsg( 0, "REPLAY: Failed to add domination" );
         nFriendIdOut = 0;

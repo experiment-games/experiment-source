@@ -10,7 +10,7 @@ class CHL2MPBotProxy : public CPointEntity
 {
     DECLARE_CLASS( CHL2MPBotProxy, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CHL2MPBotProxy( void );
@@ -29,7 +29,7 @@ class CHL2MPBotProxy : public CPointEntity
     void OnAttackingEnemy( void );
     void OnKilledEnemy( void );
 
-   protected:
+    protected:
     // Output
     COutputEvent m_onSpawned;
     COutputEvent m_onInjured;

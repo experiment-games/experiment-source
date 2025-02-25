@@ -23,7 +23,7 @@ class CHudViewport;
 //-----------------------------------------------------------------------------
 class ClientModeHL2MPNormal : public ClientModeShared
 {
-   public:
+    public:
     DECLARE_CLASS( ClientModeHL2MPNormal, ClientModeShared );
 
     ClientModeHL2MPNormal();

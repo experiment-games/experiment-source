@@ -21,7 +21,7 @@ class CAI_MoveAndShootOverlay : public CAI_Component
 {
     typedef CAI_Component BaseClass;
 
-   public:
+    public:
     CAI_MoveAndShootOverlay();
 
     void StartShootWhileMove();
@@ -41,7 +41,7 @@ class CAI_MoveAndShootOverlay : public CAI_Component
         return m_bMovingAndShooting;
     }
 
-   private:
+    private:
     bool HasAvailableRangeAttack();
     bool CanAimAtEnemy();
     void UpdateMoveShootActivity( bool bMoveAimAtEnemy );

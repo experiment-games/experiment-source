@@ -158,8 +158,8 @@ const char *g_HACK_GunslingerEngineerArmsOverride = "models\\weapons\\c_models\\
 const char *CTFPlayerClassShared::GetHandModelName( int iHandIndex = 0 ) const
 {
     return iHandIndex == 0
-               ? GetPlayerClassData( m_iClass )->m_szHandModelName
-               : g_HACK_GunslingerEngineerArmsOverride;  // this is precached in the CTFRobotArm class
+                ? GetPlayerClassData( m_iClass )->m_szHandModelName
+                : g_HACK_GunslingerEngineerArmsOverride;  // this is precached in the CTFRobotArm class
 }
 //-----------------------------------------------------------------------------
 // Purpose: Initialize the player class.

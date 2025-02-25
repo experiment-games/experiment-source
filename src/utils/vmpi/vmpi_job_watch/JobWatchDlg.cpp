@@ -156,7 +156,7 @@ bool ReadStringFromFile( FILE *fp, char *pStr, int strSize )
     for ( i; i < strSize - 2; i++ )
     {
         if ( fread( &pStr[i], 1, 1, fp ) != 1 ||
-             pStr[i] == '\n' )
+            pStr[i] == '\n' )
         {
             break;
         }
@@ -213,8 +213,8 @@ BOOL CJobWatchDlg::OnInitDialog()
         }
 
         if ( !ReadStringFromFile( fp, hostName, sizeof( hostName ) ) ||
-             !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) ||
-             !ReadStringFromFile( fp, userName, sizeof( userName ) ) )
+            !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) ||
+            !ReadStringFromFile( fp, userName, sizeof( userName ) ) )
         {
             fclose( fp );
             Q_snprintf( errString, sizeof( errString ), "'%s' has invalid format.", pFilename );
@@ -277,7 +277,7 @@ BOOL CJobWatchDlg::OnInitDialog()
     m_AnchorMgr.AddAnchor( this, &m_GraphControl, ANCHOR_WIDTH_PERCENT, ANCHOR_TOP, ANCHOR_RIGHT, ANCHOR_HEIGHT_PERCENT );
 
     return TRUE;  // return TRUE unless you set the focus to a control
-                  // EXCEPTION: OCX Property Pages should return FALSE
+                // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 CWorkerInfo *CJobWatchDlg::FindWorkerByID( unsigned long jobWorkerID )
@@ -468,13 +468,13 @@ void CJobWatchDlg::ProcessQueryResults_WorkerStats( IMySQLRowSet *pSet )
         if ( pInfo )
         {
             if ( workerState != pInfo->m_bConnected ||
-                 nWorkUnits != pInfo->m_nWorkUnitsDone ||
-                 runningTimeMS != pInfo->m_RunningTimeMS ||
-                 stricmp( pCurrentStage, pInfo->m_CurrentStage ) != 0 ||
-                 iThread0WU != pInfo->m_ThreadWUs[0] ||
-                 iThread1WU != pInfo->m_ThreadWUs[1] ||
-                 iThread2WU != pInfo->m_ThreadWUs[2] ||
-                 iThread3WU != pInfo->m_ThreadWUs[3] )
+                nWorkUnits != pInfo->m_nWorkUnitsDone ||
+                runningTimeMS != pInfo->m_RunningTimeMS ||
+                stricmp( pCurrentStage, pInfo->m_CurrentStage ) != 0 ||
+                iThread0WU != pInfo->m_ThreadWUs[0] ||
+                iThread1WU != pInfo->m_ThreadWUs[1] ||
+                iThread2WU != pInfo->m_ThreadWUs[2] ||
+                iThread3WU != pInfo->m_ThreadWUs[3] )
             {
                 bChange = true;
                 pInfo->m_bConnected = workerState;

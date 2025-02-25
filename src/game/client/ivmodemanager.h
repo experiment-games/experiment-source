@@ -18,7 +18,7 @@
 
 abstract_class IVModeManager
 {
-   public:
+    public:
     virtual void Init( void ) = 0;
     // HL2 will ignore, TF2 will change modes.
     virtual void SwitchMode( bool commander, bool force ) = 0;

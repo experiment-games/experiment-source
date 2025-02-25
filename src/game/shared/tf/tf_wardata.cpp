@@ -86,8 +86,8 @@ bool CWarDefinition::BInitFromKV( KeyValues* pKV, CUtlVector< CUtlString >* pVec
     pszTime = pKV->GetString( "end_time", NULL );
     SCHEMA_INIT_CHECK( pszTime != NULL, "war definition %s does not have 'end_time'", pKV->GetName() );
     m_rtTimeEnd = ( pszTime && pszTime[0] )
-                      ? CRTime::RTime32FromFmtString( "YYYY-MM-DD hh:mm:ss", pszTime )
-                      : RTime32( 0 );
+                    ? CRTime::RTime32FromFmtString( "YYYY-MM-DD hh:mm:ss", pszTime )
+                    : RTime32( 0 );
 
     KeyValues* pKVSidesBlock = pKV->FindKey( "sides" );
     FOR_EACH_TRUE_SUBKEY( pKVSidesBlock, pKVSide )
@@ -164,9 +164,9 @@ CWarData::CWarData()
 CTFWarGlobalDataHelper::CTFWarGlobalDataHelper()
     : m_bInitialized( false ), m_mapWarStats( DefLessFunc( WarStatsMap_t::KeyType_t ) )
 #ifdef CLIENT_DLL
-      ,
-      m_flLastUpdateRequest( 0.f ),
-      m_flLastUpdated( 0.f )
+    ,
+    m_flLastUpdateRequest( 0.f ),
+    m_flLastUpdated( 0.f )
 #endif
 {
 #ifdef CLIENT_DLL
@@ -341,26 +341,26 @@ void CTFWarGlobalDataHelper::RequestLeaderboard()
 
     /*if ( steamapicontext && steamapicontext->SteamUserStats() )
     {
-      CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
-      GCSDK::CGCClientSharedObjectCache *pSOCache = GCClientSystem()->GetSOCache( steamID );
-      if ( pSOCache )
-      {
+    CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
+    GCSDK::CGCClientSharedObjectCache *pSOCache = GCClientSystem()->GetSOCache( steamID );
+    if ( pSOCache )
+    {
         GCSDK::CGCClientSharedObjectTypeCache *pTypeCache = pSOCache->FindTypeCache( CWarData::k_nTypeID );
         if ( pTypeCache )
         {
-          CWarData *pWarData = (CWarData*)pTypeCache->GetObject( 0 );
-          if ( pWarData )
-          {
+        CWarData *pWarData = (CWarData*)pTypeCache->GetObject( 0 );
+        if ( pWarData )
+        {
             eSide = (EWarSides)pWarData->Obj().affiliation();
-          }
         }
-      }
+        }
+    }
 
-      if ( eSide != k_EInvalidSide )
-      {
+    if ( eSide != k_EInvalidSide )
+    {
         SteamAPICall_t apicall = steamapicontext->SteamUserStats()->FindLeaderboard( eSide == k_ESpy ? k_pszSpyVsEngyLeaderboard_Spy : k_pszSpyVsEngyLeaderboard_Engy );
         m_findLeaderboardCallback.Set( apicall, this, &CTFWarGlobalDataHelper::OnFindLeaderboard );
-      }
+    }
     }*/
 }
 
@@ -413,7 +413,7 @@ void CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends( LeaderboardS
 
 class CGC_War_GlobalStatsResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_War_GlobalStatsResponse( GCSDK::CGCClient* pGCClient )
         : GCSDK::CGCClientJob( pGCClient ) {}
 

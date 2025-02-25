@@ -363,10 +363,10 @@ void CTFTeamMenu::ShowPanel( bool bShow )
         }
 
         if ( ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam() && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED ) || TFGameRules()->State_Get() == GR_STATE_GAME_OVER
-             // [msmith] Don't allow the player to switch teams when in training.
-             || TFGameRules()->IsInTraining()
-             // or if they are coaching
-             || C_TFPlayer::GetLocalTFPlayer()->m_bIsCoaching || bDisallowChange )
+            // [msmith] Don't allow the player to switch teams when in training.
+            || TFGameRules()->IsInTraining()
+            // or if they are coaching
+            || C_TFPlayer::GetLocalTFPlayer()->m_bIsCoaching || bDisallowChange )
         {
             SetVisible( false );
 
@@ -521,9 +521,9 @@ void CTFTeamMenu::LoadMapPage( const char *mapName )
 void CTFTeamMenu::OnKeyCodePressed( KeyCode code )
 {
     if ( ( m_iTeamMenuKey != BUTTON_CODE_INVALID && m_iTeamMenuKey == code ) ||
-         code == KEY_XBUTTON_BACK ||
-         code == KEY_XBUTTON_B ||
-         code == STEAMCONTROLLER_B )
+        code == KEY_XBUTTON_BACK ||
+        code == KEY_XBUTTON_B ||
+        code == STEAMCONTROLLER_B )
     {
         C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
@@ -814,17 +814,17 @@ void CTFTeamMenu::OnTick()
     int iCurrentTeam = pLocalPlayer->GetTeamNumber();
 
     if ( ( bUnbalanced && iHeavyTeam == TF_TEAM_RED ) ||
-         ( pRules->WouldChangeUnbalanceTeams( TF_TEAM_RED, iCurrentTeam ) ) ||
-         ( bHighlander && GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) ||
-         ( pRules->IsMannVsMachineMode() && ( GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() >= tf_mvm_defenders_team_size.GetInt() ) ) )
+        ( pRules->WouldChangeUnbalanceTeams( TF_TEAM_RED, iCurrentTeam ) ) ||
+        ( bHighlander && GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) ||
+        ( pRules->IsMannVsMachineMode() && ( GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() >= tf_mvm_defenders_team_size.GetInt() ) ) )
     {
         m_bRedDisabled = true;
     }
 
     if ( ( bUnbalanced && iHeavyTeam == TF_TEAM_BLUE ) ||
-         ( pRules->WouldChangeUnbalanceTeams( TF_TEAM_BLUE, iCurrentTeam ) ) ||
-         ( bHighlander && GetGlobalTeam( TF_TEAM_BLUE )->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) ||
-         ( pRules->IsMannVsMachineMode() ) )
+        ( pRules->WouldChangeUnbalanceTeams( TF_TEAM_BLUE, iCurrentTeam ) ) ||
+        ( bHighlander && GetGlobalTeam( TF_TEAM_BLUE )->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) ||
+        ( pRules->IsMannVsMachineMode() ) )
     {
         m_bBlueDisabled = true;
     }

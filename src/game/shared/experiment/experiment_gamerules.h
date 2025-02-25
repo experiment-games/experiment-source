@@ -40,14 +40,14 @@ enum
 
 class CExperimentGameRulesProxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CExperimentGameRulesProxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 };
 
 class ExperimentViewVectors : public CViewVectors
 {
-   public:
+    public:
     ExperimentViewVectors(
         Vector vView,
         Vector vHullMin,
@@ -61,15 +61,15 @@ class ExperimentViewVectors : public CViewVectors
         Vector vCrouchTraceMin,
         Vector vCrouchTraceMax )
         : CViewVectors(
-              vView,
-              vHullMin,
-              vHullMax,
-              vDuckHullMin,
-              vDuckHullMax,
-              vDuckView,
-              vObsHullMin,
-              vObsHullMax,
-              vDeadViewHeight )
+            vView,
+            vHullMin,
+            vHullMax,
+            vDuckHullMin,
+            vDuckHullMax,
+            vDuckView,
+            vObsHullMin,
+            vObsHullMax,
+            vDeadViewHeight )
     {
         m_vCrouchTraceMin = vCrouchTraceMin;
         m_vCrouchTraceMax = vCrouchTraceMax;
@@ -81,7 +81,7 @@ class ExperimentViewVectors : public CViewVectors
 
 class CExperimentRules : public CTeamplayRules
 {
-   public:
+    public:
     DECLARE_CLASS( CExperimentRules, CTeamplayRules );
 
 #ifdef CLIENT_DLL
@@ -202,7 +202,7 @@ class CExperimentRules : public CTeamplayRules
 
     virtual bool IsConnectedUserInfoChangeAllowed( CBasePlayer *pPlayer );
 
-   private:
+    private:
 #ifdef EXPERIMENT_SOURCE
 #ifndef CLIENT_DLL
     float m_flLastHealthDropTime;

@@ -54,7 +54,7 @@ bool IsEntityCreationAllowedInScripts( void );
 // ----------------------------------------------------------------------------
 class CScriptKeyValues
 {
-   public:
+    public:
     CScriptKeyValues( KeyValues *pKeyValues = NULL );
     ~CScriptKeyValues();
 
@@ -73,7 +73,7 @@ class CScriptKeyValues
 
 class CVScriptGameEventListener : public CGameEventListener
 {
-   public:
+    public:
     virtual void FireGameEvent( IGameEvent *event );
     bool FireScriptHook( const char *pszHookName, HSCRIPT params );
 
@@ -87,7 +87,7 @@ class CVScriptGameEventListener : public CGameEventListener
     bool HasScriptHook( const char *szName );
     void ClearAllScriptHooks();
 
-   private:
+    private:
     CUtlSymbolTable m_ScriptHooks;
 
     HSCRIPT m_RunGameEventCallbacksFunc;

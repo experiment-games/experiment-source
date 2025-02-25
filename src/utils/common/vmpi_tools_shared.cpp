@@ -97,12 +97,12 @@ bool SharedDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
                     // Prepare the filename
                     char chSaveFileName[2 * _MAX_PATH] = { 0 };
                     sprintf( chSaveFileName, "%s\\vmpi_%s_on_%s_%d%.2d%2d%.2d%.2d%.2d_%d.mdmp", szFolder, pModuleName, VMPI_GetMachineName( iSource ), pTime->tm_year + 1900, /* Year less 2000 */
-                             pTime->tm_mon + 1,                                                                                                                               /* month (0 - 11 : 0 = January) */
-                             pTime->tm_mday,                                                                                                                                  /* day of month (1 - 31) */
-                             pTime->tm_hour,                                                                                                                                  /* hour (0 - 23) */
-                             pTime->tm_min,                                                                                                                                   /* minutes (0 - 59) */
-                             pTime->tm_sec,                                                                                                                                   /* seconds (0 - 59) */
-                             s_numMiniDumps );
+                            pTime->tm_mon + 1,                                                                                                                               /* month (0 - 11 : 0 = January) */
+                            pTime->tm_mday,                                                                                                                                  /* day of month (1 - 31) */
+                            pTime->tm_hour,                                                                                                                                  /* hour (0 - 23) */
+                            pTime->tm_min,                                                                                                                                   /* minutes (0 - 59) */
+                            pTime->tm_sec,                                                                                                                                   /* seconds (0 - 59) */
+                            s_numMiniDumps );
 
                     if ( FILE *fDump = fopen( chSaveFileName, "wb" ) )
                     {
@@ -110,8 +110,8 @@ bool SharedDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
                         fclose( fDump );
 
                         Warning( "\nSaved worker crash minidump '%s', size %d byte(s).\n",
-                                 chSaveFileName,
-                                 iFileSize );
+                                chSaveFileName,
+                                iFileSize );
                     }
                     else
                     {
@@ -196,7 +196,7 @@ int VMPI_SendFileChunk( const void *pvChunkPrefix, int lenPrefix, tchar const *p
 
     // Send the data over VMPI
     if ( VMPI_Send3Chunks(
-             pvChunkPrefix, lenPrefix, &iMappedFileSize, sizeof( iMappedFileSize ), pvMappedData, iMappedFileSize, VMPI_MASTER_ID ) )
+            pvChunkPrefix, lenPrefix, &iMappedFileSize, sizeof( iMappedFileSize ), pvMappedData, iMappedFileSize, VMPI_MASTER_ID ) )
         iResult = iMappedFileSize;
 
     // Fall-through for cleanup code to execute
@@ -344,7 +344,7 @@ void HandleMPIDisconnect( int procID, const char *pReason )
         /*
         if ( VMPI_GetCurrentNumberOfConnections() - g_nDisconnects <= 1 )
         {
-          Error( "All machines disconnected!" );
+        Error( "All machines disconnected!" );
         }
         */
     }

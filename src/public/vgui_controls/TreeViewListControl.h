@@ -29,7 +29,7 @@ class CTreeViewListControl : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CTreeViewListControl, Panel );
 
-   public:
+    public:
     CTreeViewListControl( vgui::Panel *pParent, const char *pName );
 
     // Set the tree view to be displayed on the left. If this isn't set, then nothing displays in here.
@@ -63,7 +63,7 @@ class CTreeViewListControl : public vgui::Panel
     virtual int GetScrollBarSize();
 
     // Overrides.
-   public:
+    public:
     // This is where it recalculates the row infos.
     virtual void PerformLayout();
 
@@ -75,24 +75,24 @@ class CTreeViewListControl : public vgui::Panel
     // You can override this to change the way the title bars are drawn.
     virtual void DrawTitleBars();
 
-   public:
+    public:
     enum
     {
         // By default, column header text is centered.
         CI_HEADER_LEFTALIGN = 0x0001
     };
 
-   protected:
+    protected:
     void RecalculateRows();
     void RecalculateRows_R( int index );
     void RecalculateColumns();
 
-   private:
+    private:
     vgui::TreeView *m_pTree;
 
     class CColumnInfo
     {
-       public:
+        public:
         CColumnInfo()
         {
             m_Width = m_Left = m_Right = m_ciFlags = 0;

@@ -463,11 +463,11 @@ CAI_Hint *CAI_FearBehavior::FindFearWithdrawalDest()
         pHint->DisableForSeconds( 4.0f );
     }
 #if 0
-	else
-	{
-		Msg("DID NOT FIND HINT\n");
-		NDebugOverlay::Cross3D( GetOuter()->WorldSpaceCenter(), 32, 255, 255, 0, false, 10.0f );
-	}
+    else
+    {
+        Msg("DID NOT FIND HINT\n");
+        NDebugOverlay::Cross3D( GetOuter()->WorldSpaceCenter(), 32, 255, 255, 0, false, 10.0f );
+    }
 #endif
 
     return pHint;

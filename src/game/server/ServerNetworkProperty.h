@@ -21,15 +21,15 @@
 //
 class CServerNetworkProperty : public IServerNetworkable, public IEventRegisterCallback
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CServerNetworkProperty );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CServerNetworkProperty();
     virtual ~CServerNetworkProperty();
 
-   public:
+    public:
     // IServerNetworkable implementation.
     virtual IHandleEntity *GetEntityHandle();
     virtual edict_t *GetEdict() const;
@@ -41,7 +41,7 @@ class CServerNetworkProperty : public IServerNetworkable, public IEventRegisterC
     virtual int AreaNum() const;
     virtual PVSInfo_t *GetPVSInfo();
 
-   public:
+    public:
     // Other public methods
     void Init( CBaseEntity *pEntity );
 
@@ -101,7 +101,7 @@ class CServerNetworkProperty : public IServerNetworkable, public IEventRegisterC
     // Recomputes PVS information
     void RecomputePVSInformation();
 
-   private:
+    private:
     // Detaches the edict.. should only be called by CBaseNetworkable's destructor.
     void DetachEdict();
     CBaseEntity *GetOuter();
@@ -109,7 +109,7 @@ class CServerNetworkProperty : public IServerNetworkable, public IEventRegisterC
     // Marks the networkable that it will should transmit
     void SetTransmit( CCheckTransmitInfo *pInfo );
 
-   private:
+    private:
     CBaseEntity *m_pOuter;
     // CBaseTransmitProxy *m_pTransmitProxy;
     edict_t *m_pPev;

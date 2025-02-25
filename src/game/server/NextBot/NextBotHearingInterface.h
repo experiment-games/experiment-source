@@ -14,7 +14,7 @@
  */
 class IHearing : public INextBotComponent
 {
-   public:
+    public:
     IHearing( INextBot *bot )
         : INextBotComponent( bot ) {}
     virtual ~IHearing() {}

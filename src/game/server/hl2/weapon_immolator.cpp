@@ -26,7 +26,7 @@
 
 class CWeaponImmolator : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponImmolator, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();
@@ -256,23 +256,23 @@ void CWeaponImmolator::Update()
     int brightness;
     brightness = 255 * ( m_flBurnRadius / MAX_BURN_RADIUS );
     UTIL_Beam( vecSrc,
-               tr.endpos,
-               m_beamIndex,
-               0,     // halo index
-               0,     // frame start
-               2.0f,  // framerate
-               0.1f,  // life
-               20,    // width
-               1,     // endwidth
-               0,     // fadelength,
-               1,     // noise
+                tr.endpos,
+                m_beamIndex,
+                0,     // halo index
+                0,     // frame start
+                2.0f,  // framerate
+                0.1f,  // life
+                20,    // width
+                1,     // endwidth
+                0,     // fadelength,
+                1,     // noise
 
-               0,    // red
-               255,  // green
-               0,    // blue,
+                0,    // red
+                255,  // green
+                0,    // blue,
 
-               brightness,  // bright
-               100          // speed
+                brightness,  // bright
+                100          // speed
     );
 
     if ( tr.DidHitWorld() )
@@ -292,23 +292,23 @@ void CWeaponImmolator::Update()
             vecDest = tr.endpos + vecDest * m_flBurnRadius;
 
             UTIL_Beam( tr.endpos,
-                       vecDest,
-                       m_beamIndex,
-                       0,      // halo index
-                       0,      // frame start
-                       2.0f,   // framerate
-                       0.15f,  // life
-                       20,     // width
-                       1.75,   // endwidth
-                       0.75,   // fadelength,
-                       15,     // noise
+                        vecDest,
+                        m_beamIndex,
+                        0,      // halo index
+                        0,      // frame start
+                        2.0f,   // framerate
+                        0.15f,  // life
+                        20,     // width
+                        1.75,   // endwidth
+                        0.75,   // fadelength,
+                        15,     // noise
 
-                       0,    // red
-                       255,  // green
-                       0,    // blue,
+                        0,    // red
+                        255,  // green
+                        0,    // blue,
 
-                       128,  // bright
-                       100   // speed
+                        128,  // bright
+                        100   // speed
             );
         }
 

@@ -22,8 +22,8 @@ mov oPos, $projPos
 alloc $worldPos
 if( $DOWATERFOG == 1 )
 {
-	; Get the worldpos z component only since that's all we need for height fog
-	dp4 $worldPos.z, $vPos, $cModel2
+    ; Get the worldpos z component only since that's all we need for height fog
+    dp4 $worldPos.z, $vPos, $cModel2
 }
 &CalcFog( $worldPos, $projPos );
 free $worldPos
@@ -39,7 +39,7 @@ free $worldPos
 &AllocateRegister( \$bumpOffset );
 
 mov $bumpOffset.xy, $vTexCoord2
-mov oT0, $vTexCoord0				; bumpmap texcoords 
+mov oT0, $vTexCoord0				; bumpmap texcoords
 add oT1.xy, $bumpOffset, $vTexCoord1			; first lightmap texcoord
 mad oT2.xy, $bumpOffset, $cTwo, $vTexCoord1		; second lightmap texcoord
 ; make a 3

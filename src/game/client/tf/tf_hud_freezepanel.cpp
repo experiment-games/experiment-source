@@ -605,12 +605,12 @@ void CTFFreezePanel::FireGameEvent( IGameEvent *event )
                 // UNDONE: We're not shipping this for now
                 /*else if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && pTFKiller && pTFKiller->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
                 {
-                  const wchar_t *pwchHint = g_pVGuiLocalize->Find( VarArgs( "#TF_PVE_FreezePanelHint_%s", pTFKiller->GetPlayerClass()->GetClassIconName() ) );
-                  if ( pwchHint && pwchHint[ 0 ] != L'\0' )
-                  {
+                const wchar_t *pwchHint = g_pVGuiLocalize->Find( VarArgs( "#TF_PVE_FreezePanelHint_%s", pTFKiller->GetPlayerClass()->GetClassIconName() ) );
+                if ( pwchHint && pwchHint[ 0 ] != L'\0' )
+                {
                     pchNemesisText = pwchHint;
                     bAdvice = true;
-                  }
+                }
                 }*/
             }
             break;
@@ -693,7 +693,7 @@ CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector
                 Vector vecCalloutTL( *iX, *iY, 0 );
                 Vector vecCalloutBR( iRight, iBottom, 1 );
                 if ( !QuickBoxIntersectTest( vecCalloutTL, vecCalloutBR, vecFreezeTL, vecFreezeBR ) &&
-                     !QuickBoxIntersectTest( vecCalloutTL, vecCalloutBR, vecStatTL, vecStatBR ) )
+                    !QuickBoxIntersectTest( vecCalloutTL, vecCalloutBR, vecStatTL, vecStatBR ) )
                 {
                     // Make sure it doesn't intersect any other callouts
                     bool bClear = true;

@@ -404,7 +404,7 @@ void Templates_RemoveAll( void )
 //-----------------------------------------------------------------------------
 class CTemplatesHook : public CAutoGameSystem
 {
-   public:
+    public:
     CTemplatesHook( char const *name )
         : CAutoGameSystem( name )
     {
@@ -425,7 +425,7 @@ static short TEMPLATE_SAVE_RESTORE_VERSION = 1;
 
 class CTemplate_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     const char *GetBlockName()
     {
         return "Templates";
@@ -497,7 +497,7 @@ class CTemplate_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
         }
     }
 
-   private:
+    private:
     bool m_fDoLoad;
 };
 

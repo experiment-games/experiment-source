@@ -12,16 +12,16 @@ class CLuaWebConnectionManager;  // Forward declaration
 
 class LuaWebConnectionHandle
 {
-   public:
+    public:
     LuaWebConnectionHandle(
         HTTPRequestHandle handle,
         lua_State *L,
         int successCallback,
         int failureCallback )
         : m_L( L ),
-          m_Handle( handle ),
-          m_SuccessCallback( successCallback ),
-          m_FailureCallback( failureCallback ) {}
+        m_Handle( handle ),
+        m_SuccessCallback( successCallback ),
+        m_FailureCallback( failureCallback ) {}
     ~LuaWebConnectionHandle();
 
     CCallResult< CLuaWebConnectionManager, HTTPRequestCompleted_t > *m_CompleteResult;
@@ -49,7 +49,7 @@ class LuaWebConnectionHandle
     void CallSuccessCallback( EHTTPStatusCode statusCode, const char *body, int bodySize );
     void CallFailureCallback( const char *message );
 
-   private:
+    private:
     HTTPRequestHandle m_Handle;
     lua_State *m_L;
 
@@ -61,7 +61,7 @@ class LuaWebConnectionHandle
 
 class CLuaWebConnectionManager
 {
-   public:
+    public:
     CLuaWebConnectionManager();
 
     void AddRequest( HTTPRequestHandle handle, LuaWebConnectionHandle *connectionHandle )
@@ -101,7 +101,7 @@ class CLuaWebConnectionManager
     STEAM_CALLBACK( CLuaWebConnectionManager, OnHTTPData, HTTPRequestDataReceived_t );
     void OnHTTPComplete( HTTPRequestCompleted_t *pParam, bool bIO );
 
-   private:
+    private:
     CUtlMap< HTTPRequestHandle, LuaWebConnectionHandle * > m_WebConnectionsMap;
 };
 

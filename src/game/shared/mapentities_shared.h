@@ -19,12 +19,12 @@
 //-----------------------------------------------------------------------------
 class CEntityMapData
 {
-   private:
+    private:
     char *m_pEntData;
     int m_nEntDataSize;
     char *m_pCurrentKey;
 
-   public:
+    public:
     explicit CEntityMapData( char *entBlock, int nEntBlockSize = -1 )
         : m_pEntData( entBlock ), m_nEntDataSize( nEntBlockSize ), m_pCurrentKey( entBlock ) {}
 

@@ -20,7 +20,7 @@ class CTFSupportNotificationDialog : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFSupportNotificationDialog, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFSupportNotificationDialog( int iNotificationID, const char *pszSupportMessage )
         : CTFMessageBoxDialog( NULL, pszSupportMessage, NULL, NULL, NULL ), m_iNotificationID( iNotificationID ), m_pConfirmDialog( NULL )
     {
@@ -71,10 +71,10 @@ class CTFSupportNotificationDialog : public CTFMessageBoxDialog
             // Confirm this, it's going away forever!
             CleanupConfirmDialog();
             m_pConfirmDialog = ShowConfirmDialog( "#DeleteConfirmDefault",
-                                                  "#TF_Support_Message_Confirm_Acknowledge_Text",
-                                                  "#TF_Support_Message_Acknowledge",
-                                                  "#Cancel",
-                                                  &StaticConfirmDialogCallback );
+                                                "#TF_Support_Message_Confirm_Acknowledge_Text",
+                                                "#TF_Support_Message_Acknowledge",
+                                                "#Cancel",
+                                                &StaticConfirmDialogCallback );
             m_pConfirmDialog->SetContext( this );
             return;
         }
@@ -94,7 +94,7 @@ class CTFSupportNotificationDialog : public CTFMessageBoxDialog
         return "Resource/UI/SupportNotificationDialog.res";
     }
 
-   private:
+    private:
     // Associated notification to clear
     int m_iNotificationID;
     CTFGenericConfirmDialog *m_pConfirmDialog;
@@ -170,7 +170,7 @@ void CClientNotification::Deleted()
     if ( m_bSupportMessage )
     {
         AssertMsg( !m_bSupportMessage,
-                   "Support messages should only be able to be triggered, not deleted" );
+                    "Support messages should only be able to be triggered, not deleted" );
         return;
     }
 
@@ -203,7 +203,7 @@ void CClientNotification::Trigger()
     if ( !m_bSupportMessage )
     {
         AssertMsg( m_bSupportMessage,
-                   "Don't expect to be trigger-able when not in support message mode" );
+                    "Don't expect to be trigger-able when not in support message mode" );
         return;
     }
 
@@ -216,7 +216,7 @@ void CClientNotification::OnDialogAcknowledged()
     if ( !m_bSupportMessage )
     {
         AssertMsg( m_bSupportMessage,
-                   "Don't expect to be getting callbacks from the support message dialog when not in support message mode" );
+                    "Don't expect to be getting callbacks from the support message dialog when not in support message mode" );
         return;
     }
 

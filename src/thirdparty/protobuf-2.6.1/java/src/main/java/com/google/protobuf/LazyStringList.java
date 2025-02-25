@@ -48,114 +48,114 @@ import java.util.List;
 public interface LazyStringList extends ProtocolStringList {
 
   /**
-   * Returns the element at the specified position in this list as a ByteString.
-   *
-   * @param index index of the element to return
-   * @return the element at the specified position in this list
-   * @throws IndexOutOfBoundsException if the index is out of range
-   *         ({@code index < 0 || index >= size()})
-   */
+    * Returns the element at the specified position in this list as a ByteString.
+    *
+    * @param index index of the element to return
+    * @return the element at the specified position in this list
+    * @throws IndexOutOfBoundsException if the index is out of range
+    *         ({@code index < 0 || index >= size()})
+    */
   ByteString getByteString(int index);
-  
+
   /**
-   * Returns the element at the specified position in this list as byte[].
-   *
-   * @param index index of the element to return
-   * @return the element at the specified position in this list
-   * @throws IndexOutOfBoundsException if the index is out of range
-   *         ({@code index < 0 || index >= size()})
-   */
+    * Returns the element at the specified position in this list as byte[].
+    *
+    * @param index index of the element to return
+    * @return the element at the specified position in this list
+    * @throws IndexOutOfBoundsException if the index is out of range
+    *         ({@code index < 0 || index >= size()})
+    */
   byte[] getByteArray(int index);
 
   /**
-   * Appends the specified element to the end of this list (optional
-   * operation).
-   *
-   * @param element element to be appended to this list
-   * @throws UnsupportedOperationException if the <tt>add</tt> operation
-   *         is not supported by this list
-   */
+    * Appends the specified element to the end of this list (optional
+    * operation).
+    *
+    * @param element element to be appended to this list
+    * @throws UnsupportedOperationException if the <tt>add</tt> operation
+    *         is not supported by this list
+    */
   void add(ByteString element);
 
   /**
-   * Appends the specified element to the end of this list (optional
-   * operation).
-   *
-   * @param element element to be appended to this list
-   * @throws UnsupportedOperationException if the <tt>add</tt> operation
-   *         is not supported by this list
-   */
+    * Appends the specified element to the end of this list (optional
+    * operation).
+    *
+    * @param element element to be appended to this list
+    * @throws UnsupportedOperationException if the <tt>add</tt> operation
+    *         is not supported by this list
+    */
   void add(byte[] element);
 
   /**
-   * Replaces the element at the specified position in this list with the
-   * specified element (optional operation).
-   *
-   * @param index index of the element to replace
-   * @param element the element to be stored at the specified position
-   * @throws UnsupportedOperationException if the <tt>set</tt> operation
-   *         is not supported by this list
-   *         IndexOutOfBoundsException if the index is out of range
-   *         ({@code index < 0 || index >= size()})
-   */
+    * Replaces the element at the specified position in this list with the
+    * specified element (optional operation).
+    *
+    * @param index index of the element to replace
+    * @param element the element to be stored at the specified position
+    * @throws UnsupportedOperationException if the <tt>set</tt> operation
+    *         is not supported by this list
+    *         IndexOutOfBoundsException if the index is out of range
+    *         ({@code index < 0 || index >= size()})
+    */
   void set(int index, ByteString element);
-  
+
   /**
-   * Replaces the element at the specified position in this list with the
-   * specified element (optional operation).
-   *
-   * @param index index of the element to replace
-   * @param element the element to be stored at the specified position
-   * @throws UnsupportedOperationException if the <tt>set</tt> operation
-   *         is not supported by this list
-   *         IndexOutOfBoundsException if the index is out of range
-   *         ({@code index < 0 || index >= size()})
-   */
+    * Replaces the element at the specified position in this list with the
+    * specified element (optional operation).
+    *
+    * @param index index of the element to replace
+    * @param element the element to be stored at the specified position
+    * @throws UnsupportedOperationException if the <tt>set</tt> operation
+    *         is not supported by this list
+    *         IndexOutOfBoundsException if the index is out of range
+    *         ({@code index < 0 || index >= size()})
+    */
   void set(int index, byte[] element);
 
   /**
-   * Appends all elements in the specified ByteString collection to the end of
-   * this list.
-   *
-   * @param c collection whose elements are to be added to this list
-   * @return true if this list changed as a result of the call
-   * @throws UnsupportedOperationException if the <tt>addAllByteString</tt>
-   *         operation is not supported by this list
-   */
+    * Appends all elements in the specified ByteString collection to the end of
+    * this list.
+    *
+    * @param c collection whose elements are to be added to this list
+    * @return true if this list changed as a result of the call
+    * @throws UnsupportedOperationException if the <tt>addAllByteString</tt>
+    *         operation is not supported by this list
+    */
   boolean addAllByteString(Collection<? extends ByteString> c);
 
   /**
-   * Appends all elements in the specified byte[] collection to the end of
-   * this list.
-   *
-   * @param c collection whose elements are to be added to this list
-   * @return true if this list changed as a result of the call
-   * @throws UnsupportedOperationException if the <tt>addAllByteArray</tt>
-   *         operation is not supported by this list
-   */
+    * Appends all elements in the specified byte[] collection to the end of
+    * this list.
+    *
+    * @param c collection whose elements are to be added to this list
+    * @return true if this list changed as a result of the call
+    * @throws UnsupportedOperationException if the <tt>addAllByteArray</tt>
+    *         operation is not supported by this list
+    */
   boolean addAllByteArray(Collection<byte[]> c);
 
   /**
-   * Returns an unmodifiable List of the underlying elements, each of which is
-   * either a {@code String} or its equivalent UTF-8 encoded {@code ByteString}
-   * or byte[]. It is an error for the caller to modify the returned
-   * List, and attempting to do so will result in an
-   * {@link UnsupportedOperationException}.
-   */
+    * Returns an unmodifiable List of the underlying elements, each of which is
+    * either a {@code String} or its equivalent UTF-8 encoded {@code ByteString}
+    * or byte[]. It is an error for the caller to modify the returned
+    * List, and attempting to do so will result in an
+    * {@link UnsupportedOperationException}.
+    */
   List<?> getUnderlyingElements();
 
   /**
-   * Merges all elements from another LazyStringList into this one. This method
-   * differs from {@link #addAll(Collection)} on that underlying byte arrays are
-   * copied instead of reference shared. Immutable API doesn't need to use this
-   * method as byte[] is not used there at all.
-   */
+    * Merges all elements from another LazyStringList into this one. This method
+    * differs from {@link #addAll(Collection)} on that underlying byte arrays are
+    * copied instead of reference shared. Immutable API doesn't need to use this
+    * method as byte[] is not used there at all.
+    */
   void mergeFrom(LazyStringList other);
 
   /**
-   * Returns a mutable view of this list. Changes to the view will be made into
-   * the original list. This method is used in mutable API only.
-   */
+    * Returns a mutable view of this list. Changes to the view will be made into
+    * the original list. This method is used in mutable API only.
+    */
   List<byte[]> asByteArrayList();
 
   /** Returns an unmodifiable view of the list. */

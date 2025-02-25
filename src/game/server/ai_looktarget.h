@@ -13,7 +13,7 @@
 //=============================================================================
 class CAI_LookTarget : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAI_LookTarget, CPointEntity );
     DECLARE_DATADESC();
 
@@ -53,7 +53,7 @@ class CAI_LookTarget : public CPointEntity
         m_bDisabled = true;
     }
 
-   private:
+    private:
     bool m_bDisabled;
     float m_flTimeNextAvailable;
     float m_flMaxDist;

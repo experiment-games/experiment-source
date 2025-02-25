@@ -151,7 +151,7 @@ CTFProjectile_Jar *CTFJar::CreateJarProjectile( const Vector &position, const QA
 Vector CTFJar::GetVelocityVector( const Vector &vecForward, const Vector &vecRight, const Vector &vecUp )
 {
     return ( ( vecForward * GetProjectileSpeed() ) + ( vecUp * 200.0f ) + ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) +
-             ( random->RandomFloat( -10.0f, 10.0f ) * vecUp ) );
+            ( random->RandomFloat( -10.0f, 10.0f ) * vecUp ) );
 }
 #endif
 

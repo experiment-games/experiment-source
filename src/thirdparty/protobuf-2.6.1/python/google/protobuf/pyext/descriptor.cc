@@ -74,14 +74,14 @@ static void Dealloc(CFieldDescriptor* self) {
 
 static PyObject* GetFullName(CFieldDescriptor* self, void *closure) {
   return PyString_FromStringAndSize(
-      self->descriptor->full_name().c_str(),
-      self->descriptor->full_name().size());
+    self->descriptor->full_name().c_str(),
+    self->descriptor->full_name().size());
 }
 
 static PyObject* GetName(CFieldDescriptor *self, void *closure) {
   return PyString_FromStringAndSize(
-      self->descriptor->name().c_str(),
-      self->descriptor->name().size());
+    self->descriptor->name().c_str(),
+    self->descriptor->name().size());
 }
 
 static PyObject* GetCppType(CFieldDescriptor *self, void *closure) {
@@ -160,7 +160,7 @@ static void Dealloc(CDescriptorPool* self) {
 static PyObject* NewCDescriptor(
     const google::protobuf::FieldDescriptor* field_descriptor) {
   CFieldDescriptor* cfield_descriptor = PyObject_New(
-      CFieldDescriptor, &CFieldDescriptor_Type);
+    CFieldDescriptor, &CFieldDescriptor_Type);
   if (cfield_descriptor == NULL) {
     return NULL;
   }
@@ -182,7 +182,7 @@ PyObject* FindFieldByName(CDescriptorPool* self, PyObject* name) {
 
   if (field_descriptor == NULL) {
     PyErr_Format(PyExc_TypeError, "Couldn't find field %.200s",
-                 full_field_name);
+                full_field_name);
     return NULL;
   }
 
@@ -196,10 +196,10 @@ PyObject* FindExtensionByName(CDescriptorPool* self, PyObject* arg) {
   }
 
   const google::protobuf::FieldDescriptor* field_descriptor =
-      self->pool->FindExtensionByName(full_field_name);
+    self->pool->FindExtensionByName(full_field_name);
   if (field_descriptor == NULL) {
     PyErr_Format(PyExc_TypeError, "Couldn't find field %.200s",
-                 full_field_name);
+                full_field_name);
     return NULL;
   }
 
@@ -274,7 +274,7 @@ google::protobuf::DescriptorPool* GetDescriptorPool() {
 
 PyObject* Python_NewCDescriptorPool(PyObject* ignored, PyObject* args) {
   CDescriptorPool* cdescriptor_pool = PyObject_New(
-      CDescriptorPool, &CDescriptorPool_Type);
+    CDescriptorPool, &CDescriptorPool_Type);
   if (cdescriptor_pool == NULL) {
     return NULL;
   }
@@ -295,8 +295,8 @@ class BuildFileErrorCollector : public google::protobuf::DescriptorPool::ErrorCo
     // Replicates the logging behavior that happens in the C++ implementation
     // when an error collector is not passed in.
     if (!had_errors) {
-      error_message +=
-          ("Invalid proto descriptor for file \"" + filename + "\":\n");
+    error_message +=
+        ("Invalid proto descriptor for file \"" + filename + "\":\n");
     }
     // As this only happens on failure and will result in the program not
     // running at all, no effort is made to optimize this string manipulation.
@@ -322,18 +322,18 @@ PyObject* Python_BuildFile(PyObject* ignored, PyObject* arg) {
   }
 
   if (google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-          file_proto.name()) != NULL) {
+        file_proto.name()) != NULL) {
     Py_RETURN_NONE;
   }
 
   BuildFileErrorCollector error_collector;
   const google::protobuf::FileDescriptor* descriptor =
-      GetDescriptorPool()->BuildFileCollectingErrors(file_proto,
-                                                     &error_collector);
+    GetDescriptorPool()->BuildFileCollectingErrors(file_proto,
+                                                    &error_collector);
   if (descriptor == NULL) {
     PyErr_Format(PyExc_TypeError,
-                 "Couldn't build proto file into descriptor pool!\n%s",
-                 error_collector.error_message.c_str());
+                "Couldn't build proto file into descriptor pool!\n%s",
+                error_collector.error_message.c_str());
     return NULL;
   }
 

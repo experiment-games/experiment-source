@@ -21,12 +21,12 @@
 template < class T >
 class ArrayStack
 {
-   protected:
+    protected:
     T *data;
     int m_stackDepth;
     int m_maxNumElements;
 
-   public:
+    public:
     ArrayStack( int maxNumElements )
     {
         data = new T[maxNumElements];

@@ -34,7 +34,7 @@
 // we hope.
 class cUnitVector  // : public c3dMathObject
 {
-   public:
+    public:
     cUnitVector()
     {
         mVec = 0;
@@ -184,112 +184,112 @@ class cUnitVector  // : public c3dMathObject
     }
 
 #if 0
-   void test()
-   {
+    void test()
+    {
 #define TEST_RANGE 4
 #define TEST_RANDOM 100
 #define TEST_ANGERROR 1.0
 
-      float maxError = 0;
-      float avgError = 0;
-      int numVecs = 0;
+    float maxError = 0;
+    float avgError = 0;
+    int numVecs = 0;
 
-      {for ( int x = -TEST_RANGE; x < TEST_RANGE; x++ )
-      {
-         for ( int y = -TEST_RANGE; y < TEST_RANGE; y++ )
-         {
+    {for ( int x = -TEST_RANGE; x < TEST_RANGE; x++ )
+    {
+        for ( int y = -TEST_RANGE; y < TEST_RANGE; y++ )
+        {
             for ( int z = -TEST_RANGE; z < TEST_RANGE; z++ )
             {
-               if (( x + y + z ) == 0 ) continue;
+                if (( x + y + z ) == 0 ) continue;
 
-               Vector vec( (float)x, (float)y, (float)z );
-               Vector vec2;
+                Vector vec( (float)x, (float)y, (float)z );
+                Vector vec2;
 
-               vec.normalize();
-               packVector( vec );
-               unpackVector( vec2 );
+                vec.normalize();
+                packVector( vec );
+                unpackVector( vec2 );
 
-               float ang = vec.dot( vec2 );
-               ang = (( fabs( ang ) > 0.99999f ) ? 0 : (float)acos(ang));
+                float ang = vec.dot( vec2 );
+                ang = (( fabs( ang ) > 0.99999f ) ? 0 : (float)acos(ang));
 
-               if (( ang > TEST_ANGERROR ) | ( !_finite( ang )))
-               {
-                  cerr << "error: " << ang << endl;
-                  cerr << "orig vec:       " << vec.x << ",\t"
-                       << vec.y << ",\t" << vec.z << "\tmVec: "
-                       << mVec << endl;
-                  cerr << "quantized vec2: " << vec2.x
-                       << ",\t" << vec2.y << ",\t"
-                       << vec2.z << endl << endl;
-               }
-               avgError += ang;
-               numVecs++;
-               if ( maxError < ang ) maxError = ang;
+                if (( ang > TEST_ANGERROR ) | ( !_finite( ang )))
+                {
+                cerr << "error: " << ang << endl;
+                cerr << "orig vec:       " << vec.x << ",\t"
+                        << vec.y << ",\t" << vec.z << "\tmVec: "
+                        << mVec << endl;
+                cerr << "quantized vec2: " << vec2.x
+                        << ",\t" << vec2.y << ",\t"
+                        << vec2.z << endl << endl;
+                }
+                avgError += ang;
+                numVecs++;
+                if ( maxError < ang ) maxError = ang;
             }
-         }
-      }}
+        }
+    }}
 
-      for ( int w = 0; w < TEST_RANDOM; w++ )
-      {
-         Vector vec( genRandom(), genRandom(), genRandom());
-         Vector vec2;
-         vec.normalize();
+    for ( int w = 0; w < TEST_RANDOM; w++ )
+    {
+        Vector vec( genRandom(), genRandom(), genRandom());
+        Vector vec2;
+        vec.normalize();
 
-         packVector( vec );
-         unpackVector( vec2 );
+        packVector( vec );
+        unpackVector( vec2 );
 
-         float ang =vec.dot( vec2 );
-         ang = (( ang > 0.999f ) ? 0 : (float)acos(ang));
+        float ang =vec.dot( vec2 );
+        ang = (( ang > 0.999f ) ? 0 : (float)acos(ang));
 
-         if (( ang > TEST_ANGERROR ) | ( !_finite( ang )))
-         {
+        if (( ang > TEST_ANGERROR ) | ( !_finite( ang )))
+        {
             cerr << "error: " << ang << endl;
             cerr << "orig vec:       " << vec.x << ",\t"
-                 << vec.y << ",\t" << vec.z << "\tmVec: "
-                 << mVec << endl;
+                << vec.y << ",\t" << vec.z << "\tmVec: "
+                << mVec << endl;
             cerr << "quantized vec2: " << vec2.x << ",\t"
-                 << vec2.y << ",\t"
-                 << vec2.z << endl << endl;
-         }
-         avgError += ang;
-         numVecs++;
-         if ( maxError < ang ) maxError = ang;
-      }
+                << vec2.y << ",\t"
+                << vec2.z << endl << endl;
+        }
+        avgError += ang;
+        numVecs++;
+        if ( maxError < ang ) maxError = ang;
+    }
 
-      { for ( int x = 0; x < 50; x++ )
-      {
-         Vector vec( (float)x, 25.0f, 0.0f );
-         Vector vec2;
+    { for ( int x = 0; x < 50; x++ )
+    {
+        Vector vec( (float)x, 25.0f, 0.0f );
+        Vector vec2;
 
-         vec.normalize();
-         packVector( vec );
-         unpackVector( vec2 );
+        vec.normalize();
+        packVector( vec );
+        unpackVector( vec2 );
 
-         float ang = vec.dot( vec2 );
-         ang = (( fabs( ang ) > 0.999f ) ? 0 : (float)acos(ang));
+        float ang = vec.dot( vec2 );
+        ang = (( fabs( ang ) > 0.999f ) ? 0 : (float)acos(ang));
 
-         if (( ang > TEST_ANGERROR ) | ( !_finite( ang )))
-         {
+        if (( ang > TEST_ANGERROR ) | ( !_finite( ang )))
+        {
             cerr << "error: " << ang << endl;
             cerr << "orig vec:       " << vec.x << ",\t"
-                 << vec.y << ",\t" << vec.z << "\tmVec: "
-                 << mVec << endl;
+                << vec.y << ",\t" << vec.z << "\tmVec: "
+                << mVec << endl;
             cerr << "   quantized vec2: " << vec2.x << ",\t"
-                 << vec2.y << ",\t" << vec2.z << endl << endl;
-         }
+                << vec2.y << ",\t" << vec2.z << endl << endl;
+        }
 
-         avgError += ang;
-         numVecs++;
-         if ( maxError < ang ) maxError = ang;
-      }}
+        avgError += ang;
+        numVecs++;
+        if ( maxError < ang ) maxError = ang;
+    }}
 
-      cerr << "max angle error: " << maxError
-           << ", average error: " << avgError / numVecs
-           << ", num tested vecs: " << numVecs << endl;
-   }
+    cerr << "max angle error: " << maxError
+            << ", average error: " << avgError / numVecs
+            << ", num tested vecs: " << numVecs << endl;
+    }
 
-   friend ostream& operator<< ( ostream& os, const cUnitVector& vec )
-   { os << vec.mVec; return os; }
+    friend ostream& operator<< ( ostream& os, const cUnitVector& vec )
+    { os << vec.mVec; return os; }
 #endif
 
     // protected: // !!!!

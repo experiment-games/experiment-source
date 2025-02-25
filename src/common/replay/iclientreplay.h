@@ -35,7 +35,7 @@ class IGameEvent;
 //
 class IClientReplay : public IBaseInterface
 {
-   public:
+    public:
     virtual uint64 GetServerSessionId() = 0;
     virtual bool CacheReplayRagdolls( const char *pFilename, int nStartTick ) = 0;  // Cache replay ragdolls
     virtual IReplayScreenshotSystem *GetReplayScreenshotSystem() = 0;               // Get the client's replay screenshot system

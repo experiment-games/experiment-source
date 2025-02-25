@@ -37,7 +37,7 @@ enum : vgui::HContext
 //-----------------------------------------------------------------------------
 class IVGui : public IAppSystem
 {
-   public:
+    public:
     // activates vgui message pump
     virtual void Start() = 0;
 

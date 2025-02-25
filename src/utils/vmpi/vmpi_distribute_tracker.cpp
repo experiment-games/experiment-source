@@ -20,7 +20,7 @@
 
 class CWorkUnitEvent
 {
-   public:
+    public:
     int m_iEventType;  // EVENT_TYPE_ define.
     int m_iWorker;
     double m_flTime;
@@ -28,7 +28,7 @@ class CWorkUnitEvent
 
 class CWorkUnit
 {
-   public:
+    public:
     CWorkUnit()
     {
         m_iWorkerCompleted = -1;
@@ -81,7 +81,7 @@ static CRITICAL_SECTION g_CS;
 
 class CWUStatus
 {
-   public:
+    public:
     CWUStatus()
     {
         m_iState = 0;
@@ -90,9 +90,9 @@ class CWUStatus
 
     RECT m_Rect;
     int m_iState;  // 0 = not sent yet
-                   // 1 = sent, 2 = sent recently
-                   // 3 = done, 4 = done recently
-                   // 5 = started, 6 = started recently
+                    // 1 = sent, 2 = sent recently
+                    // 3 = done, 4 = done recently
+                    // 5 = started, 6 = started recently
     float m_flTransitionTime;
 };
 CUtlVector< CWUStatus > g_WUStatus;

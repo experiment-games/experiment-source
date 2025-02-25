@@ -28,7 +28,7 @@ class CReplayRenderOverlay : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CReplayRenderOverlay, vgui::Frame );
 
-   public:
+    public:
     CReplayRenderOverlay( Panel *pParent );
     ~CReplayRenderOverlay();
 
@@ -37,7 +37,7 @@ class CReplayRenderOverlay : public vgui::Frame
 
     CReplayRenderer *m_pRenderer;
 
-   private:
+    private:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void PerformLayout();
     virtual void OnTick();
@@ -45,7 +45,7 @@ class CReplayRenderOverlay : public vgui::Frame
     virtual void OnKeyCodeTyped( vgui::KeyCode nCode );
     virtual void OnCommand( const char *pCommand );
 
-   private:
+    private:
     MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", pPanel );
 
 #if _DEBUG

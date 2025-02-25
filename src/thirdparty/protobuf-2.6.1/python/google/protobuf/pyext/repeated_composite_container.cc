@@ -101,8 +101,8 @@ static int islt(PyObject *x, PyObject *y, PyObject *compare) {
     return -1;
   if (!PyInt_Check(res)) {
     PyErr_Format(PyExc_TypeError,
-                 "comparison function must return int, not %.200s",
-                 Py_TYPE(res)->tp_name);
+                "comparison function must return int, not %.200s",
+                Py_TYPE(res)->tp_name);
     return -1;
   }
   return PyInt_AsLong(res) < 0;
@@ -111,10 +111,10 @@ static int islt(PyObject *x, PyObject *y, PyObject *compare) {
 // Copied from uarrsort.c but swaps memcpy swaps with protobuf/python swaps
 // TODO(anuraag): Is there a better way to do this then reinventing the wheel?
 static int InternalQuickSort(RepeatedCompositeContainer* self,
-                             Py_ssize_t start,
-                             Py_ssize_t limit,
-                             PyObject* cmp,
-                             PyObject* keyfunc) {
+                            Py_ssize_t start,
+                            Py_ssize_t limit,
+                            PyObject* cmp,
+                            PyObject* keyfunc) {
   if (limit - start <= 1)
     return 0;  // Nothing to sort.
 
@@ -134,59 +134,59 @@ static int InternalQuickSort(RepeatedCompositeContainer* self,
     ScopedPyObjectPtr mid(
         GET_KEY(keyfunc, PyList_GET_ITEM(children, (start + limit) / 2)));
     do {
-      ScopedPyObjectPtr key(GET_KEY(keyfunc, PyList_GET_ITEM(children, left)));
-      int is_lt = islt(key, mid, cmp);
-      if (is_lt == -1)
+    ScopedPyObjectPtr key(GET_KEY(keyfunc, PyList_GET_ITEM(children, left)));
+    int is_lt = islt(key, mid, cmp);
+    if (is_lt == -1)
         return -1;
-      /* array[left]<x */
-      while (is_lt) {
+    /* array[left]<x */
+    while (is_lt) {
         ++left;
         ScopedPyObjectPtr key(GET_KEY(keyfunc,
-                                      PyList_GET_ITEM(children, left)));
+                                    PyList_GET_ITEM(children, left)));
         is_lt = islt(key, mid, cmp);
         if (is_lt == -1)
-          return -1;
-      }
-      key.reset(GET_KEY(keyfunc, PyList_GET_ITEM(children, right - 1)));
-      is_lt = islt(mid, key, cmp);
-      if (is_lt == -1)
         return -1;
-      while (is_lt) {
+    }
+    key.reset(GET_KEY(keyfunc, PyList_GET_ITEM(children, right - 1)));
+    is_lt = islt(mid, key, cmp);
+    if (is_lt == -1)
+        return -1;
+    while (is_lt) {
         --right;
         ScopedPyObjectPtr key(GET_KEY(keyfunc,
-                                      PyList_GET_ITEM(children, right - 1)));
+                                    PyList_GET_ITEM(children, right - 1)));
         is_lt = islt(mid, key, cmp);
         if (is_lt == -1)
-          return -1;
-      }
-      if (left < right) {
+        return -1;
+    }
+    if (left < right) {
         --right;
         if (left < right) {
-          reflection->SwapElements(message, descriptor, left, right);
-          PyObject* tmp = PyList_GET_ITEM(children, left);
-          PyList_SET_ITEM(children, left, PyList_GET_ITEM(children, right));
-          PyList_SET_ITEM(children, right, tmp);
+        reflection->SwapElements(message, descriptor, left, right);
+        PyObject* tmp = PyList_GET_ITEM(children, left);
+        PyList_SET_ITEM(children, left, PyList_GET_ITEM(children, right));
+        PyList_SET_ITEM(children, right, tmp);
         }
         ++left;
-      }
+    }
     } while (left < right);
 
     if ((right - start) < (limit - left)) {
-      /* sort [start..right[ */
-      if (start < (right - 1)) {
+    /* sort [start..right[ */
+    if (start < (right - 1)) {
         InternalQuickSort(self, start, right, cmp, keyfunc);
-      }
+    }
 
-      /* sort [left..limit[ */
-      start = left;
+    /* sort [left..limit[ */
+    start = left;
     } else {
-      /* sort [left..limit[ */
-      if (left < (limit - 1)) {
+    /* sort [left..limit[ */
+    if (left < (limit - 1)) {
         InternalQuickSort(self, left, limit, cmp, keyfunc);
-      }
+    }
 
-      /* sort [start..right[ */
-      limit = right;
+    /* sort [start..right[ */
+    limit = right;
     }
   } while (start < (limit - 1));
 
@@ -202,7 +202,7 @@ static Py_ssize_t Length(RepeatedCompositeContainer* self) {
   google::protobuf::Message* message = self->message;
   if (message != NULL) {
     return message->GetReflection()->FieldSize(*message,
-                                               self->parent_field->descriptor);
+                                                self->parent_field->descriptor);
   } else {
     // The container has been released (i.e. by a call to Clear() or
     // ClearField() on the parent) and thus there's no message.
@@ -228,14 +228,14 @@ static int UpdateChildMessages(RepeatedCompositeContainer* self) {
         *(self->message), self->parent_field->descriptor, i);
     ScopedPyObjectPtr py_cmsg(cmessage::NewEmpty(self->subclass_init));
     if (py_cmsg == NULL) {
-      return -1;
+    return -1;
     }
     CMessage* cmsg = reinterpret_cast<CMessage*>(py_cmsg.get());
     cmsg->owner = self->owner;
     cmsg->message = const_cast<google::protobuf::Message*>(&sub_message);
     cmsg->parent = self->parent;
     if (cmessage::InitAttributes(cmsg, NULL, NULL) < 0) {
-      return -1;
+    return -1;
     }
     PyList_Append(self->child_messages, py_cmsg);
   }
@@ -246,8 +246,8 @@ static int UpdateChildMessages(RepeatedCompositeContainer* self) {
 // add()
 
 static PyObject* AddToAttached(RepeatedCompositeContainer* self,
-                               PyObject* args,
-                               PyObject* kwargs) {
+                                PyObject* args,
+                                PyObject* kwargs) {
   GOOGLE_CHECK_ATTACHED(self);
 
   if (UpdateChildMessages(self) < 0) {
@@ -257,8 +257,8 @@ static PyObject* AddToAttached(RepeatedCompositeContainer* self,
     return NULL;
   google::protobuf::Message* message = self->message;
   google::protobuf::Message* sub_message =
-      message->GetReflection()->AddMessage(message,
-                                           self->parent_field->descriptor);
+    message->GetReflection()->AddMessage(message,
+                                            self->parent_field->descriptor);
   PyObject* py_cmsg = cmessage::NewEmpty(self->subclass_init);
   if (py_cmsg == NULL) {
     return NULL;
@@ -279,8 +279,8 @@ static PyObject* AddToAttached(RepeatedCompositeContainer* self,
 }
 
 static PyObject* AddToReleased(RepeatedCompositeContainer* self,
-                               PyObject* args,
-                               PyObject* kwargs) {
+                                PyObject* args,
+                                PyObject* kwargs) {
   GOOGLE_CHECK_RELEASED(self);
 
   // Create the CMessage
@@ -301,8 +301,8 @@ static PyObject* AddToReleased(RepeatedCompositeContainer* self,
 }
 
 PyObject* Add(RepeatedCompositeContainer* self,
-              PyObject* args,
-              PyObject* kwargs) {
+            PyObject* args,
+            PyObject* kwargs) {
   if (self->message == NULL)
     return AddToReleased(self, args, kwargs);
   else
@@ -325,16 +325,16 @@ PyObject* Extend(RepeatedCompositeContainer* self, PyObject* value) {
   ScopedPyObjectPtr next;
   while ((next.reset(PyIter_Next(iter))) != NULL) {
     if (!PyObject_TypeCheck(next, &CMessage_Type)) {
-      PyErr_SetString(PyExc_TypeError, "Not a cmessage");
-      return NULL;
+    PyErr_SetString(PyExc_TypeError, "Not a cmessage");
+    return NULL;
     }
     ScopedPyObjectPtr new_message(Add(self, NULL, NULL));
     if (new_message == NULL) {
-      return NULL;
+    return NULL;
     }
     CMessage* new_cmessage = reinterpret_cast<CMessage*>(new_message.get());
     if (cmessage::MergeFrom(new_cmessage, next) == NULL) {
-      return NULL;
+    return NULL;
     }
   }
   if (PyErr_Occurred()) {
@@ -365,18 +365,18 @@ PyObject* Subscript(RepeatedCompositeContainer* self, PyObject* slice) {
 #else
     if (PySlice_GetIndicesEx(reinterpret_cast<PySliceObject*>(slice),
 #endif
-                             length, &from, &to, &step, &slicelength) == -1) {
-      return NULL;
+                            length, &from, &to, &step, &slicelength) == -1) {
+    return NULL;
     }
     return PyList_GetSlice(self->child_messages, from, to);
   } else if (PyInt_Check(slice) || PyLong_Check(slice)) {
     from = to = PyLong_AsLong(slice);
     if (from < 0) {
-      from = to = length + from;
+    from = to = length + from;
     }
     PyObject* result = PyList_GetItem(self->child_messages, from);
     if (result == NULL) {
-      return NULL;
+    return NULL;
     }
     Py_INCREF(result);
     return result;
@@ -399,10 +399,10 @@ int AssignSubscript(RepeatedCompositeContainer* self,
   // Delete from the underlying Message, if any.
   if (self->message != NULL) {
     if (cmessage::InternalDeleteRepeatedField(self->message,
-                                              self->parent_field->descriptor,
-                                              slice,
-                                              self->child_messages) < 0) {
-      return -1;
+                                            self->parent_field->descriptor,
+                                            slice,
+                                            self->child_messages) < 0) {
+    return -1;
     }
   } else {
     Py_ssize_t from;
@@ -412,20 +412,20 @@ int AssignSubscript(RepeatedCompositeContainer* self,
     Py_ssize_t slicelength;
     if (PySlice_Check(slice)) {
 #if PY_MAJOR_VERSION >= 3
-      if (PySlice_GetIndicesEx(slice,
+    if (PySlice_GetIndicesEx(slice,
 #else
-      if (PySlice_GetIndicesEx(reinterpret_cast<PySliceObject*>(slice),
+    if (PySlice_GetIndicesEx(reinterpret_cast<PySliceObject*>(slice),
 #endif
-                               length, &from, &to, &step, &slicelength) == -1) {
+                                length, &from, &to, &step, &slicelength) == -1) {
         return -1;
-      }
-      return PySequence_DelSlice(self->child_messages, from, to);
+    }
+    return PySequence_DelSlice(self->child_messages, from, to);
     } else if (PyInt_Check(slice) || PyLong_Check(slice)) {
-      from = to = PyLong_AsLong(slice);
-      if (from < 0) {
+    from = to = PyLong_AsLong(slice);
+    if (from < 0) {
         from = to = length + from;
-      }
-      return PySequence_DelItem(self->child_messages, from);
+    }
+    return PySequence_DelItem(self->child_messages, from);
     }
   }
 
@@ -448,8 +448,8 @@ static PyObject* Remove(RepeatedCompositeContainer* self, PyObject* value) {
 }
 
 static PyObject* RichCompare(RepeatedCompositeContainer* self,
-                             PyObject* other,
-                             int opid) {
+                            PyObject* other,
+                            int opid) {
   if (UpdateChildMessages(self) < 0) {
     return NULL;
   }
@@ -463,17 +463,17 @@ static PyObject* RichCompare(RepeatedCompositeContainer* self,
     // TODO(anuraag): Don't make new lists just for this...
     ScopedPyObjectPtr full_slice(PySlice_New(NULL, NULL, NULL));
     if (full_slice == NULL) {
-      return NULL;
+    return NULL;
     }
     ScopedPyObjectPtr list(Subscript(self, full_slice));
     if (list == NULL) {
-      return NULL;
+    return NULL;
     }
     ScopedPyObjectPtr other_list(
         Subscript(
             reinterpret_cast<RepeatedCompositeContainer*>(other), full_slice));
     if (other_list == NULL) {
-      return NULL;
+    return NULL;
     }
     return PyObject_RichCompare(list, other_list, opid);
   } else {
@@ -486,8 +486,8 @@ static PyObject* RichCompare(RepeatedCompositeContainer* self,
 // sort()
 
 static PyObject* SortAttached(RepeatedCompositeContainer* self,
-                              PyObject* args,
-                              PyObject* kwds) {
+                            PyObject* args,
+                            PyObject* kwds) {
   // Sort the underlying Message array.
   PyObject *compare = NULL;
   int reverse = 0;
@@ -496,8 +496,8 @@ static PyObject* SortAttached(RepeatedCompositeContainer* self,
 
   if (args != NULL) {
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OOi:sort",
-                                     kwlist, &compare, &keyfunc, &reverse))
-      return NULL;
+                                    kwlist, &compare, &keyfunc, &reverse))
+    return NULL;
   }
   if (compare == Py_None)
     compare = NULL;
@@ -516,21 +516,21 @@ static PyObject* SortAttached(RepeatedCompositeContainer* self,
 
     // Reverse the Message array.
     for (int i = 0; i < length / 2; ++i)
-      reflection->SwapElements(message, descriptor, i, length - i - 1);
+    reflection->SwapElements(message, descriptor, i, length - i - 1);
 
     // Reverse the Python list.
     ScopedPyObjectPtr res(PyObject_CallMethod(self->child_messages,
-                                              "reverse", NULL));
+                                            "reverse", NULL));
     if (res == NULL)
-      return NULL;
+    return NULL;
   }
 
   Py_RETURN_NONE;
 }
 
 static PyObject* SortReleased(RepeatedCompositeContainer* self,
-                              PyObject* args,
-                              PyObject* kwds) {
+                            PyObject* args,
+                            PyObject* kwds) {
   ScopedPyObjectPtr m(PyObject_GetAttrString(self->child_messages, "sort"));
   if (m == NULL)
     return NULL;
@@ -540,17 +540,17 @@ static PyObject* SortReleased(RepeatedCompositeContainer* self,
 }
 
 static PyObject* Sort(RepeatedCompositeContainer* self,
-                      PyObject* args,
-                      PyObject* kwds) {
+                    PyObject* args,
+                    PyObject* kwds) {
   // Support the old sort_function argument for backwards
   // compatibility.
   if (kwds != NULL) {
     PyObject* sort_func = PyDict_GetItemString(kwds, "sort_function");
     if (sort_func != NULL) {
-      // Must set before deleting as sort_func is a borrowed reference
-      // and kwds might be the only thing keeping it alive.
-      PyDict_SetItemString(kwds, "cmp", sort_func);
-      PyDict_DelItemString(kwds, "sort_function");
+    // Must set before deleting as sort_func is a borrowed reference
+    // and kwds might be the only thing keeping it alive.
+    PyDict_SetItemString(kwds, "cmp", sort_func);
+    PyDict_DelItemString(kwds, "sort_function");
     }
   }
 
@@ -583,14 +583,14 @@ static PyObject* Item(RepeatedCompositeContainer* self, Py_ssize_t index) {
 
 // The caller takes ownership of the returned Message.
 Message* ReleaseLast(const FieldDescriptor* field,
-                     const Descriptor* type,
-                     Message* message) {
+                    const Descriptor* type,
+                    Message* message) {
   GOOGLE_CHECK_NOTNULL(field);
   GOOGLE_CHECK_NOTNULL(type);
   GOOGLE_CHECK_NOTNULL(message);
 
   Message* released_message = message->GetReflection()->ReleaseLast(
-      message, field);
+    message, field);
   // TODO(tibell): Deal with proto1.
 
   // ReleaseMessage will return NULL which differs from
@@ -608,14 +608,14 @@ Message* ReleaseLast(const FieldDescriptor* field,
 
 // Release field of message and transfer the ownership to cmessage.
 void ReleaseLastTo(const FieldDescriptor* field,
-                   Message* message,
-                   CMessage* cmessage) {
+                    Message* message,
+                    CMessage* cmessage) {
   GOOGLE_CHECK_NOTNULL(field);
   GOOGLE_CHECK_NOTNULL(message);
   GOOGLE_CHECK_NOTNULL(cmessage);
 
   shared_ptr<Message> released_message(
-      ReleaseLast(field, cmessage->message->GetDescriptor(), message));
+    ReleaseLast(field, cmessage->message->GetDescriptor(), message));
   cmessage->parent = NULL;
   cmessage->parent_field = NULL;
   cmessage->message = released_message.get();
@@ -628,7 +628,7 @@ void ReleaseLastTo(const FieldDescriptor* field,
 int Release(RepeatedCompositeContainer* self) {
   if (UpdateChildMessages(self) < 0) {
     PyErr_WriteUnraisable(PyBytes_FromString("Failed to update released "
-                                             "messages"));
+                                            "messages"));
     return -1;
   }
 
@@ -656,7 +656,7 @@ int Release(RepeatedCompositeContainer* self) {
 }
 
 int SetOwner(RepeatedCompositeContainer* self,
-             const shared_ptr<Message>& new_owner) {
+            const shared_ptr<Message>& new_owner) {
   GOOGLE_CHECK_ATTACHED(self);
 
   self->owner = new_owner;
@@ -664,7 +664,7 @@ int SetOwner(RepeatedCompositeContainer* self,
   for (Py_ssize_t i = 0; i < n; ++i) {
     PyObject* msg = PyList_GET_ITEM(self->child_messages, i);
     if (cmessage::SetOwner(reinterpret_cast<CMessage*>(msg), new_owner) == -1) {
-      return -1;
+    return -1;
     }
   }
   return 0;

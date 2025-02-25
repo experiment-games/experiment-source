@@ -31,7 +31,7 @@ typedef struct
 //-----------------------------------------------------------------------------
 class CTFAutobalance : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CTFAutobalance();
     ~CTFAutobalance();
 
@@ -46,7 +46,7 @@ class CTFAutobalance : public CAutoGameSystemPerFrame
     // called after entities think
     virtual void FrameUpdatePostEntityThink();
 
-   private:
+    private:
     void Reset();
     bool ShouldBeActive() const;
     bool AreTeamsUnbalanced();
@@ -64,7 +64,7 @@ class CTFAutobalance : public CAutoGameSystemPerFrame
     bool IsOkayToBalancePlayers();
     void PlayerChangeTeam( CTFPlayer *pTFPlayer, bool bFullBonus );
 
-   private:
+    private:
     autobalance_state_t m_eCurrentState;
 
     int m_iLightestTeam;

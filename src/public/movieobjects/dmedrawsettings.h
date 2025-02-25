@@ -27,7 +27,7 @@ class CDmeDrawSettings : public CDmElement
 {
     DEFINE_ELEMENT( CDmeDrawSettings, CDmElement );
 
-   public:
+    public:
     enum DrawType_t
     {
         DRAW_INVALID = -1,
@@ -148,7 +148,7 @@ class CDmeDrawSettings : public CDmElement
         return m_vHighlightPoints;
     }
 
-   public:
+    public:
     CDmaVar< int > m_DrawType;
     CDmaVar< bool > m_bBackfaceCulling;
     CDmaVar< bool > m_bWireframeOnShaded;
@@ -161,7 +161,7 @@ class CDmeDrawSettings : public CDmElement
     CDmaVar< float > m_flHighlightSize;
     CDmaVar< Color > m_cHighlightColor;
 
-   protected:
+    protected:
     void BuildKnownDrawableTypes();
 
     static bool s_bWireframeMaterialInitialized;

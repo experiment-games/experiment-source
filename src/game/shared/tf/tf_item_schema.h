@@ -40,7 +40,7 @@ const uint32 k_unMvMMaxPointsPerBadgeLevel = 3;  // require 3 missions to level 
 
 class CRandomChanceString
 {
-   public:
+    public:
     CRandomChanceString();
 
     void AddString( const char *pszString, int nChance );
@@ -53,7 +53,7 @@ class CRandomChanceString
 
 class CTFTauntInfo
 {
-   public:
+    public:
     CTFTauntInfo();
 
     bool BInitFromKV( KeyValues *pKV, CUtlVector< CUtlString > *pVecErrors );
@@ -186,7 +186,7 @@ class CTFTauntInfo
         return m_vecTauntPropInputRemap[iButtonIndex];
     }
 
-   private:
+    private:
     bool InitTauntInputRemap( KeyValues *pKV, CUtlVector< TauntInputRemap_t >( &outputArray ), CUtlVector< CUtlString > *pVecErrors );
 
     CUtlVector< const char * > m_vecIntroScenes[LOADOUT_COUNT];
@@ -215,7 +215,7 @@ class CTFTauntInfo
 //-----------------------------------------------------------------------------
 class CTFRequiredQuestItemsSet
 {
-   public:
+    public:
     CTFRequiredQuestItemsSet( void ) {}
 
     bool BInitFromKV( KeyValues *pKV, CUtlVector< CUtlString > *pVecErrors = NULL );
@@ -227,7 +227,7 @@ class CTFRequiredQuestItemsSet
         return m_LoanerItemDef;
     }
 
-   private:
+    private:
     CUtlVector< item_definition_index_t > m_vecQualifyingItemDefs;
     item_definition_index_t m_LoanerItemDef;
 };
@@ -237,7 +237,7 @@ class CTFRequiredQuestItemsSet
 //-----------------------------------------------------------------------------
 class CWarDefinition
 {
-   public:
+    public:
     CWarDefinition();
 
     bool BInitFromKV( KeyValues *pKV, CUtlVector< CUtlString > *pVecErrors );
@@ -281,7 +281,7 @@ class CWarDefinition
         return m_rtTimeEnd;
     }
 
-   private:
+    private:
     const char *m_pszLocalizedWarname;
     const char *m_pszDefName;
     SidesMap_t m_mapSides;
@@ -297,7 +297,7 @@ itemid_t GetAssociatedQuestID( const IEconItemInterface *pEconItem );
 
 class CTFItemDefinition : public CEconItemDefinition
 {
-   public:
+    public:
     CTFItemDefinition()
     {
         InternalInitialize();
@@ -390,7 +390,7 @@ class CTFItemDefinition : public CEconItemDefinition
         return m_bChanceRestricted;
     }
 
-   private:
+    private:
     void InternalInitialize();
 
     // The load-out slot that this item can be placed into.
@@ -424,7 +424,7 @@ class CTFItemDefinition : public CEconItemDefinition
 
 class CTFStyleInfo : public CEconStyleInfo
 {
-   public:
+    public:
     CTFStyleInfo()
     {
         for ( int i = 0; i < ARRAYSIZE( m_pszPlayerDisplayModel ); i++ )
@@ -443,21 +443,21 @@ class CTFStyleInfo : public CEconStyleInfo
 
     const char *GetPlayerDisplayModel( int iClass, int iTeam ) const;
 
-   private:
+    private:
     // The .mdl file used for this item when it's being carried by a player.
     const char *m_pszPlayerDisplayModel[2][LOADOUT_COUNT];
 };
 
 class CTFCraftingRecipeDefinition : public CEconCraftingRecipeDefinition
 {
-   public:
+    public:
     virtual bool ItemListMatchesInputs( CUtlVector< CEconItem * > *vecCraftingItems, KeyValues *out_pkvCraftParams, bool bIgnoreSlop, CUtlVector< uint64 > *vecChosenItems ) const OVERRIDE;
 
     // A client function for testing to see if the contents of the player's backpack can match against this recipe.
     // Broken out into a separate function so we don't run the risk of its thorny logic introducing bugs into the backend crafting logic.
     bool CanMatchAgainstBackpack( CUtlVector< CEconItem * > *vecAllItems, CUtlVector< CEconItem * > vecItemsByClass[LOADOUT_COUNT], CUtlVector< CEconItem * > vecItemsBySlot[CLASS_LOADOUT_POSITION_COUNT], CUtlVector< uint64 > *vecChosenItems ) const;
 
-   private:
+    private:
     bool CheckSubItemListAgainstBackpack( CUtlVector< CEconItem * > *vecCraftingItems, CUtlVector< uint64 > *vecChosenItems ) const;
 };
 
@@ -776,7 +776,7 @@ typedef CUtlMap< EMatchmakingGroupType, SchemaMMGroup_t * > MMGroupMap_t;
 //-----------------------------------------------------------------------------
 class CTFItemSchema : public CEconItemSchema
 {
-   public:
+    public:
     CTFItemSchema();
 
     virtual void Reset();
@@ -889,7 +889,7 @@ class CTFItemSchema : public CEconItemSchema
     }
     const SchemaMMGroup_t *GetMMGroup( EMatchmakingGroupType eCat ) const;
 
-   public:
+    public:
     // CEconItemSchema interface.
     virtual CEconItemDefinition *CreateEconItemDefinition()
     {
@@ -913,12 +913,12 @@ class CTFItemSchema : public CEconItemSchema
 
     virtual RTime32 GetCustomExpirationDate( const char *pszExpirationDate ) const OVERRIDE;
 
-   protected:
+    protected:
 #ifdef TF_CLIENT_DLL
     virtual int CalculateNumberOfConcreteItems( const CEconItemDefinition *pItemDef );
 #endif  // TF_CLIENT_DLL
 
-   private:
+    private:
     void InitializeStringTable( const char **ppStringTable, unsigned int unStringCount, CUtlVector< const char * > *out_pvecStringTable );
 
     bool BInitMvmMissions( KeyValues *pKVMvmMaps, CUtlVector< CUtlString > *pVecErrors );

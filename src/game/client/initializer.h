@@ -24,7 +24,7 @@ typedef void ( *DeleteInitializerObjectFn )( void *ptr );
 
 class Initializer
 {
-   public:
+    public:
     Initializer( void **pVar, CreateInitializerObjectFn createFn, DeleteInitializerObjectFn deleteFn );
 
     // Allocates all the global objects.
@@ -33,7 +33,7 @@ class Initializer
     // Free all the global objects.
     static void FreeAllObjects();
 
-   private:
+    private:
     static Initializer *s_pInitializers;
 
     void **m_pVar;

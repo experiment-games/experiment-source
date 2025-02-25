@@ -39,7 +39,7 @@ class CMDLPanel : public CPotteryWheelPanel
 {
     DECLARE_CLASS_SIMPLE( CMDLPanel, CPotteryWheelPanel );
 
-   public:
+    public:
     // constructor, destructor
     CMDLPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CMDLPanel();
@@ -107,7 +107,7 @@ class CMDLPanel : public CPotteryWheelPanel
     virtual void FireEvent( const char *pszEventName, const char *pszEventOptions );
     void ResetAnimationEventState( MDLAnimEventState_t *pEventState );
 
-   protected:
+    protected:
     virtual void SetupRenderState( int nDisplayWidth, int nDisplayHeight ) OVERRIDE;
 
     struct MDLData_t
@@ -130,7 +130,7 @@ class CMDLPanel : public CPotteryWheelPanel
     MDLAnimEventState_t m_EventState;
     MDLAnimEventState_t m_SequenceLayerEventState[MAX_SEQUENCE_LAYERS];
 
-   private:
+    private:
     // paint it!
     virtual void OnPaint3D();
     virtual void PrePaint3D( IMatRenderContext *pRenderContext ){};

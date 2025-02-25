@@ -22,7 +22,7 @@ typedef enum
 
 class CTFAmmoPack : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CTFAmmoPack, CItem );
     DECLARE_SERVERCLASS();
 
@@ -68,7 +68,7 @@ class CTFAmmoPack : public CItem
 
     bool m_bObjGib;
 
-   private:
+    private:
     int m_iAmmo[TF_AMMO_COUNT];
 
     float m_flCreationTime;
@@ -83,7 +83,7 @@ class CTFAmmoPack : public CItem
     AmmoPackType_t m_PackType;
     CNetworkVector( m_vecInitialVelocity );
 
-   private:
+    private:
     CTFAmmoPack( const CTFAmmoPack & );
 
     DECLARE_DATADESC();

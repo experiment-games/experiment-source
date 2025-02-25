@@ -93,14 +93,14 @@ double NoLocaleStrtod(const char* text, char** original_endptr) {
   char* localized_endptr;
   result = strtod(localized_cstr, &localized_endptr);
   if ((localized_endptr - localized_cstr) >
-      (temp_endptr - text)) {
+    (temp_endptr - text)) {
     // This attempt got further, so replacing the decimal must have helped.
     // Update original_endptr to point at the right location.
     if (original_endptr != NULL) {
-      // size_diff is non-zero if the localized radix has multiple bytes.
-      int size_diff = localized.size() - strlen(text);
-      // const_cast is necessary to match the strtod() interface.
-      *original_endptr = const_cast<char*>(
+    // size_diff is non-zero if the localized radix has multiple bytes.
+    int size_diff = localized.size() - strlen(text);
+    // const_cast is necessary to match the strtod() interface.
+    *original_endptr = const_cast<char*>(
         text + (localized_endptr - localized_cstr - size_diff));
     }
   }

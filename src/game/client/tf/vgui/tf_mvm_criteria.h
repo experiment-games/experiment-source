@@ -20,7 +20,7 @@ class CMVMCriteriaPanel : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CMVMCriteriaPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMVMCriteriaPanel( vgui::Panel *pParent, const char *pszName );
     virtual ~CMVMCriteriaPanel();
 
@@ -50,7 +50,7 @@ class CMVMCriteriaPanel : public vgui::EditablePanel, public CGameEventListener
 
     void WriteControls();
 
-   private:
+    private:
     int m_iImageIsBanned = -1;
     int m_iImageNew = -1;
     int m_iImageNo = -1;
@@ -92,7 +92,7 @@ class CMVMCriteriaPanel : public vgui::EditablePanel, public CGameEventListener
 
     class ChallengeList : public vgui::SectionedListPanel
     {
-       public:
+        public:
         ChallengeList( CMVMCriteriaPanel *pCriteriaPanel, vgui::Panel *parent, const char *name )
             : vgui::SectionedListPanel( parent, name ), m_pCriteriaPanel( pCriteriaPanel )
         {

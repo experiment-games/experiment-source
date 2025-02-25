@@ -29,7 +29,7 @@ class CPropJeepEpisodic : public CPropJeep
     DECLARE_CLASS( CPropJeepEpisodic, CPropJeep );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CPropJeepEpisodic( void );
 
     virtual void Spawn( void );
@@ -77,7 +77,7 @@ class CPropJeepEpisodic : public CPropJeep
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     void HazardBlinkThink( void );
     void CreateHazardLights( void );
     void DestroyHazardLights( void );
@@ -102,7 +102,7 @@ class CPropJeepEpisodic : public CPropJeep
 
     void SetBusterHopperVisibility( bool visible );
 
-   private:
+    private:
     void UpdateWheelDust( void );
     void UpdateRadar( bool forceUpdate = false );
 

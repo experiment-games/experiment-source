@@ -33,7 +33,7 @@ class CHudTeamSwitch : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTeamSwitch, EditablePanel );
 
-   public:
+    public:
     CHudTeamSwitch( const char *pElementName );
 
     virtual void Init( void );
@@ -45,7 +45,7 @@ class CHudTeamSwitch : public CHudElement, public EditablePanel
     virtual void FireGameEvent( IGameEvent *event );
     void SetupSwitchPanel( int iNewTeam );
 
-   private:
+    private:
     Label *m_pBalanceLabel;
     float m_flHideAt;
 };

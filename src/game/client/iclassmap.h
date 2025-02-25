@@ -16,7 +16,7 @@ typedef C_BaseEntity *( *DISPATCHFUNCTION )( void );
 
 abstract_class IClassMap
 {
-   public:
+    public:
     virtual ~IClassMap() {}
 
 #ifdef LUA_SDK

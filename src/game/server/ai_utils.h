@@ -46,10 +46,10 @@ inline bool AI_IsSinglePlayer()
 
 class CAI_MoveMonitor
 {
-   public:
+    public:
     CAI_MoveMonitor()
         : m_vMark( 0, 0, 0 ),
-          m_flMarkTolerance( NO_MARK )
+        m_flMarkTolerance( NO_MARK )
     {
     }
 
@@ -99,7 +99,7 @@ class CAI_MoveMonitor
         return m_vMark;
     }
 
-   private:
+    private:
     enum
     {
         NO_MARK = -1
@@ -120,7 +120,7 @@ class CAI_MoveMonitor
 //-----------------------------------------------------------------------------
 class CAI_ShotRegulator
 {
-   public:
+    public:
     CAI_ShotRegulator();
 
     // Sets the various parameters for burst (this one's for backwards compatibility)
@@ -169,7 +169,7 @@ class CAI_ShotRegulator
     void EnableShooting( void );
     void DisableShooting( void );
 
-   private:
+    private:
     float m_flNextShotTime;
     bool m_bInRestInterval;
     unsigned short m_nBurstShotsRemaining;
@@ -191,7 +191,7 @@ class CAI_ShotRegulator
 
 class CAI_AccelDecay
 {
-   public:
+    public:
     CAI_AccelDecay();
 
     void SetParameters( float minVelocity, float maxVelocity, float accelPercent, float decelPercent );
@@ -199,7 +199,7 @@ class CAI_AccelDecay
     void ResetVelocity( float flVelocity = 0.0f );
     void SetMaxVelocity( float maxVelocity );
 
-   private:
+    private:
     float m_velocity;
 
     float m_maxVelocity;  // = 300;
@@ -238,7 +238,7 @@ struct AI_FreePassParams_t
 
 class CAI_FreePass : public CAI_Component
 {
-   public:
+    public:
     CAI_FreePass()
         : m_FreePassTimeRemaining( 0 )
     {
@@ -284,7 +284,7 @@ class CAI_FreePass : public CAI_Component
 
     bool ShouldAllowFVisible( bool bBaseResult );
 
-   private:
+    private:
     EHANDLE m_hTarget;
 
     float m_FreePassTimeRemaining;
@@ -299,11 +299,11 @@ class CAI_FreePass : public CAI_Component
 
 class CTraceFilterNav : public CTraceFilterSimple
 {
-   public:
+    public:
     CTraceFilterNav( CAI_BaseNPC *pProber, bool bIgnoreTransientEntities, const IServerEntity *passedict, int collisionGroup, bool m_bAllowPlayerAvoid = true );
     bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask );
 
-   private:
+    private:
     CAI_BaseNPC *m_pProber;
     bool m_bIgnoreTransientEntities;
     bool m_bCheckCollisionTable;

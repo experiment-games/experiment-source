@@ -47,7 +47,7 @@ class CTier1AppSystem : public CTier0AppSystem< IInterface >
 {
     typedef CTier0AppSystem< IInterface > BaseClass;
 
-   public:
+    public:
     CTier1AppSystem( bool bIsPrimaryAppSystem = true )
         : BaseClass( bIsPrimaryAppSystem )
     {

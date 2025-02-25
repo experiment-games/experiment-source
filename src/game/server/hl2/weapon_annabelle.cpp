@@ -24,17 +24,17 @@ class CWeaponAnnabelle : public CBaseHLCombatWeapon
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponAnnabelle, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();
 
-   private:
+    private:
     bool m_bNeedPump;      // When emptied completely
     bool m_bDelayedFire1;  // Fire primary when finished reloading
     bool m_bDelayedFire2;  // Fire secondary when finished reloading
 
-   public:
+    public:
     void Precache( void );
 
     int CapabilitiesGet( void )

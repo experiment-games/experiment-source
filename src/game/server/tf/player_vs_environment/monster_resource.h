@@ -17,7 +17,7 @@ class CMonsterResource : public CBaseEntity
 {
     DECLARE_CLASS( CMonsterResource, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -45,7 +45,7 @@ class CMonsterResource : public CBaseEntity
         m_iBossState = iState;
     }
 
-   protected:
+    protected:
     CNetworkVar( int, m_iBossHealthPercentageByte );  // 0-255
     CNetworkVar( int, m_iBossStunPercentageByte );    // 0-255
 

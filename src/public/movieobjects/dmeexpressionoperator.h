@@ -31,7 +31,7 @@
 //-----------------------------------------------------------------------------
 class CExpressionCalculator
 {
-   public:
+    public:
     CExpressionCalculator( const char *expr = NULL )
         : m_expr( expr ) {}
     void SetExpression( const char *expr )
@@ -52,7 +52,7 @@ class CExpressionCalculator
     int VariableCount();
     const char *VariableName( int nIndex );
 
-   private:
+    private:
     bool ParseExpr( const char *&expr );
     bool ParseConditional( const char *&expr );
     bool ParseOr( const char *&expr );
@@ -83,7 +83,7 @@ class CDmeExpressionOperator : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeExpressionOperator, CDmeOperator );
 
-   public:
+    public:
     virtual void Operate();
 
     virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
@@ -91,7 +91,7 @@ class CDmeExpressionOperator : public CDmeOperator
 
     void SetSpewResult( bool state );
 
-   protected:
+    protected:
     bool Parse( const char *expr );
 
     bool IsInputAttribute( CDmAttribute *pAttribute );

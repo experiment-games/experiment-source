@@ -21,7 +21,7 @@ class CTFHudWeaponAmmo : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudWeaponAmmo, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudWeaponAmmo( const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -29,16 +29,16 @@ class CTFHudWeaponAmmo : public CHudElement, public vgui::EditablePanel
 
     virtual bool ShouldDraw( void );
 
-   protected:
+    protected:
     virtual void OnThink();
 
-   private:
+    private:
     void UpdateAmmoLabels( bool bPrimary, bool bReserve, bool bNoClip );
     void ShowLowAmmoIndicator( void );
     void SizeLowAmmoIndicator( float flCurrentAmount, float flMaxAmount );
     void HideLowAmmoIndicator( void );
 
-   private:
+    private:
     float m_flNextThink;
 
     CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;

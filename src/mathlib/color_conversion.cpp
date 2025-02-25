@@ -380,10 +380,10 @@ void BuildGammaTable( float gamma, float texGamma, float brightness, int overbri
     /*
     for (i=0 ; i<1024 ; i++)
     {
-      // convert from screen gamma space to linear space
-      lineargammatable[i] = 1023 * pow ( i/1023.0, v_gamma.GetFloat() );
-      // convert from linear gamma space to screen space
-      screengammatable[i] = 1023 * pow ( i/1023.0, 1.0 / v_gamma.GetFloat() );
+    // convert from screen gamma space to linear space
+    lineargammatable[i] = 1023 * pow ( i/1023.0, v_gamma.GetFloat() );
+    // convert from linear gamma space to screen space
+    screengammatable[i] = 1023 * pow ( i/1023.0, 1.0 / v_gamma.GetFloat() );
     }
     */
 
@@ -406,17 +406,17 @@ void BuildGammaTable( float gamma, float texGamma, float brightness, int overbri
     }
 
 #if 0
-	for (i=0 ; i<256 ; i++)
-	{
-		float f;
+    for (i=0 ; i<256 ; i++)
+    {
+        float f;
 
-		// convert from nonlinear lightmap space (0..255) to linear space (0..4)
-		// f =  (i / 255.0) * sqrt( 4 );
-		f =  i * (2.0 / 255.0);
-		f = f * f;
+        // convert from nonlinear lightmap space (0..255) to linear space (0..4)
+        // f =  (i / 255.0) * sqrt( 4 );
+        f =  i * (2.0 / 255.0);
+        f = f * f;
 
-		texlighttolinear[i] = f;
-	}
+        texlighttolinear[i] = f;
+    }
 #endif
 
     {
@@ -648,71 +648,71 @@ void ColorRGBExp32ToVector( const ColorRGBExp32 &in, Vector &out )
 // assumes that the desired mantissa range is 128..255
 static int VectorToColorRGBExp32_CalcExponent( float in )
 {
-	int power = 0;
-	
-	if( in != 0.0f )
-	{
-		while( in > 255.0f )
-		{
-			power += 1;
-			in *= 0.5f;
-		}
-		
-		while( in < 128.0f )
-		{
-			power -= 1;
-			in *= 2.0f;
-		}
-	}
+    int power = 0;
 
-	return power;
+    if( in != 0.0f )
+    {
+        while( in > 255.0f )
+        {
+            power += 1;
+            in *= 0.5f;
+        }
+
+        while( in < 128.0f )
+        {
+            power -= 1;
+            in *= 2.0f;
+        }
+    }
+
+    return power;
 }
 
 void VectorToColorRGBExp32( const Vector& vin, ColorRGBExp32 &c )
 {
-	Vector v = vin;
-	Assert( s_bMathlibInitialized );
-	Assert( v.x >= 0.0f && v.y >= 0.0f && v.z >= 0.0f );
-	int i;		
-	float max = v[0];				
-	for( i = 1; i < 3; i++ )
-	{
-		// Get the maximum value.
-		if( v[i] > max )
-		{
-			max = v[i];
-		}
-	}
-				
-	// figure out the exponent for this luxel.
-	int exponent = VectorToColorRGBExp32_CalcExponent( max );
-				
-	// make the exponent fits into a signed byte.
-	if( exponent < -128 )
-	{
-		exponent = -128;
-	}
-	else if( exponent > 127 )
-	{
-		exponent = 127;
-	}
-				
-	// undone: optimize with a table
-	float scalar = pow( 2.0f, -exponent );
-	// convert to mantissa x 2^exponent format
-	for( i = 0; i < 3; i++ )
-	{
-		v[i] *= scalar;
-		// clamp
-		if( v[i] > 255.0f )
-		{
-			v[i] = 255.0f;
-		}
-	}
-	c.r = ( unsigned char )v[0];
-	c.g = ( unsigned char )v[1];
-	c.b = ( unsigned char )v[2];
-	c.exponent = ( signed char )exponent;
+    Vector v = vin;
+    Assert( s_bMathlibInitialized );
+    Assert( v.x >= 0.0f && v.y >= 0.0f && v.z >= 0.0f );
+    int i;
+    float max = v[0];
+    for( i = 1; i < 3; i++ )
+    {
+        // Get the maximum value.
+        if( v[i] > max )
+        {
+            max = v[i];
+        }
+    }
+
+    // figure out the exponent for this luxel.
+    int exponent = VectorToColorRGBExp32_CalcExponent( max );
+
+    // make the exponent fits into a signed byte.
+    if( exponent < -128 )
+    {
+        exponent = -128;
+    }
+    else if( exponent > 127 )
+    {
+        exponent = 127;
+    }
+
+    // undone: optimize with a table
+    float scalar = pow( 2.0f, -exponent );
+    // convert to mantissa x 2^exponent format
+    for( i = 0; i < 3; i++ )
+    {
+        v[i] *= scalar;
+        // clamp
+        if( v[i] > 255.0f )
+        {
+            v[i] = 255.0f;
+        }
+    }
+    c.r = ( unsigned char )v[0];
+    c.g = ( unsigned char )v[1];
+    c.b = ( unsigned char )v[2];
+    c.exponent = ( signed char )exponent;
 }
 
 #else

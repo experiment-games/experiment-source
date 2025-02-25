@@ -18,7 +18,7 @@ You can use .lzma86 extension, if you write that stream to file.
 .lzma86 header (14 bytes):
   Offset Size  Description
     0     1    = 0 - no filter, pure LZMA
-               = 1 - x86 filter + LZMA
+                = 1 - x86 filter + LZMA
     1     1    lc, lp and pb in encoded form
     2     4    dictSize (little endian)
     6     8    uncompressed size (little endian)
@@ -30,27 +30,27 @@ level - compression level: 0 <= level <= 9, the default value for "level" is 5.
 
 dictSize - The dictionary size in bytes. The maximum value is
         128 MB = (1 << 27) bytes for 32-bit version
-          1 GB = (1 << 30) bytes for 64-bit version
-     The default value is 16 MB = (1 << 24) bytes, for level = 5.
-     It's recommended to use the dictionary that is larger than 4 KB and
-     that can be calculated as (1 << N) or (3 << N) sizes.
-     For better compression ratio dictSize must be >= inSize.
+        1 GB = (1 << 30) bytes for 64-bit version
+    The default value is 16 MB = (1 << 24) bytes, for level = 5.
+    It's recommended to use the dictionary that is larger than 4 KB and
+    that can be calculated as (1 << N) or (3 << N) sizes.
+    For better compression ratio dictSize must be >= inSize.
 
 filterMode:
     SZ_FILTER_NO   - no Filter
     SZ_FILTER_YES  - x86 Filter
     SZ_FILTER_AUTO - it tries both alternatives to select best.
-              Encoder will use 2 or 3 passes:
-              2 passes when FILTER_NO provides better compression.
-              3 passes when FILTER_YES provides better compression.
+            Encoder will use 2 or 3 passes:
+            2 passes when FILTER_NO provides better compression.
+            3 passes when FILTER_YES provides better compression.
 
 Lzma86Encode allocates Data with MyAlloc functions.
 RAM Requirements for compressing:
   RamSize = dictionarySize * 11.5 + 6MB + FilterBlockSize
-      filterMode     FilterBlockSize
-     SZ_FILTER_NO         0
-     SZ_FILTER_YES      inSize
-     SZ_FILTER_AUTO     inSize
+    filterMode     FilterBlockSize
+    SZ_FILTER_NO         0
+    SZ_FILTER_YES      inSize
+    SZ_FILTER_AUTO     inSize
 
 
 Return code:

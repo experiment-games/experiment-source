@@ -129,7 +129,7 @@ inline bool CShader_IsFlag2Set( IMaterialVar **params, MaterialVarFlags2_t _flag
     static CShaderParam *s_pShaderParamOverrides[NUM_SHADER_MATERIAL_VARS];                                                        \
     class CShaderParam                                                                                                             \
     {                                                                                                                              \
-       public:                                                                                                                     \
+        public:                                                                                                                     \
         CShaderParam( ShaderMaterialVars_t var, ShaderParamType_t type, const char *pDefaultParam, const char *pHelp, int nFlags ) \
         {                                                                                                                          \
             m_Info.m_pName = "override";                                                                                           \
@@ -175,8 +175,8 @@ inline bool CShader_IsFlag2Set( IMaterialVar **params, MaterialVarFlags2_t _flag
         {                                                                                                                          \
             return m_Info.m_pHelp;                                                                                                 \
         }                                                                                                                          \
-                                                                                                                                   \
-       private:                                                                                                                    \
+                                                                                                                                    \
+        private:                                                                                                                    \
         ShaderParamInfo_t m_Info;                                                                                                  \
         int m_Index;                                                                                                               \
     };
@@ -207,7 +207,7 @@ inline bool CShader_IsFlag2Set( IMaterialVar **params, MaterialVarFlags2_t _flag
 #define END_SHADER_PARAMS             \
     class CShader : public CBaseClass \
     {                                 \
-       public:
+        public:
 
 #define END_SHADER                   \
     }                                \
@@ -342,7 +342,7 @@ inline bool CShader_IsFlag2Set( IMaterialVar **params, MaterialVarFlags2_t _flag
     static int s_nFlags = _flags;                                   \
     class CShader : public _base::CShader                           \
     {                                                               \
-       public:                                                      \
+        public:                                                      \
         char const *GetName() const                                 \
         {                                                           \
             return s_Name;                                          \

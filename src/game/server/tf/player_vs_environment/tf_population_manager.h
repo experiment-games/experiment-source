@@ -22,7 +22,7 @@ class CWave;
 //-----------------------------------------------------------------------
 class CPopulationManager : public CPointEntity, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CPopulationManager, CPointEntity );
     DECLARE_DATADESC();
 
@@ -204,7 +204,7 @@ class CPopulationManager : public CPointEntity, public CGameEventListener
     int GetNumBuybackCreditsForPlayer( CTFPlayer *pPlayer );
     bool IsPlayerBeingTrackedForBuybacks( CTFPlayer *pPlayer );
 
-   private:
+    private:
     struct CheckpointSnapshotInfo
     {
         CSteamID m_steamId;                          // which player this snapshot is for

@@ -51,7 +51,7 @@ static objectparams_t SBallVPhysicsObjectParams()
 // just be solid and touch triggers, and this will touch players.
 class CBallPlayerToucher : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBallPlayerToucher, CBaseEntity );
     CBallPlayerToucher()
         : m_pBall( 0 ) {}
@@ -87,7 +87,7 @@ class CBallPlayerToucher : public CBaseEntity
         return iCollisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT;
     }
 
-   private:
+    private:
     friend class CPasstimeBall;
     CPasstimeBall *m_pBall;
 
@@ -190,8 +190,8 @@ int CPasstimeBall::GetCollisionCount() const
 int CPasstimeBall::GetCarryDuration() const
 {
     return ( ( m_flBeginCarryTime > 0 ) && ( m_flBeginCarryTime < gpGlobals->curtime ) )
-               ? ( gpGlobals->curtime - m_flBeginCarryTime )
-               : 0;
+                ? ( gpGlobals->curtime - m_flBeginCarryTime )
+                : 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -364,8 +364,8 @@ void CPasstimeBall::Spawn()
     m_flFadeScale = 1;
     m_iHealth = 0;
     m_takedamage = tf_passtime_ball_takedamage.GetBool()
-                       ? DAMAGE_EVENTS_ONLY
-                       : DAMAGE_NO;
+                        ? DAMAGE_EVENTS_ONLY
+                        : DAMAGE_NO;
     m_iMaxHealth = 1;
 
     // === CPhysicsProp::Spawn
@@ -411,8 +411,8 @@ void CPasstimeBall::SetIdleRespawnTime()
     auto ts = pTimer->GetTimerState();
     auto grs = TFGameRules()->State_Get();
     m_flIdleRespawnTime = ( ( grs == GR_STATE_RND_RUNNING ) && ( ts == RT_STATE_NORMAL ) )
-                              ? ( gpGlobals->curtime + tf_passtime_ball_reset_time.GetFloat() )
-                              : 0;
+                            ? ( gpGlobals->curtime + tf_passtime_ball_reset_time.GetFloat() )
+                            : 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -1015,8 +1015,8 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 
         float frac = 0.0f;
         if ( prevRecord &&
-             ( record->flSimulationTime < flTargetTime ) &&
-             ( record->flSimulationTime < prevRecord->flSimulationTime ) )
+            ( record->flSimulationTime < flTargetTime ) &&
+            ( record->flSimulationTime < prevRecord->flSimulationTime ) )
         {
             // we didn't find the exact time but have a valid previous record
             // so interpolate between these two records;
@@ -1026,7 +1026,7 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 
             // calc fraction between both records
             frac = ( flTargetTime - record->flSimulationTime ) /
-                   ( prevRecord->flSimulationTime - record->flSimulationTime );
+                    ( prevRecord->flSimulationTime - record->flSimulationTime );
 
             Assert( frac > 0 && frac < 1 );  // should never extrapolate
 

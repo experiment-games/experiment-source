@@ -23,7 +23,7 @@ DECLARE_AUTO_LIST( ICurrencyPackAutoList );
 
 class CCurrencyPack : public CTFPowerup, public ICurrencyPackAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CCurrencyPack, CTFPowerup );
     DECLARE_SERVERCLASS();
 
@@ -61,7 +61,7 @@ class CCurrencyPack : public CTFPowerup, public ICurrencyPackAutoList
         return "models/items/currencypack_large.mdl";
     }
 
-   protected:
+    protected:
     virtual void ComeToRest( void );
 
     void BlinkThink( void );
@@ -77,7 +77,7 @@ class CCurrencyPack : public CTFPowerup, public ICurrencyPackAutoList
 
 class CCurrencyPackMedium : public CCurrencyPack
 {
-   public:
+    public:
     DECLARE_CLASS( CCurrencyPackMedium, CCurrencyPack );
 
     virtual CurrencyRewards_t GetPackSize( void )
@@ -92,7 +92,7 @@ class CCurrencyPackMedium : public CCurrencyPack
 
 class CCurrencyPackSmall : public CCurrencyPack
 {
-   public:
+    public:
     DECLARE_CLASS( CCurrencyPackSmall, CCurrencyPack );
 
     virtual CurrencyRewards_t GetPackSize( void )
@@ -107,7 +107,7 @@ class CCurrencyPackSmall : public CCurrencyPack
 
 class CCurrencyPackCustom : public CCurrencyPack
 {
-   public:
+    public:
     DECLARE_CLASS( CCurrencyPackCustom, CCurrencyPack );
 
     virtual CurrencyRewards_t GetPackSize( void )

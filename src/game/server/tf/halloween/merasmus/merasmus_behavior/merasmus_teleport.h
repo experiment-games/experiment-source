@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CMerasmusTeleport : public Action< CMerasmus >
 {
-   public:
+    public:
     CMerasmusTeleport( bool bShouldAOE, bool bGoToCap );
 
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
@@ -21,7 +21,7 @@ class CMerasmusTeleport : public Action< CMerasmus >
         return "Teleport";
     }  // return name of this action
 
-   private:
+    private:
     enum TeleportState
     {
         TELEPORTING_OUT,
@@ -40,7 +40,7 @@ class CMerasmusTeleport : public Action< CMerasmus >
 //---------------------------------------------------------------------------------------------
 class CMerasmusEscape : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
 

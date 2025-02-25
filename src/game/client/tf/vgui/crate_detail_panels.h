@@ -21,7 +21,7 @@ class CInputStringForItemBackpackOverlayDialog : public vgui::EditablePanel, pub
 {
     DECLARE_CLASS_SIMPLE( CInputStringForItemBackpackOverlayDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CInputStringForItemBackpackOverlayDialog( vgui::Panel *pParent, CEconItemView *pItem, CEconItemView *pChosenKey = NULL );
     ~CInputStringForItemBackpackOverlayDialog();
 
@@ -34,7 +34,7 @@ class CInputStringForItemBackpackOverlayDialog : public vgui::EditablePanel, pub
 
     void Show();
 
-   protected:
+    protected:
     CItemModelPanel *GetPreviewModelPanel()
     {
         return m_pPreviewModelPanel;
@@ -42,7 +42,7 @@ class CInputStringForItemBackpackOverlayDialog : public vgui::EditablePanel, pub
 
     CEconItemView m_Item;
 
-   private:
+    private:
     void CreateItemPanels();
     void FindUsableKey();
 

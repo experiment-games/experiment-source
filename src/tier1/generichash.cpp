@@ -36,10 +36,10 @@ void MakeRandomValues()
   {
     for (i = 0; i < 256; i++)
     {
-      r = rand() & 0xff;
-      t = g_nRandomValues[i];
-      g_nRandomValues[i] = g_nRandomValues[r];
-      g_nRandomValues[r] = t;
+    r = rand() & 0xff;
+    t = g_nRandomValues[i];
+    g_nRandomValues[i] = g_nRandomValues[r];
+    g_nRandomValues[r] = t;
     }
   }
 
@@ -49,7 +49,7 @@ void MakeRandomValues()
   {
     printf("\t");
     for (j = 0; j < 16; j++)
-      printf(" %3d,", g_nRandomValues[i+j]);
+    printf(" %3d,", g_nRandomValues[i+j]);
     printf("\n");
   }
   printf("};\n");
@@ -323,8 +323,8 @@ unsigned FASTCALL HashString( const char *pszKey )
 {
     const uint8 *k = ( const uint8 * )pszKey;
     unsigned even = 0,
-             odd = 0,
-             n;
+            odd = 0,
+            n;
 
     while ( ( n = *k++ ) != 0 )
     {
@@ -345,8 +345,8 @@ unsigned FASTCALL HashStringCaseless( const char *pszKey )
 {
     const uint8 *k = ( const uint8 * )pszKey;
     unsigned even = 0,
-             odd = 0,
-             n;
+            odd = 0,
+            n;
 
     while ( ( n = toupper( *k++ ) ) != 0 )
     {
@@ -519,8 +519,8 @@ unsigned FASTCALL HashBlock( const void *pKey, unsigned size )
 {
     const uint8 *k = ( const uint8 * )pKey;
     unsigned even = 0,
-             odd = 0,
-             n;
+            odd = 0,
+            n;
 
     while ( size )
     {

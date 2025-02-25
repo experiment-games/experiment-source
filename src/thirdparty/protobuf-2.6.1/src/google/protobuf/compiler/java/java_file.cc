@@ -66,7 +66,7 @@ namespace {
 // Returns false when there are unknown fields, in which case the data in the
 // extensions output parameter is not reliable and should be discarded.
 bool CollectExtensions(const Message& message,
-                       vector<const FieldDescriptor*>* extensions) {
+                        vector<const FieldDescriptor*>* extensions) {
   const Reflection* reflection = message.GetReflection();
 
   // There are unknown fields that could be extensions, thus this call fails.
@@ -79,17 +79,17 @@ bool CollectExtensions(const Message& message,
     if (fields[i]->is_extension()) extensions->push_back(fields[i]);
 
     if (GetJavaType(fields[i]) == JAVATYPE_MESSAGE) {
-      if (fields[i]->is_repeated()) {
+    if (fields[i]->is_repeated()) {
         int size = reflection->FieldSize(message, fields[i]);
         for (int j = 0; j < size; j++) {
-          const Message& sub_message =
+        const Message& sub_message =
             reflection->GetRepeatedMessage(message, fields[i], j);
-          if (!CollectExtensions(sub_message, extensions)) return false;
+        if (!CollectExtensions(sub_message, extensions)) return false;
         }
-      } else {
+    } else {
         const Message& sub_message = reflection->GetMessage(message, fields[i]);
         if (!CollectExtensions(sub_message, extensions)) return false;
-      }
+    }
     }
   }
 
@@ -102,9 +102,9 @@ bool CollectExtensions(const Message& message,
 // The message will be converted to a DynamicMessage backed by alternate_pool
 // in order to handle this case.
 void CollectExtensions(const FileDescriptorProto& file_proto,
-                       const DescriptorPool& alternate_pool,
-                       vector<const FieldDescriptor*>* extensions,
-                       const string& file_data) {
+                        const DescriptorPool& alternate_pool,
+                        vector<const FieldDescriptor*>* extensions,
+                        const string& file_data) {
   if (!CollectExtensions(file_proto, extensions)) {
     // There are unknown fields in the file_proto, which are probably
     // extensions. We need to parse the data into a dynamic message based on the
@@ -115,8 +115,8 @@ void CollectExtensions(const FileDescriptorProto& file_proto,
         << "Find unknown fields in FileDescriptorProto when building "
         << file_proto.name()
         << ". It's likely that those fields are custom options, however, "
-           "descriptor.proto is not in the transitive dependencies. "
-           "This normally should not happen. Please report a bug.";
+            "descriptor.proto is not in the transitive dependencies. "
+            "This normally should not happen. Please report a bug.";
     DynamicMessageFactory factory;
     scoped_ptr<Message> dynamic_file_proto(
         factory.GetPrototype(file_proto_desc)->New());
@@ -131,8 +131,8 @@ void CollectExtensions(const FileDescriptorProto& file_proto,
         << "Find unknown fields in FileDescriptorProto when building "
         << file_proto.name()
         << ". It's likely that those fields are custom options, however, "
-           "those options cannot be recognized in the builder pool. "
-           "This normally should not happen. Please report a bug.";
+            "those options cannot be recognized in the builder pool. "
+            "This normally should not happen. Please report a bug.";
   }
 }
 
@@ -141,17 +141,17 @@ void CollectExtensions(const FileDescriptorProto& file_proto,
 
 FileGenerator::FileGenerator(const FileDescriptor* file, bool immutable_api)
     : file_(file),
-      java_package_(FileJavaPackage(file, immutable_api)),
-      message_generators_(
-          new scoped_ptr<MessageGenerator>[file->message_type_count()]),
-      extension_generators_(
-          new scoped_ptr<ExtensionGenerator>[file->extension_count()]),
-      context_(new Context(file)),
-      name_resolver_(context_->GetNameResolver()),
-      immutable_api_(immutable_api) {
+    java_package_(FileJavaPackage(file, immutable_api)),
+    message_generators_(
+        new scoped_ptr<MessageGenerator>[file->message_type_count()]),
+    extension_generators_(
+        new scoped_ptr<ExtensionGenerator>[file->extension_count()]),
+    context_(new Context(file)),
+    name_resolver_(context_->GetNameResolver()),
+    immutable_api_(immutable_api) {
   classname_ = name_resolver_->GetFileClassName(file, immutable_api);
   generator_factory_.reset(
-      new ImmutableGeneratorFactory(context_.get()));
+    new ImmutableGeneratorFactory(context_.get()));
   for (int i = 0; i < file_->message_type_count(); ++i) {
     message_generators_[i].reset(
         generator_factory_->NewMessageGenerator(file_->message_type(i)));
@@ -172,12 +172,12 @@ bool FileGenerator::Validate(string* error) {
   if (name_resolver_->HasConflictingClassName(file_, classname_)) {
     error->assign(file_->name());
     error->append(
-      ": Cannot generate Java output because the file's outer class name, \"");
+    ": Cannot generate Java output because the file's outer class name, \"");
     error->append(classname_);
     error->append(
-      "\", matches the name of one of the types declared inside it.  "
-      "Please either rename the type or use the java_outer_classname "
-      "option to specify a different outer class name for the .proto file.");
+    "\", matches the name of one of the types declared inside it.  "
+    "Please either rename the type or use the java_outer_classname "
+    "option to specify a different outer class name for the .proto file.");
     return false;
   }
   // If java_outer_classname option is not set and the default outer class name
@@ -194,13 +194,13 @@ bool FileGenerator::Validate(string* error) {
     string default_classname =
         name_resolver_->GetFileDefaultImmutableClassName(file_);
     if (default_classname != classname_) {
-      GOOGLE_LOG(WARNING) << file_->name() << ": The default outer class name, \""
-                   << default_classname << "\", conflicts with a type "
-                   << "declared in the proto file and an alternative outer "
-                   << "class name is used: \"" << classname_ << "\". To avoid "
-                   << "this warning, please use the java_outer_classname "
-                   << "option to specify a different outer class name for "
-                   << "the .proto file.";
+    GOOGLE_LOG(WARNING) << file_->name() << ": The default outer class name, \""
+                    << default_classname << "\", conflicts with a type "
+                    << "declared in the proto file and an alternative outer "
+                    << "class name is used: \"" << classname_ << "\". To avoid "
+                    << "this warning, please use the java_outer_classname "
+                    << "option to specify a different outer class name for "
+                    << "the .proto file.";
     }
   }
   return true;
@@ -216,9 +216,9 @@ void FileGenerator::Generate(io::Printer* printer) {
     "filename", file_->name());
   if (!java_package_.empty()) {
     printer->Print(
-      "package $package$;\n"
-      "\n",
-      "package", java_package_);
+    "package $package$;\n"
+    "\n",
+    "package", java_package_);
   }
   printer->Print(
     "public final class $classname$ {\n"
@@ -251,19 +251,19 @@ void FileGenerator::Generate(io::Printer* printer) {
 
   if (!MultipleJavaFiles(file_, immutable_api_)) {
     for (int i = 0; i < file_->enum_type_count(); i++) {
-      EnumGenerator(file_->enum_type(i), immutable_api_, context_.get())
-          .Generate(printer);
+    EnumGenerator(file_->enum_type(i), immutable_api_, context_.get())
+        .Generate(printer);
     }
     for (int i = 0; i < file_->message_type_count(); i++) {
-      message_generators_[i]->GenerateInterface(printer);
-      message_generators_[i]->Generate(printer);
+    message_generators_[i]->GenerateInterface(printer);
+    message_generators_[i]->Generate(printer);
     }
     if (HasGenericServices(file_)) {
-      for (int i = 0; i < file_->service_count(); i++) {
+    for (int i = 0; i < file_->service_count(); i++) {
         scoped_ptr<ServiceGenerator> generator(
             generator_factory_->NewServiceGenerator(file_->service(i)));
         generator->Generate(printer);
-      }
+    }
     }
   }
 
@@ -282,22 +282,22 @@ void FileGenerator::Generate(io::Printer* printer) {
 
   if (HasDescriptorMethods(file_)) {
     if (immutable_api_) {
-      GenerateDescriptorInitializationCodeForImmutable(printer);
+    GenerateDescriptorInitializationCodeForImmutable(printer);
     } else {
-      GenerateDescriptorInitializationCodeForMutable(printer);
+    GenerateDescriptorInitializationCodeForMutable(printer);
     }
   } else {
     printer->Print(
-      "static {\n");
+    "static {\n");
     printer->Indent();
 
     for (int i = 0; i < file_->message_type_count(); i++) {
-      message_generators_[i]->GenerateStaticVariableInitializers(printer);
+    message_generators_[i]->GenerateStaticVariableInitializers(printer);
     }
 
     printer->Outdent();
     printer->Print(
-      "}\n");
+    "}\n");
   }
 
   printer->Print(
@@ -356,24 +356,24 @@ void FileGenerator::GenerateDescriptorInitializationCodeForImmutable(
     // Must construct an ExtensionRegistry containing all existing extensions
     // and use it to parse the descriptor data again to recognize extensions.
     printer->Print(
-      "com.google.protobuf.ExtensionRegistry registry =\n"
-      "    com.google.protobuf.ExtensionRegistry.newInstance();\n");
+    "com.google.protobuf.ExtensionRegistry registry =\n"
+    "    com.google.protobuf.ExtensionRegistry.newInstance();\n");
     for (int i = 0; i < extensions.size(); i++) {
-      scoped_ptr<ExtensionGenerator> generator(
-          generator_factory_->NewExtensionGenerator(extensions[i]));
-      generator->GenerateRegistrationCode(printer);
+    scoped_ptr<ExtensionGenerator> generator(
+        generator_factory_->NewExtensionGenerator(extensions[i]));
+    generator->GenerateRegistrationCode(printer);
     }
     printer->Print(
-      "com.google.protobuf.Descriptors.FileDescriptor\n"
-      "    .internalUpdateFileDescriptor(descriptor, registry);\n");
+    "com.google.protobuf.Descriptors.FileDescriptor\n"
+    "    .internalUpdateFileDescriptor(descriptor, registry);\n");
   }
 
   // Force descriptor initialization of all dependencies.
   for (int i = 0; i < file_->dependency_count(); i++) {
     if (ShouldIncludeDependency(file_->dependency(i), true)) {
-      string dependency =
-          name_resolver_->GetImmutableClassName(file_->dependency(i));
-      printer->Print(
+    string dependency =
+        name_resolver_->GetImmutableClassName(file_->dependency(i));
+    printer->Print(
         "$dependency$.getDescriptor();\n",
         "dependency", dependency);
     }
@@ -420,27 +420,27 @@ void FileGenerator::GenerateDescriptorInitializationCodeForMutable(io::Printer* 
     // Try to load immutable messages' outer class. Its initialization code
     // will take care of interpreting custom options.
     printer->Print(
-      "try {\n"
-      // Note that we have to load the immutable class dynamically here as
-      // we want the mutable code to be independent from the immutable code
-      // at compile time. It is required to implement dual-compile for
-      // mutable and immutable API in blaze.
-      "  java.lang.Class immutableClass = java.lang.Class.forName(\n"
-      "      \"$immutable_classname$\");\n"
-      "} catch (java.lang.ClassNotFoundException e) {\n"
-      // The immutable class can not be found. Custom options are left
-      // as unknown fields.
-      // TODO(xiaofeng): inform the user with a warning?
-      "}\n",
-      "immutable_classname", name_resolver_->GetImmutableClassName(file_));
+    "try {\n"
+    // Note that we have to load the immutable class dynamically here as
+    // we want the mutable code to be independent from the immutable code
+    // at compile time. It is required to implement dual-compile for
+    // mutable and immutable API in blaze.
+    "  java.lang.Class immutableClass = java.lang.Class.forName(\n"
+    "      \"$immutable_classname$\");\n"
+    "} catch (java.lang.ClassNotFoundException e) {\n"
+    // The immutable class can not be found. Custom options are left
+    // as unknown fields.
+    // TODO(xiaofeng): inform the user with a warning?
+    "}\n",
+    "immutable_classname", name_resolver_->GetImmutableClassName(file_));
   }
 
   // Force descriptor initialization of all dependencies.
   for (int i = 0; i < file_->dependency_count(); i++) {
     if (ShouldIncludeDependency(file_->dependency(i), false)) {
-      string dependency = name_resolver_->GetMutableClassName(
-          file_->dependency(i));
-      printer->Print(
+    string dependency = name_resolver_->GetMutableClassName(
+        file_->dependency(i));
+    printer->Print(
         "$dependency$.getDescriptor();\n",
         "dependency", dependency);
     }
@@ -473,52 +473,52 @@ static void GenerateSibling(const string& package_dir,
     "filename", descriptor->file()->name());
   if (!java_package.empty()) {
     printer.Print(
-      "package $package$;\n"
-      "\n",
-      "package", java_package);
+    "package $package$;\n"
+    "\n",
+    "package", java_package);
   }
 
   (generator->*pfn)(&printer);
 }
 
 void FileGenerator::GenerateSiblings(const string& package_dir,
-                                     GeneratorContext* context,
-                                     vector<string>* file_list) {
+                                    GeneratorContext* context,
+                                    vector<string>* file_list) {
   if (MultipleJavaFiles(file_, immutable_api_)) {
     for (int i = 0; i < file_->enum_type_count(); i++) {
-      EnumGenerator generator(file_->enum_type(i), immutable_api_,
-                              context_.get());
-      GenerateSibling<EnumGenerator>(package_dir, java_package_,
-                                     file_->enum_type(i),
-                                     context, file_list, "",
-                                     &generator,
-                                     &EnumGenerator::Generate);
+    EnumGenerator generator(file_->enum_type(i), immutable_api_,
+                            context_.get());
+    GenerateSibling<EnumGenerator>(package_dir, java_package_,
+                                    file_->enum_type(i),
+                                    context, file_list, "",
+                                    &generator,
+                                    &EnumGenerator::Generate);
     }
     for (int i = 0; i < file_->message_type_count(); i++) {
-      if (immutable_api_) {
+    if (immutable_api_) {
         GenerateSibling<MessageGenerator>(package_dir, java_package_,
-                                          file_->message_type(i),
-                                          context, file_list,
-                                          "OrBuilder",
-                                          message_generators_[i].get(),
-                                          &MessageGenerator::GenerateInterface);
-      }
-      GenerateSibling<MessageGenerator>(package_dir, java_package_,
+                                        file_->message_type(i),
+                                        context, file_list,
+                                        "OrBuilder",
+                                        message_generators_[i].get(),
+                                        &MessageGenerator::GenerateInterface);
+    }
+    GenerateSibling<MessageGenerator>(package_dir, java_package_,
                                         file_->message_type(i),
                                         context, file_list, "",
                                         message_generators_[i].get(),
                                         &MessageGenerator::Generate);
     }
     if (HasGenericServices(file_)) {
-      for (int i = 0; i < file_->service_count(); i++) {
+    for (int i = 0; i < file_->service_count(); i++) {
         scoped_ptr<ServiceGenerator> generator(
             generator_factory_->NewServiceGenerator(file_->service(i)));
         GenerateSibling<ServiceGenerator>(package_dir, java_package_,
-                                          file_->service(i),
-                                          context, file_list, "",
-                                          generator.get(),
-                                          &ServiceGenerator::Generate);
-      }
+                                        file_->service(i),
+                                        context, file_list, "",
+                                        generator.get(),
+                                        &ServiceGenerator::Generate);
+    }
     }
   }
 }

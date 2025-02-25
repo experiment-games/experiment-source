@@ -25,7 +25,7 @@ class CMatchMakingDashboardSidePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMatchMakingDashboardSidePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMatchMakingDashboardSidePanel( Panel* parent, const char* panelName, const char* pszResFile, EStackSide_t eSide );
 
     virtual void ApplySchemeSettings( vgui::IScheme* pScheme ) OVERRIDE;
@@ -39,11 +39,11 @@ class CMatchMakingDashboardSidePanel : public vgui::EditablePanel
 
     MESSAGE_FUNC( OnUpdateVisiblity, "UpdateVisiblity" );
 
-   protected:
+    protected:
     void SetupButtonAndTooltip( vgui::Button* pButton, EditablePanel* pTooltipPanel, wchar_t* pwszTipText );
     void SetupQueueButton( ETFMatchGroup eGroup );
 
-   private:
+    private:
     CUtlString m_strResFile;
     class CExButton* m_pReturnButton;
     vgui::Panel* m_pShade;

@@ -54,9 +54,9 @@ struct ZIP_FileHeader
     unsigned short internalFileAttribs;        // internal file attributes 2 bytes
     unsigned int externalFileAttribs;          // external file attributes 4 bytes
     unsigned int relativeOffsetOfLocalHeader;  // relative offset of local header 4 bytes
-                                               // file name (variable size)
-                                               // extra field (variable size)
-                                               // file comment (variable size)
+                                                // file name (variable size)
+                                                // extra field (variable size)
+                                                // file comment (variable size)
 };
 
 struct ZIP_LocalFileHeader

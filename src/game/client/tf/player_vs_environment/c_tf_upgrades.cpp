@@ -1106,7 +1106,7 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
                 int nUIGroup = pUpgrade->nUIGroup;
 
                 if ( ( pItemSlotBuyPanel->nSlot == -1 && ( nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM || nUIGroup == UIGROUP_POWERUPBOTTLE ) ) ||
-                     ( pItemSlotBuyPanel->nSlot != -1 && nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER ) )
+                    ( pItemSlotBuyPanel->nSlot != -1 && nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER ) )
                 {
                     continue;
                 }
@@ -1242,7 +1242,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
                 {
                     CUpgradeBuyPanel *pUpgradeBuyPanel = pItemSlotBuyPanel->upgradeBuyPanels[i];
                     if ( pUpgradeBuyPanel && pUpgradeBuyPanel->IsVisible() &&
-                         pUpgradeBuyPanel->m_nGridPositionX == nGridPosX && pUpgradeBuyPanel->m_nGridPositionY == nGridPosY )
+                        pUpgradeBuyPanel->m_nGridPositionX == nGridPosX && pUpgradeBuyPanel->m_nGridPositionY == nGridPosY )
                     {
                         m_pActiveUpgradeBuyPanel = pUpgradeBuyPanel;
                         UpdateMouseOverHighlight();
@@ -1289,7 +1289,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
                 {
                     CUpgradeBuyPanel *pUpgradeBuyPanel = pItemSlotBuyPanel->upgradeBuyPanels[i];
                     if ( pUpgradeBuyPanel && pUpgradeBuyPanel->IsVisible() &&
-                         pUpgradeBuyPanel->m_nGridPositionX == nGridPosX && pUpgradeBuyPanel->m_nGridPositionY == nGridPosY )
+                        pUpgradeBuyPanel->m_nGridPositionX == nGridPosX && pUpgradeBuyPanel->m_nGridPositionY == nGridPosY )
                     {
                         m_pActiveUpgradeBuyPanel = pUpgradeBuyPanel;
                         UpdateMouseOverHighlight();
@@ -1702,7 +1702,7 @@ void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0
                 if ( m_hPlayer->IsPlayerClass( TF_CLASS_SPY ) )
                 {
                     if ( m_iWeaponSlotBeingUpgraded == LOADOUT_POSITION_MELEE ||
-                         m_iWeaponSlotBeingUpgraded == LOADOUT_POSITION_SECONDARY )
+                        m_iWeaponSlotBeingUpgraded == LOADOUT_POSITION_SECONDARY )
                     {
                         m_bAwardMaxSlotAchievement = true;
                     }
@@ -1865,7 +1865,7 @@ void CHudUpgradePanel::CancelUpgrades( void )
                 kvSub->SetInt( "count", -pUpgradeBuyPanel->m_nPurchases );  // revert previous buy and sell
 
                 if ( pItemSlotBuyPanel->nSlot == LOADOUT_POSITION_ACTION && !bSellAllowed &&
-                     pUpgradeBuyPanel->m_nPurchases < 0 )
+                    pUpgradeBuyPanel->m_nPurchases < 0 )
                 {
                     // The player wasn't refunded these so the cancel gives it back for free
                     kvSub->SetBool( "free", true );

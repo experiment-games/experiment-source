@@ -32,18 +32,18 @@ class CHudZoom : public vgui::Panel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudZoom, vgui::Panel );
 
-   public:
+    public:
     CHudZoom( const char *pElementName );
 
     bool ShouldDraw( void );
     void Init( void );
     void LevelInit( void );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint( void );
 
-   private:
+    private:
     bool m_bZoomOn;
     float m_flZoomStartTime;
     bool m_bPainted;

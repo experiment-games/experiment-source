@@ -14,7 +14,7 @@
 // This class manages the (persistent) list of squelched players.
 class CVoiceBanMgr
 {
-   public:
+    public:
     CVoiceBanMgr();
     ~CVoiceBanMgr();
 
@@ -28,10 +28,10 @@ class CVoiceBanMgr
     bool GetPlayerBan( char const playerID[SIGNED_GUID_LEN] );
     void SetPlayerBan( char const playerID[SIGNED_GUID_LEN], bool bSquelch );
 
-   protected:
+    protected:
     class BannedPlayer
     {
-       public:
+        public:
         char m_PlayerID[SIGNED_GUID_LEN];
         BannedPlayer *m_pPrev, *m_pNext;
     };
@@ -40,7 +40,7 @@ class CVoiceBanMgr
     BannedPlayer *InternalFindPlayerSquelch( char const playerID[SIGNED_GUID_LEN] );
     BannedPlayer *AddBannedPlayer( char const playerID[SIGNED_GUID_LEN] );
 
-   protected:
+    protected:
     BannedPlayer m_PlayerHash[256];
 };
 

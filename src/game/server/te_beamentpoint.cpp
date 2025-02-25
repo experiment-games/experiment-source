@@ -24,7 +24,7 @@ extern short g_sModelIndexSmoke;  // (in combatweapon.cpp) holds the index for t
 //-----------------------------------------------------------------------------
 class CTEBeamEntPoint : public CTEBaseBeam
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBeamEntPoint, CTEBaseBeam );
     DECLARE_SERVERCLASS();
 
@@ -33,7 +33,7 @@ class CTEBeamEntPoint : public CTEBaseBeam
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVar( int, m_nStartEntity );
     CNetworkVector( m_vecStartPoint );
     CNetworkVar( int, m_nEndEntity );

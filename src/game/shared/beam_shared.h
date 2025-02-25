@@ -47,7 +47,7 @@ class CBeam : public CBaseEntity
 {
     DECLARE_CLASS( CBeam, CBaseEntity );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 #if !defined( CLIENT_DLL )
@@ -180,7 +180,7 @@ class CBeam : public CBaseEntity
 
 #if defined( CLIENT_DLL )
     // IClientEntity overrides.
-   public:
+    public:
     virtual int DrawModel( int flags );
     virtual bool IsTransparent( void );
     virtual bool ShouldDraw();
@@ -200,7 +200,7 @@ class CBeam : public CBaseEntity
     }
 
     // Beam Data Elements
-   private:
+    private:
     // Computes the bounding box of a beam local to the origin of the beam
     void ComputeBounds( Vector &mins, Vector &maxs );
 
@@ -209,7 +209,7 @@ class CBeam : public CBaseEntity
 
 #endif
 
-   protected:
+    protected:
     CNetworkVar( float, m_flFrameRate );
     CNetworkVar( float, m_flHDRColorScale );
     float m_flFireTime;
@@ -219,7 +219,7 @@ class CBeam : public CBaseEntity
     pixelvis_handle_t m_queryHandleHalo;
 #endif
 
-   private:
+    private:
 #if !defined( CLIENT_DLL )
     void InputNoise( inputdata_t &inputdata );
     void InputWidth( inputdata_t &inputdata );
@@ -252,7 +252,7 @@ class CBeam : public CBaseEntity
     int m_nDissolveType;
 #endif
 
-   public:
+    public:
 #ifdef PORTAL
     CNetworkVar( bool, m_bDrawInMainRender );
     CNetworkVar( bool, m_bDrawInPortalRender );

@@ -27,7 +27,7 @@ class CDmeTransformOperator : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeTransformOperator, CDmeOperator );
 
-   public:
+    public:
     virtual void Operate();
 
     virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
@@ -36,7 +36,7 @@ class CDmeTransformOperator : public CDmeOperator
     void SetTransform( CDmeTransform *pTransform );
     const CDmeTransform *GetTransform() const;
 
-   protected:
+    protected:
     CDmaElement< CDmeTransform > m_transform;
     CDmaVar< float > m_positionX;
     CDmaVar< float > m_positionY;

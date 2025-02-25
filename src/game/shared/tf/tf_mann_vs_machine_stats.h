@@ -269,7 +269,7 @@ class CMannVsMachineStats : public CBaseEntity
 {
     DECLARE_CLASS( CMannVsMachineStats, CBaseEntity );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     CMannVsMachineStats();
@@ -398,7 +398,7 @@ class CMannVsMachineStats : public CBaseEntity
     }
 #endif  // GAME_DLL
 
-   private:
+    private:
     // helper
     CMannVsMachineLocalWaveStats GetWaveStats( int iWaveIdx );
 

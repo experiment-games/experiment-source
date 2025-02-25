@@ -40,7 +40,7 @@
 
 #ifdef SHA1_LITTLE_ENDIAN
 #define SHABLK0( i ) ( m_block->l[i] = \
-                           ( ROL32( m_block->l[i], 24 ) & 0xFF00FF00 ) | ( ROL32( m_block->l[i], 8 ) & 0x00FF00FF ) )
+                            ( ROL32( m_block->l[i], 24 ) & 0xFF00FF00 ) | ( ROL32( m_block->l[i], 8 ) & 0x00FF00FF ) )
 #else
 #define SHABLK0( i ) ( m_block->l[i] )
 #endif

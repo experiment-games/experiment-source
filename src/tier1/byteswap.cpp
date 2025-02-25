@@ -52,8 +52,8 @@ void CByteswap::SwapFieldToTargetEndian( void *pOutputBuffer, void *pData, typed
             for ( int i = 0; i < pField->fieldSize; ++i )
             {
                 SwapFieldsToTargetEndian( ( byte * )pOutputBuffer + pEmbed->fieldOffset[TD_OFFSET_NORMAL],
-                                          ( byte * )pData + pEmbed->fieldOffset[TD_OFFSET_NORMAL],
-                                          pField->td );
+                                        ( byte * )pData + pEmbed->fieldOffset[TD_OFFSET_NORMAL],
+                                        pField->td );
 
                 pOutputBuffer = ( byte * )pOutputBuffer + pField->fieldSizeInBytes;
                 pData = ( byte * )pData + pField->fieldSizeInBytes;
@@ -83,7 +83,7 @@ void CByteswap::SwapFieldsToTargetEndian( void *pOutputBuffer, void *pBaseData, 
     {
         typedescription_t *pField = &pFields[i];
         SwapFieldToTargetEndian( ( BYTE * )pOutputBuffer + pField->fieldOffset[TD_OFFSET_NORMAL],
-                                 ( BYTE * )pBaseData + pField->fieldOffset[TD_OFFSET_NORMAL],
-                                 pField );
+                                ( BYTE * )pBaseData + pField->fieldOffset[TD_OFFSET_NORMAL],
+                                pField );
     }
 }

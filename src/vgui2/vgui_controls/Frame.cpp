@@ -48,7 +48,7 @@ namespace
 //-----------------------------------------------------------------------------
 class GripPanel : public Panel
 {
-   public:
+    public:
     GripPanel( Frame *dragFrame, const char *name, int xdir, int ydir )
         : Panel( dragFrame, name )
     {
@@ -245,7 +245,7 @@ class GripPanel : public Panel
         }
     }
 
-   protected:
+    protected:
     Frame *_frame;
     int _dragMultX;
     int _dragMultY;
@@ -262,7 +262,7 @@ class GripPanel : public Panel
 //-----------------------------------------------------------------------------
 class CaptionGripPanel : public GripPanel
 {
-   public:
+    public:
     CaptionGripPanel( Frame *frame, const char *name )
         : GripPanel( frame, name, 0, 0 )
     {
@@ -438,7 +438,7 @@ class CaptionGripPanel : public GripPanel
 
         // if we're within the snap threshold then snap
         if ( ( snapToX <= ( right + m_iSnapRange ) ) &&
-             ( snapToX >= ( right - m_iSnapRange ) ) )
+            ( snapToX >= ( right - m_iSnapRange ) ) )
         {
             if ( horizSnappable )
             {
@@ -448,7 +448,7 @@ class CaptionGripPanel : public GripPanel
             }
         }
         else if ( ( snapToX + wide ) >= ( left - m_iSnapRange ) &&
-                  ( snapToX + wide ) <= ( left + m_iSnapRange ) )
+                ( snapToX + wide ) <= ( left + m_iSnapRange ) )
         {
             if ( horizSnappable )
             {
@@ -458,7 +458,7 @@ class CaptionGripPanel : public GripPanel
         }
 
         if ( ( snapToY <= ( bottom + m_iSnapRange ) ) &&
-             ( snapToY >= ( bottom - m_iSnapRange ) ) )
+            ( snapToY >= ( bottom - m_iSnapRange ) ) )
         {
             if ( vertSnappable )
             {
@@ -467,7 +467,7 @@ class CaptionGripPanel : public GripPanel
             }
         }
         else if ( ( snapToY + tall ) <= ( top + m_iSnapRange ) &&
-                  ( snapToY + tall ) >= ( top - m_iSnapRange ) )
+                ( snapToY + tall ) >= ( top - m_iSnapRange ) )
         {
             if ( vertSnappable )
             {
@@ -488,13 +488,13 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class FrameButton : public Button
 {
-   private:
+    private:
     IBorder *_brightBorder, *_depressedBorder, *_disabledBorder;
     Color _enabledFgColor, _enabledBgColor;
     Color _disabledFgColor, _disabledBgColor;
     bool _disabledLook;
 
-   public:
+    public:
     static int GetButtonSide( Frame *pFrame )
     {
         if ( pFrame->IsSmallCaption() )
@@ -604,14 +604,14 @@ class FrameSystemButton : public MenuButton
 {
     DECLARE_CLASS_SIMPLE( FrameSystemButton, MenuButton );
 
-   private:
+    private:
     IImage *_enabled, *_disabled;
     Color _enCol, _disCol;
     bool _respond;
     CUtlString m_EnabledImage;
     CUtlString m_DisabledImage;
 
-   public:
+    public:
     FrameSystemButton( Panel *parent, const char *panelName )
         : MenuButton( parent, panelName, "" )
     {
@@ -1072,7 +1072,7 @@ void Frame::OnThink()
         if ( focus && ipanel()->HasParent( focus, GetVPanel() ) )
         {
             if ( input()->GetAppModalSurface() == 0 ||
-                 input()->GetAppModalSurface() == GetVPanel() )
+                input()->GetAppModalSurface() == GetVPanel() )
             {
                 hasFocus = true;
             }
@@ -2184,8 +2184,8 @@ void Frame::OnKeyCodeTyped( KeyCode code )
         }
     }
     else if ( code == KEY_ESCAPE &&
-              surface()->SupportsFeature( ISurface::ESCAPE_KEY ) &&
-              input()->GetAppModalSurface() == GetVPanel() )
+            surface()->SupportsFeature( ISurface::ESCAPE_KEY ) &&
+            input()->GetAppModalSurface() == GetVPanel() )
     {
         // ESC cancels, unless we're in the engine - in the engine ESC flips between the UI and the game
         CloseModal();

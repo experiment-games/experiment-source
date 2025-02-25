@@ -37,7 +37,7 @@ class CConfirmDecodeDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmDecodeDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmDecodeDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -158,13 +158,13 @@ void CEconTool_CrateKey::OnClientApplyTool( CEconItemView *pTool, CEconItemView 
 
 class CWaitForCrateDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitForCrateDialog( vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         // Play an exciting sound!
@@ -187,7 +187,7 @@ class CWaitForCrateDialog : public CGenericWaitingDialog
 //-----------------------------------------------------------------------------
 class CGCUnlockCrateResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCUnlockCrateResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

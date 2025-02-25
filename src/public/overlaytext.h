@@ -20,7 +20,7 @@
 
 class OverlayText_t
 {
-   public:
+    public:
     OverlayText_t()
     {
         nextOverlayText = 0;

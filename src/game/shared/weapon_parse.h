@@ -67,13 +67,13 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 class FileWeaponInfo_t
 {
-   public:
+    public:
     FileWeaponInfo_t();
 
     // Each game can override this to get whatever values it wants from the script.
     virtual void Parse( KeyValues *pKeyValuesData, const char *szWeaponName );
 
-   public:
+    public:
     bool bParsedScript;
     bool bLoadedHudElements;
 

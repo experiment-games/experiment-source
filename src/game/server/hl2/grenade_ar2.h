@@ -23,7 +23,7 @@ class CWeaponAR2;
 
 class CGrenadeAR2 : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeAR2, CBaseGrenade );
 
     CHandle< SmokeTrail > m_hSmokeTrail;
@@ -36,7 +36,7 @@ class CGrenadeAR2 : public CBaseGrenade
     void GrenadeAR2Think( void );
     void Event_Killed( const CTakeDamageInfo &info );
 
-   public:
+    public:
     void EXPORT Detonate( void );
     CGrenadeAR2( void );
 

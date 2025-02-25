@@ -32,14 +32,14 @@ class CHudDemomanChargeMeter : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudDemomanChargeMeter, EditablePanel );
 
-   public:
+    public:
     CHudDemomanChargeMeter( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
     virtual bool ShouldDraw( void );
     virtual void OnTick( void );
 
-   private:
+    private:
     vgui::ContinuousProgressBar *m_pChargeMeter;
 };
 

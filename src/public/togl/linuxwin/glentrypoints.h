@@ -43,7 +43,7 @@ void *VoidFnPtrLookup_GlMgr( const char *fn, bool &okay, const bool bRequired, v
 #if GL_USE_EXECUTE_HELPER_FOR_ALL_API_CALLS
 class CGLExecuteHelperBase
 {
-   public:
+    public:
     inline void StartCall( const char *pName );
     inline void StopCall( const char *pName );
 #if GL_TRACK_API_TIME
@@ -54,7 +54,7 @@ class CGLExecuteHelperBase
 template < class FunctionType, typename Result >
 class CGLExecuteHelper : public CGLExecuteHelperBase
 {
-   public:
+    public:
     inline CGLExecuteHelper( FunctionType pFn, const char *pName )
         : m_pFn( pFn )
     {
@@ -160,7 +160,7 @@ class CGLExecuteHelper : public CGLExecuteHelperBase
 template < class FunctionType >
 class CGLExecuteHelper< FunctionType, void > : public CGLExecuteHelperBase
 {
-   public:
+    public:
     inline CGLExecuteHelper( FunctionType pFn, const char *pName )
         : m_pFn( pFn )
     {
@@ -256,7 +256,7 @@ class CGLExecuteHelper< FunctionType, void > : public CGLExecuteHelperBase
 template < class FunctionType, typename Result >
 class CDynamicFunctionOpenGLBase
 {
-   public:
+    public:
     // Construct with a NULL function pointer. You must manually call
     //  Lookup() before you can call a dynamic function through this interface.
     CDynamicFunctionOpenGLBase()
@@ -426,7 +426,7 @@ class CDynamicFunctionOpenGLBase
         return m_pFn == NULL;
     }
 
-   protected:
+    protected:
     FunctionType m_pFn;
 
 #if GL_TELEMETRY_ZONES || GL_DUMP_ALL_API_CALLS
@@ -447,10 +447,10 @@ class CDynamicFunctionOpenGLBase
 template < const bool bRequired, class FunctionType, typename Result >
 class CDynamicFunctionOpenGL : public CDynamicFunctionOpenGLBase< FunctionType, Result >
 {
-   private:  // forbid default constructor.
+    private:  // forbid default constructor.
     CDynamicFunctionOpenGL() {}
 
-   public:
+    public:
     CDynamicFunctionOpenGL( const char *fn, FunctionType fallback = NULL )
     {
         bool okay = true;
@@ -509,7 +509,7 @@ class COpenGLEntryPoints
     COpenGLEntryPoints( const COpenGLEntryPoints & );
     COpenGLEntryPoints &operator=( const COpenGLEntryPoints & );
 
-   public:
+    public:
     // The GL context you are looking up entry points for must be current when you construct this object!
     COpenGLEntryPoints();
     ~COpenGLEntryPoints();

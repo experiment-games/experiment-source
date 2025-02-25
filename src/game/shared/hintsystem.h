@@ -30,7 +30,7 @@ class CHintSystem
 {
     DECLARE_CLASS_NOBASE( CHintSystem );
 
-   public:
+    public:
     CHintSystem();
     ~CHintSystem();
 
@@ -89,10 +89,10 @@ class CHintSystem
         return ( gpGlobals->curtime - m_flLastHintPlayedAt < 11 );
     }
 
-   private:
+    private:
     void ReAddHintTimerIfNotDisplayed( int iHintID, float flTimerDuration );
 
-   private:
+    private:
     CBasePlayer *m_pPlayer;
 
     float m_flLastHintPlayedAt;
@@ -117,7 +117,7 @@ class CHintSystem
 // when the player waves his target ID over it on the client.
 abstract_class ITargetIDProvidesHint
 {
-   public:
+    public:
     virtual void DisplayHintTo( C_BasePlayer * pPlayer ) = 0;
 };
 #endif

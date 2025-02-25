@@ -63,7 +63,7 @@ class CKeyValuesGrowableStringTable;
 //-----------------------------------------------------------------------------
 class KeyValues
 {
-   public:
+    public:
     //	By default, the KeyValues class uses a string table for the key names that is
     //	limited to 4MB. The game will exit in error if this space is exhausted. In
     //	general this is preferable for game code for performance and memory fragmentation
@@ -90,7 +90,7 @@ class KeyValues
     //
     class AutoDelete
     {
-       public:
+        public:
         explicit inline AutoDelete( KeyValues *pKeyValues )
             : m_pKeyValues( pKeyValues ) {}
         explicit inline AutoDelete( const char *pchKVName )
@@ -112,7 +112,7 @@ class KeyValues
             return m_pKeyValues;
         }
 
-       private:
+        private:
         AutoDelete( AutoDelete const &x );             // forbid
         AutoDelete &operator=( AutoDelete const &x );  // forbid
         KeyValues *m_pKeyValues;
@@ -295,7 +295,7 @@ class KeyValues
 
     KeyValues *CreateKey( const char *keyName );
 
-   private:
+    private:
     KeyValues( KeyValues & );  // prevent copy constructor being used
 
     // prevent delete being called except through deleteThis()
@@ -364,14 +364,14 @@ class KeyValues
     KeyValues *m_pSub;    // pointer to Start of a new sub key list
     KeyValues *m_pChain;  // Search here if it's not in our list
 
-   private:
+    private:
     // Statics to implement the optional growable string table
     // Function pointers that will determine which mode we are in
     static int ( *s_pfGetSymbolForString )( const char *name, bool bCreate );
     static const char *( *s_pfGetStringForSymbol )( int symbol );
     static CKeyValuesGrowableStringTable *s_pGrowableStringTable;
 
-   public:
+    public:
     // Functions that invoke the default behavior
     static int GetSymbolForStringClassic( const char *name, bool bCreate = true );
     static const char *GetStringForSymbolClassic( int symbol );
@@ -478,7 +478,7 @@ bool EvaluateConditional( const char *str );
 
 class CUtlSortVectorKeyValuesByName
 {
-   public:
+    public:
     bool Less( const KeyValues *lhs, const KeyValues *rhs, void * )
     {
         return Q_stricmp( lhs->GetName(), rhs->GetName() ) < 0;
@@ -491,7 +491,7 @@ class CUtlSortVectorKeyValuesByName
 
 class IKeyValuesDumpContext
 {
-   public:
+    public:
     virtual bool KvBeginKey( KeyValues *pKey, int nIndentLevel ) = 0;
     virtual bool KvWriteValue( KeyValues *pValue, int nIndentLevel ) = 0;
     virtual bool KvEndKey( KeyValues *pKey, int nIndentLevel ) = 0;
@@ -499,28 +499,28 @@ class IKeyValuesDumpContext
 
 class IKeyValuesDumpContextAsText : public IKeyValuesDumpContext
 {
-   public:
+    public:
     virtual bool KvBeginKey( KeyValues *pKey, int nIndentLevel );
     virtual bool KvWriteValue( KeyValues *pValue, int nIndentLevel );
     virtual bool KvEndKey( KeyValues *pKey, int nIndentLevel );
 
-   public:
+    public:
     virtual bool KvWriteIndent( int nIndentLevel );
     virtual bool KvWriteText( char const *szText ) = 0;
 };
 
 class CKeyValuesDumpContextAsDevMsg : public IKeyValuesDumpContextAsText
 {
-   public:
+    public:
     // Overrides developer level to dump in DevMsg, zero to dump as Msg
     CKeyValuesDumpContextAsDevMsg( int nDeveloperLevel = 1 )
         : m_nDeveloperLevel( nDeveloperLevel ) {}
 
-   public:
+    public:
     virtual bool KvBeginKey( KeyValues *pKey, int nIndentLevel );
     virtual bool KvWriteText( char const *szText );
 
-   protected:
+    protected:
     int m_nDeveloperLevel;
 };
 

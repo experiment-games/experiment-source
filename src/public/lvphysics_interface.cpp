@@ -1395,9 +1395,9 @@ LUA_BINDING_END( "PhysicsSurfacePropertiesHandle", "The global surface propertie
 LUA_BINDING_BEGIN( PhysicsSurfaceProperties, ParseSurfaceData, "class", "Parses surface data" )
 {
     lua_pushinteger( L,
-                     physprops->ParseSurfaceData(
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ),
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
+                    physprops->ParseSurfaceData(
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ),
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The surface data." )

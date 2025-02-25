@@ -10,7 +10,7 @@ EXTERN_C_BEGIN
 
 /* #define _LZMA_PROB32 */
 /* _LZMA_PROB32 can increase the speed on some CPUs,
-   but memory usage for CLzmaDec::probs will be doubled in that case */
+    but memory usage for CLzmaDec::probs will be doubled in that case */
 
 #ifdef _LZMA_PROB32
 #define CLzmaProb UInt32
@@ -39,7 +39,7 @@ SRes LzmaProps_Decode( CLzmaProps *p, const Byte *data, unsigned size );
 /* ---------- LZMA Decoder state ---------- */
 
 /* LZMA_REQUIRED_INPUT_MAX = number of required input bytes for worst case.
-   Num bits = log2((2^11 / 31) ^ 22) + 26 < 134 + 26 = 160; */
+    Num bits = log2((2^11 / 31) ^ 22) + 26 < 134 + 26 = 160; */
 
 #define LZMA_REQUIRED_INPUT_MAX 20
 
@@ -73,8 +73,8 @@ typedef struct
 void LzmaDec_Init( CLzmaDec *p );
 
 /* There are two types of LZMA streams:
-     0) Stream with end mark. That end mark adds about 6 bytes to compressed size.
-     1) Stream without end mark. You must know exact uncompressed size to decompress such stream. */
+    0) Stream with end mark. That end mark adds about 6 bytes to compressed size.
+    1) Stream without end mark. You must know exact uncompressed size to decompress such stream. */
 
 typedef enum
 {
@@ -84,17 +84,17 @@ typedef enum
 
 /* ELzmaFinishMode has meaning only if the decoding reaches output limit !!!
 
-   You must use LZMA_FINISH_END, when you know that current output buffer
-   covers last bytes of block. In other cases you must use LZMA_FINISH_ANY.
+    You must use LZMA_FINISH_END, when you know that current output buffer
+    covers last bytes of block. In other cases you must use LZMA_FINISH_ANY.
 
-   If LZMA decoder sees end marker before reaching output limit, it returns SZ_OK,
-   and output value of destLen will be less than output buffer size limit.
-   You can check status result also.
+    If LZMA decoder sees end marker before reaching output limit, it returns SZ_OK,
+    and output value of destLen will be less than output buffer size limit.
+    You can check status result also.
 
-   You can use multiple checks to test data integrity after full decompression:
-     1) Check Result and "status" variable.
-     2) Check that output(destLen) = uncompressedSize, if you know real uncompressedSize.
-     3) Check that output(srcLen) = compressedSize, if you know real compressedSize.
+    You can use multiple checks to test data integrity after full decompression:
+    1) Check Result and "status" variable.
+    2) Check that output(destLen) = uncompressedSize, if you know real uncompressedSize.
+    3) Check that output(srcLen) = compressedSize, if you know real compressedSize.
         You must use correct finish mode in that case. */
 
 typedef enum
@@ -111,17 +111,17 @@ typedef enum
 /* ---------- Interfaces ---------- */
 
 /* There are 3 levels of interfaces:
-     1) Dictionary Interface
-     2) Buffer Interface
-     3) One Call Interface
-   You can select any of these interfaces, but don't mix functions from different
-   groups for same object. */
+    1) Dictionary Interface
+    2) Buffer Interface
+    3) One Call Interface
+    You can select any of these interfaces, but don't mix functions from different
+    groups for same object. */
 
 /* There are two variants to allocate state for Dictionary Interface:
-     1) LzmaDec_Allocate / LzmaDec_Free
-     2) LzmaDec_AllocateProbs / LzmaDec_FreeProbs
-   You can use variant 2, if you set dictionary buffer manually.
-   For Buffer Interface you must always use variant 1.
+    1) LzmaDec_Allocate / LzmaDec_Free
+    2) LzmaDec_AllocateProbs / LzmaDec_FreeProbs
+    You can use variant 2, if you set dictionary buffer manually.
+    For Buffer Interface you must always use variant 1.
 
 LzmaDec_Allocate* can return:
   SZ_OK
@@ -138,28 +138,28 @@ void LzmaDec_Free( CLzmaDec *state, ISzAlloc *alloc );
 /* ---------- Dictionary Interface ---------- */
 
 /* You can use it, if you want to eliminate the overhead for data copying from
-   dictionary to some other external buffer.
-   You must work with CLzmaDec variables directly in this interface.
+    dictionary to some other external buffer.
+    You must work with CLzmaDec variables directly in this interface.
 
-   STEPS:
-     LzmaDec_Constr()
-     LzmaDec_Allocate()
-     for (each new stream)
-     {
-       LzmaDec_Init()
-       while (it needs more decompression)
-       {
-         LzmaDec_DecodeToDic()
-         use data from CLzmaDec::dic and update CLzmaDec::dicPos
-       }
-     }
-     LzmaDec_Free()
+    STEPS:
+    LzmaDec_Constr()
+    LzmaDec_Allocate()
+    for (each new stream)
+    {
+        LzmaDec_Init()
+        while (it needs more decompression)
+        {
+        LzmaDec_DecodeToDic()
+        use data from CLzmaDec::dic and update CLzmaDec::dicPos
+        }
+    }
+    LzmaDec_Free()
 */
 
 /* LzmaDec_DecodeToDic
 
-   The decoding to internal dictionary buffer (CLzmaDec::dic).
-   You must manually update CLzmaDec::dicPos, if it reaches CLzmaDec::dicBufSize !!!
+    The decoding to internal dictionary buffer (CLzmaDec::dic).
+    You must manually update CLzmaDec::dicPos, if it reaches CLzmaDec::dicBufSize !!!
 
 finishMode:
   It has meaning only if the decoding reaches output limit (dicLimit).
@@ -169,10 +169,10 @@ finishMode:
 Returns:
   SZ_OK
     status:
-      LZMA_STATUS_FINISHED_WITH_MARK
-      LZMA_STATUS_NOT_FINISHED
-      LZMA_STATUS_NEEDS_MORE_INPUT
-      LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK
+    LZMA_STATUS_FINISHED_WITH_MARK
+    LZMA_STATUS_NOT_FINISHED
+    LZMA_STATUS_NEEDS_MORE_INPUT
+    LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK
   SZ_ERROR_DATA - Data error
 */
 
@@ -181,9 +181,9 @@ SRes LzmaDec_DecodeToDic( CLzmaDec *p, SizeT dicLimit, const Byte *src, SizeT *s
 /* ---------- Buffer Interface ---------- */
 
 /* It's zlib-like interface.
-   See LzmaDec_DecodeToDic description for information about STEPS and return results,
-   but you must use LzmaDec_DecodeToBuf instead of LzmaDec_DecodeToDic and you don't need
-   to work with CLzmaDec variables manually.
+    See LzmaDec_DecodeToDic description for information about STEPS and return results,
+    but you must use LzmaDec_DecodeToBuf instead of LzmaDec_DecodeToDic and you don't need
+    to work with CLzmaDec variables manually.
 
 finishMode:
   It has meaning only if the decoding reaches output limit (*destLen).
@@ -205,9 +205,9 @@ finishMode:
 Returns:
   SZ_OK
     status:
-      LZMA_STATUS_FINISHED_WITH_MARK
-      LZMA_STATUS_NOT_FINISHED
-      LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK
+    LZMA_STATUS_FINISHED_WITH_MARK
+    LZMA_STATUS_NOT_FINISHED
+    LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK
   SZ_ERROR_DATA - Data error
   SZ_ERROR_MEM  - Memory allocation error
   SZ_ERROR_UNSUPPORTED - Unsupported properties

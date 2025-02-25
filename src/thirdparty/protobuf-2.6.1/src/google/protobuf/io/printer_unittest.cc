@@ -65,21 +65,21 @@ TEST(Printer, BasicPrinting) {
     ArrayOutputStream output(buffer, sizeof(buffer), block_size);
 
     {
-      Printer printer(&output, '\0');
+    Printer printer(&output, '\0');
 
-      printer.Print("Hello World!");
-      printer.Print("  This is the same line.\n");
-      printer.Print("But this is a new one.\nAnd this is another one.");
+    printer.Print("Hello World!");
+    printer.Print("  This is the same line.\n");
+    printer.Print("But this is a new one.\nAnd this is another one.");
 
-      EXPECT_FALSE(printer.failed());
+    EXPECT_FALSE(printer.failed());
     }
 
     buffer[output.ByteCount()] = '\0';
 
     EXPECT_STREQ("Hello World!  This is the same line.\n"
-                 "But this is a new one.\n"
-                 "And this is another one.",
-                 buffer);
+                "But this is a new one.\n"
+                "And this is another one.",
+                buffer);
   }
 }
 
@@ -90,24 +90,24 @@ TEST(Printer, WriteRaw) {
     ArrayOutputStream output(buffer, sizeof(buffer), block_size);
 
     {
-      string string_obj = "From an object\n";
-      Printer printer(&output, '$');
-      printer.WriteRaw("Hello World!", 12);
-      printer.PrintRaw("  This is the same line.\n");
-      printer.PrintRaw("But this is a new one.\nAnd this is another one.");
-      printer.WriteRaw("\n", 1);
-      printer.PrintRaw(string_obj);
-      EXPECT_FALSE(printer.failed());
+    string string_obj = "From an object\n";
+    Printer printer(&output, '$');
+    printer.WriteRaw("Hello World!", 12);
+    printer.PrintRaw("  This is the same line.\n");
+    printer.PrintRaw("But this is a new one.\nAnd this is another one.");
+    printer.WriteRaw("\n", 1);
+    printer.PrintRaw(string_obj);
+    EXPECT_FALSE(printer.failed());
     }
 
     buffer[output.ByteCount()] = '\0';
 
     EXPECT_STREQ("Hello World!  This is the same line.\n"
-                 "But this is a new one.\n"
-                 "And this is another one."
-                 "\n"
-                 "From an object\n",
-                 buffer);
+                "But this is a new one.\n"
+                "And this is another one."
+                "\n"
+                "From an object\n",
+                buffer);
   }
 }
 
@@ -118,32 +118,32 @@ TEST(Printer, VariableSubstitution) {
     ArrayOutputStream output(buffer, sizeof(buffer), block_size);
 
     {
-      Printer printer(&output, '$');
-      map<string, string> vars;
+    Printer printer(&output, '$');
+    map<string, string> vars;
 
-      vars["foo"] = "World";
-      vars["bar"] = "$foo$";
-      vars["abcdefg"] = "1234";
+    vars["foo"] = "World";
+    vars["bar"] = "$foo$";
+    vars["abcdefg"] = "1234";
 
-      printer.Print(vars, "Hello $foo$!\nbar = $bar$\n");
-      printer.PrintRaw("RawBit\n");
-      printer.Print(vars, "$abcdefg$\nA literal dollar sign:  $$");
+    printer.Print(vars, "Hello $foo$!\nbar = $bar$\n");
+    printer.PrintRaw("RawBit\n");
+    printer.Print(vars, "$abcdefg$\nA literal dollar sign:  $$");
 
-      vars["foo"] = "blah";
-      printer.Print(vars, "\nNow foo = $foo$.");
+    vars["foo"] = "blah";
+    printer.Print(vars, "\nNow foo = $foo$.");
 
-      EXPECT_FALSE(printer.failed());
+    EXPECT_FALSE(printer.failed());
     }
 
     buffer[output.ByteCount()] = '\0';
 
     EXPECT_STREQ("Hello World!\n"
-                 "bar = $foo$\n"
-                 "RawBit\n"
-                 "1234\n"
-                 "A literal dollar sign:  $\n"
-                 "Now foo = blah.",
-                 buffer);
+                "bar = $foo$\n"
+                "RawBit\n"
+                "1234\n"
+                "A literal dollar sign:  $\n"
+                "Now foo = blah.",
+                buffer);
   }
 }
 
@@ -163,9 +163,9 @@ TEST(Printer, InlineVariableSubstitution) {
   buffer[output.ByteCount()] = '\0';
 
   EXPECT_STREQ("Hello World!\n"
-               "RawBit\n"
-               "one two\n",
-               buffer);
+                "RawBit\n"
+                "one two\n",
+                buffer);
 }
 
 TEST(Printer, Indenting) {
@@ -175,47 +175,47 @@ TEST(Printer, Indenting) {
     ArrayOutputStream output(buffer, sizeof(buffer), block_size);
 
     {
-      Printer printer(&output, '$');
-      map<string, string> vars;
+    Printer printer(&output, '$');
+    map<string, string> vars;
 
-      vars["newline"] = "\n";
+    vars["newline"] = "\n";
 
-      printer.Print("This is not indented.\n");
-      printer.Indent();
-      printer.Print("This is indented\nAnd so is this\n");
-      printer.Outdent();
-      printer.Print("But this is not.");
-      printer.Indent();
-      printer.Print("  And this is still the same line.\n"
+    printer.Print("This is not indented.\n");
+    printer.Indent();
+    printer.Print("This is indented\nAnd so is this\n");
+    printer.Outdent();
+    printer.Print("But this is not.");
+    printer.Indent();
+    printer.Print("  And this is still the same line.\n"
                     "But this is indented.\n");
-      printer.PrintRaw("RawBit has indent at start\n");
-      printer.PrintRaw("but not after a raw newline\n");
-      printer.Print(vars, "Note that a newline in a variable will break "
+    printer.PrintRaw("RawBit has indent at start\n");
+    printer.PrintRaw("but not after a raw newline\n");
+    printer.Print(vars, "Note that a newline in a variable will break "
                     "indenting, as we see$newline$here.\n");
-      printer.Indent();
-      printer.Print("And this");
-      printer.Outdent();
-      printer.Outdent();
-      printer.Print(" is double-indented\nBack to normal.");
+    printer.Indent();
+    printer.Print("And this");
+    printer.Outdent();
+    printer.Outdent();
+    printer.Print(" is double-indented\nBack to normal.");
 
-      EXPECT_FALSE(printer.failed());
+    EXPECT_FALSE(printer.failed());
     }
 
     buffer[output.ByteCount()] = '\0';
 
     EXPECT_STREQ(
-      "This is not indented.\n"
-      "  This is indented\n"
-      "  And so is this\n"
-      "But this is not.  And this is still the same line.\n"
-      "  But this is indented.\n"
-      "  RawBit has indent at start\n"
-      "but not after a raw newline\n"
-      "Note that a newline in a variable will break indenting, as we see\n"
-      "here.\n"
-      "    And this is double-indented\n"
-      "Back to normal.",
-      buffer);
+    "This is not indented.\n"
+    "  This is indented\n"
+    "  And so is this\n"
+    "But this is not.  And this is still the same line.\n"
+    "  But this is indented.\n"
+    "  RawBit has indent at start\n"
+    "but not after a raw newline\n"
+    "Note that a newline in a variable will break indenting, as we see\n"
+    "here.\n"
+    "    And this is double-indented\n"
+    "Back to normal.",
+    buffer);
   }
 }
 

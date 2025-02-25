@@ -9,7 +9,7 @@
 
 class CWeightButton : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CWeightButton, CBaseEntity );
 

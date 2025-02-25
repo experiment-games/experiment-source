@@ -27,7 +27,7 @@ class CSCHintIcon;
 //-----------------------------------------------------------------------------
 class CTFSpectatorGUIHealth : public CTFHudPlayerHealth
 {
-   public:
+    public:
     CTFSpectatorGUIHealth( Panel *parent, const char *name )
         : CTFHudPlayerHealth( parent, name )
     {
@@ -48,10 +48,10 @@ class CTFSpectatorGUIHealth : public CTFHudPlayerHealth
 //-----------------------------------------------------------------------------
 class CTFSpectatorGUI : public CSpectatorGUI, public CGameEventListener
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFSpectatorGUI, CSpectatorGUI );
 
-   public:
+    public:
     CTFSpectatorGUI( IViewPort *pViewPort );
     ~CTFSpectatorGUI( void );
 
@@ -93,7 +93,7 @@ class CTFSpectatorGUI : public CSpectatorGUI, public CGameEventListener
         return GAME_ACTION_SET_SPECTATOR;
     }
 
-   protected:
+    protected:
     int m_nLastSpecMode;
     float m_flNextTipChangeTime;  // time at which to next change the tip
     int m_iTipClass;              // class that current tip is for

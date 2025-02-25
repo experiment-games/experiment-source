@@ -19,7 +19,7 @@ struct studiohdr_t;
 // Fixme, this might not be the best spot for this
 class IGlobalFlexController
 {
-   public:
+    public:
     virtual int FindGlobalFlexController( char const *name ) = 0;
     virtual char const *GetGlobalFlexControllerName( int idx ) = 0;
 };
@@ -31,7 +31,7 @@ class CDmeGlobalFlexControllerOperator : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeGlobalFlexControllerOperator, CDmeOperator );
 
-   public:
+    public:
     void SetGameModel( CDmeGameModel *gameModel );
 
     virtual void Resolve();
@@ -51,7 +51,7 @@ class CDmeGlobalFlexControllerOperator : public CDmeOperator
 
     DmAttributeHandle_t m_ToAttributeHandle;
 
-   private:
+    private:
     int FindGlobalFlexControllerIndex() const;
 
     int m_nFlexControllerIndex;
@@ -64,7 +64,7 @@ class CDmeGameModel : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeGameModel, CDmeDag );
 
-   public:
+    public:
     void AddBone( CDmeTransform *pTransform );
     void AddBones( studiohdr_t *pStudioHdr, const char *pBaseName, int nFirstBone, int nCount );
     void SetBone( uint index, const Vector &pos, const Quaternion &rot );
@@ -111,10 +111,10 @@ class CDmeGameModel : public CDmeDag
     void AppendGlobalFlexControllerOperators( CUtlVector< IDmeOperator * > &list );
     studiohdr_t *GetStudioHdr() const;
 
-   public:
+    public:
     CDmaVar< bool > m_bComputeBounds;
 
-   protected:
+    protected:
     void PopulateExistingDagList( CDmeDag **pDags, int nCount );
 
     // This holds the operators which map to the m_flexWeights below
@@ -140,7 +140,7 @@ class CDmeGameSprite : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeGameSprite, CDmeDag );
 
-   public:
+    public:
     const char *GetModelName() const;
 
     float GetScale() const;
@@ -152,7 +152,7 @@ class CDmeGameSprite : public CDmeDag
 
     void SetState( bool bVisible, float nFrame, int nRenderMode, int nRenderFX, float flRenderScale, float flProxyRadius, const Vector &pos, const Quaternion &rot, const Color &color );
 
-   protected:
+    protected:
     CDmaString m_modelName;
     CDmaVar< float > m_frame;
     CDmaVar< int > m_rendermode;
@@ -169,7 +169,7 @@ class CDmeGamePortal : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeGamePortal, CDmeDag );
 
-   public:
+    public:
     CDmaVar< int > m_nPortalId;
     CDmaVar< int > m_nLinkedPortalId;
     CDmaVar< float > m_flStaticAmount;

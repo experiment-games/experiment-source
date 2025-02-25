@@ -47,7 +47,7 @@ class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudDeathNotice, vgui::Panel );
 
-   public:
+    public:
     CHudDeathNotice( const char *pElementName );
 
     void Init( void );
@@ -61,7 +61,7 @@ class CHudDeathNotice : public CHudElement, public vgui::Panel
 
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     CPanelAnimationVarAliasType( float, m_flLineHeight, "LineHeight", "15", "proportional_float" );
 
     CPanelAnimationVar( float, m_flMaxDeathNotices, "MaxDeathNotices", "4" );
@@ -292,7 +292,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent *event )
 
     // Do we have too many death messages in the queue?
     if ( m_DeathNotices.Count() > 0 &&
-         m_DeathNotices.Count() >= ( int )m_flMaxDeathNotices )
+        m_DeathNotices.Count() >= ( int )m_flMaxDeathNotices )
     {
         // Remove the oldest one in the queue, which will always be the first
         m_DeathNotices.Remove( 0 );

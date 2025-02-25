@@ -52,4 +52,3 @@ install-both-unix:
 	@cd src; $(MAKE) install-unix LUAV=5.4
 
 .PHONY: test
-

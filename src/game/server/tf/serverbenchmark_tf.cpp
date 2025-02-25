@@ -15,7 +15,7 @@ static ConVar sv_benchmark_freeroam( "sv_benchmark_freeroam", "0", 0, "Allow the
 
 class CTFServerBenchmark : public CServerBenchmarkHook
 {
-   public:
+    public:
     virtual void StartBenchmark()
     {
         ConVarRef cvBotFlipout( "bot_flipout" );
@@ -222,7 +222,7 @@ class CTFServerBenchmark : public CServerBenchmarkHook
         return pPlayer;
     }
 
-   private:
+    private:
     int m_nBotsCreated;
     bool m_bSetupLocalPlayer;
 

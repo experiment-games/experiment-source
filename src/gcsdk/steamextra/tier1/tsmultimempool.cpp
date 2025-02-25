@@ -33,8 +33,8 @@ CThreadSafeMultiMemoryPool::CThreadSafeMultiMemoryPool( const MemPoolConfig_t *p
         AssertMsg( pMemPoolConfig[iMemPoolConfig].m_cubBlockSize % 32 == 0, "Mempools sizes must be multiples of 32" );
         // add an int to the block size so we can note the alloc size
         memPoolRecord.m_pMemPool = new CThreadSafeMemoryPool( pMemPoolConfig[iMemPoolConfig].m_cubBlockSize + k_cubMemBlockPrefixSize,
-                                                              pMemPoolConfig[iMemPoolConfig].m_cubDefaultPoolSize,
-                                                              nGrowMode );
+                                                            pMemPoolConfig[iMemPoolConfig].m_cubDefaultPoolSize,
+                                                            nGrowMode );
         Assert( memPoolRecord.m_pMemPool );
         memPoolRecord.m_nBlockSize = pMemPoolConfig[iMemPoolConfig].m_cubBlockSize;
         m_VecMemPool.AddToTail( memPoolRecord );

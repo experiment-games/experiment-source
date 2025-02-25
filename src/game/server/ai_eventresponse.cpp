@@ -164,7 +164,7 @@ class CNPCEventResponseSystemEntity : public CBaseEntity
 {
     DECLARE_CLASS( CNPCEventResponseSystemEntity, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn();

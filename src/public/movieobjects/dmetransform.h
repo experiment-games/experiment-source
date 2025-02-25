@@ -24,7 +24,7 @@ class CDmeTransform : public CDmElement
 {
     DEFINE_ELEMENT( CDmeTransform, CDmElement );
 
-   public:
+    public:
     // FIXME: Replace this with actual methods to do editing
     // (scale/shear, etc.)
     void SetTransform( const matrix3x4_t &transform );
@@ -38,7 +38,7 @@ class CDmeTransform : public CDmElement
     CDmAttribute *GetPositionAttribute();
     CDmAttribute *GetOrientationAttribute();
 
-   private:
+    private:
     CDmaVar< Vector > m_Position;
     CDmaVar< Quaternion > m_Orientation;
 };

@@ -106,7 +106,7 @@ enum eAudioSourceFormat_t
 //-----------------------------------------------------------------------------
 class IQuickTimeMovieMaker : public IBaseInterface
 {
-   public:
+    public:
     virtual bool CreateNewMovieFile( MovieHandle_t &theMovie, const char *pFilename, int nWidth, int nHeight, int nFps, eVideoEncodeQuality quality, eAudioSourceFormat_t srcAudioFormat = cASF_None, int audioSampleRate = 0 ) = 0;
     virtual bool AppendVideoFrame( MovieHandle_t theMovie, unsigned char *pFrame ) = 0;
     virtual bool AppendAudioSamples( MovieHandle_t theMovie, void *sampleBuffer, size_t sampleSize ) = 0;
@@ -120,7 +120,7 @@ class IQuickTimeMovieMaker : public IBaseInterface
 
 class IQuickTime : public IAppSystem
 {
-   public:
+    public:
     virtual bool IsVideoSystemAvailable() = 0;
     virtual eVideoSystemStatus GetVideoSystemStatus() = 0;
     virtual eVideoSystemFeatures GetVideoSystemFeatures() = 0;

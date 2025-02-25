@@ -834,7 +834,7 @@ void CTFStunBall::PipebombTouch( CBaseEntity *pOther )
     {
         CTFPlayer *pPlayer = ToTFPlayer( pOther );
         if ( pPlayer && pPlayer->IsPlayerClass( TF_CLASS_SCOUT ) &&
-             ( pPlayer->GetAmmoCount( TF_AMMO_GRENADES1 ) < pPlayer->GetMaxAmmo( TF_AMMO_GRENADES1 ) ) )
+            ( pPlayer->GetAmmoCount( TF_AMMO_GRENADES1 ) < pPlayer->GetMaxAmmo( TF_AMMO_GRENADES1 ) ) )
         {
             pPlayer->GiveAmmo( 1, TF_AMMO_GRENADES1 );
             RemoveBallTrail();
@@ -928,9 +928,9 @@ bool CTFStunBall::ShouldBallTouch( CBaseEntity *pOther )
 
     Assert( pOther );
     if ( !pOther ||
-         !pOther->IsSolid() ||
-         pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) ||
-         pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS )
+        !pOther->IsSolid() ||
+        pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) ||
+        pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS )
     {
         pOwner->SpeakConceptIfAllowed( MP_CONCEPT_BALL_MISSED );
         return false;

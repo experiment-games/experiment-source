@@ -12,7 +12,7 @@ class CBossAlpha;
 //---------------------------------------------------------------------------------------------
 class CBossAlphaTacticalMonitor : public Action< CBossAlpha >
 {
-   public:
+    public:
     virtual Action< CBossAlpha > *InitialContainedAction( CBossAlpha *me );
 
     virtual ActionResult< CBossAlpha > OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
@@ -23,7 +23,7 @@ class CBossAlphaTacticalMonitor : public Action< CBossAlpha >
         return "TacticalMonitor";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_backOffCooldownTimer;
     CountdownTimer m_getOffMeTimer;
 };

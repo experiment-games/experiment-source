@@ -15,7 +15,7 @@
 /// bottom or you will have bad perf as data is moved around to insert new elements.
 class CSparseMatrix
 {
-   public:
+    public:
     struct NonZeroValueDescriptor_t
     {
         int m_nColumnNumber;
@@ -36,7 +36,7 @@ class CSparseMatrix
 
     void AdjustAllRowIndicesAfter( int nStartRow, int nDelta );
 
-   public:
+    public:
     FORCEINLINE float Element( int nRow, int nCol ) const;
     void SetElement( int nRow, int nCol, float flValue );
     void SetDimensions( int nNumRows, int nNumCols );

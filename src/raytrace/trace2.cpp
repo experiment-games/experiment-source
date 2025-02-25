@@ -101,14 +101,14 @@ void RayTracingEnvironment::RenderScene(
             RayTracingResult rslt;
             Trace4Rays( myrays, all_zeros, TraceLimit, &rslt );
             if ( ( rslt.HitIds[0] == -1 ) && ( rslt.HitIds[1] == -1 ) &&
-                 ( rslt.HitIds[2] == -1 ) && ( rslt.HitIds[3] == -1 ) )
+                ( rslt.HitIds[2] == -1 ) && ( rslt.HitIds[3] == -1 ) )
                 MapLinearIntensities( BackgroundColor, dest, dest + 1, dest + stride, dest + stride + 1 );
             else
             {
                 // make sure normal points back towards ray origin
                 fltx4 ndoti = rslt.surface_normal * myrays.direction;
                 fltx4 bad_dirs = AndSIMD( CmpGtSIMD( ndoti, Four_Zeros ),
-                                          LoadAlignedSIMD( ( float * )signmask ) );
+                                        LoadAlignedSIMD( ( float * )signmask ) );
 
                 // flip signs of all "wrong" normals
                 rslt.surface_normal.x = XorSIMD( bad_dirs, rslt.surface_normal.x );
@@ -183,11 +183,11 @@ void RayTracingEnvironment::RenderScene(
                 fltx4 no_hit_mask = CmpGtSIMD( rslt.HitDistance, TraceLimit );
 
                 intens.x = OrSIMD( AndSIMD( BackgroundColor.x, no_hit_mask ),
-                                   AndNotSIMD( no_hit_mask, intens.x ) );
+                                    AndNotSIMD( no_hit_mask, intens.x ) );
                 intens.y = OrSIMD( AndSIMD( BackgroundColor.y, no_hit_mask ),
-                                   AndNotSIMD( no_hit_mask, intens.y ) );
+                                    AndNotSIMD( no_hit_mask, intens.y ) );
                 intens.z = OrSIMD( AndSIMD( BackgroundColor.z, no_hit_mask ),
-                                   AndNotSIMD( no_hit_mask, intens.z ) );
+                                    AndNotSIMD( no_hit_mask, intens.z ) );
 
                 MapLinearIntensities( intens, dest, dest + 1, dest + stride, dest + stride + 1 );
             }
@@ -229,7 +229,7 @@ void RayTracingEnvironment::ComputeVirtualLightSources( void )
                         // make sure normal points back towards ray origin
                         fltx4 ndoti = rslt.surface_normal * myrays.direction;
                         fltx4 bad_dirs = AndSIMD( CmpGtSIMD( ndoti, Four_Zeros ),
-                                                  LoadAlignedSIMD( ( float * )signmask ) );
+                                                LoadAlignedSIMD( ( float * )signmask ) );
 
                         // flip signs of all "wrong" normals
                         rslt.surface_normal.x = XorSIMD( bad_dirs, rslt.surface_normal.x );

@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class C_FuncPasstimeGoal : public C_BaseEntity, public TAutoList< C_FuncPasstimeGoal >
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncPasstimeGoal, C_BaseEntity );
     DECLARE_CLIENTCLASS();
     bool BGoalTriggerDisabled() const
@@ -37,7 +37,7 @@ class C_FuncPasstimeGoal : public C_BaseEntity, public TAutoList< C_FuncPasstime
         TYPE_TOWER,
     };
 
-   private:
+    private:
     CNetworkVar( bool, m_bTriggerDisabled );
     CNetworkVar( int, m_iGoalType );
 };

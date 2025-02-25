@@ -48,7 +48,7 @@ class C_HalloweenItemPickup : public CBaseAnimating
 {
     DECLARE_CLASS( C_HalloweenItemPickup, CBaseAnimating );
 
-   public:
+    public:
     C_HalloweenItemPickup()
         : m_bReadyForPickup( false ), m_bClaimed( false ), m_flTimeToReady( 0.0f )
     {
@@ -152,9 +152,9 @@ class C_HalloweenItemPickup : public CBaseAnimating
 #endif
             CSteamID steamID;
             if ( pPlayer == NULL || pPlayer->IsBot() == true || pPlayer->GetSteamID( &steamID ) == false ||
-                 ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
-                 pPlayer->IsAlive() == false ||
-                 pPlayer->GetObserverMode() != OBS_MODE_NONE )
+                ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
+                pPlayer->IsAlive() == false ||
+                pPlayer->GetObserverMode() != OBS_MODE_NONE )
             {
                 continue;
             }

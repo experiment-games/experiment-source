@@ -58,27 +58,27 @@ public interface Message extends MessageLite, MessageOrBuilder {
   // Comparison and hashing
 
   /**
-   * Compares the specified object with this message for equality.  Returns
-   * {@code true} if the given object is a message of the same type (as
-   * defined by {@code getDescriptorForType()}) and has identical values for
-   * all of its fields.  Subclasses must implement this; inheriting
-   * {@code Object.equals()} is incorrect.
-   *
-   * @param other object to be compared for equality with this message
-   * @return {@code true} if the specified object is equal to this message
-   */
+    * Compares the specified object with this message for equality.  Returns
+    * {@code true} if the given object is a message of the same type (as
+    * defined by {@code getDescriptorForType()}) and has identical values for
+    * all of its fields.  Subclasses must implement this; inheriting
+    * {@code Object.equals()} is incorrect.
+    *
+    * @param other object to be compared for equality with this message
+    * @return {@code true} if the specified object is equal to this message
+    */
   @Override
   boolean equals(Object other);
 
   /**
-   * Returns the hash code value for this message.  The hash code of a message
-   * should mix the message's type (object identity of the descriptor) with its
-   * contents (known and unknown field values).  Subclasses must implement this;
-   * inheriting {@code Object.hashCode()} is incorrect.
-   *
-   * @return the hash code value for this message
-   * @see Map#hashCode()
-   */
+    * Returns the hash code value for this message.  The hash code of a message
+    * should mix the message's type (object identity of the descriptor) with its
+    * contents (known and unknown field values).  Subclasses must implement this;
+    * inheriting {@code Object.hashCode()} is incorrect.
+    *
+    * @return the hash code value for this message
+    * @see Map#hashCode()
+    */
   @Override
   int hashCode();
 
@@ -86,10 +86,10 @@ public interface Message extends MessageLite, MessageOrBuilder {
   // Convenience methods.
 
   /**
-   * Converts the message to a string in protocol buffer text format. This is
-   * just a trivial wrapper around {@link
-   * TextFormat#printToString(MessageOrBuilder)}.
-   */
+    * Converts the message to a string in protocol buffer text format. This is
+    * just a trivial wrapper around {@link
+    * TextFormat#printToString(MessageOrBuilder)}.
+    */
   @Override
   String toString();
 
@@ -101,29 +101,29 @@ public interface Message extends MessageLite, MessageOrBuilder {
   Builder toBuilder();
 
   /**
-   * Abstract interface implemented by Protocol Message builders.
-   */
+    * Abstract interface implemented by Protocol Message builders.
+    */
   interface Builder extends MessageLite.Builder, MessageOrBuilder {
     // (From MessageLite.Builder, re-declared here only for return type
     // covariance.)
     Builder clear();
 
     /**
-     * Merge {@code other} into the message being built.  {@code other} must
-     * have the exact same type as {@code this} (i.e.
-     * {@code getDescriptorForType() == other.getDescriptorForType()}).
-     *
-     * Merging occurs as follows.  For each field:<br>
-     * * For singular primitive fields, if the field is set in {@code other},
-     *   then {@code other}'s value overwrites the value in this message.<br>
-     * * For singular message fields, if the field is set in {@code other},
-     *   it is merged into the corresponding sub-message of this message
-     *   using the same merging rules.<br>
-     * * For repeated fields, the elements in {@code other} are concatenated
-     *   with the elements in this message.
-     *
-     * This is equivalent to the {@code Message::MergeFrom} method in C++.
-     */
+    * Merge {@code other} into the message being built.  {@code other} must
+    * have the exact same type as {@code this} (i.e.
+    * {@code getDescriptorForType() == other.getDescriptorForType()}).
+    *
+    * Merging occurs as follows.  For each field:<br>
+    * * For singular primitive fields, if the field is set in {@code other},
+    *   then {@code other}'s value overwrites the value in this message.<br>
+    * * For singular message fields, if the field is set in {@code other},
+    *   it is merged into the corresponding sub-message of this message
+    *   using the same merging rules.<br>
+    * * For repeated fields, the elements in {@code other} are concatenated
+    *   with the elements in this message.
+    *
+    * This is equivalent to the {@code Message::MergeFrom} method in C++.
+    */
     Builder mergeFrom(Message other);
 
     // (From MessageLite.Builder, re-declared here only for return type
@@ -133,84 +133,84 @@ public interface Message extends MessageLite, MessageOrBuilder {
     Builder clone();
     Builder mergeFrom(CodedInputStream input) throws IOException;
     Builder mergeFrom(CodedInputStream input,
-                      ExtensionRegistryLite extensionRegistry)
-                      throws IOException;
+                    ExtensionRegistryLite extensionRegistry)
+                    throws IOException;
 
     /**
-     * Get the message's type's descriptor.
-     * See {@link Message#getDescriptorForType()}.
-     */
+    * Get the message's type's descriptor.
+    * See {@link Message#getDescriptorForType()}.
+    */
     Descriptors.Descriptor getDescriptorForType();
 
     /**
-     * Create a Builder for messages of the appropriate type for the given
-     * field.  Messages built with this can then be passed to setField(),
-     * setRepeatedField(), or addRepeatedField().
-     */
+    * Create a Builder for messages of the appropriate type for the given
+    * field.  Messages built with this can then be passed to setField(),
+    * setRepeatedField(), or addRepeatedField().
+    */
     Builder newBuilderForField(Descriptors.FieldDescriptor field);
 
     /**
-     * Get a nested builder instance for the given field.
-     * <p>
-     * Normally, we hold a reference to the immutable message object for the
-     * message type field. Some implementations(the generated message builders),
-     * however, can also hold a reference to the builder object (a nested
-     * builder) for the field.
-     * <p>
-     * If the field is already backed up by a nested builder, the nested builder
-     * will be returned. Otherwise, a new field builder will be created and
-     * returned. The original message field (if exist) will be merged into the
-     * field builder, which will then be nested into its parent builder.
-     * <p>
-     * NOTE: implementations that do not support nested builders will throw
-     * <code>UnsupportedException</code>.
-     */
+    * Get a nested builder instance for the given field.
+    * <p>
+    * Normally, we hold a reference to the immutable message object for the
+    * message type field. Some implementations(the generated message builders),
+    * however, can also hold a reference to the builder object (a nested
+    * builder) for the field.
+    * <p>
+    * If the field is already backed up by a nested builder, the nested builder
+    * will be returned. Otherwise, a new field builder will be created and
+    * returned. The original message field (if exist) will be merged into the
+    * field builder, which will then be nested into its parent builder.
+    * <p>
+    * NOTE: implementations that do not support nested builders will throw
+    * <code>UnsupportedException</code>.
+    */
     Builder getFieldBuilder(Descriptors.FieldDescriptor field);
 
     /**
-     * Sets a field to the given value.  The value must be of the correct type
-     * for this field, i.e. the same type that
-     * {@link Message#getField(Descriptors.FieldDescriptor)} would return.
-     */
+    * Sets a field to the given value.  The value must be of the correct type
+    * for this field, i.e. the same type that
+    * {@link Message#getField(Descriptors.FieldDescriptor)} would return.
+    */
     Builder setField(Descriptors.FieldDescriptor field, Object value);
 
     /**
-     * Clears the field.  This is exactly equivalent to calling the generated
-     * "clear" accessor method corresponding to the field.
-     */
+    * Clears the field.  This is exactly equivalent to calling the generated
+    * "clear" accessor method corresponding to the field.
+    */
     Builder clearField(Descriptors.FieldDescriptor field);
 
     /**
-     * Clears the oneof.  This is exactly equivalent to calling the generated
-     * "clear" accessor method corresponding to the oneof.
-     */
+    * Clears the oneof.  This is exactly equivalent to calling the generated
+    * "clear" accessor method corresponding to the oneof.
+    */
     Builder clearOneof(Descriptors.OneofDescriptor oneof);
 
     /**
-     * Sets an element of a repeated field to the given value.  The value must
-     * be of the correct type for this field, i.e. the same type that
-     * {@link Message#getRepeatedField(Descriptors.FieldDescriptor,int)} would
-     * return.
-     * @throws IllegalArgumentException The field is not a repeated field, or
-     *           {@code field.getContainingType() != getDescriptorForType()}.
-     */
+    * Sets an element of a repeated field to the given value.  The value must
+    * be of the correct type for this field, i.e. the same type that
+    * {@link Message#getRepeatedField(Descriptors.FieldDescriptor,int)} would
+    * return.
+    * @throws IllegalArgumentException The field is not a repeated field, or
+    *           {@code field.getContainingType() != getDescriptorForType()}.
+    */
     Builder setRepeatedField(Descriptors.FieldDescriptor field,
-                             int index, Object value);
+                            int index, Object value);
 
     /**
-     * Like {@code setRepeatedField}, but appends the value as a new element.
-     * @throws IllegalArgumentException The field is not a repeated field, or
-     *           {@code field.getContainingType() != getDescriptorForType()}.
-     */
+    * Like {@code setRepeatedField}, but appends the value as a new element.
+    * @throws IllegalArgumentException The field is not a repeated field, or
+    *           {@code field.getContainingType() != getDescriptorForType()}.
+    */
     Builder addRepeatedField(Descriptors.FieldDescriptor field, Object value);
 
     /** Set the {@link UnknownFieldSet} for this message. */
     Builder setUnknownFields(UnknownFieldSet unknownFields);
 
     /**
-     * Merge some unknown fields into the {@link UnknownFieldSet} for this
-     * message.
-     */
+    * Merge some unknown fields into the {@link UnknownFieldSet} for this
+    * message.
+    */
     Builder mergeUnknownFields(UnknownFieldSet unknownFields);
 
     // ---------------------------------------------------------------
@@ -220,25 +220,25 @@ public interface Message extends MessageLite, MessageOrBuilder {
     // covariance.)
     Builder mergeFrom(ByteString data) throws InvalidProtocolBufferException;
     Builder mergeFrom(ByteString data,
-                      ExtensionRegistryLite extensionRegistry)
-                      throws InvalidProtocolBufferException;
+                    ExtensionRegistryLite extensionRegistry)
+                    throws InvalidProtocolBufferException;
     Builder mergeFrom(byte[] data) throws InvalidProtocolBufferException;
     Builder mergeFrom(byte[] data, int off, int len)
-                      throws InvalidProtocolBufferException;
+                    throws InvalidProtocolBufferException;
     Builder mergeFrom(byte[] data,
-                      ExtensionRegistryLite extensionRegistry)
-                      throws InvalidProtocolBufferException;
+                    ExtensionRegistryLite extensionRegistry)
+                    throws InvalidProtocolBufferException;
     Builder mergeFrom(byte[] data, int off, int len,
-                      ExtensionRegistryLite extensionRegistry)
-                      throws InvalidProtocolBufferException;
+                    ExtensionRegistryLite extensionRegistry)
+                    throws InvalidProtocolBufferException;
     Builder mergeFrom(InputStream input) throws IOException;
     Builder mergeFrom(InputStream input,
-                      ExtensionRegistryLite extensionRegistry)
-                      throws IOException;
+                    ExtensionRegistryLite extensionRegistry)
+                    throws IOException;
     boolean mergeDelimitedFrom(InputStream input)
-                               throws IOException;
+                                throws IOException;
     boolean mergeDelimitedFrom(InputStream input,
-                               ExtensionRegistryLite extensionRegistry)
-                               throws IOException;
+                                ExtensionRegistryLite extensionRegistry)
+                                throws IOException;
   }
 }

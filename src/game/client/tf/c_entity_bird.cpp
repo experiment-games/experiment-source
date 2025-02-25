@@ -18,15 +18,15 @@ class C_EntityFlyingBird : public CBaseAnimating
 {
     DECLARE_CLASS( C_EntityFlyingBird, CBaseAnimating );
 
-   public:
+    public:
     void InitFromServerData( float flyAngle, float flyAngleRate, float flAccelZ, float flSpeed, float flGlideTime );
     virtual void Touch( CBaseEntity *pOther );
 
-   private:
+    private:
     virtual void ClientThink( void );
     void UpdateFlyDirection( void );
 
-   private:
+    private:
     Vector m_flyForward;
     float m_flyAngle;
     float m_flyAngleRate;

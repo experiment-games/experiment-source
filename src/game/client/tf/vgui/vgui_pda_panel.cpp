@@ -31,13 +31,13 @@ class CPDAPanel : public CVGuiScreenPanel
 {
     DECLARE_CLASS( CPDAPanel, CVGuiScreenPanel );
 
-   public:
+    public:
     CPDAPanel( vgui::Panel *parent, const char *panelName );
     ~CPDAPanel();
     virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
     virtual void OnTick();
 
-   protected:
+    protected:
     C_BaseCombatWeapon *GetOwningWeapon();
 };
 
@@ -107,7 +107,7 @@ class CPDAPanel_Engineer_Destroy : public CPDAPanel
 {
     DECLARE_CLASS( CPDAPanel_Engineer_Destroy, CPDAPanel );
 
-   public:
+    public:
     CPDAPanel_Engineer_Destroy( vgui::Panel *parent, const char *panelName );
 };
 
@@ -129,7 +129,7 @@ class CPDAPanel_Engineer_Build : public CPDAPanel
 {
     DECLARE_CLASS( CPDAPanel_Engineer_Build, CPDAPanel );
 
-   public:
+    public:
     CPDAPanel_Engineer_Build( vgui::Panel *parent, const char *panelName );
 };
 
@@ -151,7 +151,7 @@ class CPDAPanel_Spy : public CPDAPanel
 {
     DECLARE_CLASS( CPDAPanel_Spy, CPDAPanel );
 
-   public:
+    public:
     CPDAPanel_Spy( vgui::Panel *parent, const char *panelName );
 };
 
@@ -173,12 +173,12 @@ class CPDAPanel_Spy_Invis : public CPDAPanel
 {
     DECLARE_CLASS( CPDAPanel_Spy_Invis, CPDAPanel );
 
-   public:
+    public:
     CPDAPanel_Spy_Invis( vgui::Panel *parent, const char *panelName );
 
     virtual void OnTick();
 
-   private:
+    private:
     ProgressBar *m_pInvisProgress;
 };
 
@@ -224,12 +224,12 @@ class CPDAPanel_Spy_Invis_Pocket : public CPDAPanel
 {
     DECLARE_CLASS( CPDAPanel_Spy_Invis_Pocket, CPDAPanel );
 
-   public:
+    public:
     CPDAPanel_Spy_Invis_Pocket( vgui::Panel *parent, const char *panelName );
 
     virtual void OnTick();
 
-   protected:
+    protected:
     ProgressBar *m_pInvisProgress;
     float m_flPrevProgress;
 };
@@ -297,7 +297,7 @@ class CPDAPanel_Spy_Invis_Pocket_TTG : public CPDAPanel_Spy_Invis_Pocket
 {
     DECLARE_CLASS( CPDAPanel_Spy_Invis_Pocket_TTG, CPDAPanel_Spy_Invis_Pocket );
 
-   public:
+    public:
     CPDAPanel_Spy_Invis_Pocket_TTG( vgui::Panel *parent, const char *panelName );
 };
 
@@ -320,7 +320,7 @@ class CPDAPanel_Spy_Invis_Pocket_HM : public CPDAPanel_Spy_Invis_Pocket
 {
     DECLARE_CLASS( CPDAPanel_Spy_Invis_Pocket_HM, CPDAPanel_Spy_Invis_Pocket );
 
-   public:
+    public:
     CPDAPanel_Spy_Invis_Pocket_HM( vgui::Panel *parent, const char *panelName );
 };
 

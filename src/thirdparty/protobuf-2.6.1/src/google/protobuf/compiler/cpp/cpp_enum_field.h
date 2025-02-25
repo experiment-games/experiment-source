@@ -50,9 +50,9 @@ namespace cpp
 
 class EnumFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit EnumFieldGenerator( const FieldDescriptor* descriptor,
-                                 const Options& options );
+                                const Options& options );
     ~EnumFieldGenerator();
 
     // implements FieldGenerator ---------------------------------------
@@ -68,19 +68,19 @@ class EnumFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( EnumFieldGenerator );
 };
 
 class EnumOneofFieldGenerator : public EnumFieldGenerator
 {
-   public:
+    public:
     explicit EnumOneofFieldGenerator( const FieldDescriptor* descriptor,
-                                      const Options& options );
+                                    const Options& options );
     ~EnumOneofFieldGenerator();
 
     // implements FieldGenerator ---------------------------------------
@@ -89,15 +89,15 @@ class EnumOneofFieldGenerator : public EnumFieldGenerator
     void GenerateSwappingCode( io::Printer* printer ) const;
     void GenerateConstructorCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( EnumOneofFieldGenerator );
 };
 
 class RepeatedEnumFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedEnumFieldGenerator( const FieldDescriptor* descriptor,
-                                         const Options& options );
+                                        const Options& options );
     ~RepeatedEnumFieldGenerator();
 
     // implements FieldGenerator ---------------------------------------
@@ -114,7 +114,7 @@ class RepeatedEnumFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

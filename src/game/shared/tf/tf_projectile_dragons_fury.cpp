@@ -41,7 +41,7 @@ ConVar tf_fireball_max_lifetime( "tf_fireball_max_lifetime", "0.5", FCVAR_REPLIC
 
 class CTFProjectile_BallOfFire : public CTFProjectile_Rocket
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_BallOfFire, CTFProjectile_Rocket );
     DECLARE_NETWORKCLASS();
 
@@ -186,11 +186,11 @@ class CTFProjectile_BallOfFire : public CTFProjectile_Rocket
         // Verify a correct "other."
         Assert( pOther );
         if ( !pOther->IsSolid() ||
-             pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) ||
-             pOther->IsSolidFlagSet( FSOLID_NOT_SOLID ) ||
-             ( pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS ) ||
-             pOther->IsFuncLOD() ||
-             pOther->IsBaseProjectile() )
+            pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) ||
+            pOther->IsSolidFlagSet( FSOLID_NOT_SOLID ) ||
+            ( pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS ) ||
+            pOther->IsFuncLOD() ||
+            pOther->IsBaseProjectile() )
         {
             return;
         }
@@ -217,10 +217,10 @@ class CTFProjectile_BallOfFire : public CTFProjectile_Rocket
 
         // The stuff we collide with
         bool bCombatEntity = pOther->IsPlayer() ||
-                             pOther->IsBaseObject() ||
-                             pOther->IsCombatCharacter() ||
-                             pOther->IsCombatItem() ||
-                             pOther->IsProjectileCollisionTarget();
+                            pOther->IsBaseObject() ||
+                            pOther->IsCombatCharacter() ||
+                            pOther->IsCombatItem() ||
+                            pOther->IsProjectileCollisionTarget();
 
         if ( bCombatEntity )
         {
@@ -550,13 +550,13 @@ class CTFProjectile_BallOfFire : public CTFProjectile_Rocket
     }
 #endif  // CLIENT_DLL
 
-   protected:
+    protected:
     virtual float GetFireballScale() const
     {
         return 1.f;
     }
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     dlight_t *m_pDynamicLight = NULL;
     bool m_bNearMiss = false;

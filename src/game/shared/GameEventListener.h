@@ -20,7 +20,7 @@ extern IGameEventManager2 *gameeventmanager;
 // our dll location.
 class CGameEventListener : public IGameEventListener2
 {
-   public:
+    public:
     CGameEventListener()
         : m_bRegisteredForEvents( false )
     {
@@ -62,7 +62,7 @@ class CGameEventListener : public IGameEventListener2
     // Intentionally abstract
     virtual void FireGameEvent( IGameEvent *event ) = 0;
 
-   private:
+    private:
     // Have we registered for any events?
     bool m_bRegisteredForEvents;
 };

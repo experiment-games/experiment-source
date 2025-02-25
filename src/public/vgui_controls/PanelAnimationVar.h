@@ -17,7 +17,7 @@
     static void AddToAnimationMap( char const *scriptname, char const *type, char const *var, char const *defaultvalue, bool array, PANELLOOKUPFUNC func ) \
     {                                                                                                                                                      \
         PanelAnimationMap *map = FindOrAddPanelAnimationMap( GetPanelClassName() );                                                                        \
-                                                                                                                                                           \
+                                                                                                                                                            \
         PanelAnimationMapEntry entry;                                                                                                                      \
         entry.m_pszScriptName = scriptname;                                                                                                                \
         entry.m_pszVariable = var;                                                                                                                         \
@@ -25,10 +25,10 @@
         entry.m_pszDefaultValue = defaultvalue;                                                                                                            \
         entry.m_pfnLookup = func;                                                                                                                          \
         entry.m_bArray = array;                                                                                                                            \
-                                                                                                                                                           \
+                                                                                                                                                            \
         map->entries.AddToTail( entry );                                                                                                                   \
     }                                                                                                                                                      \
-                                                                                                                                                           \
+                                                                                                                                                            \
     static void ChainToAnimationMap( void )                                                                                                                \
     {                                                                                                                                                      \
         static bool chained = false;                                                                                                                       \
@@ -42,19 +42,19 @@
             map->baseMap = FindOrAddPanelAnimationMap( GetPanelBaseClassName() );                                                                          \
         }                                                                                                                                                  \
     }                                                                                                                                                      \
-                                                                                                                                                           \
+                                                                                                                                                            \
     class className##_Register;                                                                                                                            \
     friend class className##_Register;                                                                                                                     \
     class className##_Register                                                                                                                             \
     {                                                                                                                                                      \
-       public:                                                                                                                                             \
+        public:                                                                                                                                             \
         className##_Register()                                                                                                                             \
         {                                                                                                                                                  \
             className::ChainToAnimationMap();                                                                                                              \
         }                                                                                                                                                  \
     };                                                                                                                                                     \
     className##_Register m_RegisterAnimationClass;                                                                                                         \
-                                                                                                                                                           \
+                                                                                                                                                            \
     virtual PanelAnimationMap *GetAnimMap()                                                                                                                \
     {                                                                                                                                                      \
         return FindOrAddPanelAnimationMap( GetPanelClassName() );                                                                                          \
@@ -72,7 +72,7 @@ typedef void *( *PANELLOOKUPFUNC )( vgui::Panel *panel );
     }                                                                                                             \
     class PanelAnimationVar_##name                                                                                \
     {                                                                                                             \
-       public:                                                                                                    \
+        public:                                                                                                    \
         static void InitVar()                                                                                     \
         {                                                                                                         \
             static bool bAdded = false;                                                                           \
@@ -103,7 +103,7 @@ typedef void *( *PANELLOOKUPFUNC )( vgui::Panel *panel );
     }                                                                                                            \
     class PanelAnimationVar_##name                                                                               \
     {                                                                                                            \
-       public:                                                                                                   \
+        public:                                                                                                   \
         static void InitVar()                                                                                    \
         {                                                                                                        \
             static bool bAdded = false;                                                                          \

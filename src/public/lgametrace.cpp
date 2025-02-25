@@ -219,9 +219,9 @@ LUA_BINDING_END( "Trace", "The new trace object." )
 
 CTraceLuaFilter::CTraceLuaFilter( lua_State *L, int filterArg, int collisionGroup, bool bIgnoreWorld, bool bFilterTableInverted /* = false */ )
     : CTraceFilterSimple( NULL, collisionGroup ),
-      m_pLuaState( L ),
-      m_bIgnoreWorld( bIgnoreWorld ),
-      m_bFilterTableInverted( bFilterTableInverted )
+    m_pLuaState( L ),
+    m_bIgnoreWorld( bIgnoreWorld ),
+    m_bFilterTableInverted( bFilterTableInverted )
 {
     m_iFilterArgIndex = filterArg = lua_absindex( L, filterArg );
     m_pPassEntity = nullptr;
@@ -306,10 +306,10 @@ bool CTraceLuaFilter::ShouldHitEntity( IHandleEntity *pHandleEntity, int content
 
                 // Disabled for now, since NULL may cause this error
                 /* if ( !pEntity )
-                 {
-                     luaL_typeerror( m_pLuaState, -1, "Entity or string" );
-                 }
-                 else*/
+                {
+                    luaL_typeerror( m_pLuaState, -1, "Entity or string" );
+                }
+                else*/
                 if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
                 {
                     lua_pop( m_pLuaState, 2 );  // Pop the value and the key

@@ -46,23 +46,23 @@ SHADER_DRAW
         // color = texture
         // alpha = vertexalpha
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_NONE );
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_SPECULARCOLOR,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_SPECULARCOLOR,
+                                                SHADER_TEXARG_NONE );
 
         // color = texture
         // alpha = blend
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_BLEND_PREVIOUSSTAGEALPHA,
-                                               SHADER_TEXARG_CONSTANTCOLOR,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_BLEND_PREVIOUSSTAGEALPHA,
+                                                SHADER_TEXARG_CONSTANTCOLOR,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
 
         pShaderShadow->BlendFunc( SHADER_BLEND_DST_COLOR, SHADER_BLEND_SRC_COLOR );
         FogToGrey();
@@ -88,49 +88,49 @@ SHADER_DRAW
         if ( IS_FLAG_SET( MATERIAL_VAR_VERTEXCOLOR ) )
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_COLOR,
-                                                   SHADER_TEXOP_MODULATE,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_VERTEXCOLOR );
+                                                    SHADER_TEXCHANNEL_COLOR,
+                                                    SHADER_TEXOP_MODULATE,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_VERTEXCOLOR );
         }
         else
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_COLOR,
-                                                   SHADER_TEXOP_SELECTARG1,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_NONE );
+                                                    SHADER_TEXCHANNEL_COLOR,
+                                                    SHADER_TEXOP_SELECTARG1,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_NONE );
         }
 
         if ( IS_FLAG_SET( MATERIAL_VAR_VERTEXALPHA ) )
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_ALPHA,
-                                                   SHADER_TEXOP_MODULATE,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_VERTEXCOLOR );
+                                                    SHADER_TEXCHANNEL_ALPHA,
+                                                    SHADER_TEXOP_MODULATE,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_VERTEXCOLOR );
         }
         else
         {
             pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                                   SHADER_TEXCHANNEL_ALPHA,
-                                                   SHADER_TEXOP_SELECTARG1,
-                                                   SHADER_TEXARG_TEXTURE,
-                                                   SHADER_TEXARG_NONE );
+                                                    SHADER_TEXCHANNEL_ALPHA,
+                                                    SHADER_TEXOP_SELECTARG1,
+                                                    SHADER_TEXARG_TEXTURE,
+                                                    SHADER_TEXARG_NONE );
         }
 
         // color = texture [* vertex color] * lightmap color
         // alpha = texture alpha [* vertex alpha] * specular alpha
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE2X,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_TEXTURE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE2X,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_TEXTURE );
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_SPECULARCOLOR );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_SPECULARCOLOR );
 
         pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
         FogToFogColor();

@@ -19,7 +19,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class vgui::MenuSeparator : public Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( MenuSeparator, Panel );
 
     MenuSeparator( Panel *parent, char const *panelName )
@@ -752,7 +752,7 @@ void Menu::PerformLayout()
     int maxVisibleItems = CountVisibleItems();
 
     if ( m_iNumVisibleLines > 0 &&
-         maxVisibleItems > m_iNumVisibleLines )
+        maxVisibleItems > m_iNumVisibleLines )
     {
         bNeedScrollbar = true;
         maxVisibleItems = m_iNumVisibleLines;
@@ -1664,7 +1664,7 @@ namespace vgui
 
 class CMenuManager
 {
-   public:
+    public:
     void AddMenu( Menu *m )
     {
         if ( !m )
@@ -1792,14 +1792,14 @@ class CMenuManager
                 Panel *pTopMost = ipanel()->GetPanel(topMost, GetControlsModuleName());
 
                 if ( pTopMost &&
-                  ipanel()->HasParent( topMost, parent->GetVPanel() ) &&
-                  dynamic_cast< MenuButton * >( pTopMost ) )
+                ipanel()->HasParent( topMost, parent->GetVPanel() ) &&
+                dynamic_cast< MenuButton * >( pTopMost ) )
                 {
-                  Msg( "topMost %s has parent %s\n",
+                Msg( "topMost %s has parent %s\n",
                     ipanel()->GetName( topMost ),
                     parent->GetName() );
 
-                  return true;
+                return true;
                 }
                 */
             }
@@ -1817,7 +1817,7 @@ class CMenuManager
     }
 #endif
 
-   private:
+    private:
     // List of visible menus
     CUtlVector< DHANDLE< Menu > > m_Menus;
 };
@@ -1994,7 +1994,7 @@ void Menu::OnMenuItemSelected( Panel *panel )
                 // GetActiveItem needs to return -1 or similar if it hasn't been set...
                 if( m_MenuItems[i]->GetActiveItem() )
                 {
-                  m_iActivatedItem = m_MenuItems[i]->GetActiveItem();
+                m_iActivatedItem = m_MenuItems[i]->GetActiveItem();
                 }*/
             }
         }
@@ -2335,7 +2335,7 @@ void Menu::SetCurrentlyHighlightedItem( int itemID )
         // by hand or set the item off the list
         // so just snap the scroll bar straight to the item.
         if ( ( row > m_pScroller->GetValue() + m_iNumVisibleLines - 1 ) ||
-             ( row < m_pScroller->GetValue() ) )
+            ( row < m_pScroller->GetValue() ) )
         {
             if ( !m_pScroller->IsVisible() )
                 return;
@@ -2489,7 +2489,7 @@ void Menu::MoveAlongMenuItemList( int direction, int loopCount )
         // scroll bar is already too far down and should scroll up or vice versa
         // so just snap the scroll bar straight to the item.
         if ( ( row > m_pScroller->GetValue() + m_iNumVisibleLines - 1 ) ||
-             ( row < m_pScroller->GetValue() ) )
+            ( row < m_pScroller->GetValue() ) )
         {
             m_pScroller->SetValue( row );
         }

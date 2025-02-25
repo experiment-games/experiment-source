@@ -24,7 +24,7 @@
 
 class CWeaponIFMBase : public CWeaponModBaseClass
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponIFMBase, CWeaponModBaseClass );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -40,7 +40,7 @@ class CWeaponIFMBase : public CWeaponModBaseClass
 
     //	virtual void	FallInit( void );
 
-   public:
+    public:
 #if defined( CLIENT_DLL )
     virtual bool ShouldPredict();
     virtual void OnDataChanged( DataUpdateType_t type );
@@ -54,7 +54,7 @@ class CWeaponIFMBase : public CWeaponModBaseClass
     }
 #endif
 
-   private:
+    private:
     CWeaponIFMBase( const CWeaponIFMBase& );
 };
 

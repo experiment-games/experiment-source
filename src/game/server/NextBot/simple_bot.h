@@ -17,7 +17,7 @@
  */
 class CSimpleBot : public NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( CSimpleBot, NextBotCombatCharacter );
 
     CSimpleBot();
@@ -33,7 +33,7 @@ class CSimpleBot : public NextBotCombatCharacter
         return m_locomotor;
     }
 
-   private:
+    private:
     NextBotGroundLocomotion *m_locomotor;
 };
 
@@ -45,7 +45,7 @@ class CSimpleBot : public NextBotCombatCharacter
  */
 class CSimpleBotPathCost : public IPathCost
 {
-   public:
+    public:
     CSimpleBotPathCost( CSimpleBot *me )
     {
         m_me = me;

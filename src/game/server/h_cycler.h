@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 class CCycler : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CCycler, CAI_BaseNPC );
 
     void GenericCyclerSpawn( char *szModel, Vector vecMin, Vector vecMax );

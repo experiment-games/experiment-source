@@ -34,7 +34,7 @@ enum HL2MPPlayerState
 
 class CPlayerAnimState
 {
-   public:
+    public:
     enum
     {
         TURN_NONE = 0,
@@ -54,7 +54,7 @@ class CPlayerAnimState
 
     CHL2MP_Player *GetOuter();
 
-   private:
+    private:
     void GetOuterAbsVelocity( Vector &vel );
 
     int ConvergeAngles( float goal, float maxrate, float dt, float &current );

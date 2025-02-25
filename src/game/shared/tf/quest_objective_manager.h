@@ -34,7 +34,7 @@ class CQuestObjectiveDefinition;
 
 class CBaseQuestObjectiveTracker : public CTFQuestEvaluator
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseQuestObjectiveTracker, CBaseQuestObjectiveTracker )
 
     CBaseQuestObjectiveTracker( const QuestObjectiveInstance_t& objectiveInstance, CQuestItemTracker* pParent, const CSteamID& ownerSteamID );
@@ -67,13 +67,13 @@ class CBaseQuestObjectiveTracker : public CTFQuestEvaluator
 
     bool UpdateConditions();
 
-   protected:
+    protected:
     const CTFPlayer* GetQuestOwningPlayer() const;
     void IncrementCount( int nIncrementValue );
 
     QuestObjectiveInstance_t m_objectiveInstance;
 
-   private:
+    private:
     CTFQuestEvaluator* m_pEvaluator;
     CQuestItemTracker* m_pParent;
     CSteamID m_steamIDOwner;
@@ -82,10 +82,10 @@ class CBaseQuestObjectiveTracker : public CTFQuestEvaluator
 class CQuestItemTracker : public CBaseSOTracker, public CGameEventListener
 #ifdef GAME_DLL
     ,
-                          public ISharedObjectListener
+                        public ISharedObjectListener
 #endif
 {
-   public:
+    public:
     CQuestItemTracker( const CSharedObject* pItem, CSteamID SteamIDOwner, CSOTrackerManager* pManager );
     ~CQuestItemTracker();
 
@@ -115,15 +115,15 @@ class CQuestItemTracker : public CBaseSOTracker, public CGameEventListener
 
 #ifdef CLIENT_DLL
     void UpdateFromServer( uint32 nPoints0,
-                           uint32 nPoints1,
-                           uint32 nPoints2 );
+                            uint32 nPoints1,
+                            uint32 nPoints2 );
 #else
     void SendUpdateToClient( const CQuestObjectiveDefinition* pObjective, const CSteamID& steamIDScorer );
 #endif
 
     virtual void Spew() const OVERRIDE;
 
-   private:
+    private:
     void EnsureObjectiveTrackersForPlayer( const CSteamID& steamIDTrackingPlayer );
 #ifdef GAME_DLL
     virtual void SOCreated( const CSteamID& steamIDOwner, const CSharedObject* pObject, ESOCacheEvent eEvent ) OVERRIDE{};
@@ -162,7 +162,7 @@ class CQuestItemTracker : public CBaseSOTracker, public CGameEventListener
 // SOCaches when they connect.
 class CQuestObjectiveManager : public CSOTrackerManager
 {
-   public:
+    public:
     DECLARE_CLASS( CQuestObjectiveManager, CSOTrackerManager )
 
     CQuestObjectiveManager();
@@ -174,7 +174,7 @@ class CQuestObjectiveManager : public CSOTrackerManager
     void UpdateFromServer( itemid_t nID, uint32 nPoints0, uint32 nPoints1, uint32 nPoints2 );
 #endif
 
-   private:
+    private:
 #ifdef GAME_DLL
     void SendMessageForCommit( const ::google::protobuf::Message* pProtoMessage ) const;
 #endif

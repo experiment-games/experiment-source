@@ -88,7 +88,7 @@ bool CSceneTokenProcessor::TokenAvailable( void )
     }
 
     if ( *search_p == ';' || *search_p == '#' ||                 // semicolon and # is comment field
-         ( *search_p == '/' && *( ( search_p ) + 1 ) == '/' ) )  // also make // a comment field
+        ( *search_p == '/' && *( ( search_p ) + 1 ) == '/' ) )  // also make // a comment field
         return false;
 
     return true;

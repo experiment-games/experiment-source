@@ -189,8 +189,8 @@ bool CTFRune::MyTouch( CBasePlayer *pPlayer )
             }
 
         if ( pTFPlayer->m_Shared.IsStealthed() ||
-             pTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             pTFPlayer->m_Shared.GetPercentInvisible() > 0.25f )
+            pTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            pTFPlayer->m_Shared.GetPercentInvisible() > 0.25f )
         {
             return false;
         }

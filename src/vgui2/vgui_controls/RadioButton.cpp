@@ -309,10 +309,10 @@ void RadioButton::Paint()
     /*
     if (HasFocus())
     {
-      int tx0, ty0, tx1, ty1;
-      _textImage->GetPos(tx0, ty0);
-      _textImage->GetSize(tx1, ty1);
-      DrawFocusBorder(tx0, ty0, tx0 + tx1, ty0 + ty1);
+    int tx0, ty0, tx1, ty1;
+    _textImage->GetPos(tx0, ty0);
+    _textImage->GetSize(tx1, ty1);
+    DrawFocusBorder(tx0, ty0, tx0 + tx1, ty0 + ty1);
     }
     */
 }

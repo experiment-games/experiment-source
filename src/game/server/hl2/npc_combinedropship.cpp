@@ -165,14 +165,14 @@ class CCombineDropshipContainer : public CPhysicsProp
     DECLARE_CLASS( CCombineDropshipContainer, CPhysicsProp );
     DECLARE_DATADESC();
 
-   public:
+    public:
     void Precache();
     virtual void Spawn();
     virtual bool OverridePropdata( void );
     virtual int OnTakeDamage( const CTakeDamageInfo &info );
     virtual void Event_Killed( const CTakeDamageInfo &info );
 
-   private:
+    private:
     enum
     {
         MAX_SMOKE_TRAILS = 4,
@@ -191,7 +191,7 @@ class CCombineDropshipContainer : public CPhysicsProp
     // Create a corpse
     void CreateCorpse();
 
-   private:
+    private:
     int m_nSmokeTrailCount;
     EHANDLE m_hLastInflictor;
     float m_flLastHitTime;
@@ -204,7 +204,7 @@ class CNPC_CombineDropship : public CBaseHelicopter
 {
     DECLARE_CLASS( CNPC_CombineDropship, CBaseHelicopter );
 
-   public:
+    public:
     ~CNPC_CombineDropship();
 
     // Setup
@@ -276,7 +276,7 @@ class CNPC_CombineDropship : public CBaseHelicopter
     // Sounds
     virtual void UpdateRotorWashVolume();
 
-   private:
+    private:
     void SetLandingState( LandingState_t landingState );
     LandingState_t GetLandingState() const
     {
@@ -286,7 +286,7 @@ class CNPC_CombineDropship : public CBaseHelicopter
     void UpdateGroundRotorWashSound( float flAltitude );
     void UpdateRotorWashVolume( CSoundPatch *pRotorSound, float flVolume, float flDeltaTime );
 
-   private:
+    private:
     // Timers
     float m_flTimeTakeOff;
     float m_flNextTroopSpawnAttempt;
@@ -360,7 +360,7 @@ class CNPC_CombineDropship : public CBaseHelicopter
     COutputFloat m_OnContainerShotDownBeforeDropoff;
     COutputEvent m_OnContainerShotDownAfterDropoff;
 
-   protected:
+    protected:
     // Because the combine dropship is a leaf class, we can use
     // static variables to store this information, and save some memory.
     // Should the dropship end up having inheritors, their activate may
@@ -1353,7 +1353,7 @@ void CNPC_CombineDropship::Flight( void )
 
     // If we're landing, deliberately tuck in the back end
     if ( GetLandingState() == LANDING_DESCEND || GetLandingState() == LANDING_TOUCHDOWN ||
-         GetLandingState() == LANDING_UNLOADING || GetLandingState() == LANDING_UNLOADED || IsHovering() )
+        GetLandingState() == LANDING_UNLOADING || GetLandingState() == LANDING_UNLOADED || IsHovering() )
     {
         finspeed = -60;
     }
@@ -1991,7 +1991,7 @@ void CNPC_CombineDropship::PrescheduleThink( void )
             /*
             if ( IsActivityFinished() && GetActivity() != ACT_DROPSHIP_DESCEND_IDLE )
             {
-              SetActivity( (Activity)ACT_DROPSHIP_DESCEND_IDLE );
+            SetActivity( (Activity)ACT_DROPSHIP_DESCEND_IDLE );
             }
             */
 
@@ -2125,7 +2125,7 @@ void CNPC_CombineDropship::PrescheduleThink( void )
             /*
             if ( IsActivityFinished() && ( GetActivity() != ACT_DROPSHIP_DESCEND_IDLE ) )
             {
-              SetActivity( (Activity)ACT_DROPSHIP_DESCEND_IDLE );
+            SetActivity( (Activity)ACT_DROPSHIP_DESCEND_IDLE );
             }
             */
 
@@ -2274,11 +2274,11 @@ void CNPC_CombineDropship::PrescheduleThink( void )
                     /*
                     if ( flDistance > 10 )
                     {
-                      // Cheat and ensure we touch the target
-                      float flSpeed = GetAbsVelocity().Length();
-                      Vector vecVelocity = vecToTarget;
-                      VectorNormalize( vecVelocity );
-                      SetAbsVelocity( vecVelocity * min(flSpeed,flDistance) );
+                    // Cheat and ensure we touch the target
+                    float flSpeed = GetAbsVelocity().Length();
+                    Vector vecVelocity = vecToTarget;
+                    VectorNormalize( vecVelocity );
+                    SetAbsVelocity( vecVelocity * min(flSpeed,flDistance) );
                     }
                     else
                     */

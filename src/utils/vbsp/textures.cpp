@@ -83,63 +83,63 @@ int FindMiptex( const char *name )
 
     // handle sky
     if ( ( propVal = GetMaterialVar( matID, "%compileSky" ) ) &&
-         StringIsTrue( propVal ) )
+        StringIsTrue( propVal ) )
     {
         textureref[i].flags |= SURF_SKY | SURF_NOLIGHT;
     }
     else if ( ( propVal = GetMaterialVar( matID, "%compile2DSky" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].flags |= SURF_SKY | SURF_SKY2D | SURF_NOLIGHT;
     }
     // handle hint brushes
     else if ( ( propVal = GetMaterialVar( matID, "%compileHint" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].flags |= SURF_NODRAW | SURF_NOLIGHT | SURF_HINT;
     }
     // handle skip faces
     else if ( ( propVal = GetMaterialVar( matID, "%compileSkip" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].flags |= SURF_NODRAW | SURF_NOLIGHT | SURF_SKIP;
     }
     // handle origin brushes
     else if ( ( propVal = GetMaterialVar( matID, "%compileOrigin" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].contents |= CONTENTS_ORIGIN | CONTENTS_DETAIL;
         textureref[i].flags |= SURF_NODRAW | SURF_NOLIGHT;
     }
     // handle clip brushes
     else if ( ( propVal = GetMaterialVar( matID, "%compileClip" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].contents |= CONTENTS_PLAYERCLIP | CONTENTS_MONSTERCLIP;
         textureref[i].flags |= SURF_NODRAW | SURF_NOLIGHT;
     }
     else if ( ( propVal = GetMaterialVar( matID, "%playerClip" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].contents |= CONTENTS_PLAYERCLIP;
         textureref[i].flags |= SURF_NODRAW | SURF_NOLIGHT;
     }
     // handle npc clip brushes
     else if ( ( propVal = GetMaterialVar( matID, "%compileNpcClip" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].contents |= CONTENTS_MONSTERCLIP;
         textureref[i].flags |= SURF_NODRAW | SURF_NOLIGHT;
     }
     // handle surface lights which are meant to
     else if ( ( propVal = GetMaterialVar( matID, "%compileNoChop" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].flags |= SURF_NOCHOP;
     }
     // handle triggers
     else if ( ( propVal = GetMaterialVar( matID, "%compileTrigger" ) ) &&
-              StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
     {
         textureref[i].flags |= ( SURF_NOLIGHT | SURF_TRIGGER );
         if ( g_NodrawTriggers )
@@ -149,7 +149,7 @@ int FindMiptex( const char *name )
     }
     // handle nolight surfs (except water)
     else if ( ( ( propVal = GetMaterialVar( matID, "%compileNoLight" ) ) && StringIsTrue( propVal ) ) &&
-              !( ( propVal2 = GetMaterialVar( matID, "%compileWater" ) ) && StringIsTrue( propVal2 ) ) )
+            !( ( propVal2 = GetMaterialVar( matID, "%compileWater" ) ) && StringIsTrue( propVal2 ) ) )
     {
         textureref[i].flags |= SURF_NOLIGHT;
     }
@@ -165,7 +165,7 @@ int FindMiptex( const char *name )
 
         // handle wet materials
         if ( ( propVal = GetMaterialVar( matID, "%noPortal" ) ) &&
-             StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
         {
             textureref[i].flags |= SURF_NOPORTAL;
         }
@@ -226,17 +226,17 @@ int FindMiptex( const char *name )
         }
 
         if ( ( propVal = GetMaterialVar( matID, "%compileDetail" ) ) &&
-             StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
         {
             textureref[i].contents |= CONTENTS_DETAIL;
         }
 
         bool bKeepLighting = ( ( propVal = GetMaterialVar( matID, "%compileKeepLight" ) ) &&
-                               StringIsTrue( propVal ) );
+                                StringIsTrue( propVal ) );
 
         // handle materials that want to be treated as water.
         if ( ( propVal = GetMaterialVar( matID, "%compileWater" ) ) &&
-             StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
         {
             textureref[i].contents &= ~( CONTENTS_SOLID | CONTENTS_DETAIL );
             textureref[i].contents |= CONTENTS_WATER;
@@ -259,7 +259,7 @@ int FindMiptex( const char *name )
         }
 
         if ( ( propVal = GetMaterialVar( matID, "%compileSlime" ) ) &&
-             StringIsTrue( propVal ) )
+            StringIsTrue( propVal ) )
         {
             textureref[i].contents &= ~( CONTENTS_SOLID | CONTENTS_DETAIL );
             textureref[i].contents |= CONTENTS_SLIME;
@@ -510,10 +510,10 @@ int FindOrCreateTexData( const char *pName_ )
     g_SurfaceProperties[nOutput] = GetSurfaceProperties( matID, pName );
 
 #if 0
-	Msg( "reflectivity: %f %f %f\n", 
-		pTexData->reflectivity[0],
-		pTexData->reflectivity[1],
-		pTexData->reflectivity[2] );
+    Msg( "reflectivity: %f %f %f\n",
+        pTexData->reflectivity[0],
+        pTexData->reflectivity[1],
+        pTexData->reflectivity[2] );
 #endif
 
     return nOutput;
@@ -682,14 +682,14 @@ int TexinfoForBrushTexture( plane_t *plane, brush_texture_t *bt, const Vector &o
     }
 
     tx.textureVecsTexelsPerWorldUnits[0][3] = bt->shift[0] +
-                                              DOT_PRODUCT( origin, tx.textureVecsTexelsPerWorldUnits[0] );
+                                            DOT_PRODUCT( origin, tx.textureVecsTexelsPerWorldUnits[0] );
     tx.textureVecsTexelsPerWorldUnits[1][3] = bt->shift[1] +
-                                              DOT_PRODUCT( origin, tx.textureVecsTexelsPerWorldUnits[1] );
+                                            DOT_PRODUCT( origin, tx.textureVecsTexelsPerWorldUnits[1] );
 
     tx.lightmapVecsLuxelsPerWorldUnits[0][3] = shiftScaleU * bt->shift[0] +
-                                               DOT_PRODUCT( origin, tx.lightmapVecsLuxelsPerWorldUnits[0] );
+                                                DOT_PRODUCT( origin, tx.lightmapVecsLuxelsPerWorldUnits[0] );
     tx.lightmapVecsLuxelsPerWorldUnits[1][3] = shiftScaleV * bt->shift[1] +
-                                               DOT_PRODUCT( origin, tx.lightmapVecsLuxelsPerWorldUnits[1] );
+                                                DOT_PRODUCT( origin, tx.lightmapVecsLuxelsPerWorldUnits[1] );
 
     tx.flags = bt->flags;
     tx.texdata = FindOrCreateTexData( bt->name );

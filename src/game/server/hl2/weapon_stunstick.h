@@ -20,7 +20,7 @@ class CWeaponStunStick : public CBaseHLBludgeonWeapon
     DECLARE_CLASS( CWeaponStunStick, CBaseHLBludgeonWeapon );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CWeaponStunStick();
 
     DECLARE_SERVERCLASS();
@@ -58,7 +58,7 @@ class CWeaponStunStick : public CBaseHLBludgeonWeapon
         return false;
     }
 
-   private:
+    private:
     CNetworkVar( bool, m_bActive );
 };
 

@@ -59,7 +59,7 @@ class CHudCredits : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudCredits, vgui::Panel );
 
-   public:
+    public:
     CHudCredits( const char *pElementName );
     virtual void Init( void );
     virtual void LevelShutdown( void );
@@ -79,11 +79,11 @@ class CHudCredits : public CHudElement, public vgui::Panel
         return IsActive();
     }
 
-   protected:
+    protected:
     virtual void Paint();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     void Clear();
 
     void ReadNames( KeyValues *pKeyValue );

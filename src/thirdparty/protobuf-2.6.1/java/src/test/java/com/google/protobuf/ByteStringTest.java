@@ -77,7 +77,7 @@ public class ByteStringTest extends TestCase {
   private boolean isArrayRange(byte[] left, byte[] right, int rightOffset, int length) {
     boolean stillEqual = (left.length == length);
     for (int i = 0; (stillEqual && i < length); ++i) {
-      stillEqual = (left[i] == right[rightOffset + i]);
+    stillEqual = (left[i] == right[rightOffset + i]);
     }
     return stillEqual;
   }
@@ -153,9 +153,9 @@ public class ByteStringTest extends TestCase {
         isArrayRange(byteString.toByteArray(), testBytes, 0, testBytes.length));
     // Call copyFrom on an iteration that's not a collection
     ByteString byteStringAlt = ByteString.copyFrom(new Iterable<ByteString>() {
-      public Iterator<ByteString> iterator() {
+    public Iterator<ByteString> iterator() {
         return pieces.iterator();
-      }
+    }
     });
     assertEquals("copyFrom from an Iteration must contain the expected bytes",
         byteString, byteStringAlt);
@@ -189,7 +189,7 @@ public class ByteStringTest extends TestCase {
     capturedArray = eis.capturedArray;
     byte[] originalValue = byteString.toByteArray();
     for (int x = 0; x < capturedArray.length; ++x) {
-      capturedArray[x] = (byte) 0;
+    capturedArray[x] = (byte) 0;
     }
 
     byte[] newValue = byteString.toByteArray();
@@ -251,12 +251,12 @@ public class ByteStringTest extends TestCase {
   // Tests that IOExceptions propagate through ByteString.readFrom().
   public void testReadFrom_IOExceptions() {
     try {
-      ByteString.readFrom(new FailStream());
-      fail("readFrom must throw the underlying IOException");
+    ByteString.readFrom(new FailStream());
+    fail("readFrom must throw the underlying IOException");
 
     } catch (IOException e) {
-      assertEquals("readFrom must throw the expected exception",
-                   "synthetic failure", e.getMessage());
+    assertEquals("readFrom must throw the expected exception",
+                    "synthetic failure", e.getMessage());
     }
   }
 
@@ -282,7 +282,7 @@ public class ByteStringTest extends TestCase {
   // Fails unless ByteString.readFrom reads the bytes correctly from a
   // reluctant stream with the given chunkSize parameter.
   private void assertReadFromReluctantStream(byte[] bytes, int chunkSize)
-      throws IOException {
+    throws IOException {
     ByteString b = ByteString.readFrom(new ReluctantStream(bytes), chunkSize);
     assertTrue("readFrom byte stream must contain the expected bytes",
         isArray(b.toByteArray(), bytes));
@@ -309,7 +309,7 @@ public class ByteStringTest extends TestCase {
   // A stream that fails when read.
   private static final class FailStream extends InputStream {
     @Override public int read() throws IOException {
-      throw new IOException("synthetic failure");
+    throw new IOException("synthetic failure");
     }
   }
 
@@ -320,40 +320,40 @@ public class ByteStringTest extends TestCase {
     protected int pos = 0;
 
     public ReluctantStream(byte[] data) {
-      this.data = data;
+    this.data = data;
     }
 
     @Override public int read() {
-      if (pos == data.length) {
+    if (pos == data.length) {
         return -1;
-      } else {
+    } else {
         return data[pos++];
-      }
+    }
     }
 
     @Override public int read(byte[] buf) {
-      return read(buf, 0, buf.length);
+    return read(buf, 0, buf.length);
     }
 
     @Override public int read(byte[] buf, int offset, int size) {
-      if (pos == data.length) {
+    if (pos == data.length) {
         return -1;
-      }
-      int count = Math.min(Math.min(size, data.length - pos), 250);
-      System.arraycopy(data, pos, buf, offset, count);
-      pos += count;
-      return count;
+    }
+    int count = Math.min(Math.min(size, data.length - pos), 250);
+    System.arraycopy(data, pos, buf, offset, count);
+    pos += count;
+    return count;
     }
   }
 
   // Same as above, but also implements available().
   private static final class AvailableStream extends ReluctantStream {
     public AvailableStream(byte[] data) {
-      super(data);
+    super(data);
     }
 
     @Override public int available() {
-      return Math.min(250, data.length - pos);
+    return Math.min(250, data.length - pos);
     }
   }
 
@@ -363,38 +363,38 @@ public class ByteStringTest extends TestCase {
 
     @Override
     public int read(byte[] buf, int off, int len) {
-      if (capturedArray != null) {
+    if (capturedArray != null) {
         return -1;
-      } else {
+    } else {
         capturedArray = buf;
         for (int x = 0; x < len; ++x) {
-          buf[x] = (byte) x;
+        buf[x] = (byte) x;
         }
         return len;
-      }
+    }
     }
 
     @Override
     public int read() {
-      // Purposefully do nothing.
-      return -1;
+    // Purposefully do nothing.
+    return -1;
     }
   }
-  
+
   // A stream which exposes the byte array passed into write(byte[], int, int).
   private static class EvilOutputStream extends OutputStream {
     public byte[] capturedArray = null;
 
     @Override
     public void write(byte[] buf, int off, int len) {
-      if (capturedArray == null) {
+    if (capturedArray == null) {
         capturedArray = buf;
-      }
+    }
     }
 
     @Override
     public void write(int ignored) {
-      // Purposefully do nothing.
+    // Purposefully do nothing.
     }
   }
 
@@ -422,20 +422,20 @@ public class ByteStringTest extends TestCase {
     byte[] bytes = getTestBytes();
     int length = bytes.length;
     int[] bufferSizes = {128, 256, length / 2, length - 1, length, length + 1,
-                         2 * length, 3 * length};
+                        2 * length, 3 * length};
     int[] writeSizes = {1, 4, 5, 7, 23, bytes.length};
 
     for (int bufferSize : bufferSizes) {
-      for (int writeSize : writeSizes) {
+    for (int writeSize : writeSizes) {
         // Test writing the entire output writeSize bytes at a time.
         ByteString.Output output = ByteString.newOutput(bufferSize);
         for (int i = 0; i < length; i += writeSize) {
-          output.write(bytes, i, Math.min(writeSize, length - i));
+        output.write(bytes, i, Math.min(writeSize, length - i));
         }
         ByteString byteString = output.toByteString();
         assertTrue("String built from newOutput() must contain the expected bytes",
             isArrayRange(bytes, byteString.toByteArray(), 0, bytes.length));
-      }
+    }
     }
   }
 
@@ -445,16 +445,16 @@ public class ByteStringTest extends TestCase {
     byte[] bytes = getTestBytes();
     int length = bytes.length;
     int[] bufferSizes = {0, 1, 128, 256, length / 2,
-                         length - 1, length, length + 1,
-                         2 * length, 3 * length};
+                        length - 1, length, length + 1,
+                        2 * length, 3 * length};
     for (int bufferSize : bufferSizes) {
-      ByteString.Output output = ByteString.newOutput(bufferSize);
-      for (byte byteValue : bytes) {
+    ByteString.Output output = ByteString.newOutput(bufferSize);
+    for (byte byteValue : bytes) {
         output.write(byteValue);
-      }
-      ByteString byteString = output.toByteString();
-      assertTrue("String built from newOutput() must contain the expected bytes",
-          isArrayRange(bytes, byteString.toByteArray(), 0, bytes.length));
+    }
+    ByteString byteString = output.toByteString();
+    assertTrue("String built from newOutput() must contain the expected bytes",
+        isArrayRange(bytes, byteString.toByteArray(), 0, bytes.length));
     }
   }
 
@@ -465,40 +465,40 @@ public class ByteStringTest extends TestCase {
     byte[] bytes = getTestBytes();
     int length = bytes.length;
     int[] bufferSizes = {0, 1, 128, 256, length / 2,
-                         length - 1, length, length + 1,
-                         2 * length, 3 * length};
+                        length - 1, length, length + 1,
+                        2 * length, 3 * length};
 
     for (int bufferSize : bufferSizes) {
-      // Test writing the entire output using a mixture of write sizes and
-      // methods;
-      ByteString.Output output = ByteString.newOutput(bufferSize);
-      int position = 0;
-      while (position < bytes.length) {
+    // Test writing the entire output using a mixture of write sizes and
+    // methods;
+    ByteString.Output output = ByteString.newOutput(bufferSize);
+    int position = 0;
+    while (position < bytes.length) {
         if (rng.nextBoolean()) {
-          int count = 1 + rng.nextInt(bytes.length - position);
-          output.write(bytes, position, count);
-          position += count;
+        int count = 1 + rng.nextInt(bytes.length - position);
+        output.write(bytes, position, count);
+        position += count;
         } else {
-          output.write(bytes[position]);
-          position++;
+        output.write(bytes[position]);
+        position++;
         }
         assertEquals("size() returns the right value", position, output.size());
         assertTrue("newOutput() substring must have correct bytes",
             isArrayRange(output.toByteString().toByteArray(),
                 bytes, 0, position));
-      }
-      ByteString byteString = output.toByteString();
-      assertTrue("String built from newOutput() must contain the expected bytes",
-          isArrayRange(bytes, byteString.toByteArray(), 0, bytes.length));
+    }
+    ByteString byteString = output.toByteString();
+    assertTrue("String built from newOutput() must contain the expected bytes",
+        isArrayRange(bytes, byteString.toByteArray(), 0, bytes.length));
     }
   }
-  
+
   public void testNewOutputEmpty() throws IOException {
     // Make sure newOutput() correctly builds empty byte strings
     ByteString byteString = ByteString.newOutput().toByteString();
     assertEquals(ByteString.EMPTY, byteString);
   }
-  
+
   public void testNewOutput_Mutating() throws IOException {
     Output os = ByteString.newOutput(5);
     os.write(new byte[] {1, 2, 3, 4, 5});
@@ -529,7 +529,7 @@ public class ByteStringTest extends TestCase {
     ByteString concreteSubstring = ByteString.copyFrom(bigBytes).substring(start, end);
     boolean ok = true;
     for (int i = start; ok && i < end; ++i) {
-      ok = (bigBytes[i] == concreteSubstring.byteAt(i - start));
+    ok = (bigBytes[i] == concreteSubstring.byteAt(i - start));
     }
     assertTrue("Concrete substring didn't capture the right bytes", ok);
 
@@ -552,13 +552,13 @@ public class ByteStringTest extends TestCase {
     byte[] substringBytes = compositeSubstring.toByteArray();
     boolean stillEqual = true;
     for (int i = 0; stillEqual && i < to - from; ++i) {
-      stillEqual = referenceBytes[from + i] == substringBytes[i];
+    stillEqual = referenceBytes[from + i] == substringBytes[i];
     }
     assertTrue("Substring must return correct bytes", stillEqual);
 
     stillEqual = true;
     for (int i = 0; stillEqual && i < to - from; ++i) {
-      stillEqual = referenceBytes[from + i] == compositeSubstring.byteAt(i);
+    stillEqual = referenceBytes[from + i] == compositeSubstring.byteAt(i);
     }
     assertTrue("Substring must support byteAt() correctly", stillEqual);
 
@@ -597,7 +597,7 @@ public class ByteStringTest extends TestCase {
     Iterator<ByteString> iter = pieces.iterator();
     ByteString concatenatedString = iter.next();
     while (iter.hasNext()) {
-      concatenatedString = concatenatedString.concat(iter.next());
+    concatenatedString = concatenatedString.concat(iter.next());
     }
 
     assertTrue("Concatenated string must be equal to literal string",
@@ -607,9 +607,9 @@ public class ByteStringTest extends TestCase {
   }
 
   /**
-   * Test the Rope implementation can deal with Empty nodes, even though we
-   * guard against them. See also {@link LiteralByteStringTest#testConcat_empty()}.
-   */
+    * Test the Rope implementation can deal with Empty nodes, even though we
+    * guard against them. See also {@link LiteralByteStringTest#testConcat_empty()}.
+    */
   public void testConcat_empty() {
     byte[] referenceBytes = getTestBytes(7748, 113344L);
     ByteString literalString = ByteString.copyFrom(referenceBytes);
@@ -629,21 +629,21 @@ public class ByteStringTest extends TestCase {
     ByteString.ByteIterator quintetIter = quintet.iterator();
     boolean stillEqual = true;
     while (stillEqual && quintetIter.hasNext()) {
-      stillEqual = (duoIter.nextByte() == quintetIter.nextByte());
+    stillEqual = (duoIter.nextByte() == quintetIter.nextByte());
     }
     assertTrue("We must get the same characters by iterating", stillEqual);
     assertFalse("Iterator must be exhausted", duoIter.hasNext());
     try {
-      duoIter.nextByte();
-      fail("Should have thrown an exception.");
+    duoIter.nextByte();
+    fail("Should have thrown an exception.");
     } catch (NoSuchElementException e) {
-      // This is success
+    // This is success
     }
     try {
-      quintetIter.nextByte();
-      fail("Should have thrown an exception.");
+    quintetIter.nextByte();
+    fail("Should have thrown an exception.");
     } catch (NoSuchElementException e) {
-      // This is success
+    // This is success
     }
 
     // Test that even if we force empty strings in as rope leaves in this
@@ -653,12 +653,12 @@ public class ByteStringTest extends TestCase {
     // It is possible, using the testing factory method to create deeply nested
     // trees of empty leaves, to make a string that will fail this test.
     for (int i = 1; i < duo.size(); ++i) {
-      assertTrue("Substrings of size() < 2 must not be RopeByteStrings",
-          duo.substring(i - 1, i) instanceof LiteralByteString);
+    assertTrue("Substrings of size() < 2 must not be RopeByteStrings",
+        duo.substring(i - 1, i) instanceof LiteralByteString);
     }
     for (int i = 1; i < quintet.size(); ++i) {
-      assertTrue("Substrings of size() < 2 must not be RopeByteStrings",
-          quintet.substring(i - 1, i) instanceof LiteralByteString);
+    assertTrue("Substrings of size() < 2 must not be RopeByteStrings",
+        quintet.substring(i - 1, i) instanceof LiteralByteString);
     }
   }
 
@@ -697,29 +697,29 @@ public class ByteStringTest extends TestCase {
     // Starting length should be small enough that we'll do some concatenating by
     // copying if we just concatenate all these pieces together.
     for (int start = 0, length = 16; start < referenceBytes.length; start += length) {
-      length = (length << 1) - 1;
-      if (start + length > referenceBytes.length) {
+    length = (length << 1) - 1;
+    if (start + length > referenceBytes.length) {
         length = referenceBytes.length - start;
-      }
-      pieces.add(ByteString.copyFrom(referenceBytes, start, length));
+    }
+    pieces.add(ByteString.copyFrom(referenceBytes, start, length));
     }
     return pieces;
   }
-  
+
   private byte[] substringUsingWriteTo(
-      ByteString data, int offset, int length) throws IOException {
+    ByteString data, int offset, int length) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     data.writeTo(output, offset, length);
     return output.toByteArray();
   }
-  
+
   public void testWriteToOutputStream() throws Exception {
     // Choose a size large enough so when two ByteStrings are concatenated they
     // won't be merged into one byte array due to some optimizations.
     final int dataSize = ByteString.CONCATENATE_BY_COPY_SIZE + 1;
     byte[] data1 = new byte[dataSize];
     for (int i = 0; i < data1.length; i++) {
-      data1[i] = (byte) 1;
+    data1[i] = (byte) 1;
     }
     data1[1] = (byte) 11;
     // Test LiteralByteString.writeTo(OutputStream,int,int)
@@ -727,10 +727,10 @@ public class ByteStringTest extends TestCase {
     byte[] result = substringUsingWriteTo(left, 1, 1);
     assertEquals(1, result.length);
     assertEquals((byte) 11, result[0]);
-    
+
     byte[] data2 = new byte[dataSize];
     for (int i = 0; i < data1.length; i++) {
-      data2[i] = (byte) 2;
+    data2[i] = (byte) 2;
     }
     LiteralByteString right = new LiteralByteString(data2);
     // Concatenate two ByteStrings to create a RopeByteString.

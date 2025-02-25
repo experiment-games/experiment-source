@@ -25,7 +25,7 @@ class bf_read;
 //-----------------------------------------------------------------------------
 abstract_class IViewEffects
 {
-   public:
+    public:
     // Initialize subsystem
     virtual void Init( void ) = 0;
     // Initialize after each level change

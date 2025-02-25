@@ -20,7 +20,7 @@ class CCasualCriteriaPanel : public vgui::EditablePanel, public CGameEventListen
 {
     DECLARE_CLASS_SIMPLE( CCasualCriteriaPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CCasualCriteriaPanel( vgui::Panel *pParent, const char *pszName );
     virtual ~CCasualCriteriaPanel();
 
@@ -34,7 +34,7 @@ class CCasualCriteriaPanel : public vgui::EditablePanel, public CGameEventListen
 
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   private:
+    private:
     void WriteCategories( void );
 
     MESSAGE_FUNC_PARAMS( OnCategoryExpanded, "CategoryExpanded", params );

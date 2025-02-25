@@ -73,7 +73,7 @@ TEST(ExtensionSetTest, Defaults) {
             &message.GetExtension(unittest::optional_nested_message_extension));
   EXPECT_EQ(&unittest::ForeignMessage::default_instance(),
             &message.GetExtension(
-              unittest::optional_foreign_message_extension));
+            unittest::optional_foreign_message_extension));
   EXPECT_EQ(&unittest_import::ImportMessage::default_instance(),
             &message.GetExtension(unittest::optional_import_message_extension));
 }
@@ -109,7 +109,7 @@ TEST(ExtensionSetTest, Clear) {
             &message.GetExtension(unittest::optional_nested_message_extension));
   EXPECT_NE(&unittest::ForeignMessage::default_instance(),
             &message.GetExtension(
-              unittest::optional_foreign_message_extension));
+            unittest::optional_foreign_message_extension));
   EXPECT_NE(&unittest_import::ImportMessage::default_instance(),
             &message.GetExtension(unittest::optional_import_message_extension));
 
@@ -145,13 +145,13 @@ TEST(ExtensionSetTest, ClearOneField) {
 TEST(ExtensionSetTest, SetAllocatedExtension) {
   unittest::TestAllExtensions message;
   EXPECT_FALSE(message.HasExtension(
-      unittest::optional_foreign_message_extension));
+    unittest::optional_foreign_message_extension));
   // Add a extension using SetAllocatedExtension
   unittest::ForeignMessage* foreign_message = new unittest::ForeignMessage();
   message.SetAllocatedExtension(unittest::optional_foreign_message_extension,
                                 foreign_message);
   EXPECT_TRUE(message.HasExtension(
-      unittest::optional_foreign_message_extension));
+    unittest::optional_foreign_message_extension));
   EXPECT_EQ(foreign_message,
             message.MutableExtension(
                 unittest::optional_foreign_message_extension));
@@ -168,37 +168,37 @@ TEST(ExtensionSetTest, SetAllocatedExtension) {
   message.SetAllocatedExtension(unittest::optional_foreign_message_extension,
                                 NULL);
   EXPECT_FALSE(message.HasExtension(
-      unittest::optional_foreign_message_extension));
+    unittest::optional_foreign_message_extension));
 }
 
 TEST(ExtensionSetTest, ReleaseExtension) {
   unittest::TestMessageSet message;
   EXPECT_FALSE(message.HasExtension(
-      unittest::TestMessageSetExtension1::message_set_extension));
+    unittest::TestMessageSetExtension1::message_set_extension));
   // Add a extension using SetAllocatedExtension
   unittest::TestMessageSetExtension1* extension =
-      new unittest::TestMessageSetExtension1();
+    new unittest::TestMessageSetExtension1();
   message.SetAllocatedExtension(
-      unittest::TestMessageSetExtension1::message_set_extension,
-      extension);
+    unittest::TestMessageSetExtension1::message_set_extension,
+    extension);
   EXPECT_TRUE(message.HasExtension(
-      unittest::TestMessageSetExtension1::message_set_extension));
+    unittest::TestMessageSetExtension1::message_set_extension));
   // Release the extension using ReleaseExtension
   unittest::TestMessageSetExtension1* released_extension =
-      message.ReleaseExtension(
-          unittest::TestMessageSetExtension1::message_set_extension);
+    message.ReleaseExtension(
+        unittest::TestMessageSetExtension1::message_set_extension);
   EXPECT_EQ(extension, released_extension);
   EXPECT_FALSE(message.HasExtension(
-      unittest::TestMessageSetExtension1::message_set_extension));
+    unittest::TestMessageSetExtension1::message_set_extension));
   // ReleaseExtension will return the underlying object even after
   // ClearExtension is called.
   message.SetAllocatedExtension(
-      unittest::TestMessageSetExtension1::message_set_extension,
-      extension);
+    unittest::TestMessageSetExtension1::message_set_extension,
+    extension);
   message.ClearExtension(
-      unittest::TestMessageSetExtension1::message_set_extension);
+    unittest::TestMessageSetExtension1::message_set_extension);
   released_extension = message.ReleaseExtension(
-      unittest::TestMessageSetExtension1::message_set_extension);
+    unittest::TestMessageSetExtension1::message_set_extension);
   EXPECT_TRUE(released_extension != NULL);
   delete released_extension;
 }
@@ -271,9 +271,9 @@ TEST(ExtensionSetTest, SwapExtension) {
 
   // Swap two extensions.
   fields.push_back(
-      reflection->FindKnownExtensionByNumber(12));
+    reflection->FindKnownExtensionByNumber(12));
   fields.push_back(
-      reflection->FindKnownExtensionByNumber(25));
+    reflection->FindKnownExtensionByNumber(25));
   reflection->SwapFields(&message1, &message2, fields);
 
   EXPECT_TRUE(message1.HasExtension(unittest::optional_int32_extension));
@@ -463,7 +463,7 @@ TEST(ExtensionSetTest, PackedToUnpackedParsing) {
   // Make sure we can add extensions.
   destination.AddExtension(unittest::unpacked_int32_extension, 1);
   destination.AddExtension(unittest::unpacked_enum_extension,
-                           protobuf_unittest::FOREIGN_BAR);
+                            protobuf_unittest::FOREIGN_BAR);
 }
 
 TEST(ExtensionSetTest, UnpackedToPackedParsing) {
@@ -484,7 +484,7 @@ TEST(ExtensionSetTest, UnpackedToPackedParsing) {
   // Make sure we can add extensions.
   destination.AddExtension(unittest::packed_int32_extension, 1);
   destination.AddExtension(unittest::packed_enum_extension,
-                           protobuf_unittest::FOREIGN_BAR);
+                            protobuf_unittest::FOREIGN_BAR);
 }
 
 TEST(ExtensionSetTest, IsInitialized) {
@@ -560,7 +560,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     unittest::TestAllExtensions message;
     const int base_size = message.SpaceUsed();
     message.SetExtension(unittest::optional_nested_enum_extension,
-                         unittest::TestAllTypes::FOO);
+                        unittest::TestAllTypes::FOO);
     int min_expected_size = base_size +
         sizeof(message.GetExtension(unittest::optional_nested_enum_extension));
     EXPECT_LE(min_expected_size, message.SpaceUsed());
@@ -571,7 +571,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     unittest::TestAllExtensions message;
     const int base_size = message.SpaceUsed();
     const string s("this is a fairly large string that will cause some "
-                   "allocation in order to store it in the extension");
+                    "allocation in order to store it in the extension");
     message.SetExtension(unittest::optional_string_extension, s);
     int min_expected_size = base_size + s.length();
     EXPECT_LE(min_expected_size, message.SpaceUsed());
@@ -612,7 +612,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     EXPECT_EQ(empty_repeated_field_size, message.SpaceUsed()) << #type;        \
     message.ClearExtension(unittest::repeated_##type##_extension);             \
     for (int i = 0; i < 16; ++i) {                                             \
-      message.AddExtension(unittest::repeated_##type##_extension, value);      \
+    message.AddExtension(unittest::repeated_##type##_extension, value);      \
     }                                                                          \
     int expected_size = sizeof(cpptype) * (16 -                                \
         kMinRepeatedFieldAllocationSize) + empty_repeated_field_size;          \
@@ -633,7 +633,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
   TEST_REPEATED_EXTENSIONS_SPACE_USED(double  , double, 112);
   TEST_REPEATED_EXTENSIONS_SPACE_USED(bool    , bool  , true);
   TEST_REPEATED_EXTENSIONS_SPACE_USED(nested_enum, int,
-                                      unittest::TestAllTypes::FOO);
+                                    unittest::TestAllTypes::FOO);
 #undef TEST_REPEATED_EXTENSIONS_SPACE_USED
   // Repeated strings
   {
@@ -645,7 +645,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     // without the hardcore memory management accessors there isn't a notion of
     // the empty repeated field memory usage as there is with primitive types.
     for (int i = 0; i < 16; ++i) {
-      message.AddExtension(unittest::repeated_string_extension, value);
+    message.AddExtension(unittest::repeated_string_extension, value);
     }
     min_expected_size += (sizeof(value) + value.size()) *
         (16 - kMinRepeatedFieldAllocationSize);
@@ -660,8 +660,8 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     unittest::ForeignMessage prototype;
     prototype.set_c(2);
     for (int i = 0; i < 16; ++i) {
-      message.AddExtension(unittest::repeated_foreign_message_extension)->
-          CopyFrom(prototype);
+    message.AddExtension(unittest::repeated_foreign_message_extension)->
+        CopyFrom(prototype);
     }
     min_expected_size +=
         (16 - kMinRepeatedFieldAllocationSize) * prototype.SpaceUsed();
@@ -674,9 +674,9 @@ template<typename T, typename M, typename ID>
 inline T SumAllExtensions(const M& message, ID extension, T zero) {
   T sum = zero;
   typename RepeatedField<T>::const_iterator iter =
-      message.GetRepeatedExtension(extension).begin();
+    message.GetRepeatedExtension(extension).begin();
   typename RepeatedField<T>::const_iterator end =
-      message.GetRepeatedExtension(extension).end();
+    message.GetRepeatedExtension(extension).end();
   for (; iter != end; ++iter) {
     sum += *iter;
   }
@@ -685,11 +685,11 @@ inline T SumAllExtensions(const M& message, ID extension, T zero) {
 
 template<typename T, typename M, typename ID>
 inline void IncAllExtensions(M* message, ID extension,
-                          T val) {
+                        T val) {
   typename RepeatedField<T>::iterator iter =
-      message->MutableRepeatedExtension(extension)->begin();
+    message->MutableRepeatedExtension(extension)->begin();
   typename RepeatedField<T>::iterator end  =
-      message->MutableRepeatedExtension(extension)->end();
+    message->MutableRepeatedExtension(extension)->end();
   for (; iter != end; ++iter) {
     *iter += val;
   }
@@ -700,18 +700,18 @@ TEST(ExtensionSetTest, RepeatedFields) {
 
   // Test empty repeated-field case (b/12926163)
   ASSERT_EQ(0, message.GetRepeatedExtension(
-      unittest::repeated_int32_extension).size());
+    unittest::repeated_int32_extension).size());
   ASSERT_EQ(0, message.GetRepeatedExtension(
-      unittest::repeated_nested_enum_extension).size());
+    unittest::repeated_nested_enum_extension).size());
   ASSERT_EQ(0, message.GetRepeatedExtension(
-      unittest::repeated_string_extension).size());
+    unittest::repeated_string_extension).size());
   ASSERT_EQ(0, message.GetRepeatedExtension(
-      unittest::repeated_nested_message_extension).size());
+    unittest::repeated_nested_message_extension).size());
 
   unittest::TestAllTypes::NestedMessage nested_message;
   nested_message.set_bb(42);
   unittest::TestAllTypes::NestedEnum nested_enum =
-      unittest::TestAllTypes::NestedEnum_MIN;
+    unittest::TestAllTypes::NestedEnum_MIN;
 
   for (int i = 0; i < 10; ++i) {
     message.AddExtension(unittest::repeated_int32_extension, 1);
@@ -729,149 +729,149 @@ TEST(ExtensionSetTest, RepeatedFields) {
     message.AddExtension(unittest::repeated_bool_extension, true);
     message.AddExtension(unittest::repeated_nested_enum_extension, nested_enum);
     message.AddExtension(unittest::repeated_string_extension,
-                         ::std::string("test"));
+                        ::std::string("test"));
     message.AddExtension(unittest::repeated_bytes_extension,
-                         ::std::string("test\xFF"));
+                        ::std::string("test\xFF"));
     message.AddExtension(
         unittest::repeated_nested_message_extension)->CopyFrom(nested_message);
     message.AddExtension(unittest::repeated_nested_enum_extension,
-                         nested_enum);
+                        nested_enum);
   }
 
   ASSERT_EQ(10, SumAllExtensions<int32>(
-      message, unittest::repeated_int32_extension, 0));
+    message, unittest::repeated_int32_extension, 0));
   IncAllExtensions<int32>(
-      &message, unittest::repeated_int32_extension, 1);
+    &message, unittest::repeated_int32_extension, 1);
   ASSERT_EQ(20, SumAllExtensions<int32>(
-      message, unittest::repeated_int32_extension, 0));
+    message, unittest::repeated_int32_extension, 0));
 
   ASSERT_EQ(20, SumAllExtensions<int64>(
-      message, unittest::repeated_int64_extension, 0));
+    message, unittest::repeated_int64_extension, 0));
   IncAllExtensions<int64>(
-      &message, unittest::repeated_int64_extension, 1);
+    &message, unittest::repeated_int64_extension, 1);
   ASSERT_EQ(30, SumAllExtensions<int64>(
-      message, unittest::repeated_int64_extension, 0));
+    message, unittest::repeated_int64_extension, 0));
 
   ASSERT_EQ(30, SumAllExtensions<uint32>(
-      message, unittest::repeated_uint32_extension, 0));
+    message, unittest::repeated_uint32_extension, 0));
   IncAllExtensions<uint32>(
-      &message, unittest::repeated_uint32_extension, 1);
+    &message, unittest::repeated_uint32_extension, 1);
   ASSERT_EQ(40, SumAllExtensions<uint32>(
-      message, unittest::repeated_uint32_extension, 0));
+    message, unittest::repeated_uint32_extension, 0));
 
   ASSERT_EQ(40, SumAllExtensions<uint64>(
-      message, unittest::repeated_uint64_extension, 0));
+    message, unittest::repeated_uint64_extension, 0));
   IncAllExtensions<uint64>(
-      &message, unittest::repeated_uint64_extension, 1);
+    &message, unittest::repeated_uint64_extension, 1);
   ASSERT_EQ(50, SumAllExtensions<uint64>(
-      message, unittest::repeated_uint64_extension, 0));
+    message, unittest::repeated_uint64_extension, 0));
 
   ASSERT_EQ(50, SumAllExtensions<int32>(
-      message, unittest::repeated_sint32_extension, 0));
+    message, unittest::repeated_sint32_extension, 0));
   IncAllExtensions<int32>(
-      &message, unittest::repeated_sint32_extension, 1);
+    &message, unittest::repeated_sint32_extension, 1);
   ASSERT_EQ(60, SumAllExtensions<int32>(
-      message, unittest::repeated_sint32_extension, 0));
+    message, unittest::repeated_sint32_extension, 0));
 
   ASSERT_EQ(60, SumAllExtensions<int64>(
-      message, unittest::repeated_sint64_extension, 0));
+    message, unittest::repeated_sint64_extension, 0));
   IncAllExtensions<int64>(
-      &message, unittest::repeated_sint64_extension, 1);
+    &message, unittest::repeated_sint64_extension, 1);
   ASSERT_EQ(70, SumAllExtensions<int64>(
-      message, unittest::repeated_sint64_extension, 0));
+    message, unittest::repeated_sint64_extension, 0));
 
   ASSERT_EQ(70, SumAllExtensions<uint32>(
-      message, unittest::repeated_fixed32_extension, 0));
+    message, unittest::repeated_fixed32_extension, 0));
   IncAllExtensions<uint32>(
-      &message, unittest::repeated_fixed32_extension, 1);
+    &message, unittest::repeated_fixed32_extension, 1);
   ASSERT_EQ(80, SumAllExtensions<uint32>(
-      message, unittest::repeated_fixed32_extension, 0));
+    message, unittest::repeated_fixed32_extension, 0));
 
   ASSERT_EQ(80, SumAllExtensions<uint64>(
-      message, unittest::repeated_fixed64_extension, 0));
+    message, unittest::repeated_fixed64_extension, 0));
   IncAllExtensions<uint64>(
-      &message, unittest::repeated_fixed64_extension, 1);
+    &message, unittest::repeated_fixed64_extension, 1);
   ASSERT_EQ(90, SumAllExtensions<uint64>(
-      message, unittest::repeated_fixed64_extension, 0));
+    message, unittest::repeated_fixed64_extension, 0));
 
   // Usually, floating-point arithmetic cannot be trusted to be exact, so it is
   // a Bad Idea to assert equality in a test like this. However, we're dealing
   // with integers with a small number of significant mantissa bits, so we
   // should actually have exact precision here.
   ASSERT_EQ(90, SumAllExtensions<float>(
-      message, unittest::repeated_float_extension, 0));
+    message, unittest::repeated_float_extension, 0));
   IncAllExtensions<float>(
-      &message, unittest::repeated_float_extension, 1);
+    &message, unittest::repeated_float_extension, 1);
   ASSERT_EQ(100, SumAllExtensions<float>(
-      message, unittest::repeated_float_extension, 0));
+    message, unittest::repeated_float_extension, 0));
 
   ASSERT_EQ(100, SumAllExtensions<double>(
-      message, unittest::repeated_double_extension, 0));
+    message, unittest::repeated_double_extension, 0));
   IncAllExtensions<double>(
-      &message, unittest::repeated_double_extension, 1);
+    &message, unittest::repeated_double_extension, 1);
   ASSERT_EQ(110, SumAllExtensions<double>(
-      message, unittest::repeated_double_extension, 0));
+    message, unittest::repeated_double_extension, 0));
 
   RepeatedPtrField< ::std::string>::iterator string_iter;
   RepeatedPtrField< ::std::string>::iterator string_end;
   for (string_iter = message.MutableRepeatedExtension(
-          unittest::repeated_string_extension)->begin(),
-       string_end  = message.MutableRepeatedExtension(
-           unittest::repeated_string_extension)->end();
-       string_iter != string_end; ++string_iter) {
+        unittest::repeated_string_extension)->begin(),
+        string_end  = message.MutableRepeatedExtension(
+            unittest::repeated_string_extension)->end();
+        string_iter != string_end; ++string_iter) {
     *string_iter += "test";
   }
   RepeatedPtrField< ::std::string>::const_iterator string_const_iter;
   RepeatedPtrField< ::std::string>::const_iterator string_const_end;
   for (string_const_iter = message.GetRepeatedExtension(
-           unittest::repeated_string_extension).begin(),
-       string_const_end  = message.GetRepeatedExtension(
-           unittest::repeated_string_extension).end();
-       string_iter != string_end; ++string_iter) {
+            unittest::repeated_string_extension).begin(),
+        string_const_end  = message.GetRepeatedExtension(
+            unittest::repeated_string_extension).end();
+        string_iter != string_end; ++string_iter) {
     ASSERT_TRUE(*string_iter == "testtest");
   }
 
   RepeatedField<unittest::TestAllTypes_NestedEnum>::iterator enum_iter;
   RepeatedField<unittest::TestAllTypes_NestedEnum>::iterator enum_end;
   for (enum_iter = message.MutableRepeatedExtension(
-           unittest::repeated_nested_enum_extension)->begin(),
-       enum_end  = message.MutableRepeatedExtension(
-           unittest::repeated_nested_enum_extension)->end();
-       enum_iter != enum_end; ++enum_iter) {
+            unittest::repeated_nested_enum_extension)->begin(),
+        enum_end  = message.MutableRepeatedExtension(
+            unittest::repeated_nested_enum_extension)->end();
+        enum_iter != enum_end; ++enum_iter) {
     *enum_iter = unittest::TestAllTypes::NestedEnum_MAX;
   }
   RepeatedField<unittest::TestAllTypes_NestedEnum>::const_iterator
-      enum_const_iter;
+    enum_const_iter;
   RepeatedField<unittest::TestAllTypes_NestedEnum>::const_iterator
-      enum_const_end;
+    enum_const_end;
   for (enum_const_iter = message.GetRepeatedExtension(
-           unittest::repeated_nested_enum_extension).begin(),
-       enum_const_end  = message.GetRepeatedExtension(
-           unittest::repeated_nested_enum_extension).end();
-       enum_iter != enum_end; ++enum_iter) {
+            unittest::repeated_nested_enum_extension).begin(),
+        enum_const_end  = message.GetRepeatedExtension(
+            unittest::repeated_nested_enum_extension).end();
+        enum_iter != enum_end; ++enum_iter) {
     ASSERT_EQ(*enum_const_iter, unittest::TestAllTypes::NestedEnum_MAX);
   }
 
   RepeatedPtrField<unittest::TestAllTypes_NestedMessage>::iterator
-      msg_iter;
+    msg_iter;
   RepeatedPtrField<unittest::TestAllTypes_NestedMessage>::iterator
-      msg_end;
+    msg_end;
   for (msg_iter = message.MutableRepeatedExtension(
-           unittest::repeated_nested_message_extension)->begin(),
-       msg_end  = message.MutableRepeatedExtension(
-           unittest::repeated_nested_message_extension)->end();
-       msg_iter != msg_end; ++msg_iter) {
+            unittest::repeated_nested_message_extension)->begin(),
+        msg_end  = message.MutableRepeatedExtension(
+            unittest::repeated_nested_message_extension)->end();
+        msg_iter != msg_end; ++msg_iter) {
     msg_iter->set_bb(1234);
   }
   RepeatedPtrField<unittest::TestAllTypes_NestedMessage>::
-      const_iterator msg_const_iter;
+    const_iterator msg_const_iter;
   RepeatedPtrField<unittest::TestAllTypes_NestedMessage>::
-      const_iterator msg_const_end;
+    const_iterator msg_const_end;
   for (msg_const_iter = message.GetRepeatedExtension(
-           unittest::repeated_nested_message_extension).begin(),
-       msg_const_end  = message.GetRepeatedExtension(
-           unittest::repeated_nested_message_extension).end();
-       msg_const_iter != msg_const_end; ++msg_const_iter) {
+            unittest::repeated_nested_message_extension).begin(),
+        msg_const_end  = message.GetRepeatedExtension(
+            unittest::repeated_nested_message_extension).end();
+        msg_const_iter != msg_const_end; ++msg_const_iter) {
     ASSERT_EQ(msg_const_iter->bb(), 1234);
   }
 
@@ -879,29 +879,29 @@ TEST(ExtensionSetTest, RepeatedFields) {
 #if __cplusplus >= 201103L
   // Test one primitive field.
   for (auto& x : *message.MutableRepeatedExtension(
-          unittest::repeated_int32_extension)) {
+        unittest::repeated_int32_extension)) {
     x = 4321;
   }
   for (const auto& x : message.GetRepeatedExtension(
-          unittest::repeated_int32_extension)) {
+        unittest::repeated_int32_extension)) {
     ASSERT_EQ(x, 4321);
   }
   // Test one string field.
   for (auto& x : *message.MutableRepeatedExtension(
-          unittest::repeated_string_extension)) {
+        unittest::repeated_string_extension)) {
     x = "test_range_based_for";
   }
   for (const auto& x : message.GetRepeatedExtension(
-          unittest::repeated_string_extension)) {
+        unittest::repeated_string_extension)) {
     ASSERT_TRUE(x == "test_range_based_for");
   }
   // Test one message field.
   for (auto& x : *message.MutableRepeatedExtension(
-          unittest::repeated_nested_message_extension)) {
+        unittest::repeated_nested_message_extension)) {
     x.set_bb(4321);
   }
   for (const auto& x : *message.MutableRepeatedExtension(
-          unittest::repeated_nested_message_extension)) {
+        unittest::repeated_nested_message_extension)) {
     ASSERT_EQ(x.bb(), 4321);
   }
 #endif
@@ -911,12 +911,12 @@ TEST(ExtensionSetTest, RepeatedFields) {
 TEST(ExtensionSetTest, AbsentExtension) {
   unittest::TestAllExtensions message;
   message.MutableRepeatedExtension(unittest::repeated_nested_message_extension)
-      ->Add()->set_bb(123);
+    ->Add()->set_bb(123);
   ASSERT_EQ(1, message.ExtensionSize(
-      unittest::repeated_nested_message_extension));
+    unittest::repeated_nested_message_extension));
   EXPECT_EQ(
-      123, message.GetExtension(
-          unittest::repeated_nested_message_extension, 0).bb());
+    123, message.GetExtension(
+        unittest::repeated_nested_message_extension, 0).bb());
 }
 
 #ifdef PROTOBUF_HAS_DEATH_TEST
@@ -925,7 +925,7 @@ TEST(ExtensionSetTest, InvalidEnumDeath) {
   unittest::TestAllExtensions message;
   EXPECT_DEBUG_DEATH(
     message.SetExtension(unittest::optional_foreign_enum_extension,
-                         static_cast<unittest::ForeignEnum>(53)),
+                        static_cast<unittest::ForeignEnum>(53)),
     "IsValid");
 }
 
@@ -937,21 +937,21 @@ TEST(ExtensionSetTest, DynamicExtensions) {
   FileDescriptorProto dynamic_proto;
   dynamic_proto.set_name("dynamic_extensions_test.proto");
   dynamic_proto.add_dependency(
-      unittest::TestAllExtensions::descriptor()->file()->name());
+    unittest::TestAllExtensions::descriptor()->file()->name());
   dynamic_proto.set_package("dynamic_extensions");
 
   // Copy the fields and nested types from TestDynamicExtensions into our new
   // proto, converting the fields into extensions.
   const Descriptor* template_descriptor =
-      unittest::TestDynamicExtensions::descriptor();
+    unittest::TestDynamicExtensions::descriptor();
   DescriptorProto template_descriptor_proto;
   template_descriptor->CopyTo(&template_descriptor_proto);
   dynamic_proto.mutable_message_type()->MergeFrom(
-      template_descriptor_proto.nested_type());
+    template_descriptor_proto.nested_type());
   dynamic_proto.mutable_enum_type()->MergeFrom(
-      template_descriptor_proto.enum_type());
+    template_descriptor_proto.enum_type());
   dynamic_proto.mutable_extension()->MergeFrom(
-      template_descriptor_proto.field());
+    template_descriptor_proto.field());
 
   // For each extension that we added...
   for (int i = 0; i < dynamic_proto.extension_size(); i++) {
@@ -964,10 +964,10 @@ TEST(ExtensionSetTest, DynamicExtensions) {
     // make it refer to the type in our dynamic proto instead.
     string prefix = "." + template_descriptor->full_name() + ".";
     if (extension->has_type_name()) {
-      string* type_name = extension->mutable_type_name();
-      if (HasPrefixString(*type_name, prefix)) {
+    string* type_name = extension->mutable_type_name();
+    if (HasPrefixString(*type_name, prefix)) {
         type_name->replace(0, prefix.size(), ".dynamic_extensions.");
-      }
+    }
     }
   }
 
@@ -1001,8 +1001,8 @@ TEST(ExtensionSetTest, DynamicExtensions) {
 
     // An unknown enum value (for a known field).
     message.mutable_unknown_fields()->AddVarint(
-      unittest::TestDynamicExtensions::kDynamicEnumExtensionFieldNumber,
-      12345);
+    unittest::TestDynamicExtensions::kDynamicEnumExtensionFieldNumber,
+    12345);
     // A regular unknown field.
     message.mutable_unknown_fields()->AddLengthDelimited(54321, "unknown");
 
@@ -1082,7 +1082,7 @@ TEST(ExtensionSetTest, DynamicExtensions) {
     const Message& parent = unittest::TestAllExtensions::default_instance();
     const Message& sub_message =
         parent.GetReflection()->GetMessage(parent, dynamic_message_extension,
-                                           &dynamic_factory);
+                                            &dynamic_factory);
     const Message* prototype =
         dynamic_factory.GetPrototype(dynamic_message_extension->message_type());
     EXPECT_EQ(prototype, &sub_message);

@@ -30,7 +30,7 @@ class CPortableThumper : public CBaseAnimating
 {
     DECLARE_CLASS( CPortableThumper, CBaseAnimating );
 
-   private:
+    private:
     void ThumpThink( void );
     void ThumperUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
     void Precache( void );
@@ -112,7 +112,7 @@ DEFINE_FUNCTION( ThumpThink ),
 {
     DECLARE_CLASS( CWeaponThumper, CBaseHLCombatWeapon );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     void Spawn( void );
     void Precache( void );

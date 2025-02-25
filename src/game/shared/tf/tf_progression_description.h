@@ -37,7 +37,7 @@ extern const XPSourceDef_t g_XPSourceDefs[CMsgTFXPSource::XPSourceType_ARRAYSIZE
 
 class IProgressionDesc
 {
-   public:
+    public:
     friend class IMatchGroupDescription;
 
     IProgressionDesc( const char* pszBadgeName, const char* pszProgressionResFile, const char* pszLevelToken );
@@ -58,7 +58,7 @@ class IProgressionDesc
     const char* m_pszLevelToken;
     const char* m_pszProgressionResFile;
 
-   protected:
+    protected:
 #ifdef CLIENT_DLL
     virtual void SetupBadgePanel( CBaseModelPanel* pModelPanel, const LevelInfo_t& level, const CSteamID& steamID, bool bInPlacement ) const = 0;
     void EnsureBadgePanelModel( CBaseModelPanel* pModelPanel ) const;

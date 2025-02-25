@@ -11,7 +11,7 @@
 #include "portalstaticoverlay_ps11.inc"
 
 BEGIN_VS_SHADER( PortalStaticOverlay,
-                 "Help for PortalStaticOverlay shader" )
+                "Help for PortalStaticOverlay shader" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( COLOR, SHADER_PARAM_TYPE_COLOR, "{255 255 255}", "unused", SHADER_PARAM_NOT_EDITABLE )

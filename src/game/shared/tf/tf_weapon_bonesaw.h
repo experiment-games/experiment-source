@@ -33,7 +33,7 @@ enum bonesaw_weapontypes_t
 //
 class CTFBonesaw : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBonesaw, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -77,7 +77,7 @@ class CTFBonesaw : public CTFWeaponBaseMelee
     virtual void UpdateAttachmentModels( void );
 #endif
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     int m_iUberChargePoseParam;
     float m_flChargeLevel;

@@ -25,7 +25,7 @@ class CTFMedicCallerPanel : public vgui::EditablePanel, public CGameEventListene
 {
     DECLARE_CLASS_SIMPLE( CTFMedicCallerPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTFMedicCallerPanel( vgui::Panel *parent, const char *name );
     ~CTFMedicCallerPanel( void );
 
@@ -47,13 +47,13 @@ class CTFMedicCallerPanel : public vgui::EditablePanel, public CGameEventListene
 
     virtual void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     C_BaseEntity *GetEntity() const
     {
         return m_hEntity;
     }
 
-   private:
+    private:
     IMaterial *m_pArrowMaterial;
     float m_flRemoveAt;
     Vector m_vecOffset;

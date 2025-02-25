@@ -27,7 +27,7 @@ class CDmeMorphOperator : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeMorphOperator, CDmeOperator );
 
-   public:
+    public:
     virtual void Operate();
 
     // need this until we have the EditApply message queue
@@ -41,7 +41,7 @@ class CDmeMorphOperator : public CDmeOperator
     CDmElement *GetDeltaStateWeight( uint i );
     CDmeMesh *GetMesh();
 
-   protected:
+    protected:
     CDmaElement< CDmeMesh > m_mesh;
     CDmaElementArray< CDmElement > m_deltaStateWeights;
     CDmaString m_baseStateName;

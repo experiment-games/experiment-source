@@ -16,7 +16,7 @@ class CFuncNavPrerequisite : public CBaseTrigger, public IFuncNavPrerequisiteAut
 {
     DECLARE_CLASS( CFuncNavPrerequisite, CBaseTrigger );
 
-   public:
+    public:
     CFuncNavPrerequisite();
 
     DECLARE_DATADESC();
@@ -42,7 +42,7 @@ class CFuncNavPrerequisite : public CBaseTrigger, public IFuncNavPrerequisiteAut
         return !m_isDisabled;
     }
 
-   protected:
+    protected:
     int m_task;
     string_t m_taskEntityName;
     float m_taskValue;

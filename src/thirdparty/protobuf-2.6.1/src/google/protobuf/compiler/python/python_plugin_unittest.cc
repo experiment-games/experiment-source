@@ -68,7 +68,7 @@ class TestGenerator : public CodeGenerator {
   }
 
   void TryInsert(const string& filename, const string& insertion_point,
-                 GeneratorContext* context) const {
+                GeneratorContext* context) const {
     scoped_ptr<io::ZeroCopyOutputStream> output(
         context->OpenForInsert(filename, insertion_point));
     io::Printer printer(output.get(), '$');
@@ -81,12 +81,12 @@ class TestGenerator : public CodeGenerator {
 // compiling the output which is a bit more than I care to do for this test.
 TEST(PythonPluginTest, PluginTest) {
   GOOGLE_CHECK_OK(File::SetContents(TestTempDir() + "/test.proto",
-                             "syntax = \"proto2\";\n"
-                             "package foo;\n"
-                             "message Bar {\n"
-                             "  message Baz {}\n"
-                             "}\n",
-                             true));
+                            "syntax = \"proto2\";\n"
+                            "package foo;\n"
+                            "message Bar {\n"
+                            "  message Baz {}\n"
+                            "}\n",
+                            true));
 
   google::protobuf::compiler::CommandLineInterface cli;
   cli.SetInputsAreProtoPathRelative(true);

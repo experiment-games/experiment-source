@@ -21,7 +21,7 @@ class C_TFPlayer;
 //-----------------------------------------------------------------------------
 class C_PasstimeBall : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( C_PasstimeBall, C_BaseAnimating );
     DECLARE_NETWORKCLASS();
     C_PasstimeBall();
@@ -44,7 +44,7 @@ class C_PasstimeBall : public C_BaseAnimating
     C_TFPlayer* GetCarrier();
     C_TFPlayer* GetPrevCarrier();
 
-   private:
+    private:
     bool m_bWasVisible;
     float m_fDrawTime;
     CNetworkVar( int, m_iCollisionCount );

@@ -249,7 +249,7 @@ void CHudArenaClassLayout::PerformLayout( void )
         bool bShow = true;
 
         if ( ( pLocalPlayer->m_Shared.GetArenaNumChanges() >= tf_arena_change_limit.GetInt() ) ||
-             ( tf_arena_force_class.GetBool() == false ) )
+            ( tf_arena_force_class.GetBool() == false ) )
         {
             bShow = false;
         }

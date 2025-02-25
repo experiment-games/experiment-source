@@ -23,7 +23,7 @@ class IMaterialSystemHardwareConfig;
 //---------------------------------------------------------------------------------------------------
 abstract_class IClientRenderTargets
 {
-   public:
+    public:
     // Pass the material system interface to the client-- Their Material System singleton has not been created
     // at the time they receive this call.
     virtual void InitClientRenderTargets( IMaterialSystem * pMaterialSystem, IMaterialSystemHardwareConfig * pHardwareConfig ) = 0;

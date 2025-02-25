@@ -33,7 +33,7 @@ class CAttributeList;
 //-----------------------------------------------------------------------------
 class IHasAttributes
 {
-   public:
+    public:
     virtual CAttributeManager *GetAttributeManager( void ) = 0;
     virtual CAttributeContainer *GetAttributeContainer( void ) = 0;
     virtual CBaseEntity *GetAttributeOwner( void ) = 0;

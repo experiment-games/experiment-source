@@ -200,7 +200,7 @@ void CTFConditionList::ServerThink()
     {
         CTFCondition* cond = _conditions[i];
         if ( cond->GetMaxDuration() > PERMANENT_CONDITION ||
-             cond->GetMinDuration() > PERMANENT_CONDITION )
+            cond->GetMinDuration() > PERMANENT_CONDITION )
         {
             // Reduce the duration over time.
             float reduction = gpGlobals->frametime;
@@ -295,10 +295,10 @@ void CTFConditionList::UpdateClientConditions( CTFPlayer* outer )
 //-----------------------------------------------------------------------------
 CTFCondition::CTFCondition( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider /*= NULL*/ )
     : _type( type ),
-      _min_duration( 0 ),
-      _max_duration( duration ),
-      _outer( outer ),
-      _provider( provider )
+    _min_duration( 0 ),
+    _max_duration( duration ),
+    _outer( outer ),
+    _provider( provider )
 {
 }
 
@@ -320,7 +320,7 @@ void CTFCondition::Add( float duration )
         // our current duration, and is longer than our min duration
         // make it our new min duration.
         if ( GetMaxDuration() == PERMANENT_CONDITION ||
-             duration < GetMaxDuration() )
+            duration < GetMaxDuration() )
         {
             if ( duration > GetMinDuration() )
                 SetMinDuration( duration );

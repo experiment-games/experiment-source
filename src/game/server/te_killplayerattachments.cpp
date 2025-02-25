@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEKillPlayerAttachments : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEKillPlayerAttachments, CBaseTempEntity );
 
     CTEKillPlayerAttachments( const char* name );
@@ -31,7 +31,7 @@ class CTEKillPlayerAttachments : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVar( int, m_nPlayer );
 };
 

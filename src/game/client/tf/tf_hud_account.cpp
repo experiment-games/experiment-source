@@ -178,7 +178,7 @@ class CAccountPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CAccountPanel, EditablePanel );
 
-   public:
+    public:
     CAccountPanel( Panel *parent, const char *name )
         : EditablePanel( parent, name )
     {
@@ -198,7 +198,7 @@ class CAccountPanel : public EditablePanel
         return "resource/UI/HudAccountPanel.res";
     }
 
-   protected:
+    protected:
     virtual Color GetColor( const account_delta_t::eAccountDeltaType_t &type );
 
     CUtlVector< account_delta_t > m_AccountDeltaItems;
@@ -236,7 +236,7 @@ class CHudAccountPanel : public CHudElement, public CAccountPanel
 {
     DECLARE_CLASS_SIMPLE( CHudAccountPanel, CAccountPanel );
 
-   public:
+    public:
     CHudAccountPanel( const char *pElementName )
         : CHudElement( pElementName ), CAccountPanel( NULL, pElementName )
     {
@@ -303,7 +303,7 @@ class CHealthAccountPanel : public CHudAccountPanel
 {
     DECLARE_CLASS_SIMPLE( CHealthAccountPanel, CHudAccountPanel );
 
-   public:
+    public:
     CHealthAccountPanel( const char *pElementName )
         : CHudAccountPanel( pElementName )
     {
@@ -418,7 +418,7 @@ class CScoreAccountPanel : public CAccountPanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CScoreAccountPanel, CAccountPanel );
 
-   public:
+    public:
     CScoreAccountPanel( Panel *parent, const char *name )
         : CAccountPanel( parent, name ), m_nTeam( TF_TEAM_COUNT )
     {
@@ -487,7 +487,7 @@ class CScoreAccountPanel : public CAccountPanel, public CGameEventListener
         }
     }
 
-   private:
+    private:
     char m_pszEventName[32];  // max length of event names
     int m_nTeam;
 };
@@ -501,7 +501,7 @@ class CDamageAccountPanel : public CHudAccountPanel
 {
     DECLARE_CLASS_SIMPLE( CDamageAccountPanel, CHudAccountPanel );
 
-   public:
+    public:
     CDamageAccountPanel( const char *pElementName )
         : CHudAccountPanel( pElementName )
     {
@@ -547,7 +547,7 @@ class CDamageAccountPanel : public CHudAccountPanel
 
         // Show the attacker, or when healing the player that is
         if ( ( pAttacker == pLocalPlayer ) ||
-             ( pLocalPlayer->IsPlayerClass( TF_CLASS_MEDIC ) && ( pLocalPlayer->MedicGetHealTarget() == pAttacker ) ) )
+            ( pLocalPlayer->IsPlayerClass( TF_CLASS_MEDIC ) && ( pLocalPlayer->MedicGetHealTarget() == pAttacker ) ) )
         {
             bool bDeadRingerSpy = false;
             C_TFPlayer *pVictimPlayer = ToTFPlayer( pVictim );
@@ -592,7 +592,7 @@ class CDamageAccountPanel : public CHudAccountPanel
 
                 // Play hitbeeps
                 if ( ( bHitEnabled || bLastHitEnabled ) &&
-                     ( gpGlobals->curtime > ( m_flLastDingTime + tf_dingalingaling_repeat_delay.GetFloat() ) || tf_dingalingaling_repeat_delay.GetFloat() == 0.f ) )
+                    ( gpGlobals->curtime > ( m_flLastDingTime + tf_dingalingaling_repeat_delay.GetFloat() ) || tf_dingalingaling_repeat_delay.GetFloat() == 0.f ) )
                 {
                     m_flLastDingTime = gpGlobals->curtime;
 
@@ -859,7 +859,7 @@ class CDamageAccountPanel : public CHudAccountPanel
         BaseClass::LevelInit();
     }
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose:
     //-----------------------------------------------------------------------------
@@ -872,7 +872,7 @@ class CDamageAccountPanel : public CHudAccountPanel
         m_flLastDingTime = 0.f;
     }
 
-   private:
+    private:
     // DamageMeter
     float m_flFirstDamageEventTime;
     float m_flLastDamageEventTime;
@@ -1101,7 +1101,7 @@ void CAccountPanel::Paint( void )
                 // If next item is from the same source and too close, merge
                 float flDelay = m_AccountDeltaItems[i].m_flBatchWindow;
                 if ( m_AccountDeltaItems[i].m_flDieTime - m_AccountDeltaItems[i - 1].m_flDieTime <= flDelay &&
-                     m_AccountDeltaItems[i - 1].m_nSourceID == m_AccountDeltaItems[i].m_nSourceID )
+                    m_AccountDeltaItems[i - 1].m_nSourceID == m_AccountDeltaItems[i].m_nSourceID )
                 {
                     m_AccountDeltaItems[i].m_iAmount += m_AccountDeltaItems[i - 1].m_iAmount;
                     m_AccountDeltaItems.Remove( i - 1 );

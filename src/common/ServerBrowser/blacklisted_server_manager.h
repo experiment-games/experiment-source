@@ -32,7 +32,7 @@ struct blacklisted_server_t
 //-----------------------------------------------------------------------------
 class CBlacklistedServerManager
 {
-   public:
+    public:
     CBlacklistedServerManager();
 
     void Reset( void );
@@ -57,7 +57,7 @@ class CBlacklistedServerManager
     bool CanServerBeBlacklisted( gameserveritem_t &server ) const;
     bool CanServerBeBlacklisted( uint32 serverIP, int serverPort, const char *serverName ) const;
 
-   private:
+    private:
     CUtlVector< blacklisted_server_t > m_Blacklist;
     int m_iNextServerID;  // for vgui use
 };

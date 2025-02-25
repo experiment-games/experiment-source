@@ -4,14 +4,14 @@
  */
 
 /* WARNING: this file should *not* be used by applications. It is
-   part of the implementation of the compression library and is
-   subject to change. Applications should only use zlib.h.
+    part of the implementation of the compression library and is
+    subject to change. Applications should only use zlib.h.
  */
 
 /* define NO_GZIP when compiling if you want to disable gzip header and
-   trailer decoding by inflate().  NO_GZIP would be used to avoid linking in
-   the crc code when it is not needed.  For shared libraries, gzip decoding
-   should be left enabled. */
+    trailer decoding by inflate().  NO_GZIP would be used to avoid linking in
+    the crc code when it is not needed.  For shared libraries, gzip decoding
+    should be left enabled. */
 #ifndef NO_GZIP
 #define GUNZIP
 #endif
@@ -61,7 +61,7 @@ typedef enum
     Process header:
         HEAD -> (gzip) or (zlib) or (raw)
         (gzip) -> FLAGS -> TIME -> OS -> EXLEN -> EXTRA -> NAME -> COMMENT ->
-                  HCRC -> TYPE
+                HCRC -> TYPE
         (zlib) -> DICTID or TYPE
         DICTID -> DICT -> TYPE
         (raw) -> TYPEDO
@@ -79,7 +79,7 @@ typedef enum
  */
 
 /* State maintained between inflate() calls -- approximately 7K bytes, not
-   including the allocated sliding window, which is up to 32K bytes. */
+    including the allocated sliding window, which is up to 32K bytes. */
 struct inflate_state
 {
     z_streamp strm;      /* pointer back to this zlib stream */

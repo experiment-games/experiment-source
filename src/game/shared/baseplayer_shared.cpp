@@ -76,7 +76,7 @@ extern ConVar sv_turbophysics;
 
 class CUsePushFilter : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
     {
         CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
@@ -306,7 +306,7 @@ void CBasePlayer::ItemPostFrame()
     else
     {
         if ( GetActiveWeapon() &&
-             ( !IsInAVehicle() || UsingStandardWeaponsInVehicle() ) )
+            ( !IsInAVehicle() || UsingStandardWeaponsInVehicle() ) )
         {
 #if defined( CLIENT_DLL )
             // Not predicting this weapon
@@ -374,7 +374,7 @@ Vector CBasePlayer::EyePosition()
         if ( IsObserver() )
         {
             if ( GetObserverMode() == OBS_MODE_CHASE ||
-                 GetObserverMode() == OBS_MODE_POI )
+                GetObserverMode() == OBS_MODE_POI )
             {
                 if ( IsLocalPlayer() )
                 {
@@ -476,7 +476,7 @@ void CBasePlayer::CacheVehicleView( void )
                     eyeAttachmentIndex, vehicleEyeOrigin, vehicleEyeAngles );
 
                 g_ClientVirtualReality.OverrideTorsoTransform( vehicleEyeOrigin,
-                                                               vehicleEyeAngles );
+                                                                vehicleEyeAngles );
             }
         }
 #endif
@@ -541,8 +541,8 @@ surfacedata_t *CBasePlayer::GetLadderSurface( const Vector &origin )
 }
 
 void CBasePlayer::UpdateStepSound( surfacedata_t *psurface,
-                                   const Vector &vecOrigin,
-                                   const Vector &vecVelocity )
+                                    const Vector &vecOrigin,
+                                    const Vector &vecVelocity )
 {
     bool bWalking;
     float fvol;
@@ -621,7 +621,7 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface,
     }
 #ifdef CSTRIKE_DLL
     else if ( enginetrace->GetPointContents( knee ) &
-              MASK_WATER )  // we want to use the knee for Cstrike, not the waist
+            MASK_WATER )  // we want to use the knee for Cstrike, not the waist
 #else
     else if ( GetWaterLevel() == WL_Waist )
 #endif  // CSTRIKE_DLL
@@ -913,14 +913,14 @@ void CBasePlayer::Weapon_SetLast( CBaseCombatWeapon *pWeapon )
 // Output :
 //-----------------------------------------------------------------------------
 bool CBasePlayer::Weapon_Switch( CBaseCombatWeapon *pWeapon,
-                                 int viewmodelindex /*=0*/ )
+                                int viewmodelindex /*=0*/ )
 {
     CBaseCombatWeapon *pLastWeapon = GetActiveWeapon();
 
     if ( BaseClass::Weapon_Switch( pWeapon, viewmodelindex ) )
     {
         if ( pLastWeapon &&
-             Weapon_ShouldSetLast( pLastWeapon, GetActiveWeapon() ) )
+            Weapon_ShouldSetLast( pLastWeapon, GetActiveWeapon() ) )
         {
             Weapon_SetLast( pLastWeapon->GetLastWeapon() );
         }
@@ -1022,7 +1022,7 @@ void CBasePlayer::SimulatePlayerSimulatedEntities( void )
 
 #if defined( CLIENT_DLL )
         if ( e->IsClientCreated() && prediction->InPrediction() &&
-             !prediction->IsFirstTimePredicted() )
+            !prediction->IsFirstTimePredicted() )
         {
             continue;
         }
@@ -1052,7 +1052,7 @@ void CBasePlayer::SimulatePlayerSimulatedEntities( void )
 
 #if defined( CLIENT_DLL )
         if ( e->IsClientCreated() && prediction->InPrediction() &&
-             !prediction->IsFirstTimePredicted() )
+            !prediction->IsFirstTimePredicted() )
         {
             continue;
         }
@@ -1546,7 +1546,7 @@ void CBasePlayer::ViewPunchReset( float tolerance )
     {
         tolerance *= tolerance;  // square
         float check = m_Local.m_vecPunchAngleVel->LengthSqr() +
-                      m_Local.m_vecPunchAngle->LengthSqr();
+                    m_Local.m_vecPunchAngle->LengthSqr();
         if ( check > tolerance )
             return;
     }
@@ -1579,9 +1579,9 @@ void CBasePlayer::SmoothViewOnStairs( Vector &eyeOrigin )
     // Smooth out stair step ups
     // NOTE: Don't want to do this when the ground entity is moving the player
     if ( ( pGroundEntity != NULL &&
-           pGroundEntity->GetMoveType() == MOVETYPE_NONE ) &&
-         ( flCurrentPlayerZ != m_flOldPlayerZ ) && smoothstairs.GetBool() &&
-         m_flOldPlayerViewOffsetZ == flCurrentPlayerViewOffsetZ )
+            pGroundEntity->GetMoveType() == MOVETYPE_NONE ) &&
+        ( flCurrentPlayerZ != m_flOldPlayerZ ) && smoothstairs.GetBool() &&
+        m_flOldPlayerViewOffsetZ == flCurrentPlayerViewOffsetZ )
     {
         int dir = ( flCurrentPlayerZ > m_flOldPlayerZ ) ? 1 : -1;
 
@@ -1708,7 +1708,7 @@ void CBasePlayer::CalcView( CViewSetup &viewSetup )
 }
 
 void CBasePlayer::CalcViewModelView( const Vector &eyeOrigin,
-                                     const QAngle &eyeAngles )
+                                    const QAngle &eyeAngles )
 {
     for ( int i = 0; i < MAX_VIEWMODELS; i++ )
     {
@@ -2361,21 +2361,21 @@ const Vector &CBasePlayer::GetPreviouslyPredictedOrigin() const
 bool fogparams_t::operator!=( const fogparams_t &other ) const
 {
     if ( this->enable != other.enable ||
-         this->blend != other.blend ||
-         this->radial != other.radial ||
-         !VectorsAreEqual( this->dirPrimary, other.dirPrimary, 0.01f ) ||
-         this->colorPrimary.Get() != other.colorPrimary.Get() ||
-         this->colorSecondary.Get() != other.colorSecondary.Get() ||
-         this->start != other.start ||
-         this->end != other.end ||
-         this->farz != other.farz ||
-         this->maxdensity != other.maxdensity ||
-         this->colorPrimaryLerpTo.Get() != other.colorPrimaryLerpTo.Get() ||
-         this->colorSecondaryLerpTo.Get() != other.colorSecondaryLerpTo.Get() ||
-         this->startLerpTo != other.startLerpTo ||
-         this->endLerpTo != other.endLerpTo ||
-         this->lerptime != other.lerptime ||
-         this->duration != other.duration )
+        this->blend != other.blend ||
+        this->radial != other.radial ||
+        !VectorsAreEqual( this->dirPrimary, other.dirPrimary, 0.01f ) ||
+        this->colorPrimary.Get() != other.colorPrimary.Get() ||
+        this->colorSecondary.Get() != other.colorSecondary.Get() ||
+        this->start != other.start ||
+        this->end != other.end ||
+        this->farz != other.farz ||
+        this->maxdensity != other.maxdensity ||
+        this->colorPrimaryLerpTo.Get() != other.colorPrimaryLerpTo.Get() ||
+        this->colorSecondaryLerpTo.Get() != other.colorSecondaryLerpTo.Get() ||
+        this->startLerpTo != other.startLerpTo ||
+        this->endLerpTo != other.endLerpTo ||
+        this->lerptime != other.lerptime ||
+        this->duration != other.duration )
         return true;
 
     return false;

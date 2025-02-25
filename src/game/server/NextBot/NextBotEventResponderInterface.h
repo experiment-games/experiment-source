@@ -33,7 +33,7 @@ enum MoveToFailureType
  */
 class INextBotEventResponder
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( INextBotEventResponder );
 
     virtual ~INextBotEventResponder() {}

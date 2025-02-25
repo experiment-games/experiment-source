@@ -169,7 +169,7 @@ void CTriggerStun::Touch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 class CTriggerIgniteArrows : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerIgniteArrows, CBaseTrigger );
 
     void Spawn( void );
@@ -232,7 +232,7 @@ void CTriggerIgniteArrows::Touch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 class CTriggerTimerDoor : public CTriggerAreaCapture
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerTimerDoor, CTriggerAreaCapture );
     DECLARE_DATADESC();
 
@@ -242,13 +242,13 @@ class CTriggerTimerDoor : public CTriggerAreaCapture
     virtual void OnStartCapture( int iTeam ) OVERRIDE;
     virtual void OnEndCapture( int iTeam ) OVERRIDE;
 
-   protected:
+    protected:
     virtual bool CaptureModeScalesWithPlayers() const OVERRIDE
     {
         return false;
     }
 
-   private:
+    private:
     CHandle< CBaseDoor > m_hDoor;  // the door that we are linked to!
 
     string_t m_iszDoorName;
@@ -331,7 +331,7 @@ void CTriggerTimerDoor::OnEndCapture( int iTeam )
 //-----------------------------------------------------------------------------
 class CTriggerBotTag : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerBotTag, CBaseTrigger );
 
@@ -339,7 +339,7 @@ class CTriggerBotTag : public CBaseTrigger
 
     virtual void Touch( CBaseEntity *pOther );
 
-   private:
+    private:
     string_t m_iszTags;
 
     bool m_bAdd;
@@ -410,7 +410,7 @@ void CTriggerBotTag::Touch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 class CTriggerAddTFPlayerCondition : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerAddTFPlayerCondition, CBaseTrigger );
 
@@ -419,7 +419,7 @@ class CTriggerAddTFPlayerCondition : public CBaseTrigger
     virtual void StartTouch( CBaseEntity *pOther );
     virtual void EndTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     ETFCond m_nCondition;
 
     float m_flDuration;
@@ -521,7 +521,7 @@ IMPLEMENT_AUTO_LIST( ITriggerPlayerRespawnOverride );
 //-----------------------------------------------------------------------------
 class CTriggerIgnite : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerIgnite, CBaseTrigger );
 
@@ -534,7 +534,7 @@ class CTriggerIgnite : public CBaseTrigger
 
     void BurnThink();
 
-   private:
+    private:
     void IgniteEntity( CBaseEntity *pOther );
     int BurnEntities();
 
@@ -700,7 +700,7 @@ int CTriggerIgnite::BurnEntities()
 //-----------------------------------------------------------------------------
 class CTriggerParticle : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerParticle, CBaseTrigger );
 
@@ -711,7 +711,7 @@ class CTriggerParticle : public CBaseTrigger
 
     virtual void StartTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     string_t m_iszParticleName;
     string_t m_iszAttachmentName;
     ParticleAttachment_t m_nAttachType;
@@ -777,7 +777,7 @@ void CTriggerParticle::StartTouch( CBaseEntity *pOther )
 
 class CTriggerRemoveTFPlayerCondition : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerRemoveTFPlayerCondition, CBaseTrigger );
 
@@ -785,7 +785,7 @@ class CTriggerRemoveTFPlayerCondition : public CBaseTrigger
 
     virtual void StartTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     ETFCond m_nCondition;
 };
 
@@ -845,7 +845,7 @@ void CTriggerRemoveTFPlayerCondition::StartTouch( CBaseEntity *pOther )
 
 class CTriggerAddOrRemoveTFPlayerAttributes : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTriggerAddOrRemoveTFPlayerAttributes, CBaseTrigger );
 
@@ -854,7 +854,7 @@ class CTriggerAddOrRemoveTFPlayerAttributes : public CBaseTrigger
     virtual void StartTouch( CBaseEntity *pOther );
     virtual void EndTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     bool m_bRemove;
     string_t m_iszAttributeName;
     float m_flAttributeValue;

@@ -171,8 +171,8 @@ bool Flashlight_UseLegacyVersion( void )
             return false;
 
         g_bUseLegacyFlashlight = ( !Q_strcmp( modDir, "hl2" ) ||
-                                   !Q_strcmp( modDir, "episodic" ) ||
-                                   !Q_strcmp( modDir, "lostcoast" ) || !Q_strcmp( modDir, "hl1" ) );
+                                    !Q_strcmp( modDir, "episodic" ) ||
+                                    !Q_strcmp( modDir, "lostcoast" ) || !Q_strcmp( modDir, "hl1" ) );
 
         g_bCacheLegacyFlashlightStatus = false;
     }
@@ -188,10 +188,10 @@ class CLogicPlayerProxy : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicPlayerProxy, CLogicalEntity );
 
-   private:
+    private:
     DECLARE_DATADESC();
 
-   public:
+    public:
     COutputEvent m_OnFlashlightOn;
     COutputEvent m_OnFlashlightOff;
     COutputEvent m_PlayerHasAmmo;
@@ -1228,9 +1228,9 @@ void CHL2_Player::InitSprinting( void )
 bool CHL2_Player::CanSprint()
 {
     return ( m_bSprintEnabled &&                                            // Only if sprint is enabled
-             !( m_Local.m_bDucked && !m_Local.m_bDucking ) &&               // Nor if we're ducking
-             ( GetWaterLevel() != 3 ) &&                                    // Certainly not underwater
-             ( GlobalEntity_GetState( "suit_no_sprint" ) != GLOBAL_ON ) );  // Out of the question without the sprint module
+            !( m_Local.m_bDucked && !m_Local.m_bDucking ) &&               // Nor if we're ducking
+            ( GetWaterLevel() != 3 ) &&                                    // Certainly not underwater
+            ( GlobalEntity_GetState( "suit_no_sprint" ) != GLOBAL_ON ) );  // Out of the question without the sprint module
 }
 
 //-----------------------------------------------------------------------------
@@ -1358,7 +1358,7 @@ bool CHL2_Player::IsZooming( void )
 
 class CPhysicsPlayerCallback : public IPhysicsPlayerControllerEvent
 {
-   public:
+    public:
     int ShouldMoveTo( IPhysicsObject *pObject, const Vector &position )
     {
         CHL2_Player *pPlayer = ( CHL2_Player * )pObject->GetGameData();
@@ -1546,18 +1546,18 @@ void CHL2_Player::CommanderUpdate()
         AISquadIter_t iter;
         for ( CAI_BaseNPC *pAllyNpc = m_pPlayerAISquad->GetFirstMember(&iter); pAllyNpc; pAllyNpc = m_pPlayerAISquad->GetNextMember(&iter) )
         {
-          if ( pAllyNpc->IsCommandMoving() )
-          {
+        if ( pAllyNpc->IsCommandMoving() )
+        {
             pszMoving = "<-";
             break;
-          }
+        }
         }
 
         NDebugOverlay::ScreenText(
-          0.932, 0.919,
-          CFmtStr( "%d|%c%s", GetNumSquadCommandables(), ( bFollowMode ) ? 'F' : 'S', pszMoving ),
-          255, 128, 0, 128,
-          0 );
+        0.932, 0.919,
+        CFmtStr( "%d|%c%s", GetNumSquadCommandables(), ( bFollowMode ) ? 'F' : 'S', pszMoving ),
+        255, 128, 0, 128,
+        0 );
         */
     }
     else
@@ -2901,7 +2901,7 @@ void CHL2_Player::PlayerUse( void )
         }
 
         if ( ( ( m_nButtons & IN_USE ) && ( caps & FCAP_CONTINUOUS_USE ) ) ||
-             ( ( m_afButtonPressed & IN_USE ) && ( caps & ( FCAP_IMPULSE_USE | FCAP_ONOFF_USE ) ) ) )
+            ( ( m_afButtonPressed & IN_USE ) && ( caps & ( FCAP_IMPULSE_USE | FCAP_ONOFF_USE ) ) ) )
         {
             if ( caps & FCAP_CONTINUOUS_USE )
                 m_afPhysicsFlags |= PFLAG_USING;
@@ -3149,7 +3149,7 @@ bool CHL2_Player::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
     if ( GetActiveWeapon() )
     {
         if ( PhysCannonGetHeldEntity( GetActiveWeapon() ) == pWeapon &&
-             Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
+            Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
         {
             return true;
         }
@@ -3452,10 +3452,10 @@ static void Collision_ClearTrace( const Vector &vecRayStart, const Vector &vecRa
 }
 
 bool IntersectRayWithAACylinder( const Ray_t &ray,
-                                 const Vector &center,
-                                 float radius,
-                                 float height,
-                                 CBaseTrace *pTrace )
+                                const Vector &center,
+                                float radius,
+                                float height,
+                                CBaseTrace *pTrace )
 {
     Assert( ray.m_IsRay );
     Collision_ClearTrace( ray.m_Start, ray.m_Delta, pTrace );

@@ -12,7 +12,7 @@
 
 class CTFBotGuardArea : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -29,7 +29,7 @@ class CTFBotGuardArea : public Action< CTFBot >
         return "GuardArea";
     };
 
-   private:
+    private:
     ChasePath m_chasePath;
     PathFollower m_pathToPoint;
     PathFollower m_pathToVantageArea;

@@ -26,15 +26,15 @@ class CCreateMultiplayerGameBotPage : public vgui::PropertyPage
 {
     DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameBotPage, vgui::PropertyPage );
 
-   public:
+    public:
     CCreateMultiplayerGameBotPage( vgui::Panel *parent, const char *name, KeyValues *botKeys );
     ~CCreateMultiplayerGameBotPage();
 
-   protected:
+    protected:
     virtual void OnResetChanges();
     virtual void OnApplyChanges();
 
-   private:
+    private:
     CCvarToggleCheckButton *m_joinAfterPlayer;
 
     CCvarToggleCheckButton *m_allowRogues;

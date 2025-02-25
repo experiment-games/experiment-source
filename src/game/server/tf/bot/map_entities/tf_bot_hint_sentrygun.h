@@ -12,7 +12,7 @@ class CTFPlayer;
 
 class CTFBotHintSentrygun : public CBaseTFBotHintEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTFBotHintSentrygun, CBaseTFBotHintEntity );
     DECLARE_DATADESC();
 
@@ -37,7 +37,7 @@ class CTFBotHintSentrygun : public CBaseTFBotHintEntity
         return HINT_SENTRYGUN;
     }
 
-   private:
+    private:
     bool m_isSticky;
     int m_iUseCount;
     COutputEvent m_outputOnSentryGunDestroyed;

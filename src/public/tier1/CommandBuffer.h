@@ -37,7 +37,7 @@ enum
 //-----------------------------------------------------------------------------
 class CCommandBuffer
 {
-   public:
+    public:
     // Constructor, destructor
     CCommandBuffer();
     ~CCommandBuffer();
@@ -94,7 +94,7 @@ class CCommandBuffer
         return m_nMaxArgSBufferLength;
     }
 
-   private:
+    private:
     enum
     {
         ARGS_BUFFER_LENGTH = 8192,

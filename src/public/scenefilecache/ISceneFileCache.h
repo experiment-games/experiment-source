@@ -23,7 +23,7 @@ struct SceneCachedData_t
 
 class ISceneFileCache : public IAppSystem
 {
-   public:
+    public:
     // async implemenation
     virtual size_t GetSceneBufferSize( char const *filename ) = 0;
     virtual bool GetSceneData( char const *filename, byte *buf, size_t bufsize ) = 0;

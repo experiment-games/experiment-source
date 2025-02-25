@@ -67,20 +67,20 @@ class CAI_MappedActivityBehavior_Temporary : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_MappedActivityBehavior_Temporary, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_MappedActivityBehavior_Temporary( CAI_BaseNPC *pOuter = NULL )
         : CAI_SimpleBehavior( pOuter )
     {
         SetDefLessFunc( m_ActivityMap );
     }
 
-   protected:
+    protected:
     Activity GetMappedActivity( AI_Posture_t posture, Activity activity );
     void OnChangeActiveWeapon( CBaseCombatWeapon *pOldWeapon, CBaseCombatWeapon *pNewWeapon );
 
     virtual void UpdateTranslateActivityMap();
 
-   private:
+    private:
     CUtlMap< unsigned, Activity > m_ActivityMap;
 };
 
@@ -88,7 +88,7 @@ class CAI_StandoffBehavior : public CAI_MappedActivityBehavior_Temporary
 {
     DECLARE_CLASS( CAI_StandoffBehavior, CAI_MappedActivityBehavior_Temporary );
 
-   public:
+    public:
     CAI_StandoffBehavior( CAI_BaseNPC *pOuter = NULL );
 
     virtual const char *GetName()
@@ -114,7 +114,7 @@ class CAI_StandoffBehavior : public CAI_MappedActivityBehavior_Temporary
     bool CanSelectSchedule();
     bool IsBehindBattleLines( const Vector &point );
 
-   protected:
+    protected:
     void Spawn();
     void BeginScheduleSelection();
     void EndScheduleSelection();
@@ -161,7 +161,7 @@ class CAI_StandoffBehavior : public CAI_MappedActivityBehavior_Temporary
         return false;
     }
 
-   private:
+    private:
     //----------------------------
 
     enum

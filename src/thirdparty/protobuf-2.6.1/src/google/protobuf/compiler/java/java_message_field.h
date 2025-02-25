@@ -62,7 +62,7 @@ namespace java
 
 class ImmutableMessageFieldGenerator : public ImmutableFieldGenerator
 {
-   public:
+    public:
     explicit ImmutableMessageFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -90,7 +90,7 @@ class ImmutableMessageFieldGenerator : public ImmutableFieldGenerator
 
     string GetBoxedType() const;
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
     const int messageBitIndex_;
@@ -99,22 +99,22 @@ class ImmutableMessageFieldGenerator : public ImmutableFieldGenerator
     ClassNameResolver* name_resolver_;
 
     void PrintNestedBuilderCondition( io::Printer* printer,
-                                      const char* regular_case,
-                                      const char* nested_builder_case ) const;
+                                    const char* regular_case,
+                                    const char* nested_builder_case ) const;
     void PrintNestedBuilderFunction( io::Printer* printer,
-                                     const char* method_prototype,
-                                     const char* regular_case,
-                                     const char* nested_builder_case,
-                                     const char* trailing_code ) const;
+                                    const char* method_prototype,
+                                    const char* regular_case,
+                                    const char* nested_builder_case,
+                                    const char* trailing_code ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutableMessageFieldGenerator );
 };
 
 class ImmutableMessageOneofFieldGenerator
     : public ImmutableMessageFieldGenerator
 {
-   public:
+    public:
     ImmutableMessageOneofFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -130,13 +130,13 @@ class ImmutableMessageOneofFieldGenerator
     void GenerateSerializationCode( io::Printer* printer ) const;
     void GenerateSerializedSizeCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutableMessageOneofFieldGenerator );
 };
 
 class RepeatedImmutableMessageFieldGenerator : public ImmutableFieldGenerator
 {
-   public:
+    public:
     explicit RepeatedImmutableMessageFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -164,7 +164,7 @@ class RepeatedImmutableMessageFieldGenerator : public ImmutableFieldGenerator
 
     string GetBoxedType() const;
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
     const int messageBitIndex_;
@@ -173,15 +173,15 @@ class RepeatedImmutableMessageFieldGenerator : public ImmutableFieldGenerator
     ClassNameResolver* name_resolver_;
 
     void PrintNestedBuilderCondition( io::Printer* printer,
-                                      const char* regular_case,
-                                      const char* nested_builder_case ) const;
+                                    const char* regular_case,
+                                    const char* nested_builder_case ) const;
     void PrintNestedBuilderFunction( io::Printer* printer,
-                                     const char* method_prototype,
-                                     const char* regular_case,
-                                     const char* nested_builder_case,
-                                     const char* trailing_code ) const;
+                                    const char* method_prototype,
+                                    const char* regular_case,
+                                    const char* nested_builder_case,
+                                    const char* trailing_code ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( RepeatedImmutableMessageFieldGenerator );
 };
 

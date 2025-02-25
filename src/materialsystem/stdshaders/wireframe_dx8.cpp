@@ -15,7 +15,7 @@ DEFINE_FALLBACK_SHADER( Wireframe, Wireframe_DX8 )
 DEFINE_FALLBACK_SHADER( Wireframe_DX9, Wireframe_DX8 )
 
 BEGIN_VS_SHADER( Wireframe_DX8,
-                 "Help for Wireframe_DX8" )
+                "Help for Wireframe_DX8" )
 
 BEGIN_SHADER_PARAMS
 END_SHADER_PARAMS

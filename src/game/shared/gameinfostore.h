@@ -7,7 +7,7 @@
 
 class CGameInfoStore : public CGameEventListener
 {
-   public:
+    public:
     CGameInfoStore();
     ~CGameInfoStore();
 
@@ -52,7 +52,7 @@ class CGameInfoStore : public CGameEventListener
     virtual CBasePlayer *GetPlayerByAddress( const char *pszAddress );
     virtual bool GetPlayerAddress( CBasePlayer *pPlayer, char *pszAddress, int nMaxLen );
 
-   private:
+    private:
     char m_pszServerAddress[46];  // 39 (ipv6) + 6 (port) + 1 (null terminator) = 46
     char m_pszServerIpAsString[39];
     int m_iServerIp;

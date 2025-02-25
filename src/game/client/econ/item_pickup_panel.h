@@ -35,7 +35,7 @@ class CItemPickupPanel : public vgui::Frame, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CItemPickupPanel, vgui::Frame );
 
-   public:
+    public:
     CItemPickupPanel( Panel *parent, bool bPopup = true );
     virtual ~CItemPickupPanel();
 
@@ -63,11 +63,11 @@ class CItemPickupPanel : public vgui::Frame, public CGameEventListener
 
     MESSAGE_FUNC_PARAMS( OnConfirmDelete, "ConfirmDlgResult", data );
 
-   protected:
+    protected:
     virtual void UpdateModelPanels( void );
     virtual void AcknowledgeItems( void );
 
-   protected:
+    protected:
     int m_iSelectedItem;
 
     struct founditem_t
@@ -104,7 +104,7 @@ class CItemDiscardPanel : public vgui::Frame, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CItemDiscardPanel, vgui::Frame );
 
-   public:
+    public:
     CItemDiscardPanel( Panel *parent, bool bPopup = true );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -119,7 +119,7 @@ class CItemDiscardPanel : public vgui::Frame, public CGameEventListener
 
     MESSAGE_FUNC_PARAMS( OnConfirmDelete, "ConfirmDlgResult", data );
 
-   protected:
+    protected:
     CItemModelPanel *m_pModelPanel;
     CBackpackPanel *m_pBackpackPanel;
     vgui::EditablePanel *m_pConfirmDeleteDialog;

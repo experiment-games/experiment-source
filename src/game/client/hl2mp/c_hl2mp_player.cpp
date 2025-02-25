@@ -141,7 +141,7 @@ void C_HL2MP_Player::UpdateIDTarget()
 
     // don't show IDs in chase spec mode
     if ( GetObserverMode() == OBS_MODE_CHASE ||
-         GetObserverMode() == OBS_MODE_DEATHCAM )
+        GetObserverMode() == OBS_MODE_DEATHCAM )
         return;
 
     trace_t tr;

@@ -25,7 +25,7 @@ class AnimatingImagePanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( AnimatingImagePanel, Panel );
 
-   public:
+    public:
     AnimatingImagePanel( Panel *parent, const char *name );
 
     // Add an image to the end of the list of animations
@@ -41,7 +41,7 @@ class AnimatingImagePanel : public Panel
     virtual void StopAnimation();
     virtual void ResetAnimation( int frame = 0 );
 
-   protected:
+    protected:
     virtual void OnTick();
     virtual void PerformLayout();
     virtual void PaintBackground();
@@ -50,7 +50,7 @@ class AnimatingImagePanel : public Panel
     virtual void ApplySettings( KeyValues *inResourceData );
     virtual const char *GetDescription();
 
-   private:
+    private:
     int m_iCurrentImage;
     int m_iNextFrameTime;
     int m_iFrameTimeMillis;

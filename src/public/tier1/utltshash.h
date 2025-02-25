@@ -39,14 +39,14 @@ typedef intp UtlTSHashHandle_t;
 template < class T >
 abstract_class ITSHashConstructor
 {
-   public:
+    public:
     virtual void Construct( T * pElement ) = 0;
 };
 
 template < class T >
 class CDefaultTSHashConstructor : public ITSHashConstructor< T >
 {
-   public:
+    public:
     virtual void Construct( T *pElement )
     {
         ::Construct( pElement );
@@ -56,7 +56,7 @@ class CDefaultTSHashConstructor : public ITSHashConstructor< T >
 template < int BUCKET_COUNT, class KEYTYPE = intp >
 class CUtlTSHashGenericHash
 {
-   public:
+    public:
     static int Hash( const KEYTYPE &key, int nBucketMask )
     {
         int nHash = HashIntConventional( ( intp )key );
@@ -80,7 +80,7 @@ class CUtlTSHashGenericHash
 template < int BUCKET_COUNT, class KEYTYPE >
 class CUtlTSHashUseKeyHashMethod
 {
-   public:
+    public:
     static int Hash( const KEYTYPE &key, int nBucketMask )
     {
         uint32 nHash = key.HashValue();
@@ -96,7 +96,7 @@ class CUtlTSHashUseKeyHashMethod
 template < class T, int BUCKET_COUNT, class KEYTYPE = intp, class HashFuncs = CUtlTSHashGenericHash< BUCKET_COUNT, KEYTYPE >, int nAlignment = 0 >
 class CUtlTSHash
 {
-   public:
+    public:
     // Constructor/Deconstructor.
     CUtlTSHash( int nAllocationCount );
     ~CUtlTSHash();
@@ -147,7 +147,7 @@ class CUtlTSHash
     // Convert element * to hashHandle
     UtlTSHashHandle_t ElementPtrToHandle( T *pElement ) const;
 
-   private:
+    private:
     // Templatized for memory tracking purposes
     template < typename Data_t >
     struct HashFixedDataInternal_t

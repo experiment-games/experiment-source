@@ -23,7 +23,7 @@ class CDmeTimeFrame : public CDmElement
 {
     DEFINE_ELEMENT( CDmeTimeFrame, CDmElement );
 
-   public:
+    public:
     // Methods of IDmElement
     virtual void OnAttributeChanged( CDmAttribute *pAttribute );
 
@@ -48,7 +48,7 @@ class CDmeTimeFrame : public CDmElement
     void SetEndTime( DmeTime_t endTime, bool bChangeDuration );
     void SetTimeScale( float flScale, DmeTime_t scaleCenter, bool bChangeDuration );
 
-   private:
+    private:
     CDmaVar< int > m_Start;
     CDmaVar< int > m_Duration;
     CDmaVar< int > m_Offset;

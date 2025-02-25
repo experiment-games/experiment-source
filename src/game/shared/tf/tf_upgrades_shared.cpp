@@ -154,10 +154,10 @@ void CMannVsMachineUpgradeManager::LoadUpgradesFileFromPath( const char *pszPath
     // Check that the path is valid
     const char *pszExtension = V_GetFileExtension( pszPath );
     if ( V_strstr( pszPath, ".." ) || V_strstr( pszPath, " " ) ||
-         V_strstr( pszPath, "\r" ) || V_strstr( pszPath, "\n" ) ||
-         V_strstr( pszPath, ":" ) || V_strstr( pszPath, "\\\\" ) ||
-         V_IsAbsolutePath( pszPath ) ||
-         pszExtension == NULL || V_strcmp( pszExtension, "txt" ) != 0 )
+        V_strstr( pszPath, "\r" ) || V_strstr( pszPath, "\n" ) ||
+        V_strstr( pszPath, ":" ) || V_strstr( pszPath, "\\\\" ) ||
+        V_IsAbsolutePath( pszPath ) ||
+        pszExtension == NULL || V_strcmp( pszExtension, "txt" ) != 0 )
     {
         return;
     }
@@ -203,8 +203,8 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
         Assert( pMannVsMachineUpgrade->nUIGroup == UIGROUP_POWERUPBOTTLE );
 
         nCurrentStep = ::FindAttribute( pItemData, pAttribDef )
-                           ? pPowerupBottle->GetNumCharges()
-                           : 0;
+                            ? pPowerupBottle->GetNumCharges()
+                            : 0;
         bOverCap = nCurrentStep == pPowerupBottle->GetMaxNumCharges();
 
         return pPowerupBottle->GetMaxNumCharges();

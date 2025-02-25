@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CPasstimeBallControllerHoming : public CPasstimeBallController
 {
-   public:
+    public:
     CPasstimeBallControllerHoming();
     ~CPasstimeBallControllerHoming();
     void SetTargetSpeed( float f );
@@ -26,7 +26,7 @@ class CPasstimeBallControllerHoming : public CPasstimeBallController
     }
     void StartHoming( CPasstimeBall *pBall, CTFPlayer *pTarget, bool isCharged );
 
-   private:
+    private:
     CHandle< CTFPlayer > m_hTarget;
     CHandle< CPasstimeBall > m_hBall;
     float m_fTargetSpeed;

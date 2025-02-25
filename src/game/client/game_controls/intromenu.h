@@ -23,10 +23,10 @@ class TextEntry;
 
 class CIntroMenu : public vgui::Frame, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CIntroMenu, vgui::Frame );
 
-   public:
+    public:
     CIntroMenu( IViewPort *pViewPort );
     virtual ~CIntroMenu();
 
@@ -71,7 +71,7 @@ class CIntroMenu : public vgui::Frame, public IViewPortPanel
         return GAME_ACTION_SET_IN_GAME_HUD;
     }
 
-   protected:
+    protected:
     // vgui overrides
     virtual void OnCommand( const char *command );
 

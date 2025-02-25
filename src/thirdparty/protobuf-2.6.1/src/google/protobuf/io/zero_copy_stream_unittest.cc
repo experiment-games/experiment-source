@@ -129,7 +129,7 @@ const int IoTest::kBlockSizes[] = {-1, 1, 2, 5, 7, 10, 23, 64};
 const int IoTest::kBlockSizeCount = GOOGLE_ARRAYSIZE(IoTest::kBlockSizes);
 
 bool IoTest::WriteToOutput(ZeroCopyOutputStream* output,
-                           const void* data, int size) {
+                            const void* data, int size) {
   const uint8* in = reinterpret_cast<const uint8*>(data);
   int in_size = size;
 
@@ -138,14 +138,14 @@ bool IoTest::WriteToOutput(ZeroCopyOutputStream* output,
 
   while (true) {
     if (!output->Next(&out, &out_size)) {
-      return false;
+    return false;
     }
     EXPECT_GT(out_size, 0);
 
     if (in_size <= out_size) {
-      memcpy(out, in, in_size);
-      output->BackUp(out_size - in_size);
-      return true;
+    memcpy(out, in, in_size);
+    output->BackUp(out_size - in_size);
+    return true;
     }
 
     memcpy(out, in, out_size);
@@ -167,22 +167,22 @@ int IoTest::ReadFromInput(ZeroCopyInputStream* input, void* data, int size) {
 
   while (true) {
     if (!input->Next(&in, &in_size)) {
-      return size - out_size;
+    return size - out_size;
     }
     EXPECT_GT(in_size, -1);
     if (in_size == 0) {
-      repeated_zeros++;
+    repeated_zeros++;
     } else {
-      repeated_zeros = 0;
+    repeated_zeros = 0;
     }
     EXPECT_LT(repeated_zeros, MAX_REPEATED_ZEROS);
 
     if (out_size <= in_size) {
-      memcpy(out, in, out_size);
-      if (in_size > out_size) {
+    memcpy(out, in, out_size);
+    if (in_size > out_size) {
         input->BackUp(in_size - out_size);
-      }
-      return size;  // Copied all of it.
+    }
+    return size;  // Copied all of it.
     }
 
     memcpy(out, in, in_size);
@@ -273,15 +273,15 @@ TEST_F(IoTest, ArrayIo) {
 
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      int size;
-      {
+    int size;
+    {
         ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
         size = WriteStuff(&output);
-      }
-      {
+    }
+    {
         ArrayInputStream input(buffer, size, kBlockSizes[j]);
         ReadStuff(&input);
-      }
+    }
     }
   }
 }
@@ -297,39 +297,39 @@ TEST_F(IoTest, TwoSessionWrite) {
 
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      ArrayOutputStream* output =
-          new ArrayOutputStream(buffer, kBufferSize, kBlockSizes[i]);
-      CodedOutputStream* coded_output = new CodedOutputStream(output);
-      coded_output->WriteVarint32(strlen(strA));
-      coded_output->WriteRaw(strA, strlen(strA));
-      delete coded_output;  // flush
-      int64 pos = output->ByteCount();
-      delete output;
-      output = new ArrayOutputStream(
-          buffer + pos, kBufferSize - pos, kBlockSizes[i]);
-      coded_output = new CodedOutputStream(output);
-      coded_output->WriteVarint32(strlen(strB));
-      coded_output->WriteRaw(strB, strlen(strB));
-      delete coded_output;  // flush
-      int64 size = pos + output->ByteCount();
-      delete output;
+    ArrayOutputStream* output =
+        new ArrayOutputStream(buffer, kBufferSize, kBlockSizes[i]);
+    CodedOutputStream* coded_output = new CodedOutputStream(output);
+    coded_output->WriteVarint32(strlen(strA));
+    coded_output->WriteRaw(strA, strlen(strA));
+    delete coded_output;  // flush
+    int64 pos = output->ByteCount();
+    delete output;
+    output = new ArrayOutputStream(
+        buffer + pos, kBufferSize - pos, kBlockSizes[i]);
+    coded_output = new CodedOutputStream(output);
+    coded_output->WriteVarint32(strlen(strB));
+    coded_output->WriteRaw(strB, strlen(strB));
+    delete coded_output;  // flush
+    int64 size = pos + output->ByteCount();
+    delete output;
 
-      ArrayInputStream* input =
-          new ArrayInputStream(buffer, size, kBlockSizes[j]);
-      CodedInputStream* coded_input = new CodedInputStream(input);
-      uint32 insize;
-      EXPECT_TRUE(coded_input->ReadVarint32(&insize));
-      EXPECT_EQ(strlen(strA), insize);
-      EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
-      EXPECT_EQ(0, memcmp(temp_buffer, strA, insize));
+    ArrayInputStream* input =
+        new ArrayInputStream(buffer, size, kBlockSizes[j]);
+    CodedInputStream* coded_input = new CodedInputStream(input);
+    uint32 insize;
+    EXPECT_TRUE(coded_input->ReadVarint32(&insize));
+    EXPECT_EQ(strlen(strA), insize);
+    EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
+    EXPECT_EQ(0, memcmp(temp_buffer, strA, insize));
 
-      EXPECT_TRUE(coded_input->ReadVarint32(&insize));
-      EXPECT_EQ(strlen(strB), insize);
-      EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
-      EXPECT_EQ(0, memcmp(temp_buffer, strB, insize));
+    EXPECT_TRUE(coded_input->ReadVarint32(&insize));
+    EXPECT_EQ(strlen(strB), insize);
+    EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
+    EXPECT_EQ(0, memcmp(temp_buffer, strB, insize));
 
-      delete coded_input;
-      delete input;
+    delete coded_input;
+    delete input;
     }
   }
 
@@ -343,28 +343,28 @@ TEST_F(IoTest, GzipIo) {
   uint8* buffer = new uint8[kBufferSize];
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      for (int z = 0; z < kBlockSizeCount; z++) {
+    for (int z = 0; z < kBlockSizeCount; z++) {
         int gzip_buffer_size = kBlockSizes[z];
         int size;
         {
-          ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
-          GzipOutputStream::Options options;
-          options.format = GzipOutputStream::GZIP;
-          if (gzip_buffer_size != -1) {
+        ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
+        GzipOutputStream::Options options;
+        options.format = GzipOutputStream::GZIP;
+        if (gzip_buffer_size != -1) {
             options.buffer_size = gzip_buffer_size;
-          }
-          GzipOutputStream gzout(&output, options);
-          WriteStuff(&gzout);
-          gzout.Close();
-          size = output.ByteCount();
+        }
+        GzipOutputStream gzout(&output, options);
+        WriteStuff(&gzout);
+        gzout.Close();
+        size = output.ByteCount();
         }
         {
-          ArrayInputStream input(buffer, size, kBlockSizes[j]);
-          GzipInputStream gzin(
-              &input, GzipInputStream::GZIP, gzip_buffer_size);
-          ReadStuff(&gzin);
+        ArrayInputStream input(buffer, size, kBlockSizes[j]);
+        GzipInputStream gzin(
+            &input, GzipInputStream::GZIP, gzip_buffer_size);
+        ReadStuff(&gzin);
         }
-      }
+    }
     }
   }
   delete [] buffer;
@@ -378,29 +378,29 @@ TEST_F(IoTest, GzipIoWithFlush) {
   // fails. See documentation for Flush() for more detail.
   for (int i = 4; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      for (int z = 0; z < kBlockSizeCount; z++) {
+    for (int z = 0; z < kBlockSizeCount; z++) {
         int gzip_buffer_size = kBlockSizes[z];
         int size;
         {
-          ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
-          GzipOutputStream::Options options;
-          options.format = GzipOutputStream::GZIP;
-          if (gzip_buffer_size != -1) {
+        ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
+        GzipOutputStream::Options options;
+        options.format = GzipOutputStream::GZIP;
+        if (gzip_buffer_size != -1) {
             options.buffer_size = gzip_buffer_size;
-          }
-          GzipOutputStream gzout(&output, options);
-          WriteStuff(&gzout);
-          EXPECT_TRUE(gzout.Flush());
-          gzout.Close();
-          size = output.ByteCount();
+        }
+        GzipOutputStream gzout(&output, options);
+        WriteStuff(&gzout);
+        EXPECT_TRUE(gzout.Flush());
+        gzout.Close();
+        size = output.ByteCount();
         }
         {
-          ArrayInputStream input(buffer, size, kBlockSizes[j]);
-          GzipInputStream gzin(
-              &input, GzipInputStream::GZIP, gzip_buffer_size);
-          ReadStuff(&gzin);
+        ArrayInputStream input(buffer, size, kBlockSizes[j]);
+        GzipInputStream gzin(
+            &input, GzipInputStream::GZIP, gzip_buffer_size);
+        ReadStuff(&gzin);
         }
-      }
+    }
     }
   }
   delete [] buffer;
@@ -429,7 +429,7 @@ TEST_F(IoTest, GzipIoContiguousFlushes) {
 
   ArrayInputStream input(buffer, size, block_size);
   GzipInputStream gzin(
-      &input, GzipInputStream::GZIP, gzip_buffer_size);
+    &input, GzipInputStream::GZIP, gzip_buffer_size);
   ReadStuff(&gzin);
 
   delete [] buffer;
@@ -456,7 +456,7 @@ TEST_F(IoTest, GzipIoReadAfterFlush) {
 
   ArrayInputStream input(buffer, size, block_size);
   GzipInputStream gzin(
-      &input, GzipInputStream::GZIP, gzip_buffer_size);
+    &input, GzipInputStream::GZIP, gzip_buffer_size);
   ReadStuff(&gzin);
 
   gzout.Close();
@@ -469,28 +469,28 @@ TEST_F(IoTest, ZlibIo) {
   uint8* buffer = new uint8[kBufferSize];
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      for (int z = 0; z < kBlockSizeCount; z++) {
+    for (int z = 0; z < kBlockSizeCount; z++) {
         int gzip_buffer_size = kBlockSizes[z];
         int size;
         {
-          ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
-          GzipOutputStream::Options options;
-          options.format = GzipOutputStream::ZLIB;
-          if (gzip_buffer_size != -1) {
+        ArrayOutputStream output(buffer, kBufferSize, kBlockSizes[i]);
+        GzipOutputStream::Options options;
+        options.format = GzipOutputStream::ZLIB;
+        if (gzip_buffer_size != -1) {
             options.buffer_size = gzip_buffer_size;
-          }
-          GzipOutputStream gzout(&output, options);
-          WriteStuff(&gzout);
-          gzout.Close();
-          size = output.ByteCount();
+        }
+        GzipOutputStream gzout(&output, options);
+        WriteStuff(&gzout);
+        gzout.Close();
+        size = output.ByteCount();
         }
         {
-          ArrayInputStream input(buffer, size, kBlockSizes[j]);
-          GzipInputStream gzin(
-              &input, GzipInputStream::ZLIB, gzip_buffer_size);
-          ReadStuff(&gzin);
+        ArrayInputStream input(buffer, size, kBlockSizes[j]);
+        GzipInputStream gzin(
+            &input, GzipInputStream::ZLIB, gzip_buffer_size);
+        ReadStuff(&gzin);
         }
-      }
+    }
     }
   }
   delete [] buffer;
@@ -550,7 +550,7 @@ string IoTest::Uncompress(const string& data) {
     const void* buffer;
     int size;
     while (gzin.Next(&buffer, &size)) {
-      result.append(reinterpret_cast<const char*>(buffer), size);
+    result.append(reinterpret_cast<const char*>(buffer), size);
     }
   }
   return result;
@@ -561,9 +561,9 @@ TEST_F(IoTest, CompressionOptions) {
 
   string golden;
   GOOGLE_CHECK_OK(File::GetContents(
-      TestSourceDir() +
-          "/google/protobuf/testdata/golden_message",
-      &golden, true));
+    TestSourceDir() +
+        "/google/protobuf/testdata/golden_message",
+    &golden, true));
 
   GzipOutputStream::Options options;
   string gzip_compressed = Compress(golden, options);
@@ -603,53 +603,53 @@ TEST_F(IoTest, TwoSessionWriteGzip) {
 
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      ArrayOutputStream* output =
-          new ArrayOutputStream(buffer, kBufferSize, kBlockSizes[i]);
-      GzipOutputStream* gzout = new GzipOutputStream(output);
-      CodedOutputStream* coded_output = new CodedOutputStream(gzout);
-      int32 outlen = strlen(strA) + 1;
-      coded_output->WriteVarint32(outlen);
-      coded_output->WriteRaw(strA, outlen);
-      delete coded_output;  // flush
-      delete gzout;  // flush
-      int64 pos = output->ByteCount();
-      delete output;
-      output = new ArrayOutputStream(
-          buffer + pos, kBufferSize - pos, kBlockSizes[i]);
-      gzout = new GzipOutputStream(output);
-      coded_output = new CodedOutputStream(gzout);
-      outlen = strlen(strB) + 1;
-      coded_output->WriteVarint32(outlen);
-      coded_output->WriteRaw(strB, outlen);
-      delete coded_output;  // flush
-      delete gzout;  // flush
-      int64 size = pos + output->ByteCount();
-      delete output;
+    ArrayOutputStream* output =
+        new ArrayOutputStream(buffer, kBufferSize, kBlockSizes[i]);
+    GzipOutputStream* gzout = new GzipOutputStream(output);
+    CodedOutputStream* coded_output = new CodedOutputStream(gzout);
+    int32 outlen = strlen(strA) + 1;
+    coded_output->WriteVarint32(outlen);
+    coded_output->WriteRaw(strA, outlen);
+    delete coded_output;  // flush
+    delete gzout;  // flush
+    int64 pos = output->ByteCount();
+    delete output;
+    output = new ArrayOutputStream(
+        buffer + pos, kBufferSize - pos, kBlockSizes[i]);
+    gzout = new GzipOutputStream(output);
+    coded_output = new CodedOutputStream(gzout);
+    outlen = strlen(strB) + 1;
+    coded_output->WriteVarint32(outlen);
+    coded_output->WriteRaw(strB, outlen);
+    delete coded_output;  // flush
+    delete gzout;  // flush
+    int64 size = pos + output->ByteCount();
+    delete output;
 
-      ArrayInputStream* input =
-          new ArrayInputStream(buffer, size, kBlockSizes[j]);
-      GzipInputStream* gzin = new GzipInputStream(input);
-      CodedInputStream* coded_input = new CodedInputStream(gzin);
-      uint32 insize;
-      EXPECT_TRUE(coded_input->ReadVarint32(&insize));
-      EXPECT_EQ(strlen(strA) + 1, insize);
-      EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
-      EXPECT_EQ(0, memcmp(temp_buffer, strA, insize))
-          << "strA=" << strA << " in=" << temp_buffer;
+    ArrayInputStream* input =
+        new ArrayInputStream(buffer, size, kBlockSizes[j]);
+    GzipInputStream* gzin = new GzipInputStream(input);
+    CodedInputStream* coded_input = new CodedInputStream(gzin);
+    uint32 insize;
+    EXPECT_TRUE(coded_input->ReadVarint32(&insize));
+    EXPECT_EQ(strlen(strA) + 1, insize);
+    EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
+    EXPECT_EQ(0, memcmp(temp_buffer, strA, insize))
+        << "strA=" << strA << " in=" << temp_buffer;
 
-      EXPECT_TRUE(coded_input->ReadVarint32(&insize));
-      EXPECT_EQ(strlen(strB) + 1, insize);
-      EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
-      EXPECT_EQ(0, memcmp(temp_buffer, strB, insize))
-          << " out_block_size=" << kBlockSizes[i]
-          << " in_block_size=" << kBlockSizes[j]
-          << " pos=" << pos
-          << " size=" << size
-          << " strB=" << strB << " in=" << temp_buffer;
+    EXPECT_TRUE(coded_input->ReadVarint32(&insize));
+    EXPECT_EQ(strlen(strB) + 1, insize);
+    EXPECT_TRUE(coded_input->ReadRaw(temp_buffer, insize));
+    EXPECT_EQ(0, memcmp(temp_buffer, strB, insize))
+        << " out_block_size=" << kBlockSizes[i]
+        << " in_block_size=" << kBlockSizes[j]
+        << " pos=" << pos
+        << " size=" << size
+        << " strB=" << strB << " in=" << temp_buffer;
 
-      delete coded_input;
-      delete gzin;
-      delete input;
+    delete coded_input;
+    delete gzin;
+    delete input;
     }
   }
 
@@ -680,27 +680,27 @@ TEST_F(IoTest, FileIo) {
 
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      // Make a temporary file.
-      int file =
+    // Make a temporary file.
+    int file =
         open(filename.c_str(), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0777);
-      ASSERT_GE(file, 0);
+    ASSERT_GE(file, 0);
 
-      {
+    {
         FileOutputStream output(file, kBlockSizes[i]);
         WriteStuff(&output);
         EXPECT_EQ(0, output.GetErrno());
-      }
+    }
 
-      // Rewind.
-      ASSERT_NE(lseek(file, 0, SEEK_SET), (off_t)-1);
+    // Rewind.
+    ASSERT_NE(lseek(file, 0, SEEK_SET), (off_t)-1);
 
-      {
+    {
         FileInputStream input(file, kBlockSizes[j]);
         ReadStuff(&input);
         EXPECT_EQ(0, input.GetErrno());
-      }
+    }
 
-      close(file);
+    close(file);
     }
   }
 }
@@ -711,30 +711,30 @@ TEST_F(IoTest, GzipFileIo) {
 
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      // Make a temporary file.
-      int file =
+    // Make a temporary file.
+    int file =
         open(filename.c_str(), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0777);
-      ASSERT_GE(file, 0);
-      {
+    ASSERT_GE(file, 0);
+    {
         FileOutputStream output(file, kBlockSizes[i]);
         GzipOutputStream gzout(&output);
         WriteStuffLarge(&gzout);
         gzout.Close();
         output.Flush();
         EXPECT_EQ(0, output.GetErrno());
-      }
+    }
 
-      // Rewind.
-      ASSERT_NE(lseek(file, 0, SEEK_SET), (off_t)-1);
+    // Rewind.
+    ASSERT_NE(lseek(file, 0, SEEK_SET), (off_t)-1);
 
-      {
+    {
         FileInputStream input(file, kBlockSizes[j]);
         GzipInputStream gzin(&input);
         ReadStuffLarge(&gzin);
         EXPECT_EQ(0, input.GetErrno());
-      }
+    }
 
-      close(file);
+    close(file);
     }
   }
 }
@@ -814,23 +814,23 @@ TEST_F(IoTest, PipeIo) {
 
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      // Need to create a new pipe each time because ReadStuff() expects
-      // to see EOF at the end.
-      ASSERT_EQ(pipe(files), 0);
+    // Need to create a new pipe each time because ReadStuff() expects
+    // to see EOF at the end.
+    ASSERT_EQ(pipe(files), 0);
 
-      {
+    {
         FileOutputStream output(files[1], kBlockSizes[i]);
         WriteStuff(&output);
         EXPECT_EQ(0, output.GetErrno());
-      }
-      close(files[1]);  // Send EOF.
+    }
+    close(files[1]);  // Send EOF.
 
-      {
+    {
         FileInputStream input(files[0], kBlockSizes[j]);
         ReadStuff(&input);
         EXPECT_EQ(0, input.GetErrno());
-      }
-      close(files[0]);
+    }
+    close(files[0]);
     }
   }
 }
@@ -839,37 +839,37 @@ TEST_F(IoTest, PipeIo) {
 TEST_F(IoTest, IostreamIo) {
   for (int i = 0; i < kBlockSizeCount; i++) {
     for (int j = 0; j < kBlockSizeCount; j++) {
-      {
+    {
         stringstream stream;
 
         {
-          OstreamOutputStream output(&stream, kBlockSizes[i]);
-          WriteStuff(&output);
-          EXPECT_FALSE(stream.fail());
+        OstreamOutputStream output(&stream, kBlockSizes[i]);
+        WriteStuff(&output);
+        EXPECT_FALSE(stream.fail());
         }
 
         {
-          IstreamInputStream input(&stream, kBlockSizes[j]);
-          ReadStuff(&input);
-          EXPECT_TRUE(stream.eof());
+        IstreamInputStream input(&stream, kBlockSizes[j]);
+        ReadStuff(&input);
+        EXPECT_TRUE(stream.eof());
         }
-      }
+    }
 
-      {
+    {
         stringstream stream;
 
         {
-          OstreamOutputStream output(&stream, kBlockSizes[i]);
-          WriteStuffLarge(&output);
-          EXPECT_FALSE(stream.fail());
+        OstreamOutputStream output(&stream, kBlockSizes[i]);
+        WriteStuffLarge(&output);
+        EXPECT_FALSE(stream.fail());
         }
 
         {
-          IstreamInputStream input(&stream, kBlockSizes[j]);
-          ReadStuffLarge(&input);
-          EXPECT_TRUE(stream.eof());
+        IstreamInputStream input(&stream, kBlockSizes[j]);
+        ReadStuffLarge(&input);
+        EXPECT_TRUE(stream.eof());
         }
-      }
+    }
     }
   }
 }

@@ -15,61 +15,61 @@ $Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 
 $Configuration	"Debug"
 {
-	$General
-	{
-		$OutputDirectory		"Debug_dx7"			
-		$IntermediateDirectory	"Debug_dx7"			
-	}
+    $General
+    {
+        $OutputDirectory		"Debug_dx7"
+        $IntermediateDirectory	"Debug_dx7"
+    }
 }
 
 $Configuration	"Release"
 {
-	$General
-	{
-		$OutputDirectory		"Release_dx7"		
-		$IntermediateDirectory	"Release_dx7"		
-	}
+    $General
+    {
+        $OutputDirectory		"Release_dx7"
+        $IntermediateDirectory	"Release_dx7"
+    }
 }
 
 // Common Configuration
 $Configuration
 {
-	$Compiler
-	{
-		$PreprocessorDefinitions		"$BASE;STDSHADER_DX7_DLL_EXPORT;FAST_MATERIALVAR_ACCESS"
-		$AdditionalIncludeDirectories	"$BASE;..\..\dx9sdk\include"
-	}
+    $Compiler
+    {
+        $PreprocessorDefinitions		"$BASE;STDSHADER_DX7_DLL_EXPORT;FAST_MATERIALVAR_ACCESS"
+        $AdditionalIncludeDirectories	"$BASE;..\..\dx9sdk\include"
+    }
 
-	$Linker
-	{
-		$AdditionalDependencies			"$BASE odbc32.lib odbccp32.lib"
-	}
+    $Linker
+    {
+        $AdditionalDependencies			"$BASE odbc32.lib odbccp32.lib"
+    }
 }
 
 $Project "Stdshader_dx7"
 {
-	$Folder	"Source Files"
-	{
-		$File	"core_dx7.cpp"
-		$File	"filmdust_dx7.cpp"
-		$File	"filmgrain_dx7.cpp"
-		$File	"shatteredglass_dx7.cpp"
-		$File	"vertexlitgeneric_dx7.cpp"
-		$File	"vortwarp_dx7.cpp"
+    $Folder	"Source Files"
+    {
+        $File	"core_dx7.cpp"
+        $File	"filmdust_dx7.cpp"
+        $File	"filmgrain_dx7.cpp"
+        $File	"shatteredglass_dx7.cpp"
+        $File	"vertexlitgeneric_dx7.cpp"
+        $File	"vortwarp_dx7.cpp"
 
-		$Folder	"remove me when VAC2 is out"
-		{
-			$File	"$SRCDIR\tier1\checksum_crc.cpp"
-			$File	"$SRCDIR\tier1\checksum_md5.cpp"
-			$File	"..\shader_dll_verify.cpp"
-			$File	"..\shader_dll_verify.h"
-		}
-	}
+        $Folder	"remove me when VAC2 is out"
+        {
+            $File	"$SRCDIR\tier1\checksum_crc.cpp"
+            $File	"$SRCDIR\tier1\checksum_md5.cpp"
+            $File	"..\shader_dll_verify.cpp"
+            $File	"..\shader_dll_verify.h"
+        }
+    }
 
-	$Folder	"Link Libraries"
-	{
-		$Lib mathlib
-		$Lib shaderlib
-		$Lib	tier2
-	}
+    $Folder	"Link Libraries"
+    {
+        $Lib mathlib
+        $Lib shaderlib
+        $Lib	tier2
+    }
 }

@@ -57,8 +57,8 @@ class CAchievementTFScout_FirstBloodKill : public CBaseTFAchievement
         // Achievement for accumulating 5 kills over several matches with the first blood crit boost.
         bool bFirstBlood = event->GetInt( "death_flags" ) & TF_DEATH_FIRST_BLOOD;
         if ( pAttackerPlayer->m_Shared.IsFirstBloodBoosted() &&
-             pAttackerPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED_FIRST_BLOOD ) &&
-             !bFirstBlood )
+            pAttackerPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED_FIRST_BLOOD ) &&
+            !bFirstBlood )
         {
             IncrementCount();
         }
@@ -79,8 +79,8 @@ class CAchievementTFScout_WellEarlyKill : public CBaseTFAchievement
     {
         // Achievement for getting a kill in cp_well during the setup phase.
         if ( FStrEq( m_pAchievementMgr->GetMapName(), "cp_well" ) &&
-             TFGameRules() && ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING ) &&
-             TFGameRules()->InSetup() )
+            TFGameRules() && ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING ) &&
+            TFGameRules()->InSetup() )
         {
             IncrementCount();
         }
@@ -130,7 +130,7 @@ class CAchievementTFScout_IronManKills : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             ResetTracking();
         }
@@ -273,8 +273,8 @@ class CAchievementTFScout_DestroySentryWithPistol : public CBaseTFAchievement
                 int iType = event->GetInt( "objecttype" );
                 int iWeaponID = event->GetInt( "weaponid" );
                 if ( ( iType == OBJ_SENTRYGUN ) &&
-                     ( ( iWeaponID == TF_WEAPON_PISTOL_SCOUT ) || ( iWeaponID == TF_WEAPON_HANDGUN_SCOUT_SECONDARY ) ) &&
-                     !event->GetBool( "was_building" ) )
+                    ( ( iWeaponID == TF_WEAPON_PISTOL_SCOUT ) || ( iWeaponID == TF_WEAPON_HANDGUN_SCOUT_SECONDARY ) ) &&
+                    !event->GetBool( "was_building" ) )
                 {
                     IncrementCount();
                 }
@@ -318,14 +318,14 @@ class CAchievementTFScout_DoubleJumps : public CBaseTFAchievement
             }
         }
         else if ( ( Q_strcmp( event->GetName(), "landed" ) == 0 ) ||
-                  ( Q_strcmp( event->GetName(), "localplayer_respawn" ) == 0 ) ||
-                  ( Q_strcmp( event->GetName(), "teamplay_round_active" ) == 0 ) )
+                ( Q_strcmp( event->GetName(), "localplayer_respawn" ) == 0 ) ||
+                ( Q_strcmp( event->GetName(), "teamplay_round_active" ) == 0 ) )
         {
             m_bScoredJump = false;
         }
     }
 
-   private:
+    private:
     bool m_bScoredJump;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFScout_DoubleJumps, ACHIEVEMENT_TF_SCOUT_DOUBLE_JUMPS, "TF_SCOUT_DOUBLE_JUMPS", 5 );
@@ -381,7 +381,7 @@ class CAchievementTFScout_AssistChargeMedic : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     bool m_bCharged;
     int m_iAssists;
     int m_iMedic;
@@ -409,7 +409,7 @@ class CAchievementTFScout_StealSandwich : public CBaseTFAchievement
     {
         const char *pszEventName = event->GetName();
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             // If we died or respawned, reset...
             m_iHeavyID = -1;
@@ -442,7 +442,7 @@ class CAchievementTFScout_StealSandwich : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iHeavyID;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFScout_StealSandwich, ACHIEVEMENT_TF_SCOUT_STEAL_SANDWICH, "TF_SCOUT_STEAL_SANDWICH", 5 );
@@ -499,7 +499,7 @@ class CAchievementTFScout_SurviveDamage : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iDamageTotal;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFScout_SurviveDamage, ACHIEVEMENT_TF_SCOUT_SURVIVE_DAMAGE, "TF_SCOUT_SURVIVE_DAMAGE", 5 );
@@ -542,7 +542,7 @@ class CAchievementTFScout_ThreeFlagCaptures : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iFlagCaps;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFScout_ThreeFlagCaptures, ACHIEVEMENT_TF_SCOUT_THREE_FLAGCAPS, "TF_SCOUT_THREE_FLAGCAPS", 5 );
@@ -621,7 +621,7 @@ class CAchievementTFScout_DodgeDamage : public CBaseTFAchievement
     {
         const char *pszEventName = event->GetName();
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             // If we died or respawned, reset...
             m_iDamageDodged = 0;
@@ -638,7 +638,7 @@ class CAchievementTFScout_DodgeDamage : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iDamageDodged;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFScout_DodgeDamage, ACHIEVEMENT_TF_SCOUT_DODGE_DAMAGE, "TF_SCOUT_DODGE_DAMAGE", 5 );
@@ -667,11 +667,11 @@ class CAchievementTFScout_KnockIntoTrain : public CBaseTFAchievement
             int custom = event->GetInt( "customkill" );
             int damagebits = event->GetInt( "damagebits" );
             if ( ( damagebits & DMG_VEHICLE ) ||                // They were hit by a freakin' train!
-                 ( pAttacker && pAttacker->IsBrushModel() ) ||  // They were smashed by the world! Gah!
-                 ( !pAttacker || ( pAttacker == pVictim ) ) ||  // He killed himself!
-                 ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
-                 ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ||  // A trigger-hurt got him!
-                 ( custom == TF_DMG_CUSTOM_CROC ) )           // a croc got him!
+                ( pAttacker && pAttacker->IsBrushModel() ) ||  // They were smashed by the world! Gah!
+                ( !pAttacker || ( pAttacker == pVictim ) ) ||  // He killed himself!
+                ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
+                ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ||  // A trigger-hurt got him!
+                ( custom == TF_DMG_CUSTOM_CROC ) )           // a croc got him!
             {
                 IncrementCount();
             }
@@ -750,11 +750,11 @@ class CAchievementTFScout_StunIntoTrain : public CBaseTFAchievement
             int custom = event->GetInt( "customkill" );
             int damagebits = event->GetInt( "damagebits" );
             if ( ( damagebits & DMG_VEHICLE ) ||                // They were hit by a freakin' train!
-                 ( pAttacker && pAttacker->IsBrushModel() ) ||  // They were smashed by the world! Gah!
-                 ( !pAttacker || ( pAttacker == pVictim ) ) ||  // He killed himself!
-                 ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
-                 ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ||  // A trigger-hurt got him!
-                 ( custom == TF_DMG_CUSTOM_CROC ) )           // a croc got him!
+                ( pAttacker && pAttacker->IsBrushModel() ) ||  // They were smashed by the world! Gah!
+                ( !pAttacker || ( pAttacker == pVictim ) ) ||  // He killed himself!
+                ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
+                ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ||  // A trigger-hurt got him!
+                ( custom == TF_DMG_CUSTOM_CROC ) )           // a croc got him!
             {
                 IncrementCount();
             }
@@ -832,7 +832,7 @@ class CAchievementTFScout_StunCappingEnemies : public CBaseTFAchievement
             CTFPlayer *pVictim = ToTFPlayer( UTIL_PlayerByIndex( engine->GetPlayerForUserID( event->GetInt( "victim" ) ) ) );
 
             if ( ( pStunner == pLocalPlayer ) &&
-                 pVictim && event->GetBool( "victim_capping" ) )
+                pVictim && event->GetBool( "victim_capping" ) )
             {
                 IncrementCount();
             }
@@ -869,7 +869,7 @@ class CAchievementTFScout_MaxStuns : public CBaseTFAchievement
             CTFPlayer *pVictim = ToTFPlayer( UTIL_PlayerByIndex( engine->GetPlayerForUserID( event->GetInt( "victim" ) ) ) );
 
             if ( ( pStunner == pLocalPlayer ) &&
-                 pVictim && event->GetBool( "big_stun" ) )
+                pVictim && event->GetBool( "big_stun" ) )
             {
                 IncrementCount();
             }
@@ -950,7 +950,7 @@ class CAchievementTFScout_KillFromBehind : public CBaseTFAchievement
         {
             CTFScatterGun *pScattergun = ( CTFScatterGun * )ToTFPlayer( C_TFPlayer::GetLocalPlayer() )->Weapon_OwnsThisID( TF_WEAPON_SCATTERGUN );
             if ( pScattergun && pScattergun->HasKnockback() &&
-                 ( DotProductToTarget( pAttacker, pVictim ) > -0.1 ) )
+                ( DotProductToTarget( pAttacker, pVictim ) > -0.1 ) )
             {
                 IncrementCount();
             }
@@ -1007,8 +1007,8 @@ class CAchievementTFScout_CaptureLastPoint : public CBaseTFAchievement
             // If we're the winners and we were involved in capping the last point, we get this achievement.
             int iTeam = event->GetInt( "team" );
             if ( ( iTeam == pLocalPlayer->GetTeamNumber() ) &&
-                 m_bRecentCapper &&
-                 ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP ) )
+                m_bRecentCapper &&
+                ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP ) )
             {
                 IncrementCount();
             }
@@ -1051,7 +1051,7 @@ class CAchievementTFScout_CaptureThreePoints : public CBaseTFAchievement
             return;
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             m_iPointsCapped = 0;
         }
@@ -1233,8 +1233,8 @@ class CAchievementTFScout_BlockCaps : public CBaseTFAchievement
         {
             int iBlocker = event->GetInt( "blocker" );
             if ( ( iBlocker == pLocalPlayer->entindex() ) &&
-                 ( ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP ) ||
-                   ( TFGameRules()->GetGameType() == TF_GAMETYPE_ARENA ) ) )
+                ( ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP ) ||
+                    ( TFGameRules()->GetGameType() == TF_GAMETYPE_ARENA ) ) )
             {
                 IncrementCount();
             }
@@ -1404,7 +1404,7 @@ class CAchievementTFScout_TauntKill : public CBaseTFAchievement
 
         const char *pszEventName = event->GetName();
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             // If we died or respawned, reset...
             m_iTargetID = 0;
@@ -1432,7 +1432,7 @@ class CAchievementTFScout_TauntKill : public CBaseTFAchievement
             CBaseHandle hPlayer = CBaseHandle::UnsafeFromIndex( event->GetInt( "target_index" ) );
             C_TFPlayer *pPlayer = dynamic_cast< C_TFPlayer * >( hPlayer.Get() );
             if ( pPlayer && ( m_iTargetID == pPlayer->GetUserID() ) &&
-                 ( m_vSlamOrigin != Vector( 0, 0, 0 ) ) )
+                ( m_vSlamOrigin != Vector( 0, 0, 0 ) ) )
             {
                 float x = event->GetFloat( "x" );
                 float y = event->GetFloat( "y" );
@@ -1455,7 +1455,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_TauntKill, ACHIEVEMENT_TF_SCOUT_TAUNT_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFScout_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1468,7 +1468,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_AchieveProgress1, ACHIEVEMENT_TF_SCOUT_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFScout_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1481,7 +1481,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_AchieveProgress2, ACHIEVEMENT_TF_SCOUT_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFScout_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {
@@ -1507,7 +1507,7 @@ USER_MESSAGE( DamageDodged )
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_BackscatterKillSpyGrind : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1548,7 +1548,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_BackscatterKillSpyGrind, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_BackscatterKillHeavyMedicPair : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1568,7 +1568,7 @@ class CAchievementTFScout_BackscatterKillHeavyMedicPair : public CBaseTFAchievem
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             m_hTargets.Purge();
         }
@@ -1665,7 +1665,7 @@ class CAchievementTFScout_BackscatterKillHeavyMedicPair : public CBaseTFAchievem
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hTarget;
@@ -1679,7 +1679,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_BackscatterKillHeavyMedicPair, ACHIEVEM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_BackscatterKillFriendsGrind : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );

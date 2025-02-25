@@ -9,7 +9,7 @@ class CTFPointWeaponMimic : public CPointEntity
 {
     DECLARE_CLASS( CTFPointWeaponMimic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTFPointWeaponMimic();
@@ -20,7 +20,7 @@ class CTFPointWeaponMimic : public CPointEntity
     void InputFireMultiple( inputdata_t& inputdata );
     void DetonateStickies( inputdata_t& inputdata );
 
-   private:
+    private:
     void Fire();
 
     void FireRocket();

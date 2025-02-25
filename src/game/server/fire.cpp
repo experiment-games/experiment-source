@@ -73,7 +73,7 @@ ConVar fire_dmginterval( "fire_dmginterval", "1.0" );
 
 class CFire : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFire, CBaseEntity );
 
     int DrawDebugTextOverlays( void );
@@ -161,7 +161,7 @@ class CFire : public CBaseEntity
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   protected:
+    protected:
     void Spread( void );
     void SpawnEffect( fireType_e type, float scale );
 
@@ -197,7 +197,7 @@ class CFire : public CBaseEntity
 
 class CFireSphere : public IPartitionEnumerator
 {
-   public:
+    public:
     CFireSphere( CFire **pList, int listMax, bool onlyActiveFires, const Vector &origin, float radius );
     // This gets called	by the enumeration methods with each element
     // that passes the test.
@@ -209,7 +209,7 @@ class CFireSphere : public IPartitionEnumerator
     }
     bool AddToList( CFire *pEntity );
 
-   private:
+    private:
     Vector m_origin;
     float m_radiusSqr;
     CFire **m_pList;
@@ -1205,7 +1205,7 @@ class CEnvFireSource : public CBaseEntity
 {
     DECLARE_CLASS( CEnvFireSource, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
     void Think();
     void TurnOn();
@@ -1215,7 +1215,7 @@ class CEnvFireSource : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool m_bEnabled;
     float m_radius;
     float m_damage;
@@ -1296,7 +1296,7 @@ class CEnvFireSensor : public CBaseEntity
 {
     DECLARE_CLASS( CEnvFireSensor, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
     void Think();
     void TurnOn();
@@ -1306,7 +1306,7 @@ class CEnvFireSensor : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool m_bEnabled;
     bool m_bHeatAtLevel;
     float m_radius;

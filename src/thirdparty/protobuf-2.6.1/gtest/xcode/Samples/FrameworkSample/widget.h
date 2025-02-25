@@ -41,7 +41,7 @@
 
 class Widget
 {
-   public:
+    public:
     Widget( int number, const std::string& name );
     ~Widget();
 
@@ -53,7 +53,7 @@ class Widget
     std::string GetStringValue() const;
     void GetCharPtrValue( char* buffer, size_t max_size ) const;
 
-   private:
+    private:
     // Data members
     float number_;
     std::string name_;

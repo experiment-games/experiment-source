@@ -17,5 +17,3 @@ dp4 oPos.w, $worldPos, $cViewProj3
 &FreeRegister( \$worldPos );
 
 mov oD0, $cOne
-
-

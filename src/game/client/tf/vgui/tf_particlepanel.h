@@ -17,7 +17,7 @@ class CTFParticlePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFParticlePanel, vgui::EditablePanel );
 
-   public:
+    public:
     // constructor, destructor
     CTFParticlePanel( vgui::Panel *pParent, const char *pName );
     virtual ~CTFParticlePanel();
@@ -30,7 +30,7 @@ class CTFParticlePanel : public vgui::EditablePanel
 
     void FireParticleEffect( const char *pszName, int xPos, int yPos, float flScale, bool bLoop, float flEndTime = FLT_MAX );
 
-   private:
+    private:
     // paint it!
     virtual void Paint() OVERRIDE;
     void UpdateParticlesFromKV();

@@ -387,22 +387,22 @@ bool CBossAlpha::CheckSkillShots( const CTakeDamageInfo &info )
     Vector hitDir = m_lastTraceAttackDir;
 
     /*
-      Vector hitDir = inflictor->GetAbsVelocity();
+    Vector hitDir = inflictor->GetAbsVelocity();
 
-      if ( inflictor->IsPlayer() )
-      {
+    if ( inflictor->IsPlayer() )
+    {
         hitDir = hitSpot - inflictor->EyePosition();
-      }
-      else
-      {
+    }
+    else
+    {
         CObjectSentrygun *sentry = dynamic_cast< CObjectSentrygun * >( inflictor );
         if ( sentry )
         {
-          hitDir = hitSpot - sentry->EyePosition();
+        hitDir = hitSpot - sentry->EyePosition();
         }
-      }
+    }
 
-      hitDir.NormalizeInPlace();
+    hitDir.NormalizeInPlace();
     */
 
     Vector traceFrom = m_lastTraceAttackTrace.startpos - m_lastTraceAttackDir * 10.0f;
@@ -1074,9 +1074,9 @@ bool CBossAlpha::IsIgnored( CTFPlayer *player ) const
         }
 
         if ( player->m_Shared.InCond( TF_COND_BURNING ) ||
-             player->m_Shared.InCond( TF_COND_URINE ) ||
-             player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             player->m_Shared.InCond( TF_COND_BLEEDING ) )
+            player->m_Shared.InCond( TF_COND_URINE ) ||
+            player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            player->m_Shared.InCond( TF_COND_BLEEDING ) )
         {
             // always notice players with these conditions
             return false;
@@ -1301,9 +1301,9 @@ bool CBossAlphaVision::IsIgnored( CBaseEntity *subject ) const
         CTFPlayer *enemy = static_cast< CTFPlayer * >( subject );
 
         if ( enemy->m_Shared.InCond( TF_COND_BURNING ) ||
-             enemy->m_Shared.InCond( TF_COND_URINE ) ||
-             enemy->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             enemy->m_Shared.InCond( TF_COND_BLEEDING ) )
+            enemy->m_Shared.InCond( TF_COND_URINE ) ||
+            enemy->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            enemy->m_Shared.InCond( TF_COND_BLEEDING ) )
         {
             // always notice players with these conditions
             return false;

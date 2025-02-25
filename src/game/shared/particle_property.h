@@ -68,7 +68,7 @@ class CParticleProperty
     DECLARE_PREDICTABLE();
     DECLARE_DATADESC();
 
-   public:
+    public:
     CParticleProperty();
     ~CParticleProperty();
 
@@ -113,13 +113,13 @@ class CParticleProperty
     int FindEffect( const char *pEffectName, int nStart = 0 );
     inline CNewParticleEffect *GetParticleEffectFromIdx( int idx );
 
-   private:
+    private:
     int GetParticleAttachment( C_BaseEntity *pEntity, const char *pszAttachmentName, const char *pszParticleName );
     int FindEffect( CNewParticleEffect *pEffect );
     void UpdateParticleEffect( ParticleEffectList_t *pEffect, bool bInitializing = false, int iOnlyThisControlPoint = -1 );
     void UpdateControlPoint( ParticleEffectList_t *pEffect, int iPoint, bool bInitializing );
 
-   private:
+    private:
     CBaseEntity *m_pOuter;
     CUtlVector< ParticleEffectList_t > m_ParticleEffects;
     int m_iDormancyChangedAtFrame;

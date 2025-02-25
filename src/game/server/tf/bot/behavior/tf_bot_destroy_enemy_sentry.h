@@ -11,7 +11,7 @@
 //---------------------------------------------------------------------------------
 class CTFBotDestroyEnemySentry : public Action< CTFBot >
 {
-   public:
+    public:
     static bool IsPossible( CTFBot *me );  // return true if this Action has what it needs to perform right now
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -28,7 +28,7 @@ class CTFBotDestroyEnemySentry : public Action< CTFBot >
         return "DestroyEnemySentry";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
     CountdownTimer m_abandonTimer;
@@ -55,7 +55,7 @@ class CTFBotDestroyEnemySentry : public Action< CTFBot >
 //---------------------------------------------------------------------------------
 class CTFBotUberAttackEnemySentry : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotUberAttackEnemySentry( CObjectSentrygun *sentryTarget );
     virtual ~CTFBotUberAttackEnemySentry() {}
 
@@ -72,7 +72,7 @@ class CTFBotUberAttackEnemySentry : public Action< CTFBot >
         return "UberAttackEnemySentry";
     };
 
-   private:
+    private:
     bool m_wasIgnoringEnemies;
 
     PathFollower m_path;

@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER( LightmappedGeneric_Decal,
-                 "Help for LightmappedGeneric_Decal" )
+                "Help for LightmappedGeneric_Decal" )
 
 BEGIN_SHADER_PARAMS
 END_SHADER_PARAMS

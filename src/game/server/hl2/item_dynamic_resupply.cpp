@@ -80,7 +80,7 @@ class CItem_DynamicResupply : public CPointEntity
 {
     DECLARE_CLASS( CItem_DynamicResupply, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CItem_DynamicResupply();
@@ -100,7 +100,7 @@ class CItem_DynamicResupply : public CPointEntity
         return m_flDesiredHealth[0];
     }
 
-   private:
+    private:
     friend void DynamicResupply_InitFromAlternateMaster( CBaseEntity *pTargetEnt, string_t iszMaster );
     void FindPotentialItems( int nCount, DynamicResupplyItems_t *pItems, int iDebug, SpawnInfo_t *pSpawnInfo );
     void ComputeHealthRatios( CItem_DynamicResupply *pMaster, CBasePlayer *pPlayer, int iDebug, SpawnInfo_t *pSpawnInfo );
@@ -468,10 +468,10 @@ void CItem_DynamicResupply::ComputeHealthRatios( CItem_DynamicResupply *pMaster,
         for ( int i = 0; i < NUM_HEALTH_ITEMS; i++ )
         {
             Msg( "   %s Desired Ratio: %.2f, Current Ratio: %.2f = Delta of %.2f\n",
-                 g_DynamicResupplyHealthItems[i].sEntityName,
-                 pSpawnInfo[i].m_flDesiredRatio,
-                 pSpawnInfo[i].m_flCurrentRatio,
-                 pSpawnInfo[i].m_flDelta );
+                g_DynamicResupplyHealthItems[i].sEntityName,
+                pSpawnInfo[i].m_flDesiredRatio,
+                pSpawnInfo[i].m_flCurrentRatio,
+                pSpawnInfo[i].m_flDelta );
         }
     }
 }
@@ -512,10 +512,10 @@ void CItem_DynamicResupply::ComputeAmmoRatios( CItem_DynamicResupply *pMaster, C
         for ( int i = 0; i < NUM_AMMO_ITEMS; i++ )
         {
             Msg( "   %s Desired Ratio: %.2f, Current Ratio: %.2f = Delta of %.2f\n",
-                 g_DynamicResupplyAmmoItems[i].sEntityName,
-                 pSpawnInfo[i].m_flDesiredRatio,
-                 pSpawnInfo[i].m_flCurrentRatio,
-                 pSpawnInfo[i].m_flDelta );
+                g_DynamicResupplyAmmoItems[i].sEntityName,
+                pSpawnInfo[i].m_flDesiredRatio,
+                pSpawnInfo[i].m_flCurrentRatio,
+                pSpawnInfo[i].m_flDelta );
         }
     }
 }

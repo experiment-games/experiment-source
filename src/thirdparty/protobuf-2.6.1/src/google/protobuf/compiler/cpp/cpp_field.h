@@ -64,15 +64,15 @@ namespace cpp
 // ['name', 'index', 'number', 'classname', 'declared_type', 'tag_size',
 // 'deprecation'].
 void SetCommonFieldVariables( const FieldDescriptor* descriptor,
-                              map< string, string >* variables,
-                              const Options& options );
+                            map< string, string >* variables,
+                            const Options& options );
 
 void SetCommonOneofFieldVariables( const FieldDescriptor* descriptor,
-                                   map< string, string >* variables );
+                                    map< string, string >* variables );
 
 class FieldGenerator
 {
-   public:
+    public:
     FieldGenerator() {}
     virtual ~FieldGenerator();
 
@@ -161,25 +161,25 @@ class FieldGenerator
     // are placed in the message's ByteSize() method.
     virtual void GenerateByteSize( io::Printer* printer ) const = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( FieldGenerator );
 };
 
 // Convenience class which constructs FieldGenerators for a Descriptor.
 class FieldGeneratorMap
 {
-   public:
+    public:
     explicit FieldGeneratorMap( const Descriptor* descriptor, const Options& options );
     ~FieldGeneratorMap();
 
     const FieldGenerator& get( const FieldDescriptor* field ) const;
 
-   private:
+    private:
     const Descriptor* descriptor_;
     scoped_array< scoped_ptr< FieldGenerator > > field_generators_;
 
     static FieldGenerator* MakeGenerator( const FieldDescriptor* field,
-                                          const Options& options );
+                                        const Options& options );
 
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( FieldGeneratorMap );
 };

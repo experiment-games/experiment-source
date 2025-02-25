@@ -10,14 +10,14 @@
  */
 class C_BotNPC : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_BotNPC, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
     C_BotNPC();
     virtual ~C_BotNPC();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual bool IsNextBot()
     {
@@ -30,7 +30,7 @@ class C_BotNPC : public C_NextBotCombatCharacter
 
     virtual void ClientThink();
 
-   private:
+    private:
     C_BotNPC( const C_BotNPC& );  // not defined, not accessible
 
     CNetworkHandle( C_BaseEntity, m_laserTarget );

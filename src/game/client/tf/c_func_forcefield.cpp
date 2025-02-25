@@ -18,7 +18,7 @@ class C_FuncForceField : public C_BaseEntity
 {
     DECLARE_CLASS( C_FuncForceField, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     virtual int DrawModel( int flags ) OVERRIDE;

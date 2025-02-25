@@ -1,4 +1,4 @@
-//========= Copyright ©, Valve LLC, All rights reserved. ======================
+//========= Copyright ï¿½, Valve LLC, All rights reserved. ======================
 //
 // Purpose: Defines a buffer pool used to group small allocations
 //
@@ -23,7 +23,7 @@ namespace GCSDK
 //----------------------------------------------------------------------------
 class CBufferPool
 {
-   public:
+    public:
     CBufferPool( const char *pchName, const GCConVar &cvMaxSizeMB, const GCConVar &cvInitBufferSize, int nFlags = 0 );
     ~CBufferPool();
 
@@ -32,7 +32,7 @@ class CBufferPool
 
     static void DumpPools();
 
-   private:
+    private:
     static CUtlVector< CBufferPool * > sm_vecBufferPools;
 
     const GCConVar &m_cvMaxSizeMB;
@@ -50,7 +50,7 @@ class CBufferPool
 // thread safe version of the above which synchronizes access at the buffer allocate/release
 class CBufferPoolMT
 {
-   public:
+    public:
     CBufferPoolMT( const char *pchName, const GCConVar &cvMaxSizeMB, const GCConVar &cvInitBufferSize, int nFlags = 0 )
         : m_BufferPool( pchName, cvMaxSizeMB, cvInitBufferSize, nFlags )
     {
@@ -67,7 +67,7 @@ class CBufferPoolMT
         m_BufferPool.ReturnBuffer( pBuffer );
     }
 
-   private:
+    private:
     CBufferPool m_BufferPool;
     CThreadFastMutex m_mutex;
 };

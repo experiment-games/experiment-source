@@ -29,7 +29,7 @@
 template < class Base >
 class CInternalFileSystemPassThru : public Base
 {
-   public:
+    public:
     CInternalFileSystemPassThru()
     {
         m_pBaseFileSystemPassThru = NULL;
@@ -107,18 +107,18 @@ class CInternalFileSystemPassThru : public Base
         return m_pBaseFileSystemPassThru->UnzipFile( pFileName, pPath, pDestination );
     }
 
-   protected:
+    protected:
     IBaseFileSystem *m_pBaseFileSystemPassThru;
 };
 
 class CBaseFileSystemPassThru : public CInternalFileSystemPassThru< IBaseFileSystem >
 {
-   public:
+    public:
 };
 
 class CFileSystemPassThru : public CInternalFileSystemPassThru< IFileSystem >
 {
-   public:
+    public:
     typedef CInternalFileSystemPassThru< IFileSystem > BaseClass;
 
     CFileSystemPassThru()
@@ -338,8 +338,8 @@ class CFileSystemPassThru : public CInternalFileSystemPassThru< IFileSystem >
         return m_pFileSystemPassThru->WaitForResources( resourcelist );
     }
     virtual bool GetWaitForResourcesProgress( WaitForResourcesHandle_t handle,
-                                              float *progress,
-                                              bool *complete )
+                                            float *progress,
+                                            bool *complete )
     {
         return m_pFileSystemPassThru->GetWaitForResourcesProgress( handle, progress, complete );
     }
@@ -636,7 +636,7 @@ class CFileSystemPassThru : public CInternalFileSystemPassThru< IFileSystem >
         return m_pFileSystemPassThru->GetWriteProtectionEnable();
     }
 
-   protected:
+    protected:
     IFileSystem *m_pFileSystemPassThru;
 };
 

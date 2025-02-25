@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossApproachTarget : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
     virtual void OnEnd( CEyeballBoss *me, Action< CEyeballBoss > *nextAction );
@@ -20,7 +20,7 @@ class CEyeballBossApproachTarget : public Action< CEyeballBoss >
         return "ApproachTarget";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_lingerTimer;
     CountdownTimer m_giveUpTimer;
     CountdownTimer m_minChaseTimer;

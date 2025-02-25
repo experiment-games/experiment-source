@@ -14,7 +14,7 @@
 
 class CTETFBlood : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTETFBlood, CBaseTempEntity );
 
     DECLARE_SERVERCLASS();
@@ -23,7 +23,7 @@ class CTETFBlood : public CBaseTempEntity
 
     virtual void Test( const Vector &current_origin, const QAngle &current_angles ) {}
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecNormal;
     int m_nEntIndex;

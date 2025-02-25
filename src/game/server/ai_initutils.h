@@ -57,7 +57,7 @@ class CNodeEnt : public CServerOnlyPointEntity
 {
     DECLARE_CLASS( CNodeEnt, CServerOnlyPointEntity );
 
-   public:
+    public:
     virtual void SetOwnerEntity( CBaseEntity *pOwner )
     {
         BaseClass::SetOwnerEntity( NULL );
@@ -72,7 +72,7 @@ class CNodeEnt : public CServerOnlyPointEntity
 
     CNodeEnt( void );
 
-   public:
+    public:
     HintNodeData m_NodeData;
 };
 
@@ -86,10 +86,10 @@ class CAI_TestHull : public CAI_BaseNPC
 {
     DECLARE_CLASS( CAI_TestHull, CAI_BaseNPC );
 
-   private:
+    private:
     static CAI_TestHull *pTestHull;  // Hull for testing connectivity
 
-   public:
+    public:
     static CAI_TestHull *GetTestHull( void );  // Get the test hull
     static void ReturnTestHull( void );        // Return the test hull
 

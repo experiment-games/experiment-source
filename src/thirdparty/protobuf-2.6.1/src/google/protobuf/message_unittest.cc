@@ -118,8 +118,8 @@ TEST(MessageTest, ParseFromFileDescriptor) {
 
 TEST(MessageTest, ParsePackedFromFileDescriptor) {
   string filename =
-      TestSourceDir() +
-      "/google/protobuf/testdata/golden_packed_fields_message";
+    TestSourceDir() +
+    "/google/protobuf/testdata/golden_packed_fields_message";
   int file = open(filename.c_str(), O_RDONLY | O_BINARY);
 
   unittest::TestPackedTypes message;
@@ -173,7 +173,7 @@ TEST(MessageTest, ParseHelpers) {
     io::ArrayInputStream stream(data.data(), data.size());
     protobuf_unittest::TestAllTypes message;
     EXPECT_FALSE(
-      message.ParseFromBoundedZeroCopyStream(&stream, data.size() + 1));
+    message.ParseFromBoundedZeroCopyStream(&stream, data.size() + 1));
   }
 }
 
@@ -336,15 +336,15 @@ TEST(MessageTest, ParsingMerge) {
   ExpectMessageMerged(parsing_merge.required_all_types());
   ExpectMessageMerged(parsing_merge.optional_all_types());
   ExpectMessageMerged(
-      parsing_merge.optionalgroup().optional_group_all_types());
+    parsing_merge.optionalgroup().optional_group_all_types());
   ExpectMessageMerged(
-      parsing_merge.GetExtension(unittest::TestParsingMerge::optional_ext));
+    parsing_merge.GetExtension(unittest::TestParsingMerge::optional_ext));
 
   // Repeated fields should not be merged.
   EXPECT_EQ(3, parsing_merge.repeated_all_types_size());
   EXPECT_EQ(3, parsing_merge.repeatedgroup_size());
   EXPECT_EQ(3, parsing_merge.ExtensionSize(
-      unittest::TestParsingMerge::repeated_ext));
+    unittest::TestParsingMerge::repeated_ext));
 }
 
 TEST(MessageTest, MergeFrom) {
@@ -405,7 +405,7 @@ TEST(MessageTest, MergeFrom) {
 TEST(MessageFactoryTest, GeneratedFactoryLookup) {
   EXPECT_EQ(
     MessageFactory::generated_factory()->GetPrototype(
-      protobuf_unittest::TestAllTypes::descriptor()),
+    protobuf_unittest::TestAllTypes::descriptor()),
     &protobuf_unittest::TestAllTypes::default_instance());
 }
 

@@ -19,7 +19,7 @@
 
 class CMessage : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMessage, CPointEntity );
 
     void Spawn( void );
@@ -32,7 +32,7 @@ class CMessage : public CPointEntity
 
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-   private:
+    private:
     void InputShowMessage( inputdata_t &inputdata );
 
     string_t m_iszMessage;  // Message to display.

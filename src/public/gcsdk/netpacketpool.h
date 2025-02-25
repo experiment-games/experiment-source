@@ -19,7 +19,7 @@ extern CThreadSafeMultiMemoryPool g_MemPoolMsg;
 
 class CNetPacketPool
 {
-   public:
+    public:
 #ifdef _SERVER
     static int CMBPacketMemPool()
     {
@@ -37,7 +37,7 @@ class CNetPacketPool
         return sm_MemPoolNetPacket.Alloc();
     }
 
-   private:
+    private:
     friend class CNetPacket;
 
     static CClassMemoryPool< CNetPacket > sm_MemPoolNetPacket;

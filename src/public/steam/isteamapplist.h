@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class ISteamAppList
 {
-   public:
+    public:
     virtual uint32 GetNumInstalledApps() = 0;
     virtual uint32 GetInstalledApps( AppId_t *pvecAppID, uint32 unMaxAppIDs ) = 0;
 

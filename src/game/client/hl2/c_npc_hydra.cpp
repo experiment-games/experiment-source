@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class C_NPC_Hydra : public C_AI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( C_NPC_Hydra, C_AI_BaseNPC );
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
@@ -60,7 +60,7 @@ class C_NPC_Hydra : public C_AI_BaseNPC
 
     float m_maxPossibleLength;
 
-   private:
+    private:
     C_NPC_Hydra( const C_NPC_Hydra & );  // not defined, not accessible
 };
 

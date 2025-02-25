@@ -11,7 +11,7 @@
 //-------------------------------------------------------------------------------
 class CTFBotSpyAttack : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotSpyAttack( CTFPlayer *victim );
     virtual ~CTFBotSpyAttack() {}
 
@@ -30,16 +30,16 @@ class CTFBotSpyAttack : public Action< CTFBot >
     virtual QueryResultType IsHindrance( const INextBot *me, CBaseEntity *blocker ) const;  // use this to signal the enemy we are focusing on, so we dont avoid them
 
     virtual const CKnownEntity *SelectMoreDangerousThreat( const INextBot *me,
-                                                           const CBaseCombatCharacter *subject,
-                                                           const CKnownEntity *threat1,
-                                                           const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
+                                                            const CBaseCombatCharacter *subject,
+                                                            const CKnownEntity *threat1,
+                                                            const CKnownEntity *threat2 ) const;  // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
     virtual const char *GetName( void ) const
     {
         return "SpyAttack";
     };
 
-   private:
+    private:
     CHandle< CTFPlayer > m_victim;
     ChasePath m_path;
     bool m_isCoverBlown;

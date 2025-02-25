@@ -17,7 +17,7 @@ class CUtlBuffer;
 
 abstract_class IZip
 {
-   public:
+    public:
     enum eCompressionType
     {
         // Type of compression used for this file in the zip

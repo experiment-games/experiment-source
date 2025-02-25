@@ -32,7 +32,7 @@ class CHudAlert : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudAlert, EditablePanel );
 
-   public:
+    public:
     CHudAlert( const char *pElementName );
 
     virtual void Init( void );
@@ -44,7 +44,7 @@ class CHudAlert : public CHudElement, public EditablePanel
     virtual void FireGameEvent( IGameEvent *event );
     void SetupAlertPanel( int iAlertType );
 
-   private:
+    private:
     Label *m_pAlertLabel;
     float m_flHideAt;
 };

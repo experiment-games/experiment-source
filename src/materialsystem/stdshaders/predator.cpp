@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( Predator, Predator_DX80 )
 
 BEGIN_VS_SHADER( Predator_DX80,
-                 "Help for Predator" )
+                "Help for Predator" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( REFRACTIONAMOUNT, SHADER_PARAM_TYPE_VEC2, "[0.2 0.2]", "refaction amount" )

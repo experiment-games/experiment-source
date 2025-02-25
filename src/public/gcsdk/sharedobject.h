@@ -39,7 +39,7 @@ class CSharedObject
     friend class CGCSharedObjectCache;
     friend class CSharedObjectCache;
 
-   public:
+    public:
     virtual ~CSharedObject() {}
 
     virtual int GetTypeID() const = 0;
@@ -68,7 +68,7 @@ class CSharedObject
     static const char *PchClassCreateNodeName( int nTypeID );
     static const char *PchClassUpdateNodeName( int nTypeID );
 
-   private:
+    private:
 #if ENABLE_SO_CONSTRUCT_DESTRUCT_PARANOIA
     enum
     {
@@ -87,7 +87,7 @@ class CSharedObject
     };
     static CUtlMap< int, SharedObjectInfo_t > sm_mapFactories;
 
-   public:
+    public:
     static const CUtlMap< int, SharedObjectInfo_t > &GetFactories()
     {
         return sm_mapFactories;

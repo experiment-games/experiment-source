@@ -68,15 +68,15 @@ final class Utf8 {
   private Utf8() {}
 
   /**
-   * State value indicating that the byte sequence is well-formed and
-   * complete (no further bytes are needed to complete a character).
-   */
+    * State value indicating that the byte sequence is well-formed and
+    * complete (no further bytes are needed to complete a character).
+    */
   public static final int COMPLETE = 0;
 
   /**
-   * State value indicating that the byte sequence is definitely not
-   * well-formed.
-   */
+    * State value indicating that the byte sequence is definitely not
+    * well-formed.
+    */
   public static final int MALFORMED = -1;
 
   // Other state values include the partial bytes of the incomplete
@@ -99,63 +99,63 @@ final class Utf8 {
   // are valid trailing bytes.
 
   /**
-   * Returns {@code true} if the given byte array is a well-formed
-   * UTF-8 byte sequence.
-   *
-   * <p>This is a convenience method, equivalent to a call to {@code
-   * isValidUtf8(bytes, 0, bytes.length)}.
-   */
+    * Returns {@code true} if the given byte array is a well-formed
+    * UTF-8 byte sequence.
+    *
+    * <p>This is a convenience method, equivalent to a call to {@code
+    * isValidUtf8(bytes, 0, bytes.length)}.
+    */
   public static boolean isValidUtf8(byte[] bytes) {
     return isValidUtf8(bytes, 0, bytes.length);
   }
 
   /**
-   * Returns {@code true} if the given byte array slice is a
-   * well-formed UTF-8 byte sequence.  The range of bytes to be
-   * checked extends from index {@code index}, inclusive, to {@code
-   * limit}, exclusive.
-   *
-   * <p>This is a convenience method, equivalent to {@code
-   * partialIsValidUtf8(bytes, index, limit) == Utf8.COMPLETE}.
-   */
+    * Returns {@code true} if the given byte array slice is a
+    * well-formed UTF-8 byte sequence.  The range of bytes to be
+    * checked extends from index {@code index}, inclusive, to {@code
+    * limit}, exclusive.
+    *
+    * <p>This is a convenience method, equivalent to {@code
+    * partialIsValidUtf8(bytes, index, limit) == Utf8.COMPLETE}.
+    */
   public static boolean isValidUtf8(byte[] bytes, int index, int limit) {
     return partialIsValidUtf8(bytes, index, limit) == COMPLETE;
   }
 
   /**
-   * Tells whether the given byte array slice is a well-formed,
-   * malformed, or incomplete UTF-8 byte sequence.  The range of bytes
-   * to be checked extends from index {@code index}, inclusive, to
-   * {@code limit}, exclusive.
-   *
-   * @param state either {@link Utf8#COMPLETE} (if this is the initial decoding
-   * operation) or the value returned from a call to a partial decoding method
-   * for the previous bytes
-   *
-   * @return {@link #MALFORMED} if the partial byte sequence is
-   * definitely not well-formed, {@link #COMPLETE} if it is well-formed
-   * (no additional input needed), or if the byte sequence is
-   * "incomplete", i.e. apparently terminated in the middle of a character,
-   * an opaque integer "state" value containing enough information to
-   * decode the character when passed to a subsequent invocation of a
-   * partial decoding method.
-   */
+    * Tells whether the given byte array slice is a well-formed,
+    * malformed, or incomplete UTF-8 byte sequence.  The range of bytes
+    * to be checked extends from index {@code index}, inclusive, to
+    * {@code limit}, exclusive.
+    *
+    * @param state either {@link Utf8#COMPLETE} (if this is the initial decoding
+    * operation) or the value returned from a call to a partial decoding method
+    * for the previous bytes
+    *
+    * @return {@link #MALFORMED} if the partial byte sequence is
+    * definitely not well-formed, {@link #COMPLETE} if it is well-formed
+    * (no additional input needed), or if the byte sequence is
+    * "incomplete", i.e. apparently terminated in the middle of a character,
+    * an opaque integer "state" value containing enough information to
+    * decode the character when passed to a subsequent invocation of a
+    * partial decoding method.
+    */
   public static int partialIsValidUtf8(
-      int state, byte[] bytes, int index, int limit) {
+    int state, byte[] bytes, int index, int limit) {
     if (state != COMPLETE) {
-      // The previous decoding operation was incomplete (or malformed).
-      // We look for a well-formed sequence consisting of bytes from
-      // the previous decoding operation (stored in state) together
-      // with bytes from the array slice.
-      //
-      // We expect such "straddler characters" to be rare.
+    // The previous decoding operation was incomplete (or malformed).
+    // We look for a well-formed sequence consisting of bytes from
+    // the previous decoding operation (stored in state) together
+    // with bytes from the array slice.
+    //
+    // We expect such "straddler characters" to be rare.
 
-      if (index >= limit) {  // No bytes? No progress.
+    if (index >= limit) {  // No bytes? No progress.
         return state;
-      }
-      int byte1 = (byte) state;
-      // byte1 is never ASCII.
-      if (byte1 < (byte) 0xE0) {
+    }
+    int byte1 = (byte) state;
+    // byte1 is never ASCII.
+    if (byte1 < (byte) 0xE0) {
         // two-byte form
 
         // Simultaneously checks for illegal trailing-byte in
@@ -163,18 +163,18 @@ final class Utf8 {
         if (byte1 < (byte) 0xC2 ||
             // byte2 trailing-byte test
             bytes[index++] > (byte) 0xBF) {
-          return MALFORMED;
+        return MALFORMED;
         }
-      } else if (byte1 < (byte) 0xF0) {
+    } else if (byte1 < (byte) 0xF0) {
         // three-byte form
 
         // Get byte2 from saved state or array
         int byte2 = (byte) ~(state >> 8);
         if (byte2 == 0) {
-          byte2 = bytes[index++];
-          if (index >= limit) {
+        byte2 = bytes[index++];
+        if (index >= limit) {
             return incompleteStateFor(byte1, byte2);
-          }
+        }
         }
         if (byte2 > (byte) 0xBF ||
             // overlong? 5 most significant bits must not all be zero
@@ -183,27 +183,27 @@ final class Utf8 {
             (byte1 == (byte) 0xED && byte2 >= (byte) 0xA0) ||
             // byte3 trailing-byte test
             bytes[index++] > (byte) 0xBF) {
-          return MALFORMED;
+        return MALFORMED;
         }
-      } else {
+    } else {
         // four-byte form
 
         // Get byte2 and byte3 from saved state or array
         int byte2 = (byte) ~(state >> 8);
         int byte3 = 0;
         if (byte2 == 0) {
-          byte2 = bytes[index++];
-          if (index >= limit) {
+        byte2 = bytes[index++];
+        if (index >= limit) {
             return incompleteStateFor(byte1, byte2);
-          }
+        }
         } else {
-          byte3 = (byte) (state >> 16);
+        byte3 = (byte) (state >> 16);
         }
         if (byte3 == 0) {
-          byte3 = bytes[index++];
-          if (index >= limit) {
+        byte3 = bytes[index++];
+        if (index >= limit) {
             return incompleteStateFor(byte1, byte2, byte3);
-          }
+        }
         }
 
         // If we were called with state == MALFORMED, then byte1 is 0xFF,
@@ -219,38 +219,38 @@ final class Utf8 {
             // byte3 trailing-byte test
             byte3 > (byte) 0xBF ||
             // byte4 trailing-byte test
-             bytes[index++] > (byte) 0xBF) {
-          return MALFORMED;
+            bytes[index++] > (byte) 0xBF) {
+        return MALFORMED;
         }
-      }
+    }
     }
 
     return partialIsValidUtf8(bytes, index, limit);
   }
 
   /**
-   * Tells whether the given byte array slice is a well-formed,
-   * malformed, or incomplete UTF-8 byte sequence.  The range of bytes
-   * to be checked extends from index {@code index}, inclusive, to
-   * {@code limit}, exclusive.
-   *
-   * <p>This is a convenience method, equivalent to a call to {@code
-   * partialIsValidUtf8(Utf8.COMPLETE, bytes, index, limit)}.
-   *
-   * @return {@link #MALFORMED} if the partial byte sequence is
-   * definitely not well-formed, {@link #COMPLETE} if it is well-formed
-   * (no additional input needed), or if the byte sequence is
-   * "incomplete", i.e. apparently terminated in the middle of a character,
-   * an opaque integer "state" value containing enough information to
-   * decode the character when passed to a subsequent invocation of a
-   * partial decoding method.
-   */
+    * Tells whether the given byte array slice is a well-formed,
+    * malformed, or incomplete UTF-8 byte sequence.  The range of bytes
+    * to be checked extends from index {@code index}, inclusive, to
+    * {@code limit}, exclusive.
+    *
+    * <p>This is a convenience method, equivalent to a call to {@code
+    * partialIsValidUtf8(Utf8.COMPLETE, bytes, index, limit)}.
+    *
+    * @return {@link #MALFORMED} if the partial byte sequence is
+    * definitely not well-formed, {@link #COMPLETE} if it is well-formed
+    * (no additional input needed), or if the byte sequence is
+    * "incomplete", i.e. apparently terminated in the middle of a character,
+    * an opaque integer "state" value containing enough information to
+    * decode the character when passed to a subsequent invocation of a
+    * partial decoding method.
+    */
   public static int partialIsValidUtf8(
-      byte[] bytes, int index, int limit) {
+    byte[] bytes, int index, int limit) {
     // Optimize for 100% ASCII.
     // Hotspot loves small simple top-level loops like this.
     while (index < limit && bytes[index] >= 0) {
-      index++;
+    index++;
     }
 
     return (index >= limit) ? COMPLETE :
@@ -258,35 +258,35 @@ final class Utf8 {
   }
 
   private static int partialIsValidUtf8NonAscii(
-      byte[] bytes, int index, int limit) {
+    byte[] bytes, int index, int limit) {
     for (;;) {
-      int byte1, byte2;
+    int byte1, byte2;
 
-      // Optimize for interior runs of ASCII bytes.
-      do {
+    // Optimize for interior runs of ASCII bytes.
+    do {
         if (index >= limit) {
-          return COMPLETE;
+        return COMPLETE;
         }
-      } while ((byte1 = bytes[index++]) >= 0);
+    } while ((byte1 = bytes[index++]) >= 0);
 
-      if (byte1 < (byte) 0xE0) {
+    if (byte1 < (byte) 0xE0) {
         // two-byte form
 
         if (index >= limit) {
-          return byte1;
+        return byte1;
         }
 
         // Simultaneously checks for illegal trailing-byte in
         // leading position and overlong 2-byte form.
         if (byte1 < (byte) 0xC2 ||
             bytes[index++] > (byte) 0xBF) {
-          return MALFORMED;
+        return MALFORMED;
         }
-      } else if (byte1 < (byte) 0xF0) {
+    } else if (byte1 < (byte) 0xF0) {
         // three-byte form
 
         if (index >= limit - 1) { // incomplete sequence
-          return incompleteStateFor(bytes, index, limit);
+        return incompleteStateFor(bytes, index, limit);
         }
         if ((byte2 = bytes[index++]) > (byte) 0xBF ||
             // overlong? 5 most significant bits must not all be zero
@@ -295,13 +295,13 @@ final class Utf8 {
             (byte1 == (byte) 0xED && byte2 >= (byte) 0xA0) ||
             // byte3 trailing-byte test
             bytes[index++] > (byte) 0xBF) {
-          return MALFORMED;
+        return MALFORMED;
         }
-      } else {
+    } else {
         // four-byte form
 
         if (index >= limit - 2) {  // incomplete sequence
-          return incompleteStateFor(bytes, index, limit);
+        return incompleteStateFor(bytes, index, limit);
         }
         if ((byte2 = bytes[index++]) > (byte) 0xBF ||
             // Check that 1 <= plane <= 16.  Tricky optimized form of:
@@ -313,9 +313,9 @@ final class Utf8 {
             bytes[index++] > (byte) 0xBF ||
             // byte4 trailing-byte test
             bytes[index++] > (byte) 0xBF) {
-          return MALFORMED;
+        return MALFORMED;
         }
-      }
+    }
     }
   }
 
@@ -340,10 +340,10 @@ final class Utf8 {
   private static int incompleteStateFor(byte[] bytes, int index, int limit) {
     int byte1 = bytes[index - 1];
     switch (limit - index) {
-      case 0: return incompleteStateFor(byte1);
-      case 1: return incompleteStateFor(byte1, bytes[index]);
-      case 2: return incompleteStateFor(byte1, bytes[index], bytes[index + 1]);
-      default: throw new AssertionError();
+    case 0: return incompleteStateFor(byte1);
+    case 1: return incompleteStateFor(byte1, bytes[index]);
+    case 2: return incompleteStateFor(byte1, bytes[index], bytes[index + 1]);
+    default: throw new AssertionError();
     }
   }
 }

@@ -127,8 +127,8 @@ qboolean VectorsEqual( const float *v1, const float *v2 )
 {
     Assert( s_bMathlibInitialized );
     return ( ( v1[0] == v2[0] ) &&
-             ( v1[1] == v2[1] ) &&
-             ( v1[2] == v2[2] ) );
+            ( v1[1] == v2[1] ) &&
+            ( v1[2] == v2[2] ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -191,13 +191,13 @@ void MatrixAngles( const matrix3x4_t &matrix, Quaternion &q, Vector &pos )
     QuaternionNormalize( q );
 
 #if 0
-	// check against the angle version
-	RadianEuler ang;
-	MatrixAngles( matrix, ang );
-	Quaternion test;
-	AngleQuaternion( ang, test );
-	float d = QuaternionDotProduct( q, test );
-	Assert( fabs(d) > 0.99 && fabs(d) < 1.01 );
+    // check against the angle version
+    RadianEuler ang;
+    MatrixAngles( matrix, ang );
+    Quaternion test;
+    AngleQuaternion( ang, test );
+    float d = QuaternionDotProduct( q, test );
+    Assert( fabs(d) > 0.99 && fabs(d) < 1.01 );
 #endif
 
     MatrixGetColumn( matrix, 3, pos );
@@ -649,12 +649,12 @@ R_ConcatTransforms
 void ConcatTransforms( const matrix3x4_t &in1, const matrix3x4_t &in2, matrix3x4_t &out )
 {
 #if 0
-	// test for ones that'll be 2x faster
-	if ( (((size_t)&in1) % 16) == 0 && (((size_t)&in2) % 16) == 0 && (((size_t)&out) % 16) == 0 )
-	{
-		ConcatTransforms_Aligned( in1, in2, out );
-		return;
-	}
+    // test for ones that'll be 2x faster
+    if ( (((size_t)&in1) % 16) == 0 && (((size_t)&in2) % 16) == 0 && (((size_t)&out) % 16) == 0 )
+    {
+        ConcatTransforms_Aligned( in1, in2, out );
+        return;
+    }
 #endif
 
     fltx4 lastMask = *( fltx4 * )( &g_SIMD_ComponentMask[3] );
@@ -1762,16 +1762,16 @@ void QuaternionScale( const Quaternion &p, float t, Quaternion &q )
     Assert( s_bMathlibInitialized );
 
 #if 0
-	Quaternion p0;
-	Quaternion q;
-	p0.Init( 0.0, 0.0, 0.0, 1.0 );
+    Quaternion p0;
+    Quaternion q;
+    p0.Init( 0.0, 0.0, 0.0, 1.0 );
 
-	// slerp in "reverse order" so that p doesn't get realigned
-	QuaternionSlerp( p, p0, 1.0 - fabs( t ), q );
-	if (t < 0.0)
-	{
-		q.w = -q.w;
-	}
+    // slerp in "reverse order" so that p doesn't get realigned
+    QuaternionSlerp( p, p0, 1.0 - fabs( t ), q );
+    if (t < 0.0)
+    {
+        q.w = -q.w;
+    }
 #else
     float r;
 
@@ -2118,42 +2118,42 @@ void BasisToQuaternion( const Vector &vecForward, const Vector &vecRight, const 
     float flTrace = vecForward.x + vecLeft.y + vecUp.z + 1.0f;
     if ( flTrace > 1e-6 )
     {
-      float flSqrtTrace = FastSqrt( flTrace );
-      float s = 0.5f / flSqrtTrace;
-      q.x = ( vecUp.y - vecLeft.z ) * s;
-      q.y = ( vecForward.z - vecUp.x ) * s;
-      q.z = ( vecLeft.x - vecForward.y ) * s;
-      q.w = 0.5f * flSqrtTrace;
+    float flSqrtTrace = FastSqrt( flTrace );
+    float s = 0.5f / flSqrtTrace;
+    q.x = ( vecUp.y - vecLeft.z ) * s;
+    q.y = ( vecForward.z - vecUp.x ) * s;
+    q.z = ( vecLeft.x - vecForward.y ) * s;
+    q.w = 0.5f * flSqrtTrace;
     }
     else
     {
-      if (( vecForward.x > vecLeft.y ) && ( vecForward.x > vecUp.z ) )
-      {
+    if (( vecForward.x > vecLeft.y ) && ( vecForward.x > vecUp.z ) )
+    {
         float flSqrtTrace = FastSqrt( 1.0f + vecForward.x - vecLeft.y - vecUp.z );
         float s = 0.5f / flSqrtTrace;
         q.x = 0.5f * flSqrtTrace;
         q.y = ( vecForward.y + vecLeft.x ) * s;
         q.z = ( vecUp.x + vecForward.z ) * s;
         q.w = ( vecUp.y - vecLeft.z ) * s;
-      }
-      else if ( vecLeft.y > vecUp.z )
-      {
+    }
+    else if ( vecLeft.y > vecUp.z )
+    {
         float flSqrtTrace = FastSqrt( 1.0f + vecLeft.y - vecForward.x - vecUp.z );
         float s = 0.5f / flSqrtTrace;
         q.x = ( vecForward.y + vecLeft.x ) * s;
         q.y = 0.5f * flSqrtTrace;
         q.z = ( vecUp.y + vecLeft.z ) * s;
         q.w = ( vecForward.z - vecUp.x ) * s;
-      }
-      else
-      {
+    }
+    else
+    {
         float flSqrtTrace = FastSqrt( 1.0 + vecUp.z - vecForward.x - vecLeft.y );
         float s = 0.5f / flSqrtTrace;
         q.x = ( vecUp.x + vecForward.z ) * s;
         q.y = ( vecUp.y + vecLeft.z ) * s;
         q.z = 0.5f * flSqrtTrace;
         q.w = ( vecLeft.x - vecForward.y ) * s;
-      }
+    }
     }
     QuaternionNormalize( q );
     */
@@ -2936,14 +2936,14 @@ void ITransformAABB( const matrix3x4_t &transform, const Vector &vecMinsIn, cons
 
     Vector localExtents;
     localExtents.x = FloatMakePositive( worldExtents.x * transform[0][0] ) +
-                     FloatMakePositive( worldExtents.y * transform[1][0] ) +
-                     FloatMakePositive( worldExtents.z * transform[2][0] );
+                    FloatMakePositive( worldExtents.y * transform[1][0] ) +
+                    FloatMakePositive( worldExtents.z * transform[2][0] );
     localExtents.y = FloatMakePositive( worldExtents.x * transform[0][1] ) +
-                     FloatMakePositive( worldExtents.y * transform[1][1] ) +
-                     FloatMakePositive( worldExtents.z * transform[2][1] );
+                    FloatMakePositive( worldExtents.y * transform[1][1] ) +
+                    FloatMakePositive( worldExtents.z * transform[2][1] );
     localExtents.z = FloatMakePositive( worldExtents.x * transform[0][2] ) +
-                     FloatMakePositive( worldExtents.y * transform[1][2] ) +
-                     FloatMakePositive( worldExtents.z * transform[2][2] );
+                    FloatMakePositive( worldExtents.y * transform[1][2] ) +
+                    FloatMakePositive( worldExtents.z * transform[2][2] );
 
     VectorSubtract( localCenter, localExtents, vecMinsOut );
     VectorAdd( localCenter, localExtents, vecMaxsOut );
@@ -2991,14 +2991,14 @@ void IRotateAABB( const matrix3x4_t &transform, const Vector &vecMinsIn, const V
 
     Vector newExtents;
     newExtents.x = FloatMakePositive( oldExtents.x * transform[0][0] ) +
-                   FloatMakePositive( oldExtents.y * transform[1][0] ) +
-                   FloatMakePositive( oldExtents.z * transform[2][0] );
+                    FloatMakePositive( oldExtents.y * transform[1][0] ) +
+                    FloatMakePositive( oldExtents.z * transform[2][0] );
     newExtents.y = FloatMakePositive( oldExtents.x * transform[0][1] ) +
-                   FloatMakePositive( oldExtents.y * transform[1][1] ) +
-                   FloatMakePositive( oldExtents.z * transform[2][1] );
+                    FloatMakePositive( oldExtents.y * transform[1][1] ) +
+                    FloatMakePositive( oldExtents.z * transform[2][1] );
     newExtents.z = FloatMakePositive( oldExtents.x * transform[0][2] ) +
-                   FloatMakePositive( oldExtents.y * transform[1][2] ) +
-                   FloatMakePositive( oldExtents.z * transform[2][2] );
+                    FloatMakePositive( oldExtents.y * transform[1][2] ) +
+                    FloatMakePositive( oldExtents.z * transform[2][2] );
 
     VectorSubtract( newCenter, newExtents, vecMinsOut );
     VectorAdd( newCenter, newExtents, vecMaxsOut );
@@ -3953,20 +3953,20 @@ void GeneratePerspectiveFrustum( const Vector &origin, const QAngle &angles, flo
 bool R_CullBox( const Vector &mins, const Vector &maxs, const Frustum_t &frustum )
 {
     return ( ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_RIGHT ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_LEFT ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_TOP ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_BOTTOM ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_NEARZ ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_FARZ ) ) == 2 ) );
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_LEFT ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_TOP ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_BOTTOM ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_NEARZ ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_FARZ ) ) == 2 ) );
 }
 
 bool R_CullBoxSkipNear( const Vector &mins, const Vector &maxs, const Frustum_t &frustum )
 {
     return ( ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_RIGHT ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_LEFT ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_TOP ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_BOTTOM ) ) == 2 ) ||
-             ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_FARZ ) ) == 2 ) );
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_LEFT ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_TOP ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_BOTTOM ) ) == 2 ) ||
+            ( BoxOnPlaneSide( mins, maxs, frustum.GetPlane( FRUSTUM_FARZ ) ) == 2 ) );
 }
 
 // NOTE: This routine was taken (and modified) from NVidia's BlinnReflection demo
@@ -4117,14 +4117,14 @@ void HSVtoRGB( const Vector &hsv, Vector &rgb )
 }
 
 void GetInterpolationData( float const *pKnotPositions,
-                           float const *pKnotValues,
-                           int nNumValuesinList,
-                           int nInterpolationRange,
-                           float flPositionToInterpolateAt,
-                           bool bWrap,
-                           float *pValueA,
-                           float *pValueB,
-                           float *pInterpolationValue )
+                            float const *pKnotValues,
+                            int nNumValuesinList,
+                            int nInterpolationRange,
+                            float flPositionToInterpolateAt,
+                            bool bWrap,
+                            float *pValueA,
+                            float *pValueB,
+                            float *pInterpolationValue )
 {
     // first, find the bracketting knots by looking for the first knot >= our index
 

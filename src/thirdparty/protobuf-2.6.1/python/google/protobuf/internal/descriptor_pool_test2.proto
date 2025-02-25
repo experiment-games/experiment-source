@@ -48,23 +48,22 @@ message DescriptorPoolTest3 {
 
   message NestedMessage {
     enum NestedEnum {
-      OMICRON = 15;
-      PI = 16;
+    OMICRON = 15;
+    PI = 16;
     }
     optional NestedEnum nested_enum = 1 [default = PI];
     optional string nested_field = 2 [default = "nu"];
     optional DeepNestedMessage deep_nested_message = 3;
 
     message DeepNestedMessage {
-      enum NestedEnum {
+    enum NestedEnum {
         RHO = 17;
         SIGMA = 18;
-      }
-      optional NestedEnum nested_enum = 1 [default = RHO];
-      optional string nested_field = 2 [default = "sigma"];
+    }
+    optional NestedEnum nested_enum = 1 [default = RHO];
+    optional string nested_field = 2 [default = "sigma"];
     }
   }
 
   optional NestedMessage nested_message = 2;
 }
-

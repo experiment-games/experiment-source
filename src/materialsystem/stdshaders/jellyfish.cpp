@@ -14,7 +14,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER( JellyFish,
-                 "Help for JellyFish" )
+                "Help for JellyFish" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( GRADIENTTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "1D texture for silhouette glowy bits" )

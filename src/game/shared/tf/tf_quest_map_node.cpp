@@ -104,16 +104,16 @@ void CQuestMapNodeDefinition::GetCantUnlockReason( wchar_t* out_wszRequirements,
     {
         V_wcsncat( out_wszRequirements, L"\n\n", nRequirementsSize );
         V_wcsncat( out_wszRequirements,
-                   LocalizeNumberWithToken( "TF_QuestView_Requirements_StarCount", GetNumStarsToUnlock(), helper.GetNumStarsAvailableToSpend( GetStarType() ) ),
-                   nRequirementsSize );
+                    LocalizeNumberWithToken( "TF_QuestView_Requirements_StarCount", GetNumStarsToUnlock(), helper.GetNumStarsAvailableToSpend( GetStarType() ) ),
+                    nRequirementsSize );
     }
 
     if ( !BHasRequiredNodesCompltedToUnlock( helper ) )
     {
         V_wcsncat( out_wszRequirements, L"\n\n", nRequirementsSize );
         V_wcsncat( out_wszRequirements,
-                   LocalizeNumberWithToken( "TF_QuestView_Requirement_NodeState", GetNumStarsToUnlock(), helper.GetNumStarsAvailableToSpend( GetStarType() ) ),
-                   nRequirementsSize );
+                    LocalizeNumberWithToken( "TF_QuestView_Requirement_NodeState", GetNumStarsToUnlock(), helper.GetNumStarsAvailableToSpend( GetStarType() ) ),
+                    nRequirementsSize );
     }
 }
 #endif

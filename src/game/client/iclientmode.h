@@ -35,7 +35,7 @@ enum CHAT_MESSAGE_MODE
 abstract_class IClientMode
 {
     // Misc.
-   public:
+    public:
     virtual ~IClientMode() {}
 
     // Called before the HUD is initialized.
@@ -133,7 +133,7 @@ abstract_class IClientMode
     virtual void DisplayReplayMessage( const char *pLocalizeName, float flDuration, bool bUrgent, const char *pSound, bool bDlg ) = 0;
 
     // Updates.
-   public:
+    public:
     // Called every frame.
     virtual void Update() = 0;
 

@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossStunned : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
     virtual void OnEnd( CEyeballBoss *me, Action< CEyeballBoss > *nextAction );
@@ -26,7 +26,7 @@ class CEyeballBossStunned : public Action< CEyeballBoss >
         return "Stunned";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_stunTimer;
     float m_spinRate;
 };

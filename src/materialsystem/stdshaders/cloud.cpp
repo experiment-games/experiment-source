@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_SHADER( Cloud,
-              "Help for Cloud" )
+            "Help for Cloud" )
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/cloud", "cloud texture", 0 )
 SHADER_PARAM( CLOUDALPHATEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/cloudalpha", "cloud alpha texture" )
@@ -53,7 +53,7 @@ SHADER_DRAW
             pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 
             pShaderShadow->DrawFlags( SHADER_DRAW_POSITION |
-                                      SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 );
+                                    SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 );
             DefaultFog();
         }
         DYNAMIC_STATE

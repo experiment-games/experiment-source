@@ -19,7 +19,7 @@ class IEntityListener;
 
 abstract_class CBaseEntityClassList
 {
-   public:
+    public:
     CBaseEntityClassList();
     ~CBaseEntityClassList();
     virtual void LevelShutdownPostEntity() = 0;
@@ -30,7 +30,7 @@ abstract_class CBaseEntityClassList
 template < class T >
 class CEntityClassList : public CBaseEntityClassList
 {
-   public:
+    public:
     virtual void LevelShutdownPostEntity()
     {
         m_pClassList = NULL;
@@ -64,7 +64,7 @@ class CEntityClassList : public CBaseEntityClassList
 // Derive a class from this if you want to filter entity list searches
 abstract_class IEntityFindFilter
 {
-   public:
+    public:
     virtual bool ShouldFindEntity( CBaseEntity * pEntity ) = 0;
     virtual CBaseEntity *GetFilterResult( void ) = 0;
 };
@@ -75,8 +75,8 @@ abstract_class IEntityFindFilter
 //-----------------------------------------------------------------------------
 class CGlobalEntityList : public CBaseEntityList
 {
-   public:
-   private:
+    public:
+    private:
     int m_iHighestEnt;  // the topmost used array index
     int m_iNumEnts;
     int m_iNumEdicts;
@@ -84,7 +84,7 @@ class CGlobalEntityList : public CBaseEntityList
     bool m_bClearingEntities;
     CUtlVector< IEntityListener * > m_entityListeners;
 
-   public:
+    public:
     IServerNetworkable *GetServerNetworkable( CBaseHandle hEnt ) const;
     CBaseNetworkable *GetBaseNetworkable( CBaseHandle hEnt ) const;
     CBaseEntity *GetBaseEntity( CBaseHandle hEnt ) const;
@@ -170,7 +170,7 @@ class CGlobalEntityList : public CBaseEntityList
     CGlobalEntityList();
 
     // CBaseEntityList overrides.
-   protected:
+    protected:
     virtual void OnAddEntity( IHandleEntity *pEnt, CBaseHandle handle );
     virtual void OnRemoveEntity( IHandleEntity *pEnt, CBaseHandle handle );
 };
@@ -223,34 +223,34 @@ inline CBaseEntity *CGlobalEntityList::GetBaseEntity( CBaseHandle hEnt ) const
 template <class ENT_TYPE>
 inline bool FindEntityByName( const char *pszName, ENT_TYPE **ppResult)
 {
-	CBaseEntity *pBaseEntity = gEntList.FindEntityByName( NULL, pszName );
-	
-	if ( pBaseEntity )
-		*ppResult = dynamic_cast<ENT_TYPE *>( pBaseEntity );
-	else
-		*ppResult = NULL;
+    CBaseEntity *pBaseEntity = gEntList.FindEntityByName( NULL, pszName );
 
-	return ( *ppResult != NULL );
+    if ( pBaseEntity )
+        *ppResult = dynamic_cast<ENT_TYPE *>( pBaseEntity );
+    else
+        *ppResult = NULL;
+
+    return ( *ppResult != NULL );
 }
 
 template <>
 inline bool FindEntityByName<CBaseEntity>( const char *pszName, CBaseEntity **ppResult)
 {
-	*ppResult = gEntList.FindEntityByName( NULL, pszName );
-	return ( *ppResult != NULL );
+    *ppResult = gEntList.FindEntityByName( NULL, pszName );
+    return ( *ppResult != NULL );
 }
 
 template <>
 inline bool FindEntityByName<CAI_BaseNPC>( const char *pszName, CAI_BaseNPC **ppResult)
 {
-	CBaseEntity *pBaseEntity = gEntList.FindEntityByName( NULL, pszName );
-	
-	if ( pBaseEntity )
-		*ppResult = pBaseEntity->MyNPCPointer();
-	else
-		*ppResult = NULL;
+    CBaseEntity *pBaseEntity = gEntList.FindEntityByName( NULL, pszName );
 
-	return ( *ppResult != NULL );
+    if ( pBaseEntity )
+        *ppResult = pBaseEntity->MyNPCPointer();
+    else
+        *ppResult = NULL;
+
+    return ( *ppResult != NULL );
 }
 #endif
 //-----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ struct entitem_t
 
 class CEntityList
 {
-   public:
+    public:
     CEntityList();
     ~CEntityList();
 
@@ -320,7 +320,7 @@ struct notify_system_event_params_t
 
 abstract_class INotify
 {
-   public:
+    public:
     // Add notification for an entity
     virtual void AddEntity( CBaseEntity * pNotify, CBaseEntity * pWatched ) = 0;
 
@@ -355,7 +355,7 @@ abstract_class INotify
 // Implement this class and register with gEntList to receive entity create/delete notification
 class IEntityListener
 {
-   public:
+    public:
     virtual void OnEntityCreated( CBaseEntity *pEntity ){};
     virtual void OnEntitySpawned( CBaseEntity *pEntity ){};
     virtual void OnEntityDeleted( CBaseEntity *pEntity ){};

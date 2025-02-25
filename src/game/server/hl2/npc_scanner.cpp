@@ -1727,8 +1727,8 @@ void CNPC_CScanner::SpotlightUpdate( void )
     }
 
     if ( ( m_nFlyMode != SCANNER_FLY_SPOT ) &&
-         ( m_nFlyMode != SCANNER_FLY_PATROL ) &&
-         ( m_nFlyMode != SCANNER_FLY_FAST ) )
+        ( m_nFlyMode != SCANNER_FLY_PATROL ) &&
+        ( m_nFlyMode != SCANNER_FLY_FAST ) )
     {
         if ( m_hSpotlight )
         {
@@ -2521,19 +2521,19 @@ void CNPC_CScanner::MoveToSpotlight( float flInterval )
     //  unless I'm inspecting
     // ------------------------------------------------
     if (m_pSquad &&
-      gpGlobals->curtime > m_fInspectEndTime)
+    gpGlobals->curtime > m_fInspectEndTime)
     {
-      CBaseEntity*	pNearest	= m_pSquad->NearestSquadMember(this);
-      if (pNearest)
-      {
+    CBaseEntity*	pNearest	= m_pSquad->NearestSquadMember(this);
+    if (pNearest)
+    {
         Vector			vNearestDir = (pNearest->GetLocalOrigin() - GetLocalOrigin());
         if (vNearestDir.Length() < SCANNER_SQUAD_FLY_DIST)
         {
-          vNearestDir		= pNearest->GetLocalOrigin() - GetLocalOrigin();
-          VectorNormalize(vNearestDir);
-          vFlyDirection  -= 0.5*vNearestDir;
+        vNearestDir		= pNearest->GetLocalOrigin() - GetLocalOrigin();
+        VectorNormalize(vNearestDir);
+        vFlyDirection  -= 0.5*vNearestDir;
         }
-      }
+    }
     }
 
     // ---------------------------------------------------------
@@ -2541,7 +2541,7 @@ void CNPC_CScanner::MoveToSpotlight( float flInterval )
     // ---------------------------------------------------------
     if ((m_flLastDamageTime + SCANNER_EVADE_TIME) > gpGlobals->curtime)
     {
-      vFlyDirection = vFlyDirection + VelocityToEvade(GetEnemyCombatCharacterPointer());
+    vFlyDirection = vFlyDirection + VelocityToEvade(GetEnemyCombatCharacterPointer());
     }
     */
 }
@@ -2602,19 +2602,19 @@ void CNPC_CScanner::MoveToPhotograph( float flInterval )
     //  unless I'm inspecting
     // ------------------------------------------------
     if (m_pSquad &&
-      gpGlobals->curtime > m_fInspectEndTime)
+    gpGlobals->curtime > m_fInspectEndTime)
     {
-      CBaseEntity*	pNearest	= m_pSquad->NearestSquadMember(this);
-      if (pNearest)
-      {
+    CBaseEntity*	pNearest	= m_pSquad->NearestSquadMember(this);
+    if (pNearest)
+    {
         Vector			vNearestDir = (pNearest->GetLocalOrigin() - GetLocalOrigin());
         if (vNearestDir.Length() < SCANNER_SQUAD_FLY_DIST)
         {
-          vNearestDir		= pNearest->GetLocalOrigin() - GetLocalOrigin();
-          VectorNormalize(vNearestDir);
-          vFlyDirection  -= 0.5*vNearestDir;
+        vNearestDir		= pNearest->GetLocalOrigin() - GetLocalOrigin();
+        VectorNormalize(vNearestDir);
+        vFlyDirection  -= 0.5*vNearestDir;
         }
-      }
+    }
     }
     */
 }
@@ -2958,7 +2958,7 @@ class CNPC_ClawScanner : public CNPC_CScanner
 {
     DECLARE_CLASS( CNPC_ClawScanner, CNPC_CScanner );
 
-   public:
+    public:
     CNPC_ClawScanner();
     DECLARE_DATADESC();
 };

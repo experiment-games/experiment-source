@@ -26,7 +26,7 @@ class KeyValues;
 
 abstract_class IViewPortPanel
 {
-   public:
+    public:
     virtual ~IViewPortPanel(){};
 
     virtual const char *GetName( void ) = 0;       // return identifer name
@@ -48,7 +48,7 @@ abstract_class IViewPortPanel
 
 abstract_class IViewPort
 {
-   public:
+    public:
     virtual void UpdateAllPanels( void ) = 0;
     virtual void ShowPanel( const char *pName, bool state ) = 0;
     virtual void ShowPanel( IViewPortPanel * pPanel, bool state ) = 0;

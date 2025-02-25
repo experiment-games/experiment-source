@@ -151,7 +151,7 @@ struct IncursionEntry_t
 //---------------------------------------------------------------------------------------------
 class SpyHideIncursionDistanceLess
 {
-   public:
+    public:
     bool Less( const IncursionEntry_t &src1, const IncursionEntry_t &src2, void *pCtx )
     {
         return src1.area->GetIncursionDistance( src1.team ) < src2.area->GetIncursionDistance( src2.team );

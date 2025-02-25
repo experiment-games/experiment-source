@@ -53,7 +53,7 @@ enum LeadBehaviorEvents_t
 
 class CAI_LeadBehaviorHandler
 {
-   public:
+    public:
     virtual void OnEvent( int event ) {}
     virtual const char *GetConceptModifiers( const char *pszConcept )
     {
@@ -95,11 +95,11 @@ class CAI_LeadBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_LeadBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_LeadBehavior()
         : m_pSink( NULL ),
-          m_LostTimer( 3.0, 4.0 ),
-          m_LostLOSTimer( 2.0, 3.0 )
+        m_LostTimer( 3.0, 4.0 ),
+        m_LostLOSTimer( 2.0, 3.0 )
     {
         memset( &m_args, 0, sizeof( m_args ) );
         ClearGoal();
@@ -195,7 +195,7 @@ class CAI_LeadBehavior : public CAI_SimpleBehavior
 
     };
 
-   private:
+    private:
     void GatherConditions();
     virtual int SelectSchedule();
     virtual int TranslateSchedule( int scheduleType );

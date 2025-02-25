@@ -33,7 +33,7 @@ class CTFFileImportDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CTFFileImportDialog, Frame );
 
-   public:
+    public:
     enum BUILD_RESULT
     {
         BUILD_OKAY,
@@ -114,7 +114,7 @@ class CTFFileImportDialog : public vgui::Frame
         PREFAB_COUNT
     };
 
-   public:
+    public:
     CTFFileImportDialog( vgui::Panel *parent );
 
     virtual ~CTFFileImportDialog();
@@ -224,7 +224,7 @@ class CTFFileImportDialog : public vgui::Frame
     bool SetupPreviewData();
     void CleanupPreviewData();
 
-   protected:
+    protected:
     bool IsMulticlass();
     const char *GetClassFolder();
     bool AnyClassHasModels();
@@ -238,7 +238,7 @@ class CTFFileImportDialog : public vgui::Frame
     void GetWorkshopData();
     void SetWorkshopData();
 
-   private:
+    private:
     bool ShouldP4AddOrEdit() const;
     bool IsPartnerContent() const;
     const char *GetWorkshopFolder() const;

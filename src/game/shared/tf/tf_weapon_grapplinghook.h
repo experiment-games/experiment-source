@@ -20,7 +20,7 @@
 // ------------------------------------------------------------------------------------------------------------------------
 class CTFGrapplingHook : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrapplingHook, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -86,7 +86,7 @@ class CTFGrapplingHook : public CTFRocketLauncher
     void ActivateRune();
 #endif  // GAME_DLL
 
-   private:
+    private:
 #ifdef GAME_DLL
     void RemoveHookProjectile( bool bForce = false );
     bool IsLatchedToTargetPlayer() const;
@@ -113,7 +113,7 @@ class CTFGrapplingHook : public CTFRocketLauncher
 
 class CEquipGrapplingHookNotification : public CEconNotification
 {
-   public:
+    public:
     CEquipGrapplingHookNotification()
         : CEconNotification()
     {
@@ -159,7 +159,7 @@ class CEquipGrapplingHookNotification : public CEconNotification
         return dynamic_cast< CEquipGrapplingHookNotification * >( pNotification ) != NULL;
     }
 
-   private:
+    private:
     bool m_bHasTriggered;
 };
 

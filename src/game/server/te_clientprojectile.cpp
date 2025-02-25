@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 class CTEClientProjectile : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEClientProjectile, CBaseTempEntity );
 
     CTEClientProjectile( const char* name );
@@ -25,7 +25,7 @@ class CTEClientProjectile : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecVelocity );
     CNetworkVar( int, m_nModelIndex );

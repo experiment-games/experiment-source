@@ -20,7 +20,7 @@ class CUtlBuffer;
 
 class CKeyBindings
 {
-   public:
+    public:
     void SetBinding( ButtonCode_t code, const char *pBinding );
     void SetBinding( const char *pButtonName, const char *pBinding );
 
@@ -33,7 +33,7 @@ class CKeyBindings
     const char *ButtonNameForBinding( const char *pBinding );
     const char *GetBindingForButton( ButtonCode_t code );
 
-   private:
+    private:
     CUtlString m_KeyInfo[BUTTON_CODE_LAST];
 };
 

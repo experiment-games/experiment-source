@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CTEBeamSpline : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBeamSpline, CBaseTempEntity );
 
     CTEBeamSpline( const char* name );
@@ -32,7 +32,7 @@ class CTEBeamSpline : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkArray( Vector, m_vecPoints, MAX_SPLINE_POINTS );
     CNetworkVar( int, m_nPoints );
 };

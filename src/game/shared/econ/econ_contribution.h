@@ -24,7 +24,7 @@ class CSQLAccess;
 //---------------------------------------------------------------------------------
 class CTFMapContribution : public GCSDK::CProtoBufSharedObject< CSOTFMapContribution, k_EEconTypeMapContribution >
 {
-   public:
+    public:
     CTFMapContribution() {}
 };
 

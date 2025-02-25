@@ -23,7 +23,7 @@ class CSaxxyAwardsPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSaxxyAwardsPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CSaxxyAwardsPanel( Panel *pParent, const char *pName );
     ~CSaxxyAwardsPanel();
 
@@ -31,7 +31,7 @@ class CSaxxyAwardsPanel : public vgui::EditablePanel
 
     void Refresh();
 
-   private:
+    private:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
     virtual void OnCommand( const char *pCommand );
@@ -154,10 +154,10 @@ class CSaxxyAwardsSubmitForm : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSaxxyAwardsSubmitForm, vgui::EditablePanel );
 
-   public:
+    public:
     CSaxxyAwardsSubmitForm( Panel *pParent );
 
-   private:
+    private:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
     virtual void OnCommand( const char *pCommand );

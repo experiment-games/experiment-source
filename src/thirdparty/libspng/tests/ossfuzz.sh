@@ -39,7 +39,7 @@ $CXX $CXXFLAGS -std=c++11 \
 
 
 find $SRC/libspng/tests -name "*.png" | \
-     xargs zip $OUT/seed_corpus.zip
+    xargs zip $OUT/seed_corpus.zip
 
 cp $SRC/libspng/tests/spng.dict $OUT/
 

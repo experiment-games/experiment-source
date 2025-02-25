@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CHudElement : public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CHudElement );
 
     // constructor - registers object in global list
@@ -133,17 +133,17 @@ class CHudElement : public CGameEventListener
     // by panels with a lower priority and will only lock out panels with a lower priority
     virtual int GetRenderGroupPriority();
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event ) {}
 
-   public:
+    public:
     // True if this element is visible, and should think
     bool m_bActive;
 
-   protected:
+    protected:
     int m_iHiddenBits;
 
-   private:
+    private:
     const char *m_pElementName;
     bool m_bNeedsRemove;
     bool m_bIsParentedToClientDLLRootPanel;
@@ -163,7 +163,7 @@ inline bool RenderGroupLessFunc( CHudElement *const &lhs, CHudElement *const &rh
 // then they can query by index the state of their render group
 class CHudRenderGroup
 {
-   public:
+    public:
     CHudRenderGroup()
     {
         m_pLockingElements.SetLessFunc( RenderGroupLessFunc );

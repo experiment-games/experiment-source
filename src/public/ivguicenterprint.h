@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 abstract_class ICenterPrint
 {
-   public:
+    public:
     virtual void SetTextColor( int r, int g, int b, int a ) = 0;
     virtual void Print( char *text ) = 0;
     virtual void Print( wchar_t * text ) = 0;

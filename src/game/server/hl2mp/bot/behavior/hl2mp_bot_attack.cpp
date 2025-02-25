@@ -65,14 +65,14 @@ ActionResult< CHL2MPBot > CHL2MPBotAttack::Update( CHL2MPBot *me, float interval
 
     // Go after them!
     bool bAggressive = hl2mp_bot_aggressive.GetBool() &&
-                       !bHasRangedWeapon &&
-                       me->GetDifficulty() > CHL2MPBot::EASY;
+                        !bHasRangedWeapon &&
+                        me->GetDifficulty() > CHL2MPBot::EASY;
 
     // pursue the threat. if not visible, go to the last known position
     if ( bAggressive ||
-         !threat->IsVisibleRecently() ||
-         me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) ||
-         !me->IsLineOfFireClear( threat->GetEntity()->EyePosition() ) )
+        !threat->IsVisibleRecently() ||
+        me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) ||
+        !me->IsLineOfFireClear( threat->GetEntity()->EyePosition() ) )
     {
         if ( threat->IsVisibleRecently() )
         {

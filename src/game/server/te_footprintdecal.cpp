@@ -24,7 +24,7 @@
 
 class CTEFootprintDecal : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEFootprintDecal, CBaseTempEntity );
 
     CTEFootprintDecal( const char *name );
@@ -32,7 +32,7 @@ class CTEFootprintDecal : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecDirection );
     CNetworkVar( int, m_nEntity );

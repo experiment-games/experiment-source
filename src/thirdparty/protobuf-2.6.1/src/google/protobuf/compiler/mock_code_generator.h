@@ -68,7 +68,7 @@ namespace compiler
 //     code info, and "0" otherwise.
 class MockCodeGenerator : public CodeGenerator
 {
-   public:
+    public:
     MockCodeGenerator( const string& name );
     virtual ~MockCodeGenerator();
 
@@ -80,27 +80,27 @@ class MockCodeGenerator : public CodeGenerator
     // |parsed_file_list| is a comma-separated list of names of the files
     // that are being compiled together in this run.
     static void ExpectGenerated( const string& name,
-                                 const string& parameter,
-                                 const string& insertions,
-                                 const string& file,
-                                 const string& first_message_name,
-                                 const string& parsed_file_list,
-                                 const string& output_directory );
+                                const string& parameter,
+                                const string& insertions,
+                                const string& file,
+                                const string& first_message_name,
+                                const string& parsed_file_list,
+                                const string& output_directory );
 
     // Get the name of the file which would be written by the given generator.
     static string GetOutputFileName( const string& generator_name,
-                                     const FileDescriptor* file );
+                                    const FileDescriptor* file );
     static string GetOutputFileName( const string& generator_name,
-                                     const string& file );
+                                    const string& file );
 
     // implements CodeGenerator ----------------------------------------
 
     virtual bool Generate( const FileDescriptor* file,
-                           const string& parameter,
-                           GeneratorContext* context,
-                           string* error ) const;
+                            const string& parameter,
+                            GeneratorContext* context,
+                            string* error ) const;
 
-   private:
+    private:
     string name_;
 
     static string GetOutputFileContent( const string& generator_name,

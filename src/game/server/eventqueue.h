@@ -38,7 +38,7 @@ struct EventQueuePrioritizedEvent_t
 
 class CEventQueue
 {
-   public:
+    public:
     // pushes an event into the queue, targeting a string name (m_iName), or directly by a pointer
     void AddEvent( const char *target, const char *action, variant_t Value, float fireDelay, CBaseEntity *pActivator, CBaseEntity *pCaller, int outputID = 0 );
     void AddEvent( CBaseEntity *target, const char *action, float fireDelay, CBaseEntity *pActivator, CBaseEntity *pCaller, int outputID = 0 );
@@ -66,7 +66,7 @@ class CEventQueue
 
     void Dump( void );
 
-   private:
+    private:
     void AddEvent( EventQueuePrioritizedEvent_t *event );
     void RemoveEvent( EventQueuePrioritizedEvent_t *pe );
 

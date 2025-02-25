@@ -32,7 +32,7 @@ CTFBotRetreatToCover::CTFBotRetreatToCover( Action< CTFBot > *actionToChangeToOn
 // for testing a given area's exposure to known threats
 class CTestAreaAgainstThreats : public IVision::IForEachKnownEntity
 {
-   public:
+    public:
     CTestAreaAgainstThreats( CTFBot *me, CTFNavArea *area )
     {
         m_me = me;
@@ -67,7 +67,7 @@ class CTestAreaAgainstThreats : public IVision::IForEachKnownEntity
 // collect nearby areas that provide cover from our known threats
 class CSearchForCover : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CSearchForCover( CTFBot *me )
     {
         m_me = me;

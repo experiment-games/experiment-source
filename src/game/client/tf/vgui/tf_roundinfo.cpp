@@ -38,7 +38,7 @@ const char *GetMapDisplayName( const char *mapName, bool bTitleCase = false );
 
 class RoundInfoOverlay : public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( RoundInfoOverlay, vgui::EditablePanel );
 
     RoundInfoOverlay( Panel *parent, const char *panelName )
@@ -100,7 +100,7 @@ class RoundInfoOverlay : public vgui::EditablePanel
     void DrawTeamIcon( int x, int y, bool bBlueTeam, float flBloat = 1.0f );
     void DrawCapArrows( int x0, int y0, int x1, int y1 );
 
-   private:
+    private:
     // structure to hold a single control point
     typedef struct
     {
@@ -203,9 +203,9 @@ void RoundInfoOverlay::Paint( void )
             if ( ( m_flModeChangeTime - gpGlobals->curtime ) < 3.5f )
             {
                 DrawCapArrows( m_ControlPoints[m_iNextRoundPoints[0]].m_iXPos,
-                               m_ControlPoints[m_iNextRoundPoints[0]].m_iYPos,
-                               m_ControlPoints[m_iNextRoundPoints[1]].m_iXPos,
-                               m_ControlPoints[m_iNextRoundPoints[1]].m_iYPos );
+                                m_ControlPoints[m_iNextRoundPoints[0]].m_iYPos,
+                                m_ControlPoints[m_iNextRoundPoints[1]].m_iXPos,
+                                m_ControlPoints[m_iNextRoundPoints[1]].m_iYPos );
             }
         }
     }
@@ -584,11 +584,11 @@ void CTFRoundInfo::Update()
 void CTFRoundInfo::OnKeyCodePressed( KeyCode code )
 {
     if ( code == KEY_SPACE ||
-         code == KEY_ENTER ||
-         code == KEY_XBUTTON_A ||
-         code == KEY_XBUTTON_B ||
-         code == STEAMCONTROLLER_A ||
-         code == STEAMCONTROLLER_B )
+        code == KEY_ENTER ||
+        code == KEY_XBUTTON_A ||
+        code == KEY_XBUTTON_B ||
+        code == STEAMCONTROLLER_A ||
+        code == STEAMCONTROLLER_B )
     {
         OnCommand( "continue" );
     }

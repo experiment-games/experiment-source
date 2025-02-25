@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( Core, Core_DX90 )
 
 BEGIN_VS_SHADER( Core_DX90,
-                 "Help for Core" )
+                "Help for Core" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( COLOR, SHADER_PARAM_TYPE_COLOR, "{255 255 255}", "unused", SHADER_PARAM_NOT_EDITABLE )

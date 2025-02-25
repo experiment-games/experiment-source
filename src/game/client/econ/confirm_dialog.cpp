@@ -35,9 +35,9 @@
 //-----------------------------------------------------------------------------
 CConfirmDialog::CConfirmDialog( vgui::Panel *parent )
     : BaseClass( parent, "ConfirmDialog" ),
-      m_pCancelButton( NULL ),
-      m_pConfirmButton( NULL ),
-      m_pIcon( NULL )
+    m_pCancelButton( NULL ),
+    m_pConfirmButton( NULL ),
+    m_pIcon( NULL )
 {
 }
 
@@ -250,7 +250,7 @@ void CConfirmDialog::OnSizeChanged( int nNewWide, int nNewTall )
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const char *pTextKey, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent )
     : BaseClass( pParent ),
-      m_pTextKey( pTextKey )
+    m_pTextKey( pTextKey )
 {
     CommonInit( pTitle, pConfirmBtnText, pCancelBtnText, callback, pParent );
 }
@@ -260,7 +260,7 @@ CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const char
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent )
     : BaseClass( pParent ),
-      m_pTextKey( NULL )
+    m_pTextKey( NULL )
 {
     CommonInit( pTitle, pConfirmBtnText, pCancelBtnText, callback, pParent );
 
@@ -422,13 +422,13 @@ void CTFGenericConfirmDialog::SetContext( void *pContext )
 // Purpose:
 //-----------------------------------------------------------------------------
 CTFGenericConfirmOptOutDialog::CTFGenericConfirmOptOutDialog( const char *pTitle,
-                                                              const char *pText,
-                                                              const char *pConfirmBtnText,
-                                                              const char *pCancelBtnText,
-                                                              const char *pOptOutText,
-                                                              const char *pOptOutConVarName,
-                                                              GenericConfirmDialogCallback callback,
-                                                              vgui::Panel *parent )
+                                                            const char *pText,
+                                                            const char *pConfirmBtnText,
+                                                            const char *pCancelBtnText,
+                                                            const char *pOptOutText,
+                                                            const char *pOptOutConVarName,
+                                                            GenericConfirmDialogCallback callback,
+                                                            vgui::Panel *parent )
     : CTFGenericConfirmDialog( pTitle, pText, pConfirmBtnText, pCancelBtnText, callback, parent )
 {
     m_optOutText = pOptOutText;
@@ -810,12 +810,12 @@ void CTFReviveDialog::SetOwner( CBaseEntity *pEntity )
 // Purpose: In-game dialog that avoids the crosshair area and is much smaller
 //-----------------------------------------------------------------------------
 CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
-                                   const char *pTitle,
-                                   const char *pText,
-                                   const char *pConfirmBtnText,
-                                   GenericConfirmDialogCallback callback,
-                                   vgui::Panel *parent,
-                                   void *pContext )
+                                    const char *pTitle,
+                                    const char *pText,
+                                    const char *pConfirmBtnText,
+                                    GenericConfirmDialogCallback callback,
+                                    vgui::Panel *parent,
+                                    void *pContext )
 {
     CTFReviveDialog *pDialog = vgui::SETUP_PANEL( new CTFReviveDialog( pTitle, pText, pConfirmBtnText, callback, parent ) );
     if ( pDialog )

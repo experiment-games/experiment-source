@@ -5,7 +5,7 @@
 
 class VertexCache
 {
-   public:
+    public:
     VertexCache( int size )
     {
         numEntries = size;
@@ -80,7 +80,7 @@ class VertexCache
         entries[index] = value;
     }
 
-   private:
+    private:
     int* entries;
     int numEntries;
 };

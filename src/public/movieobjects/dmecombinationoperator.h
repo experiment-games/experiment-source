@@ -38,7 +38,7 @@ class CDmeCombinationInputControl : public CDmElement
 {
     DEFINE_ELEMENT( CDmeCombinationInputControl, CDmElement );
 
-   public:
+    public:
     virtual void OnElementUnserialized();
 
     // Adds a control, returns the control index,
@@ -80,7 +80,7 @@ class CDmeCombinationInputControl : public CDmElement
     float GetDefaultValue() const;
     float GetBaseValue() const;
 
-   private:
+    private:
     int FindRawControl( const char *pRawControlName );
 
     CDmaStringArray m_RawControlNames;
@@ -98,7 +98,7 @@ class CDmeCombinationDominationRule : public CDmElement
 {
     DEFINE_ELEMENT( CDmeCombinationDominationRule, CDmElement );
 
-   public:
+    public:
     // Methods of IDmElement
     virtual void OnAttributeChanged( CDmAttribute *pAttribute );
 
@@ -123,7 +123,7 @@ class CDmeCombinationDominationRule : public CDmElement
     bool HasDominatorControl( const char *pDominatorControl ) const;
     bool HasSuppressedControl( const char *pSuppressedControl ) const;
 
-   private:
+    private:
     bool HasString( const char *pString, const CDmaStringArray &attr );
 
     CDmaStringArray m_Dominators;
@@ -147,7 +147,7 @@ class CDmeCombinationOperator : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeCombinationOperator, CDmeOperator );
 
-   public:
+    public:
     // Methods of IDmElement
     virtual void OnAttributeChanged( CDmAttribute *pAttribute );
 
@@ -310,10 +310,10 @@ class CDmeCombinationOperator : public CDmeOperator
     // Remove all controls and domination rules which are not referring to anything
     void Purge();
 
-   protected:
+    protected:
     void ComputeCombinationInfo( int nIndex );
 
-   private:
+    private:
     typedef int RawControlIndex_t;
 
     struct DominatorInfo_t
@@ -431,7 +431,7 @@ class CDmeMayaCombinationOperator : public CDmeCombinationOperator
 {
     DEFINE_ELEMENT( CDmeMayaCombinationOperator, CDmeCombinationOperator );
 
-   public:
+    public:
     void AddDeltaState( const char *pDeltaStateName );
     void RemoveDeltaState( const char *pDeltaStateName );
     void RemoveAllDeltaStates();
@@ -442,7 +442,7 @@ class CDmeMayaCombinationOperator : public CDmeCombinationOperator
     const char *GetDeltaState( int nIndex ) const;
     const Vector2D &GetDeltaStateWeight( int nIndex, CombinationControlType_t type ) const;
 
-   private:
+    private:
     CDmaElementArray< CDmElement > m_DeltaStates;
     CDmaArray< Vector2D > m_DeltaStateWeights[COMBO_CONTROL_TYPE_COUNT];
 };

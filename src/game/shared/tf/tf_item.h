@@ -27,7 +27,7 @@ class CTFPlayer;
 //
 class CTFItem : public CDynamicProp
 {
-   public:
+    public:
     DECLARE_CLASS( CTFItem, CDynamicProp )
     DECLARE_NETWORKCLASS();
 

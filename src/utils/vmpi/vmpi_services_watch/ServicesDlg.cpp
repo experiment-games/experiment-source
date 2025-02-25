@@ -26,7 +26,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 #define SERVICE_OFF_TIMEOUT ( 20 * 1000 )  // If we haven't heard from a service in this long,
-                                           // then we assume the service is off.
+                                            // then we assume the service is off.
 
 #define SERVICES_PING_INTERVAL ( 3 * 1000 )  // ping the services every so often
 
@@ -428,7 +428,7 @@ BOOL CServicesDlg::OnInitDialog()
     m_VMPIRegistryQueryThread.Init();
 
     return TRUE;  // return TRUE unless you set the focus to a control
-                  // EXCEPTION: OCX Property Pages should return FALSE
+                // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CServicesDlg::BuildVMPIPingPacket( CUtlVector< char > &out, char cPacketID, unsigned char protocolVersion, bool bIgnorePassword )
@@ -1090,16 +1090,16 @@ void CServicesDlg::OnDblclkServicesList( NMHDR *pNMHDR, LRESULT *pResult )
                 memset( &pi, 0, sizeof( pi ) );
 
                 if ( !CreateProcess(
-                         NULL,
-                         ( char * )( const char * )cmdLine,
-                         NULL,  // security
-                         NULL,
-                         TRUE,
-                         0,     // flags
-                         NULL,  // environment
-                         NULL,  // current directory
-                         &si,
-                         &pi ) )
+                        NULL,
+                        ( char * )( const char * )cmdLine,
+                        NULL,  // security
+                        NULL,
+                        TRUE,
+                        0,     // flags
+                        NULL,  // environment
+                        NULL,  // current directory
+                        &si,
+                        &pi ) )
                 {
                     char err[512];
                     Q_snprintf( err, sizeof( err ), "Can't run '%s'", ( LPCTSTR )cmdLine );

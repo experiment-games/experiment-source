@@ -97,7 +97,7 @@ message TestMessageWithCustomOptions {
   option (message_opt1) = -56;
 
   optional string field1 = 1 [ctype=CORD,
-                              (field_opt1)=8765432109];
+                            (field_opt1)=8765432109];
 
   enum AnEnum {
     option (enum_opt1) = -789;
@@ -231,7 +231,7 @@ message ComplexOptionType2 {
     optional int32 waldo = 1;
 
     extend google.protobuf.MessageOptions {
-      optional ComplexOptionType4 complex_opt4 = 7633546;
+    optional ComplexOptionType4 complex_opt4 = 7633546;
     }
   }
 
@@ -348,14 +348,14 @@ option (fileopt) = {
   // another fileopt.
   file {
     [protobuf_unittest.fileopt] {
-      s:'FileExtensionAnnotation'
+    s:'FileExtensionAnnotation'
     }
   }
 
   // A message set inside an option value
   mset {
     [protobuf_unittest.AggregateMessageSetElement.message_set_extension] {
-      s: 'EmbeddedMessageSetElement'
+    s: 'EmbeddedMessageSetElement'
     }
   }
 };

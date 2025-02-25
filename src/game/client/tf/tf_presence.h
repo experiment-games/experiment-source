@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CTF_Presence : public CBasePresence, public CGameEventListener
 {
-   public:
+    public:
     // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 
@@ -34,7 +34,7 @@ class CTF_Presence : public CBasePresence, public CGameEventListener
     virtual void GetPropertyDisplayString( uint id, uint value, char *pOutput, int nBytes );
     virtual void UploadStats();
 
-   private:
+    private:
     bool m_bIsInCommentary;
 
 #if defined( _X360 )

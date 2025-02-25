@@ -14,7 +14,7 @@
  */
 class IBodyClient
 {
-   public:
+    public:
     enum ActivityType
     {
         MOTION_CONTROLLED_XY = 0x0001,      // XY position and orientation of the bot is driven by the animation.
@@ -31,14 +31,14 @@ class IBodyClient
  */
 class C_NextBotCombatCharacter : public C_BaseCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_NextBotCombatCharacter, C_BaseCombatCharacter );
     DECLARE_CLIENTCLASS();
 
     C_NextBotCombatCharacter();
     virtual ~C_NextBotCombatCharacter();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void UpdateClientSideAnimation( void );
     virtual ShadowType_t ShadowCastType( void );
@@ -81,7 +81,7 @@ class C_NextBotCombatCharacter : public C_BaseCombatCharacter
         return m_flFrustumDistanceSqr;
     }
 
-   private:
+    private:
     ShadowType_t m_shadowType;     // Are we LOD'd to simple shadows?
     CountdownTimer m_shadowTimer;  // Timer to throttle checks for shadow LOD
     ShadowType_t m_forcedShadowType;
@@ -93,7 +93,7 @@ class C_NextBotCombatCharacter : public C_BaseCombatCharacter
     bool m_bInFrustum;
     float m_flFrustumDistanceSqr;
 
-   private:
+    private:
     C_NextBotCombatCharacter( const C_NextBotCombatCharacter & );  // not defined, not accessible
 };
 
@@ -103,15 +103,15 @@ class C_NextBotCombatCharacter : public C_BaseCombatCharacter
  */
 class C_NextBotManager
 {
-   public:
+    public:
     C_NextBotManager( void );
     ~C_NextBotManager();
 
     /**
-     * Execute functor for each NextBot in the system.
-     * If a functor returns false, stop iteration early
-     * and return false.
-     */
+    * Execute functor for each NextBot in the system.
+    * If a functor returns false, stop iteration early
+    * and return false.
+    */
     template < typename Functor >
     bool ForEachCombatCharacter( Functor &func )
     {
@@ -148,7 +148,7 @@ class C_NextBotManager
         return ( m_nInFrustumFrame == gpGlobals->framecount );
     }
 
-   private:
+    private:
     friend class C_NextBotCombatCharacter;
 
     void Register( C_NextBotCombatCharacter *bot );

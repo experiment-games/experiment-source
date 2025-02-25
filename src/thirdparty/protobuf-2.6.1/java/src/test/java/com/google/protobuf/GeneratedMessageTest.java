@@ -88,9 +88,9 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testDefaultInstance() throws Exception {
     assertSame(TestAllTypes.getDefaultInstance(),
-               TestAllTypes.getDefaultInstance().getDefaultInstanceForType());
+                TestAllTypes.getDefaultInstance().getDefaultInstanceForType());
     assertSame(TestAllTypes.getDefaultInstance(),
-               TestAllTypes.newBuilder().getDefaultInstanceForType());
+                TestAllTypes.newBuilder().getDefaultInstanceForType());
   }
 
   public void testMessageOrBuilder() throws Exception {
@@ -217,80 +217,80 @@ public class GeneratedMessageTest extends TestCase {
 
   private void assertIsUnmodifiable(List<?> list) {
     if (list == Collections.emptyList()) {
-      // OKAY -- Need to check this b/c EmptyList allows you to call clear.
+    // OKAY -- Need to check this b/c EmptyList allows you to call clear.
     } else {
-      try {
+    try {
         list.clear();
         fail("List wasn't immutable");
-      } catch (UnsupportedOperationException e) {
+    } catch (UnsupportedOperationException e) {
         // good
-      }
+    }
     }
   }
 
   public void testSettersRejectNull() throws Exception {
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     try {
-      builder.setOptionalString(null);
-      fail("Exception was not thrown");
+    builder.setOptionalString(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalBytes(null);
-      fail("Exception was not thrown");
+    builder.setOptionalBytes(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalNestedMessage((TestAllTypes.NestedMessage) null);
-      fail("Exception was not thrown");
+    builder.setOptionalNestedMessage((TestAllTypes.NestedMessage) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalNestedMessage(
-          (TestAllTypes.NestedMessage.Builder) null);
-      fail("Exception was not thrown");
+    builder.setOptionalNestedMessage(
+        (TestAllTypes.NestedMessage.Builder) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalNestedEnum(null);
-      fail("Exception was not thrown");
+    builder.setOptionalNestedEnum(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedString(null);
-      fail("Exception was not thrown");
+    builder.addRepeatedString(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedBytes(null);
-      fail("Exception was not thrown");
+    builder.addRepeatedBytes(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedNestedMessage((TestAllTypes.NestedMessage) null);
-      fail("Exception was not thrown");
+    builder.addRepeatedNestedMessage((TestAllTypes.NestedMessage) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedNestedMessage(
-          (TestAllTypes.NestedMessage.Builder) null);
-      fail("Exception was not thrown");
+    builder.addRepeatedNestedMessage(
+        (TestAllTypes.NestedMessage.Builder) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedNestedEnum(null);
-      fail("Exception was not thrown");
+    builder.addRepeatedNestedEnum(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -308,46 +308,46 @@ public class GeneratedMessageTest extends TestCase {
     builder.addRepeatedString("one");
     builder.addRepeatedString("two");
     try {
-      builder.setRepeatedString(1, null);
-      fail("Exception was not thrown");
+    builder.setRepeatedString(1, null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     builder.addRepeatedBytes(TestUtil.toBytes("one"));
     builder.addRepeatedBytes(TestUtil.toBytes("two"));
     try {
-      builder.setRepeatedBytes(1, null);
-      fail("Exception was not thrown");
+    builder.setRepeatedBytes(1, null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     builder.addRepeatedNestedMessage(
-      TestAllTypes.NestedMessage.newBuilder().setBb(218).build());
+    TestAllTypes.NestedMessage.newBuilder().setBb(218).build());
     builder.addRepeatedNestedMessage(
-      TestAllTypes.NestedMessage.newBuilder().setBb(456).build());
+    TestAllTypes.NestedMessage.newBuilder().setBb(456).build());
     try {
-      builder.setRepeatedNestedMessage(1, (TestAllTypes.NestedMessage) null);
-      fail("Exception was not thrown");
+    builder.setRepeatedNestedMessage(1, (TestAllTypes.NestedMessage) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setRepeatedNestedMessage(
-          1, (TestAllTypes.NestedMessage.Builder) null);
-      fail("Exception was not thrown");
+    builder.setRepeatedNestedMessage(
+        1, (TestAllTypes.NestedMessage.Builder) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     builder.addRepeatedNestedEnum(TestAllTypes.NestedEnum.FOO);
     builder.addRepeatedNestedEnum(TestAllTypes.NestedEnum.BAR);
     try {
-      builder.setRepeatedNestedEnum(1, null);
-      fail("Exception was not thrown");
+    builder.setRepeatedNestedEnum(1, null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -375,48 +375,48 @@ public class GeneratedMessageTest extends TestCase {
     ForeignMessage foreignMessage =
         ForeignMessage.newBuilder().setC(12).build();
     try {
-      builder.addAllRepeatedForeignMessage(
-          Arrays.asList(foreignMessage, (ForeignMessage) null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedForeignMessage(
+        Arrays.asList(foreignMessage, (ForeignMessage) null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     try {
-      builder.addAllRepeatedForeignEnum(
-          Arrays.asList(ForeignEnum.FOREIGN_BAZ, null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedForeignEnum(
+        Arrays.asList(ForeignEnum.FOREIGN_BAZ, null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     try {
-      builder.addAllRepeatedString(Arrays.asList("one", null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedString(Arrays.asList("one", null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     try {
-      builder.addAllRepeatedBytes(Arrays.asList(TestUtil.toBytes("one"), null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedBytes(Arrays.asList(TestUtil.toBytes("one"), null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
-  
+
   public void testRepeatedAppendIterateOnlyOnce() throws Exception {
     // Create a Iterable that can only be iterated once.
     Iterable<String> stringIterable = new Iterable<String>() {
-      private boolean called = false;
-      @Override
-      public Iterator<String> iterator() {
+    private boolean called = false;
+    @Override
+    public Iterator<String> iterator() {
         if (called) {
-          throw new IllegalStateException();
+        throw new IllegalStateException();
         }
         called = true;
         return Arrays.asList("one", "two", "three").iterator();
-      }
+    }
     };
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     builder.addAllRepeatedString(stringIterable);
@@ -426,20 +426,20 @@ public class GeneratedMessageTest extends TestCase {
     assertEquals("three", builder.getRepeatedString(2));
 
     try {
-      builder.addAllRepeatedString(stringIterable);
-      fail("Exception was not thrown");
+    builder.addAllRepeatedString(stringIterable);
+    fail("Exception was not thrown");
     } catch (IllegalStateException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
   public void testMergeFromOtherRejectsNull() throws Exception {
     try {
-      TestAllTypes.Builder builder = TestAllTypes.newBuilder();
-      builder.mergeFrom((TestAllTypes) null);
-      fail("Exception was not thrown");
+    TestAllTypes.Builder builder = TestAllTypes.newBuilder();
+    builder.mergeFrom((TestAllTypes) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -534,9 +534,9 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testReflectionDefaults() throws Exception {
     reflectionTester.assertClearViaReflection(
-      TestAllTypes.getDefaultInstance());
+    TestAllTypes.getDefaultInstance());
     reflectionTester.assertClearViaReflection(
-      TestAllTypes.newBuilder().build());
+    TestAllTypes.newBuilder().build());
   }
 
   public void testReflectionGetOneof() throws Exception {
@@ -576,7 +576,7 @@ public class GeneratedMessageTest extends TestCase {
     Internal.EnumLiteMap<ForeignEnum> map = ForeignEnum.internalGetValueMap();
 
     for (ForeignEnum value : ForeignEnum.values()) {
-      assertEquals(value, map.findValueByNumber(value.getNumber()));
+    assertEquals(value, map.findValueByNumber(value.getNumber()));
     }
 
     assertTrue(map.findValueByNumber(12345) == null);
@@ -585,14 +585,14 @@ public class GeneratedMessageTest extends TestCase {
   public void testParsePackedToUnpacked() throws Exception {
     TestUnpackedTypes.Builder builder = TestUnpackedTypes.newBuilder();
     TestUnpackedTypes message =
-      builder.mergeFrom(TestUtil.getPackedSet().toByteString()).build();
+    builder.mergeFrom(TestUtil.getPackedSet().toByteString()).build();
     TestUtil.assertUnpackedFieldsSet(message);
   }
 
   public void testParseUnpackedToPacked() throws Exception {
     TestPackedTypes.Builder builder = TestPackedTypes.newBuilder();
     TestPackedTypes message =
-      builder.mergeFrom(TestUtil.getUnpackedSet().toByteString()).build();
+    builder.mergeFrom(TestUtil.getUnpackedSet().toByteString()).build();
     TestUtil.assertPackedFieldsSet(message);
   }
 
@@ -601,7 +601,7 @@ public class GeneratedMessageTest extends TestCase {
 
   TestUtil.ReflectionTester extensionsReflectionTester =
     new TestUtil.ReflectionTester(TestAllExtensions.getDescriptor(),
-                                  TestUtil.getExtensionRegistry());
+                                TestUtil.getExtensionRegistry());
 
   public void testExtensionMessageOrBuilder() throws Exception {
     TestAllExtensions.Builder builder = TestAllExtensions.newBuilder();
@@ -657,7 +657,7 @@ public class GeneratedMessageTest extends TestCase {
   }
 
   public void testExtensionReflectionRepeatedSettersRejectNull()
-      throws Exception {
+    throws Exception {
     TestAllExtensions.Builder builder = TestAllExtensions.newBuilder();
     extensionsReflectionTester.assertReflectionRepeatedSettersRejectNull(
         builder);
@@ -665,20 +665,20 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testExtensionReflectionDefaults() throws Exception {
     extensionsReflectionTester.assertClearViaReflection(
-      TestAllExtensions.getDefaultInstance());
+    TestAllExtensions.getDefaultInstance());
     extensionsReflectionTester.assertClearViaReflection(
-      TestAllExtensions.newBuilder().build());
+    TestAllExtensions.newBuilder().build());
   }
 
   public void testClearExtension() throws Exception {
     // clearExtension() is not actually used in TestUtil, so try it manually.
     assertFalse(
-      TestAllExtensions.newBuilder()
+    TestAllExtensions.newBuilder()
         .setExtension(UnittestProto.optionalInt32Extension, 1)
         .clearExtension(UnittestProto.optionalInt32Extension)
         .hasExtension(UnittestProto.optionalInt32Extension));
     assertEquals(0,
-      TestAllExtensions.newBuilder()
+    TestAllExtensions.newBuilder()
         .addExtension(UnittestProto.repeatedInt32Extension, 1)
         .clearExtension(UnittestProto.repeatedInt32Extension)
         .getExtensionCount(UnittestProto.repeatedInt32Extension));
@@ -692,7 +692,7 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testExtensionMergeFrom() throws Exception {
     TestAllExtensions original =
-      TestAllExtensions.newBuilder()
+    TestAllExtensions.newBuilder()
         .setExtension(UnittestProto.optionalInt32Extension, 1).build();
     TestAllExtensions merged =
         TestAllExtensions.newBuilder().mergeFrom(original).build();
@@ -736,12 +736,12 @@ public class GeneratedMessageTest extends TestCase {
   public void testClearLiteExtension() throws Exception {
     // clearExtension() is not actually used in TestUtil, so try it manually.
     assertFalse(
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .setExtension(UnittestLite.optionalInt32ExtensionLite, 1)
         .clearExtension(UnittestLite.optionalInt32ExtensionLite)
         .hasExtension(UnittestLite.optionalInt32ExtensionLite));
     assertEquals(0,
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .addExtension(UnittestLite.repeatedInt32ExtensionLite, 1)
         .clearExtension(UnittestLite.repeatedInt32ExtensionLite)
         .getExtensionCount(UnittestLite.repeatedInt32ExtensionLite));
@@ -756,7 +756,7 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testLiteExtensionMergeFrom() throws Exception {
     TestAllExtensionsLite original =
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .setExtension(UnittestLite.optionalInt32ExtensionLite, 1).build();
     TestAllExtensionsLite merged =
         TestAllExtensionsLite.newBuilder().mergeFrom(original).build();
@@ -780,7 +780,7 @@ public class GeneratedMessageTest extends TestCase {
   public void testMultipleFilesOption() throws Exception {
     // We mostly just want to check that things compile.
     MessageWithNoOuter message =
-      MessageWithNoOuter.newBuilder()
+    MessageWithNoOuter.newBuilder()
         .setNested(MessageWithNoOuter.NestedMessage.newBuilder().setI(1))
         .addForeign(TestAllTypes.newBuilder().setOptionalInt32(1))
         .setNestedEnum(MessageWithNoOuter.NestedEnum.BAZ)
@@ -789,18 +789,18 @@ public class GeneratedMessageTest extends TestCase {
     assertEquals(message, MessageWithNoOuter.parseFrom(message.toByteString()));
 
     assertEquals(MultipleFilesTestProto.getDescriptor(),
-                 MessageWithNoOuter.getDescriptor().getFile());
+                MessageWithNoOuter.getDescriptor().getFile());
 
     Descriptors.FieldDescriptor field =
-      MessageWithNoOuter.getDescriptor().findFieldByName("foreign_enum");
+    MessageWithNoOuter.getDescriptor().findFieldByName("foreign_enum");
     assertEquals(EnumWithNoOuter.BAR.getValueDescriptor(),
-                 message.getField(field));
+                message.getField(field));
 
     assertEquals(MultipleFilesTestProto.getDescriptor(),
-                 ServiceWithNoOuter.getDescriptor().getFile());
+                ServiceWithNoOuter.getDescriptor().getFile());
 
     assertFalse(
-      TestAllExtensions.getDefaultInstance().hasExtension(
+    TestAllExtensions.getDefaultInstance().hasExtension(
         MultipleFilesTestProto.extensionWithOuter));
   }
 
@@ -822,7 +822,7 @@ public class GeneratedMessageTest extends TestCase {
   }
 
   public void testUninitializedExtensionInOptimizedForSize()
-      throws Exception {
+    throws Exception {
     TestOptimizedForSize.Builder builder = TestOptimizedForSize.newBuilder();
     builder.setExtension(TestOptimizedForSize.testExtension2,
         TestRequiredOptimizedForSize.newBuilder().buildPartial());
@@ -862,12 +862,12 @@ public class GeneratedMessageTest extends TestCase {
     assertEquals(UnittestProto.OPTIONAL_INT32_EXTENSION_FIELD_NUMBER, 1);
     assertEquals(UnittestProto.OPTIONALGROUP_EXTENSION_FIELD_NUMBER, 16);
     assertEquals(
-      UnittestProto.OPTIONAL_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 18);
+    UnittestProto.OPTIONAL_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 18);
     assertEquals(UnittestProto.OPTIONAL_NESTED_ENUM_EXTENSION_FIELD_NUMBER, 21);
     assertEquals(UnittestProto.REPEATED_INT32_EXTENSION_FIELD_NUMBER, 31);
     assertEquals(UnittestProto.REPEATEDGROUP_EXTENSION_FIELD_NUMBER, 46);
     assertEquals(
-      UnittestProto.REPEATED_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 48);
+    UnittestProto.REPEATED_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 48);
     assertEquals(UnittestProto.REPEATED_NESTED_ENUM_EXTENSION_FIELD_NUMBER, 51);
   }
 
@@ -886,9 +886,9 @@ public class GeneratedMessageTest extends TestCase {
     TestAllTypes expected = builder.build();
     ObjectOutputStream out = new ObjectOutputStream(baos);
     try {
-      out.writeObject(expected);
+    out.writeObject(expected);
     } finally {
-      out.close();
+    out.close();
     }
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ObjectInputStream in = new ObjectInputStream(bais);
@@ -902,9 +902,9 @@ public class GeneratedMessageTest extends TestCase {
     TestAllTypes expected = builder.buildPartial();
     ObjectOutputStream out = new ObjectOutputStream(baos);
     try {
-      out.writeObject(expected);
+    out.writeObject(expected);
     } finally {
-      out.close();
+    out.close();
     }
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ObjectInputStream in = new ObjectInputStream(bais);
@@ -913,9 +913,9 @@ public class GeneratedMessageTest extends TestCase {
   }
 
   public void testEnumValues() {
-     assertEquals(
-         TestAllTypes.NestedEnum.BAR.getNumber(),
-         TestAllTypes.NestedEnum.BAR_VALUE);
+    assertEquals(
+        TestAllTypes.NestedEnum.BAR.getNumber(),
+        TestAllTypes.NestedEnum.BAR_VALUE);
     assertEquals(
         TestAllTypes.NestedEnum.BAZ.getNumber(),
         TestAllTypes.NestedEnum.BAZ_VALUE);
@@ -926,26 +926,26 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testNonNestedExtensionInitialization() {
     assertTrue(NonNestedExtension.nonNestedExtension
-               .getMessageDefaultInstance() instanceof MyNonNestedExtension);
+                .getMessageDefaultInstance() instanceof MyNonNestedExtension);
     assertEquals("nonNestedExtension",
-                 NonNestedExtension.nonNestedExtension.getDescriptor().getName());
+                NonNestedExtension.nonNestedExtension.getDescriptor().getName());
   }
 
   public void testNestedExtensionInitialization() {
     assertTrue(MyNestedExtension.recursiveExtension.getMessageDefaultInstance()
-               instanceof MessageToBeExtended);
+                instanceof MessageToBeExtended);
     assertEquals("recursiveExtension",
-                 MyNestedExtension.recursiveExtension.getDescriptor().getName());
+                MyNestedExtension.recursiveExtension.getDescriptor().getName());
   }
 
   public void testNonNestedExtensionLiteInitialization() {
     assertTrue(NonNestedExtensionLite.nonNestedExtensionLite
-               .getMessageDefaultInstance() instanceof MyNonNestedExtensionLite);
+                .getMessageDefaultInstance() instanceof MyNonNestedExtensionLite);
   }
 
   public void testNestedExtensionLiteInitialization() {
     assertTrue(MyNestedExtensionLite.recursiveExtensionLite
-               .getMessageDefaultInstance() instanceof MessageLiteToBeExtended);
+                .getMessageDefaultInstance() instanceof MessageLiteToBeExtended);
   }
 
   public void testInvalidations() throws Exception {
@@ -1166,7 +1166,7 @@ public class GeneratedMessageTest extends TestCase {
     FieldDescriptor fieldDescriptor =
         descriptor.findFieldByName("optional_nested_message");
 
-    // Before setting field, builder is initialized by default value. 
+    // Before setting field, builder is initialized by default value.
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     NestedMessage.Builder fieldBuilder =
         (NestedMessage.Builder) builder.getFieldBuilder(fieldDescriptor);
@@ -1190,37 +1190,37 @@ public class GeneratedMessageTest extends TestCase {
     Descriptor descriptor = TestAllTypes.getDescriptor();
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     try {
-      builder.getFieldBuilder(descriptor.findFieldByName("optional_int32"));
-      fail("Exception was not thrown");
+    builder.getFieldBuilder(descriptor.findFieldByName("optional_int32"));
+    fail("Exception was not thrown");
     } catch (UnsupportedOperationException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.getFieldBuilder(
-          descriptor.findFieldByName("optional_nested_enum"));
-      fail("Exception was not thrown");
+    builder.getFieldBuilder(
+        descriptor.findFieldByName("optional_nested_enum"));
+    fail("Exception was not thrown");
     } catch (UnsupportedOperationException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.getFieldBuilder(descriptor.findFieldByName("repeated_int32"));
-      fail("Exception was not thrown");
+    builder.getFieldBuilder(descriptor.findFieldByName("repeated_int32"));
+    fail("Exception was not thrown");
     } catch (UnsupportedOperationException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.getFieldBuilder(
-          descriptor.findFieldByName("repeated_nested_enum"));
-      fail("Exception was not thrown");
+    builder.getFieldBuilder(
+        descriptor.findFieldByName("repeated_nested_enum"));
+    fail("Exception was not thrown");
     } catch (UnsupportedOperationException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.getFieldBuilder(
-          descriptor.findFieldByName("repeated_nested_message"));
-      fail("Exception was not thrown");
+    builder.getFieldBuilder(
+        descriptor.findFieldByName("repeated_nested_message"));
+    fail("Exception was not thrown");
     } catch (UnsupportedOperationException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -1297,135 +1297,135 @@ public class GeneratedMessageTest extends TestCase {
   public void testOneofTypes() throws Exception {
     // Primitive
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      assertEquals(builder.getFooInt(), 0);
-      assertFalse(builder.hasFooInt());
-      assertTrue(builder.setFooInt(123).hasFooInt());
-      assertEquals(builder.getFooInt(), 123);
-      TestOneof2 message = builder.buildPartial();
-      assertTrue(message.hasFooInt());
-      assertEquals(message.getFooInt(), 123);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    assertEquals(builder.getFooInt(), 0);
+    assertFalse(builder.hasFooInt());
+    assertTrue(builder.setFooInt(123).hasFooInt());
+    assertEquals(builder.getFooInt(), 123);
+    TestOneof2 message = builder.buildPartial();
+    assertTrue(message.hasFooInt());
+    assertEquals(message.getFooInt(), 123);
 
-      assertFalse(builder.clearFooInt().hasFooInt());
-      TestOneof2 message2 = builder.build();
-      assertFalse(message2.hasFooInt());
-      assertEquals(message2.getFooInt(), 0);
+    assertFalse(builder.clearFooInt().hasFooInt());
+    TestOneof2 message2 = builder.build();
+    assertFalse(message2.hasFooInt());
+    assertEquals(message2.getFooInt(), 0);
     }
 
     // Enum
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      assertEquals(builder.getFooEnum(), TestOneof2.NestedEnum.FOO);
-      assertTrue(builder.setFooEnum(TestOneof2.NestedEnum.BAR).hasFooEnum());
-      assertEquals(builder.getFooEnum(), TestOneof2.NestedEnum.BAR);
-      TestOneof2 message = builder.buildPartial();
-      assertTrue(message.hasFooEnum());
-      assertEquals(message.getFooEnum(), TestOneof2.NestedEnum.BAR);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    assertEquals(builder.getFooEnum(), TestOneof2.NestedEnum.FOO);
+    assertTrue(builder.setFooEnum(TestOneof2.NestedEnum.BAR).hasFooEnum());
+    assertEquals(builder.getFooEnum(), TestOneof2.NestedEnum.BAR);
+    TestOneof2 message = builder.buildPartial();
+    assertTrue(message.hasFooEnum());
+    assertEquals(message.getFooEnum(), TestOneof2.NestedEnum.BAR);
 
-      assertFalse(builder.clearFooEnum().hasFooEnum());
-      TestOneof2 message2 = builder.build();
-      assertFalse(message2.hasFooEnum());
-      assertEquals(message2.getFooEnum(), TestOneof2.NestedEnum.FOO);
+    assertFalse(builder.clearFooEnum().hasFooEnum());
+    TestOneof2 message2 = builder.build();
+    assertFalse(message2.hasFooEnum());
+    assertEquals(message2.getFooEnum(), TestOneof2.NestedEnum.FOO);
     }
 
     // String
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      assertEquals(builder.getFooString(), "");
-      builder.setFooString("foo");
-      assertTrue(builder.hasFooString());
-      assertEquals(builder.getFooString(), "foo");
-      TestOneof2 message = builder.buildPartial();
-      assertTrue(message.hasFooString());
-      assertEquals(message.getFooString(), "foo");
-      assertEquals(message.getFooStringBytes(), TestUtil.toBytes("foo"));
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    assertEquals(builder.getFooString(), "");
+    builder.setFooString("foo");
+    assertTrue(builder.hasFooString());
+    assertEquals(builder.getFooString(), "foo");
+    TestOneof2 message = builder.buildPartial();
+    assertTrue(message.hasFooString());
+    assertEquals(message.getFooString(), "foo");
+    assertEquals(message.getFooStringBytes(), TestUtil.toBytes("foo"));
 
-      assertFalse(builder.clearFooString().hasFooString());
-      TestOneof2 message2 = builder.buildPartial();
-      assertFalse(message2.hasFooString());
-      assertEquals(message2.getFooString(), "");
-      assertEquals(message2.getFooStringBytes(), TestUtil.toBytes(""));
+    assertFalse(builder.clearFooString().hasFooString());
+    TestOneof2 message2 = builder.buildPartial();
+    assertFalse(message2.hasFooString());
+    assertEquals(message2.getFooString(), "");
+    assertEquals(message2.getFooStringBytes(), TestUtil.toBytes(""));
 
-      // Get method should not change the oneof value.
-      builder.setFooInt(123);
-      assertEquals(builder.getFooString(), "");
-      assertEquals(builder.getFooStringBytes(), TestUtil.toBytes(""));
-      assertEquals(123, builder.getFooInt());
+    // Get method should not change the oneof value.
+    builder.setFooInt(123);
+    assertEquals(builder.getFooString(), "");
+    assertEquals(builder.getFooStringBytes(), TestUtil.toBytes(""));
+    assertEquals(123, builder.getFooInt());
 
-      message = builder.build();
-      assertEquals(message.getFooString(), "");
-      assertEquals(message.getFooStringBytes(), TestUtil.toBytes(""));
-      assertEquals(123, message.getFooInt());
+    message = builder.build();
+    assertEquals(message.getFooString(), "");
+    assertEquals(message.getFooStringBytes(), TestUtil.toBytes(""));
+    assertEquals(123, message.getFooInt());
     }
 
     // Cord
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      assertEquals(builder.getFooCord(), "");
-      builder.setFooCord("foo");
-      assertTrue(builder.hasFooCord());
-      assertEquals(builder.getFooCord(), "foo");
-      TestOneof2 message = builder.buildPartial();
-      assertTrue(message.hasFooCord());
-      assertEquals(message.getFooCord(), "foo");
-      assertEquals(message.getFooCordBytes(), TestUtil.toBytes("foo"));
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    assertEquals(builder.getFooCord(), "");
+    builder.setFooCord("foo");
+    assertTrue(builder.hasFooCord());
+    assertEquals(builder.getFooCord(), "foo");
+    TestOneof2 message = builder.buildPartial();
+    assertTrue(message.hasFooCord());
+    assertEquals(message.getFooCord(), "foo");
+    assertEquals(message.getFooCordBytes(), TestUtil.toBytes("foo"));
 
-      assertFalse(builder.clearFooCord().hasFooCord());
-      TestOneof2 message2 = builder.build();
-      assertFalse(message2.hasFooCord());
-      assertEquals(message2.getFooCord(), "");
-      assertEquals(message2.getFooCordBytes(), TestUtil.toBytes(""));
+    assertFalse(builder.clearFooCord().hasFooCord());
+    TestOneof2 message2 = builder.build();
+    assertFalse(message2.hasFooCord());
+    assertEquals(message2.getFooCord(), "");
+    assertEquals(message2.getFooCordBytes(), TestUtil.toBytes(""));
     }
 
     // StringPiece
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      assertEquals(builder.getFooStringPiece(), "");
-      builder.setFooStringPiece("foo");
-      assertTrue(builder.hasFooStringPiece());
-      assertEquals(builder.getFooStringPiece(), "foo");
-      TestOneof2 message = builder.buildPartial();
-      assertTrue(message.hasFooStringPiece());
-      assertEquals(message.getFooStringPiece(), "foo");
-      assertEquals(message.getFooStringPieceBytes(), TestUtil.toBytes("foo"));
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    assertEquals(builder.getFooStringPiece(), "");
+    builder.setFooStringPiece("foo");
+    assertTrue(builder.hasFooStringPiece());
+    assertEquals(builder.getFooStringPiece(), "foo");
+    TestOneof2 message = builder.buildPartial();
+    assertTrue(message.hasFooStringPiece());
+    assertEquals(message.getFooStringPiece(), "foo");
+    assertEquals(message.getFooStringPieceBytes(), TestUtil.toBytes("foo"));
 
-      assertFalse(builder.clearFooStringPiece().hasFooStringPiece());
-      TestOneof2 message2 = builder.build();
-      assertFalse(message2.hasFooStringPiece());
-      assertEquals(message2.getFooStringPiece(), "");
-      assertEquals(message2.getFooStringPieceBytes(), TestUtil.toBytes(""));
+    assertFalse(builder.clearFooStringPiece().hasFooStringPiece());
+    TestOneof2 message2 = builder.build();
+    assertFalse(message2.hasFooStringPiece());
+    assertEquals(message2.getFooStringPiece(), "");
+    assertEquals(message2.getFooStringPieceBytes(), TestUtil.toBytes(""));
     }
 
     // Message
     {
-      // set
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      assertEquals(builder.getFooMessage().getQuxInt(), 0);
-      builder.setFooMessage(
-          TestOneof2.NestedMessage.newBuilder().setQuxInt(234).build());
-      assertTrue(builder.hasFooMessage());
-      assertEquals(builder.getFooMessage().getQuxInt(), 234);
-      TestOneof2 message = builder.buildPartial();
-      assertTrue(message.hasFooMessage());
-      assertEquals(message.getFooMessage().getQuxInt(), 234);
+    // set
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    assertEquals(builder.getFooMessage().getQuxInt(), 0);
+    builder.setFooMessage(
+        TestOneof2.NestedMessage.newBuilder().setQuxInt(234).build());
+    assertTrue(builder.hasFooMessage());
+    assertEquals(builder.getFooMessage().getQuxInt(), 234);
+    TestOneof2 message = builder.buildPartial();
+    assertTrue(message.hasFooMessage());
+    assertEquals(message.getFooMessage().getQuxInt(), 234);
 
-      // clear
-      assertFalse(builder.clearFooMessage().hasFooString());
-      message = builder.build();
-      assertFalse(message.hasFooMessage());
-      assertEquals(message.getFooMessage().getQuxInt(), 0);
+    // clear
+    assertFalse(builder.clearFooMessage().hasFooString());
+    message = builder.build();
+    assertFalse(message.hasFooMessage());
+    assertEquals(message.getFooMessage().getQuxInt(), 0);
 
-      // nested builder
-      builder = TestOneof2.newBuilder();
-      assertSame(builder.getFooMessageOrBuilder(),
-          TestOneof2.NestedMessage.getDefaultInstance());
-      assertFalse(builder.hasFooMessage());
-      builder.getFooMessageBuilder().setQuxInt(123);
-      assertTrue(builder.hasFooMessage());
-      assertEquals(builder.getFooMessage().getQuxInt(), 123);
-      message = builder.build();
-      assertTrue(message.hasFooMessage());
-      assertEquals(message.getFooMessage().getQuxInt(), 123);
+    // nested builder
+    builder = TestOneof2.newBuilder();
+    assertSame(builder.getFooMessageOrBuilder(),
+        TestOneof2.NestedMessage.getDefaultInstance());
+    assertFalse(builder.hasFooMessage());
+    builder.getFooMessageBuilder().setQuxInt(123);
+    assertTrue(builder.hasFooMessage());
+    assertEquals(builder.getFooMessage().getQuxInt(), 123);
+    message = builder.build();
+    assertTrue(message.hasFooMessage());
+    assertEquals(message.getFooMessage().getQuxInt(), 123);
     }
 
     // LazyMessage is tested in LazyMessageLiteTest.java
@@ -1434,82 +1434,82 @@ public class GeneratedMessageTest extends TestCase {
   public void testOneofMerge() throws Exception {
     // Primitive Type
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooInt(123).build();
-      TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
-      assertTrue(message2.hasFooInt());
-      assertEquals(message2.getFooInt(), 123);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooInt(123).build();
+    TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
+    assertTrue(message2.hasFooInt());
+    assertEquals(message2.getFooInt(), 123);
     }
 
     // String
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooString("foo").build();
-      TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
-      assertTrue(message2.hasFooString());
-      assertEquals(message2.getFooString(), "foo");
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooString("foo").build();
+    TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
+    assertTrue(message2.hasFooString());
+    assertEquals(message2.getFooString(), "foo");
     }
 
     // Enum
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooEnum(TestOneof2.NestedEnum.BAR).build();
-      TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
-      assertTrue(message2.hasFooEnum());
-      assertEquals(message2.getFooEnum(), TestOneof2.NestedEnum.BAR);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooEnum(TestOneof2.NestedEnum.BAR).build();
+    TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
+    assertTrue(message2.hasFooEnum());
+    assertEquals(message2.getFooEnum(), TestOneof2.NestedEnum.BAR);
     }
 
     // Message
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooMessage(
-          TestOneof2.NestedMessage.newBuilder().setQuxInt(234).build()).build();
-      TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
-      assertTrue(message2.hasFooMessage());
-      assertEquals(message2.getFooMessage().getQuxInt(), 234);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooMessage(
+        TestOneof2.NestedMessage.newBuilder().setQuxInt(234).build()).build();
+    TestOneof2 message2 = TestOneof2.newBuilder().mergeFrom(message).build();
+    assertTrue(message2.hasFooMessage());
+    assertEquals(message2.getFooMessage().getQuxInt(), 234);
     }
   }
 
   public void testOneofSerialization() throws Exception {
     // Primitive Type
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooInt(123).build();
-      ByteString serialized = message.toByteString();
-      TestOneof2 message2 = TestOneof2.parseFrom(serialized);
-      assertTrue(message2.hasFooInt());
-      assertEquals(message2.getFooInt(), 123);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooInt(123).build();
+    ByteString serialized = message.toByteString();
+    TestOneof2 message2 = TestOneof2.parseFrom(serialized);
+    assertTrue(message2.hasFooInt());
+    assertEquals(message2.getFooInt(), 123);
     }
 
     // String
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooString("foo").build();
-      ByteString serialized = message.toByteString();
-      TestOneof2 message2 = TestOneof2.parseFrom(serialized);
-      assertTrue(message2.hasFooString());
-      assertEquals(message2.getFooString(), "foo");
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooString("foo").build();
+    ByteString serialized = message.toByteString();
+    TestOneof2 message2 = TestOneof2.parseFrom(serialized);
+    assertTrue(message2.hasFooString());
+    assertEquals(message2.getFooString(), "foo");
     }
 
     // Enum
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooEnum(TestOneof2.NestedEnum.BAR).build();
-      ByteString serialized = message.toByteString();
-      TestOneof2 message2 = TestOneof2.parseFrom(serialized);
-      assertTrue(message2.hasFooEnum());
-      assertEquals(message2.getFooEnum(), TestOneof2.NestedEnum.BAR);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooEnum(TestOneof2.NestedEnum.BAR).build();
+    ByteString serialized = message.toByteString();
+    TestOneof2 message2 = TestOneof2.parseFrom(serialized);
+    assertTrue(message2.hasFooEnum());
+    assertEquals(message2.getFooEnum(), TestOneof2.NestedEnum.BAR);
     }
 
     // Message
     {
-      TestOneof2.Builder builder = TestOneof2.newBuilder();
-      TestOneof2 message = builder.setFooMessage(
-          TestOneof2.NestedMessage.newBuilder().setQuxInt(234).build()).build();
-      ByteString serialized = message.toByteString();
-      TestOneof2 message2 = TestOneof2.parseFrom(serialized);
-      assertTrue(message2.hasFooMessage());
-      assertEquals(message2.getFooMessage().getQuxInt(), 234);
+    TestOneof2.Builder builder = TestOneof2.newBuilder();
+    TestOneof2 message = builder.setFooMessage(
+        TestOneof2.NestedMessage.newBuilder().setQuxInt(234).build()).build();
+    ByteString serialized = message.toByteString();
+    TestOneof2 message2 = TestOneof2.parseFrom(serialized);
+    assertTrue(message2.hasFooMessage());
+    assertEquals(message2.getFooMessage().getQuxInt(), 234);
     }
   }
 }

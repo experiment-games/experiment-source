@@ -22,7 +22,7 @@ class VideoPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( VideoPanel, vgui::EditablePanel );
 
-   public:
+    public:
     VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHeight, unsigned int nWidth, bool allowAlternateMedia = true );
 
     virtual ~VideoPanel( void );
@@ -50,7 +50,7 @@ class VideoPanel : public vgui::EditablePanel
         m_bBlackBackground = bBlack;
     }
 
-   protected:
+    protected:
     virtual void OnTick( void )
     {
         BaseClass::OnTick();
@@ -61,7 +61,7 @@ class VideoPanel : public vgui::EditablePanel
     }
     virtual void OnVideoOver() {}
 
-   protected:
+    protected:
     IVideoMaterial *m_VideoMaterial;
 
     IMaterial *m_pMaterial;

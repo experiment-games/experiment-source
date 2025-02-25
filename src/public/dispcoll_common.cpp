@@ -34,7 +34,7 @@ struct DispCollPlaneIndex_t
 
 class CPlaneIndexHashFuncs
 {
-   public:
+    public:
     CPlaneIndexHashFuncs( int ) {}
 
     // Compare

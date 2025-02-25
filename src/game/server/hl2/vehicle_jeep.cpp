@@ -92,7 +92,7 @@ DEFINE_ARRAY( m_bWheelInWater, FIELD_BOOLEAN, JEEP_WHEEL_COUNT ),
 {
     typedef CFourWheelServerVehicle BaseClass;
     // IServerVehicle
-   public:
+    public:
     bool NPC_HasPrimaryWeapon( void )
     {
         return true;
@@ -1213,9 +1213,9 @@ void CPropJeep::DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleE
 // speed += ( pCoefficientsOut[0] * ( targetPos - currentPos ) + pCoefficientsOut[1] * ( targetSpeed - currentSpeed ) ) * flDeltaTime;
 //-----------------------------------------------------------------------------
 void CPropJeep::ComputePDControllerCoefficients( float *pCoefficientsOut,
-                                                 float flFrequency,
-                                                 float flDampening,
-                                                 float flDeltaTime )
+                                                float flFrequency,
+                                                float flDampening,
+                                                float flDeltaTime )
 {
     float flKs = 9.0f * flFrequency * flFrequency;
     float flKd = 4.5f * flFrequency * flDampening;
@@ -1329,16 +1329,16 @@ void CPropJeep::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDow
 
     // Adrian: No headlights on Superfly.
     /*	if ( ucmd->impulse == 100 )
-      {
+    {
         if (HeadlightIsOn())
         {
-          HeadlightTurnOff();
+        HeadlightTurnOff();
         }
             else
         {
-          HeadlightTurnOn();
+        HeadlightTurnOn();
         }
-      }*/
+    }*/
 
     // Only handle the cannon if the vehicle has one
     if ( m_bHasGun )
@@ -1433,16 +1433,16 @@ void CPropJeep::CreateDangerSounds( void )
         // NDebugOverlay::Box(vecSpot, Vector(-radius,-radius,-radius),Vector(radius,radius,radius), 255, 0, 255, 0, soundDuration);
 
 #if 0
-		trace_t	tr;
-		// put sounds a bit to left and right but slightly closer to Jeep to make a "cone" of sound 
-		// in front of it
-		vecSpot = vecStart + vecDir * (speed * 0.75f) - vecRight * speed * 0.5;
-		UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 1 );
+        trace_t	tr;
+        // put sounds a bit to left and right but slightly closer to Jeep to make a "cone" of sound
+        // in front of it
+        vecSpot = vecStart + vecDir * (speed * 0.75f) - vecRight * speed * 0.5;
+        UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+        CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 1 );
 
-		vecSpot = vecStart + vecDir * (speed * 0.75f) + vecRight * speed * 0.5;
-		UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 2);
+        vecSpot = vecStart + vecDir * (speed * 0.75f) + vecRight * speed * 0.5;
+        UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+        CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 2);
 #endif
     }
 

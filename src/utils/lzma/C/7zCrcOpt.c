@@ -18,10 +18,10 @@ UInt32 MY_FAST_CALL CrcUpdateT4(UInt32 v, const void *data, size_t size, const U
   {
     v ^= *(const UInt32 *)p;
     v =
-      table[0x300 + (v & 0xFF)] ^
-      table[0x200 + ((v >> 8) & 0xFF)] ^
-      table[0x100 + ((v >> 16) & 0xFF)] ^
-      table[0x000 + ((v >> 24))];
+    table[0x300 + (v & 0xFF)] ^
+    table[0x200 + ((v >> 8) & 0xFF)] ^
+    table[0x100 + ((v >> 16) & 0xFF)] ^
+    table[0x000 + ((v >> 24))];
   }
   for (; size > 0; size--, p++)
     v = CRC_UPDATE_BYTE_2(v, *p);
@@ -51,10 +51,10 @@ UInt32 MY_FAST_CALL CrcUpdateT1_BeT4(UInt32 v, const void *data, size_t size, co
   {
     v ^= *(const UInt32 *)p;
     v =
-      table[0x000 + (v & 0xFF)] ^
-      table[0x100 + ((v >> 8) & 0xFF)] ^
-      table[0x200 + ((v >> 16) & 0xFF)] ^
-      table[0x300 + ((v >> 24))];
+    table[0x000 + (v & 0xFF)] ^
+    table[0x100 + ((v >> 8) & 0xFF)] ^
+    table[0x200 + ((v >> 16) & 0xFF)] ^
+    table[0x300 + ((v >> 24))];
   }
   table -= 0x100;
   v = CRC_UINT32_SWAP(v);

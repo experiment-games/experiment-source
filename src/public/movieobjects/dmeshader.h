@@ -24,14 +24,14 @@ class CDmeShader : public CDmElement
 {
     DEFINE_ELEMENT( CDmeShader, CDmElement );
 
-   public:
+    public:
     void SetShaderName( const char *pShaderName );
     const char *GetShaderName() const;
 
     // Resolve
     virtual void Resolve();
 
-   private:
+    private:
     // Finds a shader
     IShader *FindShader();
 

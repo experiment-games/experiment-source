@@ -14,7 +14,7 @@
 
 class C_LightGlowOverlay : public CGlowOverlay
 {
-   public:
+    public:
     virtual void CalcSpriteColorAndSize( float flDot, CGlowSprite *pSprite, float *flHorzSize, float *flVertSize, Vector *vColor )
     {
         *flHorzSize = pSprite->m_flHorzSize;
@@ -74,7 +74,7 @@ class C_LightGlowOverlay : public CGlowOverlay
         VectorNormalize( m_vecDirection );
     }
 
-   protected:
+    protected:
     Vector m_vecOrigin;
     Vector m_vecDirection;
     int m_nMinDist;
@@ -89,19 +89,19 @@ class C_LightGlowOverlay : public CGlowOverlay
 //-----------------------------------------------------------------------------
 class C_LightGlow : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_LightGlow, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_LightGlow();
 
     // C_BaseEntity overrides.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void Simulate( void );
     virtual void ClientThink( void );
 
-   public:
+    public:
     int m_nHorizontalSize;
     int m_nVerticalSize;
     int m_nMinDist;

@@ -20,14 +20,14 @@
 //-----------------------------------------------------------------------------
 class C_EnvParticleScript : public C_BaseAnimating, public IParticleEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_EnvParticleScript, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
 
     C_EnvParticleScript();
 
     // IParticleEffect overrides.
-   public:
+    public:
     virtual bool ShouldSimulate() const
     {
         return m_bSimulate;
@@ -43,7 +43,7 @@ class C_EnvParticleScript : public C_BaseAnimating, public IParticleEffect
     virtual const Vector &GetSortOrigin();
 
     // C_BaseAnimating overrides
-   public:
+    public:
     // NOTE: Ths enclosed particle effect binding will do all the drawing
     // But we have to return true, unlike other particle systems, for the animation events to work
     virtual bool ShouldDraw()
@@ -63,13 +63,13 @@ class C_EnvParticleScript : public C_BaseAnimating, public IParticleEffect
     virtual void OnPreDataChanged( DataUpdateType_t updateType );
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   private:
+    private:
     // Creates, destroys particles attached to an attachment
     void CreateParticle( const char *pAttachmentName, const char *pSpriteName );
     void DestroyAllParticles( const char *pAttachmentName );
     void DestroyAllParticles();
 
-   private:
+    private:
     struct ParticleScriptParticle_t : public Particle
     {
         int m_nAttachment;

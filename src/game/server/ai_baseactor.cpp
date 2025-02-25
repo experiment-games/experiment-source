@@ -935,19 +935,19 @@ void CAI_BaseActor::UpdateHeadControl( const Vector &vHeadTarget, float flHeadIn
         /*
         if ( (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) )
         {
-          // Msg("bias %f %f %f\n", angBias.x, angBias.y, angBias.z );
+        // Msg("bias %f %f %f\n", angBias.x, angBias.y, angBias.z );
 
-          Vector tmp1, tmp2;
+        Vector tmp1, tmp2;
 
-          VectorTransform( Vector( 0, 0, 0), chestToWorld, tmp1 );
-          VectorTransform( Vector( 100, 0, 0), chestToWorld, tmp2 );
-          NDebugOverlay::Line( tmp1, tmp2, 0,0,255, false, 0.12 );
+        VectorTransform( Vector( 0, 0, 0), chestToWorld, tmp1 );
+        VectorTransform( Vector( 100, 0, 0), chestToWorld, tmp2 );
+        NDebugOverlay::Line( tmp1, tmp2, 0,0,255, false, 0.12 );
 
-          VectorTransform( Vector( 0, 0, 0), eyesToWorld, tmp1 );
-          VectorTransform( Vector( 100, 0, 0), eyesToWorld, tmp2 );
-          NDebugOverlay::Line( tmp1, tmp2, 0,0,255, false, 0.12 );
+        VectorTransform( Vector( 0, 0, 0), eyesToWorld, tmp1 );
+        VectorTransform( Vector( 100, 0, 0), eyesToWorld, tmp2 );
+        NDebugOverlay::Line( tmp1, tmp2, 0,0,255, false, 0.12 );
 
-          // NDebugOverlay::Line( EyePosition(), pEntity->EyePosition(), 0,0,255, false, 0.5);
+        // NDebugOverlay::Line( EyePosition(), pEntity->EyePosition(), 0,0,255, false, 0.5);
         }
         */
     }
@@ -991,8 +991,8 @@ void CAI_BaseActor::UpdateHeadControl( const Vector &vHeadTarget, float flHeadIn
     /*
     if ( (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) )
     {
-      // Msg( "yaw %.1f (%f) pitch %.1f (%.1f)\n", m_goalHeadCorrection.y, vTargetAngles.y, vTargetAngles.x, m_goalHeadCorrection.x );
-      // Msg( "yaw %.2f (goal %.2f) (influence %.2f) (flex %.2f)\n", flLimit, m_goalHeadCorrection.y, flHeadInfluence, Get( m_FlexweightHeadRightLeft ) );
+    // Msg( "yaw %.1f (%f) pitch %.1f (%.1f)\n", m_goalHeadCorrection.y, vTargetAngles.y, vTargetAngles.x, m_goalHeadCorrection.x );
+    // Msg( "yaw %.2f (goal %.2f) (influence %.2f) (flex %.2f)\n", flLimit, m_goalHeadCorrection.y, flHeadInfluence, Get( m_FlexweightHeadRightLeft ) );
     }
     */
 
@@ -1001,7 +1001,7 @@ void CAI_BaseActor::UpdateHeadControl( const Vector &vHeadTarget, float flHeadIn
     /*
     if ( (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) )
     {
-      Msg( "yaw  %5.1f : (%5.1f : %5.1f) %5.1f (%5.1f)\n", flLimit, m_goalHeadCorrection.y, Get( m_FlexweightHeadRightLeft ), angBias.y, Get( m_ParameterHeadYaw ) );
+    Msg( "yaw  %5.1f : (%5.1f : %5.1f) %5.1f (%5.1f)\n", flLimit, m_goalHeadCorrection.y, Get( m_FlexweightHeadRightLeft ), angBias.y, Get( m_ParameterHeadYaw ) );
     }
     */
     Set( m_ParameterHeadYaw, flLimit );
@@ -1011,7 +1011,7 @@ void CAI_BaseActor::UpdateHeadControl( const Vector &vHeadTarget, float flHeadIn
     /*
     if ( (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) )
     {
-      Msg( "pitch %5.1f : (%5.1f : %5.1f) %5.1f (%5.1f)\n", flLimit, m_goalHeadCorrection.x, Get( m_FlexweightHeadUpDown ), angBias.x, Get( m_ParameterHeadPitch ) );
+    Msg( "pitch %5.1f : (%5.1f : %5.1f) %5.1f (%5.1f)\n", flLimit, m_goalHeadCorrection.x, Get( m_FlexweightHeadUpDown ), angBias.x, Get( m_ParameterHeadPitch ) );
     }
     */
     Set( m_ParameterHeadPitch, flLimit );
@@ -1021,7 +1021,7 @@ void CAI_BaseActor::UpdateHeadControl( const Vector &vHeadTarget, float flHeadIn
     /*
     if ( (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) )
     {
-      Msg( "roll  %5.1f : (%5.1f : %5.1f) %5.1f (%5.1f)\n", flLimit, m_goalHeadCorrection.z, Get( m_FlexweightHeadTilt ), angBias.z, Get( m_ParameterHeadRoll ) );
+    Msg( "roll  %5.1f : (%5.1f : %5.1f) %5.1f (%5.1f)\n", flLimit, m_goalHeadCorrection.z, Get( m_FlexweightHeadTilt ), angBias.z, Get( m_ParameterHeadRoll ) );
     }
     */
     Set( m_ParameterHeadRoll, flLimit );
@@ -1296,8 +1296,8 @@ bool CAI_BaseActor::PickRandomLookTarget( AILookTargetArgs_t *pArgs )
 
         int iImportance;
 #if 0
-		// consider things in front to be more important than things to the sides
-		iImportance = (DotProduct( delta, HeadDirection3D() );
+        // consider things in front to be more important than things to the sides
+        iImportance = (DotProduct( delta, HeadDirection3D() );
 #else
         // No, for now, give all targets random priority (as long as they're in front)
         iImportance = random->RandomInt( 1, 100 );
@@ -1526,7 +1526,7 @@ void CAI_BaseActor::MaintainLookTargets( float flInterval )
         /*
         if ( (m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) )
         {
-          DevMsg( "head (%d) %.2f : %s : %.1f %.1f %.1f\n", i, flInterest, active[i]->m_hTarget->GetClassname(), active[i]->GetPosition().x, active[i]->GetPosition().y, active[i]->GetPosition().z );
+        DevMsg( "head (%d) %.2f : %s : %.1f %.1f %.1f\n", i, flInterest, active[i]->m_hTarget->GetClassname(), active[i]->GetPosition().x, active[i]->GetPosition().y, active[i]->GetPosition().z );
         }
         */
 

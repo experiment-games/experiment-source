@@ -34,7 +34,7 @@
 //
 class CTFPistol : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPistol, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -52,14 +52,14 @@ class CTFPistol : public CTFWeaponBaseGun
         return TF_WEAPON_PISTOL;
     }
 
-   private:
+    private:
     CTFPistol( const CTFPistol & ) {}
 };
 
 // Scout specific version
 class CTFPistol_Scout : public CTFPistol
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPistol_Scout, CTFPistol );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -72,7 +72,7 @@ class CTFPistol_Scout : public CTFPistol
 
 class CTFPistol_ScoutPrimary : public CTFPistol_Scout
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPistol_ScoutPrimary, CTFPistol_Scout );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -102,13 +102,13 @@ class CTFPistol_ScoutPrimary : public CTFPistol_Scout
     }
 #endif
 
-   private:
+    private:
     float m_flPushTime;
 };
 
 class CTFPistol_ScoutSecondary : public CTFPistol_Scout
 {
-   public:
+    public:
     DECLARE_CLASS( CTFPistol_ScoutSecondary, CTFPistol_Scout );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

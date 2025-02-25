@@ -10,7 +10,7 @@
 
 class CMerasmusZap : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
 
@@ -18,7 +18,7 @@ class CMerasmusZap : public Action< CMerasmus >
     {
         return "Zap!";
     }  // return name of this action
-   private:
+    private:
     enum SpellType_t
     {
         SPELL_FIRE,

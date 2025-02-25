@@ -53,7 +53,7 @@ class CHudWeaponSelection : public CBaseHudWeaponSelection, public vgui::Editabl
 {
     DECLARE_CLASS_SIMPLE( CHudWeaponSelection, vgui::Panel );
 
-   public:
+    public:
     CHudWeaponSelection( const char *pElementName );
     virtual ~CHudWeaponSelection( void );
 
@@ -90,7 +90,7 @@ class CHudWeaponSelection : public CBaseHudWeaponSelection, public vgui::Editabl
     void _cdecl UserCmd_Slot11( void );
     void _cdecl UserCmd_Slot12( void );
 
-   protected:
+    protected:
     struct SlotLayout_t
     {
         float x, y;
@@ -113,7 +113,7 @@ class CHudWeaponSelection : public CBaseHudWeaponSelection, public vgui::Editabl
         return false;
     }
 
-   private:
+    private:
     C_BaseCombatWeapon *FindNextWeaponInWeaponSelection( int iCurrentSlot, int iCurrentPosition );
     C_BaseCombatWeapon *FindPrevWeaponInWeaponSelection( int iCurrentSlot, int iCurrentPosition );
 

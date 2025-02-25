@@ -53,7 +53,7 @@ class CLobbyContainerFrame_Comp : public CBaseLobbyContainerFrame
 {
     DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Comp, CBaseLobbyContainerFrame );
 
-   public:
+    public:
     CLobbyContainerFrame_Comp();
     ~CLobbyContainerFrame_Comp();
 
@@ -69,10 +69,10 @@ class CLobbyContainerFrame_Comp : public CBaseLobbyContainerFrame
         return TypeCanHandleMatchGroup( eMatchGroup );
     }
 
-   protected:
+    protected:
     virtual void WriteControls() OVERRIDE;
 
-   private:
+    private:
     virtual const char* GetResFile() const OVERRIDE
     {
         return "Resource/UI/LobbyContainerFrame_Comp.res";

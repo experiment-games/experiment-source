@@ -69,7 +69,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar **params, IShaderDyn
         // Unlit generic never uses the flashlight
         bool hasEnvmap = !hasFlashlight && params[info.m_nEnvmap]->IsTexture();
         bool hasEnvmapMask = ( hasSelfIllumInEnvMapMask || !hasFlashlight ) &&
-                             params[info.m_nEnvmapMask]->IsTexture();
+                            params[info.m_nEnvmapMask]->IsTexture();
         bool bHasNormal = bVertexLitGeneric || hasEnvmap;
 
         if ( hasFlashlight )
@@ -487,7 +487,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar **params, IShaderDyn
 }
 
 BEGIN_VS_SHADER( VortWarp_DX9,
-                 "Help for VortWarp_DX9" )
+                "Help for VortWarp_DX9" )
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( ALBEDO, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "albedo (Base texture with no baked lighting)" )
 SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )

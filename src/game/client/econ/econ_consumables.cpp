@@ -66,8 +66,8 @@ bool CEconTool_WrappedGift::CanBeUsedNow( const IEconItemInterface *pItem ) cons
     Assert( pItem->GetItemDefinition()->GetEconTool() == this );
 
     if ( ( pItem->GetItemDefinition() == pItemDef_WrappedGiftapultPackage ) ||
-         ( pItem->GetItemDefinition() == pItemDef_CompetitiveBetaPassGift ) ||
-         ( pItem->GetItemDefinition() == pItemDef_DeliveredGiftapultPackage ) )
+        ( pItem->GetItemDefinition() == pItemDef_CompetitiveBetaPassGift ) ||
+        ( pItem->GetItemDefinition() == pItemDef_DeliveredGiftapultPackage ) )
         return true;
 
     return pItem->IsTradable();
@@ -98,7 +98,7 @@ const char *CEconTool_WrappedGift::GetUseCommandLocalizationToken( const IEconIt
 
     // NOTE! Keep in sync with CEconTool_WrappedGift::GetUseCommand
     if ( BIsDirectGift() ||
-         ( IsLocalPlayerWrappedGift( pItem ) && i == 0 ) )
+        ( IsLocalPlayerWrappedGift( pItem ) && i == 0 ) )
         return "#DeliverGift";
     return "#UnwrapGift";
 }
@@ -131,7 +131,7 @@ const char *CEconTool_WrappedGift::GetUseCommand( const IEconItemInterface *pIte
 
     // NOTE! Keep in sync with CEconTool_WrappedGift::GetUseCommand
     if ( BIsDirectGift() ||
-         ( IsLocalPlayerWrappedGift( pItem ) && i == 0 ) )
+        ( IsLocalPlayerWrappedGift( pItem ) && i == 0 ) )
         return "Context_DeliverItem";
     return "Context_UnwrapItem";
 }

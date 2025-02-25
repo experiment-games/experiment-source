@@ -25,9 +25,9 @@ namespace GCSDK
 {
 
 bool IsProtoBufFieldLess( const ::google::protobuf::Message &msgLHS,
-                          const ::google::protobuf::Message &msgRHS,
-                          const ::google::protobuf::FieldDescriptor *pFieldLHS,
-                          const ::google::protobuf::FieldDescriptor *pFieldRHS );
+                        const ::google::protobuf::Message &msgRHS,
+                        const ::google::protobuf::FieldDescriptor *pFieldLHS,
+                        const ::google::protobuf::FieldDescriptor *pFieldRHS );
 
 //----------------------------------------------------------------------------
 // Purpose: Base class for CProtoBufSharedObject. This is where all the actual
@@ -35,7 +35,7 @@ bool IsProtoBufFieldLess( const ::google::protobuf::Message &msgLHS,
 //----------------------------------------------------------------------------
 class CProtoBufSharedObjectBase : public CSharedObject
 {
-   public:
+    public:
     typedef CSharedObject BaseClass;
 
     virtual bool BParseFromMessage( const CUtlBuffer &buffer ) OVERRIDE;
@@ -55,14 +55,14 @@ class CProtoBufSharedObjectBase : public CSharedObject
     static KeyValues *CreateKVFromProtoBuf( const ::google::protobuf::Message &msg );
     static void RecursiveAddProtoBufToKV( KeyValues *pKVDest, const ::google::protobuf::Message &msg );
 
-   protected:
+    protected:
     virtual ::google::protobuf::Message *GetPObject() = 0;
     const ::google::protobuf::Message *GetPObject() const
     {
         return const_cast< CProtoBufSharedObjectBase * >( this )->GetPObject();
     }
 
-   private:
+    private:
 };
 
 //----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ class CProtoBufSharedObjectBase : public CSharedObject
 template < typename Message_t, int nTypeID, bool bPublicMutable = true >
 class CProtoBufSharedObject : public CProtoBufSharedObjectBase
 {
-   public:
+    public:
     ~CProtoBufSharedObject()
     {
     }
@@ -102,7 +102,7 @@ class CProtoBufSharedObject : public CProtoBufSharedObjectBase
     typedef Message_t SchObjectType_t;
     const static int k_nTypeID = nTypeID;
 
-   protected:
+    protected:
     template < typename T = Message_t >
     Protected_Message_t< T > MutObj()
     {
@@ -114,7 +114,7 @@ class CProtoBufSharedObject : public CProtoBufSharedObjectBase
         return &m_msgObject;
     }
 
-   private:
+    private:
     Message_t m_msgObject;
 };
 
@@ -129,7 +129,7 @@ class CProtoBufSharedObject : public CProtoBufSharedObjectBase
 template < typename Message_t, int nTypeID >
 class CProtoBufSharedObjectWrapper : public CProtoBufSharedObjectBase
 {
-   public:
+    public:
     CProtoBufSharedObjectWrapper( Message_t *pMsgToWrap )
         : m_pMsgObject( pMsgToWrap )
     {
@@ -155,16 +155,16 @@ class CProtoBufSharedObjectWrapper : public CProtoBufSharedObjectBase
 
     typedef Message_t SchObjectType_t;
 
-   public:
+    public:
     const static int k_nTypeID = nTypeID;
 
-   protected:
+    protected:
     ::google::protobuf::Message *GetPObject()
     {
         return m_pMsgObject;
     }
 
-   private:
+    private:
     Message_t *m_pMsgObject;
 };
 

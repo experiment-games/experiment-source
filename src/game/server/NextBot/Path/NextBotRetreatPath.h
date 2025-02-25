@@ -21,7 +21,7 @@
  */
 class RetreatPath : public PathFollower
 {
-   public:
+    public:
     RetreatPath( void );
     virtual ~RetreatPath() {}
 
@@ -31,7 +31,7 @@ class RetreatPath : public PathFollower
 
     virtual void Invalidate( void );  // (EXTEND) cause the path to become invalid
 
-   private:
+    private:
     void RefreshPath( INextBot *bot, CBaseEntity *threat );
 
     CountdownTimer m_throttleTimer;  // require a minimum time between re-paths
@@ -97,7 +97,7 @@ inline void RetreatPath::Update( INextBot *bot, CBaseEntity *threat )
  */
 class RetreatPathBuilder
 {
-   public:
+    public:
     RetreatPathBuilder( INextBot *me, CBaseEntity *threat, float retreatRange = 500.0f )
     {
         m_me = me;
@@ -226,8 +226,8 @@ class RetreatPathBuilder
     }
 
     /**
-     * Build a vector of adjacent areas reachable from the given area
-     */
+    * Build a vector of adjacent areas reachable from the given area
+    */
     void CollectAdjacentAreas( CNavArea *area )
     {
         m_adjAreaIndex = 0;
@@ -329,8 +329,8 @@ class RetreatPathBuilder
     }
 
     /**
-     * Cost minimizes path length traveled thus far and "danger" (proximity to threat(s))
-     */
+    * Cost minimizes path length traveled thus far and "danger" (proximity to threat(s))
+    */
     float Cost( CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder )
     {
         // check if we can use this area
@@ -467,7 +467,7 @@ class RetreatPathBuilder
         return cost;
     }
 
-   private:
+    private:
     INextBot *m_me;
     ILocomotion *m_mover;
 

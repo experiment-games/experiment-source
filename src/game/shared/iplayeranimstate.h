@@ -19,7 +19,7 @@ typedef enum
 
 abstract_class IPlayerAnimState
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     // Update() and DoAnimationEvent() together maintain the entire player's animation state.

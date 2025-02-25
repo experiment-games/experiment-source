@@ -21,7 +21,7 @@ class CDmeMaterialOverlayFXClip : public CDmeFXClip
 {
     DEFINE_ELEMENT( CDmeMaterialOverlayFXClip, CDmeFXClip );
 
-   public:
+    public:
     // All effects must be able to apply their effect
     virtual void ApplyEffect( DmeTime_t time, Rect_t &currentRect, Rect_t &totalRect, ITexture *pTextures[MAX_FX_INPUT_TEXTURES] );
 
@@ -36,7 +36,7 @@ class CDmeMaterialOverlayFXClip : public CDmeFXClip
     IMaterial *GetMaterial();
     float GetAlpha();
 
-   private:
+    private:
     CDmaString m_Material;
     CDmaColor m_Color;
     CDmaVar< int > m_nLeft;

@@ -15,7 +15,7 @@
 
 class CFunc_Dust : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFunc_Dust, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -24,19 +24,19 @@ class CFunc_Dust : public CBaseEntity
     virtual ~CFunc_Dust();
 
     // CBaseEntity overrides.
-   public:
+    public:
     virtual void Spawn();
     virtual void Activate();
     virtual void Precache();
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
 
     // Input handles.
-   public:
+    public:
     void InputTurnOn( inputdata_t &inputdata );
     void InputTurnOff( inputdata_t &inputdata );
 
     // FGD properties.
-   public:
+    public:
     CNetworkVar( color32, m_Color );
     CNetworkVar( int, m_SpawnRate );
 
@@ -52,10 +52,10 @@ class CFunc_Dust : public CBaseEntity
 
     CNetworkVar( float, m_FallSpeed );
 
-   public:
+    public:
     CNetworkVar( int, m_DustFlags );  // Combination of DUSTFLAGS_
 
-   private:
+    private:
     int m_iAlpha;
 };
 
@@ -63,7 +63,7 @@ class CFunc_DustMotes : public CFunc_Dust
 {
     DECLARE_CLASS( CFunc_DustMotes, CFunc_Dust );
 
-   public:
+    public:
     CFunc_DustMotes();
 };
 
@@ -71,7 +71,7 @@ class CFunc_DustCloud : public CFunc_Dust
 {
     DECLARE_CLASS( CFunc_DustCloud, CFunc_Dust );
 
-   public:
+    public:
 };
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CFunc_Dust, DT_Func_Dust )
@@ -216,7 +216,7 @@ void CFunc_Dust::InputTurnOff( inputdata_t &inputdata )
 
 class CTEDust : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTEDust, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 
@@ -272,10 +272,10 @@ class CEnvDustPuff : public CPointEntity
 {
     DECLARE_CLASS( CEnvDustPuff, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     // Input handlers
     void InputSpawnDust( inputdata_t &inputdata );
 

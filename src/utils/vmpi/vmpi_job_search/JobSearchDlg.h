@@ -24,7 +24,7 @@
 class CJobSearchDlg : public CDialog
 {
     // Construction
-   public:
+    public:
     CJobSearchDlg( CWnd* pParent = NULL );  // standard constructor
     virtual ~CJobSearchDlg();
 
@@ -42,12 +42,12 @@ class CJobSearchDlg : public CDialog
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CJobSearchDlg)
-   protected:
+    protected:
     virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
                                                         //}}AFX_VIRTUAL
 
     // Implementation
-   protected:
+    protected:
     void ClearJobsList();
     void RepopulateJobsList();
 

@@ -28,13 +28,13 @@
 
 class CVMPIBrowserJobWatchApp : public CWinApp
 {
-   public:
+    public:
     CVMPIBrowserJobWatchApp();
 
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CVMPIBrowserJobWatchApp)
-   public:
+    public:
     virtual BOOL InitInstance();
     //}}AFX_VIRTUAL
 

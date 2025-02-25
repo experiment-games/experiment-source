@@ -78,8 +78,8 @@ LIBPROTOBUF_EXPORT bool ParseNamedEnum( const EnumDescriptor* descriptor,
 
 template < typename EnumType >
 bool ParseNamedEnum( const EnumDescriptor* descriptor,
-                     const string& name,
-                     EnumType* value )
+                    const string& name,
+                    EnumType* value )
 {
     int tmp;
     if ( !ParseNamedEnum( descriptor, name, &tmp ) ) return false;

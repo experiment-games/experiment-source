@@ -50,11 +50,11 @@ inline CUtlDict< short, short > *GetAnimTable()
 
 class CModelLookupContext
 {
-   public:
+    public:
     CModelLookupContext( int group, const studiohdr_t *pStudioHdr );
     ~CModelLookupContext();
 
-   private:
+    private:
     int m_lookupIndex;
 };
 

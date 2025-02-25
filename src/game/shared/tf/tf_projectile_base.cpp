@@ -333,29 +333,29 @@ C_LocalTempEntity *ClientsideProjectileCallback( const CEffectData &data, float 
         // No check is needed anymore given the needles come from inside the player's head
         // and that cannot be obstructed.
 #if 0
-		else
-		{
-			C_BaseEntity *pViewModel = pLocalPlayer->GetViewModel();
+        else
+        {
+            C_BaseEntity *pViewModel = pLocalPlayer->GetViewModel();
 
-			if ( pViewModel )
-			{
-				QAngle vecAngles;
-				Vector vecMuzzleOrigin;
-				int iMuzzleFlashAttachment = pViewModel->LookupAttachment( "muzzle" );
-				pViewModel->GetAttachment( iMuzzleFlashAttachment, vecMuzzleOrigin, vecAngles );
+            if ( pViewModel )
+            {
+                QAngle vecAngles;
+                Vector vecMuzzleOrigin;
+                int iMuzzleFlashAttachment = pViewModel->LookupAttachment( "muzzle" );
+                pViewModel->GetAttachment( iMuzzleFlashAttachment, vecMuzzleOrigin, vecAngles );
 
-				Vector vForward;
-				AngleVectors( vecAngles, &vForward );
+                Vector vForward;
+                AngleVectors( vecAngles, &vForward );
 
-				trace_t trace;	
-				UTIL_TraceLine( vecMuzzleOrigin + vForward * -50, vecMuzzleOrigin, MASK_SOLID, pEnt, COLLISION_GROUP_NONE, &trace );
+                trace_t trace;
+                UTIL_TraceLine( vecMuzzleOrigin + vForward * -50, vecMuzzleOrigin, MASK_SOLID, pEnt, COLLISION_GROUP_NONE, &trace );
 
-				if ( trace.fraction != 1.0 )
-				{
-					vecSrc = trace.endpos;
-				}
-			}
-		}
+                if ( trace.fraction != 1.0 )
+                {
+                    vecSrc = trace.endpos;
+                }
+            }
+        }
 #endif
     }
 

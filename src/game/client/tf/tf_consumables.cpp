@@ -69,13 +69,13 @@ bool DuelMiniGame_IsDueling();
 
 class CWaitForPackageDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitForPackageDialog( vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         // Play an exciting sound!
@@ -113,7 +113,7 @@ enum EServerPlayersGCSend
 
 struct CUseItemConfirmContext
 {
-   public:
+    public:
     CUseItemConfirmContext( CEconItemView *pEconItemView, EServerPlayersGCSend eSendServerPlayers, const char *pszConfirmUseSound = NULL )
         : m_pEconItemView( pEconItemView ), m_bSendServerPlayers( eSendServerPlayers == kServerPlayers_Send ), m_pszConfirmUseSound( pszConfirmUseSound )
     {
@@ -683,7 +683,7 @@ void PaintkitConfirmCallback( bool bConfirmed, void *pContext );
 
 class CTFPainkitConsumeDialog : public EditablePanel, public CLocalSteamSharedObjectListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFPainkitConsumeDialog, EditablePanel );
     CTFPainkitConsumeDialog( C_EconItemView *pItem )
         : BaseClass( NULL, "PaintkitConsume" ), m_pItem( pItem ), m_nSourceItemID( pItem->GetID() )
@@ -829,7 +829,7 @@ class CTFPainkitConsumeDialog : public EditablePanel, public CLocalSteamSharedOb
         m_bSuccess = true;
     }
 
-   private:
+    private:
     CTFItemInspectionPanel *m_pIspectionPanel;
     C_EconItemView *m_pItem;
     uint64 m_nSourceItemID;
@@ -858,7 +858,7 @@ void CEconTool_PaintKit::OnClientUseConsumable( class C_EconItemView *pItem, vgu
 //-----------------------------------------------------------------------------
 class CGCEventEnableResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCEventEnableResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -963,7 +963,7 @@ void UseGift( CEconItemView *pItem, CSteamID targetID )
 
 class CDeliverGiftSelectDialog : public CSelectPlayerDialog
 {
-   public:
+    public:
     CDeliverGiftSelectDialog( vgui::Panel *parent );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -981,7 +981,7 @@ class CDeliverGiftSelectDialog : public CSelectPlayerDialog
         UseGift( m_pItem, steamID );
     }
 
-   private:
+    private:
     CEconItemView *m_pItem;
 };
 
@@ -1209,7 +1209,7 @@ static ConCommand end_context_action( "-context_action", EndContextAction );
 
 class CTFGiftNotification : public CEconNotification
 {
-   public:
+    public:
     CTFGiftNotification( GCSDK::CProtoBufMsg< CMsgGCGiftedItems > &msg )
         : CEconNotification()
     {
@@ -1294,10 +1294,10 @@ class CTFGiftNotification : public CEconNotification
 
                 wchar_t wszNotification[1024] = L"";
                 g_pVGuiLocalize->ConstructString_safe( wszNotification,
-                                                       pFormat,
-                                                       2,
-                                                       m_wszPlayerName,
-                                                       wszRecipientName );
+                                                        pFormat,
+                                                        2,
+                                                        m_wszPlayerName,
+                                                        wszRecipientName );
 
                 char szAnsi[1024];
                 g_pVGuiLocalize->ConvertUnicodeToANSI( wszNotification, szAnsi, sizeof( szAnsi ) );
@@ -1355,7 +1355,7 @@ class CTFGiftNotification : public CEconNotification
 //-----------------------------------------------------------------------------
 class CTFUseItemNotification : public CEconNotification
 {
-   public:
+    public:
     CTFUseItemNotification( EGCMsgUseItemResponse eResponse )
         : CEconNotification()
     {
@@ -1399,7 +1399,7 @@ class CTFUseItemNotification : public CEconNotification
 //-----------------------------------------------------------------------------
 class CGCUseItemResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCUseItemResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -1441,7 +1441,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCUseItemResponse, "CGCUseItemResponse", k_EMsgGC
 //-----------------------------------------------------------------------------
 class CGCGiftedItems : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCGiftedItems( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -1473,7 +1473,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCGiftedItems, "CGCGiftedItems", k_EMsgGCGiftedIt
 //-----------------------------------------------------------------------------
 class CGCUsedClaimCodeItem : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCUsedClaimCodeItem( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -1539,7 +1539,7 @@ static bool RemoveRelatedDuelNotifications( CEconNotification *pNotification );
  */
 class CTFDuelInfoNotification : public CEconNotification
 {
-   public:
+    public:
     CTFDuelInfoNotification()
     {
     }
@@ -1555,7 +1555,7 @@ class CTFDuelInfoNotification : public CEconNotification
  */
 class CTFDuelRequestNotification : public CEconNotification, public CGameEventListener
 {
-   public:
+    public:
     CTFDuelRequestNotification( const char *pInitiatorName, const CSteamID &steamIDInitiator, const CSteamID &steamIDTarget, const int iRequiredPlayerClass )
         : CEconNotification(), m_steamIDInitiator( steamIDInitiator ), m_steamIDTarget( steamIDTarget ), m_iRequiredPlayerClass( iRequiredPlayerClass )
     {
@@ -1686,7 +1686,7 @@ class CTFDuelRequestNotification : public CEconNotification, public CGameEventLi
  */
 class CDuelMiniGameEventListener : public CGameEventListener
 {
-   public:
+    public:
     CDuelMiniGameEventListener()
     {
         ListenForGameEvent( "duel_status" );
@@ -1788,7 +1788,7 @@ class CDuelMiniGameEventListener : public CGameEventListener
  */
 class CGC_Duel_Request : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_Duel_Request( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -1886,7 +1886,7 @@ class CGC_Duel_Request : public GCSDK::CGCClientJob
         return true;
     }
 
-   protected:
+    protected:
 };
 GC_REG_JOB( GCSDK::CGCClient, CGC_Duel_Request, "CGC_Duel_Request", k_EMsgGC_Duel_Request, GCSDK::k_EServerTypeGCClient );
 
@@ -1895,7 +1895,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGC_Duel_Request, "CGC_Duel_Request", k_EMsgGC_Due
  */
 class CGCClient_Duel_Response : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCClient_Duel_Response( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -1980,7 +1980,7 @@ class CGCClient_Duel_Response : public GCSDK::CGCClientJob
         return true;
     }
 
-   protected:
+    protected:
 };
 GC_REG_JOB( GCSDK::CGCClient, CGCClient_Duel_Response, "CGCClient_Duel_Response", k_EMsgGC_Duel_Response, GCSDK::k_EServerTypeGCClient );
 
@@ -1989,7 +1989,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCClient_Duel_Response, "CGCClient_Duel_Response"
  */
 class CGC_Duel_Status : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_Duel_Status( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -2046,7 +2046,7 @@ class CGC_Duel_Status : public GCSDK::CGCClientJob
         return true;
     }
 
-   protected:
+    protected:
 };
 GC_REG_JOB( GCSDK::CGCClient, CGC_Duel_Status, "CGC_Duel_Status", k_EMsgGC_Duel_Status, GCSDK::k_EServerTypeGCClient );
 
@@ -2055,7 +2055,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGC_Duel_Status, "CGC_Duel_Status", k_EMsgGC_Duel_
  */
 class CGC_Duel_Results : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGC_Duel_Results( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -2173,14 +2173,14 @@ class CGC_Duel_Results : public GCSDK::CGCClientJob
         return true;
     }
 
-   protected:
+    protected:
 };
 GC_REG_JOB( GCSDK::CGCClient, CGC_Duel_Results, "CGC_Duel_Results", k_EMsgGC_Duel_Results, GCSDK::k_EServerTypeGCClient );
 
 static bool RemoveRelatedDuelNotifications( CEconNotification *pNotification )
 {
     return ( CTFDuelRequestNotification::IsDuelRequestNotification( pNotification ) ||
-             CTFDuelInfoNotification::IsDuelInfoNotification( pNotification ) );
+            CTFDuelInfoNotification::IsDuelInfoNotification( pNotification ) );
 }
 
 static void DuelMiniGame_Reset()
@@ -2243,7 +2243,7 @@ class CSelectPlayerForDuelDialog : public CSelectPlayerDialog, public CGameEvent
 {
     DECLARE_CLASS_SIMPLE( CSelectPlayerForDuelDialog, CSelectPlayerDialog );
 
-   public:
+    public:
     CSelectPlayerForDuelDialog( uint64 iItemID );
     virtual ~CSelectPlayerForDuelDialog();
     virtual void OnSelectPlayer( const CSteamID &steamID );
@@ -2254,7 +2254,7 @@ class CSelectPlayerForDuelDialog : public CSelectPlayerDialog, public CGameEvent
     MESSAGE_FUNC_PARAMS( OnShowClassIconMouseover, "ShowClassIconMouseover", data );
     MESSAGE_FUNC( OnHideClassIconMouseover, "HideClassIconMouseover" );
 
-   protected:
+    protected:
     virtual const char *GetResFile()
     {
         return "resource/ui/SelectPlayerDialog_Duel.res";
@@ -2410,9 +2410,9 @@ void CSelectPlayerForDuelDialog::SetSelectedClass( int iClass )
 
     wchar_t wszText[1024] = L"";
     g_pVGuiLocalize->ConstructString_safe( wszText,
-                                           g_pVGuiLocalize->Find( "#TF_SelectPlayer_DuelClass" ),
-                                           1,
-                                           g_pVGuiLocalize->Find( pClassName ) );
+                                            g_pVGuiLocalize->Find( "#TF_SelectPlayer_DuelClass" ),
+                                            1,
+                                            g_pVGuiLocalize->Find( pClassName ) );
 
     SetDialogVariable( "player_class", wszText );
 }
@@ -2447,7 +2447,7 @@ void CL_Consumables_LevelShutdown()
 //
 class CTFNameItemNotification : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CTFNameItemNotification( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -2510,7 +2510,7 @@ GC_REG_JOB( GCSDK::CGCClient, CTFNameItemNotification, "CTFNameItemNotification"
 //
 class CClientDisplayNotification : public CEconNotification
 {
-   public:
+    public:
     CClientDisplayNotification( GCSDK::IMsgNetPacket *pNetPacket )
         : m_msg( pNetPacket )
     {
@@ -2538,7 +2538,7 @@ class CClientDisplayNotification : public CEconNotification
         }
     }
 
-   private:
+    private:
     // We make a local copy of the full message because dynamic-length strings are sent down from the
     // GC and we need to make sure they stay in memory until the user looks at the notification.
     GCSDK::CProtoBufMsg< CMsgGCClientDisplayNotification > m_msg;
@@ -2546,7 +2546,7 @@ class CClientDisplayNotification : public CEconNotification
 
 class CTFClientDisplayNotification : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CTFClientDisplayNotification( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )

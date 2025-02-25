@@ -145,7 +145,7 @@ enum
 
 class CTFGameRulesProxy : public CTeamplayRoundBasedRulesProxy, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGameRulesProxy, CTeamplayRoundBasedRulesProxy );
     DECLARE_NETWORKCLASS();
 
@@ -203,7 +203,7 @@ class CTFGameRulesProxy : public CTeamplayRoundBasedRulesProxy, public CGameEven
 
     virtual void Activate();
 
-   private:
+    private:
     //=============================================================================
     // HPE_BEGIN:
     // [msmith]	hud type so the game type and hud type can be separate.  Used for
@@ -218,7 +218,7 @@ class CTFGameRulesProxy : public CTeamplayRoundBasedRulesProxy, public CGameEven
     bool m_bRopesHolidayLightsAllowed;
 #endif
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 };
 
@@ -226,7 +226,7 @@ class CTFRadiusDamageInfo
 {
     DECLARE_CLASS_NOBASE( CTFRadiusDamageInfo );
 
-   public:
+    public:
     CTFRadiusDamageInfo( CTakeDamageInfo *pInfo, const Vector &vecSrcIn, float flRadiusIn, CBaseEntity *pIgnore = NULL, float flRJRadiusIn = 0, float flForceScaleIn = 1.0f )
     {
         dmgInfo = pInfo;
@@ -244,7 +244,7 @@ class CTFRadiusDamageInfo
     void CalculateFalloff( void );
     int ApplyToEntity( CBaseEntity *pEntity );
 
-   public:
+    public:
     // Fill these in & call RadiusDamage()
     CTakeDamageInfo *dmgInfo;
     Vector vecSrc;
@@ -253,7 +253,7 @@ class CTFRadiusDamageInfo
     float flRJRadius;  // Radius to use to calculate RJ, to maintain RJs when damage/radius changes on a RL
     float m_flForceScale;
     CBaseEntity *m_pEntityTarget;  // Target being direct hit if any
-   private:
+    private:
     // These are used during the application of the RadiusDamage
     float flFalloff;
 };
@@ -288,7 +288,7 @@ class CKothLogic;
 typedef CTFPlayer *BONUSPLAYERPTR;
 class CBonusPlayerListLess
 {
-   public:
+    public:
     bool Less( const BONUSPLAYERPTR &src1, const BONUSPLAYERPTR &src2, void *pCtx )
     {
         if ( src1->m_Shared.GetItemFindBonus() > src2->m_Shared.GetItemFindBonus() )
@@ -302,7 +302,7 @@ class CBonusPlayerListLess
 
 class CTFGameRules : public CTeamplayRoundBasedRules
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGameRules, CTeamplayRoundBasedRules );
 
     CTFGameRules();
@@ -347,7 +347,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
     virtual bool PointsMayBeCaptured( void ) OVERRIDE;
 
 #ifdef GAME_DLL
-   public:
+    public:
     virtual void Precache( void );
 
     // Override this to prevent removal of game specific entities that need to persist
@@ -548,7 +548,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
         return BInMatchStartCountdown();
     }
 
-   protected:
+    protected:
     virtual void LoadMapCycleFile( void ) OVERRIDE;
     void TrackWorkshopMapsInMapCycle( void );
 
@@ -577,7 +577,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
 
 #endif  // GAME_DLL
 
-   public:
+    public:
     // Bonus round handling
 #ifdef GAME_DLL
     virtual bool ShouldGoToBonusRound( void );
@@ -595,7 +595,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
     virtual void PreRound_End( void ) OVERRIDE;
 #endif
 
-   public:
+    public:
     // Return the value of this player towards capturing a point
     virtual int GetCaptureValueForPlayer( CBasePlayer *pPlayer );
 
@@ -1162,7 +1162,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
 
     virtual bool StopWatchShouldBeTimedWin( void ) OVERRIDE;
 
-   public:
+    public:
     void SetPlayerNextMapVote( int nIndex, EUserNextMapVote eState )
     {
         m_ePlayerWantsRematch.Set( nIndex, eState );
@@ -1251,7 +1251,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
 
     int GetTeamAssignmentOverride( CTFPlayer *pTFPlayer, int iDesiredTeam, bool bAutoBalance = false );
 
-   private:
+    private:
     void ChooseNextMapVoteOptions();
 
     int DefaultFOV( void )
@@ -1273,7 +1273,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
         return m_bRopesHolidayLightsAllowed;
     }
 
-   private:
+    private:
     void ComputeHealthAndAmmoVectors( void );  // compute internal vectors of health and ammo locations
     bool m_areHealthAndAmmoVectorsReady;
 
@@ -1454,7 +1454,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
 
     float m_flCTFCaptureBonusTime;
 
-   public:
+    public:
     bool m_bControlSpawnsPerTeam[MAX_TEAMS][MAX_CONTROL_POINTS];
     int m_iPreviousRoundWinners;
 
@@ -1600,7 +1600,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
         m_iGlobalAttributeCacheVersion++;
     }
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     bool m_bRecievedBaseline;
 #endif
@@ -1634,7 +1634,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
     int m_zombiesLeftToSpawn;
     Vector m_zombieSpawnSpot;
 
-   public:
+    public:
     void BeginHaunting( int nDesiredCount, float flMinDuration, float flMaxDuration );
 
     void StartHalloweenBossTimer( float flTime, float flVariation = 0.f )
@@ -1667,7 +1667,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
         m_nForceEscortPushLogic = nState;
     }
 
-   private:
+    private:
     CUtlVector< CHandle< CGhost > > m_ghostVector;
     CUtlVector< PlayerHistoryInfo_t > m_vecPlayerHistory;
 
@@ -1729,7 +1729,7 @@ class CTFGameRules : public CTeamplayRoundBasedRules
 
 // MvM Helpers
 #ifdef GAME_DLL
-   public:
+    public:
     void SetNextMvMPopfile( const char *next );
     const char *GetNextMvMPopfile();
 
@@ -1802,7 +1802,7 @@ class CArenaLogic : public CPointEntity
 {
     DECLARE_CLASS( CArenaLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual int UpdateTransmitState()
@@ -1826,7 +1826,7 @@ class CCompetitiveLogic : public CPointEntity
 {
     DECLARE_CLASS( CCompetitiveLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void OnSpawnRoomDoorsShouldLock( void );
@@ -1843,7 +1843,7 @@ class CLogicMannPower : public CPointEntity
 {
     DECLARE_CLASS( CLogicMannPower, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 };
 
@@ -1854,7 +1854,7 @@ class CTrainingModeLogic : public CPointEntity
 {
     DECLARE_CLASS( CTrainingModeLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void SetupOnRoundStart( void );
@@ -1886,7 +1886,7 @@ class CTrainingModeLogic : public CPointEntity
     void InputSetNextMap( inputdata_t &inputdata );
     void InputForcePlayerSwapToWeapon( inputdata_t &inputdata );
 
-   protected:
+    protected:
     enum
     {
         kMaxLengthObjectiveText = 128,
@@ -1926,7 +1926,7 @@ class CMultipleEscort : public CPointEntity
 {
     DECLARE_CLASS( CMultipleEscort, CPointEntity );
 
-   public:
+    public:
     virtual int UpdateTransmitState()
     {
         return SetTransmitState( FL_EDICT_ALWAYS );
@@ -1937,7 +1937,7 @@ class CMedievalLogic : public CPointEntity
 {
     DECLARE_CLASS( CMedievalLogic, CPointEntity );
 
-   public:
+    public:
     virtual int UpdateTransmitState()
     {
         return SetTransmitState( FL_EDICT_ALWAYS );
@@ -1948,7 +1948,7 @@ class CHybridMap_CTF_CP : public CPointEntity
 {
     DECLARE_CLASS( CHybridMap_CTF_CP, CPointEntity );
 
-   public:
+    public:
     virtual int UpdateTransmitState()
     {
         return SetTransmitState( FL_EDICT_ALWAYS );
@@ -1959,7 +1959,7 @@ class CTFHolidayEntity : public CPointEntity, public CGameEventListener
 {
     DECLARE_CLASS( CTFHolidayEntity, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CTFHolidayEntity()
@@ -2006,7 +2006,7 @@ class CTFHolidayEntity : public CPointEntity, public CGameEventListener
         return m_nWinningTeam;
     }
 
-   private:
+    private:
     void HalloweenTeleportToHellDanceThink( void );
     void Teleport();
 
@@ -2022,7 +2022,7 @@ class CKothLogic : public CPointEntity
 {
     DECLARE_CLASS( CKothLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CKothLogic()
@@ -2054,7 +2054,7 @@ class CKothLogic : public CPointEntity
     void InputAddRedTimer( inputdata_t &inputdata );
     void InputAddBlueTimer( inputdata_t &inputdata );
 
-   private:
+    private:
     int m_nTimerInitialLength;
     int m_nTimeToUnlockPoint;
 
@@ -2067,7 +2067,7 @@ class CCPTimerLogic : public CPointEntity
 {
     DECLARE_CLASS( CCPTimerLogic, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CCPTimerLogic()
@@ -2088,7 +2088,7 @@ class CCPTimerLogic : public CPointEntity
     void Think( void );
     bool TimerMayExpire( void );
 
-   private:
+    private:
     int m_nTimerLength;
     string_t m_iszControlPointName;
     CHandle< CTeamControlPoint > m_hControlPoint;
@@ -2112,7 +2112,7 @@ class CBonusRoundLogic : public CBaseEntity
 {
     DECLARE_CLASS( CBonusRoundLogic, CBaseEntity );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
 #ifdef GAME_DLL
@@ -2155,7 +2155,7 @@ class CBonusRoundLogic : public CBaseEntity
         return &m_Item;
     }
 
-   private:
+    private:
     CUtlSortVector< BONUSPLAYERPTR, CBonusPlayerListLess > m_aBonusPlayerList;
     CUtlVector< int > m_aBonusPlayerRoll;
     CNetworkHandle( CTFPlayer, m_hBonusWinner );
@@ -2167,7 +2167,7 @@ class CBonusRoundLogic : public CBaseEntity
 #ifdef GAME_DLL
 class CSingleUserReliableRecipientFilter : public CRecipientFilter
 {
-   public:
+    public:
     CSingleUserReliableRecipientFilter( CBasePlayer *player )
     {
         AddRecipient( player );

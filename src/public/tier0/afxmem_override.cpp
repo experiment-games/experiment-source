@@ -222,7 +222,7 @@ void CMemoryState::UpdateData()
 
 // fills 'this' with the difference, returns TRUE if significant
 BOOL CMemoryState::Difference( const CMemoryState& oldState,
-                               const CMemoryState& newState )
+                                const CMemoryState& newState )
 {
     int nResult = _CrtMemDifference( &m_memState, &oldState.m_memState, &newState.m_memState );
     UpdateData();

@@ -26,7 +26,7 @@ class CTFCondition;
 
 class CTFConditionList
 {
-   public:
+    public:
     DECLARE_EMBEDDED_NETWORKVAR();
     DECLARE_CLASS_NOBASE( CTFConditionList );
     DECLARE_PREDICTABLE();
@@ -52,7 +52,7 @@ class CTFConditionList
     void UpdateClientConditions( CTFPlayer* outer );
 #endif
 
-   private:
+    private:
     CUtlVector< CTFCondition* > _conditions;
 
     CNetworkVar( int, _condition_bits );  // Bitfield of set conditions for fast checking.
@@ -61,7 +61,7 @@ class CTFConditionList
 
 class CTFCondition
 {
-   public:
+    public:
     CTFCondition( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider = NULL );
     virtual ~CTFCondition();
 
@@ -118,7 +118,7 @@ class CTFCondition
         return _provider;
     }
 
-   private:
+    private:
     float _min_duration;
     float _max_duration;
     const ETFCond _type;
@@ -128,7 +128,7 @@ class CTFCondition
 
 class CTFCondition_CritBoost : public CTFCondition
 {
-   public:
+    public:
     CTFCondition_CritBoost( ETFCond type, float duration, CTFPlayer* outer, CBaseEntity* provider = NULL );
 
     virtual void OnAdded();

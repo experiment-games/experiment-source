@@ -146,7 +146,7 @@ bool CGhost::ShouldCollide( int collisionGroup, int contentsMask ) const
 //---------------------------------------------------------------------------------------------
 class CGhostBehavior : public Action< CGhost >
 {
-   public:
+    public:
     //---------------------------------------------------------------------------------------------
     virtual ActionResult< CGhost > OnStart( CGhost *me, Action< CGhost > *priorAction )
     {
@@ -288,7 +288,7 @@ class CGhostBehavior : public Action< CGhost >
         return "Behavior";
     }  // return name of this action
 
-   private:
+    private:
     IntervalTimer m_lifeTimer;
     CountdownTimer m_moanTimer;
     CountdownTimer m_scareTimer;

@@ -25,6 +25,6 @@ phase
 texld  r3, r2
 
 ; multiply color by reflecttint
-mul r0.rgb, r3, c1 
+mul r0.rgb, r3, c1
 +mov_sat r0.a, v0.a				; Necessary since v0.a may be negative
 add_sat r0.a, c1.a, r0.a

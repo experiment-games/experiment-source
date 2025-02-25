@@ -46,39 +46,39 @@ static Bool Utf16_To_Utf8(Byte *dest, size_t *destLen, const UInt16 *src, size_t
     UInt32 value;
     if (srcPos == srcLen)
     {
-      *destLen = destPos;
-      return True;
+    *destLen = destPos;
+    return True;
     }
     value = src[srcPos++];
     if (value < 0x80)
     {
-      if (dest)
+    if (dest)
         dest[destPos] = (char)value;
-      destPos++;
-      continue;
+    destPos++;
+    continue;
     }
     if (value >= 0xD800 && value < 0xE000)
     {
-      UInt32 c2;
-      if (value >= 0xDC00 || srcPos == srcLen)
+    UInt32 c2;
+    if (value >= 0xDC00 || srcPos == srcLen)
         break;
-      c2 = src[srcPos++];
-      if (c2 < 0xDC00 || c2 >= 0xE000)
+    c2 = src[srcPos++];
+    if (c2 < 0xDC00 || c2 >= 0xE000)
         break;
-      value = (((value - 0xD800) << 10) | (c2 - 0xDC00)) + 0x10000;
+    value = (((value - 0xD800) << 10) | (c2 - 0xDC00)) + 0x10000;
     }
     for (numAdds = 1; numAdds < 5; numAdds++)
-      if (value < (((UInt32)1) << (numAdds * 5 + 6)))
+    if (value < (((UInt32)1) << (numAdds * 5 + 6)))
         break;
     if (dest)
-      dest[destPos] = (char)(kUtf8Limits[numAdds - 1] + (value >> (6 * numAdds)));
+    dest[destPos] = (char)(kUtf8Limits[numAdds - 1] + (value >> (6 * numAdds)));
     destPos++;
     do
     {
-      numAdds--;
-      if (dest)
+    numAdds--;
+    if (dest)
         dest[destPos] = (char)(0x80 + ((value >> (6 * numAdds)) & 0x3F));
-      destPos++;
+    destPos++;
     }
     while (numAdds != 0);
   }
@@ -114,20 +114,20 @@ static SRes Utf16_To_Char(CBuf *buf, const UInt16 *s
   {
     unsigned size = len * 3 + 100;
     if (!Buf_EnsureSize(buf, size))
-      return SZ_ERROR_MEM;
+    return SZ_ERROR_MEM;
     {
-      buf->data[0] = 0;
-      if (len != 0)
-      {
+    buf->data[0] = 0;
+    if (len != 0)
+    {
         char defaultChar = '_';
         BOOL defUsed;
         unsigned numChars = 0;
         numChars = WideCharToMultiByte(codePage, 0, s, len, (char *)buf->data, size, &defaultChar, &defUsed);
         if (numChars == 0 || numChars >= size)
-          return SZ_ERROR_FAIL;
+        return SZ_ERROR_FAIL;
         buf->data[numChars] = 0;
-      }
-      return SZ_OK;
+    }
+    return SZ_OK;
     }
   }
   #else
@@ -147,9 +147,9 @@ static SRes Utf16_To_Char(CBuf *buf, const UInt16 *s
 static WRes MyCreateDir(const UInt16 *name)
 {
   #ifdef USE_WINDOWS_FILE
-  
+
   return CreateDirectoryW(name, NULL) ? 0 : GetLastError();
-  
+
   #else
 
   CBuf buf;
@@ -166,7 +166,7 @@ static WRes MyCreateDir(const UInt16 *name)
   == 0 ? 0 : errno;
   Buf_Free(&buf, &g_Alloc);
   return res;
-  
+
   #endif
 }
 
@@ -191,10 +191,10 @@ static SRes PrintString(const UInt16 *s)
   SRes res;
   Buf_Init(&buf);
   res = Utf16_To_Char(&buf, s
-      #ifdef _WIN32
-      , CP_OEMCP
-      #endif
-      );
+    #ifdef _WIN32
+    , CP_OEMCP
+    #endif
+    );
   if (res == SZ_OK)
     fputs((const char *)buf.data, stdout);
   Buf_Free(&buf, &g_Alloc);
@@ -270,7 +270,7 @@ static void ConvertFileTimeToString(const CNtfsFileTime *nt, char *s)
   {
     unsigned s = ms[mon];
     if (v < s)
-      break;
+    break;
     v -= s;
   }
   s = UIntToStr(s, year, 4); *s++ = '-';
@@ -321,12 +321,12 @@ int MY_CDECL main(int numargs, char *args[])
   if (numargs == 1)
   {
     printf(
-      "Usage: 7zDec <command> <archive_name>\n\n"
-      "<Commands>\n"
-      "  e: Extract files from archive (without using directory names)\n"
-      "  l: List contents of archive\n"
-      "  t: Test integrity of archive\n"
-      "  x: eXtract files with full paths\n");
+    "Usage: 7zDec <command> <archive_name>\n\n"
+    "<Commands>\n"
+    "  e: Extract files from archive (without using directory names)\n"
+    "  l: List contents of archive\n"
+    "  t: Test integrity of archive\n"
+    "  x: eXtract files with full paths\n");
     return 0;
   }
   if (numargs < 3)
@@ -357,7 +357,7 @@ int MY_CDECL main(int numargs, char *args[])
 
   FileInStream_CreateVTable(&archiveStream);
   LookToRead_CreateVTable(&lookStream, False);
-  
+
   lookStream.realStream = &archiveStream.s;
   LookToRead_Init(&lookStream);
 
@@ -375,82 +375,82 @@ int MY_CDECL main(int numargs, char *args[])
     else if (strcmp(command, "x") == 0) { fullPaths = 1; }
     else
     {
-      PrintError("incorrect command");
-      res = SZ_ERROR_FAIL;
+    PrintError("incorrect command");
+    res = SZ_ERROR_FAIL;
     }
 
     if (res == SZ_OK)
     {
-      UInt32 i;
+    UInt32 i;
 
-      /*
-      if you need cache, use these 3 variables.
-      if you use external function, you can make these variable as static.
-      */
-      UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
-      Byte *outBuffer = 0; /* it must be 0 before first call for each new archive. */
-      size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
+    /*
+    if you need cache, use these 3 variables.
+    if you use external function, you can make these variable as static.
+    */
+    UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
+    Byte *outBuffer = 0; /* it must be 0 before first call for each new archive. */
+    size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
 
-      for (i = 0; i < db.NumFiles; i++)
-      {
+    for (i = 0; i < db.NumFiles; i++)
+    {
         size_t offset = 0;
         size_t outSizeProcessed = 0;
         // const CSzFileItem *f = db.Files + i;
         size_t len;
         int isDir = SzArEx_IsDir(&db, i);
         if (listCommand == 0 && isDir && !fullPaths)
-          continue;
+        continue;
         len = SzArEx_GetFileNameUtf16(&db, i, NULL);
         // len = SzArEx_GetFullNameLen(&db, i);
 
         if (len > tempSize)
         {
-          SzFree(NULL, temp);
-          tempSize = len;
-          temp = (UInt16 *)SzAlloc(NULL, tempSize * sizeof(temp[0]));
-          if (!temp)
-          {
+        SzFree(NULL, temp);
+        tempSize = len;
+        temp = (UInt16 *)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+        if (!temp)
+        {
             res = SZ_ERROR_MEM;
             break;
-          }
+        }
         }
 
         SzArEx_GetFileNameUtf16(&db, i, temp);
         /*
         if (SzArEx_GetFullNameUtf16_Back(&db, i, temp + len) != temp)
         {
-          res = SZ_ERROR_FAIL;
-          break;
+        res = SZ_ERROR_FAIL;
+        break;
         }
         */
 
         if (listCommand)
         {
-          char attr[8], s[32], t[32];
-          UInt64 fileSize;
+        char attr[8], s[32], t[32];
+        UInt64 fileSize;
 
-          GetAttribString(SzBitWithVals_Check(&db.Attribs, i) ? db.Attribs.Vals[i] : 0, isDir, attr);
+        GetAttribString(SzBitWithVals_Check(&db.Attribs, i) ? db.Attribs.Vals[i] : 0, isDir, attr);
 
-          fileSize = SzArEx_GetFileSize(&db, i);
-          UInt64ToStr(fileSize, s);
-          if (SzBitWithVals_Check(&db.MTime, i))
+        fileSize = SzArEx_GetFileSize(&db, i);
+        UInt64ToStr(fileSize, s);
+        if (SzBitWithVals_Check(&db.MTime, i))
             ConvertFileTimeToString(&db.MTime.Vals[i], t);
-          else
-          {
+        else
+        {
             size_t j;
             for (j = 0; j < 19; j++)
-              t[j] = ' ';
+            t[j] = ' ';
             t[j] = '\0';
-          }
-          
-          printf("%s %s %10s  ", t, attr, s);
-          res = PrintString(temp);
-          if (res != SZ_OK)
+        }
+
+        printf("%s %s %10s  ", t, attr, s);
+        res = PrintString(temp);
+        if (res != SZ_OK)
             break;
-          if (isDir)
+        if (isDir)
             printf("/");
-          printf("\n");
-          continue;
+        printf("\n");
+        continue;
         }
         fputs(testCommand ?
             "Testing    ":
@@ -458,71 +458,71 @@ int MY_CDECL main(int numargs, char *args[])
             stdout);
         res = PrintString(temp);
         if (res != SZ_OK)
-          break;
+        break;
         if (isDir)
-          printf("/");
+        printf("/");
         else
         {
-          res = SzArEx_Extract(&db, &lookStream.s, i,
-              &blockIndex, &outBuffer, &outBufferSize,
-              &offset, &outSizeProcessed,
-              &allocImp, &allocTempImp);
-          if (res != SZ_OK)
+        res = SzArEx_Extract(&db, &lookStream.s, i,
+            &blockIndex, &outBuffer, &outBufferSize,
+            &offset, &outSizeProcessed,
+            &allocImp, &allocTempImp);
+        if (res != SZ_OK)
             break;
         }
         if (!testCommand)
         {
-          CSzFile outFile;
-          size_t processedSize;
-          size_t j;
-          UInt16 *name = (UInt16 *)temp;
-          const UInt16 *destPath = (const UInt16 *)name;
-          for (j = 0; name[j] != 0; j++)
+        CSzFile outFile;
+        size_t processedSize;
+        size_t j;
+        UInt16 *name = (UInt16 *)temp;
+        const UInt16 *destPath = (const UInt16 *)name;
+        for (j = 0; name[j] != 0; j++)
             if (name[j] == '/')
             {
-              if (fullPaths)
-              {
+            if (fullPaths)
+            {
                 name[j] = 0;
                 MyCreateDir(name);
                 name[j] = CHAR_PATH_SEPARATOR;
-              }
-              else
+            }
+            else
                 destPath = name + j + 1;
             }
-    
-          if (isDir)
-          {
+
+        if (isDir)
+        {
             MyCreateDir(destPath);
             printf("\n");
             continue;
-          }
-          else if (OutFile_OpenUtf16(&outFile, destPath))
-          {
+        }
+        else if (OutFile_OpenUtf16(&outFile, destPath))
+        {
             PrintError("can not open output file");
             res = SZ_ERROR_FAIL;
             break;
-          }
-          processedSize = outSizeProcessed;
-          if (File_Write(&outFile, outBuffer + offset, &processedSize) != 0 || processedSize != outSizeProcessed)
-          {
+        }
+        processedSize = outSizeProcessed;
+        if (File_Write(&outFile, outBuffer + offset, &processedSize) != 0 || processedSize != outSizeProcessed)
+        {
             PrintError("can not write output file");
             res = SZ_ERROR_FAIL;
             break;
-          }
-          if (File_Close(&outFile))
-          {
+        }
+        if (File_Close(&outFile))
+        {
             PrintError("can not close output file");
             res = SZ_ERROR_FAIL;
             break;
-          }
-          #ifdef USE_WINDOWS_FILE
-          if (SzBitWithVals_Check(&db.Attribs, i))
+        }
+        #ifdef USE_WINDOWS_FILE
+        if (SzBitWithVals_Check(&db.Attribs, i))
             SetFileAttributesW(destPath, db.Attribs.Vals[i]);
-          #endif
+        #endif
         }
         printf("\n");
-      }
-      IAlloc_Free(&allocImp, outBuffer);
+    }
+    IAlloc_Free(&allocImp, outBuffer);
     }
   }
   SzArEx_Free(&db, &allocImp);

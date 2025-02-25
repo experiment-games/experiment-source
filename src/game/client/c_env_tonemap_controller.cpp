@@ -22,14 +22,14 @@ class C_EnvTonemapController : public C_BaseEntity
 {
     DECLARE_CLASS( C_EnvTonemapController, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_EnvTonemapController();
     ~C_EnvTonemapController();
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   private:
+    private:
     bool m_bUseCustomAutoExposureMin;
     bool m_bUseCustomAutoExposureMax;
     bool m_bUseCustomBloomScale;
@@ -38,7 +38,7 @@ class C_EnvTonemapController : public C_BaseEntity
     float m_flCustomBloomScale;
     float m_flCustomBloomScaleMinimum;
 
-   private:
+    private:
     C_EnvTonemapController( const C_EnvTonemapController& );
 };
 

@@ -21,7 +21,7 @@ class C_ParticleSystem : public C_BaseEntity
 {
     DECLARE_CLASS( C_ParticleSystem, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ParticleSystem();
@@ -30,7 +30,7 @@ class C_ParticleSystem : public C_BaseEntity
     void PostDataUpdate( DataUpdateType_t updateType );
     void ClientThink( void );
 
-   protected:
+    protected:
     int m_iEffectIndex;
     bool m_bActive;
     bool m_bOldActive;

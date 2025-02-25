@@ -23,7 +23,7 @@ class CExplanationManager : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CExplanationManager, EditablePanel );
 
-   public:
+    public:
     CExplanationManager();
     virtual ~CExplanationManager();
 
@@ -34,7 +34,7 @@ class CExplanationManager : public EditablePanel
 
     CExplanationPopup* ShowExplanation( const char* pszExplanationName );
 
-   private:
+    private:
     CUtlVector< CExplanationPopup* > m_vecPopups;
     CUtlVector< CExplanationPopup* > m_vecQueuedPopups;
 };

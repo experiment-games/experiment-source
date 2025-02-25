@@ -23,7 +23,7 @@ extern short g_sModelIndexBubbles;  // holds the index for the bubbles model
 //-----------------------------------------------------------------------------
 class CTEBubbles : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBubbles, CBaseTempEntity );
 
     CTEBubbles( const char* name );
@@ -33,7 +33,7 @@ class CTEBubbles : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecMins );
     CNetworkVector( m_vecMaxs );
     CNetworkVar( float, m_fHeight );

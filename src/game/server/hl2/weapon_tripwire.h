@@ -26,7 +26,7 @@ enum TripwireState_t
 
 class CWeapon_Tripwire : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeapon_Tripwire, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();

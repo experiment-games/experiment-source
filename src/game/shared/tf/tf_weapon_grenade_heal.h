@@ -23,7 +23,7 @@
 //
 class CTFGrenadeHeal : public CTFWeaponBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeHeal, CTFWeaponBaseGrenade );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -57,7 +57,7 @@ class CTFGrenadeHeal : public CTFWeaponBaseGrenade
 
 class CTFGrenadeHealProjectile : public CTFWeaponBaseGrenadeProj
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeHealProjectile, CTFWeaponBaseGrenadeProj );
 
     // Unique identifier.
@@ -78,7 +78,7 @@ class CTFGrenadeHealProjectile : public CTFWeaponBaseGrenadeProj
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool m_bPlayedLeadIn;
 };
 

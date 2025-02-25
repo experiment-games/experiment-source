@@ -28,7 +28,7 @@
 
 class CWeaponCrowbar : public CBaseExperimentBludgeonWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponCrowbar, CBaseExperimentBludgeonWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -52,15 +52,15 @@ class CWeaponCrowbar : public CBaseExperimentBludgeonWeapon
     // Animation event
 #ifndef CLIENT_DLL
     virtual void Operator_HandleAnimEvent( animevent_t *pEvent,
-                                           CBaseCombatCharacter *pOperator );
+                                            CBaseCombatCharacter *pOperator );
     void HandleAnimEventMeleeHit( animevent_t *pEvent,
-                                  CBaseCombatCharacter *pOperator );
+                                CBaseCombatCharacter *pOperator );
     int WeaponMeleeAttack1Condition( float flDot, float flDist );
 #endif
 
     CWeaponCrowbar( const CWeaponCrowbar & );
 
-   private:
+    private:
 };
 
 #endif  // Experiment_WEAPON_CROWBAR_H

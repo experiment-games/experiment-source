@@ -18,7 +18,7 @@ struct FXLineData_t;
 //-----------------------------------------------------------------------------
 abstract_class CClientSideEffect
 {
-   public:
+    public:
     // Constructs the named effect
     CClientSideEffect( const char *name );
     virtual ~CClientSideEffect( void );
@@ -36,7 +36,7 @@ abstract_class CClientSideEffect
     // Sets the effect name (useful for debugging).
     virtual void SetEffectName( const char *pszName );
 
-   private:
+    private:
     // Name of effect ( static data )
     const char *m_pszName;
     // Is the effect active
@@ -48,7 +48,7 @@ abstract_class CClientSideEffect
 //-----------------------------------------------------------------------------
 abstract_class IEffectsList
 {
-   public:
+    public:
     virtual ~IEffectsList( void ) {}
 
     // Add an effect to the list of effects
@@ -77,19 +77,19 @@ void FX_AddLine( const FXLineData_t &data );
 void FX_AddQuad( const FXQuadData_t &data );
 
 void FX_AddQuad( const Vector &origin,
-                 const Vector &normal,
-                 float startSize,
-                 float endSize,
-                 float sizeBias,
-                 float startAlpha,
-                 float endAlpha,
-                 float alphaBias,
-                 float yaw,
-                 float deltaYaw,
-                 const Vector &color,
-                 float lifeTime,
-                 const char *shader,
-                 unsigned int flags );
+                const Vector &normal,
+                float startSize,
+                float endSize,
+                float sizeBias,
+                float startAlpha,
+                float endAlpha,
+                float alphaBias,
+                float yaw,
+                float deltaYaw,
+                const Vector &color,
+                float lifeTime,
+                const char *shader,
+                unsigned int flags );
 
 // For safe addition of client effects
 void SetFXCreationAllowed( bool state );

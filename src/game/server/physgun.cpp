@@ -41,7 +41,7 @@ class CGravityPellet : public CBaseAnimating
 {
     DECLARE_CLASS( CGravityPellet, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     ~CGravityPellet();
@@ -130,7 +130,7 @@ class CGravControllerPoint : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     CGravControllerPoint( void );
     ~CGravControllerPoint( void );
     void AttachEntity( CBaseEntity *pEntity, IPhysicsObject *pPhys, const Vector &position );
@@ -459,7 +459,7 @@ class CWeaponGravityGun : public CBaseCombatWeapon
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponGravityGun, CBaseCombatWeapon );
 
     CWeaponGravityGun();
@@ -547,7 +547,7 @@ class CWeaponGravityGun : public CBaseCombatWeapon
 
     DECLARE_SERVERCLASS();
 
-   private:
+    private:
     CNetworkVar( int, m_active );
     bool m_useDown;
     EHANDLE m_hObject;
@@ -616,7 +616,7 @@ DEFINE_FIELD( localNormal, FIELD_VECTOR ),
     END_DATADESC()
 
         enum physgun_soundstate { SS_SCANNING,
-                                  SS_LOCKEDON };
+                                SS_LOCKEDON };
 enum physgun_soundIndex
 {
     SI_LOCKEDON = 0,
@@ -1506,11 +1506,11 @@ void CC_CollisionTest( const CCommand &args )
     Msg( "%d collisions in %.2f ms (%u dots)\n", NUM_COLLISION_TESTS, duration * 1000, dots );
     Msg( "Current speed ratio: %.2fX BSP:JGJK\n", test[1] / test[0] );
 #if 0
-	int red = 255, green = 0, blue = 0;
-	for ( i = 0; i < NUM_COLLISION_TESTS; i++ )
-	{
-		NDebugOverlay::Line( start, results[i], red, green, blue, false, 2 );
-	}
+    int red = 255, green = 0, blue = 0;
+    for ( i = 0; i < NUM_COLLISION_TESTS; i++ )
+    {
+        NDebugOverlay::Line( start, results[i], red, green, blue, false, 2 );
+    }
 #endif
 }
 static ConCommand collision_test( "collision_test", CC_CollisionTest, "Tests collision system", FCVAR_CHEAT );

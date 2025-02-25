@@ -523,7 +523,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 
                         // If this guy's was a blocker, but not valid now, remove him from the list
                         if ( m_Blockers[i].iCapAttemptNumber != m_iCapAttemptNumber || !IsTouching( m_Blockers[i].hPlayer ) ||
-                             ( TeamplayGameRules()->PointsMayAlwaysBeBlocked() && m_Blockers[i].flNextBlockTime < gpGlobals->curtime && m_bStartTouch ) )
+                            ( TeamplayGameRules()->PointsMayAlwaysBeBlocked() && m_Blockers[i].flNextBlockTime < gpGlobals->curtime && m_bStartTouch ) )
                         {
                             m_Blockers.Remove( i );
                             continue;
@@ -597,16 +597,16 @@ void CTriggerAreaCapture::CaptureThink( void )
         //if no-one is in the area
         if( iTeamsInZone == 0 )
         {
-          BreakCapture( true );
-          return;
+        BreakCapture( true );
+        return;
         }
 
         //if they've lost the number of players needed to cap
         int iTeamMembersHere = m_TeamData[m_nCapturingTeam].iNumTouching + iNumBlockablePlayers[m_nCapturingTeam];
         if ( (iTeamMembersHere == 0 ) || (mp_capstyle.GetInt() == 0 && iTeamMembersHere < m_TeamData[m_nCapturingTeam].iNumRequiredToCap) )
         {
-          BreakCapture( true );
-          return;
+        BreakCapture( true );
+        return;
         }
         */
 

@@ -14,7 +14,7 @@ texcoord t3
 
 ; v0.rgb : color for third axis - gamma converted to 2.2 in the vertex shader
 
-; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space 
+; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space
 
 dp3_sat r1.rgb, t1_bx2, c0
 +mov r0.a, t0
@@ -28,6 +28,3 @@ mad r0.rgb, r1, v0, r0
 
 ;mov_x2 r0.rgb, r0
 mul_x2 r0.rgb, r0, t0
-
-
-

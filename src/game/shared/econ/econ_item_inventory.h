@@ -35,14 +35,14 @@ class ITexture;
 // Used to sort the inventory items into their positions.
 class CInventoryListLess
 {
-   public:
+    public:
     bool Less( const CEconItemView &src1, const CEconItemView &src2, void *pCtx );
 };
 
 // A class that wants notifications when an inventory is updated
 class IInventoryUpdateListener : public GCSDK::ISharedObjectListener
 {
-   public:
+    public:
     virtual void InventoryUpdated( CPlayerInventory *pInventory ) = 0;
 
     virtual void SOCreated( const CSteamID &steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE
@@ -82,7 +82,7 @@ class CPlayerInventory : public GCSDK::ISharedObjectListener
 {
     DECLARE_CLASS_NOBASE( CPlayerInventory );
 
-   public:
+    public:
     CPlayerInventory();
     virtual ~CPlayerInventory();
 
@@ -194,7 +194,7 @@ class CPlayerInventory : public GCSDK::ISharedObjectListener
     }
 #endif
 
-   protected:
+    protected:
     // Inventory updating, called by the Inventory Manager only. If you want an inventory updated,
     // use the SteamRequestX functions in CInventoryManager.
     void RequestInventory( CSteamID pSteamID );
@@ -239,7 +239,7 @@ class CPlayerInventory : public GCSDK::ISharedObjectListener
 
     void DirtyItemHandles();
 
-   protected:
+    protected:
     // The Steam Id of the player who owns this inventory
     CSteamID m_OwnerID;
 
@@ -268,7 +268,7 @@ class CInventoryManager : public CAutoGameSystemPerFrame
 {
     DECLARE_CLASS_GAMEROOT( CInventoryManager, CAutoGameSystem );
 
-   public:
+    public:
     CInventoryManager( void );
 
     // Adds the inventory to the list of inventories that should be maintained.
@@ -284,7 +284,7 @@ class CInventoryManager : public CAutoGameSystemPerFrame
     int DeleteUnknowns( CPlayerInventory *pInventory );
 #endif
 
-   public:
+    public:
     //-----------------------------------------------------------------------
     // IAutoServerSystem
     //-----------------------------------------------------------------------
@@ -424,24 +424,24 @@ class CInventoryManager : public CAutoGameSystemPerFrame
     void CleanAckFile( void );
     void SaveAckFile( void );
 
-   private:
+    private:
     void VerifyAckFileLoaded( void );
     KeyValues *m_pkvItemClientAckFile;
     bool m_bClientAckDirty;
 
-   private:
+    private:
     // As we move items around in batches (on pickups usually) we need to know what slots will be filled
     // by items we've moved, and haven't received a response from Steam.
     CUtlVector< int > m_PredictedFilledSlots;
 #endif
 
-   public:
+    public:
     virtual int GetBackpackPositionFromBackend( uint32 iBackendPosition )
     {
         return ExtractBackpackPositionFromBackend( iBackendPosition );
     }
 
-   private:
+    private:
     //-----------------------------------------------------------------------
     // Pending inventory requests
     struct pendingreq_t
@@ -452,7 +452,7 @@ class CInventoryManager : public CAutoGameSystemPerFrame
     CUtlVector< pendingreq_t > m_hPendingInventoryRequests;
     void RemovePendingRequest( CSteamID *pSteamID );
 
-   protected:
+    protected:
     //-----------------------------------------------------------------------
     // Inventory registry
     void DeregisterInventory( CPlayerInventory *pInventory );
@@ -502,7 +502,7 @@ CBasePlayer *GetPlayerBySteamID( const CSteamID &steamID );
 //-----------------------------------------------------------------------------
 class CEconItemViewHandle
 {
-   public:
+    public:
     CEconItemViewHandle()
         : m_pItem( NULL ), m_pInv( NULL ), m_bPointerDirty( false )
     {
@@ -558,7 +558,7 @@ class CEconItemViewHandle
         m_bPointerDirty = true;
     }
 
-   private:
+    private:
     CEconItemView *Get() const;
 
     mutable bool m_bPointerDirty;    // Used to mark when m_pItem is no longer valid

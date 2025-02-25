@@ -20,7 +20,7 @@ class CTFStorePage_Maps : public CTFStorePage1
 {
     DECLARE_CLASS_SIMPLE( CTFStorePage_Maps, CTFStorePage1 );
 
-   public:
+    public:
     CTFStorePage_Maps( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
     virtual ~CTFStorePage_Maps() {}
 
@@ -31,7 +31,7 @@ class CTFStorePage_Maps : public CTFStorePage1
 
     virtual void OnPageShow( void );
 
-   protected:
+    protected:
 };
 
 #endif  // STORE_PAGE_MAPS_H

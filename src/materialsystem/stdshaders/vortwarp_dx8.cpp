@@ -26,7 +26,7 @@ float CubicBezier( float t, float A, float B, float C, float D )
 }
 
 BEGIN_VS_SHADER( VortWarp_dx8,
-                 "Help for VortWarp_dx8" )
+                "Help for VortWarp_dx8" )
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
 SHADER_PARAM( ENTITYORIGIN, SHADER_PARAM_TYPE_VEC3, "0.0", "center if the model in world space" )

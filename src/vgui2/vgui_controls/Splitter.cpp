@@ -32,7 +32,7 @@ class SplitterHandle : public Panel
 {
     DECLARE_CLASS_SIMPLE( SplitterHandle, Panel );
 
-   public:
+    public:
     SplitterHandle( Splitter *parent, const char *name, SplitterMode_t mode, int nIndex );
     ~SplitterHandle();
 
@@ -42,7 +42,7 @@ class SplitterHandle : public Panel
     virtual void OnCursorMoved( int x, int y );
     virtual void OnMouseDoublePressed( MouseCode code );
 
-   private:
+    private:
     SplitterMode_t m_nMode;
     int m_nIndex;
     bool m_bDragging;
@@ -155,7 +155,7 @@ class SplitterChildPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( SplitterChildPanel, EditablePanel );
 
-   public:
+    public:
     SplitterChildPanel( Panel *parent, const char *panelName )
         : BaseClass( parent, panelName )
     {

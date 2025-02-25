@@ -238,7 +238,7 @@ void CTripmineGrenade::BeamBreakThink( void )
 
     // Also blow up if the attached entity goes away, ie: a crate
     if ( pBCC || fabs( m_flBeamLength - tr.fraction ) > 0.001 ||
-         ( m_bAttached && m_hAttachEntity.Get() == NULL ) || bAttachMoved )
+        ( m_bAttached && m_hAttachEntity.Get() == NULL ) || bAttachMoved )
     {
         m_iHealth = 0;
         if ( m_pConstraint )
@@ -351,11 +351,11 @@ void CTripmineGrenade::AttachToEntity( CBaseEntity *pOther )
     SetMoveType( MOVETYPE_NONE );
 
     if ( pOther->GetSolid() == SOLID_VPHYSICS &&
-         pOther->VPhysicsGetObject() != NULL )
+        pOther->VPhysicsGetObject() != NULL )
     {
         SetSolid(
             SOLID_BBOX );  // Tony; switch to bbox solid instead of vphysics,
-                           // because we've made the physics object non-solid
+                            // because we've made the physics object non-solid
         MakeConstraint( pOther );
         SetMoveType( MOVETYPE_VPHYSICS );  // use vphysics while constrained!!
     }
@@ -364,7 +364,7 @@ void CTripmineGrenade::AttachToEntity( CBaseEntity *pOther )
     {
         SetSolid(
             SOLID_BBOX );  // Tony; switch to bbox solid instead of vphysics,
-                           // because we've made the physics object non-solid
+                            // because we've made the physics object non-solid
         SetParent( m_hAttachEntity.Get() );
     }
 }

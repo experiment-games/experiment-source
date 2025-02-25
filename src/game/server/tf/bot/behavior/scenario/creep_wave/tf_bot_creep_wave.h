@@ -16,7 +16,7 @@ CTFBot *FindNearestEnemyCreep( CTFBot *me );
 //-----------------------------------------------------------------------------
 class CTFBotCreepWave : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -29,7 +29,7 @@ class CTFBotCreepWave : public Action< CTFBot >
         return "CreepWave";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
     IntervalTimer m_stuckTimer;
@@ -38,7 +38,7 @@ class CTFBotCreepWave : public Action< CTFBot >
 //-----------------------------------------------------------------------------
 class CTFBotCreepAttack : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotCreepAttack( CTFPlayer *victim );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -49,7 +49,7 @@ class CTFBotCreepAttack : public Action< CTFBot >
         return "CreepAttack";
     };
 
-   private:
+    private:
     CHandle< CTFPlayer > m_victim;
 };
 

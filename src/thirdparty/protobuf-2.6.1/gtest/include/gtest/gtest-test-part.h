@@ -47,7 +47,7 @@ namespace testing
 // Don't inherit from TestPartResult as its destructor is not virtual.
 class GTEST_API_ TestPartResult
 {
-   public:
+    public:
     // The possible outcomes of a test part (i.e. an assertion or an
     // explicit SUCCEED(), FAIL(), or ADD_FAILURE()).
     enum Type
@@ -65,10 +65,10 @@ class GTEST_API_ TestPartResult
                     int a_line_number,
                     const char* a_message )
         : type_( a_type ),
-          file_name_( a_file_name == NULL ? "" : a_file_name ),
-          line_number_( a_line_number ),
-          summary_( ExtractSummary( a_message ) ),
-          message_( a_message )
+        file_name_( a_file_name == NULL ? "" : a_file_name ),
+        line_number_( a_line_number ),
+        summary_( ExtractSummary( a_message ) ),
+        message_( a_message )
     {
     }
 
@@ -128,7 +128,7 @@ class GTEST_API_ TestPartResult
         return type_ == kFatalFailure;
     }
 
-   private:
+    private:
     Type type_;
 
     // Gets the summary of the failure message by omitting the stack
@@ -154,7 +154,7 @@ std::ostream& operator<<( std::ostream& os, const TestPartResult& result );
 // virtual.
 class GTEST_API_ TestPartResultArray
 {
-   public:
+    public:
     TestPartResultArray() {}
 
     // Appends the given TestPartResult to the array.
@@ -166,7 +166,7 @@ class GTEST_API_ TestPartResultArray
     // Returns the number of TestPartResult objects in the array.
     int size() const;
 
-   private:
+    private:
     std::vector< TestPartResult > array_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( TestPartResultArray );
@@ -175,7 +175,7 @@ class GTEST_API_ TestPartResultArray
 // This interface knows how to report a test part result.
 class TestPartResultReporterInterface
 {
-   public:
+    public:
     virtual ~TestPartResultReporterInterface() {}
 
     virtual void ReportTestPartResult( const TestPartResult& result ) = 0;
@@ -193,7 +193,7 @@ namespace internal
 class GTEST_API_ HasNewFatalFailureHelper
     : public TestPartResultReporterInterface
 {
-   public:
+    public:
     HasNewFatalFailureHelper();
     virtual ~HasNewFatalFailureHelper();
     virtual void ReportTestPartResult( const TestPartResult& result );
@@ -202,7 +202,7 @@ class GTEST_API_ HasNewFatalFailureHelper
         return has_new_fatal_failure_;
     }
 
-   private:
+    private:
     bool has_new_fatal_failure_;
     TestPartResultReporterInterface* original_reporter_;
 

@@ -106,9 +106,9 @@ SHADER_DRAW
         pShaderAPI->SetVertexShaderIndex( 0 );
 
         float flPixelShaderParams[4] = { r_bloomtintr.GetFloat(),
-                                         r_bloomtintg.GetFloat(),
-                                         r_bloomtintb.GetFloat(),
-                                         r_bloomtintexponent.GetFloat() };
+                                        r_bloomtintg.GetFloat(),
+                                        r_bloomtintb.GetFloat(),
+                                        r_bloomtintexponent.GetFloat() };
         if ( params[BLOOMTINTENABLE]->GetIntValue() == 0 )
         {
             flPixelShaderParams[0] = 0.333f;

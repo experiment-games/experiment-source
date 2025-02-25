@@ -33,7 +33,7 @@ class CTFMiniGame : public CBaseEntity
     ,
                     public IMinigameAutoList
 {
-   public:
+    public:
     enum EScoringType
     {
         SCORING_TYPE_POINTS = 0,
@@ -105,7 +105,7 @@ class CTFMiniGame : public CBaseEntity
     int GetScoreForTeam( int nTeamNum ) const;
 #endif
 
-   protected:
+    protected:
 #ifdef GAME_DLL
     virtual void InternalHandleInputScore( inputdata_t &inputdata ) {}
     virtual void SuddenDeathTimeStartThink();
@@ -140,7 +140,7 @@ class CTFHalloweenMinigame : public CTFMiniGame
     DECLARE_CLASS( CTFHalloweenMinigame, CTFMiniGame )
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
 #ifdef GAME_DLL
     CTFHalloweenMinigame();
 
@@ -161,10 +161,10 @@ class CTFHalloweenMinigame : public CTFMiniGame
     void InputEnableSpawnBoss( inputdata_t &inputdata );
     void InputDisableSpawnBoss( inputdata_t &inputdata );
 
-   protected:
+    protected:
     virtual void InternalHandleInputScore( inputdata_t &inputdata ) OVERRIDE;
 
-   private:
+    private:
     void TeleportAllPlayersThink();
 
     EHANDLE m_hBossSpawnPoint;
@@ -177,7 +177,7 @@ class CTFHalloweenMinigame_FallingPlatforms : public CTFHalloweenMinigame
     DECLARE_CLASS( CTFHalloweenMinigame_FallingPlatforms, CTFHalloweenMinigame )
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
 #ifdef GAME_DLL
     CTFHalloweenMinigame_FallingPlatforms();
 
@@ -189,7 +189,7 @@ class CTFHalloweenMinigame_FallingPlatforms : public CTFHalloweenMinigame
     COutputInt m_OutputSafePlatform;
     COutputInt m_OutputRemovePlatform;
 
-   private:
+    private:
     CCopyableUtlVector< int > m_vecRemainingPlatforms;
 #endif
 };
@@ -199,7 +199,7 @@ class CTFMinigameLogic : public CBaseEntity
     DECLARE_CLASS( CTFMinigameLogic, CBaseEntity )
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
     CTFMinigameLogic();
     virtual ~CTFMinigameLogic();
 
@@ -224,7 +224,7 @@ class CTFMinigameLogic : public CBaseEntity
     void InputTeleportToRandomMinigame( inputdata_t &inputdata );
 #endif
 
-   protected:
+    protected:
     static CTFMinigameLogic *m_sMinigameLogic;
 
 #ifdef GAME_DLL
@@ -244,7 +244,7 @@ class CTFMinigameLogic : public CBaseEntity
 class CTFHalloweenFortuneTeller : public CBaseAnimating
 #ifdef GAME_DLL
     ,
-                                  public CGameEventListener
+                                public CGameEventListener
 #endif
 {
     DECLARE_CLASS( CTFHalloweenFortuneTeller, CBaseAnimating );
@@ -258,7 +258,7 @@ class CTFHalloweenFortuneTeller : public CBaseAnimating
         NUM_TELLER_TYPES
     };
 
-   public:
+    public:
     CTFHalloweenFortuneTeller();
     ~CTFHalloweenFortuneTeller();
 
@@ -272,7 +272,7 @@ class CTFHalloweenFortuneTeller : public CBaseAnimating
     void InputEndFortuneTelling( inputdata_t & );
 #endif  // GAME_DLL
 
-   protected:
+    protected:
     virtual void Precache() OVERRIDE;
 
 #ifdef GAME_DLL
@@ -291,7 +291,7 @@ class CTFHalloweenFortuneTeller : public CBaseAnimating
     void SpeakThink();
 #endif  // GAME_DLL
 
-   private:
+    private:
 #ifdef GAME_DLL
     COutputEvent m_OnFortuneWarning;
     COutputEvent m_OnFortuneTold;

@@ -28,7 +28,7 @@ class CHudHintDisplay : public vgui::Panel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudHintDisplay, vgui::Panel );
 
-   public:
+    public:
     CHudHintDisplay( const char *pElementName );
 
     void Init();
@@ -41,11 +41,11 @@ class CHudHintDisplay : public vgui::Panel, public CHudElement
 
     virtual void PerformLayout();
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnThink();
 
-   protected:
+    protected:
     vgui::HFont m_hFont;
     Color m_bgColor;
     vgui::Label *m_pLabel;
@@ -346,7 +346,7 @@ class CHudHintKeyDisplay : public vgui::Panel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudHintKeyDisplay, vgui::Panel );
 
-   public:
+    public:
     CHudHintKeyDisplay( const char *pElementName );
     void Init();
     void Reset();
@@ -355,11 +355,11 @@ class CHudHintKeyDisplay : public vgui::Panel, public CHudElement
 
     bool SetHintText( const char *text );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnThink();
 
-   private:
+    private:
     CUtlVector< vgui::Label * > m_Labels;
     vgui::HFont m_hSmallFont, m_hLargeFont;
     int m_iBaseY;
@@ -550,16 +550,16 @@ bool CHudHintKeyDisplay::SetHintText( const char *text )
                     bUseThisKey = ( Q_stricmp( pBinding, binding ) == 0 );
 
                     if ( !bUseThisKey &&
-                         ( Q_stricmp( pBinding, "+duck" ) == 0 || Q_stricmp( pBinding, "toggle_duck" ) == 0 ) &&
-                         ( Q_stricmp( binding, "+duck" ) == 0 || Q_stricmp( binding, "toggle_duck" ) == 0 ) )
+                        ( Q_stricmp( pBinding, "+duck" ) == 0 || Q_stricmp( pBinding, "toggle_duck" ) == 0 ) &&
+                        ( Q_stricmp( binding, "+duck" ) == 0 || Q_stricmp( binding, "toggle_duck" ) == 0 ) )
                     {
                         // +duck and toggle_duck are interchangable
                         bUseThisKey = true;
                     }
 
                     if ( !bUseThisKey &&
-                         ( Q_stricmp( pBinding, "+zoom" ) == 0 || Q_stricmp( pBinding, "toggle_zoom" ) == 0 ) &&
-                         ( Q_stricmp( binding, "+zoom" ) == 0 || Q_stricmp( binding, "toggle_zoom" ) == 0 ) )
+                        ( Q_stricmp( pBinding, "+zoom" ) == 0 || Q_stricmp( pBinding, "toggle_zoom" ) == 0 ) &&
+                        ( Q_stricmp( binding, "+zoom" ) == 0 || Q_stricmp( binding, "toggle_zoom" ) == 0 ) )
                     {
                         // +zoom and toggle_zoom are interchangable
                         bUseThisKey = true;

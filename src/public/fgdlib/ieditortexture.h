@@ -60,7 +60,7 @@ struct DrawTexData_t
 
 class IEditorTexture
 {
-   public:
+    public:
     virtual ~IEditorTexture( void )
     {
     }

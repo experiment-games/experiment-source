@@ -205,7 +205,7 @@ QueryResultType CTFBotPayloadGuard::ShouldHurry( const INextBot *bot ) const
 //---------------------------------------------------------------------------------------------
 class CCollectPayloadGuardVantagePoints : public ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     CCollectPayloadGuardVantagePoints( CTFBot *me, CBaseEntity *cart )
     {
         m_me = me;

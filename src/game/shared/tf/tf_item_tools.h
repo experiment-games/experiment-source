@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------------------
 class CEconTool_TFSpellbookPage : public IEconTool
 {
-   public:
+    public:
     CEconTool_TFSpellbookPage( const char *pszTypeName, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, NULL, unCapabilities )
     {
@@ -28,7 +28,7 @@ class CEconTool_TFSpellbookPage : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_TFEventEnableHalloween : public IEconTool
 {
-   public:
+    public:
     CEconTool_TFEventEnableHalloween( const char *pszTypeName, const char *pszUseString )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ) {}
 

@@ -10,7 +10,7 @@
 
 class CTFBotNavEntWait : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotNavEntWait( const CFuncNavPrerequisite *prereq );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -21,7 +21,7 @@ class CTFBotNavEntWait : public Action< CTFBot >
         return "NavEntWait";
     };
 
-   private:
+    private:
     CHandle< CFuncNavPrerequisite > m_prereq;
     CountdownTimer m_timer;
 };

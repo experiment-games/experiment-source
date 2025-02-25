@@ -170,7 +170,7 @@ bool CTFRocketPack::CanFire( void ) const
         return false;
 
     /*if ( pOwner->m_Shared.InCond( TF_COND_STUNNED ) )
-      return false;*/
+    return false;*/
 
     if ( pOwner->IsTaunting() )
         return false;
@@ -380,9 +380,9 @@ Vector CTFRocketPack::CalcRocketForceFromPlayer( CTFPlayer *pPlayer )
     QAngle angAim = ( bOnGround ) ? pPlayer->GetAbsAngles() : pPlayer->EyeAngles();
     AngleVectors( angAim, &vecForward, &vecRight, NULL );
     bool bNone = !( pPlayer->m_nButtons & IN_FORWARD ) &&
-                 !( pPlayer->m_nButtons & IN_BACK ) /* &&
-                 !( pPlayer->m_nButtons & IN_MOVELEFT ) &&
-                 !( pPlayer->m_nButtons & IN_MOVERIGHT ) */
+                !( pPlayer->m_nButtons & IN_BACK ) /* &&
+                !( pPlayer->m_nButtons & IN_MOVELEFT ) &&
+                !( pPlayer->m_nButtons & IN_MOVERIGHT ) */
         ;
 
     vecDir = vecForward;

@@ -33,7 +33,7 @@ class CHudDamageIndicator : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudDamageIndicator, vgui::Panel );
 
-   public:
+    public:
     CHudDamageIndicator( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -43,7 +43,7 @@ class CHudDamageIndicator : public CHudElement, public vgui::Panel
     // Handler for our message
     void MsgFunc_Damage( bf_read &msg );
 
-   private:
+    private:
     virtual void OnThink();
     virtual void Paint();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -52,7 +52,7 @@ class CHudDamageIndicator : public CHudElement, public vgui::Panel
     void GetDamagePosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation );
     void DrawDamageIndicator( int x0, int y0, int x1, int y1, float alpha, float flRotation );
 
-   private:
+    private:
     // Indication times
 
     CPanelAnimationVarAliasType( float, m_flMinimumWidth, "MinimumWidth", "10", "proportional_float" );

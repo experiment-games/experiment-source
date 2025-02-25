@@ -25,7 +25,7 @@ struct AudioState_t;
 //-----------------------------------------------------------------------------
 class IToolSystem
 {
-   public:
+    public:
     // Name describing the tool
     virtual char const *GetToolName() = 0;
 

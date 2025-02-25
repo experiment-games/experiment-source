@@ -652,7 +652,7 @@ void CTFSniperRifle::ApplyChargeSpeedModifications( float &flBaseRef )
 
         CTFPlayer *pTarget = ToTFPlayer( tr.m_pEnt );
         if ( pTarget && pTarget->IsAlive() && pTarget->GetTeamNumber() != pPlayer->GetTeamNumber() &&
-             !( pTarget->m_Shared.IsStealthed() && !pTarget->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
+            !( pTarget->m_Shared.IsStealthed() && !pTarget->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
         {
             CALL_ATTRIB_HOOK_FLOAT( flBaseRef, mult_sniper_charge_per_sec_with_enemy_under_crosshair );
 
@@ -1310,7 +1310,7 @@ float CTFSniperRifle::GetHUDDamagePerc( void )
 //-----------------------------------------------------------------------------
 class CProxySniperRifleCharge : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity );
 };
 

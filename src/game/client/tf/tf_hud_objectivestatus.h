@@ -29,7 +29,7 @@ class CTFHudObjectiveStatus : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudObjectiveStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudObjectiveStatus( const char *pElementName );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void Reset();
@@ -53,10 +53,10 @@ class CTFHudObjectiveStatus : public CHudElement, public vgui::EditablePanel
     // HPE_END
     //=============================================================================
 
-   private:
+    private:
     void SetVisiblePanels( void );
 
-   private:
+    private:
     float m_flNextThink;
 
     CTFHudFlagObjectives *m_pFlagPanel;

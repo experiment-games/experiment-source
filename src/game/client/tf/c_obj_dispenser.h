@@ -19,7 +19,7 @@ class C_ObjectDispenser : public C_BaseObject
 {
     DECLARE_CLASS( C_ObjectDispenser, C_BaseObject );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_ObjectDispenser();
@@ -45,7 +45,7 @@ class C_ObjectDispenser : public C_BaseObject
 
     bool m_bUpdateHealingTargets;
 
-   private:
+    private:
     int m_iState;
     int m_iAmmoMetal;
     int m_iMiniBombCounter;
@@ -66,14 +66,14 @@ class CDispenserControlPanel : public CObjectControlPanel
 {
     DECLARE_CLASS( CDispenserControlPanel, CObjectControlPanel );
 
-   public:
+    public:
     CDispenserControlPanel( vgui::Panel *parent, const char *panelName );
 
-   protected:
+    protected:
     virtual void OnTickActive( C_BaseObject *pObj, C_TFPlayer *pLocalPlayer );
     virtual bool IsVisible() OVERRIDE;
 
-   private:
+    private:
     vgui::RotatingProgressBar *m_pAmmoProgress;
     CHandle< C_ObjectDispenser > m_hDispenser;
 };
@@ -82,7 +82,7 @@ class CDispenserControlPanel_Red : public CDispenserControlPanel
 {
     DECLARE_CLASS( CDispenserControlPanel_Red, CDispenserControlPanel );
 
-   public:
+    public:
     CDispenserControlPanel_Red( vgui::Panel *parent, const char *panelName )
         : CDispenserControlPanel( parent, panelName ) {}
 };
@@ -91,7 +91,7 @@ class C_ObjectCartDispenser : public C_ObjectDispenser
 {
     DECLARE_CLASS( C_ObjectCartDispenser, C_ObjectDispenser );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 };
 #endif  // C_OBJ_DISPENSER_H

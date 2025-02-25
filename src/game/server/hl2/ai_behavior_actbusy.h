@@ -69,7 +69,7 @@ class CAI_ActBusyBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_ActBusyBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     DECLARE_DATADESC();
     CAI_ActBusyBehavior();
 
@@ -172,7 +172,7 @@ class CAI_ActBusyBehavior : public CAI_SimpleBehavior
     bool IsInSafeZone( CBaseEntity *pEntity );
     int CountEnemiesInSafeZone();
 
-   private:
+    private:
     virtual int SelectSchedule( void );
     int SelectScheduleForLeaving( void );
     int SelectScheduleWhileNotBusy( int iBase );
@@ -184,7 +184,7 @@ class CAI_ActBusyBehavior : public CAI_SimpleBehavior
     bool PlayAnimForActBusy( busyanimparts_t AnimPart );
     void PlaySoundForActBusy( busyanimparts_t AnimPart );
 
-   private:
+    private:
     bool m_bEnabled;
     bool m_bForceActBusy;
     Activity m_ForcedActivity;
@@ -226,7 +226,7 @@ class CAI_ActBusyGoal : public CAI_GoalEntity
 {
     DECLARE_CLASS( CAI_ActBusyGoal, CAI_GoalEntity );
 
-   public:
+    public:
     CAI_ActBusyGoal()
     {
         // Support legacy maps, where this value used to be set from a constant (with a value of 1).
@@ -253,7 +253,7 @@ class CAI_ActBusyGoal : public CAI_GoalEntity
         return m_bAllowCombatActBusyTeleport;
     }
 
-   protected:
+    protected:
     CAI_ActBusyBehavior *GetBusyBehaviorForNPC( const char *pszActorName, CBaseEntity *pActivator, CBaseEntity *pCaller, const char *sInputName );
     CAI_ActBusyBehavior *GetBusyBehaviorForNPC( CBaseEntity *pEntity, const char *sInputName );
 
@@ -269,20 +269,20 @@ class CAI_ActBusyGoal : public CAI_GoalEntity
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     float m_flBusySearchRange;
     bool m_bVisibleOnly;
     int m_iType;
     bool m_bAllowCombatActBusyTeleport;
 
-   public:
+    public:
     // Let the actbusy behavior query these so we don't have to duplicate the data.
     string_t m_iszSeeEntityName;
     float m_flSeeEntityTimeout;
     string_t m_iszSafeZoneVolume;
     int m_iSightMethod;
 
-   protected:
+    protected:
     COutputEHANDLE m_OnNPCStartedBusy;
     COutputEHANDLE m_OnNPCFinishedBusy;
     COutputEHANDLE m_OnNPCLeft;
@@ -300,7 +300,7 @@ class CAI_ActBusyQueueGoal : public CAI_ActBusyGoal
 {
     DECLARE_CLASS( CAI_ActBusyQueueGoal, CAI_ActBusyGoal );
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void DrawDebugGeometryOverlays( void );
     virtual void NPCMovingToBusy( CAI_BaseNPC *pNPC );
@@ -326,7 +326,7 @@ class CAI_ActBusyQueueGoal : public CAI_ActBusyGoal
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     int m_iCurrentQueueCount;
     CHandle< CAI_Hint > m_hNodes[MAX_QUEUE_NODES];
     bool m_bPlayerBlockedNodes[MAX_QUEUE_NODES];

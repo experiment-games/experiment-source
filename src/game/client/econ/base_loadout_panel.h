@@ -24,7 +24,7 @@ class CBaseLoadoutPanel : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CBaseLoadoutPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName );
     virtual ~CBaseLoadoutPanel();
 
@@ -88,7 +88,7 @@ class CBaseLoadoutPanel : public vgui::EditablePanel, public CGameEventListener
         return m_pMouseOverTooltip;
     }
 
-   protected:
+    protected:
     virtual void UpdateModelPanels( void )
     {
         return;
@@ -111,7 +111,7 @@ class CBaseLoadoutPanel : public vgui::EditablePanel, public CGameEventListener
     bool GetAdjacentItemIndex( int nIndex, int nPage, int *pnNewIndex, int *pnNewPage, int dx, int dy );
     void SelectAdjacentItem( int dx, int dy );
 
-   protected:
+    protected:
     CUtlVector< CItemModelPanel * > m_pItemModelPanels;
     vgui::Label *m_pTitleLabel;
 
@@ -139,7 +139,7 @@ class CBaseLoadoutPanel : public vgui::EditablePanel, public CGameEventListener
 
     CPanelAnimationVarAliasType( int, m_iDeleteButtonXPos, "button_override_delete_xpos", "0", "proportional_int" );
 
-   protected:
+    protected:
     CItemModelPanel *m_pMouseOverItemPanel;
     CItemModelPanelToolTip *m_pMouseOverTooltip;
     CItemModelPanel *m_pItemPanelBeingMousedOver;

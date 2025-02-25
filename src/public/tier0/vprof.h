@@ -276,7 +276,7 @@ class DBG_CLASS CVProfNode
     friend class CVProfRecorder;
     friend class CVProfile;
 
-   public:
+    public:
     CVProfNode( const tchar *pszName, int detailLevel, CVProfNode *pParent, const tchar *pBudgetGroupName, int budgetFlags );
     ~CVProfNode();
 
@@ -346,7 +346,7 @@ class DBG_CLASS CVProfNode
 #endif                                                       // DBGFLAG_VALIDATE
 
     // Used by vprof record/playback.
-   private:
+    private:
     void SetUniqueNodeID( int id )
     {
         m_iUniqueNodeID = id;
@@ -359,7 +359,7 @@ class DBG_CLASS CVProfNode
 
     static int s_iCurrentUniqueNodeID;
 
-   private:
+    private:
     const tchar *m_pszName;
     CFastTimer m_Timer;
 
@@ -379,7 +379,7 @@ class DBG_CLASS CVProfNode
     int m_iCurLoadHitStores;
     int m_iTotalLoadHitStores;
 
-   public:
+    public:
     enum FlagBits
     {
         kRecordL2 = 0x01,
@@ -401,7 +401,7 @@ class DBG_CLASS CVProfNode
 
     int GetLoadHitStores();
 
-   private:
+    private:
 
 #endif
 
@@ -453,7 +453,7 @@ enum CounterGroup_t
 {
     COUNTER_GROUP_DEFAULT = 0,
     COUNTER_GROUP_NO_RESET,           // The engine doesn't reset these counters. Usually, they are used
-                                      // like global variables that can be accessed across modules.
+                                    // like global variables that can be accessed across modules.
     COUNTER_GROUP_TEXTURE_GLOBAL,     // Global texture usage counters (totals for what is currently in memory).
     COUNTER_GROUP_TEXTURE_PER_FRAME,  // Per-frame texture usage counters.
 
@@ -462,7 +462,7 @@ enum CounterGroup_t
 
 class DBG_CLASS CVProfile
 {
-   public:
+    public:
     CVProfile();
     ~CVProfile();
 
@@ -657,7 +657,7 @@ class DBG_CLASS CVProfile
     void Validate( CValidator &validator, tchar *pchName );  // Validate our internal structures
 #endif                                                       // DBGFLAG_VALIDATE
 
-   protected:
+    protected:
     void FreeNodes_R( CVProfNode *pNode );
 
 #ifdef VPROF_VTUNE_GROUP
@@ -693,7 +693,7 @@ class DBG_CLASS CVProfile
 
     class CBudgetGroup
     {
-       public:
+        public:
         tchar *m_pName;
         int m_BudgetFlags;
     };
@@ -741,7 +741,7 @@ DBG_INTERFACE bool g_VProfSignalSpike;
 
 class CVProfSpikeDetector
 {
-   public:
+    public:
     CVProfSpikeDetector( float spike )
         : m_timeLast( GetTimeLast() )
     {
@@ -762,7 +762,7 @@ class CVProfSpikeDetector
         }
     }
 
-   private:
+    private:
     static float &GetTimeLast()
     {
         static float timeLast = 0;
@@ -788,8 +788,8 @@ inline void CVProfile::PushGroup( int nGroupID )
     m_GroupIDStack[m_GroupIDStackDepth] = nGroupID;
     m_GroupIDStackDepth++;
     if ( m_GroupIDStack[m_GroupIDStackDepth - 2] != nGroupID &&
-         VTuneGroupEnabled() &&
-         nGroupID == VTuneGroupID() )
+        VTuneGroupEnabled() &&
+        nGroupID == VTuneGroupID() )
     {
         vtune( true );
     }
@@ -804,8 +804,8 @@ inline void CVProfile::PopGroup( void )
     // the first element to be VPROF_BUDGETGROUP_OTHER_UNACCOUNTED.
     Assert( m_GroupIDStackDepth > 0 );
     if ( m_GroupIDStack[m_GroupIDStackDepth] != m_GroupIDStack[m_GroupIDStackDepth + 1] &&
-         VTuneGroupEnabled() &&
-         m_GroupIDStack[m_GroupIDStackDepth + 1] == VTuneGroupID() )
+        VTuneGroupEnabled() &&
+        m_GroupIDStack[m_GroupIDStackDepth + 1] == VTuneGroupID() )
     {
         vtune( false );
     }
@@ -816,11 +816,11 @@ inline void CVProfile::PopGroup( void )
 
 class CVProfScope
 {
-   public:
+    public:
     CVProfScope( const tchar *pszName, int detailLevel, const tchar *pBudgetGroupName, bool bAssertAccounted, int budgetFlags );
     ~CVProfScope();
 
-   private:
+    private:
     bool m_bEnabled;
 };
 
@@ -831,16 +831,16 @@ class CVProfScope
 
 inline CVProfNode::CVProfNode( const tchar *pszName, int detailLevel, CVProfNode *pParent, const tchar *pBudgetGroupName, int budgetFlags )
     : m_pszName( pszName ),
-      m_nCurFrameCalls( 0 ),
-      m_nPrevFrameCalls( 0 ),
-      m_nRecursions( 0 ),
-      m_pParent( pParent ),
-      m_pChild( NULL ),
-      m_pSibling( NULL ),
-      m_iClientData( -1 )
+    m_nCurFrameCalls( 0 ),
+    m_nPrevFrameCalls( 0 ),
+    m_nRecursions( 0 ),
+    m_pParent( pParent ),
+    m_pChild( NULL ),
+    m_pSibling( NULL ),
+    m_iClientData( -1 )
 #ifdef _X360
-      ,
-      m_iBitFlags( 0 )
+    ,
+    m_iBitFlags( 0 )
 #endif
 {
     m_iUniqueNodeID = s_iCurrentUniqueNodeID++;
@@ -891,8 +891,8 @@ inline CVProfNode *CVProfNode::GetPrevSibling()
 
     CVProfNode *s;
     for ( s = p->GetChild();
-          s && ( s->GetSibling() != this );
-          s = s->GetSibling() )
+        s && ( s->GetSibling() != this );
+        s = s->GetSibling() )
         ;
 
     return s;
@@ -1353,7 +1353,7 @@ inline CVProfScope::~CVProfScope()
 
 class CVProfCounter
 {
-   public:
+    public:
     CVProfCounter( const tchar *pName, CounterGroup_t group = COUNTER_GROUP_DEFAULT )
     {
         m_pCounter = g_VProfCurrentProfile.FindOrCreateCounter( pName, group );
@@ -1368,7 +1368,7 @@ class CVProfCounter
         *m_pCounter += val;
     }
 
-   private:
+    private:
     int *m_pCounter;
 };
 
@@ -1384,7 +1384,7 @@ class CVProfCounter
 
 class CPIXRecorder
 {
-   public:
+    public:
     CPIXRecorder()
         : m_bActive( false ) {}
     ~CPIXRecorder()
@@ -1421,7 +1421,7 @@ class CPIXRecorder
         }
     }
 
-   private:
+    private:
     bool m_bActive;
 };
 

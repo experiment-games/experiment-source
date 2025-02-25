@@ -54,7 +54,7 @@ enum ShadowType_t
 // If no views had the entity, then it is called with bInPVS=false after rendering.
 abstract_class IPVSNotify
 {
-   public:
+    public:
     virtual void OnPVSStatusChanged( bool bInPVS ) = 0;
 };
 
@@ -63,7 +63,7 @@ abstract_class IPVSNotify
 //-----------------------------------------------------------------------------
 abstract_class IClientRenderable
 {
-   public:
+    public:
     // Gets at the containing class...
     virtual IClientUnknown *GetIClientUnknown() = 0;
 
@@ -174,7 +174,7 @@ abstract_class IClientRenderable
 // functions of IClientRenderable.
 abstract_class CDefaultClientRenderable : public IClientUnknown, public IClientRenderable
 {
-   public:
+    public:
     CDefaultClientRenderable()
     {
         m_hRenderHandle = INVALID_CLIENT_RENDER_HANDLE;
@@ -339,7 +339,7 @@ abstract_class CDefaultClientRenderable : public IClientUnknown, public IClientR
     }
 
     // IClientUnknown implementation.
-   public:
+    public:
     virtual void SetRefEHandle( const CBaseHandle &handle )
     {
         Assert( false );
@@ -379,7 +379,7 @@ abstract_class CDefaultClientRenderable : public IClientUnknown, public IClientR
         return 0;
     }
 
-   public:
+    public:
     ClientRenderHandle_t m_hRenderHandle;
 };
 

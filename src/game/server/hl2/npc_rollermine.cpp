@@ -65,7 +65,7 @@ class CRollerController : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
     AngularImpulse m_vecAngular;
@@ -85,7 +85,7 @@ class CRollerController : public IMotionEvent
         return !m_fIsStopped;
     }
 
-   private:
+    private:
     bool m_fIsStopped;
 };
 
@@ -188,7 +188,7 @@ class CNPC_RollerMine : public CNPCBaseInteractive< CAI_BaseNPC >, public CDefau
     DECLARE_CLASS( CNPC_RollerMine, CNPCBaseInteractive< CAI_BaseNPC > );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNPC_RollerMine( void )
     {
         m_bTurnedOn = true;
@@ -323,7 +323,7 @@ class CNPC_RollerMine : public CNPCBaseInteractive< CAI_BaseNPC >, public CDefau
     COutputEvent m_OnPhysGunDrop;
     COutputEvent m_OnPhysGunPickup;
 
-   protected:
+    protected:
     DEFINE_CUSTOM_AI;
     DECLARE_DATADESC();
 
@@ -1028,36 +1028,36 @@ int CNPC_RollerMine::TranslateSchedule( int scheduleType )
 #if 0
 #define ROLLERMINE_DETECTION_RADIUS 350
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::DetectedEnemyInProximity( void )
 {
-	CBaseEntity *pEnt = NULL;
-	CBaseEntity *pBestEnemy = NULL;
-	float		flBestDist = MAX_TRACE_LENGTH;
+    CBaseEntity *pEnt = NULL;
+    CBaseEntity *pBestEnemy = NULL;
+    float		flBestDist = MAX_TRACE_LENGTH;
 
-	while ( ( pEnt = gEntList.FindEntityInSphere( pEnt, GetAbsOrigin(), ROLLERMINE_DETECTION_RADIUS ) ) != NULL )
-	{
-		if ( IRelationType( pEnt ) != D_HT )
-			continue;
+    while ( ( pEnt = gEntList.FindEntityInSphere( pEnt, GetAbsOrigin(), ROLLERMINE_DETECTION_RADIUS ) ) != NULL )
+    {
+        if ( IRelationType( pEnt ) != D_HT )
+            continue;
 
-		float distance = ( pEnt->GetAbsOrigin() - GetAbsOrigin() ).Length();
-		
-		if ( distance >= flBestDist )
-			continue;
+        float distance = ( pEnt->GetAbsOrigin() - GetAbsOrigin() ).Length();
 
-		pBestEnemy = pEnt;
-		flBestDist = distance;
-	}
+        if ( distance >= flBestDist )
+            continue;
 
-	if ( pBestEnemy != NULL )
-	{
-		SetEnemy( pBestEnemy );
-		return true;
-	}
+        pBestEnemy = pEnt;
+        flBestDist = distance;
+    }
 
-	return false;
+    if ( pBestEnemy != NULL )
+    {
+        SetEnemy( pBestEnemy );
+        return true;
+    }
+
+    return false;
 }
 #endif
 
@@ -1782,21 +1782,21 @@ void CNPC_RollerMine::SpikeTouch( CBaseEntity *pOther )
 {
     /*
     if ( pOther->IsSolidFlagSet(FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS) )
-      return;
+    return;
 
     if ( m_bHeld )
-      return;
+    return;
 
     if ( pOther->IsPlayer() )
-      return;
+    return;
 
     if ( pOther->m_takedamage != DAMAGE_YES )
-      return;
+    return;
 
     // If we just hit a breakable glass object, don't explode. We want to blow through it.
     CBreakable *pBreakable = dynamic_cast<CBreakable*>(pOther);
     if ( pBreakable && pBreakable->GetMaterialType() == matGlass )
-      return;
+    return;
 
     Explode();
     EmitSound( "NPC_RollerMine.Warn" );
@@ -2230,15 +2230,15 @@ void CNPC_RollerMine::AnnounceArrivalToOthers( CBaseEntity *pOther )
     /*
     if ( iRollers >= ROLLERMINE_REQUIRED_TO_EXPLODE_VEHICLE )
     {
-      // Alert the others
-      EmitSound( "NPC_RollerMine.ExplodeChirp" );
+    // Alert the others
+    EmitSound( "NPC_RollerMine.ExplodeChirp" );
 
-      // Tell everyone to explode shortly
-      for ( int i = 0; i < iRollers; i++ )
-      {
+    // Tell everyone to explode shortly
+    for ( int i = 0; i < iRollers; i++ )
+    {
         variant_t emptyVariant;
         g_EventQueue.AddEvent( aRollersOnVehicle[i], "RespondToExplodeChirp", RandomFloat(2,5), NULL, NULL );
-      }
+    }
     }
     else
     {
@@ -2331,21 +2331,21 @@ void CNPC_RollerMine::InputJoltVehicle( inputdata_t &inputdata )
     CBeam *pBeam = CBeam::BeamCreate( "sprites/rollermine_shock.vmt", 4 );
     if ( pBeam )
     {
-      pBeam->EntsInit( GetVehicleStuckTo(), this );
-      CBaseAnimating *pAnimating = dynamic_cast<CBaseAnimating *>( GetVehicleStuckTo() );
-      if ( pAnimating )
-      {
+    pBeam->EntsInit( GetVehicleStuckTo(), this );
+    CBaseAnimating *pAnimating = dynamic_cast<CBaseAnimating *>( GetVehicleStuckTo() );
+    if ( pAnimating )
+    {
         int startAttach = pAnimating->LookupAttachment("beam_damage" );
         pBeam->SetStartAttachment( startAttach );
-      }
-      pBeam->SetEndAttachment( 1 );
-      pBeam->SetWidth( 8 );
-      pBeam->SetEndWidth( 8 );
-      pBeam->SetBrightness( 255 );
-      pBeam->SetColor( 255, 255, 255 );
-      pBeam->LiveForTime( 0.5f );
-      pBeam->RelinkBeam();
-      pBeam->SetNoise( 30 );
+    }
+    pBeam->SetEndAttachment( 1 );
+    pBeam->SetWidth( 8 );
+    pBeam->SetEndWidth( 8 );
+    pBeam->SetBrightness( 255 );
+    pBeam->SetColor( 255, 255, 255 );
+    pBeam->LiveForTime( 0.5f );
+    pBeam->RelinkBeam();
+    pBeam->SetNoise( 30 );
     }
     */
 

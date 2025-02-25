@@ -37,7 +37,7 @@ message TestMessage3 {
     // proto file. It's used to test if the compiler can avoid this conflict
     // correctly.
     enum OuterClassNameTest3 {
-      DUMMY_VALUE = 1;
+    DUMMY_VALUE = 1;
     }
   }
 }

@@ -19,7 +19,7 @@ class CPhysicsShake : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     virtual simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
     {
         Vector contact;
@@ -41,7 +41,7 @@ DEFINE_FIELD( m_force, FIELD_VECTOR ),
 
         class CEnvShake : public CPointEntity
 {
-   private:
+    private:
     float m_Amplitude;
     float m_Frequency;
     float m_Duration;
@@ -57,7 +57,7 @@ DEFINE_FIELD( m_force, FIELD_VECTOR ),
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CEnvShake, CPointEntity );
 
     ~CEnvShake( void );

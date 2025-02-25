@@ -678,7 +678,7 @@ CTradingStartDialog *OpenTradingStartDialog( vgui::Panel *pParent, CEconItemView
 //-----------------------------------------------------------------------------
 class CGCLookupAccountResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCLookupAccountResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

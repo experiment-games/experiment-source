@@ -510,7 +510,7 @@ void CMultiPlayerAnimState::RunGestureSlotAnimEventsToCompletion( GestureSlot_t 
                 continue;
 
             if ( pevent[i].cycle > pGesture->m_pAnimLayer->m_flPrevCycle &&
-                 pevent[i].cycle <= pGesture->m_pAnimLayer->m_flCycle )
+                pevent[i].cycle <= pGesture->m_pAnimLayer->m_flCycle )
             {
                 pPlayer->FireEvent( pPlayer->GetAbsOrigin(), pPlayer->GetAbsAngles(), pevent[i].event, pevent[i].pszOptions() );
             }
@@ -962,9 +962,9 @@ Activity CMultiPlayerAnimState::CalcMainActivity()
     Activity idealActivity = ACT_MP_STAND_IDLE;
 
     if ( HandleJumping( idealActivity ) ||
-         HandleDucking( idealActivity ) ||
-         HandleSwimming( idealActivity ) ||
-         HandleDying( idealActivity ) )
+        HandleDucking( idealActivity ) ||
+        HandleSwimming( idealActivity ) ||
+        HandleDying( idealActivity ) )
     {
         // intentionally blank
     }
@@ -1220,7 +1220,7 @@ void CMultiPlayerAnimState::ComputeMainSequence()
     // If we went from idle to walk, reset the interpolation history.
     // Kind of hacky putting this here.. it might belong outside the base class.
     if ( ( oldActivity == ACT_MP_CROUCH_IDLE || oldActivity == ACT_MP_STAND_IDLE || oldActivity == ACT_MP_DEPLOYED_IDLE || oldActivity == ACT_MP_CROUCH_DEPLOYED_IDLE ) &&
-         ( idealActivity == ACT_MP_WALK || idealActivity == ACT_MP_CROUCHWALK ) )
+        ( idealActivity == ACT_MP_WALK || idealActivity == ACT_MP_CROUCHWALK ) )
     {
         ResetGroundSpeed();
     }
@@ -1233,7 +1233,7 @@ bool CMultiPlayerAnimState::ShouldResetMainSequence( int iCurrentSequence, int i
         return false;
 
     return m_pPlayer->GetSequenceActivity( iCurrentSequence ) !=
-           m_pPlayer->GetSequenceActivity( iNewSequence );
+            m_pPlayer->GetSequenceActivity( iNewSequence );
 }
 
 //-----------------------------------------------------------------------------
@@ -1448,28 +1448,28 @@ bool CMultiPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
     m_PoseParameterData.m_iMoveY = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_y" );
     /*
     if ( ( m_PoseParameterData.m_iMoveX < 0 ) || ( m_PoseParameterData.m_iMoveY < 0 ) )
-      return false;
+    return false;
     */
 
     // Look for the aim pitch blender.
     m_PoseParameterData.m_iAimPitch = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "body_pitch" );
     /*
     if ( m_PoseParameterData.m_iAimPitch < 0 )
-      return false;
+    return false;
     */
 
     // Look for aim yaw blender.
     m_PoseParameterData.m_iAimYaw = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "body_yaw" );
     /*
     if ( m_PoseParameterData.m_iAimYaw < 0 )
-      return false;
+    return false;
     */
 
     m_PoseParameterData.m_iMoveYaw = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_yaw" );
     m_PoseParameterData.m_iMoveScale = GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_scale" );
     /*
     if ( ( m_PoseParameterData.m_iMoveYaw < 0 ) || ( m_PoseParameterData.m_iMoveScale < 0 ) )
-      return false;
+    return false;
     */
 
     return true;
@@ -1531,12 +1531,12 @@ void CMultiPlayerAnimState::DoMovementTest( CStudioHdr *pStudioHdr, float flX, f
 
     if ( flDuration > flForward * 1.1f || flDuration < flForward * 0.9f )
     {
-      Warning( "%s : %s (X %.0f Y %.0f) mismatched duration with forward  %.1f vs %.1f\n", pStudioHdr->pszName(), GetBasePlayer()->GetSequenceName( m_nMovementSequence ), flX, flY, flDuration, flForward );
+    Warning( "%s : %s (X %.0f Y %.0f) mismatched duration with forward  %.1f vs %.1f\n", pStudioHdr->pszName(), GetBasePlayer()->GetSequenceName( m_nMovementSequence ), flX, flY, flDuration, flForward );
     }
 
     if ( flDuration > flCenter * 1.1f || flDuration < flCenter * 0.9f )
     {
-      Warning( "%s : %s (X %.0f Y %.0f) mismatched duration with center  %.1f vs %.1f\n", pStudioHdr->pszName(), GetBasePlayer()->GetSequenceName( m_nMovementSequence ), flX, flY, flDuration, flCenter );
+    Warning( "%s : %s (X %.0f Y %.0f) mismatched duration with center  %.1f vs %.1f\n", pStudioHdr->pszName(), GetBasePlayer()->GetSequenceName( m_nMovementSequence ), flX, flY, flDuration, flCenter );
     }
     */
 }
@@ -1962,12 +1962,12 @@ void CMultiPlayerAnimState::DebugShowAnimStateForPlayer( bool bIsServer )
     Anim_StatePrintf( iLine++, "Main: %s, Cycle: %.2f\n", GetSequenceName( GetBasePlayer()->GetModelPtr(), GetBasePlayer()->GetSequence() ), GetBasePlayer()->GetCycle() );
 
 #if 0
-	if ( m_bPlayingGesture )
-	{
-		Anim_StatePrintf( iLine++, "Gesture: %s, Cycle: %.2f\n",
-			GetSequenceName( GetBasePlayer()->GetModelPtr(), m_iGestureSequence ),
-			m_flGestureCycle );
-	}
+    if ( m_bPlayingGesture )
+    {
+        Anim_StatePrintf( iLine++, "Gesture: %s, Cycle: %.2f\n",
+            GetSequenceName( GetBasePlayer()->GetModelPtr(), m_iGestureSequence ),
+            m_flGestureCycle );
+    }
 #endif
 
     // Write out the layers and their data.

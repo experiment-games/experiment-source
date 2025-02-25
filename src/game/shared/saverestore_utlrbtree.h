@@ -20,7 +20,7 @@
 template < class UTLRBTREE, int FIELD_TYPE >
 class CUtlRBTreeDataOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     CUtlRBTreeDataOps()
     {
         UTLCLASS_SAVERESTORE_VALIDATE_TYPE( FIELD_TYPE );
@@ -141,7 +141,7 @@ class CUtlRBTreeDataOps : public CDefSaveRestoreOps
 template < int FIELD_TYPE >
 class CUtlRBTreeDataopsInstantiator
 {
-   public:
+    public:
     template < class UTLRBTREE >
     static ISaveRestoreOps *GetDataOps( UTLRBTREE * )
     {

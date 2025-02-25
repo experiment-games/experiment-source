@@ -554,8 +554,8 @@ void CQuestNodeViewPanel::PerformLayout()
     const bool bHasQuest = pNode && pQuest && pNode->GetSelectedQuest() != NULL;
     const bool bQuestActive = pQuest && pQuest->Obj().active();
     const bool bAnyCompleted = m_msgNodeData.star_0_earned() ||
-                               m_msgNodeData.star_1_earned() ||
-                               m_msgNodeData.star_2_earned();
+                                m_msgNodeData.star_1_earned() ||
+                                m_msgNodeData.star_2_earned();
     const bool bLootEarned = pNode && pNode->BHasLootBeenClaimed();
 
     SetDialogVariable( "name", g_pVGuiLocalize->Find( pNodeDef->GetNameLocToken() ) );
@@ -668,8 +668,8 @@ void CQuestNodeViewPanel::PerformLayout()
             }
 
             pBloodMoneyContainer->SetPos( m_pRewardItemPanel->IsVisible() ? XRES( 5 )
-                                                                          : ( m_pRewardsContainer->GetWide() / 2.f ) - ( pBloodMoneyContainer->GetWide() / 2.f ),
-                                          pBloodMoneyContainer->GetYPos() );
+                                                                        : ( m_pRewardsContainer->GetWide() / 2.f ) - ( pBloodMoneyContainer->GetWide() / 2.f ),
+                                        pBloodMoneyContainer->GetYPos() );
         }
 
         //
@@ -678,7 +678,7 @@ void CQuestNodeViewPanel::PerformLayout()
         if ( m_pRewardItemPanel->IsVisible() )
         {
             m_pRewardItemPanel->SetPos( pBloodMoneyContainer->IsVisible() ? m_pRewardsContainer->GetWide() - m_pRewardItemPanel->GetWide() - XRES( 5 )
-                                                                          : ( m_pRewardsContainer->GetWide() / 2.f ) - ( pBloodMoneyContainer->GetWide() / 2.f ),
+                                                                        : ( m_pRewardsContainer->GetWide() / 2.f ) - ( pBloodMoneyContainer->GetWide() / 2.f ),
                                         m_pRewardItemPanel->GetYPos() );
         }
 
@@ -1224,7 +1224,7 @@ void CQuestNodeViewPanel::SODestroyed( const CSteamID& steamIDOwner, const GCSDK
         FOR_EACH_VEC( m_vecQuestSubPanels, i )
         {
             if ( m_vecQuestSubPanels[i]->GetQuestDefindex() &&
-                 m_vecQuestSubPanels[i]->GetQuestDefindex()->GetDefIndex() == pQuest->GetDefinition()->GetDefIndex() )
+                m_vecQuestSubPanels[i]->GetQuestDefindex()->GetDefIndex() == pQuest->GetDefinition()->GetDefIndex() )
             {
                 m_vecQuestSubPanels[i]->SetQuestData( NULL, m_vecQuestSubPanels[i]->GetQuestDefindex(), false );
             }

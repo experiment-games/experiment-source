@@ -30,7 +30,7 @@ class CServerNotConnectedToSteamDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CServerNotConnectedToSteamDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CServerNotConnectedToSteamDialog( vgui::Panel *pParent, const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -44,7 +44,7 @@ class CCheatDetectionDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCheatDetectionDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CCheatDetectionDialog( vgui::Panel *pParent, const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -58,7 +58,7 @@ class CCharacterInfoPanel : public vgui::PropertyDialog, public IEconRootUI, pub
 {
     DECLARE_CLASS_SIMPLE( CCharacterInfoPanel, vgui::PropertyDialog );
 
-   public:
+    public:
     CCharacterInfoPanel( Panel *parent );
     virtual ~CCharacterInfoPanel();
 
@@ -120,7 +120,7 @@ class CCharacterInfoPanel : public vgui::PropertyDialog, public IEconRootUI, pub
     // Call this to set which team the class loadout should display
     virtual void SetDefaultTeam( int iTeam );
 
-   private:
+    private:
     void Close();
     void NotifyListenersOfCloseEvent();
 

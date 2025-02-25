@@ -8,7 +8,7 @@
 //----------------------------------------------------------------------------
 class CHL2MPBotLocomotion : public PlayerLocomotion
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPBotLocomotion, PlayerLocomotion );
 
     CHL2MPBotLocomotion( INextBot *bot )
@@ -30,7 +30,7 @@ class CHL2MPBotLocomotion : public PlayerLocomotion
     virtual bool IsAreaTraversable( const CNavArea *baseArea ) const;  // return true if given area can be used for navigation
     virtual bool IsEntityTraversable( CBaseEntity *obstacle, TraverseWhenType when = EVENTUALLY ) const;
 
-   protected:
+    protected:
     virtual void AdjustPosture( const Vector &moveGoal ) {}  // never crouch to navigate
 };
 

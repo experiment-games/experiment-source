@@ -196,8 +196,8 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 
                 // can't use "behind" area when ascending...
                 if ( ladder->m_topForwardArea == to->area ||
-                     ladder->m_topLeftArea == to->area ||
-                     ladder->m_topRightArea == to->area )
+                    ladder->m_topLeftArea == to->area ||
+                    ladder->m_topRightArea == to->area )
                 {
                     to->ladder = ladder;
                     to->pos = ladder->m_bottom + ladder->GetNormal() * 2.0f * HalfHumanWidth;
@@ -335,15 +335,15 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
         /** RETHINK THIS.  It doesn't work in general cases, and messes up on doorways
         else if ( from->type == ON_GROUND && from->how <= GO_WEST )
         {
-          // if any segment is not directly walkable, add a segment
-          // fixup corners that are being cut too tightly
-          if ( mover && !mover->IsPotentiallyTraversable( from->pos, to->pos ) )
-          {
+        // if any segment is not directly walkable, add a segment
+        // fixup corners that are being cut too tightly
+        if ( mover && !mover->IsPotentiallyTraversable( from->pos, to->pos ) )
+        {
             Segment newSegment = *from;
 
             if ( bot->IsDebugging( INextBot::PATH ) )
             {
-              NDebugOverlay::HorzArrow( from->pos, to->pos, 3.0f, 255, 0, 0, 255, true, 3.0f );
+            NDebugOverlay::HorzArrow( from->pos, to->pos, 3.0f, 255, 0, 0, 255, true, 3.0f );
             }
 
             //newSegment.pos = from->area->GetCenter();
@@ -359,13 +359,13 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 
             if ( bot->IsDebugging( INextBot::PATH ) )
             {
-              NDebugOverlay::Cross3D( newSegment.pos, 15.0f, 255, 0, 255, true, 3.0f );
+            NDebugOverlay::Cross3D( newSegment.pos, 15.0f, 255, 0, 255, true, 3.0f );
             }
 
             InsertSegment( newSegment, i+1 );
 
             i += 2;
-          }
+        }
         }
         */
     }

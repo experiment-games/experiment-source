@@ -14,7 +14,7 @@ class AttributeToolPanel : public CNavUIToolPanel
 {
     DECLARE_CLASS_SIMPLE( AttributeToolPanel, CNavUIToolPanel );
 
-   public:
+    public:
     AttributeToolPanel( vgui::Panel *parent, const char *toolName );
 };
 

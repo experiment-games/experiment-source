@@ -27,13 +27,13 @@ class BaseInputDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( BaseInputDialog, Frame );
 
-   public:
+    public:
     BaseInputDialog( vgui::Panel *parent, const char *title );
     ~BaseInputDialog();
 
     void DoModal( KeyValues *pContextKeyValues = NULL );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void PerformLayout( int x, int y, int w, int h ) {}
 
@@ -43,7 +43,7 @@ class BaseInputDialog : public Frame
     void CleanUpContextKeyValues();
     KeyValues *m_pContextKeyValues;
 
-   private:
+    private:
     vgui::Button *m_pCancelButton;
     vgui::Button *m_pOKButton;
 };
@@ -55,14 +55,14 @@ class InputMessageBox : public BaseInputDialog
 {
     DECLARE_CLASS_SIMPLE( InputMessageBox, BaseInputDialog );
 
-   public:
+    public:
     InputMessageBox( vgui::Panel *parent, const char *title, char const *prompt );
     ~InputMessageBox();
 
-   protected:
+    protected:
     virtual void PerformLayout( int x, int y, int w, int h );
 
-   private:
+    private:
     vgui::Label *m_pPrompt;
 };
 
@@ -73,7 +73,7 @@ class InputDialog : public BaseInputDialog
 {
     DECLARE_CLASS_SIMPLE( InputDialog, BaseInputDialog );
 
-   public:
+    public:
     InputDialog( vgui::Panel *parent, const char *title, char const *prompt, char const *defaultValue = "" );
     ~InputDialog();
 
@@ -81,20 +81,20 @@ class InputDialog : public BaseInputDialog
 
     /* action signals
 
-      "InputCompleted"
+    "InputCompleted"
         "text"	- the text entered
 
-      "InputCanceled"
+    "InputCanceled"
     */
     void AllowNumericInputOnly( bool bOnlyNumeric );
 
-   protected:
+    protected:
     virtual void PerformLayout( int x, int y, int w, int h );
 
     // command buttons
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     vgui::Label *m_pPrompt;
     vgui::TextEntry *m_pInput;
 };

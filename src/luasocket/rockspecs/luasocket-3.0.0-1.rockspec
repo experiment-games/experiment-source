@@ -7,11 +7,11 @@ source = {
 description = {
   summary = "Network support for the Lua language",
   detailed = [[
-      LuaSocket is a Lua extension library composed of two parts: a set of C
-      modules that provide support for the TCP and UDP transport layers, and a
-      set of Lua modules that provide functions commonly needed by applications
-      that deal with the Internet.
-   ]],
+    LuaSocket is a Lua extension library composed of two parts: a set of C
+    modules that provide support for the TCP and UDP transport layers, and a
+    set of Lua modules that provide functions commonly needed by applications
+    that deal with the Internet.
+    ]],
   homepage = "https://github.com/lunarmodules/luasocket",
   license = "MIT"
 }
@@ -22,25 +22,25 @@ dependencies = {
 local function make_plat(plat)
   local defines = {
     unix = {
-      "LUASOCKET_DEBUG"
+    "LUASOCKET_DEBUG"
     },
     macosx = {
-      "LUASOCKET_DEBUG",
-      "UNIX_HAS_SUN_LEN"
+    "LUASOCKET_DEBUG",
+    "UNIX_HAS_SUN_LEN"
     },
     win32 = {
-      "LUASOCKET_DEBUG",
-      "NDEBUG"
+    "LUASOCKET_DEBUG",
+    "NDEBUG"
     },
     mingw32 = {
-      "LUASOCKET_DEBUG",
-      "LUASOCKET_INET_PTON",
-      "WINVER=0x0501"
+    "LUASOCKET_DEBUG",
+    "LUASOCKET_INET_PTON",
+    "WINVER=0x0501"
     }
   }
   local modules = {
     ["socket.core"] = {
-      sources = {
+    sources = {
         "src/luasocket.c"
         , "src/timeout.c"
         , "src/buffer.c"
@@ -53,13 +53,13 @@ local function make_plat(plat)
         , "src/tcp.c"
         , "src/udp.c"
         , "src/compat.c" },
-      defines = defines[plat],
-      incdir = "/src"
+    defines = defines[plat],
+    incdir = "/src"
     },
     ["mime.core"] = {
-      sources = { "src/mime.c", "src/compat.c" },
-      defines = defines[plat],
-      incdir = "/src"
+    sources = { "src/mime.c", "src/compat.c" },
+    defines = defines[plat],
+    incdir = "/src"
     },
     ["socket.http"]    = "src/http.lua",
     ["socket.url"]     = "src/url.lua",
@@ -77,10 +77,10 @@ local function make_plat(plat)
   then
     modules["socket.core"].sources[#modules["socket.core"].sources+1] = "src/usocket.c"
     if plat == "haiku" then
-      modules["socket.core"].libraries = {"network"}
+    modules["socket.core"].libraries = {"network"}
     end
     modules["socket.unix"] = {
-      sources = {
+    sources = {
         "src/buffer.c"
         , "src/compat.c"
         , "src/auxiliar.c"
@@ -91,11 +91,11 @@ local function make_plat(plat)
         , "src/unix.c"
         , "src/unixdgram.c"
         , "src/unixstream.c" },
-      defines = defines[plat],
-      incdir = "/src"
+    defines = defines[plat],
+    incdir = "/src"
     }
     modules["socket.serial"] = {
-      sources = {
+    sources = {
         "src/buffer.c"
         , "src/compat.c"
         , "src/auxiliar.c"
@@ -104,8 +104,8 @@ local function make_plat(plat)
         , "src/io.c"
         , "src/usocket.c"
         , "src/serial.c" },
-      defines = defines[plat],
-      incdir = "/src"
+    defines = defines[plat],
+    incdir = "/src"
     }
   end
   if  plat == "win32"

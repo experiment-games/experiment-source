@@ -23,14 +23,14 @@ class C_PlayerResource : public C_BaseEntity, public IGameResources
 {
     DECLARE_CLASS( C_PlayerResource, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
 
     C_PlayerResource();
     virtual ~C_PlayerResource();
 
-   public:  // IGameResources interface
+    public:  // IGameResources interface
     // Team data access
     virtual int GetTeamScore( int index );
     virtual const char *GetTeamName( int index );
@@ -61,7 +61,7 @@ class C_PlayerResource : public C_BaseEntity, public IGameResources
     uint32 GetAccountID( int iIndex );
     bool IsValid( int iIndex );
 
-   protected:
+    protected:
     void UpdatePlayerName( int slot );
 
     // Data for each player that's propagated to all clients

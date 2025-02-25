@@ -158,7 +158,7 @@ class CScopedGLMPIXEvent
     CScopedGLMPIXEvent( const CScopedGLMPIXEvent & );
     CScopedGLMPIXEvent &operator=( const CScopedGLMPIXEvent & );
 
-   public:
+    public:
     inline CScopedGLMPIXEvent( const char *pName )
     {
         GLMBeginPIXEvent( pName );
@@ -178,7 +178,7 @@ class CScopedGLMPIXEvent
 
 class GLMFuncLogger
 {
-   public:
+    public:
     // simple function log
     GLMFuncLogger( const char *funcName )
     {
@@ -239,9 +239,9 @@ class GLMFuncLogger
 // class to keep an in-memory mirror of a file which may be getting edited during run
 class CGLMFileMirror
 {
-   public:
+    public:
     CGLMFileMirror( char *fullpath );  // just associates mirror with file. if file exists it will be read.
-                                       // if non existent it will be created with size zero
+                                        // if non existent it will be created with size zero
     ~CGLMFileMirror();
 
     bool HasData( void );                               // see if data avail
@@ -275,7 +275,7 @@ class CGLMFileMirror
 
 class CGLMEditableTextItem
 {
-   public:
+    public:
     CGLMEditableTextItem( char *text, uint size, bool forceOverwrite, char *prefix, char *suffix = NULL );  // create a text blob from text source, optional filename suffix
     ~CGLMEditableTextItem();
 
@@ -320,7 +320,7 @@ struct GLMTextSection
 
 class CGLMTextSectioner
 {
-   public:
+    public:
     CGLMTextSectioner( char *text, int textSize, const char **markers );  // constructor finds all the sections
     ~CGLMTextSectioner();
 

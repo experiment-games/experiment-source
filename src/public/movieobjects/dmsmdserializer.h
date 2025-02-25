@@ -29,7 +29,7 @@ class CPolygonData;
 //-----------------------------------------------------------------------------
 class CDmSmdSerializer : public IDmSerializer
 {
-   public:
+    public:
     enum Axis_t
     {
         X_AXIS = 0,
@@ -139,7 +139,7 @@ class CDmSmdSerializer : public IDmSerializer
     //-----------------------------------------------------------------------------
     typedef CUtlMap< int, SmdJoint_t > SmdJointMap_t;
 
-   protected:
+    protected:
     void ParserGetNodeName( const char *pszBuf, CUtlString &sName ) const;
 
     bool ParserHandleSkeletonLine(
@@ -159,7 +159,7 @@ class CDmSmdSerializer : public IDmSerializer
     //-----------------------------------------------------------------------------
     class CNodeData
     {
-       public:
+        public:
         CNodeData()
             : m_nParentIndex( -1 ), m_bSkinned( false ), m_nInfluenceIndex( 0 ), m_pDmeDag( NULL )
         {
@@ -198,7 +198,7 @@ class CDmSmdSerializer : public IDmSerializer
     matrix3x4_t m_mAdj;        // Matrix to adjust for SMD source orientation to DMX Y up
     matrix3x4_t m_mAdjNormal;  // Matrix to adjust normals, inverse transpose of m_mAdj
 
-   public:
+    public:
     bool m_bOptImportSkeleton;
     bool m_bOptAutoStripPrefix;
     bool m_bOptAnimation;

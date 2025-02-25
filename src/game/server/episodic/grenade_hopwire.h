@@ -23,7 +23,7 @@ class CGrenadeHopwire : public CBaseGrenade
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     bool CreateVPhysics( void );
@@ -34,7 +34,7 @@ class CGrenadeHopwire : public CBaseGrenade
     void EndThink( void );     // Last think before going away
     void CombatThink( void );  // Makes the main explosion go off
 
-   protected:
+    protected:
     void KillStriders( void );
 
     CHandle< CGravityVortexController > m_hVortexController;

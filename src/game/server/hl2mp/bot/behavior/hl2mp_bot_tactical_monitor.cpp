@@ -33,7 +33,7 @@ ConVar hl2mp_bot_force_jump( "hl2mp_bot_force_jump", "0", FCVAR_CHEAT, "Force bo
 
 class CHL2MPDespawn : public Action< CHL2MPBot >
 {
-   public:
+    public:
     virtual ActionResult< CHL2MPBot > Update( CHL2MPBot *me, float interval );
     virtual const char *GetName( void ) const
     {

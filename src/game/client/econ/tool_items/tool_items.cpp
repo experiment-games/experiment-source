@@ -161,15 +161,15 @@ void CBaseToolUsageDialog::OnCommand( const char *command )
 
 #ifdef TF_CLIENT_DLL
     const char *pSubjectBaseName = m_pSubjectModelPanel && m_pSubjectModelPanel->GetItem() && m_pSubjectModelPanel->GetItem()->GetItemDefinition()
-                                       ? m_pSubjectModelPanel->GetItem()->GetItemDefinition()->GetItemBaseName()
-                                       : "n/a";
+                                        ? m_pSubjectModelPanel->GetItem()->GetItemDefinition()->GetItemBaseName()
+                                        : "n/a";
 #endif
 
     if ( !Q_stricmp( command, "apply" ) )
     {
 #ifdef TF_CLIENT_DLL
         C_CTFGameStats::ImmediateWriteInterfaceEvent( CFmtStr( "tool_usage_proceed(%s)", m_pszInternalPanelName ).Access(),
-                                                      pSubjectBaseName );
+                                                    pSubjectBaseName );
 #endif
         // Call before Apply() in case it creates new dialogs that wants to handle prevention
         EconUI()->SetPreventClosure( false );
@@ -179,7 +179,7 @@ void CBaseToolUsageDialog::OnCommand( const char *command )
     {
 #ifdef TF_CLIENT_DLL
         C_CTFGameStats::ImmediateWriteInterfaceEvent( CFmtStr( "tool_usage_cancel(%s)", m_pszInternalPanelName ).Access(),
-                                                      pSubjectBaseName );
+                                                    pSubjectBaseName );
 #endif
 
         EconUI()->SetPreventClosure( false );
@@ -215,25 +215,25 @@ void CBaseToolUsageDialog::OnKeyCodePressed( vgui::KeyCode code )
     ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
     if ( nButtonCode == KEY_XBUTTON_LEFT ||
-         nButtonCode == KEY_XSTICK1_LEFT ||
-         nButtonCode == KEY_XSTICK2_LEFT ||
-         nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-         code == KEY_LEFT ||
-         nButtonCode == KEY_XBUTTON_RIGHT ||
-         nButtonCode == KEY_XSTICK1_RIGHT ||
-         nButtonCode == KEY_XSTICK2_RIGHT ||
-         nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-         code == KEY_RIGHT ||
-         nButtonCode == KEY_XBUTTON_UP ||
-         nButtonCode == KEY_XSTICK1_UP ||
-         nButtonCode == KEY_XSTICK2_UP ||
-         nButtonCode == STEAMCONTROLLER_DPAD_UP ||
-         code == KEY_UP ||
-         nButtonCode == KEY_XBUTTON_DOWN ||
-         nButtonCode == KEY_XSTICK1_DOWN ||
-         nButtonCode == KEY_XSTICK2_DOWN ||
-         nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-         code == KEY_DOWN )
+        nButtonCode == KEY_XSTICK1_LEFT ||
+        nButtonCode == KEY_XSTICK2_LEFT ||
+        nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
+        code == KEY_LEFT ||
+        nButtonCode == KEY_XBUTTON_RIGHT ||
+        nButtonCode == KEY_XSTICK1_RIGHT ||
+        nButtonCode == KEY_XSTICK2_RIGHT ||
+        nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
+        code == KEY_RIGHT ||
+        nButtonCode == KEY_XBUTTON_UP ||
+        nButtonCode == KEY_XSTICK1_UP ||
+        nButtonCode == KEY_XSTICK2_UP ||
+        nButtonCode == STEAMCONTROLLER_DPAD_UP ||
+        code == KEY_UP ||
+        nButtonCode == KEY_XBUTTON_DOWN ||
+        nButtonCode == KEY_XSTICK1_DOWN ||
+        nButtonCode == KEY_XSTICK2_DOWN ||
+        nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
+        code == KEY_DOWN )
     {
         // eat all the movement keys so the selection doesn't update behind the dialog
     }
@@ -301,7 +301,7 @@ class CConfirmStrangeCountTransferApplicationDialog : public CBaseToolUsageDialo
 {
     DECLARE_CLASS_SIMPLE( CConfirmStrangeCountTransferApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmStrangeCountTransferApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, "ConfirmApplyStrangeCountTransferDialog", pTool, pToolSubject )
     {
@@ -349,7 +349,7 @@ class CConfirmStrangeCountTransferApplicationDialog : public CBaseToolUsageDialo
         return false;
     }
 
-   private:
+    private:
     CEconItemView *m_pItemSrc;
     CEconItemView *m_pItemDest;
 };
@@ -388,7 +388,7 @@ class CConfirmStrangePartApplicationDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmStrangePartApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmStrangePartApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -459,13 +459,13 @@ class CConfirmStrangeRestrictionApplicationDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmStrangeRestrictionApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmStrangeRestrictionApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject, int iStrangeSlot, const char *pszStatLocalizationToken );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void Apply( void );
 
-   private:
+    private:
     int m_iStrangeSlot;
     const char *m_pszStatLocalizationToken;
 };
@@ -511,17 +511,17 @@ void CConfirmStrangeRestrictionApplicationDialog::Apply()
 //-----------------------------------------------------------------------------
 class CSelectStrangePartToRestrictDialog : public CComboBoxBackpackOverlayDialogBase
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CSelectStrangePartToRestrictDialog, CComboBoxBackpackOverlayDialogBase );
 
-   public:
+    public:
     CSelectStrangePartToRestrictDialog( vgui::Panel *pParent, CEconItemView *pToolItem, CEconItemView *pSubjectItem )
         : CComboBoxBackpackOverlayDialogBase( pParent, pSubjectItem ), m_ToolItem( *pToolItem ), m_SubjectItem( *pSubjectItem )
     {
         //
     }
 
-   private:
+    private:
     virtual void PopulateComboBoxOptions()
     {
         const wchar_t *pLocBase = GLocalizationProvider()->Find( "#ApplyStrangeRestrictionCombo" );
@@ -569,7 +569,7 @@ class CSelectStrangePartToRestrictDialog : public CComboBoxBackpackOverlayDialog
         return "#ApplyStrangeRestrictionPartTitle";
     }
 
-   private:
+    private:
     CEconItemView m_ToolItem;
     CEconItemView m_SubjectItem;
 };
@@ -591,13 +591,13 @@ void CEconTool_StrangePartRestriction::OnClientApplyTool( CEconItemView *pTool, 
 //-----------------------------------------------------------------------------
 class CWaitingDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitingDialog( vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         // Play an exciting sound!
@@ -615,7 +615,7 @@ class CConfirmApplyStrangifierDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmApplyStrangifierDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmApplyStrangifierDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject, const char *pszPromptLocToken, const char *pszTransactionReason, const char *pszUpdatingText = "" )
         : CBaseToolUsageDialog( pParent, "ConfirmApplyStrangifierDialog", pTool, pToolSubject ), m_sPromptLocToken( pszPromptLocToken ), m_sTransactionReason( pszTransactionReason ), m_sUpdatingText( pszUpdatingText ), m_resultItem( *pToolSubject )
     {
@@ -644,7 +644,7 @@ class CConfirmApplyStrangifierDialog : public CBaseToolUsageDialog
 
             // If the strangifier is untradable, add an extra warning in the prompt to let the user know
             if ( m_pToolModelPanel->GetItem() && !m_pToolModelPanel->GetItem()->IsTradable() &&
-                 m_pSubjectModelPanel && m_pSubjectModelPanel->GetItem() )
+                m_pSubjectModelPanel && m_pSubjectModelPanel->GetItem() )
             {
                 wchar_t *pszUntradableString = g_pVGuiLocalize->Find( "ToolStrangifierUntradableWarning" );
 
@@ -695,11 +695,11 @@ class CConfirmApplyStrangifierDialog : public CBaseToolUsageDialog
         m_pModelInspectPanel->SetVisible( false );
     }
 
-   protected:
+    protected:
     CEmbeddedItemModelPanel *m_pModelInspectPanel;
     CEconItemView m_resultItem;
 
-   private:
+    private:
     CUtlString m_sPromptLocToken;
     CUtlString m_sTransactionReason;
     CUtlString m_sUpdatingText;
@@ -737,7 +737,7 @@ class CConfirmUseItemEaterRechargerDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmUseItemEaterRechargerDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmUseItemEaterRechargerDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, "ConfirmUseItemEaterRechargerDialog", pTool, pToolSubject )
     {
@@ -786,7 +786,7 @@ class CConfirmCardUpgradeApplicationDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmCardUpgradeApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmCardUpgradeApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, "ConfirmApplyCardUpgradeApplicationDialog", pTool, pToolSubject )
     {
@@ -839,7 +839,7 @@ class CConfirmTransmogrifyApplicationDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmTransmogrifyApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmTransmogrifyApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, "ConfirmTransmogrifyApplicationDialog", pTool, pToolSubject )
     {
@@ -895,7 +895,7 @@ class CConfirmSpellbookPageApplicationDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmSpellbookPageApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmSpellbookPageApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, "ConfirmSpellbookPageApplicationDialog", pTool, pToolSubject )
     {
@@ -936,7 +936,7 @@ class CConfirmDuckTokenApplicationDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmDuckTokenApplicationDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmDuckTokenApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, "ConfirmApplyDuckTokenDialog", pTool, pToolSubject )
     {

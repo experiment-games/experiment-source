@@ -24,7 +24,7 @@
 //
 class CFogController : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
     DECLARE_CLASS( CFogController, CBaseEntity );
@@ -65,7 +65,7 @@ class CFogController : public CBaseEntity
         return HasSpawnFlags( SF_FOG_MASTER );
     }
 
-   public:
+    public:
     CNetworkVarEmbedded( fogparams_t, m_fog );
     bool m_bUseAngles;
     int m_iChangedVariables;
@@ -77,7 +77,7 @@ class CFogController : public CBaseEntity
 //
 class CFogSystem : public CAutoGameSystem
 {
-   public:
+    public:
     // Creation/Init.
     CFogSystem( char const *name )
         : CAutoGameSystem( name )
@@ -97,7 +97,7 @@ class CFogSystem : public CAutoGameSystem
         return m_pMasterController;
     }
 
-   private:
+    private:
     CFogController *m_pMasterController;
 };
 

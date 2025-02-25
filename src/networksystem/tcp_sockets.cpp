@@ -179,7 +179,7 @@ bool CTcpClientSocket::ReadPackets( CUtlVector< CNetPacket * > &newPackets )
 
 CTcpServerSocket::CTcpServerSocket()
     : m_Socket( INVALID_SOCKET ),
-      m_Port( 0 )
+    m_Port( 0 )
 {
 }
 
@@ -257,7 +257,7 @@ bool CTcpServerSocket::AcceptClients( CUtlVector< CTcpClientSocket * > &newClien
 
     // Check if the connection is a loopback connection so we can store it as such
     if ( ( localAddress.sin_addr.s_addr == htonl( INADDR_LOOPBACK ) ) &&
-         ( remoteAddress.sin_addr.s_addr == htonl( INADDR_LOOPBACK ) ) )
+        ( remoteAddress.sin_addr.s_addr == htonl( INADDR_LOOPBACK ) ) )
     {
         DevWarning( "CTcpServerSocket::AcceptClients:  Loopback connection\n" );
 

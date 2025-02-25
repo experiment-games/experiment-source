@@ -32,7 +32,7 @@ class CTradeTargetPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTradeTargetPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CTradeTargetPanel( vgui::Panel *parent, const char *name )
         : vgui::EditablePanel( parent, name )
     {
@@ -56,7 +56,7 @@ class CTradeTargetPanel : public vgui::EditablePanel
         return m_pButton;
     }
 
-   private:
+    private:
     // Embedded panels
     CAvatarImagePanel *m_pAvatar;
     CExButton *m_pButton;
@@ -69,7 +69,7 @@ class CTradingStartDialog : public vgui::EditablePanel, public CGameEventListene
 {
     DECLARE_CLASS_SIMPLE( CTradingStartDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CTradingStartDialog( vgui::Panel *parent );
     ~CTradingStartDialog( void );
 
@@ -99,7 +99,7 @@ class CTradingStartDialog : public vgui::EditablePanel, public CGameEventListene
 
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
 
-   private:
+    private:
     struct trade_partner_info_t
     {
         CSteamID m_steamID;

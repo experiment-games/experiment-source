@@ -25,7 +25,7 @@
 
 class C_SmokeStack : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_SmokeStack, C_BaseParticleEntity );
 
@@ -34,7 +34,7 @@ class C_SmokeStack : public C_BaseParticleEntity, public IPrototypeAppEffect
 
     class SmokeStackParticle : public Particle
     {
-       public:
+        public:
         Vector m_Velocity;
         Vector m_vAccel;
         float m_Lifetime;
@@ -44,27 +44,27 @@ class C_SmokeStack : public C_BaseParticleEntity, public IPrototypeAppEffect
     };
 
     // C_BaseEntity
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ClientThink();
 
     // IPrototypeAppEffect
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
     virtual bool GetPropEditInfo( RecvTable **ppTable, void **ppObj );
 
     // IParticleEffect
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
     virtual void StartRender( VMatrix &effectMatrix );
 
-   private:
+    private:
     void QueueLightParametersInRenderer();
 
     // Stuff from the datatable
-   public:
+    public:
     CParticleSphereRenderer m_Renderer;
 
     float m_SpreadSpeed;
@@ -79,7 +79,7 @@ class C_SmokeStack : public C_BaseParticleEntity, public IPrototypeAppEffect
 
     class CLightInfo
     {
-       public:
+        public:
         Vector m_vPos;
         Vector m_vColor;
         float m_flIntensity;
@@ -100,7 +100,7 @@ class C_SmokeStack : public C_BaseParticleEntity, public IPrototypeAppEffect
     float m_flTwist;
     int m_iMaterialModel;
 
-   private:
+    private:
     C_SmokeStack( const C_SmokeStack & );
 
     float m_TwistMat[2][2];
@@ -329,8 +329,8 @@ void C_SmokeStack::Update( float fTimeDelta )
                 float angle = FRand( 0, 2.0f * M_PI_F );
 
                 pParticle->m_Pos = GetAbsOrigin() +
-                                   right * ( cos( angle ) * m_flBaseSpread ) +
-                                   forward * ( sin( angle ) * m_flBaseSpread );
+                                    right * ( cos( angle ) * m_flBaseSpread ) +
+                                    forward * ( sin( angle ) * m_flBaseSpread );
 
                 pParticle->m_Velocity =
                     FRand( -m_SpreadSpeed, m_SpreadSpeed ) * right +
@@ -457,8 +457,8 @@ void C_SmokeStack::SimulateParticles( CParticleSimulateIterator *pIterator )
 
 #ifndef HL2_EPISODIC
             pParticle->m_Pos = pParticle->m_Pos +
-                               pParticle->m_Velocity * pIterator->GetTimeDelta() +
-                               pParticle->m_vAccel * ( 0.5f * pIterator->GetTimeDelta() * pIterator->GetTimeDelta() );
+                                pParticle->m_Velocity * pIterator->GetTimeDelta() +
+                                pParticle->m_vAccel * ( 0.5f * pIterator->GetTimeDelta() * pIterator->GetTimeDelta() );
 
             pParticle->m_Velocity += pParticle->m_vAccel * pIterator->GetTimeDelta();
 #else

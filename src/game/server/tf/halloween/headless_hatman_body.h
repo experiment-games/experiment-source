@@ -13,7 +13,7 @@ class INextBot;
  */
 class CHeadlessHatmanBody : public IBody
 {
-   public:
+    public:
     CHeadlessHatmanBody( INextBot *bot );
     virtual ~CHeadlessHatmanBody() {}
 
@@ -25,7 +25,7 @@ class CHeadlessHatmanBody : public IBody
 
     virtual unsigned int GetSolidMask( void ) const;  // return the bot's collision mask (hack until we get a general hull trace abstraction here or in the locomotion interface)
 
-   private:
+    private:
     int m_currentActivity;
     int m_moveXPoseParameter;
     int m_moveYPoseParameter;

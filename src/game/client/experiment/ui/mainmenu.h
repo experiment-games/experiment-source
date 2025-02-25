@@ -30,7 +30,7 @@ class CBaseMenuPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseMenuPanel, EditablePanel );
 
-   public:
+    public:
     CBaseMenuPanel();
     virtual ~CBaseMenuPanel();
 
@@ -46,10 +46,10 @@ class CBaseMenuPanel : public EditablePanel
     // MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
     // MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
 
-   protected:
+    protected:
     void OnThink() OVERRIDE;
 
-   private:
+    private:
     void SetBackgroundRenderState( EBackgroundState state );
     bool LoadGameUI();
     void UpdateBackgroundState();
@@ -64,7 +64,7 @@ class CMainMenu : public Panel
 {
     DECLARE_CLASS_SIMPLE( CMainMenu, Panel );
 
-   public:
+    public:
     CMainMenu( Panel* pParent );
     virtual ~CMainMenu();
 
@@ -74,7 +74,7 @@ class CMainMenu : public Panel
     MESSAGE_FUNC_CHARPTR( OnCustomURLHandler, "CustomURL", url );
     MESSAGE_FUNC_INT( OnKeyCodeUnhandled, "KeyCodeUnhandled", code );
 
-   protected:
+    protected:
     void OnThink() OVERRIDE;
 
     virtual void PerformLayout() OVERRIDE;
@@ -82,7 +82,7 @@ class CMainMenu : public Panel
     void OnOpenCreateMultiplayerGameDialog();
     vgui::DHANDLE< vgui::Frame > m_hCreateMultiplayerGameDialog;
 
-   private:
+    private:
     HTML* m_pHTML;
 };
 

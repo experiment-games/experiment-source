@@ -8,7 +8,7 @@
 
 class CTFBotEngineerBuildTeleportEntrance : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -19,7 +19,7 @@ class CTFBotEngineerBuildTeleportEntrance : public Action< CTFBot >
         return "EngineerBuildTeleportEntrance";
     };
 
-   private:
+    private:
     PathFollower m_path;
 };
 

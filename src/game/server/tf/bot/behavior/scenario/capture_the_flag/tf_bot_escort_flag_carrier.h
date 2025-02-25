@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotEscortFlagCarrier : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -21,7 +21,7 @@ class CTFBotEscortFlagCarrier : public Action< CTFBot >
         return "EscortFlagCarrier";
     };
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_repathTimer;
 

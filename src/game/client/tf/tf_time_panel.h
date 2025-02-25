@@ -22,7 +22,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CTFProgressBar : public vgui::ImagePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CTFProgressBar, vgui::ImagePanel );
 
     CTFProgressBar( vgui::Panel *parent, const char *name );
@@ -33,7 +33,7 @@ class CTFProgressBar : public vgui::ImagePanel
         m_flPercent = flPercentage;
     }
 
-   private:
+    private:
     float m_flPercent;
     int m_iTexture;
 
@@ -66,7 +66,7 @@ class CTFHudTimeStatus : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CTFHudTimeStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudTimeStatus( Panel *parent, const char *name );
 
     virtual void Paint( void );
@@ -90,16 +90,16 @@ class CTFHudTimeStatus : public vgui::EditablePanel, public CGameEventListener
         m_nTeam = nTeam;
     }
 
-   protected:
+    protected:
     virtual void OnThink();
 
-   private:
+    private:
     void SetExtraTimePanels();
     void SetTimeAdded( int iIndex, int nSeconds );
     void CheckClockLabelLength( CExLabel *pLabel, vgui::Panel *pBG );
     void SetTeamBackground( void );
 
-   private:
+    private:
     float m_flNextThink;
     int m_iTimerIndex;
     bool m_bSuddenDeath;
@@ -153,7 +153,7 @@ class CTFHudKothTimeStatus : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudKothTimeStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudKothTimeStatus( const char *pElementName );
     ~CTFHudKothTimeStatus();
 
@@ -168,10 +168,10 @@ class CTFHudKothTimeStatus : public CHudElement, public vgui::EditablePanel
         return 80;
     }  // higher than build menus
 
-   private:
+    private:
     void UpdateActiveTeam( void );
 
-   private:
+    private:
     CTFHudTimeStatus *m_pBluePanel;
     CTFHudTimeStatus *m_pRedPanel;
     Panel *m_pActiveTimerBG;

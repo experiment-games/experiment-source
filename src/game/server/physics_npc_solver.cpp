@@ -17,7 +17,7 @@ class CPhysicsNPCSolver : public CLogicalEntity, public IMotionEvent
 {
     DECLARE_CLASS( CPhysicsNPCSolver, CLogicalEntity );
 
-   public:
+    public:
     CPhysicsNPCSolver();
     ~CPhysicsNPCSolver();
     DECLARE_DATADESC();
@@ -40,10 +40,10 @@ class CPhysicsNPCSolver : public CLogicalEntity, public IMotionEvent
     // IMotionEvent
     virtual simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
-   public:
+    public:
     CPhysicsNPCSolver *m_pNext;
 
-   private:
+    private:
     // locals
     void ResetCancelTime();
     void BecomePenetrationSolver();
@@ -364,7 +364,7 @@ class CPhysicsEntitySolver : public CLogicalEntity  //, public IMotionEvent
 {
     DECLARE_CLASS( CPhysicsEntitySolver, CLogicalEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     void Init( CBaseEntity *pMovingEntity, CBaseEntity *pPhysicsBlocker, float separationTime );
     static CPhysicsEntitySolver *Create( CBaseEntity *pMovingEntity, CBaseEntity *pPhysicsBlocker, float separationTime );
@@ -377,7 +377,7 @@ class CPhysicsEntitySolver : public CLogicalEntity  //, public IMotionEvent
     // IMotionEvent
     // virtual simresult_e	Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
-   private:
+    private:
     // locals
     void ResetCancelTime();
     void BecomePenetrationSolver();

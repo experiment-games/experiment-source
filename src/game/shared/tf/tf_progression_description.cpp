@@ -24,20 +24,20 @@ const float flAvgPPMPM = 27.f;   // Points per minute per match
 const float flAvgPPMPP = 1.15f;  // Points per minute per player (above / 24)
 
 const XPSourceDef_t g_XPSourceDefs[] = { { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Score", flTargetXPPM* flScoreXPScale / flAvgPPMPP /* 6.5  */ }  // SOURCE_SCORE = 0;
-                                         ,
-                                         { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_ObjectiveBonus", flTargetXPPM* flObjectiveXPScale / flAvgPPMPM /* 0.0926  */ }  // SOURCE_OBJECTIVE_BONUS = 1;
-                                         ,
-                                         { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_CompletedMatch", flTargetXPPM* flMatchCompletionXPScale / flAvgPPMPM /* 0.185 */ }  // SOURCE_COMPLETED_MATCH = 2;
-                                         ,
-                                         { "MVM.PlayerDied", "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Abandon", 1.f }  // SOURCE_COMPETITIVE_ABANDON = 3;
-                                         ,
-                                         { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Comp_Win", 1.f }  // SOURCE_COMPETITIVE_WIN = 4;
-                                         ,
-                                         { NULL, "TF_XPSource_NegativeFormat", "#TF_XPSource_Comp_Loss", 1.f }  // SOURCE_COMPETITIVE_LOSS = 5;
-                                         ,
-                                         { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Autobalance_Bonus", 1.f }  // SOURCE_AUTOBALANCE_BONUS = 6;
-                                         ,
-                                         { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Prestige_Bonus", 1.f } };  // SOURCE_PRESTIGE_BONUS = 7;
+                                        ,
+                                        { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_ObjectiveBonus", flTargetXPPM* flObjectiveXPScale / flAvgPPMPM /* 0.0926  */ }  // SOURCE_OBJECTIVE_BONUS = 1;
+                                        ,
+                                        { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_CompletedMatch", flTargetXPPM* flMatchCompletionXPScale / flAvgPPMPM /* 0.185 */ }  // SOURCE_COMPLETED_MATCH = 2;
+                                        ,
+                                        { "MVM.PlayerDied", "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Abandon", 1.f }  // SOURCE_COMPETITIVE_ABANDON = 3;
+                                        ,
+                                        { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Comp_Win", 1.f }  // SOURCE_COMPETITIVE_WIN = 4;
+                                        ,
+                                        { NULL, "TF_XPSource_NegativeFormat", "#TF_XPSource_Comp_Loss", 1.f }  // SOURCE_COMPETITIVE_LOSS = 5;
+                                        ,
+                                        { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Autobalance_Bonus", 1.f }  // SOURCE_AUTOBALANCE_BONUS = 6;
+                                        ,
+                                        { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Prestige_Bonus", 1.f } };  // SOURCE_PRESTIGE_BONUS = 7;
 
 IProgressionDesc::IProgressionDesc( const char* pszBadgeName, const char* pszProgressionResFile, const char* pszLevelToken )
     : m_strBadgeName( pszBadgeName ), m_pszProgressionResFile( pszProgressionResFile ), m_pszLevelToken( pszLevelToken )

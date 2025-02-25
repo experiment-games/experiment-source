@@ -190,10 +190,10 @@ void CTFWeaponBaseGrenade::Throw()
     }
 
 #if 0
-	// Debug!!!
-	char str[256];
-	Q_snprintf( str, sizeof( str ),"GrenadeTime = %f\n", flTime );
-	NDebugOverlay::ScreenText( 0.5f, 0.38f, str, 255, 255, 255, 255, 2.0f );
+    // Debug!!!
+    char str[256];
+    Q_snprintf( str, sizeof( str ),"GrenadeTime = %f\n", flTime );
+    NDebugOverlay::ScreenText( 0.5f, 0.38f, str, 255, 255, 255, 255, 2.0f );
 #endif
 
     QAngle vecAngles = RandomAngle( 0, 360 );

@@ -21,7 +21,7 @@ typedef struct
 
 class CLoopbackChannel : public IChannel
 {
-   public:
+    public:
     virtual ~CLoopbackChannel()
     {
         FOR_EACH_LL( m_Messages, i )
@@ -83,7 +83,7 @@ class CLoopbackChannel : public IChannel
     {
     }
 
-   private:
+    private:
     CUtlLinkedList< LoopbackMsg_t *, int > m_Messages;  // FIFO for messages we've sent.
 };
 

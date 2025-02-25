@@ -48,7 +48,7 @@ struct constraint_anchor_t
 
 class CAnchorList : public CAutoGameSystem
 {
-   public:
+    public:
     CAnchorList( char const *name )
         : CAutoGameSystem( name )
     {
@@ -82,7 +82,7 @@ class CAnchorList : public CAutoGameSystem
         return NULL;
     }
 
-   private:
+    private:
     CUtlVector< constraint_anchor_t > m_list;
 };
 
@@ -92,7 +92,7 @@ class CConstraintAnchor : public CPointEntity
 {
     DECLARE_CLASS( CConstraintAnchor, CPointEntity );
 
-   public:
+    public:
     CConstraintAnchor()
     {
         m_massScale = 1.0f;
@@ -120,7 +120,7 @@ class CPhysConstraintSystem : public CLogicalEntity
 {
     DECLARE_CLASS( CPhysConstraintSystem, CLogicalEntity );
 
-   public:
+    public:
     void Spawn();
     IPhysicsConstraintGroup *GetVPhysicsGroup()
     {
@@ -129,7 +129,7 @@ class CPhysConstraintSystem : public CLogicalEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     IPhysicsConstraintGroup *m_pMachine;
     int m_additionalIterations;
 };
@@ -705,7 +705,7 @@ class CPhysHinge : public CPhysConstraint, public IVPhysicsWatcher
 {
     DECLARE_CLASS( CPhysHinge, CPhysConstraint );
 
-   public:
+    public:
     void Spawn( void );
     IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info )
     {
@@ -808,8 +808,8 @@ class CPhysHinge : public CPhysConstraint, public IVPhysicsWatcher
             if ( GetNextThink() == TICK_NEVER_THINK )
             {
                 m_soundInfo.StartThinking( this,
-                                           VelocitySampler::GetRelativeAngularVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
-                                           m_hinge.worldAxisDirection );
+                                            VelocitySampler::GetRelativeAngularVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
+                                            m_hinge.worldAxisDirection );
 
                 SetThink( &CPhysHinge::SoundThink );
                 SetNextThink( gpGlobals->curtime + m_soundInfo.getThinkRate() );
@@ -819,8 +819,8 @@ class CPhysHinge : public CPhysConstraint, public IVPhysicsWatcher
         {
             // Is everything asleep? If so, stop thinking.
             if ( GetNextThink() != TICK_NEVER_THINK &&
-                 m_pConstraint->GetAttachedObject()->IsAsleep() &&
-                 m_pConstraint->GetReferenceObject()->IsAsleep() )
+                m_pConstraint->GetAttachedObject()->IsAsleep() &&
+                m_pConstraint->GetReferenceObject()->IsAsleep() )
             {
                 m_soundInfo.StopThinking( this );
                 SetNextThink( TICK_NEVER_THINK );
@@ -854,11 +854,11 @@ class CPhysHinge : public CPhysConstraint, public IVPhysicsWatcher
     DECLARE_DATADESC();
 
 #if HINGE_NOTIFY
-   protected:
+    protected:
     ConstraintSoundInfo m_soundInfo;
 #endif
 
-   private:
+    private:
     constraint_hingeparams_t m_hinge;
     float m_hingeFriction;
     float m_systemLoadScale;
@@ -938,8 +938,8 @@ void CPhysHinge::Activate( void )
     if ( m_pConstraint )
     {
         m_soundInfo.StartThinking( this,
-                                   VelocitySampler::GetRelativeAngularVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
-                                   m_hinge.worldAxisDirection );
+                                    VelocitySampler::GetRelativeAngularVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
+                                    m_hinge.worldAxisDirection );
 
         SetThink( &CPhysHinge::SoundThink );
         SetNextThink( gpGlobals->curtime + m_soundInfo.getThinkRate() );
@@ -1020,7 +1020,7 @@ void CPhysHinge::SoundThink( void )
 
 class CPhysBallSocket : public CPhysConstraint
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysBallSocket, CPhysConstraint );
 
     IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info )
@@ -1044,7 +1044,7 @@ LINK_ENTITY_TO_CLASS( phys_ballsocket, CPhysBallSocket );
 
 class CPhysSlideConstraint : public CPhysConstraint, public IVPhysicsWatcher
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysSlideConstraint, CPhysConstraint );
 
     DECLARE_DATADESC();
@@ -1106,8 +1106,8 @@ class CPhysSlideConstraint : public CPhysConstraint, public IVPhysicsWatcher
                 UTIL_SnapDirectionToAxis( axisDirection );
 
                 m_soundInfo.StartThinking( this,
-                                           VelocitySampler::GetRelativeVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
-                                           axisDirection );
+                                            VelocitySampler::GetRelativeVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
+                                            axisDirection );
                 SetThink( &CPhysSlideConstraint::SoundThink );
                 SetNextThink( gpGlobals->curtime + m_soundInfo.getThinkRate() );
             }
@@ -1116,8 +1116,8 @@ class CPhysSlideConstraint : public CPhysConstraint, public IVPhysicsWatcher
         {
             // Is everything asleep? If so, stop thinking.
             if ( GetNextThink() != TICK_NEVER_THINK &&
-                 m_pConstraint->GetAttachedObject()->IsAsleep() &&
-                 m_pConstraint->GetReferenceObject()->IsAsleep() )
+                m_pConstraint->GetAttachedObject()->IsAsleep() &&
+                m_pConstraint->GetReferenceObject()->IsAsleep() )
             {
                 m_soundInfo.StopThinking( this );
                 SetNextThink( TICK_NEVER_THINK );
@@ -1153,7 +1153,7 @@ class CPhysSlideConstraint : public CPhysConstraint, public IVPhysicsWatcher
     float m_systemLoadScale;
 
 #if HINGE_NOTIFY
-   protected:
+    protected:
     ConstraintSoundInfo m_soundInfo;
 #endif
 };
@@ -1261,8 +1261,8 @@ void CPhysSlideConstraint::Activate( void )
     VectorNormalize( axisDirection );
     UTIL_SnapDirectionToAxis( axisDirection );
     m_soundInfo.StartThinking( this,
-                               VelocitySampler::GetRelativeVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
-                               axisDirection );
+                                VelocitySampler::GetRelativeVelocity( m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject() ),
+                                axisDirection );
 
     SetThink( &CPhysSlideConstraint::SoundThink );
     SetNextThink( gpGlobals->curtime + m_soundInfo.getThinkRate() );
@@ -1303,7 +1303,7 @@ class CPhysPulley : public CPhysConstraint
 {
     DECLARE_CLASS( CPhysPulley, CPhysConstraint );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void DrawDebugGeometryOverlays()
@@ -1337,7 +1337,7 @@ class CPhysPulley : public CPhysConstraint
 
     IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info );
 
-   private:
+    private:
     Vector m_position2;
     Vector m_offset[2];
     float m_addLength;
@@ -1380,8 +1380,8 @@ IPhysicsConstraint *CPhysPulley::CreateConstraint( IPhysicsConstraintGroup *pGro
     }
 
     pulley.totalLength = m_addLength +
-                         ( world[0] - pulley.pulleyPosition[0] ).Length() +
-                         ( ( world[1] - pulley.pulleyPosition[1] ).Length() * m_gearRatio );
+                        ( world[0] - pulley.pulleyPosition[0] ).Length() +
+                        ( ( world[1] - pulley.pulleyPosition[1] ).Length() * m_gearRatio );
 
     if ( m_gearRatio != 0 )
     {
@@ -1403,7 +1403,7 @@ class CPhysLength : public CPhysConstraint
 {
     DECLARE_CLASS( CPhysLength, CPhysConstraint );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void DrawDebugGeometryOverlays()
@@ -1445,7 +1445,7 @@ class CPhysLength : public CPhysConstraint
 
     IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info );
 
-   private:
+    private:
     Vector m_offset[2];
     Vector m_vecAttach;
     float m_addLength;
@@ -1500,22 +1500,22 @@ class CRagdollConstraint : public CPhysConstraint
 {
     DECLARE_CLASS( CRagdollConstraint, CPhysConstraint );
 
-   public:
+    public:
     DECLARE_DATADESC();
 #if 0
-	void DrawDebugGeometryOverlays()
-	{
-		if ( m_debugOverlays & (OVERLAY_BBOX_BIT|OVERLAY_PIVOT_BIT|OVERLAY_ABSBOX_BIT) )
-		{
-			NDebugOverlay::Line( refPos, attachPos, 0, 255, 0, false, 0 );
-		}
-		BaseClass::DrawDebugGeometryOverlays();
-	}
+    void DrawDebugGeometryOverlays()
+    {
+        if ( m_debugOverlays & (OVERLAY_BBOX_BIT|OVERLAY_PIVOT_BIT|OVERLAY_ABSBOX_BIT) )
+        {
+            NDebugOverlay::Line( refPos, attachPos, 0, 255, 0, false, 0 );
+        }
+        BaseClass::DrawDebugGeometryOverlays();
+    }
 #endif
 
     IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info );
 
-   private:
+    private:
     float m_xmin;  // constraint limits in degrees
     float m_xmax;
     float m_ymin;
@@ -1616,37 +1616,37 @@ void VelocitySampler::Initialize( float samplerate )
 #if 0
 bool VelocitySampler::HasReversed(const Vector &relativeVelocity, float thresholdAcceleration)
 {
-	// first, make sure the velocity has reversed (is more than 90deg off) from last time, or is zero now.
-	// float rVsq = relativeVelocity.LengthSqr();
-	float vDot = relativeVelocity.Dot(m_prevSample);
-	if (vDot <= 0) // there is a reversal in direction. compute the magnitude of acceleration.
-	{
-		// find the scalar projection of the relative acceleration this fame onto the previous frame's
-		// velocity, and compare that to the threshold. 
-		Vector accel = relativeVelocity - m_prevSample;
+    // first, make sure the velocity has reversed (is more than 90deg off) from last time, or is zero now.
+    // float rVsq = relativeVelocity.LengthSqr();
+    float vDot = relativeVelocity.Dot(m_prevSample);
+    if (vDot <= 0) // there is a reversal in direction. compute the magnitude of acceleration.
+    {
+        // find the scalar projection of the relative acceleration this fame onto the previous frame's
+        // velocity, and compare that to the threshold.
+        Vector accel = relativeVelocity - m_prevSample;
 
-		float prevSampleLength = m_prevSample.Length();
-		float projection = 0;
-		// divide through by dt to get the accel per sec
-		if (prevSampleLength)
-		{
-			projection = -(accel.Dot(m_prevSample) / prevSampleLength) / (gpGlobals->curtime - m_fPrevSampleTime);
-		}
-		else
-		{
-			projection = accel.Length() / (gpGlobals->curtime - m_fPrevSampleTime);
-		}
+        float prevSampleLength = m_prevSample.Length();
+        float projection = 0;
+        // divide through by dt to get the accel per sec
+        if (prevSampleLength)
+        {
+            projection = -(accel.Dot(m_prevSample) / prevSampleLength) / (gpGlobals->curtime - m_fPrevSampleTime);
+        }
+        else
+        {
+            projection = accel.Length() / (gpGlobals->curtime - m_fPrevSampleTime);
+        }
 
-		if (g_debug_constraint_sounds.GetBool())
-		{
-			Msg("Reversal accel is %f/%f\n",projection,thresholdAcceleration);
-		}
-		return ((projection) > thresholdAcceleration); // the scalar projection is negative because the acceleration is against vel
-	}
-	else
-	{
-		return false;
-	}
+        if (g_debug_constraint_sounds.GetBool())
+        {
+            Msg("Reversal accel is %f/%f\n",projection,thresholdAcceleration);
+        }
+        return ((projection) > thresholdAcceleration); // the scalar projection is negative because the acceleration is against vel
+    }
+    else
+    {
+        return false;
+    }
 }
 #endif
 
@@ -1832,8 +1832,8 @@ void ConstraintSoundInfo::StartThinking( CPhysConstraint *pOuter, const Vector &
     Assert(pConstraint);
     if (pConstraint)
     {
-      IPhysicsObject * pAttached = pConstraint->GetAttachedObject(), *pReference = pConstraint->GetReferenceObject();
-      m_vSampler.BeginSampling( VelocitySampler::GetRelativeVelocity(pAttached,pReference) );
+    IPhysicsObject * pAttached = pConstraint->GetAttachedObject(), *pReference = pConstraint->GetReferenceObject();
+    m_vSampler.BeginSampling( VelocitySampler::GetRelativeVelocity(pAttached,pReference) );
     }
     */
 }

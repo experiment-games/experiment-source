@@ -11,23 +11,23 @@
 #include "shaderlib/cshader.h"
 class sdk_bloom_ps20b_Static_Index
 {
-	unsigned int m_nCONVERT_TO_SRGB : 2;
+    unsigned int m_nCONVERT_TO_SRGB : 2;
 public:
-	void SetCONVERT_TO_SRGB( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nCONVERT_TO_SRGB = i;
-	}
+    void SetCONVERT_TO_SRGB( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nCONVERT_TO_SRGB = i;
+    }
 
-	sdk_bloom_ps20b_Static_Index(  )
-	{
-		m_nCONVERT_TO_SRGB = g_pHardwareConfig->NeedsShaderSRGBConversion();
-	}
+    sdk_bloom_ps20b_Static_Index(  )
+    {
+        m_nCONVERT_TO_SRGB = g_pHardwareConfig->NeedsShaderSRGBConversion();
+    }
 
-	int GetIndex() const
-	{
-		return ( 1 * m_nCONVERT_TO_SRGB ) + 0;
-	}
+    int GetIndex() const
+    {
+        return ( 1 * m_nCONVERT_TO_SRGB ) + 0;
+    }
 };
 
 #define shaderStaticTest_sdk_bloom_ps20b 1
@@ -36,15 +36,14 @@ public:
 class sdk_bloom_ps20b_Dynamic_Index
 {
 public:
-	sdk_bloom_ps20b_Dynamic_Index(  )
-	{
-	}
+    sdk_bloom_ps20b_Dynamic_Index(  )
+    {
+    }
 
-	int GetIndex() const
-	{
-		return 0;
-	}
+    int GetIndex() const
+    {
+        return 0;
+    }
 };
 
 #define shaderDynamicTest_sdk_bloom_ps20b 1
-

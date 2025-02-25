@@ -409,7 +409,7 @@ void SetAppropriateCamera( C_TFPlayer *pPlayer )
         return;
 
     if ( TFGameRules() &&
-         ( ( TFGameRules()->IsInMedievalMode() && tf_medieval_thirdperson.GetBool() ) || pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) ) )
+        ( ( TFGameRules()->IsInMedievalMode() && tf_medieval_thirdperson.GetBool() ) || pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) ) )
     {
         g_ThirdPersonManager.SetForcedThirdPerson( true );
         Vector offset( tf_medieval_cam_idealdist.GetFloat(), tf_medieval_cam_idealdistright.GetFloat(), tf_medieval_cam_idealdistup.GetFloat() );
@@ -432,7 +432,7 @@ void SetAppropriateCamera( C_TFPlayer *pPlayer )
 
 class C_TEPlayerAnimEvent : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEPlayerAnimEvent, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -468,7 +468,7 @@ class C_TEPlayerAnimEvent : public C_BaseTempEntity
         }
     }
 
-   public:
+    public:
     CNetworkHandle( CBasePlayer, m_hPlayer );
     CNetworkVar( int, m_iEvent );
     CNetworkVar( int, m_nData );
@@ -804,7 +804,7 @@ void C_TFRagdoll::CreateTFRagdoll()
 
         // did we find a death sequence?
         if ( iDeathSeq > -1 && ( m_iDamageCustom != TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING ) &&
-             ( m_iDamageCustom != TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH ) && ( m_iDamageCustom != TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF ) )
+            ( m_iDamageCustom != TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH ) && ( m_iDamageCustom != TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF ) )
         {
             // we only want to show the death anims 25% of the time, unless this is a demoman kill taunt
             // always play backstab animations for the ice ragdoll
@@ -1281,7 +1281,7 @@ int C_TFRagdoll::InternalDrawModel( int flags )
 bool C_TFRagdoll::IsDecapitation()
 {
     return ( cl_ragdoll_fade_time.GetFloat() > 5.f ) &&
-           ( ( m_iDamageCustom == TF_DMG_CUSTOM_DECAPITATION ) || ( m_iDamageCustom == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING ) || ( m_iDamageCustom == TF_DMG_CUSTOM_DECAPITATION_BOSS ) || ( m_iDamageCustom == TF_DMG_CUSTOM_HEADSHOT_DECAPITATION ) || ( m_iDamageCustom == TF_DMG_CUSTOM_MERASMUS_DECAPITATION ) );
+            ( ( m_iDamageCustom == TF_DMG_CUSTOM_DECAPITATION ) || ( m_iDamageCustom == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING ) || ( m_iDamageCustom == TF_DMG_CUSTOM_DECAPITATION_BOSS ) || ( m_iDamageCustom == TF_DMG_CUSTOM_HEADSHOT_DECAPITATION ) || ( m_iDamageCustom == TF_DMG_CUSTOM_MERASMUS_DECAPITATION ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1641,13 +1641,13 @@ void C_TFRagdoll::EndFadeOut()
 //-----------------------------------------------------------------------------
 class CSpyInvisProxy : public CBaseInvisMaterialProxy
 {
-   public:
+    public:
     CSpyInvisProxy( void );
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues ) OVERRIDE;
     virtual void OnBind( C_BaseEntity *pBaseEntity ) OVERRIDE;
     virtual void OnBindNotEntity( void *pRenderable ) OVERRIDE;
 
-   private:
+    private:
     IMaterialVar *m_pCloakColorTint;
 };
 
@@ -1749,7 +1749,7 @@ EXPOSE_INTERFACE( CSpyInvisProxy, IMaterialProxy, "spy_invis" IMATERIAL_PROXY_IN
 //-----------------------------------------------------------------------------
 class CProxyInvulnLevel : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -1803,7 +1803,7 @@ EXPOSE_INTERFACE( CProxyInvulnLevel, IMaterialProxy, "InvulnLevel" IMATERIAL_PRO
 //-----------------------------------------------------------------------------
 class CProxyBurnLevel : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -1880,7 +1880,7 @@ EXPOSE_INTERFACE( CProxyBurnLevel, IMaterialProxy, "BurnLevel" IMATERIAL_PROXY_I
 //-----------------------------------------------------------------------------
 class CProxyUrineLevel : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -1961,7 +1961,7 @@ EXPOSE_INTERFACE( CProxyUrineLevel, IMaterialProxy, "YellowLevel" IMATERIAL_PROX
 //-----------------------------------------------------------------------------
 class CProxyModelGlowColor : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -1972,17 +1972,17 @@ class CProxyModelGlowColor : public CResultProxy
         {
             Vector vResult = Vector( 1, 1, 1 );
 #if 0   // It looks like this code path is never used
-			if ( g_PlayerPreviewEffect.GetEffect() == C_TFPlayerPreviewEffect::PREVIEW_EFFECT_CRIT )
-			{
-				if ( g_PlayerPreviewEffect.GetTeam() == TF_TEAM_RED )
-				{
-					vResult = Vector ( 80, 8, 5 );
-				}
-				else	
-				{
-					vResult = Vector ( 5, 20, 80 );
-				}
-			}
+            if ( g_PlayerPreviewEffect.GetEffect() == C_TFPlayerPreviewEffect::PREVIEW_EFFECT_CRIT )
+            {
+                if ( g_PlayerPreviewEffect.GetTeam() == TF_TEAM_RED )
+                {
+                    vResult = Vector ( 80, 8, 5 );
+                }
+                else
+                {
+                    vResult = Vector ( 5, 20, 80 );
+                }
+            }
 #endif  // 0
             m_pResult->SetVecValue( vResult.x, vResult.y, vResult.z );
             return;
@@ -2101,7 +2101,7 @@ EXPOSE_INTERFACE( CProxyModelGlowColor, IMaterialProxy, "ModelGlowColor" IMATERI
 //-----------------------------------------------------------------------------
 class CProxyCommunityWeapon : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -2142,7 +2142,7 @@ EXPOSE_INTERFACE( CProxyCommunityWeapon, IMaterialProxy, "CommunityWeapon" IMATE
 //-----------------------------------------------------------------------------
 class CProxyHeartbeatScale : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -2195,7 +2195,7 @@ ConVar tf_benefactor_gift_count( "tf_benefactor_gift_count", "-1", FCVAR_CHEAT, 
 //-----------------------------------------------------------------------------
 class CProxyBenefactorLevel : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -2271,7 +2271,7 @@ EXPOSE_INTERFACE( CProxyBenefactorLevel, IMaterialProxy, "BenefactorLevel" IMATE
 //-----------------------------------------------------------------------------
 class CProxyBuildingRescueLevel : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -2331,7 +2331,7 @@ EXPOSE_INTERFACE( CProxyBuildingRescueLevel, IMaterialProxy, "BuildingRescueLeve
 //-----------------------------------------------------------------------------
 class CProxyResistShield : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -2367,7 +2367,7 @@ EXPOSE_INTERFACE( CProxyResistShield, IMaterialProxy, "ShieldFalloff" IMATERIAL_
 //-----------------------------------------------------------------------------
 class CProxyWheatlyEyeGlow : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity )
     {
         Assert( m_pResult );
@@ -2535,7 +2535,7 @@ C_TFPlayer *GetOwnerFromProxyEntity( void *pEntity )
 //-----------------------------------------------------------------------------
 class CProxyAnimatedWeaponSheen : public CBaseAnimatedTextureProxy
 {
-   public:
+    public:
     CProxyAnimatedWeaponSheen() {}
     virtual ~CProxyAnimatedWeaponSheen() {}
 
@@ -2968,7 +2968,7 @@ class CProxyAnimatedWeaponSheen : public CBaseAnimatedTextureProxy
         m_pSheenIndexVar->SetIntValue( 0 );
     }
 
-   private:
+    private:
     IMaterialVar *m_pSheenIndexVar;
     IMaterialVar *m_pTintVar;
 
@@ -2999,11 +2999,11 @@ EXPOSE_INTERFACE( CProxyAnimatedWeaponSheen, IMaterialProxy, "AnimatedWeaponShee
 //-----------------------------------------------------------------------------
 class CStatTrakIllumProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_flMinVal;
     CFloatInput m_flMaxVal;
 };
@@ -3047,13 +3047,13 @@ EXPOSE_INTERFACE( CStatTrakIllumProxy, IMaterialProxy, "StatTrakIllum" IMATERIAL
 //-----------------------------------------------------------------------------
 class CStatTrakDigitProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
     virtual bool HelperOnBindGetStatTrakScore( void *pC_BaseEntity, int *piScore );
 
-   private:
+    private:
     CFloatInput m_flDisplayDigit;  // the particular digit we want to display
     CFloatInput m_flTrimZeros;
 };
@@ -3162,24 +3162,24 @@ EXPOSE_INTERFACE( CStatTrakDigitProxy, IMaterialProxy, "StatTrakDigit" IMATERIAL
 //-----------------------------------------------------------------------------
 class CStatTrakIconProxy : public CResultProxy
 {
-   public:
+    public:
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     // CFloatInput	m_flMinVal;
 };
 
 bool CStatTrakIconProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
     /*if ( !CResultProxy::Init( pMaterial, pKeyValues ) )
-      return false;
+    return false;
 
     if ( !m_flMinVal.Init( pMaterial, pKeyValues, "minVal", 0.5 ) )
-      return false;
+    return false;
 
     if ( !m_flMaxVal.Init( pMaterial, pKeyValues, "maxVal", 1 ) )
-      return false;*/
+    return false;*/
 
     return CResultProxy::Init( pMaterial, pKeyValues );
 }
@@ -3279,7 +3279,7 @@ struct TextureVarSetter
 //-----------------------------------------------------------------------------
 class CWeaponSkinProxy : public IMaterialProxy
 {
-   public:
+    public:
     CWeaponSkinProxy( void )
         : m_pMaterial( NULL ), m_pBaseTextureVar( NULL ), m_pBaseTextureOrig( NULL ), m_nGeneration( CRTime::RTime32TimeCur() )
     {
@@ -3518,7 +3518,7 @@ class CWeaponSkinProxy : public IMaterialProxy
 
             uint32 unLowVal, unHighVal;
             const bool bHasLowVal = pItem->FindAttribute( pAttr_CustomPaintKitSeedLo, &unLowVal ),
-                       bHasHighVal = pItem->FindAttribute( pAttr_CustomPaintKitSeedHi, &unHighVal );
+                        bHasHighVal = pItem->FindAttribute( pAttr_CustomPaintKitSeedHi, &unHighVal );
 
             // We should have both, or neither.  We should never have just one
             Assert( bHasLowVal == bHasHighVal );
@@ -3575,7 +3575,7 @@ class CWeaponSkinProxy : public IMaterialProxy
         return m_pMaterial;
     }
 
-   private:
+    private:
     IMaterial *m_pMaterial;
 
     IMaterialVar *m_pBaseTextureVar;
@@ -3740,7 +3740,7 @@ RecvPropVectorXY( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
 
     C_TFPlayer::C_TFPlayer()
     : m_iv_angEyeAngles( "C_TFPlayer::m_iv_angEyeAngles" ),
-      m_mapOverheadEffects( DefLessFunc( const char * ) )
+    m_mapOverheadEffects( DefLessFunc( const char * ) )
 {
     m_pAttributes = this;
 
@@ -3971,11 +3971,11 @@ void C_TFPlayer::Spawn( void )
 
     if ( entindex() == iLocalPlayerIndex && !m_LeaveServerTimer.HasStarted() )
     {
-      ConVarRef random_spec_server_mode( "random_spec_server_mode" );
-      if ( random_spec_server_mode.IsValid() && random_spec_server_mode.GetBool() )
-      {
+    ConVarRef random_spec_server_mode( "random_spec_server_mode" );
+    if ( random_spec_server_mode.IsValid() && random_spec_server_mode.GetBool() )
+    {
         m_LeaveServerTimer.Start( spectate_random_server_basetime.GetFloat() );
-      }
+    }
     }
     */
 
@@ -4662,7 +4662,7 @@ void C_TFPlayer::OnDataChanged( DataUpdateType_t updateType )
         }
 
         if ( m_iOldClass == TF_CLASS_SPY &&
-             ( m_bDisguised != m_Shared.InCond( TF_COND_DISGUISED ) || m_iOldDisguiseClass != m_Shared.GetDisguiseClass() ) )
+            ( m_bDisguised != m_Shared.InCond( TF_COND_DISGUISED ) || m_iOldDisguiseClass != m_Shared.GetDisguiseClass() ) )
         {
             IGameEvent *event = gameeventmanager->CreateEvent( "localplayer_changedisguise" );
             if ( event )
@@ -5015,7 +5015,7 @@ void C_TFPlayer::UpdateRecentlyTeleportedEffect( void )
             if ( TFGameRules()->IsMannVsMachineMode() && IsABot() )
             {
 #if 0  // Nice idea, but it's chewing into our particle budget, and because bots currently spawn in ubered it's nearly invisible.
-				pszEffectName = "bot_recent_teleport_blue";
+                pszEffectName = "bot_recent_teleport_blue";
 #else
                 pszEffectName = NULL;
 #endif
@@ -5193,21 +5193,21 @@ void C_TFPlayer::CalcInEyeCamView( Vector &eyeOrigin, QAngle &eyeAngles, float &
     // @note Tom Bui: we don't try to capture the "up" button event, because that doesn't seem so reliable
     if ( m_bIsCoaching )
     {
-      const float kLerpTime = 1.0f;
-      if ( ( m_nButtons & IN_JUMP ) != 0 )
-      {
+    const float kLerpTime = 1.0f;
+    if ( ( m_nButtons & IN_JUMP ) != 0 )
+    {
         VectorCopy( myEyeAngles, eyeAngles );
         engine->SetViewAngles( eyeAngles );
         m_flCoachLookAroundLerpTime = kLerpTime;
         m_angCoachLookAroundEyeAngles = myEyeAngles;
-      }
-      else if ( m_flCoachLookAroundLerpTime > 0 )
-      {
+    }
+    else if ( m_flCoachLookAroundLerpTime > 0 )
+    {
         m_flCoachLookAroundLerpTime -= gpGlobals->frametime;
         float flPercent = ( kLerpTime - m_flCoachLookAroundLerpTime / kLerpTime );
         eyeAngles = Lerp( flPercent, m_angCoachLookAroundEyeAngles, eyeAngles );
         engine->SetViewAngles( eyeAngles );
-      }
+    }
     }
     */
 }
@@ -5368,15 +5368,15 @@ void C_TFPlayer::ShowIconForIT( bool bShow )
 void C_TFPlayer::ShowBirthdayEffect( bool bShow )
 {
     /*
-      if ( bShow )
-      {
+    if ( bShow )
+    {
         ParticleProp()->Create( "birthday_player_circling", PATTACH_POINT_FOLLOW, "head" );
         DispatchParticleEffect( "bday_confetti", GetAbsOrigin() + Vector(0,0,32), vec3_angle );
-      }
-      else
-      {
+    }
+    else
+    {
         ParticleProp()->StopParticlesNamed( "birthday_player_circling", true );
-      }
+    }
     */
     m_bShouldShowBirthdayEffect = bShow;
 }
@@ -5556,18 +5556,18 @@ void C_TFPlayer::HandleTaunting( void )
 
     // Clear the taunt slot.
     if ( !m_bWasTaunting &&
-         ( m_Shared.InCond( TF_COND_TAUNTING ) ||
-           m_Shared.IsControlStunned() ||
-           m_Shared.IsLoser() ||
-           m_bIsReadyToHighFive ||
-           m_nForceTauntCam ||
-           m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) ||
-           m_Shared.InCond( TF_COND_HALLOWEEN_GIANT ) ||
-           m_Shared.InCond( TF_COND_HALLOWEEN_TINY ) ||
-           m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) ||
-           m_Shared.InCond( TF_COND_HALLOWEEN_KART ) ||
-           m_Shared.InCond( TF_COND_MELEE_ONLY ) ||
-           m_Shared.InCond( TF_COND_SWIMMING_CURSE ) ) )
+        ( m_Shared.InCond( TF_COND_TAUNTING ) ||
+            m_Shared.IsControlStunned() ||
+            m_Shared.IsLoser() ||
+            m_bIsReadyToHighFive ||
+            m_nForceTauntCam ||
+            m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) ||
+            m_Shared.InCond( TF_COND_HALLOWEEN_GIANT ) ||
+            m_Shared.InCond( TF_COND_HALLOWEEN_TINY ) ||
+            m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) ||
+            m_Shared.InCond( TF_COND_HALLOWEEN_KART ) ||
+            m_Shared.InCond( TF_COND_MELEE_ONLY ) ||
+            m_Shared.InCond( TF_COND_SWIMMING_CURSE ) ) )
     {
         m_bWasTaunting = true;
 
@@ -5579,16 +5579,16 @@ void C_TFPlayer::HandleTaunting( void )
     }
 
     if ( ( !IsAlive() && m_nForceTauntCam < 2 ) ||
-         ( m_bWasTaunting && !m_Shared.InCond( TF_COND_TAUNTING ) && !m_Shared.IsControlStunned() &&
-           !m_Shared.InCond( TF_COND_PHASE ) && !m_Shared.IsLoser() && !m_bIsReadyToHighFive &&
-           !m_nForceTauntCam && !m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) &&
-           !m_Shared.InCond( TF_COND_HALLOWEEN_THRILLER ) &&
-           !m_Shared.InCond( TF_COND_HALLOWEEN_GIANT ) &&
-           !m_Shared.InCond( TF_COND_HALLOWEEN_TINY ) &&
-           !m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) &&
-           !m_Shared.InCond( TF_COND_HALLOWEEN_KART ) &&
-           !m_Shared.InCond( TF_COND_MELEE_ONLY ) &&
-           !m_Shared.InCond( TF_COND_SWIMMING_CURSE ) ) )
+        ( m_bWasTaunting && !m_Shared.InCond( TF_COND_TAUNTING ) && !m_Shared.IsControlStunned() &&
+            !m_Shared.InCond( TF_COND_PHASE ) && !m_Shared.IsLoser() && !m_bIsReadyToHighFive &&
+            !m_nForceTauntCam && !m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) &&
+            !m_Shared.InCond( TF_COND_HALLOWEEN_THRILLER ) &&
+            !m_Shared.InCond( TF_COND_HALLOWEEN_GIANT ) &&
+            !m_Shared.InCond( TF_COND_HALLOWEEN_TINY ) &&
+            !m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) &&
+            !m_Shared.InCond( TF_COND_HALLOWEEN_KART ) &&
+            !m_Shared.InCond( TF_COND_MELEE_ONLY ) &&
+            !m_Shared.InCond( TF_COND_SWIMMING_CURSE ) ) )
     {
         m_bWasTaunting = false;
 
@@ -5852,7 +5852,7 @@ void C_TFPlayer::ClientThink()
     // b) the enemy disguised spy is now invisible
 
     if ( !IsAlive() ||
-         ( m_Shared.InCond( TF_COND_DISGUISED ) && IsEnemyPlayer() && ( GetPercentInvisible() > 0 ) ) )
+        ( m_Shared.InCond( TF_COND_DISGUISED ) && IsEnemyPlayer() && ( GetPercentInvisible() > 0 ) ) )
     {
         StopSaveMeEffect( true );
     }
@@ -5924,10 +5924,10 @@ void C_TFPlayer::ClientThink()
     m_Shared.ClientKillStreakBuffThink();
 
     /*
-      if ( m_LeaveServerTimer.HasStarted() && m_LeaveServerTimer.IsElapsed() )
-      {
+    if ( m_LeaveServerTimer.HasStarted() && m_LeaveServerTimer.IsElapsed() )
+    {
         engine->ExecuteClientCmd( "disconnect" );
-      }
+    }
     */
 
     if ( m_Shared.IsEnteringOrExitingFullyInvisible() )
@@ -6106,8 +6106,8 @@ void C_TFPlayer::UpdateLookAt( void )
     // blinking
     if (m_blinkTimer.IsElapsed())
     {
-      m_blinktoggle = !m_blinktoggle;
-      m_blinkTimer.Start( RandomFloat( 1.5f, 4.0f ) );
+    m_blinktoggle = !m_blinktoggle;
+    m_blinkTimer.Start( RandomFloat( 1.5f, 4.0f ) );
     }
     */
 
@@ -6711,7 +6711,7 @@ float C_TFPlayer::GetEffectiveInvisibilityLevel( void )
             int iObserverMode = pLocalPlayer->GetObserverMode();
 
             if ( ( iObserverMode == OBS_MODE_FREEZECAM || iObserverMode == OBS_MODE_DEATHCAM ) &&
-                 pLocalPlayer->GetObserverTarget() == this )
+                pLocalPlayer->GetObserverTarget() == this )
             {
                 float flMax = tf_teammate_max_invis.GetFloat();
                 if ( flPercentInvisible > flMax )
@@ -6797,7 +6797,7 @@ int C_TFPlayer::DrawModel( int flags )
     if ( m_Shared.InCond( TF_COND_DISGUISING ) )
     {
         flAmountToChop = ( gpGlobals->curtime - m_flDisguiseEffectStartTime ) *
-                         ( 1.0 / TF_TIME_TO_DISGUISE );
+                        ( 1.0 / TF_TIME_TO_DISGUISE );
     }
     else
     {
@@ -7460,8 +7460,8 @@ void C_TFPlayer::DropPartyHat( breakablepropparams_t &breakParams, Vector &vecBr
     return;
 
     /*
-      if ( m_hPartyHat )
-      {
+    if ( m_hPartyHat )
+    {
         breakmodel_t breakModel;
         Q_strncpy( breakModel.modelName, BDAY_HAT_MODEL, sizeof(breakModel.modelName) );
         breakModel.health = 1;
@@ -7478,7 +7478,7 @@ void C_TFPlayer::DropPartyHat( breakablepropparams_t &breakParams, Vector &vecBr
         BreakModelCreateSingle( this, &breakModel, m_hPartyHat->GetAbsOrigin(), m_hPartyHat->GetAbsAngles(), vecBreakVelocity, breakParams.angularVelocity, m_hPartyHat->m_nSkin, breakParams );
 
         m_hPartyHat->Release();
-      }
+    }
     */
 }
 
@@ -7535,7 +7535,7 @@ C_BaseObject *C_TFPlayer::GetObjectOfType( int iObjectType, int iObjectMode ) co
 bool C_TFPlayer::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
     if ( ( ( collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT ) && tf_avoidteammates.GetBool() ) ||
-         collisionGroup == TFCOLLISION_GROUP_ROCKETS )
+        collisionGroup == TFCOLLISION_GROUP_ROCKETS )
     {
         switch ( GetTeamNumber() )
         {
@@ -7655,7 +7655,7 @@ int C_TFPlayer::GetSkin()
 
     // 3 and 4 are invulnerable
     if ( m_Shared.IsInvulnerable() &&
-         ( !m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) || gpGlobals->curtime < GetLastDamageTimeMvMOnly() + 2.0f ) )
+        ( !m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) || gpGlobals->curtime < GetLastDamageTimeMvMOnly() + 2.0f ) )
     {
         nSkin += 2;
         bCheckSpyMask = false;
@@ -7924,8 +7924,8 @@ int C_TFPlayer::GetVisionFilterFlags( bool bWeaponsCheck /*= false */ )
 
     // opt-in for romevision?
     if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() &&
-         TFSharedContentManager() && TFSharedContentManager()->IsSharedVisionAvailable( TF_VISION_FILTER_ROME ) &&
-         tf_romevision_opt_in.GetBool() )
+        TFSharedContentManager() && TFSharedContentManager()->IsSharedVisionAvailable( TF_VISION_FILTER_ROME ) &&
+        tf_romevision_opt_in.GetBool() )
     {
         nVisionOptInFlags |= TF_VISION_FILTER_ROME;
     }
@@ -8218,7 +8218,7 @@ bool C_TFPlayer::IsOverridingViewmodel( void )
     C_TFPlayer *pPlayer = this;
     C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
     if ( pLocalPlayer && pLocalPlayer->GetObserverMode() == OBS_MODE_IN_EYE &&
-         pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
+        pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
     {
         pPlayer = assert_cast< C_TFPlayer * >( pLocalPlayer->GetObserverTarget() );
     }
@@ -8253,7 +8253,7 @@ int C_TFPlayer::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags 
     C_TFPlayer *pPlayer = this;
     C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
     if ( pLocalPlayer && pLocalPlayer->GetObserverMode() == OBS_MODE_IN_EYE &&
-         pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
+        pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
     {
         pPlayer = assert_cast< C_TFPlayer * >( pLocalPlayer->GetObserverTarget() );
     }
@@ -9045,10 +9045,10 @@ CNewParticleEffect *C_TFPlayer::SpawnHalloweenSpellFootsteps( ParticleAttachment
     if ( pEffect )
     {
         const int iRGB = iHalloweenFootstepType != kHalloweenSpell_RGBConstant_TeamColor  // special "use team-color" hack value
-                             ? iHalloweenFootstepType                                     // use the attribute value as the RGB
-                             : GetTeamNumber() == TF_TEAM_BLUE                            // which team are we on?
-                                   ? kHalloweenSpell_RGB_Blue
-                                   : kHalloweenSpell_RGB_Red;
+                            ? iHalloweenFootstepType                                     // use the attribute value as the RGB
+                            : GetTeamNumber() == TF_TEAM_BLUE                            // which team are we on?
+                                    ? kHalloweenSpell_RGB_Blue
+                                    : kHalloweenSpell_RGB_Red;
 
         pEffect->SetControlPoint( 1, Vector( ( ( iRGB & 0xff0000 ) >> 16 ) / 255.0f, ( ( iRGB & 0xff00 ) >> 8 ) / 255.0f, ( iRGB & 0xff ) / 255.0f ) );
     }
@@ -9528,14 +9528,14 @@ CON_COMMAND_F( spectate_random_server_extend_time, "extend the timer we're spect
   {
     if ( pPlayer->m_LeaveServerTimer.HasStarted() )
     {
-      float flTime = spectate_random_server_basetime.GetFloat();
+    float flTime = spectate_random_server_basetime.GetFloat();
 
-      if ( args.ArgC() > 1 )
-      {
+    if ( args.ArgC() > 1 )
+    {
         flTime = MAX( 0, Q_atof( args[ 1 ] ) );
-      }
+    }
 
-      pPlayer->m_LeaveServerTimer.Start( flTime );
+    pPlayer->m_LeaveServerTimer.Start( flTime );
     }
   }
 }*/
@@ -9998,8 +9998,8 @@ void C_TFPlayer::CreateBoneAttachmentsFromWearables( C_TFRagdoll *pRagdoll, bool
         if ( IsDecapitationCustomDamageType( pRagdoll->GetDamageCustom() ) )
         {
             int iLoadoutSlot = pEconItemView
-                                   ? pEconItemView->GetStaticData()->GetDefaultLoadoutSlot()
-                                   : LOADOUT_POSITION_INVALID;
+                                    ? pEconItemView->GetStaticData()->GetDefaultLoadoutSlot()
+                                    : LOADOUT_POSITION_INVALID;
 
             if ( iLoadoutSlot == LOADOUT_POSITION_HEAD || iLoadoutSlot == LOADOUT_POSITION_MISC )
                 continue;
@@ -10124,9 +10124,9 @@ bool C_TFPlayer::CanUseFirstPersonCommand( void )
     if ( pLocalPlayer )
     {
         if ( pLocalPlayer->m_Shared.InCond( TF_COND_PHASE ) ||
-             pLocalPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ||
-             pLocalPlayer->m_Shared.IsControlStunned() ||
-             pLocalPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+            pLocalPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ||
+            pLocalPlayer->m_Shared.IsControlStunned() ||
+            pLocalPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
         {
             return false;
         }
@@ -10445,10 +10445,10 @@ void C_TFPlayer::UpdateMVMEyeGlowEffect( bool bVisible )
 bool C_TFPlayer::ShouldDrawSpyAsDisguised()
 {
     if ( C_BasePlayer::GetLocalPlayer() && m_Shared.InCond( TF_COND_DISGUISED ) &&
-         ( GetEnemyTeam( GetTeamNumber() ) == C_BasePlayer::GetLocalPlayer()->GetTeamNumber() ) )
+        ( GetEnemyTeam( GetTeamNumber() ) == C_BasePlayer::GetLocalPlayer()->GetTeamNumber() ) )
     {
         if ( m_Shared.GetDisguiseClass() == TF_CLASS_SPY &&
-             m_Shared.GetDisguiseTeam() == C_BasePlayer::GetLocalPlayer()->GetTeamNumber() )
+            m_Shared.GetDisguiseTeam() == C_BasePlayer::GetLocalPlayer()->GetTeamNumber() )
         {
             // This enemy is disguised as a friendly spy.
             // Show the spy's original bodygroups.
@@ -10680,7 +10680,7 @@ void C_TFPlayer::FireGameEvent( IGameEvent *event )
 
         // Victim is carrying Resist Powerup, which is immune to crit damage
         if ( pVictim && pVictim->m_Shared.GetCarryingRuneType() == RUNE_RESIST &&
-             ( eBonusEffect == kBonusEffect_Crit || eBonusEffect == kBonusEffect_MiniCrit ) )
+            ( eBonusEffect == kBonusEffect_Crit || eBonusEffect == kBonusEffect_MiniCrit ) )
         {
             return;
         }
@@ -10718,13 +10718,13 @@ void C_TFPlayer::FireGameEvent( IGameEvent *event )
             if ( g_BonusEffects[eBonusEffect].m_eAttachment == PATTACH_POINT || g_BonusEffects[eBonusEffect].m_eAttachment == PATTACH_POINT_FOLLOW )
             {
                 pVictim->ParticleProp()->Create( g_BonusEffects[eBonusEffect].m_pszParticle,
-                                                 g_BonusEffects[eBonusEffect].m_eAttachment,
-                                                 g_BonusEffects[eBonusEffect].m_pszAttachmentName );
+                                                g_BonusEffects[eBonusEffect].m_eAttachment,
+                                                g_BonusEffects[eBonusEffect].m_pszAttachmentName );
             }
             else
             {
                 pVictim->ParticleProp()->Create( g_BonusEffects[eBonusEffect].m_pszParticle,
-                                                 g_BonusEffects[eBonusEffect].m_eAttachment );
+                                                g_BonusEffects[eBonusEffect].m_eAttachment );
             }
         }
 
@@ -10946,11 +10946,11 @@ void C_TFPlayer::FireGameEvent( IGameEvent *event )
         if ( TFGameRules() && TFGameRules()->IsMatchTypeCompetitive() )
         {
             if ( g_PR &&
-                 pLocalPlayer &&
-                 pLocalPlayer == this &&
-                 TFGameRules() &&
-                 TFGameRules()->IsCompetitiveMode() &&
-                 TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
+                pLocalPlayer &&
+                pLocalPlayer == this &&
+                TFGameRules() &&
+                TFGameRules()->IsCompetitiveMode() &&
+                TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
             {
                 CBaseHudChat *pHudChat = ( CBaseHudChat * )GET_HUDELEMENT( CHudChat );
                 if ( pHudChat )
@@ -11036,83 +11036,83 @@ CampaignMedalDisplayType_t C_TFPlayer::GetCampaignMedalType( void )
     //	static CSchemaItemDefHandle pItemDef_Winter2016Pass( "Activated Operation Tough Break Pass" );
     CampaignMedalDisplayType_t retVal = CAMPAIGN_MEDAL_DISPLAY_TYPE_NONE;
     /*
-      if ( HasCampaignMedal( CAMPAIGN_MEDAL_WINTER2016 ) )
-      {
+    if ( HasCampaignMedal( CAMPAIGN_MEDAL_WINTER2016 ) )
+    {
         CTFPlayerInventory *pInv = Inventory();
         if ( pInv )
         {
-          for ( int i = 0; i < pInv->GetItemCount(); ++i )
-          {
+        for ( int i = 0; i < pInv->GetItemCount(); ++i )
+        {
             CEconItemView *pItem = pInv->GetItem( i );
             if ( pItem && ( pItem->GetItemDefinition() == pItemDef_Winter2016Pass ) )
             {
-              style_index_t iStyle = pItem->GetItemStyle();
-              if ( iStyle != INVALID_STYLE_INDEX )
-              {
+            style_index_t iStyle = pItem->GetItemStyle();
+            if ( iStyle != INVALID_STYLE_INDEX )
+            {
                 iStyle += ( ( entindex()%2 < 1 ) ? CAMPAIGN_MEDAL_DISPLAY_TYPE_WINTER2016_GRAVEL1 : CAMPAIGN_MEDAL_DISPLAY_TYPE_WINTER2016_GRAVEL2 ); // styles start at 0 and Winter2016 images start at CAMPAIGN_MEDAL_DISPLAY_TYPE_WINTER2016_GRAVEL1
                 if ( ( iStyle >= (style_index_t)CAMPAIGN_MEDAL_DISPLAY_TYPE_WINTER2016_GRAVEL1 ) && ( iStyle <= (style_index_t)CAMPAIGN_MEDAL_DISPLAY_TYPE_WINTER2016_GOLD2 ) )
                 {
-                  retVal = (CampaignMedalDisplayType_t)iStyle;
-                  break;
+                retVal = (CampaignMedalDisplayType_t)iStyle;
+                break;
                 }
-              }
             }
-          }
+            }
         }
-      }
+        }
+    }
 
-      if ( IsPlayingInvasionMap() && HasCampaignMedal( CAMPAIGN_MEDAL_INVASION ) )
-      {
+    if ( IsPlayingInvasionMap() && HasCampaignMedal( CAMPAIGN_MEDAL_INVASION ) )
+    {
         retVal = CAMPAIGN_MEDAL_DISPLAY_TYPE_INVASION;
-      }
-      else if ( HasCampaignMedal( CAMPAIGN_MEDAL_HALLOWEEN ) )
-      {
+    }
+    else if ( HasCampaignMedal( CAMPAIGN_MEDAL_HALLOWEEN ) )
+    {
         CTFPlayerInventory *pInv = Inventory();
         if ( pInv )
         {
-          for ( int i = 0; i < pInv->GetItemCount(); ++i )
-          {
+        for ( int i = 0; i < pInv->GetItemCount(); ++i )
+        {
             CEconItemView *pItem = pInv->GetItem( i );
             if ( pItem && ( pItem->GetItemDefinition() == pItemDef_HalloweenPass ) )
             {
-              style_index_t iStyle = pItem->GetItemStyle();
-              if ( iStyle != INVALID_STYLE_INDEX )
-              {
+            style_index_t iStyle = pItem->GetItemStyle();
+            if ( iStyle != INVALID_STYLE_INDEX )
+            {
                 iStyle += CAMPAIGN_MEDAL_DISPLAY_TYPE_HALLOWEEN_GRAVEL; // styles start at 0 and Halloween images start at CAMPAIGN_MEDAL_DISPLAY_TYPE_HALLOWEEN_GRAVEL
                 if ( ( iStyle >= (style_index_t)CAMPAIGN_MEDAL_DISPLAY_TYPE_HALLOWEEN_GRAVEL ) && ( iStyle <= (style_index_t)CAMPAIGN_MEDAL_DISPLAY_TYPE_HALLOWEEN_GOLD ) )
                 {
-                  retVal = (CampaignMedalDisplayType_t)iStyle;
-                  break;
+                retVal = (CampaignMedalDisplayType_t)iStyle;
+                break;
                 }
-              }
             }
-          }
+            }
         }
-      }
-      else if ( HasCampaignMedal( CAMPAIGN_MEDAL_SUMMER2015 ) )
-      {
+        }
+    }
+    else if ( HasCampaignMedal( CAMPAIGN_MEDAL_SUMMER2015 ) )
+    {
         CTFPlayerInventory *pInv = Inventory();
         if ( pInv )
         {
-          for ( int i = 0; i < pInv->GetItemCount(); ++i )
-          {
+        for ( int i = 0; i < pInv->GetItemCount(); ++i )
+        {
             CEconItemView *pItem = pInv->GetItem( i );
             if ( pItem && ( pItem->GetItemDefinition() == pItemDef_Summer2015Operation ) )
             {
-              style_index_t iStyle = pItem->GetItemStyle();
-              if ( iStyle != INVALID_STYLE_INDEX )
-              {
+            style_index_t iStyle = pItem->GetItemStyle();
+            if ( iStyle != INVALID_STYLE_INDEX )
+            {
                 iStyle += 1; // styles start at 0 and images start at 1
                 if ( ( iStyle >= (style_index_t)CAMPAIGN_MEDAL_DISPLAY_TYPE_SUMMER2015_GRAVEL ) && ( iStyle <= (style_index_t)CAMPAIGN_MEDAL_DISPLAY_TYPE_SUMMER2015_GOLD ) )
                 {
-                  retVal = (CampaignMedalDisplayType_t)iStyle;
-                  break;
+                retVal = (CampaignMedalDisplayType_t)iStyle;
+                break;
                 }
-              }
             }
-          }
+            }
         }
-      }*/
+        }
+    }*/
 
     return retVal;
 }

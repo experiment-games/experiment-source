@@ -22,7 +22,7 @@
 // #############################################################################
 class CWindowPane : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CWindowPane, CBaseAnimating );
 
     static CWindowPane *CreateWindowPane( const Vector &vecOrigin, const QAngle &vecAngles );
@@ -45,7 +45,7 @@ class CBreakableSurface : public CBreakable
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVar( int, m_nNumWide );
     CNetworkVar( int, m_nNumHigh );
     CNetworkVar( float, m_flPanelWidth );
@@ -90,7 +90,7 @@ class CBreakableSurface : public CBreakable
     void InputShatter( inputdata_t &inputdata );
     void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
 
-   private:
+    private:
     // One bit per pane
     CNetworkArray( bool, m_RawPanelBitVec, MAX_NUM_PANELS *MAX_NUM_PANELS );
 };

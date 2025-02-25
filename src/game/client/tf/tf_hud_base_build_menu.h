@@ -22,7 +22,7 @@ class CHudBaseBuildMenu : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudBaseBuildMenu, EditablePanel );
 
-   public:
+    public:
     CHudBaseBuildMenu( const char *pElementName, const char *pMenuName )
         : CHudElement( pElementName ), BaseClass( NULL, pMenuName )
     {
@@ -55,7 +55,7 @@ class CHudBaseBuildMenu : public CHudElement, public EditablePanel
         m_bBuilderEquipped = bEquipped;
     }
 
-   private:
+    private:
     bool m_bBuilderEquipped;
 };
 

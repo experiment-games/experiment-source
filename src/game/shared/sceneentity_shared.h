@@ -30,26 +30,26 @@ class CSceneEntity;
 // FIXME: move this, it's only used in in baseflex and baseactor
 class CSceneEventInfo
 {
-   public:
+    public:
     CSceneEventInfo()
         : m_pEvent( 0 ),
-          m_pScene( 0 ),
-          m_pActor( 0 ),
-          m_bStarted( false ),
-          m_iLayer( -1 ),
-          m_iPriority( 0 ),
-          m_nSequence( 0 ),
-          m_bIsGesture( false ),
-          m_flWeight( 0.0f ),
-          m_hTarget(),
-          m_bIsMoving( false ),
-          m_bHasArrived( false ),
-          m_flInitialYaw( 0.0f ),
-          m_flTargetYaw( 0.0f ),
-          m_flFacingYaw( 0.0f ),
-          m_nType( 0 ),
-          m_flNext( 0.0f ),
-          m_bClientSide( false )
+        m_pScene( 0 ),
+        m_pActor( 0 ),
+        m_bStarted( false ),
+        m_iLayer( -1 ),
+        m_iPriority( 0 ),
+        m_nSequence( 0 ),
+        m_bIsGesture( false ),
+        m_flWeight( 0.0f ),
+        m_hTarget(),
+        m_bIsMoving( false ),
+        m_bHasArrived( false ),
+        m_flInitialYaw( 0.0f ),
+        m_flTargetYaw( 0.0f ),
+        m_flFacingYaw( 0.0f ),
+        m_nType( 0 ),
+        m_flNext( 0.0f ),
+        m_bClientSide( false )
     {
     }
 
@@ -66,7 +66,7 @@ class CSceneEventInfo
     //  bumping markov index only at start of event playback, not every frame )
     bool m_bStarted;
 
-   public:
+    public:
     //	EVENT local data...
     // FIXME: Evil, make accessors or figure out better place
     // FIXME: This won't work, scenes don't save and restore...
@@ -100,14 +100,14 @@ class CSceneEventInfo
 //-----------------------------------------------------------------------------
 class CSceneTokenProcessor : public ISceneTokenProcessor
 {
-   public:
+    public:
     const char *CurrentToken( void );
     bool GetToken( bool crossline );
     bool TokenAvailable( void );
     void Error( PRINTF_FORMAT_STRING const char *fmt, ... );
     void SetBuffer( char *buffer );
 
-   private:
+    private:
     const char *m_pBuffer;
     char m_szToken[1024];
 };

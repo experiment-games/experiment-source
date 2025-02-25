@@ -17,7 +17,7 @@ class CHudChat : public CBaseHudChat
 {
     DECLARE_CLASS_SIMPLE( CHudChat, CBaseHudChat );
 
-   public:
+    public:
     CHudChat( const char *pElementName );
 
     virtual void Init( void );

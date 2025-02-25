@@ -45,10 +45,10 @@ ClientModeHL2MPNormal* GetClientModeHL2MPNormal()
 //-----------------------------------------------------------------------------
 class CHudViewport : public CBaseViewport
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CHudViewport, CBaseViewport );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme* pScheme )
     {
         BaseClass::ApplySchemeSettings( pScheme );

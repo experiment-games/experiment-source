@@ -19,7 +19,7 @@
 
 class VAllocator
 {
-   public:
+    public:
     virtual void *Alloc( unsigned long size ) = 0;
     virtual void Free( void *ptr ) = 0;
 };
@@ -27,7 +27,7 @@ class VAllocator
 // This allocator just uses malloc and free.
 class VStdAllocator : public VAllocator
 {
-   public:
+    public:
     virtual void *Alloc( unsigned long size );
     virtual void Free( void *ptr );
 };
@@ -41,7 +41,7 @@ extern VStdAllocator g_StdAllocator;
 // Used internally.. just makes sure we call the right operator new.
 class DummyAllocatorHelper
 {
-   public:
+    public:
     int x;
 };
 

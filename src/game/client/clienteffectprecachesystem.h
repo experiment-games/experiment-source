@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 class IClientEffect
 {
-   public:
+    public:
     virtual void Cache( bool precache = true ) = 0;
 };
 
@@ -33,7 +33,7 @@ class IClientEffect
 
 class CClientEffectPrecacheSystem : public IGameSystem
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "CCLientEffectPrecacheSystem";
@@ -68,7 +68,7 @@ class CClientEffectPrecacheSystem : public IGameSystem
 
     void Register( IClientEffect *effect );
 
-   protected:
+    protected:
     CUtlVector< IClientEffect * > m_Effects;
 };
 
@@ -81,7 +81,7 @@ extern CClientEffectPrecacheSystem *ClientEffectPrecacheSystem();
 
 class CClientEffect : public IClientEffect
 {
-   public:
+    public:
     CClientEffect( void )
     {
         // Register with the main effect system
@@ -119,10 +119,10 @@ class CClientEffect : public IClientEffect
     {                                                 \
     class ClientEffectRegister : public CClientEffect \
     {                                                 \
-       private:                                       \
+        private:                                       \
         static const char *m_pszMaterials[];          \
-                                                      \
-       public:                                        \
+                                                    \
+        public:                                        \
         void Cache( bool precache = true );           \
     };                                                \
     const char *ClientEffectRegister::m_pszMaterials[] = {

@@ -323,9 +323,9 @@ bool C_LocalTempEntity::Frame( float frametime, int framenumber )
         SinCos( m_vecTempEntVelocity[2] + fastFreq, &s, &c );
 
         SetLocalOrigin( GetLocalOrigin() + Vector(
-                                               m_vecTempEntVelocity[0] * frametime + 8 * sin( gpGlobals->curtime * 20 ),
-                                               m_vecTempEntVelocity[1] * frametime + 4 * sin( gpGlobals->curtime * 30 ),
-                                               m_vecTempEntVelocity[2] * frametime ) );
+                                                m_vecTempEntVelocity[0] * frametime + 8 * sin( gpGlobals->curtime * 20 ),
+                                                m_vecTempEntVelocity[1] * frametime + 4 * sin( gpGlobals->curtime * 30 ),
+                                                m_vecTempEntVelocity[2] * frametime ) );
     }
     else
     {
@@ -429,7 +429,7 @@ bool C_LocalTempEntity::Frame( float frametime, int framenumber )
                 if (
                     ( trace.fraction != 1 ) &&
                     ( ( trace.DidHitWorld() ) ||
-                      ( trace.m_pEnt != ClientEntityList().GetEnt( clientIndex ) ) ) )
+                    ( trace.m_pEnt != ClientEntityList().GetEnt( clientIndex ) ) ) )
                 {
                     traceFraction = trace.fraction;
                     VectorCopy( trace.plane.normal, traceNormal );
@@ -648,7 +648,7 @@ CNewParticleEffect *C_LocalTempEntity::AddParticleEffect( const char *pszParticl
 //-----------------------------------------------------------------------------
 class CBreakableHelper
 {
-   public:
+    public:
     void Insert( C_LocalTempEntity *entity, bool isSlave );
     void Remove( C_LocalTempEntity *entity );
 
@@ -656,7 +656,7 @@ class CBreakableHelper
 
     const Vector *GetLightingOrigin( C_LocalTempEntity *entity );
 
-   private:
+    private:
     // A context is the first master until the next one, which starts a new context
     struct BreakableList_t
     {
@@ -1644,9 +1644,9 @@ void CTempEnts::Sprite_Smoke( C_LocalTempEntity *pTemp, float scale )
     pTemp->SetVelocity( Vector( 0, 0, 30 ) );
     int iColor = random->RandomInt( 20, 35 );
     pTemp->SetRenderColor( iColor,
-                           iColor,
-                           iColor,
-                           255 );
+                            iColor,
+                            iColor,
+                            255 );
     pTemp->SetLocalOriginDim( Z_INDEX, pTemp->GetLocalOriginDim( Z_INDEX ) + 20 );
     pTemp->m_flSpriteScale = scale;
     pTemp->flags = FTENT_WINDBLOWN;
@@ -3381,8 +3381,8 @@ void CTempEnts::CSEjectBrass( const Vector &vecPosition, const QAngle &angVeloci
     AngleVectors( angVelocity, &forward, &right, &up );
 
     velocity = forward * nVelocity * random->RandomFloat( 1.2, 2.8 ) +
-               up * random->RandomFloat( -10, 10 ) +
-               right * random->RandomFloat( -20, 20 );
+                up * random->RandomFloat( -10, 10 ) +
+                right * random->RandomFloat( -20, 20 );
 
     if ( pShooter )
         velocity += pShooter->GetAbsVelocity();

@@ -24,7 +24,7 @@
 //
 class IReplayDemoPlayer : public IBaseInterface
 {
-   public:
+    public:
     virtual void PlayReplay( ReplayHandle_t hReplay, int iPerformance ) = 0;
     virtual void PlayNextReplay() = 0;
     virtual void ClearReplayList() = 0;

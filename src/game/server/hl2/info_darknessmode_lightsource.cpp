@@ -19,7 +19,7 @@ class CInfoDarknessLightSource;
 //-----------------------------------------------------------------------------
 class CDarknessLightSourcesSystem : public CAutoGameSystem
 {
-   public:
+    public:
     CDarknessLightSourcesSystem()
         : CAutoGameSystem( "CDarknessLightSourcesSystem" )
     {
@@ -33,7 +33,7 @@ class CDarknessLightSourcesSystem : public CAutoGameSystem
     bool AreThereLightSourcesWithinRadius( CBaseEntity *pLooker, float flRadius );
     void SetDebug( bool bDebug );
 
-   private:
+    private:
     struct lightsource_t
     {
         float flLightRadiusSqr;
@@ -52,7 +52,7 @@ class CInfoDarknessLightSource : public CBaseEntity
 {
     DECLARE_CLASS( CInfoDarknessLightSource, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Activate()
@@ -126,7 +126,7 @@ class CInfoDarknessLightSource : public CBaseEntity
         return m_bIgnoreLOS;
     }
 
-   private:
+    private:
     float m_flLightRadius;
     bool m_bDisabled;
     bool m_bIgnoreLOS;

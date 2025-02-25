@@ -22,7 +22,7 @@ enum ETFLeaderboardType
 
 class CLeaderboardInfo
 {
-   public:
+    public:
     CCallResult< CLeaderboardInfo, LeaderboardFindResult_t > findLeaderboardCallback;
     CCallResult< CLeaderboardInfo, LeaderboardScoresDownloaded_t > downloadLeaderboardCallbackGlobal;
     CCallResult< CLeaderboardInfo, LeaderboardScoresDownloaded_t > downloadLeaderboardCallbackGlobalAroundUser;
@@ -69,7 +69,7 @@ class CLeaderboardInfo
         return m_bLeaderboardFound;
     }
 
-   private:
+    private:
     const char *m_pLeaderboardName;
     int m_iMyScore;
     bool m_bHasPendingUpdate;

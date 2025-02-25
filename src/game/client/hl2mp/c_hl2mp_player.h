@@ -18,18 +18,18 @@ class C_HL2MP_Player;
 //=============================================================================
 class CSuitPowerDevice
 {
-   public:
+    public:
     CSuitPowerDevice( int bitsID, float flDrainRate )
     {
         m_bitsDeviceID = bitsID;
         m_flDrainRate = flDrainRate;
     }
 
-   private:
+    private:
     int m_bitsDeviceID;   // tells what the device is. DEVICE_SPRINT, DEVICE_FLASHLIGHT, etc. BITMASK!!!!!
     float m_flDrainRate;  // how quickly does this device deplete suit power? ( percent per second )
 
-   public:
+    public:
     int GetDeviceID( void ) const
     {
         return m_bitsDeviceID;
@@ -50,7 +50,7 @@ extern ConVar hl2_sprintspeed;
 //=============================================================================
 class C_HL2MP_Player : public C_BaseHLPlayer
 {
-   public:
+    public:
     DECLARE_CLASS( C_HL2MP_Player, C_BaseHLPlayer );
 
     DECLARE_CLIENTCLASS();
@@ -141,7 +141,7 @@ class C_HL2MP_Player : public C_BaseHLPlayer
 
     virtual void PostThink( void );
 
-   private:
+    private:
     C_HL2MP_Player( const C_HL2MP_Player & );
 
     CPlayerAnimState m_PlayerAnimState;
@@ -193,7 +193,7 @@ inline C_HL2MP_Player *ToHL2MPPlayer( CBaseEntity *pEntity )
 
 class C_HL2MPRagdoll : public C_BaseAnimatingOverlay
 {
-   public:
+    public:
     DECLARE_CLASS( C_HL2MPRagdoll, C_BaseAnimatingOverlay );
     DECLARE_CLIENTCLASS();
 
@@ -209,13 +209,13 @@ class C_HL2MPRagdoll : public C_BaseAnimatingOverlay
     void UpdateOnRemove( void );
     virtual void SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights );
 
-   private:
+    private:
     C_HL2MPRagdoll( const C_HL2MPRagdoll & ) {}
 
     void Interp_Copy( C_BaseAnimatingOverlay *pDestinationEntity );
     void CreateHL2MPRagdoll( void );
 
-   private:
+    private:
     EHANDLE m_hPlayer;
     CNetworkVector( m_vecRagdollVelocity );
     CNetworkVector( m_vecRagdollOrigin );

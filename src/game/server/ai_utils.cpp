@@ -394,7 +394,7 @@ void CAI_FreePass::Update()
                 if ( dist < m_Params.coverDist )
                 {
                     if ( ( timePlayerLastSeen == AI_INVALID_TIME || gpGlobals->curtime - timePlayerLastSeen > m_Params.timeToTrigger ) &&
-                         ( lastTimeDamagedBy == AI_INVALID_TIME || gpGlobals->curtime - lastTimeDamagedBy > m_Params.timeToTrigger ) )
+                        ( lastTimeDamagedBy == AI_INVALID_TIME || gpGlobals->curtime - lastTimeDamagedBy > m_Params.timeToTrigger ) )
                     {
                         m_FreePassTimeRemaining = m_Params.duration;
                         m_FreePassMoveMonitor.SetMark( pTarget, m_Params.moveTolerance );
@@ -465,7 +465,7 @@ bool CAI_FreePass::ShouldAllowFVisible( bool bBaseResult )
         float lastTimeDamagedBy = ( pTargetInfo ) ? pTargetInfo->timeLastReceivedDamageFrom : AI_INVALID_TIME;
 
         if ( ( lastTimeSeen == AI_INVALID_TIME || gpGlobals->curtime - lastTimeSeen > m_Params.peekTime ) &&
-             ( lastTimeDamagedBy == AI_INVALID_TIME || gpGlobals->curtime - lastTimeDamagedBy > m_Params.peekTimeAfterDamage ) )
+            ( lastTimeDamagedBy == AI_INVALID_TIME || gpGlobals->curtime - lastTimeDamagedBy > m_Params.peekTimeAfterDamage ) )
         {
             Vector vToTarget;
 
@@ -511,9 +511,9 @@ string_t g_iszFuncBrushClassname = NULL_STRING;
 //-----------------------------------------------------------------------------
 CTraceFilterNav::CTraceFilterNav( CAI_BaseNPC *pProber, bool bIgnoreTransientEntities, const IServerEntity *passedict, int collisionGroup, bool bAllowPlayerAvoid )
     : CTraceFilterSimple( passedict, collisionGroup ),
-      m_pProber( pProber ),
-      m_bIgnoreTransientEntities( bIgnoreTransientEntities ),
-      m_bAllowPlayerAvoid( bAllowPlayerAvoid )
+    m_pProber( pProber ),
+    m_bIgnoreTransientEntities( bIgnoreTransientEntities ),
+    m_bAllowPlayerAvoid( bAllowPlayerAvoid )
 {
     m_bCheckCollisionTable = g_EntityCollisionHash->IsObjectInHash( pProber );
 }

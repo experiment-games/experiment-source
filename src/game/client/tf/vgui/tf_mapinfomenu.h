@@ -20,10 +20,10 @@
 
 class CTFMapInfoMenu : public vgui::Frame, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFMapInfoMenu, vgui::Frame );
 
-   public:
+    public:
     CTFMapInfoMenu( IViewPort *pViewPort );
     virtual ~CTFMapInfoMenu();
 
@@ -66,14 +66,14 @@ class CTFMapInfoMenu : public vgui::Frame, public IViewPortPanel
         return GAME_ACTION_SET_IN_GAME_HUD;
     }
 
-   protected:
+    protected:
     virtual void OnKeyCodePressed( vgui::KeyCode code );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnCommand( const char *command );
     virtual void OnKeyCodeReleased( vgui::KeyCode code );
     virtual void OnThink();
 
-   private:
+    private:
     // helper functions
     void LoadMapPage();
     void SetMapTitle();
@@ -82,7 +82,7 @@ class CTFMapInfoMenu : public vgui::Frame, public IViewPortPanel
     void CheckIntroState();
     void CheckBackContinueButtons();
 
-   protected:
+    protected:
     IViewPort *m_pViewPort;
     CExLabel *m_pTitle;
     CExRichText *m_pMapInfo;

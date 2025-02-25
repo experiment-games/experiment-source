@@ -14,7 +14,7 @@
 
 class CTesla : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTesla, CBaseEntity );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -35,7 +35,7 @@ class CTesla : public CBaseEntity
     void SetupForNextArc();
     CBaseEntity *GetSourceEntity();
 
-   public:
+    public:
     // Tesla parameters.
     string_t m_SourceEntityName;           // Which entity the arcs come from.
     CNetworkVar( string_t, m_SoundName );  // What sound to play when arcing.

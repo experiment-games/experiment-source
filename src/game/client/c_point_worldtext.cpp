@@ -559,8 +559,8 @@ rgb hsv2rgb( hsv HSV )
 {
     rgb RGB;
     double H = HSV.h, S = HSV.s, V = HSV.v,
-           P, Q, T,
-           fract;
+            P, Q, T,
+            fract;
     ( H == 360. ) ? ( H = 0. ) : ( H /= 60. );
     fract = H - floor( H );
     P = V * ( 1. - S );

@@ -18,7 +18,7 @@ class SmokeTrail : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( SmokeTrail, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -28,7 +28,7 @@ class SmokeTrail : public CBaseParticleEntity
     void FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL );
     static SmokeTrail *CreateSmokeTrail();
 
-   public:
+    public:
     // Effect parameters. These will assume default values but you can change them.
     CNetworkVector( m_StartColor );  // Fade between these colors.
     CNetworkVector( m_EndColor );
@@ -57,7 +57,7 @@ class RocketTrail : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( RocketTrail, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -66,7 +66,7 @@ class RocketTrail : public CBaseParticleEntity
     void FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL );
     static RocketTrail *CreateRocketTrail();
 
-   public:
+    public:
     // Effect parameters. These will assume default values but you can change them.
     CNetworkVector( m_StartColor );  // Fade between these colors.
     CNetworkVector( m_EndColor );
@@ -98,7 +98,7 @@ class SporeTrail : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( SporeTrail, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -107,7 +107,7 @@ class SporeTrail : public CBaseParticleEntity
     static SporeTrail *CreateSporeTrail();
 
     // Data members
-   public:
+    public:
     CNetworkVector( m_vecEndColor );
 
     CNetworkVar( float, m_flSpawnRate );
@@ -127,7 +127,7 @@ class SporeExplosion : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( SporeExplosion, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -140,7 +140,7 @@ class SporeExplosion : public CBaseParticleEntity
     void InputDisable( inputdata_t &inputdata );
 
     // Data members
-   public:
+    public:
     bool m_bDisabled;
 
     CNetworkVar( float, m_flSpawnRate );
@@ -161,7 +161,7 @@ class CFireTrail : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CFireTrail, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -181,7 +181,7 @@ class DustTrail : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( DustTrail, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -190,7 +190,7 @@ class DustTrail : public CBaseParticleEntity
     void SetEmit( bool bVal );
     static DustTrail *CreateDustTrail();
 
-   public:
+    public:
     // Effect parameters. These will assume default values but you can change them.
     CNetworkVector( m_Color );
     CNetworkVar( float, m_Opacity );

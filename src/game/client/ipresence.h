@@ -15,7 +15,7 @@
 //--------------------------------------------------------------------
 class IPresence
 {
-   public:
+    public:
     virtual void UserSetContext( unsigned int nUserIndex, unsigned int nContextId, unsigned int nContextValue, bool bAsync = false ) = 0;
     virtual void UserSetProperty( unsigned int nUserIndex, unsigned int nPropertyId, unsigned int nBytes, const void *pvValue, bool bAsync = false ) = 0;
     virtual void SetupGameProperties( CUtlVector< XUSER_CONTEXT > &contexts, CUtlVector< XUSER_PROPERTY > &properties ) = 0;

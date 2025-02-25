@@ -56,7 +56,7 @@ namespace java
 // Thread-safety note: This class is *not* thread-safe.
 class ClassNameResolver
 {
-   public:
+    public:
     ClassNameResolver();
     ~ClassNameResolver();
 
@@ -71,7 +71,7 @@ class ClassNameResolver
     // Check whether there is any type defined in the proto file that has
     // the given class name.
     bool HasConflictingClassName( const FileDescriptor* file,
-                                  const string& classname );
+                                const string& classname );
 
     // Gets the name of the outer class that holds descriptor information.
     // Descriptors are shared between immutable messages and mutable messages.
@@ -98,7 +98,7 @@ class ClassNameResolver
 
     // Gets the fully qualified name of an extension identifier.
     string GetExtensionIdentifierName( const FieldDescriptor* descriptor,
-                                       bool immutable );
+                                        bool immutable );
 
     // Gets the fully qualified name for generated classes in Java convention.
     // Nested classes will be separated using '$' instead of '.'
@@ -106,13 +106,13 @@ class ClassNameResolver
     //   com.package.OuterClass$OuterMessage$InnerMessage
     string GetJavaImmutableClassName( const Descriptor* descriptor );
 
-   private:
+    private:
     // Get the full name of a Java class by prepending the Java package name
     // or outer class name.
     string GetClassFullName( const string& name_without_package,
-                             const FileDescriptor* file,
-                             bool immutable,
-                             bool multiple_files );
+                            const FileDescriptor* file,
+                            bool immutable,
+                            bool multiple_files );
     // Get the Java Class style full name of a message.
     string GetJavaClassFullName(
         const string& name_without_package,

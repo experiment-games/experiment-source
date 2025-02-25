@@ -27,7 +27,7 @@ class CTripwireHook : public CBaseAnimating
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CTripwireHook, CBaseAnimating );
 
     EHANDLE m_hGrenade;
@@ -42,7 +42,7 @@ class CTripwireHook : public CBaseAnimating
 
 class CTripwireGrenade : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTripwireGrenade, CBaseGrenade );
 
     CTripwireGrenade();
@@ -63,7 +63,7 @@ class CTripwireGrenade : public CBaseGrenade
     void ShakeRope( void );
     void FireMissile( const Vector &vTargetPos );
 
-   private:
+    private:
     float m_flPowerUp;
     Vector m_vecDir;
 

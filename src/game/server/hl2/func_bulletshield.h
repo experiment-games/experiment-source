@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class CFuncBulletShield : public CFuncBrush
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncBulletShield, CFuncBrush );
     DECLARE_DATADESC();
 
@@ -47,9 +47,9 @@ class CFuncBulletShield : public CFuncBrush
     void InputToggle( inputdata_t &inputdata );
 
     enum BrushSolidities_e {
-      BRUSHSOLID_TOGGLE = 0,
-      BRUSHSOLID_NEVER  = 1,
-      BRUSHSOLID_ALWAYS = 2,
+    BRUSHSOLID_TOGGLE = 0,
+    BRUSHSOLID_NEVER  = 1,
+    BRUSHSOLID_ALWAYS = 2,
     };
 
     BrushSolidities_e m_iSolidity;

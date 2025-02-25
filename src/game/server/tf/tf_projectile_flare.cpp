@@ -515,11 +515,11 @@ void CTFProjectile_Flare::PerformCustomPhysics( Vector *pNewPosition, Vector *pN
             bool bBurning = pPlayer->m_Shared.InCond( TF_COND_BURNING );
 
             if ( !bBurning ||
-                 pPlayer->InSameTeam( this ) ||
-                 ( pPlayer->m_Shared.GetDisguiseTeam() == GetTeamNumber() && !bBurning ) ||
-                 ( pPlayer->m_Shared.IsStealthed() && !bBurning ) ||
-                 pPlayer->GetTeamNumber() == TEAM_SPECTATOR ||
-                 !pPlayer->IsAlive() )
+                pPlayer->InSameTeam( this ) ||
+                ( pPlayer->m_Shared.GetDisguiseTeam() == GetTeamNumber() && !bBurning ) ||
+                ( pPlayer->m_Shared.IsStealthed() && !bBurning ) ||
+                pPlayer->GetTeamNumber() == TEAM_SPECTATOR ||
+                !pPlayer->IsAlive() )
             {
                 continue;
             }

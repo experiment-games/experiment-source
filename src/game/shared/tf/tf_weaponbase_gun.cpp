@@ -680,7 +680,7 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
     float flLaunchSpeed = GetProjectileSpeed();
     CALL_ATTRIB_HOOK_FLOAT( flLaunchSpeed, mult_projectile_range );
     Vector vecVelocity = ( vecForward * flLaunchSpeed ) + ( vecUp * 200.0f ) + ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) +
-                         ( random->RandomFloat( -10.0f, 10.0f ) * vecUp );
+                        ( random->RandomFloat( -10.0f, 10.0f ) * vecUp );
 
     float flMultDmg = 1.f;
     CALL_ATTRIB_HOOK_FLOAT( flMultDmg, mult_dmg );

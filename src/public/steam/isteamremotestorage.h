@@ -180,7 +180,7 @@ enum ERemoteStorageFilePathType
 //-----------------------------------------------------------------------------
 class ISteamRemoteStorage
 {
-   public:
+    public:
     // NOTE
     //
     // Filenames are case-insensitive, and will be converted to lowercase automatically.

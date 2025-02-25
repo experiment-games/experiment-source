@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class CEventAction
 {
-   public:
+    public:
     CEventAction( const char *ActionData = NULL );
 
     string_t m_iTarget;       // name of the entity(s) to cause the action in
@@ -57,7 +57,7 @@ class CEventAction
 //-----------------------------------------------------------------------------
 class CBaseEntityOutput
 {
-   public:
+    public:
     ~CBaseEntityOutput();
 
     void ParseEventAction( const char *EventData );
@@ -90,14 +90,14 @@ class CBaseEntityOutput
 
     void ScriptRemoveEventAction( CEventAction *pEventAction, const char *szTarget, const char *szTargetInput, const char *szParameter );
 
-   protected:
+    protected:
     variant_t m_Value;
     CEventAction *m_ActionList;
     DECLARE_SIMPLE_DATADESC();
 
     CBaseEntityOutput() {}  // this class cannot be created, only it's children
 
-   private:
+    private:
     CBaseEntityOutput( CBaseEntityOutput & );  // protect from accidental copying
 };
 
@@ -107,7 +107,7 @@ class CBaseEntityOutput
 template < class Type, fieldtype_t fieldType >
 class CEntityOutputTemplate : public CBaseEntityOutput
 {
-   public:
+    public:
     //
     // Sets an initial value without firing the output.
     //
@@ -140,7 +140,7 @@ class CEntityOutputTemplate : public CBaseEntityOutput
 template <>
 class CEntityOutputTemplate< class Vector, FIELD_VECTOR > : public CBaseEntityOutput
 {
-   public:
+    public:
     void Init( const Vector &value )
     {
         m_Value.SetVector3D( value );
@@ -161,7 +161,7 @@ class CEntityOutputTemplate< class Vector, FIELD_VECTOR > : public CBaseEntityOu
 template <>
 class CEntityOutputTemplate< class Vector, FIELD_POSITION_VECTOR > : public CBaseEntityOutput
 {
-   public:
+    public:
     void Init( const Vector &value )
     {
         m_Value.SetPositionVector3D( value );
@@ -184,7 +184,7 @@ class CEntityOutputTemplate< class Vector, FIELD_POSITION_VECTOR > : public CBas
 //-----------------------------------------------------------------------------
 class COutputEvent : public CBaseEntityOutput
 {
-   public:
+    public:
     // void Firing, no parameter
     void FireOutput( CBaseEntity *pActivator, CBaseEntity *pCaller, float fDelay = 0 );
 };

@@ -20,7 +20,7 @@ class CMouseMessageForwardingPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMouseMessageForwardingPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMouseMessageForwardingPanel( Panel *parent, const char *name );
 
     virtual void PerformLayout( void );

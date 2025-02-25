@@ -74,7 +74,7 @@ const char* kForbiddenWordList[] = {
 bool IsForbidden(const string& field_name) {
   for (int i = 0; i < GOOGLE_ARRAYSIZE(kForbiddenWordList); ++i) {
     if (field_name == kForbiddenWordList[i]) {
-      return true;
+    return true;
     }
   }
   return false;
@@ -106,27 +106,27 @@ string UnderscoresToCamelCase(const string& input, bool cap_next_letter) {
   // Note:  I distrust ctype.h due to locales.
   for (int i = 0; i < input.size(); i++) {
     if ('a' <= input[i] && input[i] <= 'z') {
-      if (cap_next_letter) {
+    if (cap_next_letter) {
         result += input[i] + ('A' - 'a');
-      } else {
+    } else {
         result += input[i];
-      }
-      cap_next_letter = false;
+    }
+    cap_next_letter = false;
     } else if ('A' <= input[i] && input[i] <= 'Z') {
-      if (i == 0 && !cap_next_letter) {
+    if (i == 0 && !cap_next_letter) {
         // Force first letter to lower-case unless explicitly told to
         // capitalize it.
         result += input[i] + ('a' - 'A');
-      } else {
+    } else {
         // Capital letters after the first are left as-is.
         result += input[i];
-      }
-      cap_next_letter = false;
+    }
+    cap_next_letter = false;
     } else if ('0' <= input[i] && input[i] <= '9') {
-      result += input[i];
-      cap_next_letter = true;
+    result += input[i];
+    cap_next_letter = true;
     } else {
-      cap_next_letter = true;
+    cap_next_letter = true;
     }
   }
   // Add a trailing "_" if the name should be altered.
@@ -173,8 +173,8 @@ string FileJavaPackage(const FileDescriptor* file, bool immutable) {
   } else {
     result = kDefaultPackage;
     if (!file->package().empty()) {
-      if (!result.empty()) result += '.';
-      result += file->package();
+    if (!result.empty()) result += '.';
+    result += file->package();
     }
   }
 
@@ -191,7 +191,7 @@ string JavaPackageToDir(string package_name) {
 // TODO(xiaofeng): This function is only kept for it's publicly referenced.
 // It should be removed after mutable API up-integration.
 string ToJavaName(const string& full_name,
-                  const FileDescriptor* file) {
+                const FileDescriptor* file) {
   string result;
   if (file->options().java_multiple_files()) {
     result = FileJavaPackage(file);
@@ -233,20 +233,20 @@ string ClassName(const FileDescriptor* descriptor) {
 
 string ExtraMessageInterfaces(const Descriptor* descriptor) {
   string interfaces = "// @@protoc_insertion_point(message_implements:"
-      + descriptor->full_name() + ")";
+    + descriptor->full_name() + ")";
   return interfaces;
 }
 
 
 string ExtraBuilderInterfaces(const Descriptor* descriptor) {
   string interfaces = "// @@protoc_insertion_point(builder_implements:"
-      + descriptor->full_name() + ")";
+    + descriptor->full_name() + ")";
   return interfaces;
 }
 
 string ExtraMessageOrBuilderInterfaces(const Descriptor* descriptor) {
   string interfaces = "// @@protoc_insertion_point(interface_extends:"
-      + descriptor->full_name() + ")";
+    + descriptor->full_name() + ")";
   return interfaces;
 }
 
@@ -267,36 +267,36 @@ JavaType GetJavaType(const FieldDescriptor* field) {
     case FieldDescriptor::TYPE_SINT32:
     case FieldDescriptor::TYPE_FIXED32:
     case FieldDescriptor::TYPE_SFIXED32:
-      return JAVATYPE_INT;
+    return JAVATYPE_INT;
 
     case FieldDescriptor::TYPE_INT64:
     case FieldDescriptor::TYPE_UINT64:
     case FieldDescriptor::TYPE_SINT64:
     case FieldDescriptor::TYPE_FIXED64:
     case FieldDescriptor::TYPE_SFIXED64:
-      return JAVATYPE_LONG;
+    return JAVATYPE_LONG;
 
     case FieldDescriptor::TYPE_FLOAT:
-      return JAVATYPE_FLOAT;
+    return JAVATYPE_FLOAT;
 
     case FieldDescriptor::TYPE_DOUBLE:
-      return JAVATYPE_DOUBLE;
+    return JAVATYPE_DOUBLE;
 
     case FieldDescriptor::TYPE_BOOL:
-      return JAVATYPE_BOOLEAN;
+    return JAVATYPE_BOOLEAN;
 
     case FieldDescriptor::TYPE_STRING:
-      return JAVATYPE_STRING;
+    return JAVATYPE_STRING;
 
     case FieldDescriptor::TYPE_BYTES:
-      return JAVATYPE_BYTES;
+    return JAVATYPE_BYTES;
 
     case FieldDescriptor::TYPE_ENUM:
-      return JAVATYPE_ENUM;
+    return JAVATYPE_ENUM;
 
     case FieldDescriptor::TYPE_GROUP:
     case FieldDescriptor::TYPE_MESSAGE:
-      return JAVATYPE_MESSAGE;
+    return JAVATYPE_MESSAGE;
 
     // No default because we want the compiler to complain if any new
     // types are added.
@@ -358,7 +358,7 @@ const char* FieldTypeName(FieldDescriptor::Type field_type) {
 bool AllAscii(const string& text) {
   for (int i = 0; i < text.size(); i++) {
     if ((text[i] & 0x80) != 0) {
-      return false;
+    return false;
     }
   }
   return true;
@@ -370,70 +370,70 @@ string DefaultValue(const FieldDescriptor* field, bool immutable,
   // of FieldDescriptor to call.
   switch (field->cpp_type()) {
     case FieldDescriptor::CPPTYPE_INT32:
-      return SimpleItoa(field->default_value_int32());
+    return SimpleItoa(field->default_value_int32());
     case FieldDescriptor::CPPTYPE_UINT32:
-      // Need to print as a signed int since Java has no unsigned.
-      return SimpleItoa(static_cast<int32>(field->default_value_uint32()));
+    // Need to print as a signed int since Java has no unsigned.
+    return SimpleItoa(static_cast<int32>(field->default_value_uint32()));
     case FieldDescriptor::CPPTYPE_INT64:
-      return SimpleItoa(field->default_value_int64()) + "L";
+    return SimpleItoa(field->default_value_int64()) + "L";
     case FieldDescriptor::CPPTYPE_UINT64:
-      return SimpleItoa(static_cast<int64>(field->default_value_uint64())) +
-             "L";
+    return SimpleItoa(static_cast<int64>(field->default_value_uint64())) +
+            "L";
     case FieldDescriptor::CPPTYPE_DOUBLE: {
-      double value = field->default_value_double();
-      if (value == numeric_limits<double>::infinity()) {
+    double value = field->default_value_double();
+    if (value == numeric_limits<double>::infinity()) {
         return "Double.POSITIVE_INFINITY";
-      } else if (value == -numeric_limits<double>::infinity()) {
+    } else if (value == -numeric_limits<double>::infinity()) {
         return "Double.NEGATIVE_INFINITY";
-      } else if (value != value) {
+    } else if (value != value) {
         return "Double.NaN";
-      } else {
+    } else {
         return SimpleDtoa(value) + "D";
-      }
+    }
     }
     case FieldDescriptor::CPPTYPE_FLOAT: {
-      float value = field->default_value_float();
-      if (value == numeric_limits<float>::infinity()) {
+    float value = field->default_value_float();
+    if (value == numeric_limits<float>::infinity()) {
         return "Float.POSITIVE_INFINITY";
-      } else if (value == -numeric_limits<float>::infinity()) {
+    } else if (value == -numeric_limits<float>::infinity()) {
         return "Float.NEGATIVE_INFINITY";
-      } else if (value != value) {
+    } else if (value != value) {
         return "Float.NaN";
-      } else {
+    } else {
         return SimpleFtoa(value) + "F";
-      }
+    }
     }
     case FieldDescriptor::CPPTYPE_BOOL:
-      return field->default_value_bool() ? "true" : "false";
+    return field->default_value_bool() ? "true" : "false";
     case FieldDescriptor::CPPTYPE_STRING:
-      if (GetType(field) == FieldDescriptor::TYPE_BYTES) {
+    if (GetType(field) == FieldDescriptor::TYPE_BYTES) {
         if (field->has_default_value()) {
-          // See comments in Internal.java for gory details.
-          return strings::Substitute(
+        // See comments in Internal.java for gory details.
+        return strings::Substitute(
             "com.google.protobuf.Internal.bytesDefaultValue(\"$0\")",
             CEscape(field->default_value_string()));
         } else {
-          return "com.google.protobuf.ByteString.EMPTY";
+        return "com.google.protobuf.ByteString.EMPTY";
         }
-      } else {
+    } else {
         if (AllAscii(field->default_value_string())) {
-          // All chars are ASCII.  In this case CEscape() works fine.
-          return "\"" + CEscape(field->default_value_string()) + "\"";
+        // All chars are ASCII.  In this case CEscape() works fine.
+        return "\"" + CEscape(field->default_value_string()) + "\"";
         } else {
-          // See comments in Internal.java for gory details.
-          return strings::Substitute(
-              "com.google.protobuf.Internal.stringDefaultValue(\"$0\")",
-              CEscape(field->default_value_string()));
+        // See comments in Internal.java for gory details.
+        return strings::Substitute(
+            "com.google.protobuf.Internal.stringDefaultValue(\"$0\")",
+            CEscape(field->default_value_string()));
         }
-      }
+    }
 
     case FieldDescriptor::CPPTYPE_ENUM:
-      return name_resolver->GetClassName(field->enum_type(), immutable) + "." +
-          field->default_value_enum()->name();
+    return name_resolver->GetClassName(field->enum_type(), immutable) + "." +
+        field->default_value_enum()->name();
 
     case FieldDescriptor::CPPTYPE_MESSAGE:
-      return name_resolver->GetClassName(field->message_type(), immutable) +
-          ".getDefaultInstance()";
+    return name_resolver->GetClassName(field->message_type(), immutable) +
+        ".getDefaultInstance()";
 
     // No default because we want the compiler to complain if any new
     // types are added.
@@ -448,24 +448,24 @@ bool IsDefaultValueJavaDefault(const FieldDescriptor* field) {
   // of FieldDescriptor to call.
   switch (field->cpp_type()) {
     case FieldDescriptor::CPPTYPE_INT32:
-      return field->default_value_int32() == 0;
+    return field->default_value_int32() == 0;
     case FieldDescriptor::CPPTYPE_UINT32:
-      return field->default_value_uint32() == 0;
+    return field->default_value_uint32() == 0;
     case FieldDescriptor::CPPTYPE_INT64:
-      return field->default_value_int64() == 0L;
+    return field->default_value_int64() == 0L;
     case FieldDescriptor::CPPTYPE_UINT64:
-      return field->default_value_uint64() == 0L;
+    return field->default_value_uint64() == 0L;
     case FieldDescriptor::CPPTYPE_DOUBLE:
-      return field->default_value_double() == 0.0;
+    return field->default_value_double() == 0.0;
     case FieldDescriptor::CPPTYPE_FLOAT:
-      return field->default_value_float() == 0.0;
+    return field->default_value_float() == 0.0;
     case FieldDescriptor::CPPTYPE_BOOL:
-      return field->default_value_bool() == false;
+    return field->default_value_bool() == false;
 
     case FieldDescriptor::CPPTYPE_STRING:
     case FieldDescriptor::CPPTYPE_ENUM:
     case FieldDescriptor::CPPTYPE_MESSAGE:
-      return false;
+    return false;
 
     // No default because we want the compiler to complain if any new
     // types are added.
@@ -616,7 +616,7 @@ const char* GetCapitalizedType(const FieldDescriptor* field, bool immutable) {
     case FieldDescriptor::TYPE_BOOL    : return "Bool";
     case FieldDescriptor::TYPE_STRING  : return "String";
     case FieldDescriptor::TYPE_BYTES   : {
-      return "Bytes";
+    return "Bytes";
     }
     case FieldDescriptor::TYPE_ENUM    : return "Enum";
     case FieldDescriptor::TYPE_GROUP   : return "Group";
@@ -671,7 +671,7 @@ const FieldDescriptor** SortFieldsByNumber(const Descriptor* descriptor) {
     fields[i] = descriptor->field(i);
   }
   sort(fields, fields + descriptor->field_count(),
-       FieldOrderingByNumber());
+        FieldOrderingByNumber());
   return fields;
 }
 
@@ -704,12 +704,12 @@ bool HasRequiredFields(
   for (int i = 0; i < type->field_count(); i++) {
     const FieldDescriptor* field = type->field(i);
     if (field->is_required()) {
-      return true;
+    return true;
     }
     if (GetJavaType(field) == JAVATYPE_MESSAGE) {
-      if (HasRequiredFields(field->message_type(), already_seen)) {
+    if (HasRequiredFields(field->message_type(), already_seen)) {
         return true;
-      }
+    }
     }
   }
 
@@ -725,7 +725,7 @@ bool HasRepeatedFields(const Descriptor* descriptor) {
   for (int i = 0; i < descriptor->field_count(); ++i) {
     const FieldDescriptor* field = descriptor->field(i);
     if (field->is_repeated()) {
-      return true;
+    return true;
     }
   }
   return false;

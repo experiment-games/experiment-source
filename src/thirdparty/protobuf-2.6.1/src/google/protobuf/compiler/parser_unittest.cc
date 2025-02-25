@@ -69,16 +69,16 @@ class MockErrorCollector : public io::ErrorCollector {
   // implements ErrorCollector ---------------------------------------
   void AddError(int line, int column, const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
-                                 line, column, message);
+                                line, column, message);
   }
 };
 
 class MockValidationErrorCollector : public DescriptorPool::ErrorCollector {
  public:
   MockValidationErrorCollector(const SourceLocationTable& source_locations,
-                               io::ErrorCollector* wrapped_collector)
+                                io::ErrorCollector* wrapped_collector)
     : source_locations_(source_locations),
-      wrapped_collector_(wrapped_collector) {}
+    wrapped_collector_(wrapped_collector) {}
   ~MockValidationErrorCollector() {}
 
   // implements ErrorCollector ---------------------------------------
@@ -154,7 +154,7 @@ class ParserTest : public testing::Test {
   // Parse the text as a file and validate it (with a DescriptorPool), and
   // expect that the validation step reports the given errors.
   void ExpectHasValidationErrors(const char* text,
-                                 const char* expected_errors) {
+                                const char* expected_errors) {
     SetupParser(text);
     SourceLocationTable source_locations;
     parser_->RecordSourceLocationsTo(&source_locations);
@@ -166,9 +166,9 @@ class ParserTest : public testing::Test {
     ASSERT_EQ("", error_collector_.text_);
 
     MockValidationErrorCollector validation_error_collector(
-      source_locations, &error_collector_);
+    source_locations, &error_collector_);
     EXPECT_TRUE(pool_.BuildFileCollectingErrors(
-      file, &validation_error_collector) == NULL);
+    file, &validation_error_collector) == NULL);
     EXPECT_EQ(expected_errors, error_collector_.text_);
   }
 
@@ -838,7 +838,7 @@ TEST_F(ParseErrorTest, UnknownSyntaxIdentifier) {
   ExpectHasEarlyExitErrors(
     "syntax = \"no_such_syntax\";",
     "0:9: Unrecognized syntax identifier \"no_such_syntax\".  This parser "
-      "only recognizes \"proto2\".\n");
+    "only recognizes \"proto2\".\n");
   EXPECT_EQ("no_such_syntax", parser_->GetSyntaxIdentifier());
 }
 
@@ -1038,7 +1038,7 @@ TEST_F(ParseErrorTest, LabelInOneof) {
     "  }\n"
     "}\n",
     "2:4: Fields in oneofs must not have labels (required / optional "
-      "/ repeated).\n");
+    "/ repeated).\n");
 }
 
 TEST_F(ParseErrorTest, GroupNotCapitalized) {
@@ -1087,8 +1087,8 @@ TEST_F(ParseErrorTest, MultipleParseErrors) {
 
 TEST_F(ParseErrorTest, EofInAggregateValue) {
   ExpectHasErrors(
-      "option (fileopt) = { i:100\n",
-      "1:0: Unexpected end of stream while parsing aggregate value.\n");
+    "option (fileopt) = { i:100\n",
+    "1:0: Unexpected end of stream while parsing aggregate value.\n");
 }
 
 // -------------------------------------------------------------------
@@ -1190,7 +1190,7 @@ TEST_F(ParserValidationErrorTest, PackageNameError) {
   ExpectHasValidationErrors(
     "package foo.bar;",
     "0:8: \"foo\" is already defined (as something other than a package) "
-      "in file \"bar.proto\".\n");
+    "in file \"bar.proto\".\n");
 }
 
 TEST_F(ParserValidationErrorTest, MessageNameError) {
@@ -1398,13 +1398,13 @@ TEST_F(ParserValidationErrorTest, ResovledUndefinedOptionError) {
   // "qux.baz.bar", since it's the match from the innermost scope,
   // which will cause a symbol not defined error.
   ExpectHasValidationErrors(
-      "package qux.baz;\n"
-      "import \"base2.proto\";\n"
-      "option (baz.bar).foo = 1;\n",
-      "2:7: Option \"(baz.bar)\" is resolved to \"(qux.baz.bar)\","
-      " which is not defined. The innermost scope is searched first "
-      "in name resolution. Consider using a leading '.'(i.e., \"(.baz.bar)\")"
-      " to start from the outermost scope.\n");
+    "package qux.baz;\n"
+    "import \"base2.proto\";\n"
+    "option (baz.bar).foo = 1;\n",
+    "2:7: Option \"(baz.bar)\" is resolved to \"(qux.baz.bar)\","
+    " which is not defined. The innermost scope is searched first "
+    "in name resolution. Consider using a leading '.'(i.e., \"(.baz.bar)\")"
+    " to start from the outermost scope.\n");
 }
 
 // ===================================================================
@@ -1418,7 +1418,7 @@ typedef ParserTest ParseDecriptorDebugTest;
 class CompareDescriptorNames {
  public:
   bool operator()(const DescriptorProto* left,
-                  const DescriptorProto* right) const {
+                const DescriptorProto* right) const {
     return left->name() < right->name();
   }
 };
@@ -1449,7 +1449,7 @@ void SortMessages(FileDescriptorProto *file_descriptor_proto) {
 
 TEST_F(ParseDecriptorDebugTest, TestAllDescriptorTypes) {
   const FileDescriptor* original_file =
-     protobuf_unittest::TestAllTypes::descriptor()->file();
+    protobuf_unittest::TestAllTypes::descriptor()->file();
   FileDescriptorProto expected;
   original_file->CopyTo(&expected);
 
@@ -1463,7 +1463,7 @@ TEST_F(ParseDecriptorDebugTest, TestAllDescriptorTypes) {
   parser_->Parse(input_.get(), &parsed);
   EXPECT_EQ(io::Tokenizer::TYPE_END, input_->current().type);
   ASSERT_EQ("", error_collector_.text_)
-      << "Failed to parse:\n" << debug_string;
+    << "Failed to parse:\n" << debug_string;
 
   // We now have a FileDescriptorProto, but to compare with the expected we
   // need to link to a FileDecriptor, then output back to a proto. We'll
@@ -1471,19 +1471,19 @@ TEST_F(ParseDecriptorDebugTest, TestAllDescriptorTypes) {
   parsed.set_name("google/protobuf/unittest.proto");
   // We need the imported dependency before we can build our parsed proto
   const FileDescriptor* public_import =
-      protobuf_unittest_import::PublicImportMessage::descriptor()->file();
+    protobuf_unittest_import::PublicImportMessage::descriptor()->file();
   FileDescriptorProto public_import_proto;
   public_import->CopyTo(&public_import_proto);
   ASSERT_TRUE(pool_.BuildFile(public_import_proto) != NULL);
   const FileDescriptor* import =
-       protobuf_unittest_import::ImportMessage::descriptor()->file();
+        protobuf_unittest_import::ImportMessage::descriptor()->file();
   FileDescriptorProto import_proto;
   import->CopyTo(&import_proto);
   ASSERT_TRUE(pool_.BuildFile(import_proto) != NULL);
   const FileDescriptor* actual = pool_.BuildFile(parsed);
   parsed.Clear();
   ASSERT_TRUE(actual != NULL)
-      << "Failed to validate:\n" << debug_string;
+    << "Failed to validate:\n" << debug_string;
   actual->CopyTo(&parsed);
   ASSERT_TRUE(actual != NULL);
 
@@ -1501,7 +1501,7 @@ TEST_F(ParseDecriptorDebugTest, TestAllDescriptorTypes) {
 
 TEST_F(ParseDecriptorDebugTest, TestCustomOptions) {
   const FileDescriptor* original_file =
-     protobuf_unittest::AggregateMessage::descriptor()->file();
+    protobuf_unittest::AggregateMessage::descriptor()->file();
   FileDescriptorProto expected;
   original_file->CopyTo(&expected);
 
@@ -1573,7 +1573,7 @@ bool FollowPath(const Message& root,
 
   if (field == NULL) {
     ADD_FAILURE() << descriptor->name() << " has no field number: "
-                  << *path_begin;
+                << *path_begin;
     return false;
   }
 
@@ -1581,61 +1581,61 @@ bool FollowPath(const Message& root,
 
   if (field->is_repeated()) {
     if (path_begin == path_end) {
-      // Path refers to the whole repeated field.
-      *output_message = &root;
-      *output_field = field;
-      *output_index = -1;
-      return true;
+    // Path refers to the whole repeated field.
+    *output_message = &root;
+    *output_field = field;
+    *output_index = -1;
+    return true;
     }
 
     int index = *path_begin++;
     int size = reflection->FieldSize(root, field);
 
     if (index >= size) {
-      ADD_FAILURE() << descriptor->name() << "." << field->name()
+    ADD_FAILURE() << descriptor->name() << "." << field->name()
                     << " has size " << size << ", but path contained index: "
                     << index;
-      return false;
+    return false;
     }
 
     if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
-      // Descend into child message.
-      const Message& child = reflection->GetRepeatedMessage(root, field, index);
-      return FollowPath(child, path_begin, path_end,
+    // Descend into child message.
+    const Message& child = reflection->GetRepeatedMessage(root, field, index);
+    return FollowPath(child, path_begin, path_end,
                         output_message, output_field, output_index);
     } else if (path_begin == path_end) {
-      // Path refers to this element.
-      *output_message = &root;
-      *output_field = field;
-      *output_index = index;
-      return true;
+    // Path refers to this element.
+    *output_message = &root;
+    *output_field = field;
+    *output_index = index;
+    return true;
     } else {
-      ADD_FAILURE() << descriptor->name() << "." << field->name()
+    ADD_FAILURE() << descriptor->name() << "." << field->name()
                     << " is not a message; cannot descend into it.";
-      return false;
+    return false;
     }
   } else {
     if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
-      const Message& child = reflection->GetMessage(root, field);
-      return FollowPath(child, path_begin, path_end,
+    const Message& child = reflection->GetMessage(root, field);
+    return FollowPath(child, path_begin, path_end,
                         output_message, output_field, output_index);
     } else if (path_begin == path_end) {
-      // Path refers to this field.
-      *output_message = &root;
-      *output_field = field;
-      *output_index = -1;
-      return true;
+    // Path refers to this field.
+    *output_message = &root;
+    *output_field = field;
+    *output_index = -1;
+    return true;
     } else {
-      ADD_FAILURE() << descriptor->name() << "." << field->name()
+    ADD_FAILURE() << descriptor->name() << "." << field->name()
                     << " is not a message; cannot descend into it.";
-      return false;
+    return false;
     }
   }
 }
 
 // Check if two spans are equal.
 bool CompareSpans(const RepeatedField<int>& span1,
-                  const RepeatedField<int>& span2) {
+                const RepeatedField<int>& span2) {
   if (span1.size() != span2.size()) return false;
   for (int i = 0; i < span1.size(); i++) {
     if (span1.Get(i) != span2.Get(i)) return false;
@@ -1656,22 +1656,22 @@ class SourceInfoTest : public ParserTest {
     ExtractMarkers(text);
     SetupParser(text_without_markers_.c_str());
     if (!parser_->Parse(input_.get(), &file_)) {
-      return false;
+    return false;
     }
 
     const SourceCodeInfo& source_info = file_.source_code_info();
     for (int i = 0; i < source_info.location_size(); i++) {
-      const SourceCodeInfo::Location& location = source_info.location(i);
-      const Message* descriptor_proto = NULL;
-      const FieldDescriptor* field = NULL;
-      int index = 0;
-      if (!FollowPath(file_, location.path().begin(), location.path().end(),
-                      &descriptor_proto, &field, &index)) {
+    const SourceCodeInfo::Location& location = source_info.location(i);
+    const Message* descriptor_proto = NULL;
+    const FieldDescriptor* field = NULL;
+    int index = 0;
+    if (!FollowPath(file_, location.path().begin(), location.path().end(),
+                    &descriptor_proto, &field, &index)) {
         return false;
-      }
+    }
 
-      spans_.insert(make_pair(SpanKey(*descriptor_proto, field, index),
-                              &location));
+    spans_.insert(make_pair(SpanKey(*descriptor_proto, field, index),
+                            &location));
     }
 
     return true;
@@ -1690,43 +1690,43 @@ class SourceInfoTest : public ParserTest {
   // it should quickly become obvious.)
 
   bool HasSpan(char start_marker, char end_marker,
-               const Message& descriptor_proto) {
+                const Message& descriptor_proto) {
     return HasSpanWithComment(
         start_marker, end_marker, descriptor_proto, NULL, -1, NULL, NULL);
   }
 
   bool HasSpanWithComment(char start_marker, char end_marker,
-                          const Message& descriptor_proto,
-                          const char* expected_leading_comments,
-                          const char* expected_trailing_comments) {
+                        const Message& descriptor_proto,
+                        const char* expected_leading_comments,
+                        const char* expected_trailing_comments) {
     return HasSpanWithComment(
         start_marker, end_marker, descriptor_proto, NULL, -1,
         expected_leading_comments, expected_trailing_comments);
   }
 
   bool HasSpan(char start_marker, char end_marker,
-               const Message& descriptor_proto, const string& field_name) {
+                const Message& descriptor_proto, const string& field_name) {
     return HasSpan(start_marker, end_marker, descriptor_proto, field_name, -1);
   }
 
   bool HasSpan(char start_marker, char end_marker,
-               const Message& descriptor_proto, const string& field_name,
-               int index) {
+                const Message& descriptor_proto, const string& field_name,
+                int index) {
     return HasSpan(start_marker, end_marker, descriptor_proto,
-                   field_name, index, NULL, NULL);
+                    field_name, index, NULL, NULL);
   }
 
   bool HasSpan(char start_marker, char end_marker,
-               const Message& descriptor_proto,
-               const string& field_name, int index,
-               const char* expected_leading_comments,
-               const char* expected_trailing_comments) {
+                const Message& descriptor_proto,
+                const string& field_name, int index,
+                const char* expected_leading_comments,
+                const char* expected_trailing_comments) {
     const FieldDescriptor* field =
         descriptor_proto.GetDescriptor()->FindFieldByName(field_name);
     if (field == NULL) {
-      ADD_FAILURE() << descriptor_proto.GetDescriptor()->name()
+    ADD_FAILURE() << descriptor_proto.GetDescriptor()->name()
                     << " has no such field: " << field_name;
-      return false;
+    return false;
     }
 
     return HasSpanWithComment(
@@ -1744,60 +1744,60 @@ class SourceInfoTest : public ParserTest {
   }
 
   bool HasSpan(const Message& descriptor_proto, const string& field_name,
-               int index) {
+                int index) {
     return HasSpan('\0', '\0', descriptor_proto, field_name, index);
   }
 
   bool HasSpanWithComment(char start_marker, char end_marker,
-                          const Message& descriptor_proto,
-                          const FieldDescriptor* field, int index,
-                          const char* expected_leading_comments,
-                          const char* expected_trailing_comments) {
+                        const Message& descriptor_proto,
+                        const FieldDescriptor* field, int index,
+                        const char* expected_leading_comments,
+                        const char* expected_trailing_comments) {
     pair<SpanMap::iterator, SpanMap::iterator> range =
         spans_.equal_range(SpanKey(descriptor_proto, field, index));
 
     if (start_marker == '\0') {
-      if (range.first == range.second) {
+    if (range.first == range.second) {
         return false;
-      } else {
+    } else {
         spans_.erase(range.first);
         return true;
-      }
+    }
     } else {
-      pair<int, int> start_pos = FindOrDie(markers_, start_marker);
-      pair<int, int> end_pos = FindOrDie(markers_, end_marker);
+    pair<int, int> start_pos = FindOrDie(markers_, start_marker);
+    pair<int, int> end_pos = FindOrDie(markers_, end_marker);
 
-      RepeatedField<int> expected_span;
-      expected_span.Add(start_pos.first);
-      expected_span.Add(start_pos.second);
-      if (end_pos.first != start_pos.first) {
+    RepeatedField<int> expected_span;
+    expected_span.Add(start_pos.first);
+    expected_span.Add(start_pos.second);
+    if (end_pos.first != start_pos.first) {
         expected_span.Add(end_pos.first);
-      }
-      expected_span.Add(end_pos.second);
+    }
+    expected_span.Add(end_pos.second);
 
-      for (SpanMap::iterator iter = range.first; iter != range.second; ++iter) {
+    for (SpanMap::iterator iter = range.first; iter != range.second; ++iter) {
         if (CompareSpans(expected_span, iter->second->span())) {
-          if (expected_leading_comments == NULL) {
+        if (expected_leading_comments == NULL) {
             EXPECT_FALSE(iter->second->has_leading_comments());
-          } else {
+        } else {
             EXPECT_TRUE(iter->second->has_leading_comments());
             EXPECT_EQ(expected_leading_comments,
-                      iter->second->leading_comments());
-          }
-          if (expected_trailing_comments == NULL) {
+                    iter->second->leading_comments());
+        }
+        if (expected_trailing_comments == NULL) {
             EXPECT_FALSE(iter->second->has_trailing_comments());
-          } else {
+        } else {
             EXPECT_TRUE(iter->second->has_trailing_comments());
             EXPECT_EQ(expected_trailing_comments,
-                      iter->second->trailing_comments());
-          }
-
-          spans_.erase(iter);
-          return true;
+                    iter->second->trailing_comments());
         }
-      }
 
-      return false;
+        spans_.erase(iter);
+        return true;
+        }
+    }
+
+    return false;
     }
   }
 
@@ -1809,17 +1809,17 @@ class SourceInfoTest : public ParserTest {
 
     inline SpanKey() {}
     inline SpanKey(const Message& descriptor_proto_param,
-                   const FieldDescriptor* field_param,
-                   int index_param)
+                    const FieldDescriptor* field_param,
+                    int index_param)
         : descriptor_proto(&descriptor_proto_param), field(field_param),
-          index(index_param) {}
+        index(index_param) {}
 
     inline bool operator<(const SpanKey& other) const {
-      if (descriptor_proto < other.descriptor_proto) return true;
-      if (descriptor_proto > other.descriptor_proto) return false;
-      if (field < other.field) return true;
-      if (field > other.field) return false;
-      return index < other.index;
+    if (descriptor_proto < other.descriptor_proto) return true;
+    if (descriptor_proto > other.descriptor_proto) return false;
+    if (field < other.field) return true;
+    if (field > other.field) return false;
+    return index < other.index;
     }
   };
 
@@ -1834,38 +1834,38 @@ class SourceInfoTest : public ParserTest {
     int line = 0;
     int column = 0;
     while (*text != '\0') {
-      if (*text == '$') {
+    if (*text == '$') {
         ++text;
         GOOGLE_CHECK_NE('\0', *text);
         if (*text == '$') {
-          text_without_markers_ += '$';
-          ++column;
+        text_without_markers_ += '$';
+        ++column;
         } else {
-          markers_[*text] = make_pair(line, column);
-          ++text;
-          GOOGLE_CHECK_EQ('$', *text);
+        markers_[*text] = make_pair(line, column);
+        ++text;
+        GOOGLE_CHECK_EQ('$', *text);
         }
-      } else if (*text == '\n') {
+    } else if (*text == '\n') {
         ++line;
         column = 0;
         text_without_markers_ += *text;
-      } else {
+    } else {
         text_without_markers_ += *text;
         ++column;
-      }
-      ++text;
+    }
+    ++text;
     }
   }
 };
 
 TEST_F(SourceInfoTest, BasicFileDecls) {
   EXPECT_TRUE(Parse(
-      "$a$syntax = \"proto2\";\n"
-      "package $b$foo.bar$c$;\n"
-      "import $d$\"baz.proto\"$e$;\n"
-      "import $f$\"qux.proto\"$g$;$h$\n"
-      "\n"
-      "// comment ignored\n"));
+    "$a$syntax = \"proto2\";\n"
+    "package $b$foo.bar$c$;\n"
+    "import $d$\"baz.proto\"$e$;\n"
+    "import $f$\"qux.proto\"$g$;$h$\n"
+    "\n"
+    "// comment ignored\n"));
 
   EXPECT_TRUE(HasSpan('a', 'h', file_));
   EXPECT_TRUE(HasSpan('b', 'c', file_, "package"));
@@ -1875,8 +1875,8 @@ TEST_F(SourceInfoTest, BasicFileDecls) {
 
 TEST_F(SourceInfoTest, Messages) {
   EXPECT_TRUE(Parse(
-      "$a$message $b$Foo$c$ {}$d$\n"
-      "$e$message $f$Bar$g$ {}$h$\n"));
+    "$a$message $b$Foo$c$ {}$d$\n"
+    "$e$message $f$Bar$g$ {}$h$\n"));
 
   EXPECT_TRUE(HasSpan('a', 'd', file_.message_type(0)));
   EXPECT_TRUE(HasSpan('b', 'c', file_.message_type(0), "name"));
@@ -1889,10 +1889,10 @@ TEST_F(SourceInfoTest, Messages) {
 
 TEST_F(SourceInfoTest, Fields) {
   EXPECT_TRUE(Parse(
-      "message Foo {\n"
-      "  $a$optional$b$ $c$int32$d$ $e$bar$f$ = $g$1$h$;$i$\n"
-      "  $j$repeated$k$ $l$X.Y$m$ $n$baz$o$ = $p$2$q$;$r$\n"
-      "}\n"));
+    "message Foo {\n"
+    "  $a$optional$b$ $c$int32$d$ $e$bar$f$ = $g$1$h$;$i$\n"
+    "  $j$repeated$k$ $l$X.Y$m$ $n$baz$o$ = $p$2$q$;$r$\n"
+    "}\n"));
 
   const FieldDescriptorProto& field1 = file_.message_type(0).field(0);
   const FieldDescriptorProto& field2 = file_.message_type(0).field(1);
@@ -1917,13 +1917,13 @@ TEST_F(SourceInfoTest, Fields) {
 
 TEST_F(SourceInfoTest, Extensions) {
   EXPECT_TRUE(Parse(
-      "$a$extend $b$Foo$c$ {\n"
-      "  $d$optional$e$ int32 bar = 1;$f$\n"
-      "  $g$repeated$h$ X.Y baz = 2;$i$\n"
-      "}$j$\n"
-      "$k$extend $l$Bar$m$ {\n"
-      "  $n$optional int32 qux = 1;$o$\n"
-      "}$p$\n"));
+    "$a$extend $b$Foo$c$ {\n"
+    "  $d$optional$e$ int32 bar = 1;$f$\n"
+    "  $g$repeated$h$ X.Y baz = 2;$i$\n"
+    "}$j$\n"
+    "$k$extend $l$Bar$m$ {\n"
+    "  $n$optional int32 qux = 1;$o$\n"
+    "}$p$\n"));
 
   const FieldDescriptorProto& field1 = file_.extension(0);
   const FieldDescriptorProto& field2 = file_.extension(1);
@@ -1959,15 +1959,15 @@ TEST_F(SourceInfoTest, Extensions) {
 
 TEST_F(SourceInfoTest, NestedExtensions) {
   EXPECT_TRUE(Parse(
-      "message Message {\n"
-      "  $a$extend $b$Foo$c$ {\n"
-      "    $d$optional$e$ int32 bar = 1;$f$\n"
-      "    $g$repeated$h$ X.Y baz = 2;$i$\n"
-      "  }$j$\n"
-      "  $k$extend $l$Bar$m$ {\n"
-      "    $n$optional int32 qux = 1;$o$\n"
-      "  }$p$\n"
-      "}\n"));
+    "message Message {\n"
+    "  $a$extend $b$Foo$c$ {\n"
+    "    $d$optional$e$ int32 bar = 1;$f$\n"
+    "    $g$repeated$h$ X.Y baz = 2;$i$\n"
+    "  }$j$\n"
+    "  $k$extend $l$Bar$m$ {\n"
+    "    $n$optional int32 qux = 1;$o$\n"
+    "  }$p$\n"
+    "}\n"));
 
   const FieldDescriptorProto& field1 = file_.message_type(0).extension(0);
   const FieldDescriptorProto& field2 = file_.message_type(0).extension(1);
@@ -2005,17 +2005,17 @@ TEST_F(SourceInfoTest, NestedExtensions) {
 
 TEST_F(SourceInfoTest, ExtensionRanges) {
   EXPECT_TRUE(Parse(
-      "message Message {\n"
-      "  $a$extensions $b$1$c$ to $d$4$e$, $f$6$g$;$h$\n"
-      "  $i$extensions $j$8$k$ to $l$max$m$;$n$\n"
-      "}\n"));
+    "message Message {\n"
+    "  $a$extensions $b$1$c$ to $d$4$e$, $f$6$g$;$h$\n"
+    "  $i$extensions $j$8$k$ to $l$max$m$;$n$\n"
+    "}\n"));
 
   const DescriptorProto::ExtensionRange& range1 =
-      file_.message_type(0).extension_range(0);
+    file_.message_type(0).extension_range(0);
   const DescriptorProto::ExtensionRange& range2 =
-      file_.message_type(0).extension_range(1);
+    file_.message_type(0).extension_range(1);
   const DescriptorProto::ExtensionRange& range3 =
-      file_.message_type(0).extension_range(2);
+    file_.message_type(0).extension_range(2);
 
   EXPECT_TRUE(HasSpan('a', 'h', file_.message_type(0), "extension_range"));
   EXPECT_TRUE(HasSpan('i', 'n', file_.message_type(0), "extension_range"));
@@ -2040,11 +2040,11 @@ TEST_F(SourceInfoTest, ExtensionRanges) {
 
 TEST_F(SourceInfoTest, Oneofs) {
   EXPECT_TRUE(Parse(
-      "message Foo {\n"
-      "  $a$oneof $c$foo$d$ {\n"
-      "    $e$int32$f$ $g$a$h$ = $i$1$j$;$k$\n"
-      "  }$r$\n"
-      "}\n"));
+    "message Foo {\n"
+    "  $a$oneof $c$foo$d$ {\n"
+    "    $e$int32$f$ $g$a$h$ = $i$1$j$;$k$\n"
+    "  }$r$\n"
+    "}\n"));
 
   const OneofDescriptorProto& oneof_decl = file_.message_type(0).oneof_decl(0);
   const FieldDescriptorProto& field = file_.message_type(0).field(0);
@@ -2065,12 +2065,12 @@ TEST_F(SourceInfoTest, Oneofs) {
 
 TEST_F(SourceInfoTest, NestedMessages) {
   EXPECT_TRUE(Parse(
-      "message Foo {\n"
-      "  $a$message $b$Bar$c$ {\n"
-      "    $d$message $e$Baz$f$ {}$g$\n"
-      "  }$h$\n"
-      "  $i$message $j$Qux$k$ {}$l$\n"
-      "}\n"));
+    "message Foo {\n"
+    "  $a$message $b$Bar$c$ {\n"
+    "    $d$message $e$Baz$f$ {}$g$\n"
+    "  }$h$\n"
+    "  $i$message $j$Qux$k$ {}$l$\n"
+    "}\n"));
 
   const DescriptorProto& bar = file_.message_type(0).nested_type(0);
   const DescriptorProto& baz = bar.nested_type(0);
@@ -2091,12 +2091,12 @@ TEST_F(SourceInfoTest, NestedMessages) {
 
 TEST_F(SourceInfoTest, Groups) {
   EXPECT_TRUE(Parse(
-      "message Foo {\n"
-      "  message Bar {}\n"
-      "  $a$optional$b$ $c$group$d$ $e$Baz$f$ = $g$1$h$ {\n"
-      "    $i$message Qux {}$j$\n"
-      "  }$k$\n"
-      "}\n"));
+    "message Foo {\n"
+    "  message Bar {}\n"
+    "  $a$optional$b$ $c$group$d$ $e$Baz$f$ = $g$1$h$ {\n"
+    "    $i$message Qux {}$j$\n"
+    "  }$k$\n"
+    "}\n"));
 
   const DescriptorProto& bar = file_.message_type(0).nested_type(0);
   const DescriptorProto& baz = file_.message_type(0).nested_type(1);
@@ -2125,8 +2125,8 @@ TEST_F(SourceInfoTest, Groups) {
 
 TEST_F(SourceInfoTest, Enums) {
   EXPECT_TRUE(Parse(
-      "$a$enum $b$Foo$c$ {}$d$\n"
-      "$e$enum $f$Bar$g$ {}$h$\n"));
+    "$a$enum $b$Foo$c$ {}$d$\n"
+    "$e$enum $f$Bar$g$ {}$h$\n"));
 
   EXPECT_TRUE(HasSpan('a', 'd', file_.enum_type(0)));
   EXPECT_TRUE(HasSpan('b', 'c', file_.enum_type(0), "name"));
@@ -2139,10 +2139,10 @@ TEST_F(SourceInfoTest, Enums) {
 
 TEST_F(SourceInfoTest, EnumValues) {
   EXPECT_TRUE(Parse(
-      "enum Foo {\n"
-      "  $a$BAR$b$ = $c$1$d$;$e$\n"
-      "  $f$BAZ$g$ = $h$2$i$;$j$\n"
-      "}"));
+    "enum Foo {\n"
+    "  $a$BAR$b$ = $c$1$d$;$e$\n"
+    "  $f$BAZ$g$ = $h$2$i$;$j$\n"
+    "}"));
 
   const EnumValueDescriptorProto& bar = file_.enum_type(0).value(0);
   const EnumValueDescriptorProto& baz = file_.enum_type(0).value(1);
@@ -2162,10 +2162,10 @@ TEST_F(SourceInfoTest, EnumValues) {
 
 TEST_F(SourceInfoTest, NestedEnums) {
   EXPECT_TRUE(Parse(
-      "message Foo {\n"
-      "  $a$enum $b$Bar$c$ {}$d$\n"
-      "  $e$enum $f$Baz$g$ {}$h$\n"
-      "}\n"));
+    "message Foo {\n"
+    "  $a$enum $b$Bar$c$ {}$d$\n"
+    "  $e$enum $f$Baz$g$ {}$h$\n"
+    "}\n"));
 
   const EnumDescriptorProto& bar = file_.message_type(0).enum_type(0);
   const EnumDescriptorProto& baz = file_.message_type(0).enum_type(1);
@@ -2183,8 +2183,8 @@ TEST_F(SourceInfoTest, NestedEnums) {
 
 TEST_F(SourceInfoTest, Services) {
   EXPECT_TRUE(Parse(
-      "$a$service $b$Foo$c$ {}$d$\n"
-      "$e$service $f$Bar$g$ {}$h$\n"));
+    "$a$service $b$Foo$c$ {}$d$\n"
+    "$e$service $f$Bar$g$ {}$h$\n"));
 
   EXPECT_TRUE(HasSpan('a', 'd', file_.service(0)));
   EXPECT_TRUE(HasSpan('b', 'c', file_.service(0), "name"));
@@ -2197,10 +2197,10 @@ TEST_F(SourceInfoTest, Services) {
 
 TEST_F(SourceInfoTest, MethodsAndStreams) {
   EXPECT_TRUE(Parse(
-      "service Foo {\n"
-      "  $a$rpc $b$Bar$c$($d$X$e$) returns($f$Y$g$);$h$"
-      "  $i$rpc $j$Baz$k$($l$Z$m$) returns($n$W$o$);$p$"
-      "}"));
+    "service Foo {\n"
+    "  $a$rpc $b$Bar$c$($d$X$e$) returns($f$Y$g$);$h$"
+    "  $i$rpc $j$Baz$k$($l$Z$m$) returns($n$W$o$);$p$"
+    "}"));
 
   const MethodDescriptorProto& bar = file_.service(0).method(0);
   const MethodDescriptorProto& baz = file_.service(0).method(1);
@@ -2224,13 +2224,13 @@ TEST_F(SourceInfoTest, MethodsAndStreams) {
 
 TEST_F(SourceInfoTest, Options) {
   EXPECT_TRUE(Parse(
-      "$a$option $b$foo$c$.$d$($e$bar.baz$f$)$g$ = "
-          "$h$123$i$;$j$\n"
-      "$k$option qux = $l$-123$m$;$n$\n"
-      "$o$option corge = $p$abc$q$;$r$\n"
-      "$s$option grault = $t$'blah'$u$;$v$\n"
-      "$w$option garply = $x${ yadda yadda }$y$;$z$\n"
-      "$0$option waldo = $1$123.0$2$;$3$\n"
+    "$a$option $b$foo$c$.$d$($e$bar.baz$f$)$g$ = "
+        "$h$123$i$;$j$\n"
+    "$k$option qux = $l$-123$m$;$n$\n"
+    "$o$option corge = $p$abc$q$;$r$\n"
+    "$s$option grault = $t$'blah'$u$;$v$\n"
+    "$w$option garply = $x${ yadda yadda }$y$;$z$\n"
+    "$0$option waldo = $1$123.0$2$;$3$\n"
   ));
 
   const UninterpretedOption& option1 = file_.options().uninterpreted_option(0);
@@ -2313,53 +2313,53 @@ TEST_F(SourceInfoTest, ScopedOptions) {
   EXPECT_TRUE(HasSpan(file_.message_type(0)));
   EXPECT_TRUE(HasSpan(file_.message_type(0), "name"));
   EXPECT_TRUE(HasSpan(file_.message_type(0).options()
-                      .uninterpreted_option(0)));
+                    .uninterpreted_option(0)));
   EXPECT_TRUE(HasSpan(file_.message_type(0).options()
-                      .uninterpreted_option(0), "name"));
+                    .uninterpreted_option(0), "name"));
   EXPECT_TRUE(HasSpan(file_.message_type(0).options()
-                      .uninterpreted_option(0).name(0)));
+                    .uninterpreted_option(0).name(0)));
   EXPECT_TRUE(HasSpan(file_.message_type(0).options()
-                      .uninterpreted_option(0).name(0), "name_part"));
+                    .uninterpreted_option(0).name(0), "name_part"));
   EXPECT_TRUE(HasSpan(file_.message_type(0).options()
-                      .uninterpreted_option(0), "positive_int_value"));
+                    .uninterpreted_option(0), "positive_int_value"));
   EXPECT_TRUE(HasSpan(file_.enum_type(0)));
   EXPECT_TRUE(HasSpan(file_.enum_type(0), "name"));
   EXPECT_TRUE(HasSpan(file_.enum_type(0).options()
-                      .uninterpreted_option(0)));
+                    .uninterpreted_option(0)));
   EXPECT_TRUE(HasSpan(file_.enum_type(0).options()
-                      .uninterpreted_option(0), "name"));
+                    .uninterpreted_option(0), "name"));
   EXPECT_TRUE(HasSpan(file_.enum_type(0).options()
-                      .uninterpreted_option(0).name(0)));
+                    .uninterpreted_option(0).name(0)));
   EXPECT_TRUE(HasSpan(file_.enum_type(0).options()
-                      .uninterpreted_option(0).name(0), "name_part"));
+                    .uninterpreted_option(0).name(0), "name_part"));
   EXPECT_TRUE(HasSpan(file_.enum_type(0).options()
-                      .uninterpreted_option(0), "positive_int_value"));
+                    .uninterpreted_option(0), "positive_int_value"));
   EXPECT_TRUE(HasSpan(file_.service(0)));
   EXPECT_TRUE(HasSpan(file_.service(0), "name"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0)));
   EXPECT_TRUE(HasSpan(file_.service(0).options()
-                      .uninterpreted_option(0)));
+                    .uninterpreted_option(0)));
   EXPECT_TRUE(HasSpan(file_.service(0).options()
-                      .uninterpreted_option(0), "name"));
+                    .uninterpreted_option(0), "name"));
   EXPECT_TRUE(HasSpan(file_.service(0).options()
-                      .uninterpreted_option(0).name(0)));
+                    .uninterpreted_option(0).name(0)));
   EXPECT_TRUE(HasSpan(file_.service(0).options()
-                      .uninterpreted_option(0).name(0), "name_part"));
+                    .uninterpreted_option(0).name(0), "name_part"));
   EXPECT_TRUE(HasSpan(file_.service(0).options()
-                      .uninterpreted_option(0), "positive_int_value"));
+                    .uninterpreted_option(0), "positive_int_value"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0), "name"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0), "input_type"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0), "output_type"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0).options()
-                      .uninterpreted_option(0)));
+                    .uninterpreted_option(0)));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0).options()
-                      .uninterpreted_option(0), "name"));
+                    .uninterpreted_option(0), "name"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0).options()
-                      .uninterpreted_option(0).name(0)));
+                    .uninterpreted_option(0).name(0)));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0).options()
-                      .uninterpreted_option(0).name(0), "name_part"));
+                    .uninterpreted_option(0).name(0), "name_part"));
   EXPECT_TRUE(HasSpan(file_.service(0).method(0).options()
-                      .uninterpreted_option(0), "positive_int_value"));
+                    .uninterpreted_option(0), "positive_int_value"));
 }
 
 TEST_F(SourceInfoTest, FieldOptions) {
@@ -2367,11 +2367,11 @@ TEST_F(SourceInfoTest, FieldOptions) {
   // top-level options so we won't re-test that -- just make sure that the
   // syntax used for field options is understood.
   EXPECT_TRUE(Parse(
-      "message Foo {"
-      "  optional int32 bar = 1 "
-          "$a$[default=$b$123$c$,$d$opt1=123$e$,"
-          "$f$opt2='hi'$g$]$h$;"
-      "}\n"
+    "message Foo {"
+    "  optional int32 bar = 1 "
+        "$a$[default=$b$123$c$,$d$opt1=123$e$,"
+        "$f$opt2='hi'$g$]$h$;"
+    "}\n"
   ));
 
   const FieldDescriptorProto& field = file_.message_type(0).field(0);
@@ -2407,9 +2407,9 @@ TEST_F(SourceInfoTest, EnumValueOptions) {
   // top-level options so we won't re-test that -- just make sure that the
   // syntax used for enum options is understood.
   EXPECT_TRUE(Parse(
-      "enum Foo {"
-      "  BAR = 1 $a$[$b$opt1=123$c$,$d$opt2='hi'$e$]$f$;"
-      "}\n"
+    "enum Foo {"
+    "  BAR = 1 $a$[$b$opt1=123$c$,$d$opt2='hi'$e$]$f$;"
+    "}\n"
   ));
 
   const EnumValueDescriptorProto& value = file_.enum_type(0).value(0);
@@ -2439,30 +2439,30 @@ TEST_F(SourceInfoTest, EnumValueOptions) {
 
 TEST_F(SourceInfoTest, DocComments) {
   EXPECT_TRUE(Parse(
-      "// Foo leading\n"
-      "// line 2\n"
-      "$a$message Foo {\n"
-      "  // Foo trailing\n"
-      "  // line 2\n"
-      "\n"
-      "  // ignored\n"
-      "\n"
-      "  // bar leading\n"
-      "  $b$optional int32 bar = 1;$c$\n"
-      "  // bar trailing\n"
-      "}$d$\n"
-      "// ignored\n"
+    "// Foo leading\n"
+    "// line 2\n"
+    "$a$message Foo {\n"
+    "  // Foo trailing\n"
+    "  // line 2\n"
+    "\n"
+    "  // ignored\n"
+    "\n"
+    "  // bar leading\n"
+    "  $b$optional int32 bar = 1;$c$\n"
+    "  // bar trailing\n"
+    "}$d$\n"
+    "// ignored\n"
   ));
 
   const DescriptorProto& foo = file_.message_type(0);
   const FieldDescriptorProto& bar = foo.field(0);
 
   EXPECT_TRUE(HasSpanWithComment('a', 'd', foo,
-      " Foo leading\n line 2\n",
-      " Foo trailing\n line 2\n"));
+    " Foo leading\n line 2\n",
+    " Foo trailing\n line 2\n"));
   EXPECT_TRUE(HasSpanWithComment('b', 'c', bar,
-      " bar leading\n",
-      " bar trailing\n"));
+    " bar leading\n",
+    " bar trailing\n"));
 
   // Ignore these.
   EXPECT_TRUE(HasSpan(file_));
@@ -2475,24 +2475,24 @@ TEST_F(SourceInfoTest, DocComments) {
 
 TEST_F(SourceInfoTest, DocComments2) {
   EXPECT_TRUE(Parse(
-      "// ignored\n"
-      "syntax = \"proto2\";\n"
-      "// Foo leading\n"
-      "// line 2\n"
-      "$a$message Foo {\n"
-      "  /* Foo trailing\n"
-      "   * line 2 */\n"
-      "  // ignored\n"
-      "  /* bar leading\n"
-      "   */"
-      "  $b$optional int32 bar = 1;$c$  // bar trailing\n"
-      "  // ignored\n"
-      "}$d$\n"
-      "// ignored\n"
-      "\n"
-      "// option leading\n"
-      "$e$option baz = 123;$f$\n"
-      "// option trailing\n"
+    "// ignored\n"
+    "syntax = \"proto2\";\n"
+    "// Foo leading\n"
+    "// line 2\n"
+    "$a$message Foo {\n"
+    "  /* Foo trailing\n"
+    "   * line 2 */\n"
+    "  // ignored\n"
+    "  /* bar leading\n"
+    "   */"
+    "  $b$optional int32 bar = 1;$c$  // bar trailing\n"
+    "  // ignored\n"
+    "}$d$\n"
+    "// ignored\n"
+    "\n"
+    "// option leading\n"
+    "$e$option baz = 123;$f$\n"
+    "// option trailing\n"
   ));
 
   const DescriptorProto& foo = file_.message_type(0);
@@ -2500,14 +2500,14 @@ TEST_F(SourceInfoTest, DocComments2) {
   const UninterpretedOption& baz = file_.options().uninterpreted_option(0);
 
   EXPECT_TRUE(HasSpanWithComment('a', 'd', foo,
-      " Foo leading\n line 2\n",
-      " Foo trailing\n line 2 "));
+    " Foo leading\n line 2\n",
+    " Foo trailing\n line 2 "));
   EXPECT_TRUE(HasSpanWithComment('b', 'c', bar,
-      " bar leading\n",
-      " bar trailing\n"));
+    " bar leading\n",
+    " bar trailing\n"));
   EXPECT_TRUE(HasSpanWithComment('e', 'f', baz,
-      " option leading\n",
-      " option trailing\n"));
+    " option leading\n",
+    " option trailing\n"));
 
   // Ignore these.
   EXPECT_TRUE(HasSpan(file_));
@@ -2525,20 +2525,20 @@ TEST_F(SourceInfoTest, DocComments2) {
 
 TEST_F(SourceInfoTest, DocComments3) {
   EXPECT_TRUE(Parse(
-      "$a$message Foo {\n"
-      "  // bar leading\n"
-      "  $b$optional int32 bar = 1 [(baz.qux) = {}];$c$\n"
-      "  // bar trailing\n"
-      "}$d$\n"
-      "// ignored\n"
+    "$a$message Foo {\n"
+    "  // bar leading\n"
+    "  $b$optional int32 bar = 1 [(baz.qux) = {}];$c$\n"
+    "  // bar trailing\n"
+    "}$d$\n"
+    "// ignored\n"
   ));
 
   const DescriptorProto& foo = file_.message_type(0);
   const FieldDescriptorProto& bar = foo.field(0);
 
   EXPECT_TRUE(HasSpanWithComment('b', 'c', bar,
-      " bar leading\n",
-      " bar trailing\n"));
+    " bar leading\n",
+    " bar trailing\n"));
 
   // Ignore these.
   EXPECT_TRUE(HasSpan(file_));
@@ -2553,46 +2553,46 @@ TEST_F(SourceInfoTest, DocComments3) {
   EXPECT_TRUE(HasSpan(bar.options().uninterpreted_option(0), "name"));
   EXPECT_TRUE(HasSpan(bar.options().uninterpreted_option(0).name(0)));
   EXPECT_TRUE(HasSpan(
-      bar.options().uninterpreted_option(0).name(0), "name_part"));
+    bar.options().uninterpreted_option(0).name(0), "name_part"));
   EXPECT_TRUE(HasSpan(
-      bar.options().uninterpreted_option(0), "aggregate_value"));
+    bar.options().uninterpreted_option(0), "aggregate_value"));
 }
 
 TEST_F(SourceInfoTest, DocCommentsOneof) {
   EXPECT_TRUE(Parse(
-      "// ignored\n"
-      "syntax = \"proto2\";\n"
-      "// Foo leading\n"
-      "$a$message Foo {\n"
-      "  /* Foo trailing\n"
-      "   */\n"
-      "  // ignored\n"
-      "  /* bar leading\n"
-      "   * line 2 */\n"
-      "  $b$oneof bar {\n"
-      "  /* bar trailing\n"
-      "   * line 2 */\n"
-      "  // ignored\n"
-      "  /* bar_int leading\n"
-      "   */\n"
-      "  $c$int32 bar_int = 1;$d$  // bar_int trailing\n"
-      "  // ignored\n"
-      "  }$e$\n"
-      "}$f$\n"));
+    "// ignored\n"
+    "syntax = \"proto2\";\n"
+    "// Foo leading\n"
+    "$a$message Foo {\n"
+    "  /* Foo trailing\n"
+    "   */\n"
+    "  // ignored\n"
+    "  /* bar leading\n"
+    "   * line 2 */\n"
+    "  $b$oneof bar {\n"
+    "  /* bar trailing\n"
+    "   * line 2 */\n"
+    "  // ignored\n"
+    "  /* bar_int leading\n"
+    "   */\n"
+    "  $c$int32 bar_int = 1;$d$  // bar_int trailing\n"
+    "  // ignored\n"
+    "  }$e$\n"
+    "}$f$\n"));
 
   const DescriptorProto& foo = file_.message_type(0);
   const OneofDescriptorProto& bar = foo.oneof_decl(0);
   const FieldDescriptorProto& bar_int = foo.field(0);
 
   EXPECT_TRUE(HasSpanWithComment('a', 'f', foo,
-      " Foo leading\n",
-      " Foo trailing\n"));
+    " Foo leading\n",
+    " Foo trailing\n"));
   EXPECT_TRUE(HasSpanWithComment('b', 'e', bar,
-      " bar leading\n line 2 ",
-      " bar trailing\n line 2 "));
+    " bar leading\n line 2 ",
+    " bar trailing\n line 2 "));
   EXPECT_TRUE(HasSpanWithComment('c', 'd', bar_int,
-      " bar_int leading\n",
-      " bar_int trailing\n"));
+    " bar_int leading\n",
+    " bar_int trailing\n"));
 
   // Ignore these.
   EXPECT_TRUE(HasSpan(file_));

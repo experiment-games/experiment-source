@@ -20,7 +20,7 @@ typedef struct
 // Shared content manager
 class C_TFSharedContentManager : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     C_TFSharedContentManager() {}
 
     void OfferSharedVision( int iFlag, uint32 unAccountID );
@@ -37,7 +37,7 @@ class C_TFSharedContentManager : public CBaseGameSystemPerFrame
     virtual bool Init();
     virtual void Update( float frametime );
 
-   private:
+    private:
     bool CanOfferVision( int iFlag );
     void AddSharedVision( int iFlag )
     {
@@ -46,7 +46,7 @@ class C_TFSharedContentManager : public CBaseGameSystemPerFrame
     void OfferSharedVision_Internal( int iFlag, uint32 unAccountID );
     void PrintChatText( int iFlag, uint32 unAccountID );
 
-   private:
+    private:
     int m_iSharedVisionFlags;
     CUtlVector< uint32 > m_PlayersWhoHaveOfferedVision;  // needs to be expanded when we offer more than Romevision...
     CUtlVector< shared_vision_entry_t > m_SharedVisionQueue;

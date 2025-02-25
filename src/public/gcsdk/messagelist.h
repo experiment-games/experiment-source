@@ -1,4 +1,4 @@
-//====== Copyright ©, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Maps message types to strings and vice versa
 //
@@ -82,7 +82,7 @@ void MsgRegistrationFromEnumDescriptor( const ::google::protobuf::EnumDescriptor
 
 class CMessageList
 {
-   public:
+    public:
     CMessageList();
     ~CMessageList();
 
@@ -117,7 +117,7 @@ class CMessageList
         return GetGroupDuration( MsgInfo_t::k_EStatsGroupWindow );
     }
 
-   private:
+    private:
     void TallyMessageInternal( MsgInfo_t &msgInfo, MsgInfo_t::EStatsType eBucket, uint32 unMsgSize, uint32 nSourceMask, uint32 cMessages = 1 );
 
     void AssureBucket( int nBucket );
@@ -140,7 +140,7 @@ class CMessageList
     // given a group, this will return the time that the stats have been collected over
     uint64 GetGroupDuration( MsgInfo_t::EStatsGroup eGroup ) const;
 
-   private:
+    private:
     // totalled stats for the current window. It would be too costly to total these all the time
     MsgInfo_t::Stats_t m_WindowTotals[MsgInfo_t::k_EStatsType_Count];
 

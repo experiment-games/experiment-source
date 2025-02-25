@@ -26,7 +26,7 @@
 
 class CTFProjectile_Flare : public CTFBaseRocket, public IScorer
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_Flare, CTFBaseRocket );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -91,7 +91,7 @@ class CTFProjectile_Flare : public CTFBaseRocket, public IScorer
     float GetProjectileSpeed( void ) const;
     float GetHeatSeekPower( void ) const;
 
-   private:
+    private:
     CBaseHandle m_Scorer;
 
     bool m_bIsFromTaunt;

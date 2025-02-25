@@ -30,7 +30,7 @@
 
 class CWeaponCrowbar : public CBaseHLBludgeonWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponCrowbar, CBaseHLBludgeonWeapon );
 
     DECLARE_SERVERCLASS();
@@ -59,7 +59,7 @@ class CWeaponCrowbar : public CBaseHLBludgeonWeapon
     // Animation event
     virtual void Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 
-   private:
+    private:
     // Animation event handlers
     void HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 };

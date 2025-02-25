@@ -28,7 +28,7 @@ class CCollectionCraftingSelectionPanel : public CItemCriteriaSelectionPanel
 {
     DECLARE_CLASS_SIMPLE( CCollectionCraftingSelectionPanel, CItemCriteriaSelectionPanel );
 
-   public:
+    public:
     CCollectionCraftingSelectionPanel( Panel *pParent )
         : BaseClass( pParent, NULL ) {}
 
@@ -80,7 +80,7 @@ class CCollectionCraftingSelectionPanel : public CItemCriteriaSelectionPanel
         return false;
     }
 
-   protected:
+    protected:
     const char *m_pszTitleToken;
     CUtlVector< const CEconItemView * > m_vecCorrespondingItems;
 };
@@ -90,7 +90,7 @@ class CCollectionCraftingSelectionPanel : public CItemCriteriaSelectionPanel
 //-----------------------------------------------------------------------------
 class CCollectionCraftingPanel : public vgui::EditablePanel, public CGameEventListener, public CLocalSteamSharedObjectListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CCollectionCraftingPanel, vgui::EditablePanel );
     CCollectionCraftingPanel( vgui::Panel *parent, CItemModelPanelToolTip *pTooltip );
     ~CCollectionCraftingPanel( void );
@@ -123,7 +123,7 @@ class CCollectionCraftingPanel : public vgui::EditablePanel, public CGameEventLi
     MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
     MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
 
-   protected:
+    protected:
     virtual void SetItemPanelCount();
     virtual void CreateSelectionPanel();
     virtual void CreateItemPanels();
@@ -199,7 +199,7 @@ class CStatClockCraftingSelectionPanel : public CCollectionCraftingSelectionPane
 {
     DECLARE_CLASS_SIMPLE( CStatClockCraftingSelectionPanel, CCollectionCraftingSelectionPanel );
 
-   public:
+    public:
     CStatClockCraftingSelectionPanel( Panel *pParent )
         : BaseClass( pParent ) {}
 
@@ -215,7 +215,7 @@ class CStatClockCraftingSelectionPanel : public CCollectionCraftingSelectionPane
 //-----------------------------------------------------------------------------
 class CCraftCommonStatClockPanel : public CCollectionCraftingPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CCraftCommonStatClockPanel, CCollectionCraftingPanel );
     CCraftCommonStatClockPanel( vgui::Panel *parent, CItemModelPanelToolTip *pTooltip );
     ~CCraftCommonStatClockPanel( void );
@@ -237,7 +237,7 @@ class CCraftCommonStatClockPanel : public CCollectionCraftingPanel
 
     virtual void Show( CUtlVector< const CEconItemView * > &vecStartingItems );
 
-   protected:
+    protected:
     virtual void CreateSelectionPanel();
 
     CEconItemView m_outputItem;

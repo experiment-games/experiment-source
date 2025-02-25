@@ -83,10 +83,10 @@ enum CollideType_t
 
 class VarMapEntry_t
 {
-   public:
+    public:
     unsigned short type;
     unsigned short m_bNeedsToInterpolate;  // Set to false when this var doesn't
-                                           // need Interpolate() called on it anymore.
+                                            // need Interpolate() called on it anymore.
     void *data;
     IInterpolatedVar *watcher;
 };
@@ -175,14 +175,14 @@ class C_BaseEntity : public IClientEntity
     LUA_DECLARE_SINGLE_LUA_INSTANCE( C_BaseEntity, LUA_BASEENTITYMETANAME );
 #endif
 
-   public:
+    public:
     // Construction
     DECLARE_CLASS_NOBASE( C_BaseEntity );
 
     friend class CPrediction;
     friend void cc_cl_interp_all_changed( IConVar *pConVar, const char *pOldString, float flOldValue );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
@@ -214,9 +214,9 @@ class C_BaseEntity : public IClientEntity
         return true;
     }
     virtual bool HandleShotImpactingWater( const FireBulletsInfo_t &info,
-                                           const Vector &vecEnd,
-                                           ITraceFilter *pTraceFilter,
-                                           Vector *pVecTracerDest );
+                                            const Vector &vecEnd,
+                                            ITraceFilter *pTraceFilter,
+                                            Vector *pVecTracerDest );
     virtual ITraceFilter *GetBeamTraceFilter( void );
     virtual void DispatchTraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator = NULL );
     virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator = NULL );
@@ -286,7 +286,7 @@ class C_BaseEntity : public IClientEntity
     string_t m_iClassname;
 
     // IClientUnknown overrides.
-   public:
+    public:
     virtual void SetRefEHandle( const CBaseHandle &handle );
     virtual const CBaseHandle &GetRefEHandle() const;
 
@@ -332,7 +332,7 @@ class C_BaseEntity : public IClientEntity
     }
 
     // Methods of IClientRenderable
-   public:
+    public:
     virtual const Vector &GetRenderOrigin( void );
     virtual const QAngle &GetRenderAngles( void );
     virtual Vector GetObserverCamOrigin( void )
@@ -364,7 +364,7 @@ class C_BaseEntity : public IClientEntity
 
     virtual void OnThreadedDrawSetup() {}
 
-   public:
+    public:
     virtual bool TestCollision( const Ray_t &ray, unsigned int fContentsMask, trace_t &tr );
     virtual bool TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, trace_t &tr );
 
@@ -380,7 +380,7 @@ class C_BaseEntity : public IClientEntity
     virtual float GetAttackDamageScale( void );
 
     // IClientNetworkable implementation.
-   public:
+    public:
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
     virtual void SetTransmitWithParent( bool bTransmitWithParent );
     virtual bool GetTransmitWithParent();
@@ -421,21 +421,21 @@ class C_BaseEntity : public IClientEntity
     virtual void *GetDataTableBasePtr();
 
     // IClientThinkable.
-   public:
+    public:
     // Called whenever you registered for a think message (with SetNextClientThink).
     virtual void ClientThink();
 
     virtual ClientThinkHandle_t GetThinkHandle();
     virtual void SetThinkHandle( ClientThinkHandle_t hThink );
 
-   public:
+    public:
     void AddVar( void *data, IInterpolatedVar *watcher, int type, bool bSetup = false );
     void RemoveVar( void *data, bool bAssert = true );
     VarMapping_t *GetVarMapping();
 
     VarMapping_t m_VarMap;
 
-   public:
+    public:
     // An inline version the game code can use
     CCollisionProperty *CollisionProp();
     const CCollisionProperty *CollisionProp() const;
@@ -456,7 +456,7 @@ class C_BaseEntity : public IClientEntity
     virtual int Save( ISave &save );
     virtual int Restore( IRestore &restore );
 
-   private:
+    private:
     int SaveDataDescBlock( ISave &save, datamap_t *dmap );
     int RestoreDataDescBlock( IRestore &restore, datamap_t *dmap );
 
@@ -465,7 +465,7 @@ class C_BaseEntity : public IClientEntity
     // the model pointer), it is done here.
     void OnPostRestoreData();
 
-   public:
+    public:
     // Called after spawn, and in the case of self-managing objects, after load
     virtual bool CreateVPhysics();
 
@@ -480,11 +480,11 @@ class C_BaseEntity : public IClientEntity
     // Move the object to where it should be and call UpdatePhysicsShadowToCurrentPosition()
     IPhysicsObject *VPhysicsInitShadow( bool allowPhysicsMovement, bool allowPhysicsRotation, solid_t *pSolid = NULL );
 
-   private:
+    private:
     // called by all vphysics inits
     bool VPhysicsInitSetup();
 
-   public:
+    public:
     void VPhysicsSetObject( IPhysicsObject *pPhysics );
     // destroy and remove the physics object for this entity
     virtual void VPhysicsDestroyObject( void );
@@ -499,7 +499,7 @@ class C_BaseEntity : public IClientEntity
     virtual bool VPhysicsIsFlesh( void );
 
     // IClientEntity implementation.
-   public:
+    public:
     virtual bool SetupBones( matrix3x4_t *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime );
     virtual void SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights );
     virtual bool UsesFlexDelayedWeights()
@@ -701,7 +701,7 @@ class C_BaseEntity : public IClientEntity
     static bool IsSimulatingOnAlternateTicks();
 
     // C_BaseEntity local functions
-   public:
+    public:
     void UpdatePartitionListEntry();
 
     // This can be used to setup the entity as a client-only entity.
@@ -953,7 +953,7 @@ class C_BaseEntity : public IClientEntity
     void DrawBBoxVisualizations( void );
 
     // Methods implemented on both client and server
-   public:
+    public:
     void SetSize( const Vector &vecMin, const Vector &vecMax );  // UTIL_SetSize( pev, mins, maxs );
     char const *GetClassname( void );
     char const *GetDebugName( void );
@@ -962,7 +962,7 @@ class C_BaseEntity : public IClientEntity
     static void PrefetchSound( const char *name );
     virtual void Remove();  // UTIL_Remove( this );
 
-   public:
+    public:
     // Returns the attachment point index on our parent that our transform is relative to.
     // 0 if we're relative to the parent's absorigin and absangles.
     unsigned char GetParentAttachment() const;
@@ -1011,11 +1011,11 @@ class C_BaseEntity : public IClientEntity
 
     void PhysicsStep( void );
 
-   protected:
+    protected:
     static bool sm_bDisableTouchFuncs;  // Disables PhysicsTouch and PhysicsStartTouch function calls
     bool m_bTransmitWithParent = false;
 
-   public:
+    public:
     touchlink_t *PhysicsMarkEntityAsTouched( C_BaseEntity *other );
     void PhysicsTouch( C_BaseEntity *pentOther );
     void PhysicsStartTouch( C_BaseEntity *pentOther );
@@ -1077,7 +1077,7 @@ class C_BaseEntity : public IClientEntity
     // Destroys the shadow; causes its type to be recomputed if the entity doesn't go away immediately.
     void DestroyShadow();
 
-   protected:
+    protected:
     // think function handling
     enum thinkmethods_t
     {
@@ -1086,7 +1086,7 @@ class C_BaseEntity : public IClientEntity
         THINK_FIRE_ALL_BUT_BASE,
     };
 
-   public:
+    public:
     // Unlinks from hierarchy
     // Set the movement parent. Your local origin and angles will become relative to this parent.
     // If iAttachment is a valid attachment on the parent, then your local origin and angles
@@ -1346,7 +1346,7 @@ class C_BaseEntity : public IClientEntity
         return m_pAttributes;
     }
 
-   protected:
+    protected:
     // NOTE: m_pAttributes needs to be set in the leaf class constructor.
     IHasAttributes *m_pAttributes;
 
@@ -1379,7 +1379,7 @@ class C_BaseEntity : public IClientEntity
         return 255;
     }
 
-   protected:
+    protected:
     // Two part guts of Interpolate(). Shared with C_BaseAnimating.
     enum
     {
@@ -1392,7 +1392,7 @@ class C_BaseEntity : public IClientEntity
     int BaseInterpolatePart1( float &currentTime, Vector &oldOrigin, QAngle &oldAngles, Vector &oldVel, int &bNoMoreChanges );
     void BaseInterpolatePart2( Vector &oldOrigin, QAngle &oldAngles, Vector &oldVel, int nChangeFlags );
 
-   public:
+    public:
     // Accessors for above
     static int GetPredictionRandomSeed( bool bUseUnSyncedServerPlatTime = false );
     static void SetPredictionRandomSeed( const CUserCmd *cmd );
@@ -1441,7 +1441,7 @@ class C_BaseEntity : public IClientEntity
     void SetRenderMode( RenderMode_t nRenderMode, bool bForceUpdate = false );
     RenderMode_t GetRenderMode() const;
 
-   public:
+    public:
     // Determine what entity this corresponds to
     int index;
 
@@ -1454,11 +1454,11 @@ class C_BaseEntity : public IClientEntity
 
     CNetworkColor32( m_clrRender );
 
-   private:
+    private:
     // Model for rendering
     const model_t *model;
 
-   public:
+    public:
     // Time animation sequence or frame was last changed
     float m_flAnimTime;
     float m_flOldAnimTime;
@@ -1471,13 +1471,13 @@ class C_BaseEntity : public IClientEntity
     byte m_ubInterpolationFrame;
     byte m_ubOldInterpolationFrame;
 
-   private:
+    private:
     // Effects to apply
     int m_fEffects;
     unsigned char m_nRenderMode;
     unsigned char m_nOldRenderMode;
 
-   public:
+    public:
     // Used to store the state we were added to the BSP as, so it can
     // reinsert the entity if the state changes.
     ClientRenderHandle_t m_hRender;  // link into spatial partition
@@ -1570,7 +1570,7 @@ class C_BaseEntity : public IClientEntity
         return MyCombatCharacterPointer() == NULL ? false : true;
     }
 
-   protected:
+    protected:
     int m_nFXComputeFrame;
 
     // FIXME: Should I move the functions handling these out of C_ClientEntity
@@ -1578,7 +1578,7 @@ class C_BaseEntity : public IClientEntity
     // Client handle
     CBaseHandle m_RefEHandle;  // Reference ehandle. Used to generate ehandles off this entity.
 
-   private:
+    private:
     // Set by tools if this entity should route "info" to various tools listening to HTOOLENTITIES
 #ifndef NO_TOOLFRAMEWORK
     bool m_bEnabledInToolView;
@@ -1588,7 +1588,7 @@ class C_BaseEntity : public IClientEntity
     bool m_bRecordInTools;  // should this entity be recorded in the tools (we exclude some things like models for menus)
 #endif
 
-   protected:
+    protected:
     // pointer to the entity's physics object (vphysics.dll)
     IPhysicsObject *m_pPhysicsObject;
 
@@ -1616,14 +1616,14 @@ class C_BaseEntity : public IClientEntity
         return 0;
     }
 
-   public:
+    public:
     // This can be used to setup the entity as a client-only entity. It gets an entity handle,
     // a render handle, and is put into the spatial partition.
     bool InitializeAsClientEntityByIndex( int iIndex, RenderGroup_t renderGroup );
 
     void TrackAngRotation( bool bTrack );
 
-   private:
+    private:
     friend void OnRenderStart();
 
     // Figure out the smoothly interpolated origin for all server entities. Happens right before
@@ -1848,7 +1848,7 @@ class C_BaseEntity : public IClientEntity
     AimEntsListHandle_t m_AimEntsListHandle;
     int m_nCreationTick;
 
-   public:
+    public:
     float m_fRenderingClipPlane[4];     // world space clip plane when drawing
     bool m_bEnableRenderingClipPlane;   // true to use the custom clip plane when drawing
     float *GetRenderClipPlane( void );  // Rendering clip plane, should be 4 floats, return value of NULL indicates a disabled render clip plane
@@ -1873,7 +1873,7 @@ class C_BaseEntity : public IClientEntity
     }
 #endif
 
-   protected:
+    protected:
     void AddToInterpolationList();
     void RemoveFromInterpolationList();
     unsigned short m_InterpolationListEntry;  // Entry into g_InterpolationList (or g_InterpolationList.InvalidIndex if not in the list).
@@ -1888,14 +1888,14 @@ class C_BaseEntity : public IClientEntity
 #ifdef TF_CLIENT_DLL
     // TF prevents drawing of any entity attached to players that aren't items in the inventory of the player.
     // This is to prevent servers creating fake cosmetic items and attaching them to players.
-   public:
+    public:
     virtual bool ValidateEntityAttachedToPlayer( bool &bShouldRetry );
     bool EntityDeemedInvalid( void )
     {
         return ( m_bValidatedOwner && m_bDeemedInvalid );
     }
 
-   protected:
+    protected:
     bool m_bValidatedOwner;
     bool m_bDeemedInvalid;
     bool m_bWasDeemedInvalid;
@@ -1903,7 +1903,7 @@ class C_BaseEntity : public IClientEntity
     color32 m_PreviousRenderColor;
 #endif
 
-   private:
+    private:
     bool m_bOldShouldDraw;
 };
 

@@ -355,7 +355,7 @@ bool CSteamID::SetFromStringStrict( const char *pchSteamID, EUniverse eDefaultUn
         // For 'A' we can have a trailing instance, which must
         // be the end of the string.
         if ( *pchEnd == '(' &&
-             chPrefix == 'A' )
+            chPrefix == 'A' )
         {
             if ( unIdx > 2 )
             {
@@ -365,7 +365,7 @@ bool CSteamID::SetFromStringStrict( const char *pchSteamID, EUniverse eDefaultUn
 
             pchEnd = DecimalToUint64( pchEnd + 1, k_unSteamAccountInstanceMask, &unVal[2] );
             if ( !pchEnd ||
-                 *pchEnd != ')' )
+                *pchEnd != ')' )
             {
                 bValid = false;
                 break;
@@ -389,7 +389,7 @@ bool CSteamID::SetFromStringStrict( const char *pchSteamID, EUniverse eDefaultUn
             if ( bBracket )
             {
                 if ( *pchEnd != ']' ||
-                     *( pchEnd + 1 ) != 0 )
+                    *( pchEnd + 1 ) != 0 )
                 {
                     bValid = false;
                 }
@@ -425,7 +425,7 @@ bool CSteamID::SetFromStringStrict( const char *pchSteamID, EUniverse eDefaultUn
     if ( unIdx > 1 )
     {
         if ( unVal[0] >= k_EUniverseInvalid &&
-             unVal[0] < k_EUniverseMax )
+            unVal[0] < k_EUniverseMax )
         {
             eUniverse = ( EUniverse )unVal[0];
             if ( eUniverse == k_EUniverseInvalid )

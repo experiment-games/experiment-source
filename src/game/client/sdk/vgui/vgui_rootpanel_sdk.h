@@ -27,7 +27,7 @@ class C_SDKRootPanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     C_SDKRootPanel( vgui::VPANEL parent );
     virtual ~C_SDKRootPanel( void );
 
@@ -41,7 +41,7 @@ class C_SDKRootPanel : public vgui::Panel
     // Run effects and let them decide whether to remove themselves
     void OnTick( void );
 
-   private:
+    private:
     // Render all panel effects
     void RenderPanelEffects( void );
 

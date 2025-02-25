@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CTEPhysicsProp : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEPhysicsProp, CBaseTempEntity );
 
     CTEPhysicsProp( const char* name );
@@ -29,7 +29,7 @@ class CTEPhysicsProp : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkQAngle( m_angRotation );
     CNetworkVector( m_vecVelocity );

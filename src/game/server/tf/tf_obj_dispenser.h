@@ -34,7 +34,7 @@ class CDispenserTouchTrigger : public CBaseTrigger
 {
     DECLARE_CLASS( CDispenserTouchTrigger, CBaseTrigger );
 
-   public:
+    public:
     CDispenserTouchTrigger() {}
 
     void Spawn( void )
@@ -87,7 +87,7 @@ class CObjectDispenser : public CBaseObject
 {
     DECLARE_CLASS( CObjectDispenser, CBaseObject );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CObjectDispenser();
@@ -193,11 +193,11 @@ class CObjectDispenser : public CBaseObject
         m_bUseGenerateMetalSound = false;
     }
 
-   private:
+    private:
     virtual void PlayActiveSound();
     void ResetHealingTargets( void );
 
-   protected:
+    protected:
     // The regular and mini dispenser can be repaired
     virtual bool CanBeRepaired() const OVERRIDE
     {
@@ -222,7 +222,7 @@ class CObjectDispenser : public CBaseObject
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     CountdownTimer m_spellTimer;
     CountdownTimer m_duckTimer;
     CountdownTimer m_soulTimer;
@@ -241,7 +241,7 @@ class CObjectCartDispenser : public CObjectDispenser
 {
     DECLARE_CLASS( CObjectCartDispenser, CObjectDispenser );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 

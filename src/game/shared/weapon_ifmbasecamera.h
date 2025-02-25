@@ -22,7 +22,7 @@
 
 class CWeaponIFMBaseCamera : public CWeaponIFMBase
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponIFMBaseCamera, CWeaponIFMBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -32,18 +32,18 @@ class CWeaponIFMBaseCamera : public CWeaponIFMBase
 #endif
 
     // Shared code
-   public:
+    public:
     CWeaponIFMBaseCamera();
 
 #ifdef CLIENT_DLL
     // Client code
-   public:
+    public:
     virtual void ViewModelDrawn( CBaseViewModel *pBaseViewModel );
     virtual void DrawCrosshair();
     virtual int DrawModel( int flags );
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   protected:
+    protected:
     // Gets the abs orientation of the camera
     virtual void ComputeAbsCameraTransform( Vector &vecAbsOrigin, QAngle &angAbsRotation );
 
@@ -68,11 +68,11 @@ class CWeaponIFMBaseCamera : public CWeaponIFMBase
 
 #ifdef GAME_DLL
     // Server code
-   public:
+    public:
     void SetRenderInfo( float flAspectRatio, float flFOV, float flArmLength, const Vector &vecPosition, const QAngle &angles );
 #endif
 
-   private:
+    private:
     CNetworkVar( float, m_flRenderAspectRatio );
     CNetworkVar( float, m_flRenderFOV );
     CNetworkVar( float, m_flRenderArmLength );

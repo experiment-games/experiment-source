@@ -461,7 +461,7 @@ void CHud::Init( void )
 
                 // Note:  When a panel is parented to the module root, it's "parent" is returned as NULL.
                 if ( !element->IsParentedToClientDLLRootPanel() &&
-                     !pPanel->GetParent() )
+                    !pPanel->GetParent() )
                 {
                     Assert( false );
                     DevMsg( "Hud element '%s'/'%s' doesn't have a parent\n", m_HudList[i]->GetName(), pPanel->GetName() );

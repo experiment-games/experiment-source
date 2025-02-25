@@ -19,14 +19,14 @@
 
 class CSteamShareSystem : public CBaseGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
     // Methods of IGameSystem
     virtual bool Init();
 
     // Methods of IGameEventListener2
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
 };
 
 extern IGameSystem *SteamShareSystem();

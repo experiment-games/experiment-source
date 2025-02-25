@@ -20,7 +20,7 @@ class CSpotlightEnd : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CSpotlightEnd, CBaseEntity );
 
     void Spawn( void );
@@ -33,7 +33,7 @@ class CSpotlightEnd : public CBaseEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVar( float, m_flLightScale );
     CNetworkVar( float, m_Radius );
     //	CNetworkVector( m_vSpotlightDir );

@@ -20,7 +20,7 @@ DECLARE_AUTO_LIST( IFuncPasstimeNoBallZoneAutoList );
 
 class CFuncPasstimeNoBallZone : public CBaseTrigger, public IFuncPasstimeNoBallZoneAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncPasstimeNoBallZone, CBaseTrigger );
     DECLARE_DATADESC();
     virtual void Spawn() OVERRIDE;

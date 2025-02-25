@@ -111,24 +111,24 @@ class CxxExceptionInConstructorTest : public Test {
 
   static void TearDownTestCase() {
     printf("%s",
-           "CxxExceptionInConstructorTest::TearDownTestCase() "
-           "called as expected.\n");
+            "CxxExceptionInConstructorTest::TearDownTestCase() "
+            "called as expected.\n");
   }
 
  protected:
   ~CxxExceptionInConstructorTest() {
     ADD_FAILURE() << "CxxExceptionInConstructorTest destructor "
-                  << "called unexpectedly.";
+                << "called unexpectedly.";
   }
 
   virtual void SetUp() {
     ADD_FAILURE() << "CxxExceptionInConstructorTest::SetUp() "
-                  << "called unexpectedly.";
+                << "called unexpectedly.";
   }
 
   virtual void TearDown() {
     ADD_FAILURE() << "CxxExceptionInConstructorTest::TearDown() "
-                  << "called unexpectedly.";
+                << "called unexpectedly.";
   }
 };
 
@@ -143,8 +143,8 @@ class CxxExceptionInDestructorTest : public Test {
  public:
   static void TearDownTestCase() {
     printf("%s",
-           "CxxExceptionInDestructorTest::TearDownTestCase() "
-           "called as expected.\n");
+            "CxxExceptionInDestructorTest::TearDownTestCase() "
+            "called as expected.\n");
   }
 
  protected:
@@ -161,8 +161,8 @@ class CxxExceptionInSetUpTestCaseTest : public Test {
  public:
   CxxExceptionInSetUpTestCaseTest() {
     printf("%s",
-           "CxxExceptionInSetUpTestCaseTest constructor "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTestCaseTest constructor "
+            "called as expected.\n");
   }
 
   static void SetUpTestCase() {
@@ -171,34 +171,34 @@ class CxxExceptionInSetUpTestCaseTest : public Test {
 
   static void TearDownTestCase() {
     printf("%s",
-           "CxxExceptionInSetUpTestCaseTest::TearDownTestCase() "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTestCaseTest::TearDownTestCase() "
+            "called as expected.\n");
   }
 
  protected:
   ~CxxExceptionInSetUpTestCaseTest() {
     printf("%s",
-           "CxxExceptionInSetUpTestCaseTest destructor "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTestCaseTest destructor "
+            "called as expected.\n");
   }
 
   virtual void SetUp() {
     printf("%s",
-           "CxxExceptionInSetUpTestCaseTest::SetUp() "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTestCaseTest::SetUp() "
+            "called as expected.\n");
   }
 
   virtual void TearDown() {
     printf("%s",
-           "CxxExceptionInSetUpTestCaseTest::TearDown() "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTestCaseTest::TearDown() "
+            "called as expected.\n");
   }
 };
 
 TEST_F(CxxExceptionInSetUpTestCaseTest, ThrowsExceptionInSetUpTestCase) {
   printf("%s",
-         "CxxExceptionInSetUpTestCaseTest test body "
-         "called as expected.\n");
+        "CxxExceptionInSetUpTestCaseTest test body "
+        "called as expected.\n");
 }
 
 class CxxExceptionInTearDownTestCaseTest : public Test {
@@ -214,23 +214,23 @@ class CxxExceptionInSetUpTest : public Test {
  public:
   static void TearDownTestCase() {
     printf("%s",
-           "CxxExceptionInSetUpTest::TearDownTestCase() "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTest::TearDownTestCase() "
+            "called as expected.\n");
   }
 
  protected:
   ~CxxExceptionInSetUpTest() {
     printf("%s",
-           "CxxExceptionInSetUpTest destructor "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTest destructor "
+            "called as expected.\n");
   }
 
   virtual void SetUp() { throw std::runtime_error("Standard C++ exception"); }
 
   virtual void TearDown() {
     printf("%s",
-           "CxxExceptionInSetUpTest::TearDown() "
-           "called as expected.\n");
+            "CxxExceptionInSetUpTest::TearDown() "
+            "called as expected.\n");
   }
 };
 
@@ -243,15 +243,15 @@ class CxxExceptionInTearDownTest : public Test {
  public:
   static void TearDownTestCase() {
     printf("%s",
-           "CxxExceptionInTearDownTest::TearDownTestCase() "
-           "called as expected.\n");
+            "CxxExceptionInTearDownTest::TearDownTestCase() "
+            "called as expected.\n");
   }
 
  protected:
   ~CxxExceptionInTearDownTest() {
     printf("%s",
-           "CxxExceptionInTearDownTest destructor "
-           "called as expected.\n");
+            "CxxExceptionInTearDownTest destructor "
+            "called as expected.\n");
   }
 
   virtual void TearDown() {
@@ -265,21 +265,21 @@ class CxxExceptionInTestBodyTest : public Test {
  public:
   static void TearDownTestCase() {
     printf("%s",
-           "CxxExceptionInTestBodyTest::TearDownTestCase() "
-           "called as expected.\n");
+            "CxxExceptionInTestBodyTest::TearDownTestCase() "
+            "called as expected.\n");
   }
 
  protected:
   ~CxxExceptionInTestBodyTest() {
     printf("%s",
-           "CxxExceptionInTestBodyTest destructor "
-           "called as expected.\n");
+            "CxxExceptionInTestBodyTest destructor "
+            "called as expected.\n");
   }
 
   virtual void TearDown() {
     printf("%s",
-           "CxxExceptionInTestBodyTest::TearDown() "
-           "called as expected.\n");
+            "CxxExceptionInTestBodyTest::TearDown() "
+            "called as expected.\n");
   }
 };
 

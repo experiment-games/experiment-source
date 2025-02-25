@@ -18,10 +18,10 @@ class CInfoTeleporterCountdown : public CPointEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     virtual int UpdateTransmitState();
 
-   private:
+    private:
     void InputDisable( inputdata_t &inputdata );
     void InputEnable( inputdata_t &inputdata );
     void InputStartCountdown( inputdata_t &inputdata );

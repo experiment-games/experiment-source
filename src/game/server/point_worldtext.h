@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 class CPointWorldText : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPointWorldText, CBaseEntity );
 
     CPointWorldText();
@@ -62,7 +62,7 @@ class CPointWorldText : public CBaseEntity
         m_bRainbow = inputdata.value.Bool();
     }
 
-   private:
+    private:
     CNetworkString( m_szText, MAX_PATH );
     CNetworkVar( float, m_flTextSize );
     CNetworkVar( float, m_flTextSpacingX );

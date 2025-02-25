@@ -20,7 +20,7 @@ class CStudioHdr;
 #pragma pack( 1 )
 class CModelSoundsCache : public IBaseCacheInfo
 {
-   public:
+    public:
     CUtlVector< unsigned short > sounds;
 
     CModelSoundsCache();
@@ -36,7 +36,7 @@ class CModelSoundsCache : public IBaseCacheInfo
     static void FindOrAddScriptSound( CUtlVector< unsigned short >& sounds, char const* soundname );
     static void BuildAnimationEventSoundList( CStudioHdr* hdr, CUtlVector< unsigned short >& sounds );
 
-   private:
+    private:
     char const* GetSoundName( int index );
 };
 #pragma pack()

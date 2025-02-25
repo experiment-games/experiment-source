@@ -26,7 +26,7 @@ class CSprite;
 //-----------------------------------------------------------------------------
 class CThrownGrenade : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CThrownGrenade, CBaseGrenade );
 
     void Spawn( void );

@@ -217,8 +217,8 @@ bool CAI_Senses::WaitingUntilSeen( CBaseEntity *pSightEnt )
             Vector zero = Vector( 0, 0, 0 );
             // don't link this client in the list if the npc is wait till seen and the player isn't facing the npc
             if ( pPlayer
-                 // && pPlayer->FVisible( GetOuter() )
-                 && pPlayer->FInViewCone( GetOuter() ) && FBoxVisible( pSightEnt, static_cast< CBaseEntity * >( GetOuter() ), zero ) )
+                // && pPlayer->FVisible( GetOuter() )
+                && pPlayer->FInViewCone( GetOuter() ) && FBoxVisible( pSightEnt, static_cast< CBaseEntity * >( GetOuter() ), zero ) )
             {
                 // player sees us, become normal now.
                 GetOuter()->m_spawnflags &= ~SF_NPC_WAIT_TILL_SEEN;
@@ -490,8 +490,8 @@ int CAI_Senses::LookForNPCs( int iDistance )
         else if ( bRemoveStaleFromCache )
         {
             if ( ( !( ( CAI_BaseNPC * )m_SeenNPCs[i].Get() )->ShouldNotDistanceCull() &&
-                   origin.DistToSqr( m_SeenNPCs[i]->GetAbsOrigin() ) > distSq ) ||
-                 !Look( m_SeenNPCs[i] ) )
+                    origin.DistToSqr( m_SeenNPCs[i]->GetAbsOrigin() ) > distSq ) ||
+                !Look( m_SeenNPCs[i] ) )
             {
                 m_SeenNPCs.FastRemove( i );
             }
@@ -620,7 +620,7 @@ CSound *CAI_Senses::GetClosestSound( bool fScent, int validTypes, bool bUsePrior
     while ( pCurrent )
     {
         if ( ( !fScent && pCurrent->FIsSound() ) ||
-             ( fScent && pCurrent->FIsScent() ) )
+            ( fScent && pCurrent->FIsScent() ) )
         {
             if ( pCurrent->IsSoundType( validTypes ) && !GetOuter()->ShouldIgnoreSound( pCurrent ) )
             {

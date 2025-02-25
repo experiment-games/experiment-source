@@ -13,10 +13,10 @@
 template < class Object, class RecordType >
 class InstanceLogger
 {
-   public:
+    public:
     typedef RecordType RecordType_t;
 
-   protected:
+    protected:
     void InstanceLog( const char* pMsg )
     {
         m_records.AddToTail( BuildRecord( pMsg ) );
@@ -37,7 +37,7 @@ class InstanceLogger
 
     virtual RecordType_t BuildRecord( const char* pMsg ) = 0;
 
-   private:
+    private:
     CUtlVector< RecordType > m_records;
 };
 

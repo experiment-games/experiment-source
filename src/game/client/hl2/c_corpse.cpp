@@ -23,7 +23,7 @@ int C_Corpse::DrawModel( int flags )
 {
     int drawn = 0;
     if ( m_nReferencePlayer <= 0 ||
-         m_nReferencePlayer > gpGlobals->maxClients )
+        m_nReferencePlayer > gpGlobals->maxClients )
     {
         return drawn;
     };

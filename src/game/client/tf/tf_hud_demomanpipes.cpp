@@ -32,14 +32,14 @@ class CHudDemomanPipes : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudDemomanPipes, EditablePanel );
 
-   public:
+    public:
     CHudDemomanPipes( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
     virtual bool ShouldDraw( void );
     virtual void OnTick( void );
 
-   private:
+    private:
     vgui::EditablePanel *m_pPipesPresent;
     vgui::EditablePanel *m_pNoPipesPresent;
 

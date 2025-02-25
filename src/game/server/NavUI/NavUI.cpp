@@ -646,7 +646,7 @@ void CNavUIBasePanel::OnCursorExited( void )
     /*
     if ( m_dragSelecting || m_dragUnselecting )
     {
-      PlaySound( "EDIT_END_AREA.Creating" );
+    PlaySound( "EDIT_END_AREA.Creating" );
     }
     m_dragSelecting = false;
     m_dragUnselecting = false;

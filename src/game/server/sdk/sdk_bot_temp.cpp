@@ -38,7 +38,7 @@ static int g_CurBotNumber = 1;
 // This is our bot class.
 class CSDKBot : public CSDKPlayer
 {
-   public:
+    public:
     bool m_bBackwards;
 
     float m_flNextTurnTime;
@@ -55,7 +55,7 @@ LINK_ENTITY_TO_CLASS( sdk_bot, CSDKBot );
 
 class CBotManager
 {
-   public:
+    public:
     static CBasePlayer *ClientPutInServerOverride_Bot( edict_t *pEdict, const char *playername )
     {
         // This tells it which edict to use rather than creating a new one.

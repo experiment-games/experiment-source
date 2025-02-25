@@ -38,7 +38,7 @@ class CLZMAStream;
 
 class CLZMA
 {
-   public:
+    public:
     static unsigned int Uncompress( unsigned char *pInput, unsigned char *pOutput );
     static bool IsCompressed( unsigned char *pInput );
     static unsigned int GetActualSize( unsigned char *pInput );
@@ -53,7 +53,7 @@ struct _CLzmaDec_t;
 
 class CLZMAStream
 {
-   public:
+    public:
     CLZMAStream();
     ~CLZMAStream();
 
@@ -65,14 +65,14 @@ class CLZMAStream
     // Makes progress until blocked on input or output.
     // Returns false if read stops due to an error or if called at EOF (GetExpectedBytesRemaining == 0)
     bool Read( unsigned char *pInput, unsigned int nMaxInputBytes, unsigned char *pOutput, unsigned int nMaxOutputBytes,
-               /* out */ unsigned int &nCompressedBytesRead,
-               /* out */ unsigned int &nOutputBytesWritten );
+                /* out */ unsigned int &nCompressedBytesRead,
+                /* out */ unsigned int &nOutputBytesWritten );
 
     // Get the expected uncompressed bytes yet to be read from this stream. Returns false if not yet known, such as
     // before being fed the header.
     bool GetExpectedBytesRemaining( /* out */ unsigned int &nBytesRemaining );
 
-   private:
+    private:
     enum eHeaderParse
     {
         eHeaderParse_OK,

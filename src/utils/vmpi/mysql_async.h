@@ -16,7 +16,7 @@ class IMySQL;
 
 class CQueryResults
 {
-   public:
+    public:
     IMySQLRowSet *m_pResults;
     void *m_pUserData;          // This is the value passed to Execute.
     CCycleCount m_ExecuteTime;  // How long it took to execute this query in MySQL.
@@ -27,7 +27,7 @@ class CQueryResults
 // then you can pop the results off as they arrive.
 class IMySQLAsync
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     // After finishing the current query, if there is one, this immediately executes

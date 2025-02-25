@@ -44,13 +44,13 @@ static bool g_bCanLikeCoach = false;
 // used by the waiting dialogs
 class CCoachingWaitDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CCoachingWaitDialog()
         : CGenericWaitingDialog( NULL )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         ShowMessageBox( "#TF_Coach_Timeout_Title", "#TF_Coach_Timeout_Text", "#GameUI_OK" );
@@ -132,7 +132,7 @@ class CSelectPlayerForCoachDialog : public CSelectPlayerDialog
 {
     DECLARE_CLASS_SIMPLE( CSelectPlayerForCoachDialog, CSelectPlayerDialog );
 
-   public:
+    public:
     CSelectPlayerForCoachDialog();
     virtual ~CSelectPlayerForCoachDialog();
     virtual void OnSelectPlayer( const CSteamID &steamID );
@@ -143,7 +143,7 @@ class CSelectPlayerForCoachDialog : public CSelectPlayerDialog
     }
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   protected:
+    protected:
     virtual const char *GetResFile()
     {
         return "resource/ui/SelectPlayerDialog_Coach.res";
@@ -275,7 +275,7 @@ CON_COMMAND( cl_coach_toggle, "Toggle coach status" )
 
 class CGCCoaching_AddToCoachesResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_AddToCoachesResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -302,7 +302,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_AddToCoachesResponse, "CGCCoaching_Add
 
 class CGCCoaching_RemoveFromCoachesResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_RemoveFromCoachesResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -325,7 +325,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_RemoveFromCoachesResponse, "CGCCoachin
 
 class CGCCoaching_RemovedAsCoach : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_RemovedAsCoach( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -385,7 +385,7 @@ CON_COMMAND( cl_coach_find_coach, "Request a coach for the current game" )
 
 class CGCCoaching_FindCoachResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_FindCoachResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -428,7 +428,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_FindCoachResponse, "CGCCoaching_FindCo
 
 class CTFAskCoachNotification : public CEconNotification
 {
-   public:
+    public:
     CTFAskCoachNotification( bool bStudentIsFriend )
         : CEconNotification(), m_bStudentIsFriend( bStudentIsFriend )
     {
@@ -446,10 +446,10 @@ class CTFAskCoachNotification : public CEconNotification
     {
         // prompt coach
         ShowConfirmDialog( "#TF_Coach_AskCoach_Title",
-                           m_bStudentIsFriend ? "#TF_Coach_AskCoachForFriend_Text" : "#TF_Coach_AskCoach_Text",
-                           "#TF_Coach_Yes",
-                           "#TF_Coach_No",
-                           &AskCoachCallback );
+                            m_bStudentIsFriend ? "#TF_Coach_AskCoachForFriend_Text" : "#TF_Coach_AskCoach_Text",
+                            "#TF_Coach_Yes",
+                            "#TF_Coach_No",
+                            &AskCoachCallback );
     }
 
     virtual void Accept()
@@ -473,7 +473,7 @@ class CTFAskCoachNotification : public CEconNotification
         pNotification->MarkForDeletion();
     }
 
-   protected:
+    protected:
     bool m_bStudentIsFriend;
 };
 
@@ -481,7 +481,7 @@ class CTFAskCoachNotification : public CEconNotification
 
 class CGCCoaching_AskCoach : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_AskCoach( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
     virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
@@ -510,7 +510,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_AskCoach, "CGCCoaching_AskCoach", k_EM
 
 class CGCCoaching_CoachJoinGame : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_CoachJoinGame( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -543,7 +543,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_CoachJoinGame, "CGCCoaching_CoachJoinG
 
 class CGCCoaching_AlreadyRatedCoach : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCCoaching_AlreadyRatedCoach( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -656,7 +656,7 @@ class CCoachedByPanel : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCoachedByPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CCoachedByPanel( const char *pElementName )
         : CHudElement( pElementName ), BaseClass( NULL, "CoachedByPanel" ), m_bCanLikeCoach( false )
     {
@@ -779,7 +779,7 @@ class CCoachedByPanel : public CHudElement, public vgui::EditablePanel
         }
         const char *name = event->GetName();
         if ( FStrEq( name, "localplayer_changeteam" ) ||
-             ( FStrEq( name, "player_changename" ) && event->GetInt( "userid" ) == pLocalTFPlayer->m_hCoach->GetUserID() ) )
+            ( FStrEq( name, "player_changename" ) && event->GetInt( "userid" ) == pLocalTFPlayer->m_hCoach->GetUserID() ) )
         {
             UpdateUI();
             InvalidateLayout();
@@ -855,7 +855,7 @@ class CCoachedByPanel : public CHudElement, public vgui::EditablePanel
         SetChildPanelVisible( this, "LikeCoachLabel", m_bCanLikeCoach );
     }
 
-   protected:
+    protected:
     CAvatarImagePanel *m_pAvatar;
     vgui::Label *m_pCoachNameLabel;
     vgui::Panel *m_pBGPanel_Blue;

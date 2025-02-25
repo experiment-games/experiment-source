@@ -32,7 +32,7 @@ struct BeamTrail_t;
 
 class Beam_t : public CDefaultClientRenderable
 {
-   public:
+    public:
     Beam_t();
 
     // Methods of IClientRenderable

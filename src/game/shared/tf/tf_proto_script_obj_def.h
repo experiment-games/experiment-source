@@ -115,7 +115,7 @@ struct ProtoDefID_t
         return m_ID.defindex();
     }
 
-   private:
+    private:
     CMsgProtoDefID m_ID;
 };
 
@@ -141,7 +141,7 @@ class IProtoBufScriptObjectDefinition
     friend class CProtoEditingPanel;
     friend class CMessageEditorPanel;
 
-   public:
+    public:
     IProtoBufScriptObjectDefinition();
     virtual ~IProtoBufScriptObjectDefinition() {}
 
@@ -159,7 +159,7 @@ class IProtoBufScriptObjectDefinition
 
     virtual const google::protobuf::Message* GetTopLayerMessage() const = 0;
 
-   protected:
+    protected:
     void SerializeToBuffer( CUtlBuffer& bufOut ) const;
     bool BParseFromBuffer( CUtlBuffer& bufIn, CUtlVector< CUtlString >* pVecErrors );
     bool BParseFromString( std::string& strIn, CUtlVector< CUtlString >* pVecErrors );
@@ -173,7 +173,7 @@ class IProtoBufScriptObjectDefinition
         return true;
     }
 
-   protected:
+    protected:
     // This is the message that has the data specific to THIS definition, without any prefab values.
     virtual google::protobuf::Message* GetMutableTopLayerMsg() = 0;
     // This is the message that has all the data inherited by this definition, without definition specific values.
@@ -189,7 +189,7 @@ class IProtoBufScriptObjectDefinition
 template < class MsgType, ProtoDefTypes DefType >
 class CTypedProtoBufScriptObjectDefinition : public IProtoBufScriptObjectDefinition
 {
-   public:
+    public:
     CTypedProtoBufScriptObjectDefinition()
     {
         // If you hit this, your Protobuf Message doesn't have a CMsgProtoDefHeader field named "header".  Add one!
@@ -223,7 +223,7 @@ class CTypedProtoBufScriptObjectDefinition : public IProtoBufScriptObjectDefinit
 
     const static ProtoDefTypes k_nDefType = DefType;
 
-   protected:
+    protected:
     google::protobuf::Message* GetMutableTopLayerMsg() OVERRIDE
     {
         return &m_msgTopLayerData;
@@ -241,7 +241,7 @@ class CTypedProtoBufScriptObjectDefinition : public IProtoBufScriptObjectDefinit
 
 class CProtoDefReferenceFinder : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CProtoDefReferenceFinder();
     virtual ~CProtoDefReferenceFinder() {}
 
@@ -264,7 +264,7 @@ class CProtoDefReferenceFinder : public CAutoGameSystemPerFrame
         return m_vecPrefabReferences;
     }
 
-   protected:
+    protected:
     void SearchForReferencesForDef( const ProtoDefID_t& defID );
 
     virtual void OnDone() {}
@@ -279,7 +279,7 @@ class CProtoDefReferenceFinder : public CAutoGameSystemPerFrame
     bool m_bSearchingOriginalDef = true;
     CUtlVector< ProtoDefID_t > m_vecReferences;
 
-   private:
+    private:
     CUtlVector< ProtoDefID_t > m_vecPrefabReferences;
     int m_nPrefabIterator = 0;
     ProtoDefID_t m_defID;
@@ -303,7 +303,7 @@ extern ProtoDefTypeDesc_t g_ProtoDefTypeDescs[];
 
 class CConversionFuncRegister
 {
-   public:
+    public:
     CConversionFuncRegister( protoDefPostSolveFunc func, ProtoDefTypes eType )
     {
         g_ProtoDefTypeDescs[eType].m_pfnPostSolve = func;
@@ -321,7 +321,7 @@ typedef CUtlMap< uint32, IProtoBufScriptObjectDefinition* > DefinitionMap_t;
 class CProtoBufScriptObjectDefinitionManager
     : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CProtoBufScriptObjectDefinitionManager();
 
     virtual bool Init() OVERRIDE;
@@ -359,7 +359,7 @@ class CProtoBufScriptObjectDefinitionManager
 
     void RegisterTypeFactory( const IProtoBufScriptObjectFactory* pFactory );
 
-   private:
+    private:
     void InsertObjectIntoMap( IProtoBufScriptObjectDefinition* pObject );
 
     DefinitionMap_t m_arDefinitionsMaps[ProtoDefTypes_ARRAYSIZE];
@@ -376,7 +376,7 @@ class CProtoBufScriptObjectDefinitionManager
 //
 class IProtoBufScriptObjectFactory
 {
-   public:
+    public:
     IProtoBufScriptObjectFactory( const char* pszName, ProtoDefTypes eType )
         : m_strName( pszName ), m_eType( eType )
     {
@@ -392,7 +392,7 @@ class IProtoBufScriptObjectFactory
         return m_strName;
     }
 
-   private:
+    private:
     CUtlString m_strName;
     ProtoDefTypes m_eType;
 };
@@ -400,7 +400,7 @@ class IProtoBufScriptObjectFactory
 template < class Type >
 class CProtoBufScriptObjectFactory : public IProtoBufScriptObjectFactory
 {
-   public:
+    public:
     CProtoBufScriptObjectFactory( const char* pszName, ProtoDefTypes eType )
         : IProtoBufScriptObjectFactory( pszName, eType )
     {
@@ -553,12 +553,12 @@ void ForEachConstProtoField( const google::protobuf::Message* pMsg, F&& operatio
 }
 
 const ::google::protobuf::Message* GetSubMessage( const ::google::protobuf::Message* pMsg,
-                                                  const ::google::protobuf::FieldDescriptor* pField,
-                                                  int nIndex );
+                                                const ::google::protobuf::FieldDescriptor* pField,
+                                                int nIndex );
 
 ::google::protobuf::Message* GetMutableSubMessage( ::google::protobuf::Message* pMsg,
-                                                   const ::google::protobuf::FieldDescriptor* pField,
-                                                   int nIndex );
+                                                    const ::google::protobuf::FieldDescriptor* pField,
+                                                    int nIndex );
 
 ::google::protobuf::Message* AddSubMessage( ::google::protobuf::Message* pMsg, const ::google::protobuf::FieldDescriptor* pField );
 

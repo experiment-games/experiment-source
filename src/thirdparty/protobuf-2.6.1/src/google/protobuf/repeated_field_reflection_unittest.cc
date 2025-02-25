@@ -73,45 +73,45 @@ TEST(RepeatedFieldReflectionTest, RegularFields) {
 
   // Get FieldDescriptors for all the fields of interest.
   const FieldDescriptor* fd_repeated_int32 =
-      desc->FindFieldByName("repeated_int32");
+    desc->FindFieldByName("repeated_int32");
   const FieldDescriptor* fd_repeated_double =
-      desc->FindFieldByName("repeated_double");
+    desc->FindFieldByName("repeated_double");
   const FieldDescriptor* fd_repeated_string =
-      desc->FindFieldByName("repeated_string");
+    desc->FindFieldByName("repeated_string");
   const FieldDescriptor* fd_repeated_foreign_message =
-      desc->FindFieldByName("repeated_foreign_message");
+    desc->FindFieldByName("repeated_foreign_message");
 
   // Get RepeatedField objects for all fields of interest.
   const RepeatedField<int32>& rf_int32 =
-      refl->GetRepeatedField<int32>(message, fd_repeated_int32);
+    refl->GetRepeatedField<int32>(message, fd_repeated_int32);
   const RepeatedField<double>& rf_double =
-      refl->GetRepeatedField<double>(message, fd_repeated_double);
+    refl->GetRepeatedField<double>(message, fd_repeated_double);
 
   // Get mutable RepeatedField objects for all fields of interest.
   RepeatedField<int32>* mrf_int32 =
-      refl->MutableRepeatedField<int32>(&message, fd_repeated_int32);
+    refl->MutableRepeatedField<int32>(&message, fd_repeated_int32);
   RepeatedField<double>* mrf_double =
-      refl->MutableRepeatedField<double>(&message, fd_repeated_double);
+    refl->MutableRepeatedField<double>(&message, fd_repeated_double);
 
   // Get RepeatedPtrField objects for all fields of interest.
   const RepeatedPtrField<string>& rpf_string =
-      refl->GetRepeatedPtrField<string>(message, fd_repeated_string);
+    refl->GetRepeatedPtrField<string>(message, fd_repeated_string);
   const RepeatedPtrField<ForeignMessage>& rpf_foreign_message =
-      refl->GetRepeatedPtrField<ForeignMessage>(
-          message, fd_repeated_foreign_message);
+    refl->GetRepeatedPtrField<ForeignMessage>(
+        message, fd_repeated_foreign_message);
   const RepeatedPtrField<Message>& rpf_message =
-      refl->GetRepeatedPtrField<Message>(
-          message, fd_repeated_foreign_message);
+    refl->GetRepeatedPtrField<Message>(
+        message, fd_repeated_foreign_message);
 
   // Get mutable RepeatedPtrField objects for all fields of interest.
   RepeatedPtrField<string>* mrpf_string =
-      refl->MutableRepeatedPtrField<string>(&message, fd_repeated_string);
+    refl->MutableRepeatedPtrField<string>(&message, fd_repeated_string);
   RepeatedPtrField<ForeignMessage>* mrpf_foreign_message =
-      refl->MutableRepeatedPtrField<ForeignMessage>(
-          &message, fd_repeated_foreign_message);
+    refl->MutableRepeatedPtrField<ForeignMessage>(
+        &message, fd_repeated_foreign_message);
   RepeatedPtrField<Message>* mrpf_message =
-      refl->MutableRepeatedPtrField<Message>(
-          &message, fd_repeated_foreign_message);
+    refl->MutableRepeatedPtrField<Message>(
+        &message, fd_repeated_foreign_message);
 
   // Make sure we can do get and sets through the Repeated[Ptr]Field objects.
   for (int i = 0; i < 10; ++i) {
@@ -121,7 +121,7 @@ TEST(RepeatedFieldReflectionTest, RegularFields) {
     EXPECT_EQ(rpf_string.Get(i), StrFunc(i, 5));
     EXPECT_EQ(rpf_foreign_message.Get(i).c(), Func(i, 6));
     EXPECT_EQ(down_cast<const ForeignMessage*>(&rpf_message.Get(i))->c(),
-              Func(i, 6));
+            Func(i, 6));
 
     // Check gets through mutable objects.
     EXPECT_EQ(mrf_int32->Get(i), Func(i, 1));
@@ -129,7 +129,7 @@ TEST(RepeatedFieldReflectionTest, RegularFields) {
     EXPECT_EQ(mrpf_string->Get(i), StrFunc(i, 5));
     EXPECT_EQ(mrpf_foreign_message->Get(i).c(), Func(i, 6));
     EXPECT_EQ(down_cast<const ForeignMessage*>(&mrpf_message->Get(i))->c(),
-              Func(i, 6));
+            Func(i, 6));
 
     // Check sets through mutable objects.
     mrf_int32->Set(i, Func(i, -1));
@@ -147,13 +147,13 @@ TEST(RepeatedFieldReflectionTest, RegularFields) {
 #ifdef PROTOBUF_HAS_DEATH_TEST
   // Make sure types are checked correctly at runtime.
   const FieldDescriptor* fd_optional_int32 =
-      desc->FindFieldByName("optional_int32");
+    desc->FindFieldByName("optional_int32");
   EXPECT_DEATH(refl->GetRepeatedField<int32>(
-      message, fd_optional_int32), "requires a repeated field");
+    message, fd_optional_int32), "requires a repeated field");
   EXPECT_DEATH(refl->GetRepeatedField<double>(
-      message, fd_repeated_int32), "not the right type");
+    message, fd_repeated_int32), "not the right type");
   EXPECT_DEATH(refl->GetRepeatedPtrField<TestAllTypes>(
-      message, fd_repeated_foreign_message), "wrong submessage type");
+    message, fd_repeated_foreign_message), "wrong submessage type");
 #endif  // PROTOBUF_HAS_DEATH_TEST
 }
 
@@ -171,15 +171,15 @@ TEST(RepeatedFieldReflectionTest, ExtensionFields) {
   }
 
   const FieldDescriptor* fd_repeated_int64_extension =
-      desc->file()->FindExtensionByName("repeated_int64_extension");
+    desc->file()->FindExtensionByName("repeated_int64_extension");
   GOOGLE_CHECK(fd_repeated_int64_extension != NULL);
 
   const RepeatedField<int64>& rf_int64_extension =
-      refl->GetRepeatedField<int64>(extended_message,
+    refl->GetRepeatedField<int64>(extended_message,
                                     fd_repeated_int64_extension);
 
   RepeatedField<int64>* mrf_int64_extension =
-      refl->MutableRepeatedField<int64>(&extended_message,
+    refl->MutableRepeatedField<int64>(&extended_message,
                                         fd_repeated_int64_extension);
 
   for (int i = 0; i < 10; ++i) {

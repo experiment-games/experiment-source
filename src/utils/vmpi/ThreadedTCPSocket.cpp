@@ -33,7 +33,7 @@ bool g_bSetTCPSocketThreadPriorities = true;
 #pragma message( "**** WARNING **** ThreadedTCPSocket requires multithreaded runtime libraries to be used.\n" )
 class MTChecker
 {
-   public:
+    public:
     MTChecker()
     {
         Assert( false );
@@ -94,7 +94,7 @@ void CTCPPacket::Release()
 // ------------------------------------------------------------------------------------------------ //
 class CThreadedTCPSocket : public IThreadedTCPSocket
 {
-   public:
+    public:
     static IThreadedTCPSocket *Create( SOCKET iSocket, CIPAddr remoteAddr, ITCPSocketHandler *pHandler, bool bDeleteHandler )
     {
         CThreadedTCPSocket *pRet = new CThreadedTCPSocket;
@@ -110,7 +110,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
     }
 
     // IThreadedTCPSocket implementation.
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -146,7 +146,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
     }
 
     // Initialization.
-   private:
+    private:
     CThreadedTCPSocket()
     {
         m_Socket = INVALID_SOCKET;
@@ -257,7 +257,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
     }
 
     // Send thread functionality.
-   private:
+    private:
     // This function copies off the payload and adds a SendChunk_t to the list of chunks to be sent.
     // It also fires the ReadyToSend event so the thread will pick it up.
     bool InternalSend( void const *const *pChunks, const int *pChunkLengths, int nChunks, bool bPrependLength )
@@ -466,7 +466,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
     }
 
     // Receive thread functionality.
-   private:
+    private:
     bool RecvThread_WaitToReceiveSize()
     {
         return RecvThread_InternalRecv( &m_NextPacketLen, sizeof( m_NextPacketLen ), false, true );
@@ -643,7 +643,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
     }
 
     // Error handling.
-   private:
+    private:
     // This checks to see if either thread has signaled an error. If so, it shuts down the socket and returns true.
     bool CheckErrorSignal()
     {
@@ -694,7 +694,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
         m_bErrorSignal = true;
     }
 
-   private:
+    private:
     // Data for the send thread.
     typedef struct
     {
@@ -720,7 +720,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
     bool m_bWaitingForSize;     // This tells if we're trying to receive the next packet length or the next packet's data.
 
     int m_NextPacketLen;  // Data is received INTO here before it receives each packet. This
-                          // holds the length of each incoming packet.
+                        // holds the length of each incoming packet.
 
     WSAOVERLAPPED m_RecvOverlapped;
     CEvent m_hRecvEvent;
@@ -743,7 +743,7 @@ class CThreadedTCPSocket : public IThreadedTCPSocket
 // ------------------------------------------------------------------------------------------------ //
 class CTCPConnectSocket_Listener : public ITCPConnectSocket
 {
-   public:
+    public:
     CTCPConnectSocket_Listener()
     {
         m_Socket = INVALID_SOCKET;
@@ -776,7 +776,7 @@ class CTCPConnectSocket_Listener : public ITCPConnectSocket
         CIPAddr addr( 0, 0, 0, 0, port );  // INADDR_ANY
         pRet->m_Socket = TCPBind( &addr );
         if ( pRet->m_Socket == INVALID_SOCKET ||
-             listen( pRet->m_Socket, nQueueLength == -1 ? SOMAXCONN : nQueueLength ) != 0 )
+            listen( pRet->m_Socket, nQueueLength == -1 ? SOMAXCONN : nQueueLength ) != 0 )
         {
             pRet->Release();
             return false;
@@ -787,7 +787,7 @@ class CTCPConnectSocket_Listener : public ITCPConnectSocket
     }
 
     // ITCPConnectSocket implementation.
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -849,7 +849,7 @@ class CTCPConnectSocket_Listener : public ITCPConnectSocket
         }
     }
 
-   private:
+    private:
     SOCKET m_Socket;
 
     IHandlerCreator *m_pHandler;
@@ -868,7 +868,7 @@ ITCPConnectSocket *ThreadedTCP_CreateListener(
 // ------------------------------------------------------------------------------------------------ //
 class CTCPConnectSocket_Connector : public ITCPConnectSocket
 {
-   public:
+    public:
     CTCPConnectSocket_Connector()
     {
         m_bConnected = false;
@@ -933,7 +933,7 @@ class CTCPConnectSocket_Connector : public ITCPConnectSocket
     }
 
     // ITCPConnectSocket implementation.
-   public:
+    public:
     virtual void Release()
     {
         delete this;
@@ -1016,7 +1016,7 @@ class CTCPConnectSocket_Connector : public ITCPConnectSocket
         return false;
     }
 
-   private:
+    private:
     bool m_bError;
     bool m_bConnected;
 

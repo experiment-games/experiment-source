@@ -109,7 +109,7 @@ struct ParseResult
     //!! Unspecified boolean type
     typedef bool ( ParseResult::*BooleanType )() const;
 
-   public:
+    public:
     //! Default constructor, no error.
     ParseResult()
         : code_( kParseErrorNone ), offset_( 0 ) {}
@@ -177,7 +177,7 @@ struct ParseResult
         offset_ = offset;
     }
 
-   private:
+    private:
     ParseErrorCode code_;
     size_t offset_;
 };

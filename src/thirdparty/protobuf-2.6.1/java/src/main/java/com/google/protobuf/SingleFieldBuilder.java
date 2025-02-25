@@ -58,8 +58,8 @@ package com.google.protobuf;
  */
 public class SingleFieldBuilder
     <MType extends GeneratedMessage,
-     BType extends GeneratedMessage.Builder,
-     IType extends MessageOrBuilder>
+    BType extends GeneratedMessage.Builder,
+    IType extends MessageOrBuilder>
     implements GeneratedMessage.BuilderParent {
 
   // Parent to send changes to.
@@ -81,11 +81,11 @@ public class SingleFieldBuilder
   private boolean isClean;
 
   public SingleFieldBuilder(
-      MType message,
-      GeneratedMessage.BuilderParent parent,
-      boolean isClean) {
+    MType message,
+    GeneratedMessage.BuilderParent parent,
+    boolean isClean) {
     if (message == null) {
-      throw new NullPointerException();
+    throw new NullPointerException();
     }
     this.message = message;
     this.parent = parent;
@@ -98,27 +98,27 @@ public class SingleFieldBuilder
   }
 
   /**
-   * Get the message for the field. If the message is currently stored
-   * as a {@code Builder}, it is converted to a {@code Message} by
-   * calling {@link Message.Builder#buildPartial} on it. If no message has
-   * been set, returns the default instance of the message.
-   *
-   * @return the message for the field
-   */
+    * Get the message for the field. If the message is currently stored
+    * as a {@code Builder}, it is converted to a {@code Message} by
+    * calling {@link Message.Builder#buildPartial} on it. If no message has
+    * been set, returns the default instance of the message.
+    *
+    * @return the message for the field
+    */
   @SuppressWarnings("unchecked")
   public MType getMessage() {
     if (message == null) {
-      // If message is null, the invariant is that we must be have a builder.
-      message = (MType) builder.buildPartial();
+    // If message is null, the invariant is that we must be have a builder.
+    message = (MType) builder.buildPartial();
     }
     return message;
   }
 
   /**
-   * Builds the message and returns it.
-   *
-   * @return the message
-   */
+    * Builds the message and returns it.
+    *
+    * @return the message
+    */
   public MType build() {
     // Now that build has been called, we are required to dispatch
     // invalidations.
@@ -127,110 +127,110 @@ public class SingleFieldBuilder
   }
 
   /**
-   * Gets a builder for the field. If no builder has been created yet, a
-   * builder is created on demand by calling {@link Message#toBuilder}.
-   *
-   * @return The builder for the field
-   */
+    * Gets a builder for the field. If no builder has been created yet, a
+    * builder is created on demand by calling {@link Message#toBuilder}.
+    *
+    * @return The builder for the field
+    */
   @SuppressWarnings("unchecked")
   public BType getBuilder() {
     if (builder == null) {
-      // builder.mergeFrom() on a fresh builder
-      // does not create any sub-objects with independent clean/dirty states,
-      // therefore setting the builder itself to clean without actually calling
-      // build() cannot break any invariants.
-      builder = (BType) message.newBuilderForType(this);
-      builder.mergeFrom(message); // no-op if message is the default message
-      builder.markClean();
+    // builder.mergeFrom() on a fresh builder
+    // does not create any sub-objects with independent clean/dirty states,
+    // therefore setting the builder itself to clean without actually calling
+    // build() cannot break any invariants.
+    builder = (BType) message.newBuilderForType(this);
+    builder.mergeFrom(message); // no-op if message is the default message
+    builder.markClean();
     }
     return builder;
   }
 
   /**
-   * Gets the base class interface for the field. This may either be a builder
-   * or a message. It will return whatever is more efficient.
-   *
-   * @return the message or builder for the field as the base class interface
-   */
+    * Gets the base class interface for the field. This may either be a builder
+    * or a message. It will return whatever is more efficient.
+    *
+    * @return the message or builder for the field as the base class interface
+    */
   @SuppressWarnings("unchecked")
   public IType getMessageOrBuilder() {
     if (builder != null) {
-      return  (IType) builder;
+    return  (IType) builder;
     } else {
-      return (IType) message;
+    return (IType) message;
     }
   }
 
   /**
-   * Sets a  message for the field replacing any existing value.
-   *
-   * @param message the message to set
-   * @return the builder
-   */
+    * Sets a  message for the field replacing any existing value.
+    *
+    * @param message the message to set
+    * @return the builder
+    */
   public SingleFieldBuilder<MType, BType, IType> setMessage(
-      MType message) {
+    MType message) {
     if (message == null) {
-      throw new NullPointerException();
+    throw new NullPointerException();
     }
     this.message = message;
     if (builder != null) {
-      builder.dispose();
-      builder = null;
+    builder.dispose();
+    builder = null;
     }
     onChanged();
     return this;
   }
 
   /**
-   * Merges the field from another field.
-   *
-   * @param value the value to merge from
-   * @return the builder
-   */
+    * Merges the field from another field.
+    *
+    * @param value the value to merge from
+    * @return the builder
+    */
   public SingleFieldBuilder<MType, BType, IType> mergeFrom(
-      MType value) {
+    MType value) {
     if (builder == null && message == message.getDefaultInstanceForType()) {
-      message = value;
+    message = value;
     } else {
-      getBuilder().mergeFrom(value);
+    getBuilder().mergeFrom(value);
     }
     onChanged();
     return this;
   }
 
   /**
-   * Clears the value of the field.
-   *
-   * @return the builder
-   */
+    * Clears the value of the field.
+    *
+    * @return the builder
+    */
   @SuppressWarnings("unchecked")
   public SingleFieldBuilder<MType, BType, IType> clear() {
     message = (MType) (message != null ?
         message.getDefaultInstanceForType() :
         builder.getDefaultInstanceForType());
     if (builder != null) {
-      builder.dispose();
-      builder = null;
+    builder.dispose();
+    builder = null;
     }
     onChanged();
     return this;
   }
 
   /**
-   * Called when a the builder or one of its nested children has changed
-   * and any parent should be notified of its invalidation.
-   */
+    * Called when a the builder or one of its nested children has changed
+    * and any parent should be notified of its invalidation.
+    */
   private void onChanged() {
     // If builder is null, this is the case where onChanged is being called
     // from setMessage or clear.
     if (builder != null) {
-      message = null;
+    message = null;
     }
     if (isClean && parent != null) {
-      parent.markDirty();
+    parent.markDirty();
 
-      // Don't keep dispatching invalidations until build is called again.
-      isClean = false;
+    // Don't keep dispatching invalidations until build is called again.
+    isClean = false;
     }
   }
 

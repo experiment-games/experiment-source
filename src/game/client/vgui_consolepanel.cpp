@@ -20,10 +20,10 @@ class CConPanel;
 
 class CConsole : public IConsole
 {
-   private:
+    private:
     CConPanel *conPanel;
 
-   public:
+    public:
     CConsole( void )
     {
         conPanel = NULL;
@@ -41,8 +41,8 @@ class CConsole : public IConsole
         /*
         if ( conPanel )
         {
-          conPanel->SetParent( (vgui::Panel *)NULL );
-          delete conPanel;
+        conPanel->SetParent( (vgui::Panel *)NULL );
+        delete conPanel;
         }
         */
     }

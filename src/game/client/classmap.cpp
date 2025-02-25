@@ -13,7 +13,7 @@
 
 class classentry_t
 {
-   public:
+    public:
     classentry_t()
     {
         mapname[0] = 0;
@@ -54,7 +54,7 @@ class classentry_t
 #if defined( LUA_SDK )
     bool scripted;
 #endif
-   private:
+    private:
     char mapname[40];
 #if defined( LUA_SDK )
     char classname[40];
@@ -63,7 +63,7 @@ class classentry_t
 
 class CClassMap : public IClassMap
 {
-   public:
+    public:
 #ifdef LUA_SDK
     virtual void Add( const char *mapname, const char *classname, int size, DISPATCHFUNCTION factory /*= 0*/, bool scripted );
     virtual void RemoveAllScripted( void );
@@ -77,7 +77,7 @@ class CClassMap : public IClassMap
     virtual C_BaseEntity *CreateEntity( const char *mapname );
     virtual int GetClassSize( const char *classname );
 
-   private:
+    private:
     CUtlDict< classentry_t, unsigned short > m_ClassDict;
 };
 
@@ -179,7 +179,7 @@ const char *CClassMap::Lookup( const char *classname )
 DISPATCHFUNCTION CClassMap::FindFactory( const char *classname )
 {
     for ( int i = m_ClassDict.First(); i != m_ClassDict.InvalidIndex();
-          i = m_ClassDict.Next( i ) )
+        i = m_ClassDict.Next( i ) )
     {
         classentry_t *lookup = &m_ClassDict[i];
         if ( !lookup )

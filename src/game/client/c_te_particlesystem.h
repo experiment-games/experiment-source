@@ -39,13 +39,13 @@ typedef enum
 
 class C_TEParticleSystem : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEParticleSystem, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
     C_TEParticleSystem();
 
-   public:
+    public:
     // particle effect sort origin
     Vector m_vecOrigin;
 };
@@ -58,7 +58,7 @@ class C_TEParticleSystem : public C_BaseTempEntity
 
 class CTEParticleRenderer : public CParticleEffect
 {
-   public:
+    public:
     DECLARE_CLASS( CTEParticleRenderer, CParticleEffect );
     virtual ~CTEParticleRenderer();
 
@@ -78,11 +78,11 @@ class CTEParticleRenderer : public CParticleEffect
     float GetParticleLifetime( StandardParticle_t *pParticle );
 
     // IParticleEffect overrides.
-   public:
+    public:
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   private:
+    private:
     CTEParticleRenderer( const char *pDebugName );
     CTEParticleRenderer( const CTEParticleRenderer & );  // not defined, not accessible
 

@@ -22,7 +22,7 @@
 //
 class CTFRevolver : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRevolver, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -79,7 +79,7 @@ class CTFRevolver : public CTFWeaponBaseGun
     virtual float GetProjectileDamage( void );
 #endif
 
-   private:
+    private:
     CTFRevolver( const CTFRevolver & ) {}
 
     float m_flLastAccuracyCheck;
@@ -90,7 +90,7 @@ class CTFRevolver : public CTFWeaponBaseGun
 // Secondary Revolver (Engy)
 class CTFRevolver_Secondary : public CTFRevolver
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRevolver_Secondary, CTFRevolver );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

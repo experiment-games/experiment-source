@@ -39,7 +39,7 @@ struct ChunkHashFraction_t
 
 class ChunkHashFractionLess_t
 {
-   public:
+    public:
     bool Less( const ChunkHashFraction_t &lhs, const ChunkHashFraction_t &rhs, void *pContext )
     {
         if ( lhs.m_nPackFileNumber < rhs.m_nPackFileNumber )
@@ -57,7 +57,7 @@ class ChunkHashFractionLess_t
 
 class CPackedStoreFileHandle
 {
-   public:
+    public:
     int m_nFileNumber;
     int m_nFileOffset;
     int m_nFileSize;
@@ -218,7 +218,7 @@ struct CachedVPKRead_t
 // the chunk in cache - making the MD5 calculation "free"
 class CPackedStoreReadCache
 {
-   public:
+    public:
     CPackedStoreReadCache( IBaseFileSystem *pFS );
 
     bool ReadCacheLine( FileHandleTracker_t &fHandle, CachedVPKRead_t &cachedVPKRead );
@@ -262,7 +262,7 @@ class CPackedStoreReadCache
 
 class CPackedStore
 {
-   public:
+    public:
     CPackedStore( char const *pFileBasename, char *pszFName, IBaseFileSystem *pFS, bool bOpenForWrite = false );
 
     void RegisterFileTracker( IThreadedFileMD5Processor *pFileTracker )
@@ -401,7 +401,7 @@ class CPackedStore
 
     int m_PackFileID;
 
-   private:
+    private:
     char m_pszFileBaseName[MAX_PATH];
     char m_pszFullPathName[MAX_PATH];
     int m_nDirectoryDataSize;

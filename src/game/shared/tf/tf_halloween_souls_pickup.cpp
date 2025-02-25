@@ -47,8 +47,8 @@ RecvPropEHandle( RECVINFO( m_hTarget ) ),
     CHalloweenSoulPack::CHalloweenSoulPack()
     : m_flCreationTime( 0.f )
 #ifdef GAME_DLL
-      ,
-      m_nAmount( 1 )
+    ,
+    m_nAmount( 1 )
 #endif
 {
     m_hTarget = NULL;

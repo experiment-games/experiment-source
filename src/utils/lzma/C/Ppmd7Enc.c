@@ -23,8 +23,8 @@ static void RangeEnc_ShiftLow(CPpmd7z_RangeEnc *p)
     Byte temp = p->Cache;
     do
     {
-      p->Stream->Write(p->Stream, (Byte)(temp + (Byte)(p->Low >> 32)));
-      temp = 0xFF;
+    p->Stream->Write(p->Stream, (Byte)(temp + (Byte)(p->Low >> 32)));
+    temp = 0xFF;
     }
     while(--p->CacheSize != 0);
     p->Cache = (Byte)((UInt32)p->Low >> 24);
@@ -86,27 +86,27 @@ void Ppmd7_EncodeSymbol(CPpmd7 *p, CPpmd7z_RangeEnc *rc, int symbol)
     unsigned i;
     if (s->Symbol == symbol)
     {
-      RangeEnc_Encode(rc, 0, s->Freq, p->MinContext->SummFreq);
-      p->FoundState = s;
-      Ppmd7_Update1_0(p);
-      return;
+    RangeEnc_Encode(rc, 0, s->Freq, p->MinContext->SummFreq);
+    p->FoundState = s;
+    Ppmd7_Update1_0(p);
+    return;
     }
     p->PrevSuccess = 0;
     sum = s->Freq;
     i = p->MinContext->NumStats - 1;
     do
     {
-      if ((++s)->Symbol == symbol)
-      {
+    if ((++s)->Symbol == symbol)
+    {
         RangeEnc_Encode(rc, sum, s->Freq, p->MinContext->SummFreq);
         p->FoundState = s;
         Ppmd7_Update1(p);
         return;
-      }
-      sum += s->Freq;
+    }
+    sum += s->Freq;
     }
     while (--i);
-    
+
     p->HiBitsFlag = p->HB2Flag[p->FoundState->Symbol];
     PPMD_SetAllBitsIn256Bytes(charMask);
     MASK(s->Symbol) = 0;
@@ -120,20 +120,20 @@ void Ppmd7_EncodeSymbol(CPpmd7 *p, CPpmd7z_RangeEnc *rc, int symbol)
     CPpmd_State *s = Ppmd7Context_OneState(p->MinContext);
     if (s->Symbol == symbol)
     {
-      RangeEnc_EncodeBit_0(rc, *prob);
-      *prob = (UInt16)PPMD_UPDATE_PROB_0(*prob);
-      p->FoundState = s;
-      Ppmd7_UpdateBin(p);
-      return;
+    RangeEnc_EncodeBit_0(rc, *prob);
+    *prob = (UInt16)PPMD_UPDATE_PROB_0(*prob);
+    p->FoundState = s;
+    Ppmd7_UpdateBin(p);
+    return;
     }
     else
     {
-      RangeEnc_EncodeBit_1(rc, *prob);
-      *prob = (UInt16)PPMD_UPDATE_PROB_1(*prob);
-      p->InitEsc = PPMD7_kExpEscape[*prob >> 10];
-      PPMD_SetAllBitsIn256Bytes(charMask);
-      MASK(s->Symbol) = 0;
-      p->PrevSuccess = 0;
+    RangeEnc_EncodeBit_1(rc, *prob);
+    *prob = (UInt16)PPMD_UPDATE_PROB_1(*prob);
+    p->InitEsc = PPMD7_kExpEscape[*prob >> 10];
+    PPMD_SetAllBitsIn256Bytes(charMask);
+    MASK(s->Symbol) = 0;
+    p->PrevSuccess = 0;
     }
   }
   for (;;)
@@ -145,28 +145,28 @@ void Ppmd7_EncodeSymbol(CPpmd7 *p, CPpmd7z_RangeEnc *rc, int symbol)
     unsigned i, numMasked = p->MinContext->NumStats;
     do
     {
-      p->OrderFall++;
-      if (!p->MinContext->Suffix)
+    p->OrderFall++;
+    if (!p->MinContext->Suffix)
         return; /* EndMarker (symbol = -1) */
-      p->MinContext = Ppmd7_GetContext(p, p->MinContext->Suffix);
+    p->MinContext = Ppmd7_GetContext(p, p->MinContext->Suffix);
     }
     while (p->MinContext->NumStats == numMasked);
-    
+
     see = Ppmd7_MakeEscFreq(p, numMasked, &escFreq);
     s = Ppmd7_GetStats(p, p->MinContext);
     sum = 0;
     i = p->MinContext->NumStats;
     do
     {
-      int cur = s->Symbol;
-      if (cur == symbol)
-      {
+    int cur = s->Symbol;
+    if (cur == symbol)
+    {
         UInt32 low = sum;
         CPpmd_State *s1 = s;
         do
         {
-          sum += (s->Freq & (int)(MASK(s->Symbol)));
-          s++;
+        sum += (s->Freq & (int)(MASK(s->Symbol)));
+        s++;
         }
         while (--i);
         RangeEnc_Encode(rc, low, s1->Freq, sum + escFreq);
@@ -174,13 +174,13 @@ void Ppmd7_EncodeSymbol(CPpmd7 *p, CPpmd7z_RangeEnc *rc, int symbol)
         p->FoundState = s1;
         Ppmd7_Update2(p);
         return;
-      }
-      sum += (s->Freq & (int)(MASK(cur)));
-      MASK(cur) = 0;
-      s++;
+    }
+    sum += (s->Freq & (int)(MASK(cur)));
+    MASK(cur) = 0;
+    s++;
     }
     while (--i);
-    
+
     RangeEnc_Encode(rc, sum, escFreq, sum + escFreq);
     see->Summ = (UInt16)(see->Summ + sum + escFreq);
   }

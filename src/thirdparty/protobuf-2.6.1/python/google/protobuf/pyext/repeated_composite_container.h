@@ -115,8 +115,8 @@ static Py_ssize_t Length( RepeatedCompositeContainer* self );
 // Returns a new reference if successful; returns NULL and sets an
 // exception if unsuccessful.
 PyObject* Add( RepeatedCompositeContainer* self,
-               PyObject* args,
-               PyObject* kwargs );
+                PyObject* args,
+                PyObject* kwargs );
 
 // Appends all the CMessages in the input iterator to the container.
 //
@@ -141,14 +141,14 @@ PyObject* Subscript( RepeatedCompositeContainer* self, PyObject* slice );
 //
 // Returns 0 on success, -1 on failure.
 int AssignSubscript( RepeatedCompositeContainer* self,
-                     PyObject* slice,
-                     PyObject* value );
+                    PyObject* slice,
+                    PyObject* value );
 
 // Releases the messages in the container to the given message.
 //
 // Returns 0 on success, -1 on failure.
 int ReleaseToMessage( RepeatedCompositeContainer* self,
-                      google::protobuf::Message* new_message );
+                    google::protobuf::Message* new_message );
 
 // Releases the messages in the container to a new message.
 //
@@ -157,7 +157,7 @@ int Release( RepeatedCompositeContainer* self );
 
 // Returns 0 on success, -1 on failure.
 int SetOwner( RepeatedCompositeContainer* self,
-              const shared_ptr< Message >& new_owner );
+            const shared_ptr< Message >& new_owner );
 
 // Removes the last element of the repeated message field 'field' on
 // the Message 'message', and transfers the ownership of the released

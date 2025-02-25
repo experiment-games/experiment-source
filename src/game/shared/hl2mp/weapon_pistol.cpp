@@ -32,7 +32,7 @@
 
 class CWeaponPistol : public CBaseHL2MPCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponPistol, CBaseHL2MPCombatWeapon );
 
     CWeaponPistol( void );
@@ -59,10 +59,10 @@ class CWeaponPistol : public CBaseHL2MPCombatWeapon
         static Vector cone;
 
         float ramp = RemapValClamped( m_flAccuracyPenalty,
-                                      0.0f,
-                                      PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME,
-                                      0.0f,
-                                      1.0f );
+                                    0.0f,
+                                    PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME,
+                                    0.0f,
+                                    1.0f );
 
         // We lerp from very accurate to inaccurate over time
         VectorLerp( VECTOR_CONE_1DEGREES, VECTOR_CONE_6DEGREES, ramp, cone );
@@ -89,13 +89,13 @@ class CWeaponPistol : public CBaseHL2MPCombatWeapon
     DECLARE_ACTTABLE();
 #endif
 
-   private:
+    private:
     CNetworkVar( float, m_flSoonestPrimaryAttack );
     CNetworkVar( float, m_flLastAttackTime );
     CNetworkVar( float, m_flAccuracyPenalty );
     CNetworkVar( int, m_nNumShotsFired );
 
-   private:
+    private:
     CWeaponPistol( const CWeaponPistol & );
 };
 

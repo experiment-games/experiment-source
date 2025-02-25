@@ -18,11 +18,11 @@ ip, port = udp:getsockname()
 assert(ip, port)
 print("Waiting packets on " .. ip .. ":" .. port .. "...")
 while 1 do
-	dgram, ip, port = udp:receivefrom()
-	if dgram then
-		print("Echoing '" .. dgram .. "' to " .. ip .. ":" .. port)
-		udp:sendto(dgram, ip, port)
-	else
+    dgram, ip, port = udp:receivefrom()
+    if dgram then
+        print("Echoing '" .. dgram .. "' to " .. ip .. ":" .. port)
+        udp:sendto(dgram, ip, port)
+    else
         print(ip)
     end
 end

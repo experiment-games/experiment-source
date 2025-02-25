@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CViewSetupV1
 {
-   public:
+    public:
     CViewSetupV1()
     {
         m_bForceAspectRatio1To1 = false;

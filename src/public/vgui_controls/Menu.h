@@ -86,7 +86,7 @@ class Menu : public Panel
     DECLARE_CLASS_SIMPLE( Menu, Panel );
     friend class MenuItem;
 
-   public:
+    public:
     enum MenuDirection_e
     {
         LEFT,
@@ -260,7 +260,7 @@ class Menu : public Panel
 
     void SetUseFallbackFont( bool bState, HFont hFallback );
 
-   protected:
+    protected:
     // helper functions
     int AddMenuItemCharCommand( MenuItem *item, const char *command, Panel *target, const KeyValues *userData );
     int AddMenuItemKeyValuesCommand( MenuItem *item, KeyValues *message, Panel *target, const KeyValues *userData );
@@ -316,7 +316,7 @@ class Menu : public Panel
     virtual void Validate( CValidator &validator, char *pchName );
 #endif  // DBGFLAG_VALIDATE
 
-   private:
+    private:
     MenuItem *GetParentMenuItem();
 
     int m_iMenuItemHeight;
@@ -361,7 +361,7 @@ class Menu : public Panel
 //-----------------------------------------------------------------------------
 class MenuBuilder
 {
-   public:
+    public:
     MenuBuilder( Menu *pMenu, Panel *pActionTarget );
 
     MenuItem *AddMenuItem( const char *pszButtonText, const char *pszCommand, const char *pszCategoryName );
@@ -372,7 +372,7 @@ class MenuBuilder
     MenuItem *AddCascadingMenuItem( const char *pszButtonText, Menu *pSubMenu, const char *pszCategoryName );
     MenuItem *AddCascadingMenuItem( const wchar_t *pwszButtonText, Menu *pSubMenu, const char *pszCategoryName );
 
-   private:
+    private:
     void AddSepratorIfNeeded( const char *pszCategoryName );
 
     Menu *m_pMenu;

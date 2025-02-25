@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( Modulate, Modulate_DX6 )
 
 BEGIN_SHADER( Modulate_DX6,
-              "Help for Modulate_DX6" )
+            "Help for Modulate_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( WRITEZ, SHADER_PARAM_TYPE_BOOL, "0", "Forces z to be written if set" )

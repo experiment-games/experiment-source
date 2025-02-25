@@ -40,26 +40,26 @@ typedef const char *( *ActivityList_NameForIndex_t )( int iActivityIndex );
 // NVNT haptic system interface declaration
 abstract_class IHaptics
 {
-   public:  // Initialization.
+    public:  // Initialization.
     virtual bool Initialize( IVEngineClient * newengine,
-                             IViewRender * newview,
-                             vgui::IInputInternal * newinput,
-                             CGlobalVarsBase * newgpGlobals,
-                             CreateInterfaceFn newengineFactory,
-                             void *IMEWindow,
-                             IFileSystem *filesystem,
-                             IEngineVGui *newvgui,
-                             ActivityList_IndexForName_t actIndexForName,
-                             ActivityList_NameForIndex_t actNameForIndex ) = 0;
+                            IViewRender * newview,
+                            vgui::IInputInternal * newinput,
+                            CGlobalVarsBase * newgpGlobals,
+                            CreateInterfaceFn newengineFactory,
+                            void *IMEWindow,
+                            IFileSystem *filesystem,
+                            IEngineVGui *newvgui,
+                            ActivityList_IndexForName_t actIndexForName,
+                            ActivityList_NameForIndex_t actNameForIndex ) = 0;
 
-   public:  // Device methods
+    public:  // Device methods
     // returns true if there is at least one device connected.
     virtual bool HasDevice() = 0;
 
     // closes all haptic devices and effect processing
     virtual void ShutdownHaptics() = 0;
 
-   public:  // Game input handling
+    public:  // Game input handling
     // computes view angles and adjusts forward_move and side_move
     virtual void CalculateMove( float &forward_move, float &side_move, float delta ) = 0;
 
@@ -80,7 +80,7 @@ abstract_class IHaptics
     // Should be called by the game input class when in a menu
     virtual void MenuProcess() = 0;
 
-   public:  // Effect methods
+    public:  // Effect methods
     // process a haptic event.
     virtual void ProcessHapticEvent( int numArgs, ... ) = 0;
     virtual void ProcessHapticWeaponActivity( const char *weapon, int activity ) = 0;
@@ -120,7 +120,7 @@ abstract_class IHaptics
     // set dangling ( being hung, holding onto ledges )
     virtual void SetDangling( float amount ) = 0;
 
-   public:  // Notify methods
+    public:  // Notify methods
     // notify the haptics system that we have been respawned.
     virtual void LocalPlayerReset() = 0;
 

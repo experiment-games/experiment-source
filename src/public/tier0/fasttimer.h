@@ -31,7 +31,7 @@ class CCycleCount
 {
     friend class CFastTimer;
 
-   public:
+    public:
     CCycleCount();
     CCycleCount( uint64 cycles );
 
@@ -76,7 +76,7 @@ class CCycleCount
 
 class PLATFORM_CLASS CClockSpeedInit
 {
-   public:
+    public:
     CClockSpeedInit()
     {
         Init();
@@ -87,7 +87,7 @@ class PLATFORM_CLASS CClockSpeedInit
 
 class CFastTimer
 {
-   public:
+    public:
     // These functions are fast to call and should be called from your sampling code.
     void Start();
     void End();
@@ -98,7 +98,7 @@ class CFastTimer
     // Return number of cycles per second on this processor.
     static inline int64 GetClockSpeed();
 
-   private:
+    private:
     CCycleCount m_Duration;
 #ifdef DEBUG_FASTTIMER
     bool m_bRunning;  // Are we currently running?
@@ -108,11 +108,11 @@ class CFastTimer
 // This is a helper class that times whatever block of code it's in
 class CTimeScope
 {
-   public:
+    public:
     CTimeScope( CFastTimer *pTimer );
     ~CTimeScope();
 
-   private:
+    private:
     CFastTimer *m_pTimer;
 };
 
@@ -131,13 +131,13 @@ inline CTimeScope::~CTimeScope()
 // adds the total (int microseconds) to a global counter.
 class CTimeAdder
 {
-   public:
+    public:
     CTimeAdder( CCycleCount *pTotal );
     ~CTimeAdder();
 
     void End();
 
-   private:
+    private:
     CCycleCount *m_pTotal;
     CFastTimer m_Timer;
 };
@@ -173,15 +173,15 @@ inline void CTimeAdder::End()
 #define PROFILE_SCOPE( name )                                               \
     class C##name##ACC : public CAverageCycleCounter                        \
     {                                                                       \
-       public:                                                              \
+        public:                                                              \
         ~C##name##ACC()                                                     \
         {                                                                   \
             Msg( "%-48s: %6.3f avg (%8.1f total, %7.3f peak, %5d iters)\n", \
-                 #name,                                                     \
-                 GetAverageMilliseconds(),                                  \
-                 GetTotalMilliseconds(),                                    \
-                 GetPeakMilliseconds(),                                     \
-                 GetIters() );                                              \
+                #name,                                                     \
+                GetAverageMilliseconds(),                                  \
+                GetTotalMilliseconds(),                                    \
+                GetPeakMilliseconds(),                                     \
+                GetIters() );                                              \
         }                                                                   \
     };                                                                      \
     static C##name##ACC name##_ACC;                                         \
@@ -190,7 +190,7 @@ inline void CTimeAdder::End()
 #define TIME_SCOPE( name )                                                           \
     class CTimeScopeMsg_##name                                                       \
     {                                                                                \
-       public:                                                                       \
+        public:                                                                       \
         CTimeScopeMsg_##name()                                                       \
         {                                                                            \
             m_Timer.Start();                                                         \
@@ -200,8 +200,8 @@ inline void CTimeAdder::End()
             m_Timer.End();                                                           \
             Msg( #name "time: %.4fms\n", m_Timer.GetDuration().GetMillisecondsF() ); \
         }                                                                            \
-                                                                                     \
-       private:                                                                      \
+                                                                                    \
+        private:                                                                      \
         CFastTimer m_Timer;                                                          \
     } name##_TSM;
 
@@ -209,7 +209,7 @@ inline void CTimeAdder::End()
 
 class CAverageCycleCounter
 {
-   public:
+    public:
     CAverageCycleCounter();
 
     void Init();
@@ -221,7 +221,7 @@ class CAverageCycleCounter
     double GetTotalMilliseconds() const;
     double GetPeakMilliseconds() const;
 
-   private:
+    private:
     unsigned m_nIters;
     CCycleCount m_Total;
     CCycleCount m_Peak;
@@ -231,11 +231,11 @@ class CAverageCycleCounter
 
 class CAverageTimeMarker
 {
-   public:
+    public:
     CAverageTimeMarker( CAverageCycleCounter *pCounter );
     ~CAverageTimeMarker();
 
-   private:
+    private:
     CAverageCycleCounter *m_pCounter;
     CFastTimer m_Timer;
 };
@@ -482,7 +482,7 @@ inline CAverageTimeMarker::~CAverageTimeMarker()
 // to check while running.  NOTE: CMicroSecOverage() and CMicroSecLeft() are not as fast to check.
 class CLimitTimer
 {
-   public:
+    public:
     CLimitTimer() = default;
     CLimitTimer( uint64 cMicroSecDuration )
     {
@@ -494,7 +494,7 @@ class CLimitTimer
     int CMicroSecOverage() const;
     uint64 CMicroSecLeft() const;
 
-   private:
+    private:
     uint64 m_lCycleLimit;
 };
 

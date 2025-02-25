@@ -192,8 +192,8 @@ void ParseParticleEffectsMap( const char *pMapName, bool bLoadSheets )
     //  - mapname_particles.txt within the map BSP
     //  - mapname_particles.txt in the GAME path
     bool bLoaded = ( manifest->LoadFromFile( filesystem, "particles.txt", "BSP" ) ||
-                     manifest->LoadFromFile( filesystem, szMapManifestFilename, "BSP" ) ||
-                     manifest->LoadFromFile( filesystem, szMapManifestFilename, "GAME" ) );
+                    manifest->LoadFromFile( filesystem, szMapManifestFilename, "BSP" ) ||
+                    manifest->LoadFromFile( filesystem, szMapManifestFilename, "GAME" ) );
 
     // Open the manifest file, and read the particles specified inside it
     if ( bLoaded )
@@ -204,8 +204,8 @@ void ParseParticleEffectsMap( const char *pMapName, bool bLoadSheets )
             if ( files.Count() >= PARTICLES_MANIFEST_MAX_MAP_ENTRIES )
             {
                 Warning( "CParticleMgr::LevelInit:  Map particles manifest '%s' specifies more than %d entries.\n",
-                         szMapManifestFilename,
-                         PARTICLES_MANIFEST_MAX_MAP_ENTRIES );
+                        szMapManifestFilename,
+                        PARTICLES_MANIFEST_MAX_MAP_ENTRIES );
                 break;
             }
 
@@ -323,7 +323,7 @@ void DispatchParticleEffect( const char *pszParticleName, ParticleAttachment_t i
 
 #ifdef GAME_DLL
     if ( ( data.m_fFlags & PARTICLE_DISPATCH_FROM_ENTITY ) != 0 &&
-         ( iAttachType == PATTACH_ABSORIGIN_FOLLOW || iAttachType == PATTACH_POINT_FOLLOW || iAttachType == PATTACH_ROOTBONE_FOLLOW ) )
+        ( iAttachType == PATTACH_ABSORIGIN_FOLLOW || iAttachType == PATTACH_POINT_FOLLOW || iAttachType == PATTACH_ROOTBONE_FOLLOW ) )
     {
         CBroadcastRecipientFilter filter;
         DispatchEffect( "ParticleEffect", data, filter );
@@ -381,7 +381,7 @@ void DispatchParticleEffect( const char *pszParticleName, ParticleAttachment_t i
 
 #ifdef GAME_DLL
     if ( ( data.m_fFlags & PARTICLE_DISPATCH_FROM_ENTITY ) != 0 &&
-         ( iAttachType == PATTACH_ABSORIGIN_FOLLOW || iAttachType == PATTACH_POINT_FOLLOW || iAttachType == PATTACH_ROOTBONE_FOLLOW ) )
+        ( iAttachType == PATTACH_ABSORIGIN_FOLLOW || iAttachType == PATTACH_POINT_FOLLOW || iAttachType == PATTACH_ROOTBONE_FOLLOW ) )
     {
         CReliableBroadcastRecipientFilter filter;
         DispatchEffect( "ParticleEffect", data, filter );

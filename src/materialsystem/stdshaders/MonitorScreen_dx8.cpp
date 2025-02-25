@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( MonitorScreen, MonitorScreen_DX8 )
 
 BEGIN_VS_SHADER( MonitorScreen_DX8,
-                 "This is a shader that does a contrast/saturation version of base times lightmap." )
+                "This is a shader that does a contrast/saturation version of base times lightmap." )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( CONTRAST, SHADER_PARAM_TYPE_FLOAT, "0.0", "contrast 0 == normal 1 == color*color" )

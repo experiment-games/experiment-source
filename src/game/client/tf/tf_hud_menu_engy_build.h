@@ -34,15 +34,15 @@ struct EngyConstructBuilding_t
     EngyConstructBuilding_t() {}
 
     EngyConstructBuilding_t( bool bEnabled,
-                             ObjectType_t type,
-                             int iMode,
-                             const char *pszConstructAvailableObjectRes,
-                             const char *pszConstructAlreadyBuiltObjectRes,
-                             const char *pszConstructCantAffordObjectRes,
-                             const char *pszConstructUnavailableObjectRes,
-                             const char *pszDestroyActiveObjectRes,
-                             const char *pszDestroyInactiveObjectRes,
-                             const char *pszDestroyUnavailableObjectRes )
+                            ObjectType_t type,
+                            int iMode,
+                            const char *pszConstructAvailableObjectRes,
+                            const char *pszConstructAlreadyBuiltObjectRes,
+                            const char *pszConstructCantAffordObjectRes,
+                            const char *pszConstructUnavailableObjectRes,
+                            const char *pszDestroyActiveObjectRes,
+                            const char *pszDestroyInactiveObjectRes,
+                            const char *pszDestroyUnavailableObjectRes )
         : m_bEnabled( bEnabled ), m_iObjectType( type ), m_iMode( iMode ), m_pszConstructAvailableObjectRes( pszConstructAvailableObjectRes ), m_pszConstructAlreadyBuiltObjectRes( pszConstructAlreadyBuiltObjectRes ), m_pszConstructCantAffordObjectRes( pszConstructCantAffordObjectRes ), m_pszConstructUnavailableObjectRes( pszConstructUnavailableObjectRes ), m_pszDestroyActiveObjectRes( pszDestroyActiveObjectRes ), m_pszDestroyInactiveObjectRes( pszDestroyInactiveObjectRes ), m_pszDestroyUnavailableObjectRes( pszDestroyUnavailableObjectRes )
     {
     }
@@ -67,26 +67,26 @@ struct EngyConstructBuilding_t
 struct EngyBuildingReplacement_t
 {
     EngyBuildingReplacement_t( ObjectType_t type,
-                               int iMode,
-                               const char *strConstructionAvailable,
-                               const char *strConstructionAlreadyBuilt,
-                               const char *strConstructionCantAfford,
-                               const char *strConstructionUnavailable,
-                               const char *strDestructionActive,
-                               const char *strDestructionInactive,
-                               const char *strDestructionUnavailable,
-                               int iReplacementSlots,
-                               int iDisableSlots )
+                                int iMode,
+                                const char *strConstructionAvailable,
+                                const char *strConstructionAlreadyBuilt,
+                                const char *strConstructionCantAfford,
+                                const char *strConstructionUnavailable,
+                                const char *strDestructionActive,
+                                const char *strDestructionInactive,
+                                const char *strDestructionUnavailable,
+                                int iReplacementSlots,
+                                int iDisableSlots )
         : m_building( true,
-                      type,
-                      iMode,
-                      strConstructionAvailable,
-                      strConstructionAlreadyBuilt,
-                      strConstructionCantAfford,
-                      strConstructionUnavailable,
-                      strDestructionActive,
-                      strDestructionInactive,
-                      strDestructionUnavailable )
+                    type,
+                    iMode,
+                    strConstructionAvailable,
+                    strConstructionAlreadyBuilt,
+                    strConstructionCantAfford,
+                    strConstructionUnavailable,
+                    strDestructionActive,
+                    strDestructionInactive,
+                    strDestructionUnavailable )
 
     {
         m_iReplacementSlots = iReplacementSlots;
@@ -104,7 +104,7 @@ class CHudMenuEngyBuild : public CHudBaseBuildMenu
 {
     DECLARE_CLASS_SIMPLE( CHudMenuEngyBuild, EditablePanel );
 
-   public:
+    public:
     CHudMenuEngyBuild( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -130,7 +130,7 @@ class CHudMenuEngyBuild : public CHudBaseBuildMenu
         return IsActive() ? GAME_ACTION_SET_IN_GAME_HUD : GAME_ACTION_SET_NONE;
     }
 
-   private:
+    private:
     void SendBuildMessage( int iSlot );
     bool SendDestroyMessage( int iSlot );
 

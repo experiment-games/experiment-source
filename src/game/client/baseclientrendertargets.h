@@ -33,13 +33,13 @@ class CBaseClientRenderTargets : public IClientRenderTargets
     // no networked vars
     DECLARE_CLASS_GAMEROOT( CBaseClientRenderTargets, IClientRenderTargets );
 
-   public:
+    public:
     // Interface called by engine during material system startup.
     virtual void InitClientRenderTargets( IMaterialSystem* pMaterialSystem, IMaterialSystemHardwareConfig* pHardwareConfig, int iWaterTextureSize = 1024, int iCameraTextureSize = 256 );
     // Shutdown all custom render targets here.
     virtual void ShutdownClientRenderTargets( void );
 
-   protected:
+    protected:
     // Standard render textures used by most mods-- Classes inheriting from
     // this can choose to init these or not depending on their needs.
 

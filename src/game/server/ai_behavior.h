@@ -49,10 +49,10 @@ class IBehaviorBackBridge;
 abstract_class CAI_BehaviorBase : public CAI_Component
 {
     DECLARE_CLASS( CAI_BehaviorBase, CAI_Component )
-   public:
+    public:
     CAI_BehaviorBase( CAI_BaseNPC *pOuter = NULL )
         : CAI_Component( pOuter ),
-          m_pBackBridge( NULL )
+        m_pBackBridge( NULL )
     {
     }
 
@@ -190,7 +190,7 @@ abstract_class CAI_BehaviorBase : public CAI_Component
     static void SaveBehaviors( ISave & save, CAI_BehaviorBase * pCurrentBehavior, CAI_BehaviorBase * *ppBehavior, int nBehaviors );
     static int RestoreBehaviors( IRestore & restore, CAI_BehaviorBase * *ppBehavior, int nBehaviors );  // returns index of "current" behavior, or -1
 
-   protected:
+    protected:
     int GetNpcState()
     {
         return GetOuter()->m_NPCState;
@@ -234,13 +234,13 @@ abstract_class CAI_BehaviorBase : public CAI_Component
         GetOuter()->ClearHintNode( reuseDelay );
     }
 
-   protected:
+    protected:
     // Used by derived classes to chain a task to a task that might not be the
     // one they are currently handling:
     void ChainStartTask( int task, float taskData = 0 );
     void ChainRunTask( int task, float taskData = 0 );
 
-   protected:
+    protected:
     virtual Activity NPC_TranslateActivity( Activity activity );
 
     virtual bool IsCurTaskContinuousMove();
@@ -350,7 +350,7 @@ abstract_class CAI_BehaviorBase : public CAI_Component
 template < class NPC_CLASS = CAI_BaseNPC, const int ID_SPACE_OFFSET = 100000 >
 class CAI_Behavior : public CAI_ComponentWithOuter< NPC_CLASS, CAI_BehaviorBase >
 {
-   public:
+    public:
     DECLARE_CLASS_NOFRIEND( CAI_Behavior, NPC_CLASS );
 
     enum
@@ -388,7 +388,7 @@ class CAI_Behavior : public CAI_ComponentWithOuter< NPC_CLASS, CAI_BehaviorBase 
         this->GetOuter()->ClearCondition( condition );
     }
 
-   protected:
+    protected:
     CAI_Behavior( NPC_CLASS *pOuter = NULL )
         : CAI_ComponentWithOuter< NPC_CLASS, CAI_BehaviorBase >( pOuter )
     {
@@ -408,7 +408,7 @@ class CAI_Behavior : public CAI_ComponentWithOuter< NPC_CLASS, CAI_BehaviorBase 
         return NPC_CLASS::AccessClassScheduleIdSpaceDirect();
     }
 
-   private:
+    private:
     virtual bool IsBehaviorSchedule( int scheduleType )
     {
         return ( scheduleType >= ID_SPACE_OFFSET && scheduleType < ID_SPACE_OFFSET + 10000 );
@@ -422,7 +422,7 @@ class CAI_Behavior : public CAI_ComponentWithOuter< NPC_CLASS, CAI_BehaviorBase 
 
 abstract_class IBehaviorBackBridge
 {
-   public:
+    public:
     virtual void BackBridge_GatherConditions() = 0;
     virtual int BackBridge_SelectSchedule() = 0;
     virtual int BackBridge_TranslateSchedule( int scheduleType ) = 0;
@@ -469,9 +469,9 @@ typedef CAI_Behavior<> CAI_SimpleBehavior;
 
 template < class BASE_NPC >
 class CAI_BehaviorHost : public BASE_NPC,
-                         private IBehaviorBackBridge
+                        private IBehaviorBackBridge
 {
-   public:
+    public:
     DECLARE_CLASS_NOFRIEND( CAI_BehaviorHost, BASE_NPC );
 
     CAI_BehaviorHost()
@@ -567,7 +567,7 @@ class CAI_BehaviorHost : public BASE_NPC,
     virtual bool OnBehaviorChangeStatus( CAI_BehaviorBase *pBehavior, bool fCanFinishSchedule );
     virtual void OnChangeRunningBehavior( CAI_BehaviorBase *pOldBehavior, CAI_BehaviorBase *pNewBehavior );
 
-   protected:
+    protected:
     void AddBehavior( CAI_BehaviorBase *pBehavior );
 
     bool BehaviorSelectSchedule();
@@ -584,7 +584,7 @@ class CAI_BehaviorHost : public BASE_NPC,
     CAI_Schedule *GetNewSchedule();
     CAI_Schedule *GetFailSchedule();
 
-   private:
+    private:
     void BackBridge_GatherConditions();
     int BackBridge_SelectSchedule();
     int BackBridge_TranslateSchedule( int scheduleType );

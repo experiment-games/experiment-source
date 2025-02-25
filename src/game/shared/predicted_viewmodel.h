@@ -24,7 +24,7 @@ class CPredictedViewModel : public CBaseViewModel
 {
     DECLARE_CLASS( CPredictedViewModel, CBaseViewModel );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     CPredictedViewModel( void );
@@ -53,7 +53,7 @@ class CPredictedViewModel : public CBaseViewModel
     }
 #endif
 
-   private:
+    private:
 #if defined( CLIENT_DLL )
 
     // This is used to lag the angles.

@@ -32,7 +32,7 @@ class CBaseViewModel : public CBaseAnimating, public IHasOwner
 {
     DECLARE_CLASS( CBaseViewModel, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
@@ -188,12 +188,12 @@ class CBaseViewModel : public CBaseAnimating, public IHasOwner
     virtual bool GetAttachmentVelocity( int number, Vector &originVel, Quaternion &angleVel );
 #endif
 
-   private:
+    private:
     CBaseViewModel( const CBaseViewModel & );  // not defined, not accessible
 
 #endif
 
-   private:
+    private:
     CNetworkVar( int, m_nViewModelIndex );    // Which viewmodel is it?
     CNetworkHandle( CBaseEntity, m_hOwner );  // Player or AI carrying this weapon
 

@@ -36,29 +36,29 @@ void CHL2MPBotNavEntDestroyEntity::DetonateStickiesWhenSet( CHL2MPBot *me, CWeap
 {
     // TODO(misyl): Hook this up for SLAM someday.
 #if 0
-	if ( !stickyLauncher )
-		return;
+    if ( !stickyLauncher )
+        return;
 
-	if ( stickyLauncher->GetPipeBombCount() >= 8 || me->GetAmmoCount( TF_AMMO_SECONDARY ) <= 0 )
-	{
-		// stickies laid - detonate them once they are on the ground
-		const CUtlVector< CHandle< CTFGrenadePipebombProjectile > > &pipeVector = stickyLauncher->GetPipeBombVector();
+    if ( stickyLauncher->GetPipeBombCount() >= 8 || me->GetAmmoCount( TF_AMMO_SECONDARY ) <= 0 )
+    {
+        // stickies laid - detonate them once they are on the ground
+        const CUtlVector< CHandle< CTFGrenadePipebombProjectile > > &pipeVector = stickyLauncher->GetPipeBombVector();
 
-		int i;
-		for( i=0; i<pipeVector.Count(); ++i )
-		{
-			if ( pipeVector[i].Get() && !pipeVector[i]->m_bTouched )
-			{
-				break;
-			}
-		}
+        int i;
+        for( i=0; i<pipeVector.Count(); ++i )
+        {
+            if ( pipeVector[i].Get() && !pipeVector[i]->m_bTouched )
+            {
+                break;
+            }
+        }
 
-		if ( i == pipeVector.Count() )
-		{
-			// stickies are on the ground
-			me->PressFireButton();
-		}
-	}
+        if ( i == pipeVector.Count() )
+        {
+            // stickies are on the ground
+            me->PressFireButton();
+        }
+    }
 #endif
 }
 

@@ -57,7 +57,7 @@ class CWeaponMedigun : public CTFWeaponBaseGun
 {
     DECLARE_CLASS( CWeaponMedigun, CTFWeaponBaseGun );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
@@ -171,7 +171,7 @@ class CWeaponMedigun : public CTFWeaponBaseGun
     float GetOverHealDecayMult( CTFPlayer *pTFTarget );
     virtual void HookAttributes( void ) OVERRIDE;
 
-   private:
+    private:
     void SubtractChargeAndUpdateDeployState( float flSubtractAmount, bool bForceDrain );
     bool FindAndHealTargets( void );
     void MaintainTargetInSlot();
@@ -193,13 +193,13 @@ class CWeaponMedigun : public CTFWeaponBaseGun
     void CreateMedigunShield( void );
     void RemoveMedigunShield( void );
 
-   public:
+    public:
     CNetworkHandle( CBaseEntity, m_hHealingTarget );
     CNetworkHandle( CBaseEntity, m_hLastHealingTarget );
 
     bool m_bWasHealingBeforeDeath;
 
-   protected:
+    protected:
     // Networked data.
     CNetworkVar( bool, m_bHealing );
     CNetworkVar( bool, m_bAttacking );
@@ -266,7 +266,7 @@ class CWeaponMedigun : public CTFWeaponBaseGun
     float m_flAutoCallerCheckTime;
 #endif
 
-   private:
+    private:
     CWeaponMedigun( const CWeaponMedigun & );
 };
 
@@ -274,7 +274,7 @@ class CTFMedigunShield : public CBaseAnimating
 {
     DECLARE_CLASS( CTFMedigunShield, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
     DECLARE_DATADESC();
@@ -308,7 +308,7 @@ class CTFMedigunShield : public CBaseAnimating
     virtual void ClientThink();
 #endif
 
-   private:
+    private:
     int m_nBlinkCount;
 #ifdef GAME_DLL
     float m_flShieldEnergyLevel;

@@ -17,7 +17,7 @@ class CPointPopulatorInterface : public CPointEntity
 {
     DECLARE_CLASS( CPointPopulatorInterface, CPointEntity );
 
-   public:
+    public:
     // Input handlers
     void InputPauseBotSpawning( inputdata_t &inputdata );
     void InputUnpauseBotSpawning( inputdata_t &inputdata );

@@ -17,7 +17,7 @@
 
 class CInfoLadderDismount : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CInfoLadderDismount, CBaseEntity );
     DECLARE_NETWORKCLASS();
 
@@ -47,7 +47,7 @@ typedef CHandle< CInfoLadderDismount > CInfoLadderDismountHandle;
 //-----------------------------------------------------------------------------
 class CFuncLadder : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncLadder, CBaseEntity );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -84,13 +84,13 @@ class CFuncLadder : public CBaseEntity
     static CFuncLadder* GetLadder( int index );
     static CUtlVector< CFuncLadder* > s_Ladders;
 
-   public:
+    public:
     void FindNearbyDismountPoints( const Vector& origin, float radius, CUtlVector< CInfoLadderDismountHandle >& list );
     const char* GetSurfacePropName();
 
     void SearchForDismountPoints();
 
-   private:
+    private:
     // Movement vector from "bottom" to "top" of ladder
     CNetworkVector( m_vecLadderDir );
 

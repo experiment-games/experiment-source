@@ -108,16 +108,16 @@ REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_OnlyToTeam );
 #if 0
 static void SendProxy_Time( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
 {
-	float clock_base = floor( gpGlobals->curtime );
-	float t = *( float * )pVarData;
-	float dt = t - clock_base;
-	int addt = Floor2Int( 1000.0f * dt + 0.5f );
-	// TIME_BITS bits gives us TIME_BITS-1 bits plus sign bit
-	int maxoffset = 1 << ( TIME_BITS - 1);
+    float clock_base = floor( gpGlobals->curtime );
+    float t = *( float * )pVarData;
+    float dt = t - clock_base;
+    int addt = Floor2Int( 1000.0f * dt + 0.5f );
+    // TIME_BITS bits gives us TIME_BITS-1 bits plus sign bit
+    int maxoffset = 1 << ( TIME_BITS - 1);
 
-	addt = clamp( addt, -maxoffset, maxoffset );
+    addt = clamp( addt, -maxoffset, maxoffset );
 
-	pOut->m_Int = addt;
+    pOut->m_Int = addt;
 }
 #endif
 

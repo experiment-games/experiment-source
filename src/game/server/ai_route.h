@@ -32,7 +32,7 @@ class CAI_Path
 {
     //-----------------------------------------------------------------
 
-   public:
+    public:
     void SetWaypoints( AI_Waypoint_t *route, bool fSetGoalFromLast = false );
 
     void PrependWaypoints( AI_Waypoint_t *pWaypoints );
@@ -194,7 +194,7 @@ class CAI_Path
         m_iLastNodeReached = NO_NODE;
     }
 
-   private:
+    private:
     // Computes the goal distance for each waypoint along the route
     static void ComputeRouteGoalDistances( AI_Waypoint_t *pGoalWaypoint );
 

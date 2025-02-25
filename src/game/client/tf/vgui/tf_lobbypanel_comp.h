@@ -28,7 +28,7 @@ class CLobbyPanel_Comp : public CBaseLobbyPanel, public CLocalSteamSharedObjectL
 {
     DECLARE_CLASS_SIMPLE( CLobbyPanel_Comp, CBaseLobbyPanel );
 
-   public:
+    public:
     CLobbyPanel_Comp( vgui::Panel* pParent, CBaseLobbyContainerFrame* pLobbyContainer );
     virtual ~CLobbyPanel_Comp();
 
@@ -47,7 +47,7 @@ class CLobbyPanel_Comp : public CBaseLobbyPanel, public CLocalSteamSharedObjectL
     }
     void WriteGameSettingsControls() OVERRIDE;
 
-   private:
+    private:
     class CCompStatsPanel* m_pCompStats;
 };
 

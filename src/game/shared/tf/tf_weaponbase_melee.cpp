@@ -477,9 +477,9 @@ bool CTFWeaponBaseMelee::DoSwingTraceInternal( trace_t &trace, bool bCleave, CUt
             }
 
             if ( trace.fraction < 1.0f &&
-                 trace.m_pEnt &&
-                 trace.m_pEnt->IsBaseObject() &&
-                 trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
+                trace.m_pEnt &&
+                trace.m_pEnt->IsBaseObject() &&
+                trace.m_pEnt->GetTeamNumber() == pPlayer->GetTeamNumber() )
             {
                 CBaseObject *pObject = static_cast< CBaseObject * >( trace.m_pEnt );
                 if ( pObject->HasSapper() )
@@ -887,9 +887,9 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity *ent, trace_t &trace, float 
 
                 // strange stat tracking
                 EconEntity_OnOwnerKillEaterEvent( this,
-                                                  ToTFPlayer( GetOwner() ),
-                                                  pVictimPlayer,
-                                                  kKillEaterEvent_PlayerTickle );
+                                                ToTFPlayer( GetOwner() ),
+                                                pVictimPlayer,
+                                                kKillEaterEvent_PlayerTickle );
             }
         }
 
@@ -930,7 +930,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity *ent, trace_t &trace, float 
             VectorNormalize( vecDir );
 
             if ( !pVictimPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_USER_BUFF ) &&
-                 !pVictimPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
+                !pVictimPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
             {
                 if ( pVictimPlayer->m_Shared.IsCarryingRune() )
                 {

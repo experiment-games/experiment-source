@@ -14,7 +14,7 @@
 
 class CNetViewThread
 {
-   public:
+    public:
     CNetViewThread();
     ~CNetViewThread();
 
@@ -27,7 +27,7 @@ class CNetViewThread
     // list and it won't return those names again.
     void GetComputerNames( CUtlVector< char * > &computerNames, bool bRemoveFromList );
 
-   private:
+    private:
     void UpdateServicesFromNetView();
     void ParseComputerNames( const char *pNetViewOutput );
 

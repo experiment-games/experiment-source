@@ -24,17 +24,17 @@
 
 abstract_class CTEBaseBeam : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBaseBeam, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CTEBaseBeam( const char* name );
     virtual ~CTEBaseBeam( void );
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles ) = 0;
 
-   public:
+    public:
     CNetworkVar( int, m_nModelIndex );
     CNetworkVar( int, m_nHaloIndex );
     CNetworkVar( int, m_nStartFrame );

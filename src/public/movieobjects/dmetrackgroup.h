@@ -38,7 +38,7 @@ class CDmeTrackGroup : public CDmElement
 {
     DEFINE_ELEMENT( CDmeTrackGroup, CDmElement );
 
-   public:
+    public:
     // Max track count
     void SetMaxTrackCount( int nCount );
 
@@ -115,7 +115,7 @@ class CDmeTrackGroup : public CDmElement
     int GetSubClipCount() const;
     void GetSubClips( CDmeClip **ppClips );
 
-   private:
+    private:
     CDmaElementArray< CDmeTrack > m_Tracks;
     CDmaVar< bool > m_bIsVisible;
     CDmaVar< bool > m_bMinimized;

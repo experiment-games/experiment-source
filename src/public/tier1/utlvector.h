@@ -34,7 +34,7 @@
 // UtlVector derives from this so we can do the type check above
 struct base_vector_t
 {
-   public:
+    public:
     enum
     {
         IsUtlVector = true
@@ -54,7 +54,7 @@ class CUtlVector : public base_vector_t
 {
     typedef A CAllocator;
 
-   public:
+    public:
     typedef T ElemType_t;
     typedef T *iterator;
     typedef const T *const_iterator;
@@ -236,7 +236,7 @@ class CUtlVector : public base_vector_t
     template < class F >
     void SortPredicate( F &&predicate );
 
-   protected:
+    protected:
     // Can't copy this unless we explicitly do it!
     CUtlVector( CUtlVector const &vec )
     {
@@ -266,7 +266,7 @@ class CUtlVector : public base_vector_t
     inline void ResetDbgInfo() {}
 #endif
 
-   private:
+    private:
     void InPlaceQuickSort_r( int( __cdecl *pfnCompare )( const T *, const T * ), int nLeft, int nRight );
 };
 
@@ -274,7 +274,7 @@ class CUtlVector : public base_vector_t
 template < class T >
 class CUtlBlockVector : public CUtlVector< T, CUtlBlockMemory< T, int > >
 {
-   public:
+    public:
     explicit CUtlBlockVector( int growSize = 0, int initSize = 0 )
         : CUtlVector< T, CUtlBlockMemory< T, int > >( growSize, initSize ) {}
 };
@@ -291,7 +291,7 @@ class CUtlVectorMT : public BASE_UTLVECTOR, public MUTEX_TYPE
 {
     typedef BASE_UTLVECTOR BaseClass;
 
-   public:
+    public:
     // MUTEX_TYPE Mutex_t;
 
     // constructor, destructor
@@ -310,7 +310,7 @@ class CUtlVectorFixed : public CUtlVector< T, CUtlMemoryFixed< T, MAX_SIZE > >
 {
     typedef CUtlVector< T, CUtlMemoryFixed< T, MAX_SIZE > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     explicit CUtlVectorFixed( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
@@ -327,7 +327,7 @@ class CUtlVectorFixedGrowable : public CUtlVector< T, CUtlMemoryFixedGrowable< T
 {
     typedef CUtlVector< T, CUtlMemoryFixedGrowable< T, MAX_SIZE > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     explicit CUtlVectorFixedGrowable( int growSize = 0 )
         : BaseClass( growSize, MAX_SIZE ) {}
@@ -342,7 +342,7 @@ class CUtlVectorConservative : public CUtlVector< T, CUtlMemoryConservative< T >
 {
     typedef CUtlVector< T, CUtlMemoryConservative< T > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     explicit CUtlVectorConservative( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
@@ -362,7 +362,7 @@ class CUtlVectorConservative : public CUtlVector< T, CUtlMemoryConservative< T >
 
 class CUtlVectorUltraConservativeAllocator
 {
-   public:
+    public:
     static void *Alloc( size_t nSize )
     {
         return malloc( nSize );
@@ -387,7 +387,7 @@ class CUtlVectorUltraConservativeAllocator
 template < typename T, typename A = CUtlVectorUltraConservativeAllocator >
 class CUtlVectorUltraConservative : private A
 {
-   public:
+    public:
     // Don't inherit from base_vector_t because multiple-inheritance increases
     // class size!
     enum
@@ -583,7 +583,7 @@ class CUtlVectorUltraConservative : private A
 
     Data_t *m_pData;
 
-   private:
+    private:
     void ShiftElementsLeft( int elem, int num = 1 )
     {
         int Size = Count();
@@ -623,7 +623,7 @@ class CCopyableUtlVector : public CUtlVector< T, CUtlMemory< T > >
 {
     typedef CUtlVector< T, CUtlMemory< T > > BaseClass;
 
-   public:
+    public:
     explicit CCopyableUtlVector( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
     CCopyableUtlVector( T *pMemory, int numElements )
@@ -646,7 +646,7 @@ class CCopyableUtlVectorFixedGrowable : public CUtlVectorFixedGrowable< T, MAX_S
 {
     typedef CUtlVectorFixedGrowable< T, MAX_SIZE > BaseClass;
 
-   public:
+    public:
     explicit CCopyableUtlVectorFixedGrowable( int growSize = 0 )
         : BaseClass( growSize ) {}
     CCopyableUtlVectorFixedGrowable( T *pMemory, int numElements )
@@ -669,7 +669,7 @@ class CCopyableUtlVectorFixed : public CUtlVectorFixed< T, MAX_SIZE >
 {
     typedef CUtlVectorFixed< T, MAX_SIZE > BaseClass;
 
-   public:
+    public:
     explicit CCopyableUtlVectorFixed( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
     CCopyableUtlVectorFixed( T *pMemory, int numElements )
@@ -1479,7 +1479,7 @@ void CUtlVector< T, A >::Validate( CValidator &validator, char *pchName )
 template < class T >
 class CUtlVectorAutoPurge : public CUtlVector< T, CUtlMemory< T, int > >
 {
-   public:
+    public:
     ~CUtlVectorAutoPurge( void )
     {
         this->PurgeAndDeleteElements();
@@ -1490,7 +1490,7 @@ class CUtlVectorAutoPurge : public CUtlVector< T, CUtlMemory< T, int > >
 // Frees the dynamic strings in destructor.
 class CUtlStringList : public CUtlVectorAutoPurge< char * >
 {
-   public:
+    public:
     void CopyAndAddToTail( char const *pString )  // clone the string and add to the end
     {
         char *pNewStr = new char[1 + strlen( pString )];
@@ -1525,14 +1525,14 @@ class CUtlStringList : public CUtlVectorAutoPurge< char * >
         V_SplitString2( pString, pSeparators, nSeparators, *this );
     }
 
-   private:
+    private:
     CUtlStringList( const CUtlStringList &other );  // copying directly will cause double-release of the same strings; maybe we need to do a deep copy, but unless and until such need arises, this will guard against double-release
 };
 
 // <Sergiy> placing it here a few days before Cert to minimize disruption to the rest of codebase
 class CSplitString : public CUtlVector< char *, CUtlMemory< char *, int > >
 {
-   public:
+    public:
     CSplitString()
     {
         m_szBuffer = nullptr;
@@ -1547,11 +1547,11 @@ class CSplitString : public CUtlVector< char *, CUtlMemory< char *, int > >
     void Set( const char *pString, const char **pSeparators, int nSeparators );
     void Set( const char *pString, const char *pSeparator );
 
-   private:
+    private:
     void Construct( const char *pString, const char **pSeparators, int nSeparators );
     void PurgeAndDeleteElements();
 
-   private:
+    private:
     char *m_szBuffer;  // a copy of original string, with '\0' instead of separators
 };
 
@@ -1573,7 +1573,7 @@ class CUtlVectorFixedGrowableCompat : public CUtlVector< T >
 {
     typedef CUtlVector< T > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     CUtlVectorFixedGrowableCompat( int growSize = 0 )
         : BaseClass( nullptr, FIXED_SIZE, growSize )

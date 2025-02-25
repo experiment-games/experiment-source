@@ -39,7 +39,7 @@
 //
 class CTFWeaponBaseGun : public CTFWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponBaseGun, CTFWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -120,7 +120,7 @@ class CTFWeaponBaseGun : public CTFWeaponBase
 
     virtual bool ShouldRemoveDisguiseOnPrimaryAttack() const;
 
-   private:
+    private:
     CTFWeaponBaseGun( const CTFWeaponBaseGun & );
 };
 

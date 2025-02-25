@@ -24,7 +24,7 @@ const char CAbuseReportManager::k_rchScreenShotFilename[] = "screenshots\\abuse_
 //-----------------------------------------------------------------------------
 class CEconNotification_AbuseReportReady : public CEconNotification
 {
-   public:
+    public:
     CEconNotification_AbuseReportReady()
         : CEconNotification()
     {
@@ -78,7 +78,7 @@ class CEconNotification_AbuseReportReady : public CEconNotification
 
     bool m_bShowInGame;
 
-   private:
+    private:
     void ReallyTrigger()
     {
         Assert( !m_bHasTriggered );

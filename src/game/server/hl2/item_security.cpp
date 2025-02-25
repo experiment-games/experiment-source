@@ -20,7 +20,7 @@
 
 class CItemSecurity : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CItemSecurity, CItem );
 
     void Spawn( void )

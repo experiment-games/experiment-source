@@ -81,18 +81,18 @@ ConVar tf_flamethrower_waterfall_damage_per_tick( "tf_flamethrower_waterfall_dam
 // TODO These should be cheat upon shipping probably
 ConVar tf_airblast_cray( "tf_airblast_cray", "1", FCVAR_CHEAT, "Use alternate cray airblast logic globally." );
 ConVar tf_airblast_cray_debug( "tf_airblast_cray_debug", "0", FCVAR_CHEAT,
-                               "Enable debugging overlays & output for cray airblast.  "
-                               "Value is length of time to show debug overlays in seconds." );
+                                "Enable debugging overlays & output for cray airblast.  "
+                                "Value is length of time to show debug overlays in seconds." );
 ConVar tf_airblast_cray_power( "tf_airblast_cray_power", "600", FCVAR_CHEAT,
-                               "Amount of force cray airblast should apply unconditionally. "
-                               "Set to 0 to only perform player momentum reflection." );
+                                "Amount of force cray airblast should apply unconditionally. "
+                                "Set to 0 to only perform player momentum reflection." );
 ConVar tf_airblast_cray_power_relative( "tf_airblast_cray_power_relative", "0", FCVAR_CHEAT, "If set, the blast power power also inherits from the blast's forward momentum." );
 ConVar tf_airblast_cray_reflect_coeff( "tf_airblast_cray_reflect_coeff", "2", FCVAR_CHEAT,
-                                       "The coefficient of reflective power cray airblast employs.\n"
-                                       " 0   - No reflective powers\n"
-                                       " 0-1 - Cancel out some/all incoming velocity\n"
-                                       " 1-2 - Reflect some/all incoming velocity outwards\n"
-                                       " 2+  - Reflect incoming velocity outwards and then some\n" );
+                                        "The coefficient of reflective power cray airblast employs.\n"
+                                        " 0   - No reflective powers\n"
+                                        " 0-1 - Cancel out some/all incoming velocity\n"
+                                        " 1-2 - Reflect some/all incoming velocity outwards\n"
+                                        " 2+  - Reflect incoming velocity outwards and then some\n" );
 ConVar tf_airblast_cray_reflect_cost_coeff( "tf_airblast_cray_reflect_cost_coeff", "0.5", FCVAR_CHEAT,
                                             "What portion of power used for reflection is removed from the push effect. "
                                             "Note that reflecting incoming momentum requires 2x the momentum - "
@@ -103,26 +103,26 @@ ConVar tf_airblast_cray_reflect_cost_coeff( "tf_airblast_cray_reflect_cost_coeff
                                             "running towards the blast would not be beneficial vs being still, while "
                                             "values >.5 would make it beneficial to do so, and <.5 detrimental." );
 ConVar tf_airblast_cray_reflect_relative( "tf_airblast_cray_reflect_relative", "0", FCVAR_CHEAT,
-                                          "If set, the relative, rather than absolute, target velocity is considered "
-                                          "for reflection." );
+                                        "If set, the relative, rather than absolute, target velocity is considered "
+                                        "for reflection." );
 ConVar tf_airblast_cray_ground_reflect( "tf_airblast_cray_ground_reflect", "1", FCVAR_CHEAT,
                                         "If set, cray airblast reflects any airblast power directed into the ground "
                                         "off of it, to prevent ground-stuck and provide a bit more control over "
                                         "up-vs-forward vectoring" );
 ConVar tf_airblast_cray_ground_minz( "tf_airblast_cray_ground_minz", "100", FCVAR_CHEAT,
-                                     "If set, cray airblast ensures the target has this minimum Z velocity after "
-                                     "reflections and impulse have been applied. "
-                                     "Set to 268.3281572999747 for exact old airblast Z behavior." );
+                                    "If set, cray airblast ensures the target has this minimum Z velocity after "
+                                    "reflections and impulse have been applied. "
+                                    "Set to 268.3281572999747 for exact old airblast Z behavior." );
 ConVar tf_airblast_cray_lose_footing_duration( "tf_airblast_cray_lose_footing_duration", "0.5", FCVAR_CHEAT,
-                                               "How long the player should be unable to regain their footing after "
-                                               "being airblast, separate from air-control stun." );
+                                                "How long the player should be unable to regain their footing after "
+                                                "being airblast, separate from air-control stun." );
 ConVar tf_airblast_cray_stun_duration( "tf_airblast_cray_stun_duration", "0", FCVAR_CHEAT,
-                                       "If set, apply this duration of stun when initially hit by an airblast.  "
-                                       "Does not apply to repeated airblasts.",
-                                       true,
-                                       0.0f,
-                                       true,
-                                       1.0f );
+                                        "If set, apply this duration of stun when initially hit by an airblast.  "
+                                        "Does not apply to repeated airblasts.",
+                                        true,
+                                        0.0f,
+                                        true,
+                                        1.0f );
 ConVar tf_airblast_cray_stun_amount( "tf_airblast_cray_stun_amount", "0", FCVAR_CHEAT, "Amount of control loss to apply if stun_duration is set.", true, 0.0f, true, 1.0f );
 ConVar tf_airblast_cray_pitch_control( "tf_airblast_cray_pitch_control", "0", FCVAR_CHEAT, "If set, allow controlling the pitch of the airblast, in addition to the yaw." );
 #endif  // defined( GAME_DLL )
@@ -1390,34 +1390,34 @@ void CTFFlameThrower::ComputeCrayAirBlastForce( CTFPlayer *pTarget, CTFPlayer *p
 
             // Visualize velocity towards pyro aim
             NDebugOverlay::HorzArrow( vecTargetCenter,
-                                      vecTargetCenter + vecIncomingVel * flDebugOverlayScale,
-                                      flDebugOverlayWidth,
-                                      200,
-                                      0,
-                                      0,
-                                      255,
-                                      false,
-                                      flDebugOverlayDuration );
+                                    vecTargetCenter + vecIncomingVel * flDebugOverlayScale,
+                                    flDebugOverlayWidth,
+                                    200,
+                                    0,
+                                    0,
+                                    255,
+                                    false,
+                                    flDebugOverlayDuration );
             // Visualize mirror'd velocity away from pyro aim
             NDebugOverlay::HorzArrow( vecTargetCenter,
-                                      vecTargetCenter + vecOutgoingVel * flDebugOverlayScale,
-                                      flDebugOverlayWidth,
-                                      0,
-                                      200,
-                                      0,
-                                      255,
-                                      true,
-                                      flDebugOverlayDuration );
+                                    vecTargetCenter + vecOutgoingVel * flDebugOverlayScale,
+                                    flDebugOverlayWidth,
+                                    0,
+                                    200,
+                                    0,
+                                    255,
+                                    true,
+                                    flDebugOverlayDuration );
             // Visualize push
             NDebugOverlay::HorzArrow( vecTargetCenter,
-                                      vecTargetCenter + vecReflect * flDebugOverlayScale,
-                                      flDebugOverlayWidth,
-                                      150,
-                                      150,
-                                      150,
-                                      255,
-                                      true,
-                                      flDebugOverlayDuration );
+                                    vecTargetCenter + vecReflect * flDebugOverlayScale,
+                                    flDebugOverlayWidth,
+                                    150,
+                                    150,
+                                    150,
+                                    255,
+                                    true,
+                                    flDebugOverlayDuration );
             CFmtStr strDebug( "Reflected player off blast ( into-blast momentum %f )", -1 * flMomentumAlongPyroAim );
             NDebugOverlay::Text( vecTargetCenter, strDebug, true, flDebugOverlayDuration );
         }
@@ -1464,9 +1464,9 @@ void CTFFlameThrower::ComputeCrayAirBlastForce( CTFPlayer *pTarget, CTFPlayer *p
             Vector vecEndArrow = vecDebugBasePush + ( vecAdditionalPush * flDebugOverlayScale );
             NDebugOverlay::HorzArrow( vecDebugBasePush, vecEndArrow, flDebugOverlayWidth, 0, 0, 200, 255, true, flDebugOverlayDuration );
             CFmtStr strDebug( "Remaining power after reflection ( %f power - %f reflection * %f cost coeff )",
-                              flAirblastPower,
-                              flPreampPower,
-                              flReflectCostCoeff );
+                            flAirblastPower,
+                            flPreampPower,
+                            flReflectCostCoeff );
             // Put at end of arrow since we're also drawing the final-impulse text at this origin
             NDebugOverlay::Text( vecEndArrow, strDebug, false, flDebugOverlayDuration );
         }
@@ -1512,24 +1512,24 @@ void CTFFlameThrower::ComputeCrayAirBlastForce( CTFPlayer *pTarget, CTFPlayer *p
 
                     // Draw an arrow showing into-ground velocity
                     NDebugOverlay::HorzArrow( vecDebugGround,
-                                              vecDebugGround + vecHypotheticalTargetVelocity * flDebugOverlayScale,
-                                              flDebugOverlayWidth,
-                                              200,
-                                              0,
-                                              200,
-                                              255,
-                                              true,
-                                              flDebugOverlayDuration );
+                                            vecDebugGround + vecHypotheticalTargetVelocity * flDebugOverlayScale,
+                                            flDebugOverlayWidth,
+                                            200,
+                                            0,
+                                            200,
+                                            255,
+                                            true,
+                                            flDebugOverlayDuration );
                     // ... and post-reflect
                     NDebugOverlay::HorzArrow( vecDebugGround,
-                                              vecDebugGround + ( vecHypotheticalTargetVelocity + vecReflectVector ) * flDebugOverlayScale,
-                                              flDebugOverlayWidth,
-                                              200,
-                                              200,
-                                              0,
-                                              255,
-                                              true,
-                                              flDebugOverlayDuration );
+                                            vecDebugGround + ( vecHypotheticalTargetVelocity + vecReflectVector ) * flDebugOverlayScale,
+                                            flDebugOverlayWidth,
+                                            200,
+                                            200,
+                                            0,
+                                            255,
+                                            true,
+                                            flDebugOverlayDuration );
                     CFmtStr strDebug( "Reflected player off ground ( into-ground momentum %f )", -1 * flFromGroundForce );
                     NDebugOverlay::Text( vecDebugGround, strDebug, false, flDebugOverlayDuration );
                 }
@@ -1588,8 +1588,8 @@ void CTFFlameThrower::ComputeCrayAirBlastForce( CTFPlayer *pTarget, CTFPlayer *p
                 Vector vecArrowEnd = vecTargetOrigin + ( vecUpwardCorrected - vecResult ) * flDebugOverlayScale;
                 NDebugOverlay::HorzArrow( vecTargetOrigin, vecArrowEnd, flDebugOverlayWidth, 50, 50, 50, 255, true, flDebugOverlayDuration );
                 CFmtStr strDebug( "Applied redirect to maintain minimum Z ( %f -> %f )",
-                                  vecResult.z,
-                                  vecUpwardCorrected.z );
+                                vecResult.z,
+                                vecUpwardCorrected.z );
                 NDebugOverlay::Text( vecArrowEnd, strDebug, false, flDebugOverlayDuration );
             }
 
@@ -1615,8 +1615,8 @@ void CTFFlameThrower::ComputeCrayAirBlastForce( CTFPlayer *pTarget, CTFPlayer *p
             Vector vecArrowEnd = vecTargetOrigin + Vector( 0, 0, vecResult.z - flOldZ );
             NDebugOverlay::HorzArrow( vecTargetOrigin + vecOffset, vecArrowEnd + vecOffset, flDebugOverlayWidth, 50, 90, 90, 255, true, flDebugOverlayDuration );
             CFmtStr strDebug( "Airblast vertical push multiplier from attributes/vulnerabilities ( %f -> %f )",
-                              flOldZ,
-                              vecResult.z );
+                            flOldZ,
+                            vecResult.z );
             NDebugOverlay::Text( vecArrowEnd + vecOffset, strDebug, false, flDebugOverlayDuration );
         }
     }
@@ -1633,14 +1633,14 @@ void CTFFlameThrower::ComputeCrayAirBlastForce( CTFPlayer *pTarget, CTFPlayer *p
         // Show overall outgoing vector
         vecDebugMuzzle += Vector( 0, -20, 0 );  // Next to it
         NDebugOverlay::HorzArrow( vecDebugMuzzle,
-                                  vecDebugMuzzle + ( vecTargetVel + vecResult ) * flDebugOverlayScale,
-                                  flDebugOverlayWidth + 1.f,
-                                  50,
-                                  50,
-                                  50,
-                                  200,
-                                  true,
-                                  flDebugOverlayDuration );
+                                vecDebugMuzzle + ( vecTargetVel + vecResult ) * flDebugOverlayScale,
+                                flDebugOverlayWidth + 1.f,
+                                50,
+                                50,
+                                50,
+                                200,
+                                true,
+                                flDebugOverlayDuration );
         CFmtStr strDebugFinal( "Expected result speed: %f", ( vecTargetVel + vecResult ).Length() );
         NDebugOverlay::Text( vecDebugMuzzle + Vector( 0, 0, -2 ), strDebugFinal, true, flDebugOverlayDuration );
     }
@@ -1774,7 +1774,7 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
             // This is bypassing ApplyGenericPushbackImpulse because it implements its own pushback logic.
             pTarget->RemoveFlag( FL_ONGROUND );
             pTarget->SetGroundEntity( NULL );  // We'll restick if necessary, but we want to bypass the gamemovement
-                                               // requirements for un-sticking.
+                                                // requirements for un-sticking.
             // Only apply stun if we're about to apply knocked into air initially
             if ( !pTarget->m_Shared.InCond( TF_COND_KNOCKED_INTO_AIR ) )
             {

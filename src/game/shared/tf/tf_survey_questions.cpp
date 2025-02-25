@@ -63,10 +63,10 @@ bool CasualInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlayerInd
 //-----------------------------------------------------------------------------
 //	  Survey Enum				Help Text String	   Weight	Criteria Function		Active
 const SurveyQuestion_t g_SurveyQuestions[SurveyQuestionType_ARRAYSIZE] = { { QUESTION_MATCH_QUALITY, "MatchQuality", 1.f, NULL, true },
-                                                                           { QUESTION_MAP_QUALITY, "MapQuality", 1.f, NULL, true },
-                                                                           { QUESTION_COMP_INQUIRY, "CompetitiveInquiry", 1.f, &CompetitiveInquiry, true },
-                                                                           { QUESTION_CASUAL_INQUIRY, "CasualInquiry", 1.f, &CasualInquiry, true },
-                                                                           { QUESTION_RANDOM_CRIT, "RandomCritInquiry", 1.f, NULL, true } };
+                                                                            { QUESTION_MAP_QUALITY, "MapQuality", 1.f, NULL, true },
+                                                                            { QUESTION_COMP_INQUIRY, "CompetitiveInquiry", 1.f, &CompetitiveInquiry, true },
+                                                                            { QUESTION_CASUAL_INQUIRY, "CasualInquiry", 1.f, &CasualInquiry, true },
+                                                                            { QUESTION_RANDOM_CRIT, "RandomCritInquiry", 1.f, NULL, true } };
 
 #ifdef CLIENT_DLL
 
@@ -174,8 +174,8 @@ void CSurveyQuestionPanel::FireGameEvent( IGameEvent* event )
 
     // They left/changed servers.  Consider the survey abandoned
     if ( !Q_stricmp( pEventName, "client_disconnect" ) ||
-         !Q_stricmp( pEventName, "client_beginconnect" ) ||
-         !Q_stricmp( pEventName, "server_spawn" ) )
+        !Q_stricmp( pEventName, "client_beginconnect" ) ||
+        !Q_stricmp( pEventName, "server_spawn" ) )
     {
         MarkForDeletion();
     }

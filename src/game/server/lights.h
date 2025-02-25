@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 class CLight : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLight, CPointEntity );
 
     bool KeyValue( const char *szKeyName, const char *szValue );
@@ -37,7 +37,7 @@ class CLight : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     int m_iStyle;
     int m_iDefaultStyle;
     string_t m_iszPattern;

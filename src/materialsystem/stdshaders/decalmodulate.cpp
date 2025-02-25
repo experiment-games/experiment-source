@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( DecalModulate, DecalModulate_DX6 )
 
 BEGIN_SHADER( DecalModulate_dx6,
-              "Help for DecalModulate_dx6" )
+            "Help for DecalModulate_dx6" )
 
 BEGIN_SHADER_PARAMS
 END_SHADER_PARAMS

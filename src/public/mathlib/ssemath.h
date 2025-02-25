@@ -109,9 +109,9 @@ struct ALIGN16 intx4
     inline const bool operator==( const intx4 &other ) const
     {
         return m_i32[0] == other.m_i32[0] &&
-               m_i32[1] == other.m_i32[1] &&
-               m_i32[2] == other.m_i32[2] &&
-               m_i32[3] == other.m_i32[3];
+                m_i32[1] == other.m_i32[1] &&
+                m_i32[2] == other.m_i32[2] &&
+                m_i32[3] == other.m_i32[3];
     }
 } ALIGN16_POST;
 
@@ -122,7 +122,7 @@ FORCEINLINE void TestVPUFlags()
     __vector4 a;
     __asm
     {
-		mfvscr	a;
+        mfvscr	a;
     }
     unsigned int *flags = ( unsigned int * )&a;
     unsigned int controlWord = flags[3];
@@ -496,36 +496,36 @@ FORCEINLINE fltx4 NegSIMD( const fltx4 &a )  // negate: -a
 FORCEINLINE bool IsAllZeros( const fltx4 &a )  // all floats of a zero?
 {
     return ( SubFloat( a, 0 ) == 0.0 ) &&
-           ( SubFloat( a, 1 ) == 0.0 ) &&
-           ( SubFloat( a, 2 ) == 0.0 ) &&
-           ( SubFloat( a, 3 ) == 0.0 );
+            ( SubFloat( a, 1 ) == 0.0 ) &&
+            ( SubFloat( a, 2 ) == 0.0 ) &&
+            ( SubFloat( a, 3 ) == 0.0 );
 }
 
 // for branching when a.xyzw > b.xyzw
 FORCEINLINE bool IsAllGreaterThan( const fltx4 &a, const fltx4 &b )
 {
     return SubFloat( a, 0 ) > SubFloat( b, 0 ) &&
-           SubFloat( a, 1 ) > SubFloat( b, 1 ) &&
-           SubFloat( a, 2 ) > SubFloat( b, 2 ) &&
-           SubFloat( a, 3 ) > SubFloat( b, 3 );
+            SubFloat( a, 1 ) > SubFloat( b, 1 ) &&
+            SubFloat( a, 2 ) > SubFloat( b, 2 ) &&
+            SubFloat( a, 3 ) > SubFloat( b, 3 );
 }
 
 // for branching when a.xyzw >= b.xyzw
 FORCEINLINE bool IsAllGreaterThanOrEq( const fltx4 &a, const fltx4 &b )
 {
     return SubFloat( a, 0 ) >= SubFloat( b, 0 ) &&
-           SubFloat( a, 1 ) >= SubFloat( b, 1 ) &&
-           SubFloat( a, 2 ) >= SubFloat( b, 2 ) &&
-           SubFloat( a, 3 ) >= SubFloat( b, 3 );
+            SubFloat( a, 1 ) >= SubFloat( b, 1 ) &&
+            SubFloat( a, 2 ) >= SubFloat( b, 2 ) &&
+            SubFloat( a, 3 ) >= SubFloat( b, 3 );
 }
 
 // For branching if all a.xyzw == b.xyzw
 FORCEINLINE bool IsAllEqual( const fltx4 &a, const fltx4 &b )
 {
     return SubFloat( a, 0 ) == SubFloat( b, 0 ) &&
-           SubFloat( a, 1 ) == SubFloat( b, 1 ) &&
-           SubFloat( a, 2 ) == SubFloat( b, 2 ) &&
-           SubFloat( a, 3 ) == SubFloat( b, 3 );
+            SubFloat( a, 1 ) == SubFloat( b, 1 ) &&
+            SubFloat( a, 2 ) == SubFloat( b, 2 ) &&
+            SubFloat( a, 3 ) == SubFloat( b, 3 );
 }
 
 FORCEINLINE int TestSignSIMD( const fltx4 &a )  // mask of which floats have the high bit set
@@ -768,17 +768,17 @@ FORCEINLINE fltx4 ExpSIMD( const fltx4 &toPower )
 FORCEINLINE fltx4 Dot3SIMD( const fltx4 &a, const fltx4 &b )
 {
     float flDot = SubFloat( a, 0 ) * SubFloat( b, 0 ) +
-                  SubFloat( a, 1 ) * SubFloat( b, 1 ) +
-                  SubFloat( a, 2 ) * SubFloat( b, 2 );
+                SubFloat( a, 1 ) * SubFloat( b, 1 ) +
+                SubFloat( a, 2 ) * SubFloat( b, 2 );
     return ReplicateX4( flDot );
 }
 
 FORCEINLINE fltx4 Dot4SIMD( const fltx4 &a, const fltx4 &b )
 {
     float flDot = SubFloat( a, 0 ) * SubFloat( b, 0 ) +
-                  SubFloat( a, 1 ) * SubFloat( b, 1 ) +
-                  SubFloat( a, 2 ) * SubFloat( b, 2 ) +
-                  SubFloat( a, 3 ) * SubFloat( b, 3 );
+                SubFloat( a, 1 ) * SubFloat( b, 1 ) +
+                SubFloat( a, 2 ) * SubFloat( b, 2 ) +
+                SubFloat( a, 3 ) * SubFloat( b, 3 );
     return ReplicateX4( flDot );
 }
 
@@ -946,17 +946,17 @@ FORCEINLINE fltx4 UnsignedIntConvertToFltSIMD( const u32x4 &vSrcA )
 }
 
 #if 0 /* pc has no such op */
-// Take a fltx4 containing fixed-point sints and 
-// return them as single precision floats. No 
+// Take a fltx4 containing fixed-point sints and
+// return them as single precision floats. No
 // fixed point conversion is done.
 FORCEINLINE fltx4 SignedIntConvertToFltSIMD( const i32x4 &vSrcA )
 {
-	fltx4 retval;
-	SubFloat( retval, 0 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[0])) );
-	SubFloat( retval, 1 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[1])) );
-	SubFloat( retval, 2 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[2])) );
-	SubFloat( retval, 3 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[3])) );
-	return retval;
+    fltx4 retval;
+    SubFloat( retval, 0 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[0])) );
+    SubFloat( retval, 1 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[1])) );
+    SubFloat( retval, 2 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[2])) );
+    SubFloat( retval, 3 ) = ( (float) (reinterpret_cast<int32 *>(&vSrcA.m128_s32[3])) );
+    return retval;
 }
 
 
@@ -971,14 +971,14 @@ FORCEINLINE fltx4 SignedIntConvertToFltSIMD( const i32x4 &vSrcA )
 */
 FORCEINLINE i32x4 IntShiftLeftWordSIMD(const i32x4 &vSrcA, const i32x4 &vSrcB)
 {
-	i32x4 retval;
-	SubInt(retval, 0) = SubInt(vSrcA, 0) << SubInt(vSrcB, 0);
-	SubInt(retval, 1) = SubInt(vSrcA, 1) << SubInt(vSrcB, 1);
-	SubInt(retval, 2) = SubInt(vSrcA, 2) << SubInt(vSrcB, 2);
-	SubInt(retval, 3) = SubInt(vSrcA, 3) << SubInt(vSrcB, 3);
+    i32x4 retval;
+    SubInt(retval, 0) = SubInt(vSrcA, 0) << SubInt(vSrcB, 0);
+    SubInt(retval, 1) = SubInt(vSrcA, 1) << SubInt(vSrcB, 1);
+    SubInt(retval, 2) = SubInt(vSrcA, 2) << SubInt(vSrcB, 2);
+    SubInt(retval, 3) = SubInt(vSrcA, 3) << SubInt(vSrcB, 3);
 
 
-	return retval;
+    return retval;
 }
 #endif
 
@@ -1639,10 +1639,10 @@ FORCEINLINE fltx4 SignedIntConvertToFltSIMD( const i32x4 &vSrcA )
 // will be divided by 2^immed after conversion
 // (eg, this is fixed point math).
 /* as if:
-   FORCEINLINE fltx4 UnsignedIntConvertToFltSIMD( const i32x4 &vSrcA, unsigned int uImmed )
-   {
-   return __vcfux( vSrcA, uImmed );
-   }
+    FORCEINLINE fltx4 UnsignedIntConvertToFltSIMD( const i32x4 &vSrcA, unsigned int uImmed )
+    {
+    return __vcfux( vSrcA, uImmed );
+    }
 */
 #define UnsignedFixedIntConvertToFltSIMD( vSrcA, uImmed ) ( __vcfux( ( vSrcA ), ( uImmed ) ) )
 
@@ -1651,19 +1651,19 @@ FORCEINLINE fltx4 SignedIntConvertToFltSIMD( const i32x4 &vSrcA )
 // will be divided by 2^immed (eg, this is fixed point
 // math).
 /* as if:
-   FORCEINLINE fltx4 SignedIntConvertToFltSIMD( const i32x4 &vSrcA, unsigned int uImmed )
-   {
-   return __vcfsx( vSrcA, uImmed );
-   }
+    FORCEINLINE fltx4 SignedIntConvertToFltSIMD( const i32x4 &vSrcA, unsigned int uImmed )
+    {
+    return __vcfsx( vSrcA, uImmed );
+    }
 */
 #define SignedFixedIntConvertToFltSIMD( vSrcA, uImmed ) ( __vcfsx( ( vSrcA ), ( uImmed ) ) )
 
 // set all components of a vector to a signed immediate int number.
 /* as if:
-   FORCEINLINE fltx4 IntSetImmediateSIMD(int toImmediate)
-   {
-   return __vspltisw( toImmediate );
-   }
+    FORCEINLINE fltx4 IntSetImmediateSIMD(int toImmediate)
+    {
+    return __vspltisw( toImmediate );
+    }
 */
 #define IntSetImmediateSIMD( x ) ( __vspltisw( x ) )
 
@@ -2321,13 +2321,13 @@ FORCEINLINE fltx4 FindHighestSIMD3( const fltx4 &a )
 // splat all components of a vector to a signed immediate int number.
 FORCEINLINE fltx4 IntSetImmediateSIMD(int to)
 {
-	//CHRISG: SSE2 has this, but not SSE1. What to do?
-	fltx4 retval;
-	SubInt( retval, 0 ) = to;
-	SubInt( retval, 1 ) = to;
-	SubInt( retval, 2 ) = to;
-	SubInt( retval, 3 ) = to;
-	return retval;
+    //CHRISG: SSE2 has this, but not SSE1. What to do?
+    fltx4 retval;
+    SubInt( retval, 0 ) = to;
+    SubInt( retval, 1 ) = to;
+    SubInt( retval, 2 ) = to;
+    SubInt( retval, 3 ) = to;
+    return retval;
 }
 #endif
 
@@ -2446,7 +2446,7 @@ FORCEINLINE void ConvertStoreAsIntsSIMD( intx4 *RESTRICT pDest, const fltx4 &vSr
 /// stored in the format x x x x y y y y z z z z so that they can be efficiently SIMD-accelerated.
 class ALIGN16 FourVectors
 {
-   public:
+    public:
     fltx4 x, y, z;
 
     FORCEINLINE void DuplicateVector( Vector const &v )  //< set all 4 vectors to the same vector value
@@ -3007,11 +3007,11 @@ inline fltx4 SimpleSpline( const fltx4 &value )
 // remaps a value in [startInterval, startInterval+rangeInterval] from linear to
 // spline using SimpleSpline
 inline fltx4 SimpleSplineRemapValWithDeltas( const fltx4 &val,
-                                             const fltx4 &A,
-                                             const fltx4 &BMinusA,
-                                             const fltx4 &OneOverBMinusA,
-                                             const fltx4 &C,
-                                             const fltx4 &DMinusC )
+                                            const fltx4 &A,
+                                            const fltx4 &BMinusA,
+                                            const fltx4 &OneOverBMinusA,
+                                            const fltx4 &C,
+                                            const fltx4 &DMinusC )
 {
     // 	if ( A == B )
     // 		return val >= B ? D : C;

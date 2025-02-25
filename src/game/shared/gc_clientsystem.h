@@ -22,7 +22,7 @@ class CGCClientSystem : public CAutoGameSystemPerFrame
 {
     DECLARE_CLASS_GAMEROOT( CGCClientSystem, CAutoGameSystem );
 
-   public:
+    public:
     // Constructor/Destructor.
     CGCClientSystem();
     ~CGCClientSystem();
@@ -68,13 +68,13 @@ class CGCClientSystem : public CAutoGameSystemPerFrame
         return m_sTxnCountryCode.Get();
     }
 
-   protected:
+    protected:
     void SetupGC();
     virtual void InitGC();
     virtual void PreInitGC() {}
     virtual void PostInitGC() {}
 
-   private:
+    private:
     void SetConnectedToGC( bool bConnected );
 
 #ifdef CLIENT_DLL

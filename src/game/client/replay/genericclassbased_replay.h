@@ -25,11 +25,11 @@ extern IClientReplayContext *g_pClientReplayContext;
 //----------------------------------------------------------------------------------------
 
 class CGenericClassBasedReplay : public CReplay,
-                                 public CGameEventListener
+                                public CGameEventListener
 {
     typedef CReplay BaseClass;
 
-   public:
+    public:
     CGenericClassBasedReplay();
     ~CGenericClassBasedReplay();
 
@@ -144,7 +144,7 @@ class CGenericClassBasedReplay : public CReplay,
         return m_lifeStats;
     }
 
-   protected:
+    protected:
     int m_nPlayerClass;
     int m_nPlayerTeam;
     int m_nStatUndefined;
@@ -172,7 +172,7 @@ class CGenericClassBasedReplay : public CReplay,
     RoundStats_t m_refStats;   // Reference stats, used to compute current stats
     RoundStats_t m_lifeStats;  // Stats for this life, based on reference stats (m_refStats)
 
-   private:
+    private:
     void MedicUpdate();
 
     bool GetFriendIdFromUserId( int nPlayerIndex, uint32 &nFriendIdOut ) const;  // Get a friend ID based on player index.  Returns true on success

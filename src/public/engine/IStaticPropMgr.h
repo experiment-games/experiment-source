@@ -36,7 +36,7 @@ class ICollideable;
 //-----------------------------------------------------------------------------
 abstract_class IStaticPropMgr
 {
-   public:
+    public:
     // Create physics representations of props
     virtual void CreateVPhysicsRepresentations( IPhysicsEnvironment * physenv, IVPhysicsKeyHandler * pDefaults, void *pGameData ) = 0;
 
@@ -53,7 +53,7 @@ abstract_class IStaticPropMgr
 
 abstract_class IStaticPropMgrClient : public IStaticPropMgr
 {
-   public:
+    public:
     // Recomputes the static prop opacity given a view origin
     virtual void ComputePropOpacity( const Vector &viewOrigin, float factor ) = 0;
 
@@ -82,7 +82,7 @@ abstract_class IStaticPropMgrClient : public IStaticPropMgr
 
 class IStaticPropMgrServer : public IStaticPropMgr
 {
-   public:
+    public:
     // Changes made specifically to support the Portal mod (smack Dave Kircher if something breaks) (Added separately to both client and server to not mess with versioning)
     //===================================================================
     virtual void GetAllStaticProps( CUtlVector< ICollideable * > *pOutput ) = 0;                                                                                                       // testing function that will eventually be removed

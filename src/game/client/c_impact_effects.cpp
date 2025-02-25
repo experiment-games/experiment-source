@@ -1366,21 +1366,21 @@ void FX_GaussExplosion( const Vector &pos, const Vector &dir, int type )
 
 class C_TEGaussExplosion : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEGaussExplosion, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
     C_TEGaussExplosion();
     virtual ~C_TEGaussExplosion();
 
-   public:
+    public:
     virtual void PostDataUpdate( DataUpdateType_t updateType );
     virtual bool ShouldDraw()
     {
         return true;
     }
 
-   public:
+    public:
     int m_nType;
     Vector m_vecDirection;
 };

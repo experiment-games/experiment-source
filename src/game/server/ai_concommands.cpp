@@ -410,11 +410,11 @@ void CC_NPC_Create( const CCommand &args )
         Vector forward;
         pPlayer->EyeVectors( &forward );
         AI_TraceLine( pPlayer->EyePosition(),
-                      pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
-                      MASK_NPCSOLID,
-                      pPlayer,
-                      COLLISION_GROUP_NONE,
-                      &tr );
+                    pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
+                    MASK_NPCSOLID,
+                    pPlayer,
+                    COLLISION_GROUP_NONE,
+                    &tr );
         if ( tr.fraction != 1.0 )
         {
             if ( baseNPC->CapabilitiesGet() & bits_CAP_MOVE_FLY )
@@ -477,11 +477,11 @@ void CC_NPC_Create_Aimed( const CCommand &args )
         angles.x = 0;
         angles.z = 0;
         AI_TraceLine( pPlayer->EyePosition(),
-                      pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
-                      MASK_NPCSOLID,
-                      pPlayer,
-                      COLLISION_GROUP_NONE,
-                      &tr );
+                    pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
+                    MASK_NPCSOLID,
+                    pPlayer,
+                    COLLISION_GROUP_NONE,
+                    &tr );
 
         if ( tr.fraction != 1.0 )
         {
@@ -628,11 +628,11 @@ void CC_NPC_Teleport( void )
     Vector forward;
     pPlayer->EyeVectors( &forward );
     AI_TraceLine( pPlayer->EyePosition(),
-                  pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
-                  MASK_NPCSOLID,
-                  pPlayer,
-                  COLLISION_GROUP_NONE,
-                  &tr );
+                pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
+                MASK_NPCSOLID,
+                pPlayer,
+                COLLISION_GROUP_NONE,
+                &tr );
 
     if ( tr.fraction != 1.0 )
     {
@@ -663,11 +663,11 @@ void CC_NPC_Go( void )
     Vector forward;
     pPlayer->EyeVectors( &forward );
     AI_TraceLine( pPlayer->EyePosition(),
-                  pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
-                  MASK_NPCSOLID,
-                  pPlayer,
-                  COLLISION_GROUP_NONE,
-                  &tr );
+                pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,
+                MASK_NPCSOLID,
+                pPlayer,
+                COLLISION_GROUP_NONE,
+                &tr );
     if ( tr.fraction != 1.0 )
     {
         CAI_BaseNPC::ForceSelectedGo( pPlayer, tr.endpos, forward, npc_go_do_run.GetBool() );

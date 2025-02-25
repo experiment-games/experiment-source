@@ -61,11 +61,11 @@ int main(int argc, const char** argv) {
     bool ok;
     ok = in.Next(&inptr, &inlen);
     if (!ok) {
-      break;
+    break;
     }
     if (inlen > 0) {
-      int err = write(STDOUT_FILENO, inptr, inlen);
-      assert(err == inlen);
+    int err = write(STDOUT_FILENO, inptr, inlen);
+    assert(err == inlen);
     }
   }
 

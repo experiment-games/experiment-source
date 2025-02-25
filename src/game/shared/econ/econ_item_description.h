@@ -62,11 +62,11 @@ struct econ_item_description_line_t
 
 class IEconItemDescription
 {
-   public:
+    public:
     // This may yield on the GC and should never yield on the client.
     static void YieldingFillOutEconItemDescription( IEconItemDescription *out_pDescription, CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 
-   public:
+    public:
     IEconItemDescription() {}
     virtual ~IEconItemDescription() {}
 
@@ -83,7 +83,7 @@ class IEconItemDescription
     // will all of the flags cannot be found.
     const econ_item_description_line_t *GetFirstLineWithMetaType( uint32 unMetaTypeSearchFlags ) const;
 
-   private:
+    private:
     // When generating an item description, this is guaranteed to be called once and only once before GenerateDescription()
     // is called. Any data that may yield but will be needed somewhere deep inside GenerateDescription() should be determined
     // and cached off here.
@@ -93,7 +93,7 @@ class IEconItemDescription
     // fill out all of our description lines.
     virtual void GenerateDescriptionLines( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem ) = 0;
 
-   protected:
+    protected:
     CUtlVector< econ_item_description_line_t > m_vecDescLines;
 };
 
@@ -108,7 +108,7 @@ class IEconItemDescription
 //-----------------------------------------------------------------------------
 class IAccountPersonaLocalizer
 {
-   public:
+    public:
     virtual const locchar_t *FindAccountPersonaName( uint32 unAccountID ) const = 0;
 };
 
@@ -117,7 +117,7 @@ class IAccountPersonaLocalizer
 //-----------------------------------------------------------------------------
 class CEconItemDescription : public IEconItemDescription, public IAccountPersonaLocalizer
 {
-   public:
+    public:
     // Instances should be filled out via YieldingFillOutEconItemDescription().
     CEconItemDescription()
         : m_bUnknownPlayer( false ), m_bIsToolTip( false )
@@ -142,7 +142,7 @@ class CEconItemDescription : public IEconItemDescription, public IAccountPersona
     // manually sorted to be grouped by positive/negative status, etc.
     class CVisibleAttributeDisplayer : public IEconItemAttributeIterator
     {
-       public:
+        public:
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value ) OVERRIDE;
 
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value ) OVERRIDE
@@ -181,7 +181,7 @@ class CEconItemDescription : public IEconItemDescription, public IAccountPersona
         void SortAttributes();
         void Finalize( const IEconItemInterface *pEconItem, CEconItemDescription *pEconItemDescription, const CLocalizationProvider *pLocalizationProvider );
 
-       private:
+        private:
         struct attrib_iterator_value_t
         {
             const CEconItemAttributeDefinition *m_pAttrDef;
@@ -193,7 +193,7 @@ class CEconItemDescription : public IEconItemDescription, public IAccountPersona
 
     class CRecipeNameAttributeDisplayer : public CVisibleAttributeDisplayer
     {
-       public:
+        public:
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value ) OVERRIDE;
     };
 
@@ -206,12 +206,12 @@ class CEconItemDescription : public IEconItemDescription, public IAccountPersona
         m_bIsToolTip = bIsToolTip;
     }
 
-   private:
+    private:
     // IEconItemDescription interface.
     virtual void YieldingCacheDescriptionData( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
     virtual void GenerateDescriptionLines( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 
-   private:
+    private:
     // Internal.
     virtual void AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor = NUM_ATTRIB_COLORS, uint32 unAdditionalMetaType = 0 );
 
@@ -296,7 +296,7 @@ class CEconItemDescription : public IEconItemDescription, public IAccountPersona
 //-----------------------------------------------------------------------------
 class CEconAttributeDescription
 {
-   private:
+    private:
     // Internal constructor.
     void InternalConstruct(
         const CLocalizationProvider *pLocalizationProvider,
@@ -305,7 +305,7 @@ class CEconAttributeDescription
         TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( MD5Context_t *pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
             IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer );
 
-   public:
+    public:
     // Outward-facing constructor. Pass in whatever you want for "value" and we'll
     // use the raw bits for their value interpreted however the attribute says.
     template < typename T >
@@ -334,7 +334,7 @@ class CEconAttributeDescription
         return m_eDefaultColor;
     }
 
-   private:
+    private:
     CUtlConstStringBase< locchar_t > m_loc_sValue;
     CUtlConstStringBase< locchar_t > m_loc_sShortValue;
     attrib_colors_t m_eDefaultColor;
@@ -356,7 +356,7 @@ enum EGenerateLocalizedFullItemNameFlag_t
 //-----------------------------------------------------------------------------
 class CEconItemLocalizedFullNameGenerator
 {
-   public:
+    public:
     CEconItemLocalizedFullNameGenerator( const CLocalizationProvider *pLocalizationProvider, const CEconItemDefinition *pItemDef, bool bUseingHashContext = true, entityquality_t eQuality = AE_UNIQUE );
 
     const locchar_t *GetFullName() const
@@ -364,7 +364,7 @@ class CEconItemLocalizedFullNameGenerator
         return m_loc_LocalizedItemName;
     }
 
-   private:
+    private:
     locchar_t m_loc_LocalizedItemName[MAX_ITEM_NAME_LENGTH];
 };
 
@@ -373,7 +373,7 @@ class CEconItemLocalizedFullNameGenerator
 //-----------------------------------------------------------------------------
 class CEconItemLocalizedMarketNameGenerator
 {
-   public:
+    public:
     CEconItemLocalizedMarketNameGenerator( const CLocalizationProvider *pLocalizationProvider, IEconItemInterface *pItem, bool bUseingHashContext = true );
 
     const locchar_t *GetFullName() const
@@ -381,7 +381,7 @@ class CEconItemLocalizedMarketNameGenerator
         return m_loc_LocalizedItemName;
     }
 
-   private:
+    private:
     locchar_t m_loc_LocalizedItemName[MAX_ITEM_NAME_LENGTH];
 };
 
@@ -390,7 +390,7 @@ class CEconItemLocalizedMarketNameGenerator
 //-----------------------------------------------------------------------------
 class CSteamAccountIDAttributeCollector : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value ) OVERRIDE
     {
         if ( pAttrDef->GetDescriptionFormat() == ATTDESCFORM_VALUE_IS_ACCOUNT_ID )
@@ -407,7 +407,7 @@ class CSteamAccountIDAttributeCollector : public CEconItemSpecificAttributeItera
         return m_vecSteamAccountIDs;
     }
 
-   private:
+    private:
     CUtlVector< uint32 > m_vecSteamAccountIDs;
 };
 
@@ -431,7 +431,7 @@ struct CLocalizedRTime32
 template <>
 class CLocalizedStringArg< CLocalizedRTime32 >
 {
-   public:
+    public:
     enum
     {
         kIsValid = true
@@ -444,7 +444,7 @@ class CLocalizedStringArg< CLocalizedRTime32 >
         return m_Str.Get();
     }
 
-   private:
+    private:
     CUtlConstStringBase< locchar_t > m_Str;
 };
 

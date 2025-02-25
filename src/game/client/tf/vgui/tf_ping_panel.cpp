@@ -32,7 +32,7 @@ REGISTER_FUNC_FOR_DASHBOARD_PANEL_TYPE( GetDashboardPingPanel, k_eMMSettings );
 
 CTFPingPanel::CTFPingPanel( Panel* pPanel, const char* pszName, ETFMatchGroup eMatchGroup )
     : CMatchMakingDashboardSidePanel( pPanel, pszName, "resource/ui/MatchMakingPingPanel.res", k_eSideLeft ),
-      m_eMatchGroup( eMatchGroup )
+    m_eMatchGroup( eMatchGroup )
 {
     SetProportional( true );
 
@@ -246,8 +246,8 @@ void CTFPingPanel::UpdateCurrentPing()
     int nLowestDataCenterPing = m_vecDataCenterPingPanels.Count() ? m_vecDataCenterPingPanels[0].m_nPing : 0;
     int nCurrentPingLimit = MAX( ( int )m_pPingSlider->GetSliderValue(), nLowestDataCenterPing );
     m_pCurrentPingLabel->SetText( bUsePingLimit
-                                      ? LocalizeNumberWithToken( "#TF_MM_PingSetting", nCurrentPingLimit )
-                                      : g_pVGuiLocalize->Find( "#TF_MM_PingSetting_Auto" ) );
+                                    ? LocalizeNumberWithToken( "#TF_MM_PingSetting", nCurrentPingLimit )
+                                    : g_pVGuiLocalize->Find( "#TF_MM_PingSetting_Auto" ) );
 
     FOR_EACH_VEC( m_vecDataCenterPingPanels, i )
     {

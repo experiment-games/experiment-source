@@ -16,7 +16,7 @@ class CBasePlayer;
 
 abstract_class IVoiceGameMgrHelper
 {
-   public:
+    public:
     virtual ~IVoiceGameMgrHelper() {}
 
     // Called each frame to determine which players are allowed to hear each other.	This overrides
@@ -27,7 +27,7 @@ abstract_class IVoiceGameMgrHelper
 // CVoiceGameMgr manages which clients can hear which other clients.
 class CVoiceGameMgr
 {
-   public:
+    public:
     CVoiceGameMgr();
     virtual ~CVoiceGameMgr();
 
@@ -55,11 +55,11 @@ class CVoiceGameMgr
 
     bool IsPlayerIgnoringPlayer( int iTalker, int iListener );
 
-   private:
+    private:
     // Force it to update the client masks.
     void UpdateMasks();
 
-   private:
+    private:
     IVoiceGameMgrHelper *m_pHelper;
     int m_nMaxPlayers;
     double m_UpdateInterval;  // How long since the last update.

@@ -1,4 +1,4 @@
-//======= Copyright © 2005, , Valve Corporation, All rights reserved. =========
+//======= Copyright ï¿½ 2005, , Valve Corporation, All rights reserved. =========
 //
 // Purpose: Variant Pearson Hash general purpose hashing algorithm described
 //			by Cargill in C++ Report 1994. Generates a 16-bit result.
@@ -74,7 +74,7 @@ inline unsigned HashIntConventional( const int n )  // faster but less effective
     return hash;
 
     /* this is the old version, which would cause a load-hit-store on every
-       line on a PowerPC, and therefore took hundreds of clocks to execute!
+        line on a PowerPC, and therefore took hundreds of clocks to execute!
 
     byte *p = (byte *)&n;
     unsigned hash = 0xAAAAAAAA + *p++;

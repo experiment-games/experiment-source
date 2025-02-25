@@ -17,7 +17,7 @@
 // interface matches a subset of VGUI functions
 class CLocalizationProvider
 {
-   public:
+    public:
     virtual locchar_t *Find( const char *pchKey ) const = 0;
     locchar_t *FindSafe( const char *pchKey ) const;
 
@@ -42,7 +42,7 @@ extern vgui::ILocalize *g_pVGuiLocalize;
 // Game localization is handled by vgui
 class CVGUILocalizationProvider : public CLocalizationProvider
 {
-   public:
+    public:
     CVGUILocalizationProvider();
 
     virtual locchar_t *Find( const char *pchKey ) const;

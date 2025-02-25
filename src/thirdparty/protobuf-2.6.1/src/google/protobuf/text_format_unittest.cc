@@ -97,13 +97,13 @@ class TextFormatExtensionsTest : public testing::Test {
  public:
   static void SetUpTestCase() {
     GOOGLE_CHECK_OK(File::GetContents(TestSourceDir() +
-                                   "/google/protobuf/testdata/"
-                                   "text_format_unittest_extensions_data.txt",
-                               &static_proto_debug_string_, true));
+                                    "/google/protobuf/testdata/"
+                                    "text_format_unittest_extensions_data.txt",
+                                &static_proto_debug_string_, true));
   }
 
   TextFormatExtensionsTest()
-      : proto_debug_string_(static_proto_debug_string_) {}
+    : proto_debug_string_(static_proto_debug_string_) {}
 
  protected:
   // Debug string read from text_format_unittest_data.txt.
@@ -188,8 +188,8 @@ TEST_F(TextFormatTest, StringEscape) {
 
   // Hardcode a correct value to test against.
   string correct_string = "optional_string: "
-      + kEscapeTestStringEscaped
-       + "\n";
+    + kEscapeTestStringEscaped
+        + "\n";
 
   // Compare.
   EXPECT_EQ(correct_string, debug_string);
@@ -198,7 +198,7 @@ TEST_F(TextFormatTest, StringEscape) {
   EXPECT_EQ(correct_string, utf8_debug_string);
 
   string expected_short_debug_string = "optional_string: "
-      + kEscapeTestStringEscaped;
+    + kEscapeTestStringEscaped;
   EXPECT_EQ(expected_short_debug_string, proto_.ShortDebugString());
 }
 
@@ -213,19 +213,19 @@ TEST_F(TextFormatTest, Utf8DebugString) {
 
   // Hardcode a correct value to test against.
   string correct_utf8_string =
-      "optional_string: "
-      "\"\350\260\267\346\255\214\""
-      "\n"
-      "optional_bytes: "
-      "\"\\350\\260\\267\\346\\255\\214\""
-      "\n";
+    "optional_string: "
+    "\"\350\260\267\346\255\214\""
+    "\n"
+    "optional_bytes: "
+    "\"\\350\\260\\267\\346\\255\\214\""
+    "\n";
   string correct_string =
-      "optional_string: "
-      "\"\\350\\260\\267\\346\\255\\214\""
-      "\n"
-      "optional_bytes: "
-      "\"\\350\\260\\267\\346\\255\\214\""
-      "\n";
+    "optional_string: "
+    "\"\\350\\260\\267\\346\\255\\214\""
+    "\n"
+    "optional_bytes: "
+    "\"\\350\\260\\267\\346\\255\\214\""
+    "\n";
 
   // Compare.
   EXPECT_EQ(correct_utf8_string, utf8_debug_string);
@@ -428,8 +428,8 @@ TEST_F(TextFormatTest, FieldSpecificCustomPrinter) {
 
   TextFormat::Printer printer;
   EXPECT_TRUE(printer.RegisterFieldValuePrinter(
-      message.GetDescriptor()->FindFieldByName("optional_int32"),
-      new CustomInt32FieldValuePrinter()));
+    message.GetDescriptor()->FindFieldByName("optional_int32"),
+    new CustomInt32FieldValuePrinter()));
   string text;
   printer.PrintToString(message, &text);
   EXPECT_EQ("optional_int32: value-is(42)\nrepeated_int32: 42\n", text);
@@ -440,8 +440,8 @@ TEST_F(TextFormatTest, ErrorCasesRegisteringFieldValuePrinterShouldFail) {
   TextFormat::Printer printer;
   // NULL printer.
   EXPECT_FALSE(printer.RegisterFieldValuePrinter(
-      message.GetDescriptor()->FindFieldByName("optional_int32"),
-      NULL));
+    message.GetDescriptor()->FindFieldByName("optional_int32"),
+    NULL));
   // Because registration fails, the ownership of this printer is never taken.
   TextFormat::FieldValuePrinter my_field_printer;
   // NULL field
@@ -455,11 +455,11 @@ class CustomMessageFieldValuePrinter : public TextFormat::FieldValuePrinter {
   }
 
   virtual string PrintMessageStart(const Message& message,
-                                   int field_index,
-                                   int field_count,
-                                   bool single_line_mode) const {
+                                    int field_index,
+                                    int field_count,
+                                    bool single_line_mode) const {
     if (single_line_mode) {
-      return " { ";
+    return " { ";
     }
     return StrCat(
         " {  # ", message.GetDescriptor()->name(), ": ", field_index, "\n");
@@ -480,30 +480,30 @@ TEST_F(TextFormatTest, CustomPrinterForComments) {
   string text;
   printer.PrintToString(message, &text);
   EXPECT_EQ(
-      "optional_nested_message {  # NestedMessage: -1\n"
-      "}\n"
-      "optional_import_message {  # ImportMessage: -1\n"
-      "  d: 42  # x2a\n"
-      "}\n"
-      "repeated_nested_message {  # NestedMessage: 0\n"
-      "}\n"
-      "repeated_nested_message {  # NestedMessage: 1\n"
-      "}\n"
-      "repeated_import_message {  # ImportMessage: 0\n"
-      "  d: 43  # x2b\n"
-      "}\n"
-      "repeated_import_message {  # ImportMessage: 1\n"
-      "  d: 44  # x2c\n"
-      "}\n",
-      text);
+    "optional_nested_message {  # NestedMessage: -1\n"
+    "}\n"
+    "optional_import_message {  # ImportMessage: -1\n"
+    "  d: 42  # x2a\n"
+    "}\n"
+    "repeated_nested_message {  # NestedMessage: 0\n"
+    "}\n"
+    "repeated_nested_message {  # NestedMessage: 1\n"
+    "}\n"
+    "repeated_import_message {  # ImportMessage: 0\n"
+    "  d: 43  # x2b\n"
+    "}\n"
+    "repeated_import_message {  # ImportMessage: 1\n"
+    "  d: 44  # x2c\n"
+    "}\n",
+    text);
 }
 
 class CustomMultilineCommentPrinter : public TextFormat::FieldValuePrinter {
  public:
   virtual string PrintMessageStart(const Message& message,
-                                   int field_index,
-                                   int field_count,
-                                   bool single_line_comment) const {
+                                    int field_index,
+                                    int field_count,
+                                    bool single_line_comment) const {
     return StrCat(" {  # 1\n", "  # 2\n");
   }
 };
@@ -518,14 +518,14 @@ TEST_F(TextFormatTest, CustomPrinterForMultilineComments) {
   string text;
   printer.PrintToString(message, &text);
   EXPECT_EQ(
-      "optional_nested_message {  # 1\n"
-      "  # 2\n"
-      "}\n"
-      "optional_import_message {  # 1\n"
-      "  # 2\n"
-      "  d: 42\n"
-      "}\n",
-      text);
+    "optional_nested_message {  # 1\n"
+    "  # 2\n"
+    "}\n"
+    "optional_import_message {  # 1\n"
+    "  # 2\n"
+    "  d: 42\n"
+    "}\n",
+    text);
 }
 
 TEST_F(TextFormatTest, ParseBasic) {
@@ -564,8 +564,8 @@ TEST_F(TextFormatTest, ParseEnumFieldFromNegativeNumber) {
 TEST_F(TextFormatTest, ParseStringEscape) {
   // Create a parse string with escpaed characters in it.
   string parse_string = "optional_string: "
-      + kEscapeTestStringEscaped
-      + "\n";
+    + kEscapeTestStringEscaped
+    + "\n";
 
   io::ArrayInputStream input_stream(parse_string.data(),
                                     parse_string.size());
@@ -588,7 +588,7 @@ TEST_F(TextFormatTest, ParseConcatenatedString) {
 
   // Create a parse string with multiple parts on seperate lines.
   parse_string = "optional_string: \"foo\"\n"
-                 "\"bar\"\n";
+                "\"bar\"\n";
 
   io::ArrayInputStream input_stream2(parse_string.data(),
                                     parse_string.size());
@@ -616,18 +616,18 @@ TEST_F(TextFormatTest, ParseFloatWithSuffix) {
 
 TEST_F(TextFormatTest, ParseShortRepeatedForm) {
   string parse_string =
-      // Mixed short-form and long-form are simply concatenated.
-      "repeated_int32: 1\n"
-      "repeated_int32: [456, 789]\n"
-      "repeated_nested_enum: [  FOO ,BAR, # comment\n"
-      "                         3]\n"
-      // Note that while the printer won't print repeated strings in short-form,
-      // the parser will accept them.
-      "repeated_string: [ \"foo\", 'bar' ]\n"
-      // Repeated message
-      "repeated_nested_message: [ { bb: 1 }, { bb : 2 }]\n"
-      // Repeated group
-      "RepeatedGroup [{ a: 3 },{ a: 4 }]\n";
+    // Mixed short-form and long-form are simply concatenated.
+    "repeated_int32: 1\n"
+    "repeated_int32: [456, 789]\n"
+    "repeated_nested_enum: [  FOO ,BAR, # comment\n"
+    "                         3]\n"
+    // Note that while the printer won't print repeated strings in short-form,
+    // the parser will accept them.
+    "repeated_string: [ \"foo\", 'bar' ]\n"
+    // Repeated message
+    "repeated_nested_message: [ { bb: 1 }, { bb : 2 }]\n"
+    // Repeated group
+    "RepeatedGroup [{ a: 3 },{ a: 4 }]\n";
 
   ASSERT_TRUE(TextFormat::ParseFromString(parse_string, &proto_));
 
@@ -931,25 +931,25 @@ TEST_F(TextFormatTest, PrintFieldsInIndexOrder) {
 class TextFormatParserTest : public testing::Test {
  protected:
   void ExpectFailure(const string& input, const string& message, int line,
-                     int col) {
+                    int col) {
     scoped_ptr<unittest::TestAllTypes> proto(new unittest::TestAllTypes);
     ExpectFailure(input, message, line, col, proto.get());
   }
 
   void ExpectFailure(const string& input, const string& message, int line,
-                     int col, Message* proto) {
+                    int col, Message* proto) {
     ExpectMessage(input, message, line, col, proto, false);
   }
 
   void ExpectMessage(const string& input, const string& message, int line,
-                     int col, Message* proto, bool expected_result) {
+                    int col, Message* proto, bool expected_result) {
     TextFormat::Parser parser;
     MockErrorCollector error_collector;
     parser.RecordErrorsTo(&error_collector);
     EXPECT_EQ(expected_result, parser.ParseFromString(input, proto))
         << input << " -> " << proto->DebugString();
     EXPECT_EQ(SimpleItoa(line) + ":" + SimpleItoa(col) + ": " + message + "\n",
-              error_collector.text_);
+            error_collector.text_);
   }
 
   void ExpectSuccessAndTree(const string& input, Message* proto,
@@ -963,8 +963,8 @@ class TextFormatParserTest : public testing::Test {
   }
 
   void ExpectLocation(TextFormat::ParseInfoTree* tree,
-                      const Descriptor* d, const string& field_name,
-                      int index, int line, int column) {
+                    const Descriptor* d, const string& field_name,
+                    int index, int line, int column) {
     TextFormat::ParseLocation location = tree->GetLocation(
         d->FindFieldByName(field_name), index);
     EXPECT_EQ(line, location.line);
@@ -974,7 +974,7 @@ class TextFormatParserTest : public testing::Test {
   // An error collector which simply concatenates all its errors into a big
   // block of text which can be checked.
   class MockErrorCollector : public io::ErrorCollector {
-   public:
+    public:
     MockErrorCollector() {}
     ~MockErrorCollector() {}
 
@@ -982,12 +982,12 @@ class TextFormatParserTest : public testing::Test {
 
     // implements ErrorCollector -------------------------------------
     void AddError(int line, int column, const string& message) {
-      strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
-                                   line + 1, column + 1, message);
+    strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
+                                    line + 1, column + 1, message);
     }
 
     void AddWarning(int line, int column, const string& message) {
-      AddError(line, column, "WARNING:" + message);
+    AddError(line, column, "WARNING:" + message);
     }
   };
 };
@@ -997,20 +997,20 @@ TEST_F(TextFormatParserTest, ParseInfoTreeBuilding) {
   const Descriptor* d = message->GetDescriptor();
 
   string stringData =
-      "optional_int32: 1\n"
-      "optional_int64: 2\n"
-      "  optional_double: 2.4\n"
-      "repeated_int32: 5\n"
-      "repeated_int32: 10\n"
-      "optional_nested_message <\n"
-      "  bb: 78\n"
-      ">\n"
-      "repeated_nested_message <\n"
-      "  bb: 79\n"
-      ">\n"
-      "repeated_nested_message <\n"
-      "  bb: 80\n"
-      ">";
+    "optional_int32: 1\n"
+    "optional_int64: 2\n"
+    "  optional_double: 2.4\n"
+    "repeated_int32: 5\n"
+    "repeated_int32: 10\n"
+    "optional_nested_message <\n"
+    "  bb: 78\n"
+    ">\n"
+    "repeated_nested_message <\n"
+    "  bb: 79\n"
+    ">\n"
+    "repeated_nested_message <\n"
+    "  bb: 80\n"
+    ">";
 
 
   TextFormat::ParseInfoTree tree;
@@ -1036,10 +1036,10 @@ TEST_F(TextFormatParserTest, ParseInfoTreeBuilding) {
 
   // Verify inside the nested message.
   const FieldDescriptor* nested_field =
-      d->FindFieldByName("optional_nested_message");
+    d->FindFieldByName("optional_nested_message");
 
   TextFormat::ParseInfoTree* nested_tree =
-      tree.GetTreeForNested(nested_field, -1);
+    tree.GetTreeForNested(nested_field, -1);
   ExpectLocation(nested_tree, nested_field->message_type(), "bb", -1, 6, 2);
 
   // Verify inside another nested message.
@@ -1052,7 +1052,7 @@ TEST_F(TextFormatParserTest, ParseInfoTreeBuilding) {
 
   // Verify a NULL tree for an unknown nested field.
   TextFormat::ParseInfoTree* unknown_nested_tree =
-      tree.GetTreeForNested(nested_field, 2);
+    tree.GetTreeForNested(nested_field, 2);
 
   EXPECT_EQ(NULL, unknown_nested_tree);
 }
@@ -1172,7 +1172,7 @@ TEST_F(TextFormatParserTest, ParseFieldValueFromString) {
   // enum
   EXPECT_FIELD(nested_enum, unittest::TestAllTypes::BAR, "BAR");
   EXPECT_FIELD(nested_enum, unittest::TestAllTypes::BAZ,
-               SimpleItoa(unittest::TestAllTypes::BAZ));
+                SimpleItoa(unittest::TestAllTypes::BAZ));
   EXPECT_INVALID(nested_enum, "FOOBAR");
 
   // message
@@ -1200,29 +1200,29 @@ TEST_F(TextFormatParserTest, InvalidToken) {
 
 TEST_F(TextFormatParserTest, InvalidFieldName) {
   ExpectFailure(
-      "invalid_field: somevalue\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"invalid_field\".",
-      1, 14);
+    "invalid_field: somevalue\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"invalid_field\".",
+    1, 14);
 }
 
 TEST_F(TextFormatParserTest, InvalidCapitalization) {
   // We require that group names be exactly as they appear in the .proto.
   ExpectFailure(
-      "optionalgroup {\na: 15\n}\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"optionalgroup\".",
-      1, 15);
+    "optionalgroup {\na: 15\n}\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"optionalgroup\".",
+    1, 15);
   ExpectFailure(
-      "OPTIONALgroup {\na: 15\n}\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"OPTIONALgroup\".",
-      1, 15);
+    "OPTIONALgroup {\na: 15\n}\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"OPTIONALgroup\".",
+    1, 15);
   ExpectFailure(
-      "Optional_Double: 10.0\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"Optional_Double\".",
-      1, 16);
+    "Optional_Double: 10.0\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"Optional_Double\".",
+    1, 16);
 }
 
 TEST_F(TextFormatParserTest, AllowIgnoreCapitalizationError) {
@@ -1285,9 +1285,9 @@ TEST_F(TextFormatParserTest, InvalidFieldValues) {
   ExpectFailure("optional_bool: !\n", "Expected identifier.", 1, 16);
 
   ExpectFailure(
-      "optional_bool: meh\n",
-      "Invalid value for boolean field \"optional_bool\". Value: \"meh\".",
-      2, 1);
+    "optional_bool: meh\n",
+    "Invalid value for boolean field \"optional_bool\". Value: \"meh\".",
+    2, 1);
 
   ExpectFailure("optional_bool {\n \n}\n", "Expected \":\", found \"{\".",
                 1, 15);
@@ -1315,13 +1315,13 @@ TEST_F(TextFormatParserTest, InvalidFieldValues) {
                 "Expected integer or identifier.", 1, 23);
 
   ExpectFailure(
-      "optional_nested_enum: grah\n",
-      "Unknown enumeration value of \"grah\" for field "
-      "\"optional_nested_enum\".", 2, 1);
+    "optional_nested_enum: grah\n",
+    "Unknown enumeration value of \"grah\" for field "
+    "\"optional_nested_enum\".", 2, 1);
 
   ExpectFailure(
-      "optional_nested_enum {\n \n}\n",
-      "Expected \":\", found \"{\".", 1, 22);
+    "optional_nested_enum {\n \n}\n",
+    "Expected \":\", found \"{\".", 1, 22);
 }
 
 TEST_F(TextFormatParserTest, MessageDelimeters) {
@@ -1449,11 +1449,11 @@ TEST_F(TextFormatMessageSetTest, Serialize) {
   protobuf_unittest::TestMessageSetContainer proto;
   protobuf_unittest::TestMessageSetExtension1* item_a =
     proto.mutable_message_set()->MutableExtension(
-      protobuf_unittest::TestMessageSetExtension1::message_set_extension);
+    protobuf_unittest::TestMessageSetExtension1::message_set_extension);
   item_a->set_i(23);
   protobuf_unittest::TestMessageSetExtension2* item_b =
     proto.mutable_message_set()->MutableExtension(
-      protobuf_unittest::TestMessageSetExtension2::message_set_extension);
+    protobuf_unittest::TestMessageSetExtension2::message_set_extension);
   item_b->set_str("foo");
   EXPECT_EQ(proto_debug_string_, proto.DebugString());
 }

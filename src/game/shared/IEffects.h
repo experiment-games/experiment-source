@@ -31,7 +31,7 @@ typedef CGameTrace trace_t;
 #define IEFFECTS_INTERFACE_VERSION "IEffects001"
 abstract_class IEffects : public IPredictionSystem
 {
-   public:
+    public:
     //
     // Particle effects
     //

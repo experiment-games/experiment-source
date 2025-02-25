@@ -29,7 +29,7 @@ class CScriptedClientLuaPanel;
 //-----------------------------------------------------------------------------
 class ClientModeExperimentNormal : public ClientModeShared
 {
-   public:
+    public:
     DECLARE_CLASS( ClientModeExperimentNormal, ClientModeShared );
 
     ClientModeExperimentNormal();

@@ -18,7 +18,7 @@
 DEFINE_FALLBACK_SHADER( Refract, Refract_DX80 )
 
 BEGIN_VS_SHADER( Refract_DX80,
-                 "Help for Refract_DX80" )
+                "Help for Refract_DX80" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( COLOR, SHADER_PARAM_TYPE_COLOR, "{255 255 255}", "unused", SHADER_PARAM_NOT_EDITABLE )

@@ -62,11 +62,11 @@ void PrintByteSegmentInObjectTo(const unsigned char* obj_bytes, size_t start,
   for (size_t i = 0; i != count; i++) {
     const size_t j = start + i;
     if (i != 0) {
-      // Organizes the bytes into groups of 2 for easy parsing by
-      // human.
-      if ((j % 2) == 0)
+    // Organizes the bytes into groups of 2 for easy parsing by
+    // human.
+    if ((j % 2) == 0)
         *os << ' ';
-      else
+    else
         *os << '-';
     }
     GTEST_SNPRINTF_(text, sizeof(text), "%02X", obj_bytes[j]);
@@ -76,7 +76,7 @@ void PrintByteSegmentInObjectTo(const unsigned char* obj_bytes, size_t start,
 
 // Prints the bytes in the given value to the given ostream.
 void PrintBytesInObjectToImpl(const unsigned char* obj_bytes, size_t count,
-                              ostream* os) {
+                            ostream* os) {
   // Tells the user how big the object is.
   *os << count << "-byte object <";
 
@@ -108,7 +108,7 @@ namespace internal2 {
 // ::testing::internal namespace, which contains a << operator that
 // sometimes conflicts with the one in STL.
 void PrintBytesInObjectTo(const unsigned char* obj_bytes, size_t count,
-                          ostream* os) {
+                        ostream* os) {
   PrintBytesInObjectToImpl(obj_bytes, count, os);
 }
 
@@ -142,43 +142,43 @@ template <typename UnsignedChar, typename Char>
 static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
   switch (static_cast<wchar_t>(c)) {
     case L'\0':
-      *os << "\\0";
-      break;
+    *os << "\\0";
+    break;
     case L'\'':
-      *os << "\\'";
-      break;
+    *os << "\\'";
+    break;
     case L'\\':
-      *os << "\\\\";
-      break;
+    *os << "\\\\";
+    break;
     case L'\a':
-      *os << "\\a";
-      break;
+    *os << "\\a";
+    break;
     case L'\b':
-      *os << "\\b";
-      break;
+    *os << "\\b";
+    break;
     case L'\f':
-      *os << "\\f";
-      break;
+    *os << "\\f";
+    break;
     case L'\n':
-      *os << "\\n";
-      break;
+    *os << "\\n";
+    break;
     case L'\r':
-      *os << "\\r";
-      break;
+    *os << "\\r";
+    break;
     case L'\t':
-      *os << "\\t";
-      break;
+    *os << "\\t";
+    break;
     case L'\v':
-      *os << "\\v";
-      break;
+    *os << "\\v";
+    break;
     default:
-      if (IsPrintableAscii(c)) {
+    if (IsPrintableAscii(c)) {
         *os << static_cast<char>(c);
         return kAsIs;
-      } else {
+    } else {
         *os << String::Format("\\x%X", static_cast<UnsignedChar>(c));
         return kHexEscape;
-      }
+    }
   }
   return kSpecialEscape;
 }
@@ -188,13 +188,13 @@ static CharFormat PrintAsCharLiteralTo(Char c, ostream* os) {
 static CharFormat PrintAsStringLiteralTo(wchar_t c, ostream* os) {
   switch (c) {
     case L'\'':
-      *os << "'";
-      return kAsIs;
+    *os << "'";
+    return kAsIs;
     case L'"':
-      *os << "\\\"";
-      return kSpecialEscape;
+    *os << "\\\"";
+    return kSpecialEscape;
     default:
-      return PrintAsCharLiteralTo<wchar_t>(c, os);
+    return PrintAsCharLiteralTo<wchar_t>(c, os);
   }
 }
 
@@ -202,7 +202,7 @@ static CharFormat PrintAsStringLiteralTo(wchar_t c, ostream* os) {
 // necessary; returns how c was formatted.
 static CharFormat PrintAsStringLiteralTo(char c, ostream* os) {
   return PrintAsStringLiteralTo(
-      static_cast<wchar_t>(static_cast<unsigned char>(c)), os);
+    static_cast<wchar_t>(static_cast<unsigned char>(c)), os);
 }
 
 // Prints a wide or narrow character c and its code.  '\0' is printed
@@ -230,7 +230,7 @@ void PrintCharAndCodeTo(Char c, ostream* os) {
     // Do nothing.
   } else {
     *os << String::Format(", 0x%X",
-                          static_cast<UnsignedChar>(c)).c_str();
+                        static_cast<UnsignedChar>(c)).c_str();
   }
   *os << ")";
 }
@@ -261,10 +261,10 @@ static void PrintCharsAsStringTo(
   for (size_t index = 0; index < len; ++index) {
     const CharType cur = begin[index];
     if (is_previous_hex && IsXDigit(cur)) {
-      // Previous character is of '\x..' form and this character can be
-      // interpreted as another hexadecimal digit in its number. Break string to
-      // disambiguate.
-      *os << "\" " << kQuoteBegin;
+    // Previous character is of '\x..' form and this character can be
+    // interpreted as another hexadecimal digit in its number. Break string to
+    // disambiguate.
+    *os << "\" " << kQuoteBegin;
     }
     is_previous_hex = PrintAsStringLiteralTo(cur, os) == kHexEscape;
   }

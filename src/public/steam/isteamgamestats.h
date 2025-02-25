@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2008, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to steam for game play statistics
 //
@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 class ISteamGameStats
 {
-   public:
+    public:
     STEAM_CALL_RESULT( GameStatsSessionIssued_t )
     virtual SteamAPICall_t GetNewSession( int8 nAccountType, uint64 ulAccountID, int32 nAppID, RTime32 rtTimeStarted ) = 0;
     STEAM_CALL_RESULT( GameStatsSessionClosed_t )

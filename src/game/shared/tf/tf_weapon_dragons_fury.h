@@ -24,7 +24,7 @@
 
 class CTFWeaponFlameBall : public CTFFlameThrower
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponFlameBall, CTFFlameThrower );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -69,7 +69,7 @@ class CTFWeaponFlameBall : public CTFFlameThrower
     void UpdatePoseParams();
 #endif
 
-   private:
+    private:
 #ifdef GAME_DLL
     void StartPressureSound();
     void StopPressureSound();

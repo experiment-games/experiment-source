@@ -42,7 +42,7 @@ class CDmeSource : public CDmElement
 {
     DEFINE_ELEMENT( CDmeSource, CDmElement );
 
-   public:
+    public:
     // NOTE: Filenames are stored as relative file names in dmesource
     // To resolve them to full paths, use CDmeMakefile::GetSourceFullPath
     const char *GetRelativeFileName() const;
@@ -63,7 +63,7 @@ class CDmeSource : public CDmElement
     // Call this to open the source file in an editor
     void OpenEditor();
 
-   private:
+    private:
     // The makefile that built this source
     CDmeHandle< CDmeMakefile > m_DependentMakefile;
 };
@@ -85,7 +85,7 @@ class CDmeMakefile : public CDmElement
 {
     DEFINE_ELEMENT( CDmeMakefile, CDmElement );
 
-   public:
+    public:
     // NOTE: Adding or removing sources of the specified type will invalidate the index
     // NOTE: This index is the same index used in GetSources()
     CDmeSource *AddSource( const char *pSourceType, const char *pFullPath );
@@ -158,14 +158,14 @@ class CDmeMakefile : public CDmElement
     bool IsDirty() const;
     void SetDirty( bool bDirty );
 
-   protected:
+    protected:
     // Make all outputs writeable
     void MakeOutputsWriteable();
 
     // Gets the path of the makefile
     void GetMakefilePath( char *pFullPath, int nBufLen );
 
-   private:
+    private:
     // Inherited classes should re-implement these methods
     virtual CDmElement *CreateOutputElement()
     {
@@ -182,7 +182,7 @@ class CDmeMakefile : public CDmElement
         return "makefilegamedir:";
     }
 
-   private:
+    private:
     // Relative path to full path
     void RelativePathToFullPath( const char *pRelativePath, char *pFullPath, int nBufLen );
 

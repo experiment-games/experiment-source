@@ -74,7 +74,7 @@ local check_parse_url = function(gaba)
     for i, v in pairs(gaba) do
         if v ~= parsed[i] then
             io.write("parse: In test for '", url, "' expected ", i, " = '",
-                   v, "' but got '", tostring(parsed[i]), "'\n")
+                    v, "' but got '", tostring(parsed[i]), "'\n")
             for i,v in pairs(parsed) do print(i,v) end
             os.exit()
         end
@@ -82,7 +82,7 @@ local check_parse_url = function(gaba)
     for i, v in pairs(parsed) do
         if v ~= gaba[i] then
             io.write("parse: In test for '", url, "' expected ", i, " = '",
-                   tostring(gaba[i]), "' but got '", v, "'\n")
+                    tostring(gaba[i]), "' but got '", v, "'\n")
             for i,v in pairs(parsed) do print(i,v) end
             os.exit()
         end
@@ -684,7 +684,7 @@ check_absolute_url("/a/b/c/d;p?q#f", "d/e/f", "/a/b/c/d/e/f")
 check_absolute_url("a/b/c/d", "d/e/f", "a/b/c/d/e/f")
 check_absolute_url("a/b/c/d/../", "d/e/f", "a/b/c/d/e/f")
 check_absolute_url("http://velox.telemar.com.br", "/dashboard/index.html",
-   "http://velox.telemar.com.br/dashboard/index.html")
+    "http://velox.telemar.com.br/dashboard/index.html")
 check_absolute_url("http://example.com/", "../.badhost.com/", "http://example.com/.badhost.com/")
 check_absolute_url("http://example.com/", "...badhost.com/", "http://example.com/...badhost.com/")
 check_absolute_url("http://example.com/a/b/c/d/", "../q", "http://example.com/a/b/c/q")

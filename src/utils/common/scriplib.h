@@ -77,7 +77,7 @@ struct fileList_t
 
 class IScriptLib
 {
-   public:
+    public:
     virtual bool ReadFileToBuffer( const char *pSourceName, CUtlBuffer &buffer, bool bText = false, bool bNoOpenFailureWarning = false ) = 0;
     virtual bool WriteBufferToFile( const char *pTargetName, CUtlBuffer &buffer, DiskWriteMode_t writeMode ) = 0;
     virtual int FindFiles( char *pFileMask, bool bRecurse, CUtlVector< fileList_t > &fileList ) = 0;

@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 class CTFBotMvMDeployBomb : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
@@ -21,7 +21,7 @@ class CTFBotMvMDeployBomb : public Action< CTFBot >
         return "MvMDeployBomb";
     };
 
-   private:
+    private:
     CountdownTimer m_timer;
     Vector m_anchorPos;
 };

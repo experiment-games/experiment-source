@@ -8,7 +8,7 @@
 
 class CTFBotEngineerBuildDispenser : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
     virtual void OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
@@ -20,7 +20,7 @@ class CTFBotEngineerBuildDispenser : public Action< CTFBot >
         return "EngineerBuildDispenser";
     };
 
-   private:
+    private:
     CountdownTimer m_searchTimer;
     CountdownTimer m_getAmmoTimer;
     CountdownTimer m_repathTimer;

@@ -257,9 +257,9 @@ bool CTFBotVision::IsIgnored( CBaseEntity *subject ) const
         }
 
         if ( enemy->m_Shared.InCond( TF_COND_BURNING ) ||
-             enemy->m_Shared.InCond( TF_COND_URINE ) ||
-             enemy->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             enemy->m_Shared.InCond( TF_COND_BLEEDING ) )
+            enemy->m_Shared.InCond( TF_COND_URINE ) ||
+            enemy->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            enemy->m_Shared.InCond( TF_COND_BLEEDING ) )
         {
             // always notice players with these conditions
             return false;
@@ -345,9 +345,9 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
         CTFPlayer *player = static_cast< CTFPlayer * >( subject );
 
         if ( player->m_Shared.InCond( TF_COND_BURNING ) ||
-             player->m_Shared.InCond( TF_COND_URINE ) ||
-             player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
-             player->m_Shared.InCond( TF_COND_BLEEDING ) )
+            player->m_Shared.InCond( TF_COND_URINE ) ||
+            player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
+            player->m_Shared.InCond( TF_COND_BLEEDING ) )
         {
             // always notice players with these conditions
             if ( player->m_Shared.InCond( TF_COND_STEALTHED ) )

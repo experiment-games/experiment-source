@@ -33,7 +33,7 @@
 //-----------------------------------------------------------------------------
 class CTFRobotDestruction_RobotSpawn : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTFRobotDestruction_RobotSpawn, CBaseEntity )
     DECLARE_NETWORKCLASS();
@@ -62,7 +62,7 @@ class CTFRobotDestruction_RobotSpawn : public CBaseEntity
     void InputSpawnRobot( inputdata_t& inputdata );
 
 #endif
-   private:
+    private:
     CHandle< CTFRobotDestruction_Robot > m_hRobot;
 #ifdef GAME_DLL
     CHandle< class CTFRobotDestruction_RobotGroup > m_hGroup;
@@ -79,7 +79,7 @@ class CTFRobotDestruction_RobotGroup : public CBaseEntity, public IRobotDestruct
     DECLARE_CLASS( CTFRobotDestruction_RobotGroup, CBaseEntity )
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
     virtual ~CTFRobotDestruction_RobotGroup();
 #ifdef GAME_DLL
 
@@ -145,7 +145,7 @@ class CTFRobotDestruction_RobotGroup : public CBaseEntity, public IRobotDestruct
         return m_flLastAttackedTime;
     }
 
-   private:
+    private:
 #ifdef GAME_DLL
     CUtlVector< CTFRobotDestruction_RobotSpawn* > m_vecSpawns;
     int m_nTeamNumber;
@@ -190,13 +190,13 @@ struct TeamSound_t
 class CTFRobotDestructionLogic : public CBaseEntity
 #ifdef GAME_DLL
     ,
-                                 public CGameEventListener
+                                public CGameEventListener
 #endif
 {
     DECLARE_CLASS( CTFRobotDestructionLogic, CBaseEntity )
     DECLARE_NETWORKCLASS();
 
-   public:
+    public:
     enum EType
     {
         TYPE_ROBOT_DESTRUCTION,
@@ -299,7 +299,7 @@ class CTFRobotDestructionLogic : public CBaseEntity
         return false;
     }
 
-   protected:
+    protected:
 #ifdef GAME_DLL
     virtual void OnRedScoreChanged() {}
     virtual void OnBlueScoreChanged() {}
@@ -369,7 +369,7 @@ class CRobotDestructionVaultTrigger : public CBaseTrigger
     DECLARE_CLASS( CRobotDestructionVaultTrigger, CBaseTrigger );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CRobotDestructionVaultTrigger();
     virtual void Spawn() OVERRIDE;
     virtual void Precache() OVERRIDE;
@@ -378,7 +378,7 @@ class CRobotDestructionVaultTrigger : public CBaseTrigger
     virtual void StartTouch( CBaseEntity* pOther ) OVERRIDE;
     virtual void EndTouch( CBaseEntity* pOther ) OVERRIDE;
 
-   private:
+    private:
     void StealPointsThink();
     int StealPoints( CTFPlayer* pPlayer );
 

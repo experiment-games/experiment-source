@@ -24,7 +24,7 @@ class CHudArenaPlayerCount : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudArenaPlayerCount, EditablePanel );
 
-   public:
+    public:
     CHudArenaPlayerCount( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -32,10 +32,10 @@ class CHudArenaPlayerCount : public CHudElement, public EditablePanel
     //	virtual void FireGameEvent( IGameEvent * event );
     virtual void OnTick( void );
 
-   private:
+    private:
     void UpdateCounts( void );
 
-   private:
+    private:
     EditablePanel *m_pBlueTeam;
     EditablePanel *m_pRedTeam;
 };

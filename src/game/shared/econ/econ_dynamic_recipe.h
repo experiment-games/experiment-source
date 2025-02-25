@@ -23,9 +23,9 @@ extern const char* g_pszAttrEncodeSeparator;
 //-----------------------------------------------------------------------------
 class CRecipeComponentMatchingIterator : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     CRecipeComponentMatchingIterator( const IEconItemInterface* pSourceItem,
-                                      const IEconItemInterface* pTargetItem );
+                                    const IEconItemInterface* pTargetItem );
 
     void SetSourceItem( const IEconItemInterface* m_pSourceItem );
     void SetTargetItem( const IEconItemInterface* pTargetItem );
@@ -35,7 +35,7 @@ class CRecipeComponentMatchingIterator : public CEconItemSpecificAttributeIterat
     }
 
     virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition* pAttrDef,
-                                          const CAttribute_DynamicRecipeComponent& value ) OVERRIDE;
+                                        const CAttribute_DynamicRecipeComponent& value ) OVERRIDE;
 
     const CUtlVector< const CEconItemAttributeDefinition* >& GetMatchingComponentInputs() const
     {
@@ -59,7 +59,7 @@ class CRecipeComponentMatchingIterator : public CEconItemSpecificAttributeIterat
         return m_nOutputsTotal;
     }
 
-   private:
+    private:
     const IEconItemInterface* m_pSourceItem;
     const IEconItemInterface* m_pTargetItem;
     bool m_bIgnoreCompleted;

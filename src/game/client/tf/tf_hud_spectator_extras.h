@@ -20,7 +20,7 @@ class CTFHudSpectatorExtras : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFHudSpectatorExtras, vgui::EditablePanel );
 
-   public:
+    public:
     CTFHudSpectatorExtras( const char *pElementName );
     virtual ~CTFHudSpectatorExtras() {}
 
@@ -30,7 +30,7 @@ class CTFHudSpectatorExtras : public CHudElement, public vgui::EditablePanel
 
     void RemoveEntity( int nRemove );
 
-   private:
+    private:
     void Reset( void );
 
     typedef struct

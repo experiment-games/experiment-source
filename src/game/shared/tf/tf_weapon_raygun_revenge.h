@@ -23,7 +23,7 @@
 
 class CTFRaygun_Revenge : public CTFRaygun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRaygun, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -89,7 +89,7 @@ class CTFRaygun_Revenge : public CTFRaygun
     }
 #endif
 
-   private:
+    private:
     float m_flIrradiateTime;
     bool m_bEffectsThinking;
 };
@@ -97,7 +97,7 @@ class CTFRaygun_Revenge : public CTFRaygun
 //---------------------------------------------------------
 class CTFDRGPomson : public CTFRaygun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFDRGPomson, CTFRaygun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

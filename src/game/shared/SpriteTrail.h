@@ -36,7 +36,7 @@ class CSpriteTrail : public CSprite
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
-   public:
+    public:
     CSpriteTrail( void );
 
     // Sets parameters of the sprite trail
@@ -79,7 +79,7 @@ class CSpriteTrail : public CSprite
 
 #endif
 
-   private:
+    private:
 #if defined( CLIENT_DLL )
     enum {
         // NOTE: # of points max must be a power of two!
@@ -117,7 +117,7 @@ class CSpriteTrail : public CSprite
     bool m_bDrawForMoveParent;
 
 #if defined( CLIENT_DLL )
-   public:
+    public:
     void SetUpdateTime( float setTo )
     {
         m_flUpdateTime = setTo;

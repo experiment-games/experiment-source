@@ -200,11 +200,11 @@ void CTFBaseBoss::ResolvePlayerCollision( CTFPlayer *player )
     Vector newPlayerPos = player->GetAbsOrigin();
 
     if ( playerGlobalMins.x > bossGlobalMaxs.x ||
-         playerGlobalMaxs.x < bossGlobalMins.x ||
-         playerGlobalMins.y > bossGlobalMaxs.y ||
-         playerGlobalMaxs.y < bossGlobalMins.y ||
-         playerGlobalMins.z > bossGlobalMaxs.z ||
-         playerGlobalMaxs.z < bossGlobalMins.z )
+        playerGlobalMaxs.x < bossGlobalMins.x ||
+        playerGlobalMins.y > bossGlobalMaxs.y ||
+        playerGlobalMaxs.y < bossGlobalMins.y ||
+        playerGlobalMins.z > bossGlobalMaxs.z ||
+        playerGlobalMaxs.z < bossGlobalMins.z )
     {
         // no overlap
         return;

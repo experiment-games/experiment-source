@@ -23,7 +23,7 @@
 //
 class CTFWeaponBaseGrenade : public CTFWeaponBase
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWeaponBaseGrenade, CTFWeaponBase );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -66,12 +66,12 @@ class CTFWeaponBaseGrenade : public CTFWeaponBase
 
 #endif
 
-   protected:
+    protected:
     CNetworkVar( bool, m_bPrimed );       // Set to true when the pin has been pulled but the grenade hasn't been thrown yet.
     CNetworkVar( float, m_flThrowTime );  // the time at which the grenade will be thrown.  If this value is 0 then the time hasn't been set yet.
     CNetworkVar( bool, m_bThrow );        // True when the player is throwing the grenade
 
-   private:
+    private:
     CTFWeaponBaseGrenade( const CTFWeaponBaseGrenade& ) {}
 };
 

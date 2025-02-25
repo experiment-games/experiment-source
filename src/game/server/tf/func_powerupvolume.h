@@ -20,7 +20,7 @@ DECLARE_AUTO_LIST( IFuncPowerupVolumeAutoList );
 //
 class CPowerupVolume : public CTriggerMultiple, public IFuncPowerupVolumeAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CPowerupVolume, CTriggerMultiple );
 
     CPowerupVolume();
@@ -42,7 +42,7 @@ class CPowerupVolume : public CTriggerMultiple, public IFuncPowerupVolumeAutoLis
 
     int m_nNumberOfTimesUsed;
 
-   private:
+    private:
     bool m_bDisabled;
 };
 #endif  // FUNC_POWERUP_VOLUME_H

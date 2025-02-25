@@ -16,7 +16,7 @@ class CDmeBalanceToStereoCalculatorOperator : public CDmeOperator
 {
     DEFINE_ELEMENT( CDmeBalanceToStereoCalculatorOperator, CDmeOperator );
 
-   public:
+    public:
     virtual void Operate();
 
     virtual void GetInputAttributes( CUtlVector< CDmAttribute * > &attrs );
@@ -24,7 +24,7 @@ class CDmeBalanceToStereoCalculatorOperator : public CDmeOperator
 
     void SetSpewResult( bool state );
 
-   protected:
+    protected:
     float ComputeDefaultValue();
 
     CDmaVar< float > m_result_left;

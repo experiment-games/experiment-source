@@ -17,12 +17,12 @@ class CScriptedHudViewport : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CScriptedHudViewport, vgui::EditablePanel );
 
-   public:
+    public:
     CScriptedHudViewport( lua_State *L );
 
     virtual void SetParent( vgui::VPANEL parent );
 
-   protected:
+    protected:
     virtual void Paint();
 };
 

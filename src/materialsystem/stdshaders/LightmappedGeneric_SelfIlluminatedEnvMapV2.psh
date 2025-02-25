@@ -24,4 +24,3 @@ mul		r0.rgb, r1, r0		; fold in lighting (color only)
 mul_x2	r0.rgb, c0, r0   ; * 2 * (overbrightFactor/2)
 
 mad r0.rgb, t2, c2, r0	; + envmap * envmaptint (color only)
-

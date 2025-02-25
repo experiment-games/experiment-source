@@ -13,7 +13,7 @@
 
 class CHudSmokeBomb : public CHudElement, public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudSmokeBomb, vgui::Panel );
 
     CHudSmokeBomb( const char *name );
@@ -22,7 +22,7 @@ class CHudSmokeBomb : public CHudElement, public vgui::Panel
     virtual void Paint();
     virtual void Init();
 
-   private:
+    private:
     CHudTexture *m_pIcon;
 };
 

@@ -24,7 +24,7 @@ class CNavLadder;
  */
 class IPathCost
 {
-   public:
+    public:
     virtual float operator()( CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder, const CFuncElevator *elevator, float length ) const = 0;
 };
 
@@ -34,7 +34,7 @@ class IPathCost
  */
 class IPathOpenGoalSelector
 {
-   public:
+    public:
     // compare "newArea" to "currentGoal" and return the area that is the better goal area
     virtual CNavArea *operator()( CNavArea *currentGoal, CNavArea *newArea ) const = 0;
 };
@@ -47,7 +47,7 @@ class IPathOpenGoalSelector
  */
 class Path
 {
-   public:
+    public:
     Path( void );
     virtual ~Path() {}
 
@@ -143,11 +143,11 @@ class Path
 
     //-----------------------------------------------------------------------------------------------------------------
     /**
-     * Compute shortest path from bot to given actor via A* algorithm.
-     * If returns true, path was found to the subject.
-     * If returns false, path may either be invalid (use IsValid() to check), or valid but
-     * doesn't reach all the way to the subject.
-     */
+    * Compute shortest path from bot to given actor via A* algorithm.
+    * If returns true, path was found to the subject.
+    * If returns false, path may either be invalid (use IsValid() to check), or valid but
+    * doesn't reach all the way to the subject.
+    */
     template < typename CostFunctor >
     bool Compute( INextBot *bot, CBaseCombatCharacter *subject, CostFunctor &costFunc, float maxPathLength = 0.0f, bool includeGoalIfPathFails = true )
     {
@@ -259,11 +259,11 @@ class Path
 
     //-----------------------------------------------------------------------------------------------------------------
     /**
-     * Compute shortest path from bot to 'goal' via A* algorithm.
-     * If returns true, path was found to the goal position.
-     * If returns false, path may either be invalid (use IsValid() to check), or valid but
-     * doesn't reach all the way to the goal.
-     */
+    * Compute shortest path from bot to 'goal' via A* algorithm.
+    * If returns true, path was found to the goal position.
+    * If returns false, path may either be invalid (use IsValid() to check), or valid but
+    * doesn't reach all the way to the goal.
+    */
     template < typename CostFunctor >
     bool Compute( INextBot *bot, const Vector &goal, CostFunctor &costFunc, float maxPathLength = 0.0f, bool includeGoalIfPathFails = true, bool requireGoalArea = false )
     {
@@ -386,10 +386,10 @@ class Path
 
     //-----------------------------------------------------------------------------------------------------------------
     /**
-     * Build a path from bot's current location to an undetermined goal area
-     * that minimizes the given cost along the final path and meets the
-     * goal criteria.
-     */
+    * Build a path from bot's current location to an undetermined goal area
+    * that minimizes the given cost along the final path and meets the
+    * goal criteria.
+    */
     virtual bool ComputeWithOpenGoal( INextBot *bot, const IPathCost &costFunc, const IPathOpenGoalSelector &goalSelector, float maxSearchRadius = 0.0f )
     {
         VPROF_BUDGET( "ComputeWithOpenGoal", "NextBot" );
@@ -501,9 +501,9 @@ class Path
 
     //-----------------------------------------------------------------------------------------------------------------
     /**
-     * Given the last area in a path with valid parent pointers,
-     * construct the actual path.
-     */
+    * Given the last area in a path with valid parent pointers,
+    * construct the actual path.
+    */
     void AssemblePrecomputedPath( INextBot *bot, const Vector &goal, CNavArea *endArea )
     {
         VPROF_BUDGET( "AssemblePrecomputedPath", "NextBot" );
@@ -569,17 +569,17 @@ class Path
     }
 
     /**
-     * Utility function for when start and goal are in the same area
-     */
+    * Utility function for when start and goal are in the same area
+    */
     bool BuildTrivialPath( INextBot *bot, const Vector &goal );
 
     /**
-     * Determine exactly where the path goes between the given two areas
-     * on the path. Return this point in 'crossPos'.
-     */
+    * Determine exactly where the path goes between the given two areas
+    * on the path. Return this point in 'crossPos'.
+    */
     virtual void ComputeAreaCrossing( INextBot *bot, const CNavArea *from, const Vector &fromPos, const CNavArea *to, NavDirType dir, Vector *crossPos ) const;
 
-   private:
+    private:
     enum
     {
         MAX_PATH_SEGMENTS = 256
@@ -606,8 +606,8 @@ class Path
     CHandle< CBaseCombatCharacter > m_subject;  // the subject this path leads to
 
     /**
-     * Build a vector of adjacent areas reachable from the given area
-     */
+    * Build a vector of adjacent areas reachable from the given area
+    */
     void CollectAdjacentAreas( CNavArea *area )
     {
         m_adjAreaIndex = 0;

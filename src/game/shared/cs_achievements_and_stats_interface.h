@@ -29,7 +29,7 @@
 
 class CSAchievementsAndStatsInterface : public AchievementsAndStatsInterface
 {
-   public:
+    public:
     CSAchievementsAndStatsInterface();
 
     virtual void CreatePanel( vgui::Panel* pParent );
@@ -40,7 +40,7 @@ class CSAchievementsAndStatsInterface : public AchievementsAndStatsInterface
         return cAchievementsDialogMinWidth;
     }
 
-   protected:
+    protected:
     vgui::DHANDLE< vgui::Frame > m_pAchievementAndStatsSummary;
 };
 

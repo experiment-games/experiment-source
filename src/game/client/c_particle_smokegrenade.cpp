@@ -45,17 +45,17 @@ int g_OffsetLookup[3] = { -1, 0, 1 };
 // ------------------------------------------------------------------------- //
 class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_ParticleSmokeGrenade, C_BaseParticleEntity );
     DECLARE_CLIENTCLASS();
 
     C_ParticleSmokeGrenade();
     ~C_ParticleSmokeGrenade();
 
-   private:
+    private:
     class SmokeGrenadeParticle : public Particle
     {
-       public:
+        public:
         float m_RotationSpeed;
         float m_CurRotation;
         float m_FadeAlpha;            // Set as it moves around.
@@ -63,7 +63,7 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
         unsigned char m_Color[4];
     };
 
-   public:
+    public:
     // Optional call. It will use defaults if you don't call this.
     void SetParams();
 
@@ -71,17 +71,17 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
     void SetPos( const Vector &pos );
 
     // C_BaseEntity.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     virtual void CleanupToolRecordingState( KeyValues *msg );
 
     // IPrototypeAppEffect.
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
 
     // IParticleEffect.
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
@@ -90,14 +90,14 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
     virtual void ClientThink();
 
     // Proxies.
-   public:
+    public:
     static void RecvProxy_CurrentStage( const CRecvProxyData *pData, void *pStruct, void *pOut );
 
-   private:
+    private:
     // The SmokeEmitter represents a grid in 3D space.
     class SmokeParticleInfo
     {
-       public:
+        public:
         SmokeGrenadeParticle *m_pParticle;
         int m_TradeIndex;       // -1 if not exchanging yet.
         float m_TradeClock;     // How long since they started trading.
@@ -139,9 +139,9 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
     inline Vector GetSmokeParticlePos( int x, int y, int z )
     {
         return m_SmokeBasePos +
-               Vector( ( ( float )x / ( m_xCount - 1 ) ) * m_SpacingRadius * 2 - m_SpacingRadius,
-                       ( ( float )y / ( m_yCount - 1 ) ) * m_SpacingRadius * 2 - m_SpacingRadius,
-                       ( ( float )z / ( m_zCount - 1 ) ) * m_SpacingRadius * 2 - m_SpacingRadius );
+                Vector( ( ( float )x / ( m_xCount - 1 ) ) * m_SpacingRadius * 2 - m_SpacingRadius,
+                        ( ( float )y / ( m_yCount - 1 ) ) * m_SpacingRadius * 2 - m_SpacingRadius,
+                        ( ( float )z / ( m_zCount - 1 ) ) * m_SpacingRadius * 2 - m_SpacingRadius );
     }
 
     inline Vector GetSmokeParticlePosIndex( int index_ )
@@ -160,7 +160,7 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
     void FillVolume();
 
     // State variables from server.
-   public:
+    public:
     unsigned char m_CurrentStage;
     Vector m_SmokeBasePos;
 
@@ -175,7 +175,7 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
     // Used during rendering.. active dlights.
     class CActiveLight
     {
-       public:
+        public:
         Vector m_vColor;
         Vector m_vOrigin;
         float m_flRadiusSqr;
@@ -183,7 +183,7 @@ class C_ParticleSmokeGrenade : public C_BaseParticleEntity, public IPrototypeApp
     CActiveLight m_ActiveLights[MAX_DLIGHTS];
     int m_nActiveLights;
 
-   private:
+    private:
     C_ParticleSmokeGrenade( const C_ParticleSmokeGrenade & );
 
     bool m_bStarted;
@@ -600,11 +600,11 @@ void C_ParticleSmokeGrenade::UpdateDynamicLightList( const Vector &vMins, const 
     {
         dlight_t *pIn = lights[i];
         if ( pIn->origin.x + pIn->radius <= vMins.x ||
-             pIn->origin.y + pIn->radius <= vMins.y ||
-             pIn->origin.z + pIn->radius <= vMins.z ||
-             pIn->origin.x - pIn->radius >= vMaxs.x ||
-             pIn->origin.y - pIn->radius >= vMaxs.y ||
-             pIn->origin.z - pIn->radius >= vMaxs.z )
+            pIn->origin.y + pIn->radius <= vMins.y ||
+            pIn->origin.z + pIn->radius <= vMins.z ||
+            pIn->origin.x - pIn->radius >= vMaxs.x ||
+            pIn->origin.y - pIn->radius >= vMaxs.y ||
+            pIn->origin.z - pIn->radius >= vMaxs.z )
         {
         }
         else
@@ -818,7 +818,7 @@ void C_ParticleSmokeGrenade::FillVolume()
                     /*int contents = GetWorldPointContents(vPos);
                     if(false && (contents & CONTENTS_SOLID))
                     {
-                      pInfo->m_pParticle = NULL;
+                    pInfo->m_pParticle = NULL;
                     }
                     else
                     */
@@ -853,22 +853,22 @@ void C_ParticleSmokeGrenade::FillVolume()
 
                         /*for(int i=0; i < NUM_FADE_PLANES; i++)
                         {
-                          trace_t trace;
-                          WorldTraceLine(vPos, vPos + s_FadePlaneDirections[i] * 100, MASK_SOLID_BRUSHONLY, &trace);
-                          if(trace.fraction < 1.0f)
-                          {
+                        trace_t trace;
+                        WorldTraceLine(vPos, vPos + s_FadePlaneDirections[i] * 100, MASK_SOLID_BRUSHONLY, &trace);
+                        if(trace.fraction < 1.0f)
+                        {
                             float dist = DotProduct(trace.plane.normal, vPos) - trace.plane.dist;
                             if(dist < 0)
                             {
-                              pInfo->m_FadeAlpha = 0;
+                            pInfo->m_FadeAlpha = 0;
                             }
                             else if(dist < SMOKEPARTICLE_SIZE)
                             {
-                              float alphaScale = dist / SMOKEPARTICLE_SIZE;
-                              alphaScale *= alphaScale * alphaScale;
-                              pInfo->m_FadeAlpha *= alphaScale;
+                            float alphaScale = dist / SMOKEPARTICLE_SIZE;
+                            alphaScale *= alphaScale * alphaScale;
+                            pInfo->m_FadeAlpha *= alphaScale;
                             }
-                          }
+                        }
                         }*/
 
                         pInfo->m_pParticle = pParticle;

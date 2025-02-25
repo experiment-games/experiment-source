@@ -20,7 +20,7 @@ class DmeTime_t;
 
 class DmeFramerate_t
 {
-   public:
+    public:
     DmeFramerate_t( float fps );
     DmeFramerate_t( int fps = 0 );
     DmeFramerate_t( const DmeFramerate_t& src )
@@ -85,7 +85,7 @@ class DmeFramerate_t
         return *this;
     }
 
-   private:
+    private:
     DmeFramerate_t( int nNumerator, int nDenominator );
 
     unsigned short m_num;
@@ -102,7 +102,7 @@ class DmeFramerate_t
 
 class DmeTime_t
 {
-   public:
+    public:
     DmeTime_t()
         : m_tms( INT_MIN ) {}  // invalid time
     explicit DmeTime_t( int tms )
@@ -259,7 +259,7 @@ class DmeTime_t
     DmeTime_t TimeAtNextFrame( DmeFramerate_t framerate ) const;
     DmeTime_t TimeAtPrevFrame( DmeFramerate_t framerate ) const;
 
-   private:
+    private:
     DmeTime_t( int64 tms )
         : m_tms( int( tms ) ) {}
 

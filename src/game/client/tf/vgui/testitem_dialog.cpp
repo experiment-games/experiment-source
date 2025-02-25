@@ -319,7 +319,7 @@ void CTestItemDialog::CloseAndUpdateItem( void )
     }
 
     KeyValues *pkvVisuals = new KeyValues( g_TeamVisualSections[0] ),
-              *pkvPlayerBodyGroups = new KeyValues( "player_bodygroups" );
+            *pkvPlayerBodyGroups = new KeyValues( "player_bodygroups" );
 
     kv->AddSubKey( pkvVisuals );
     pkvVisuals->AddSubKey( pkvPlayerBodyGroups );

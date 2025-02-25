@@ -37,7 +37,7 @@ class CHudHistoryResource : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudHistoryResource, vgui::Panel );
 
-   private:
+    private:
     struct HIST_ITEM
     {
         HIST_ITEM()
@@ -57,7 +57,7 @@ class CHudHistoryResource : public CHudElement, public vgui::Panel
 
     CUtlVector< HIST_ITEM > m_PickupHistory;
 
-   public:
+    public:
     CHudHistoryResource( const char *pElementName );
 
     // CHudElement overrides
@@ -78,7 +78,7 @@ class CHudHistoryResource : public CHudElement, public vgui::Panel
     void SetHistoryGap( int iNewHistoryGap );
     void AddIconToHistory( int iType, int iId, C_BaseCombatWeapon *weapon, int iCount, CHudTexture *icon );
 
-   private:
+    private:
     // these vars are for hl1-port compatibility
     int m_iHistoryGap;
     int m_iCurrentHistorySlot;

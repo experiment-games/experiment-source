@@ -12,7 +12,7 @@ class C_TFBotHintEngineerNest : public C_BaseEntity
 {
     DECLARE_CLASS( C_TFBotHintEngineerNest, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TFBotHintEngineerNest( void );
@@ -22,7 +22,7 @@ class C_TFBotHintEngineerNest : public C_BaseEntity
     virtual void OnPreDataChanged( DataUpdateType_t type ) OVERRIDE;
     virtual void OnDataChanged( DataUpdateType_t type ) OVERRIDE;
 
-   private:
+    private:
     bool m_bHadActiveTeleporter;
     CNetworkVar( bool, m_bHasActiveTeleporter );
 

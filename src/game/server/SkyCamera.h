@@ -22,14 +22,14 @@ class CSkyCamera : public CLogicalEntity
 {
     DECLARE_CLASS( CSkyCamera, CLogicalEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     CSkyCamera();
     ~CSkyCamera();
     virtual void Spawn( void );
     virtual void Activate();
 
-   public:
+    public:
     sky3dparams_t m_skyboxData;
     bool m_bUseAngles;
     CSkyCamera* m_pNext;

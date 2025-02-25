@@ -1438,7 +1438,7 @@ void LoadObjectInfos( IBaseFileSystem *pFileSystem )
             // Does it make sense to call the below Steam API so it'll force a validation next startup time?
             // Need to verify it's real corruption and not someone dorking around with their objects.txt file...
             //
-            // From Martin Otten: If you have a file on disc and you’re 100% sure it’s
+            // From Martin Otten: If you have a file on disc and youï¿½re 100% sure itï¿½s
             //  corrupt, call ISteamApps::MarkContentCorrupt( false ), before you shutdown
             //  the game. This will cause a content validation in Steam.
 
@@ -1449,15 +1449,15 @@ void LoadObjectInfos( IBaseFileSystem *pFileSystem )
 
         // Read all the info in.
         if ( ( pInfo->m_flBuildTime = pSub->GetFloat( "BuildTime", -999 ) ) == -999 ||
-             ( pInfo->m_nMaxObjects = pSub->GetInt( "MaxObjects", -999 ) ) == -999 ||
-             ( pInfo->m_Cost = pSub->GetInt( "Cost", -999 ) ) == -999 ||
-             ( pInfo->m_CostMultiplierPerInstance = pSub->GetFloat( "CostMultiplier", -999 ) ) == -999 ||
-             ( pInfo->m_flUpgradeDuration = pSub->GetFloat( "UpgradeDuration", -999 ) ) == -999 ||
-             ( pInfo->m_UpgradeCost = pSub->GetInt( "UpgradeCost", -999 ) ) == -999 ||
-             ( pInfo->m_MaxUpgradeLevel = pSub->GetInt( "MaxUpgradeLevel", -999 ) ) == -999 ||
-             ( pInfo->m_SelectionSlot = pSub->GetInt( "SelectionSlot", -999 ) ) == -999 ||
-             ( pInfo->m_iBuildCount = pSub->GetInt( "BuildCount", -999 ) ) == -999 ||
-             ( pInfo->m_SelectionPosition = pSub->GetInt( "SelectionPosition", -999 ) ) == -999 )
+            ( pInfo->m_nMaxObjects = pSub->GetInt( "MaxObjects", -999 ) ) == -999 ||
+            ( pInfo->m_Cost = pSub->GetInt( "Cost", -999 ) ) == -999 ||
+            ( pInfo->m_CostMultiplierPerInstance = pSub->GetFloat( "CostMultiplier", -999 ) ) == -999 ||
+            ( pInfo->m_flUpgradeDuration = pSub->GetFloat( "UpgradeDuration", -999 ) ) == -999 ||
+            ( pInfo->m_UpgradeCost = pSub->GetInt( "UpgradeCost", -999 ) ) == -999 ||
+            ( pInfo->m_MaxUpgradeLevel = pSub->GetInt( "MaxUpgradeLevel", -999 ) ) == -999 ||
+            ( pInfo->m_SelectionSlot = pSub->GetInt( "SelectionSlot", -999 ) ) == -999 ||
+            ( pInfo->m_iBuildCount = pSub->GetInt( "BuildCount", -999 ) ) == -999 ||
+            ( pInfo->m_SelectionPosition = pSub->GetInt( "SelectionPosition", -999 ) ) == -999 )
         {
             SpewFileInfo( pFileSystem, pFilename, "GAME", pValues );
 
@@ -1571,12 +1571,12 @@ bool ClassCanBuild( int iClass, int iObjectType )
     /*
     for ( int i = 0; i < OBJ_LAST; i++ )
     {
-      // Hit the end?
-      if ( g_TFClassInfos[iClass].m_pClassObjects[i] == OBJ_LAST )
+    // Hit the end?
+    if ( g_TFClassInfos[iClass].m_pClassObjects[i] == OBJ_LAST )
         return false;
 
-      // Found it?
-      if ( g_TFClassInfos[iClass].m_pClassObjects[i] == iObjectType )
+    // Found it?
+    if ( g_TFClassInfos[iClass].m_pClassObjects[i] == iObjectType )
         return true;
     }
 
@@ -1603,111 +1603,111 @@ struct wpntranslation_class_weapons_t
 wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
     {
         { "tf_weapon_shotgun",
-          {
-              "",                           // TF_CLASS_UNDEFINED = 0,
-              "",                           // TF_CLASS_SCOUT,
-              "",                           // TF_CLASS_SNIPER,
-              "tf_weapon_shotgun_soldier",  // TF_CLASS_SOLDIER,
-              "",                           // TF_CLASS_DEMOMAN,
-              "",                           // TF_CLASS_MEDIC,
-              "tf_weapon_shotgun_hwg",      // TF_CLASS_HEAVYWEAPONS,
-              "tf_weapon_shotgun_pyro",     // TF_CLASS_PYRO,
-              "",                           // TF_CLASS_SPY,
-              "tf_weapon_shotgun_primary",  // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                           // TF_CLASS_UNDEFINED = 0,
+            "",                           // TF_CLASS_SCOUT,
+            "",                           // TF_CLASS_SNIPER,
+            "tf_weapon_shotgun_soldier",  // TF_CLASS_SOLDIER,
+            "",                           // TF_CLASS_DEMOMAN,
+            "",                           // TF_CLASS_MEDIC,
+            "tf_weapon_shotgun_hwg",      // TF_CLASS_HEAVYWEAPONS,
+            "tf_weapon_shotgun_pyro",     // TF_CLASS_PYRO,
+            "",                           // TF_CLASS_SPY,
+            "tf_weapon_shotgun_primary",  // TF_CLASS_ENGINEER,
+        } },
 
         { "tf_weapon_pistol",
-          {
-              "",                        // TF_CLASS_UNDEFINED = 0,
-              "tf_weapon_pistol_scout",  // TF_CLASS_SCOUT,
-              "",                        // TF_CLASS_SNIPER,
-              "",                        // TF_CLASS_SOLDIER,
-              "",                        // TF_CLASS_DEMOMAN,
-              "",                        // TF_CLASS_MEDIC,
-              "",                        // TF_CLASS_HEAVYWEAPONS,
-              "",                        // TF_CLASS_PYRO,
-              "",                        // TF_CLASS_SPY,
-              "tf_weapon_pistol",        // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                        // TF_CLASS_UNDEFINED = 0,
+            "tf_weapon_pistol_scout",  // TF_CLASS_SCOUT,
+            "",                        // TF_CLASS_SNIPER,
+            "",                        // TF_CLASS_SOLDIER,
+            "",                        // TF_CLASS_DEMOMAN,
+            "",                        // TF_CLASS_MEDIC,
+            "",                        // TF_CLASS_HEAVYWEAPONS,
+            "",                        // TF_CLASS_PYRO,
+            "",                        // TF_CLASS_SPY,
+            "tf_weapon_pistol",        // TF_CLASS_ENGINEER,
+        } },
 
         { "tf_weapon_shovel",
-          {
-              "",                  // TF_CLASS_UNDEFINED = 0,
-              "",                  // TF_CLASS_SCOUT,
-              "",                  // TF_CLASS_SNIPER,
-              "tf_weapon_shovel",  // TF_CLASS_SOLDIER,
-              "tf_weapon_bottle",  // TF_CLASS_DEMOMAN,
-              "",                  // TF_CLASS_MEDIC,
-              "",                  // TF_CLASS_HEAVYWEAPONS,
-              "",                  // TF_CLASS_PYRO,
-              "",                  // TF_CLASS_SPY,
-              "",                  // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                  // TF_CLASS_UNDEFINED = 0,
+            "",                  // TF_CLASS_SCOUT,
+            "",                  // TF_CLASS_SNIPER,
+            "tf_weapon_shovel",  // TF_CLASS_SOLDIER,
+            "tf_weapon_bottle",  // TF_CLASS_DEMOMAN,
+            "",                  // TF_CLASS_MEDIC,
+            "",                  // TF_CLASS_HEAVYWEAPONS,
+            "",                  // TF_CLASS_PYRO,
+            "",                  // TF_CLASS_SPY,
+            "",                  // TF_CLASS_ENGINEER,
+        } },
         { "tf_weapon_bottle",
-          {
-              "",                  // TF_CLASS_UNDEFINED = 0,
-              "",                  // TF_CLASS_SCOUT,
-              "",                  // TF_CLASS_SNIPER,
-              "tf_weapon_shovel",  // TF_CLASS_SOLDIER,
-              "tf_weapon_bottle",  // TF_CLASS_DEMOMAN,
-              "",                  // TF_CLASS_MEDIC,
-              "",                  // TF_CLASS_HEAVYWEAPONS,
-              "",                  // TF_CLASS_PYRO,
-              "",                  // TF_CLASS_SPY,
-              "",                  // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                  // TF_CLASS_UNDEFINED = 0,
+            "",                  // TF_CLASS_SCOUT,
+            "",                  // TF_CLASS_SNIPER,
+            "tf_weapon_shovel",  // TF_CLASS_SOLDIER,
+            "tf_weapon_bottle",  // TF_CLASS_DEMOMAN,
+            "",                  // TF_CLASS_MEDIC,
+            "",                  // TF_CLASS_HEAVYWEAPONS,
+            "",                  // TF_CLASS_PYRO,
+            "",                  // TF_CLASS_SPY,
+            "",                  // TF_CLASS_ENGINEER,
+        } },
         { "saxxy",
-          {
-              "",                   // TF_CLASS_UNDEFINED = 0,
-              "tf_weapon_bat",      // TF_CLASS_SCOUT,
-              "tf_weapon_club",     // TF_CLASS_SNIPER,
-              "tf_weapon_shovel",   // TF_CLASS_SOLDIER,
-              "tf_weapon_bottle",   // TF_CLASS_DEMOMAN,
-              "tf_weapon_bonesaw",  // TF_CLASS_MEDIC,
-              "tf_weapon_fireaxe",  // TF_CLASS_HEAVYWEAPONS,		HWG uses a fireaxe because he doesn't have a default melee weapon of his own; also I am a terrible person
-              "tf_weapon_fireaxe",  // TF_CLASS_PYRO,
-              "tf_weapon_knife",    // TF_CLASS_SPY,
-              "tf_weapon_wrench",   // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                   // TF_CLASS_UNDEFINED = 0,
+            "tf_weapon_bat",      // TF_CLASS_SCOUT,
+            "tf_weapon_club",     // TF_CLASS_SNIPER,
+            "tf_weapon_shovel",   // TF_CLASS_SOLDIER,
+            "tf_weapon_bottle",   // TF_CLASS_DEMOMAN,
+            "tf_weapon_bonesaw",  // TF_CLASS_MEDIC,
+            "tf_weapon_fireaxe",  // TF_CLASS_HEAVYWEAPONS,		HWG uses a fireaxe because he doesn't have a default melee weapon of his own; also I am a terrible person
+            "tf_weapon_fireaxe",  // TF_CLASS_PYRO,
+            "tf_weapon_knife",    // TF_CLASS_SPY,
+            "tf_weapon_wrench",   // TF_CLASS_ENGINEER,
+        } },
         { "tf_weapon_throwable",
-          {
-              "",                               // TF_CLASS_UNDEFINED = 0,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_SCOUT,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_SNIPER,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_SOLDIER,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_DEMOMAN,
-              "tf_weapon_throwable_primary",    // TF_CLASS_MEDIC,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_HEAVYWEAPONS
-              "tf_weapon_throwable_secondary",  // TF_CLASS_PYRO,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_SPY,
-              "tf_weapon_throwable_secondary",  // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                               // TF_CLASS_UNDEFINED = 0,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_SCOUT,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_SNIPER,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_SOLDIER,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_DEMOMAN,
+            "tf_weapon_throwable_primary",    // TF_CLASS_MEDIC,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_HEAVYWEAPONS
+            "tf_weapon_throwable_secondary",  // TF_CLASS_PYRO,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_SPY,
+            "tf_weapon_throwable_secondary",  // TF_CLASS_ENGINEER,
+        } },
         { "tf_weapon_parachute",
-          {
-              "",                               // TF_CLASS_UNDEFINED = 0,
-              "",                               // TF_CLASS_SCOUT,
-              "",                               // TF_CLASS_SNIPER,
-              "tf_weapon_parachute_secondary",  // TF_CLASS_SOLDIER,
-              "tf_weapon_parachute_primary",    // TF_CLASS_DEMOMAN,
-              "",                               // TF_CLASS_MEDIC,
-              "",                               // TF_CLASS_HEAVYWEAPONS
-              "",                               // TF_CLASS_PYRO,
-              ""                                // TF_CLASS_SPY,
-              "",                               // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                               // TF_CLASS_UNDEFINED = 0,
+            "",                               // TF_CLASS_SCOUT,
+            "",                               // TF_CLASS_SNIPER,
+            "tf_weapon_parachute_secondary",  // TF_CLASS_SOLDIER,
+            "tf_weapon_parachute_primary",    // TF_CLASS_DEMOMAN,
+            "",                               // TF_CLASS_MEDIC,
+            "",                               // TF_CLASS_HEAVYWEAPONS
+            "",                               // TF_CLASS_PYRO,
+            ""                                // TF_CLASS_SPY,
+            "",                               // TF_CLASS_ENGINEER,
+        } },
         { "tf_weapon_revolver",
-          {
-              "",                              // TF_CLASS_UNDEFINED = 0,
-              "",                              // TF_CLASS_SCOUT,
-              "",                              // TF_CLASS_SNIPER,
-              "",                              // TF_CLASS_SOLDIER,
-              "",                              // TF_CLASS_DEMOMAN,
-              "",                              // TF_CLASS_MEDIC,
-              "",                              // TF_CLASS_HEAVYWEAPONS
-              "",                              // TF_CLASS_PYRO,
-              "tf_weapon_revolver",            // TF_CLASS_SPY,
-              "tf_weapon_revolver_secondary",  // TF_CLASS_ENGINEER,
-          } },
+        {
+            "",                              // TF_CLASS_UNDEFINED = 0,
+            "",                              // TF_CLASS_SCOUT,
+            "",                              // TF_CLASS_SNIPER,
+            "",                              // TF_CLASS_SOLDIER,
+            "",                              // TF_CLASS_DEMOMAN,
+            "",                              // TF_CLASS_MEDIC,
+            "",                              // TF_CLASS_HEAVYWEAPONS
+            "",                              // TF_CLASS_PYRO,
+            "tf_weapon_revolver",            // TF_CLASS_SPY,
+            "tf_weapon_revolver_secondary",  // TF_CLASS_ENGINEER,
+        } },
 };
 
 //-----------------------------------------------------------------------------

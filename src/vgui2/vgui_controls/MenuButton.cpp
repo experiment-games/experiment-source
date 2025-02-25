@@ -144,7 +144,7 @@ bool MenuButton::CanBeDefaultButton( void )
 void MenuButton::DoClick()
 {
     if ( IsDropMenuButtonStyle() &&
-         m_pDropMenuImage )
+        m_pDropMenuImage )
     {
         int mx, my;
         // force the menu to appear where the mouse button was pressed

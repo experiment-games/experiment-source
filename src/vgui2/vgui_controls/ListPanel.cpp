@@ -61,7 +61,7 @@ enum
 //-----------------------------------------------------------------------------
 class ColumnButton : public Button
 {
-   public:
+    public:
     ColumnButton( vgui::Panel *parent, const char *name, const char *text );
 
     // Inherited from Button
@@ -125,7 +125,7 @@ void ColumnButton::OpenColumnChoiceMenu()
 //-----------------------------------------------------------------------------
 class Dragger : public Panel
 {
-   public:
+    public:
     Dragger( int column );
 
     // Inherited from Panel
@@ -135,7 +135,7 @@ class Dragger : public Panel
     virtual void OnCursorMoved( int x, int y );
     virtual void SetMovable( bool state );
 
-   private:
+    private:
     int m_iDragger;
     bool m_bDragging;
     int m_iDragPos;
@@ -227,7 +227,7 @@ namespace vgui
 // optimized for sorting
 class FastSortListPanelItem : public ListPanelItem
 {
-   public:
+    public:
     // index into accessing item to sort
     CUtlVector< int > m_SortedTreeIndexes;
 
@@ -674,7 +674,7 @@ void ListPanel::ResortColumnRBTree( int col )
         // if this item doesn't already have a SortedTreeIndex for this column,
         // if can only be because this is the brand new column, so add it to the SortedTreeIndexes
         if ( dataItem->m_SortedTreeIndexes.Count() == m_ColumnsHistory.Count() - 1 &&
-             columnHistoryIndex == m_ColumnsHistory.Count() - 1 )
+            columnHistoryIndex == m_ColumnsHistory.Count() - 1 )
         {
             dataItem->m_SortedTreeIndexes.AddToTail();
         }
@@ -1534,7 +1534,7 @@ Panel *ListPanel::GetCellRenderer( int itemID, int col )
 
         FastSortListPanelItem *listItem = m_DataItems[itemID];
         if ( col == 0 &&
-             listItem->m_bImage && m_pImageList )
+            listItem->m_bImage && m_pImageList )
         {
             IImage *pImage = NULL;
             if ( listItem->m_pIcon )
@@ -1635,7 +1635,7 @@ void ListPanel::PerformLayout()
         for ( int i = 0; i < nColumns; i++ )
         {
             if ( m_ColumnsData[m_CurrentColumns[i]].m_bResizesWithWindow  // column is resizable in response to window
-                 && !m_ColumnsData[m_CurrentColumns[i]].m_bHidden )
+                && !m_ColumnsData[m_CurrentColumns[i]].m_bHidden )
             {
                 numToResize++;
             }
@@ -1878,7 +1878,7 @@ void ListPanel::PerformLayout()
                 wide = header->GetWide();
 
                 if ( itemID == m_iEditModeItemID &&
-                     j == m_iEditModeColumn )
+                    j == m_iEditModeColumn )
                 {
                     m_hEditModePanel->SetPos( x + m_iTableStartX + 2, ( drawcount * m_iRowHeight ) + m_iTableStartY );
                     m_hEditModePanel->SetSize( wide, m_iRowHeight - 1 );
@@ -2000,16 +2000,16 @@ void ListPanel::Paint()
             // work in progress, optimized paint for text
             else
             {
-              // just paint it ourselves
-              char tempText[256];
-              // Grab cell text
-              GetCellText(i, j, tempText, sizeof(tempText));
-              surface()->DrawSetTextPos(x + m_iTableStartX + 2, (drawcount * m_iRowHeight) + m_iTableStartY);
+            // just paint it ourselves
+            char tempText[256];
+            // Grab cell text
+            GetCellText(i, j, tempText, sizeof(tempText));
+            surface()->DrawSetTextPos(x + m_iTableStartX + 2, (drawcount * m_iRowHeight) + m_iTableStartY);
 
-              for (const char *pText = tempText; *pText != 0; pText++)
-              {
+            for (const char *pText = tempText; *pText != 0; pText++)
+            {
                 surface()->DrawUnicodeChar((wchar_t)*pText);
-              }
+            }
             }
             */
 

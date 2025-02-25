@@ -60,8 +60,8 @@ enum tooltippos_t
 };
 
 void PositionTooltip( const tooltippos_t ePreferredTooltipPosition,
-                      vgui::Panel *pMouseOverPanel,
-                      vgui::Panel *pToolTipPanel );
+                    vgui::Panel *pMouseOverPanel,
+                    vgui::Panel *pToolTipPanel );
 
 //-----------------------------------------------------------------------------
 // Purpose: Xbox-specific panel that displays button icons text labels
@@ -70,7 +70,7 @@ class CTFFooter : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFFooter, vgui::EditablePanel );
 
-   public:
+    public:
     CTFFooter( Panel *parent, const char *panelName );
     virtual ~CTFFooter();
 
@@ -83,7 +83,7 @@ class CTFFooter : public vgui::EditablePanel
     void AddNewButtonLabel( const char *name, const char *text, const char *icon );
     void ClearButtons();
 
-   private:
+    private:
     struct FooterButton_t
     {
         bool bVisible;
@@ -120,7 +120,7 @@ class CMainMenuToolTip : public vgui::BaseTooltip
 {
     DECLARE_CLASS_SIMPLE( CMainMenuToolTip, vgui::BaseTooltip );
 
-   public:
+    public:
     CMainMenuToolTip( vgui::Panel *parent, const char *text = NULL )
         : vgui::BaseTooltip( parent, text )
     {
@@ -142,7 +142,7 @@ class CMainMenuToolTip : public vgui::BaseTooltip
         m_pEmbeddedPanel = pPanel;
     }
 
-   protected:
+    protected:
     vgui::EditablePanel *m_pEmbeddedPanel;
 };
 
@@ -153,7 +153,7 @@ class CTFTextToolTip : public CMainMenuToolTip
 {
     DECLARE_CLASS_SIMPLE( CTFTextToolTip, CMainMenuToolTip );
 
-   public:
+    public:
     CTFTextToolTip( vgui::Panel *parent, const char *text = NULL )
         : CMainMenuToolTip( parent, text )
     {
@@ -171,7 +171,7 @@ class CTFTextToolTip : public CMainMenuToolTip
         m_nMaxWide = YRES( nMaxWide );
     }
 
-   private:
+    private:
     int m_nMaxWide = 0;
 };
 
@@ -183,7 +183,7 @@ class CTFAdvancedOptionsDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFAdvancedOptionsDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CTFAdvancedOptionsDialog( vgui::Panel *parent );
     ~CTFAdvancedOptionsDialog();
 
@@ -192,7 +192,7 @@ class CTFAdvancedOptionsDialog : public vgui::EditablePanel
 
     void Deploy( void );
 
-   private:
+    private:
     void CreateControls();
     void DestroyControls();
     void GatherCurrentValues();
@@ -203,7 +203,7 @@ class CTFAdvancedOptionsDialog : public vgui::EditablePanel
     virtual void OnKeyCodeTyped( vgui::KeyCode code );
     virtual void OnKeyCodePressed( vgui::KeyCode code );
 
-   private:
+    private:
     CInfoDescription *m_pDescription;
     mpcontrol_t *m_pList;
     vgui::PanelListPanel *m_pListPanel;
@@ -223,7 +223,7 @@ class CExScrollingEditablePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CExScrollingEditablePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CExScrollingEditablePanel( Panel *pParent, const char *pszName );
     virtual ~CExScrollingEditablePanel();
 
@@ -243,7 +243,7 @@ class CExScrollingEditablePanel : public vgui::EditablePanel
         return m_nLastScrollValue;
     }
 
-   protected:
+    protected:
     void ShiftChildren( int nDistance );
 
     vgui::ScrollBar *m_pScrollBar;
@@ -262,7 +262,7 @@ class CScrollableList : public CExScrollingEditablePanel
 {
     DECLARE_CLASS_SIMPLE( CScrollableList, CExScrollingEditablePanel );
 
-   public:
+    public:
     CScrollableList( Panel *pParent, const char *pszName )
         : CExScrollingEditablePanel( pParent, pszName )
     {
@@ -275,7 +275,7 @@ class CScrollableList : public CExScrollingEditablePanel
     void AddPanel( Panel *pPanel, int nGap );
     void ClearAutoLayoutPanels();
 
-   private:
+    private:
     struct LayoutInfo_t
     {
         Panel *m_pPanel;
@@ -294,7 +294,7 @@ class CExCheckButton : public vgui::CheckButton
 {
     DECLARE_CLASS_SIMPLE( CExCheckButton, vgui::CheckButton );
 
-   public:
+    public:
     CExCheckButton( Panel *pParent, const char *pszName )
         : BaseClass( pParent, pszName, NULL ), m_pKVData( NULL )
     {
@@ -322,7 +322,7 @@ class CExCheckButton : public vgui::CheckButton
         return m_pKVData;
     }
 
-   private:
+    private:
     KeyValues *m_pKVData;
 };
 
@@ -330,7 +330,7 @@ class CExpandablePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CExpandablePanel, vgui::EditablePanel );
 
-   public:
+    public:
     enum EExpandDir_t
     {
         EXPAND_DOWN,
@@ -373,7 +373,7 @@ class CExpandablePanel : public vgui::EditablePanel
         return m_nCollapsedHeight;
     }
 
-   protected:
+    protected:
     int GetDimension();
     void SetDimension( int nNewValue );
 
@@ -381,7 +381,7 @@ class CExpandablePanel : public vgui::EditablePanel
     CPanelAnimationVarAliasType( int, m_nCollapsedHeight, "collapsed_height", "17", "proportional_int" );
     CPanelAnimationVarAliasType( int, m_nExpandedHeight, "expanded_height", "50", "proportional_int" );
 
-   private:
+    private:
     bool bInvalidateParentOnResize = true;
     EExpandDir_t m_eExpandDir = EXPAND_DOWN;
     bool m_bExpanded;
@@ -395,7 +395,7 @@ class CDraggableScrollingPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CDraggableScrollingPanel, vgui::EditablePanel );
 
-   public:
+    public:
     enum EPinPosition
     {
         PIN_TOP_LEFT = 0,
@@ -443,7 +443,7 @@ class CDraggableScrollingPanel : public vgui::EditablePanel
 
     const ChildPositionInfo_t *GetChildPositionInfo( const Panel *pChildPanel ) const;
 
-   private:
+    private:
     bool BCheckForPendingChildren();
     virtual void OnChildSettingsApplied( KeyValues *pInResourceData, Panel *pChild ) OVERRIDE;
     void UpdateChildren();
@@ -469,29 +469,29 @@ class CTFLogoPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CTFLogoPanel, vgui::Panel );
 
-   public:
+    public:
     CTFLogoPanel( Panel *pParent, const char *pszPanelname );
 
     virtual void Paint() OVERRIDE;
 
-   protected:
+    protected:
     CPanelAnimationVarAliasType( float, m_flRadius, "radius", "5", "float" );
     CPanelAnimationVarAliasType( float, m_flVelocity, "velocity", "0", "float" );
 
-   private:
+    private:
     void PaintTFLogo( float flAngle, const Color &color ) const;
 
     float m_flOffsetAngle = 0.f;
 };
 
 void CreateScrollingIndicator( int nXPos,
-                               int nYPos,
-                               const wchar *pwszText,
-                               const char *pszSoundName,
-                               float flDelay,
-                               int nXTravel,
-                               int nYTravel,
-                               bool bPositive );
+                                int nYPos,
+                                const wchar *pwszText,
+                                const char *pszSoundName,
+                                float flDelay,
+                                int nXTravel,
+                                int nYTravel,
+                                bool bPositive );
 
 // Helper to create a string that can blame users for some action.
 // Example: They don't have a Widget.
@@ -500,7 +500,7 @@ void CreateScrollingIndicator( int nXPos,
 //			"User1, User2, and User3 don't have a Widget"
 struct BlameNames_t
 {
-   public:
+    public:
     BlameNames_t( const CUtlVector< CSteamID > &vecBlameSteamIDs, const char *pszReason, const char *pszSingularVerb, const char *pszPluralVerb )
     {
         wchar_t wszMembers[512];
@@ -530,7 +530,7 @@ struct BlameNames_t
         return m_wszBuff;
     }
 
-   private:
+    private:
     wchar_t m_wszBuff[1024];
 };
 #endif  // TF_CONTROLS_H

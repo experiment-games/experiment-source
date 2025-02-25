@@ -16,7 +16,7 @@ class CCaptureZoneShim : public CBaseTrigger
 {
     virtual void ShimTouch( CBaseEntity *pOther ) = 0;
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther )
     {
         return ShimTouch( pOther );
@@ -32,7 +32,7 @@ class CCaptureZone : public CCaptureZoneShim, public ICaptureZoneAutoList
 {
     DECLARE_CLASS( CCaptureZone, CCaptureZoneShim );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CCaptureZone();
@@ -54,7 +54,7 @@ class CCaptureZone : public CCaptureZoneShim, public ICaptureZoneAutoList
 
     void PlayerDestructionThink( void );
 
-   private:
+    private:
     CNetworkVar( bool, m_bDisabled );  // Enabled/Disabled?
 
     int m_nCapturePoint;  // Used in non-CTF maps to identify this capture point
@@ -82,7 +82,7 @@ class CFlagDetectionZone : public CBaseTrigger, public IFlagDetectionZoneAutoLis
 {
     DECLARE_CLASS( CFlagDetectionZone, CBaseTrigger );
 
-   public:
+    public:
     CFlagDetectionZone();
 
     void Spawn();
@@ -108,7 +108,7 @@ class CFlagDetectionZone : public CBaseTrigger, public IFlagDetectionZoneAutoLis
     void FlagPickedUp( CBasePlayer *pPlayer );
     void FlagCaptured( CBasePlayer *pPlayer );
 
-   private:
+    private:
     bool EntityIsFlagCarrier( CBaseEntity *pEntity );
 
     bool m_bDisabled;  // Enabled/Disabled?

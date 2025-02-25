@@ -25,7 +25,7 @@ class EditablePanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( EditablePanel, Panel );
 
-   public:
+    public:
 #ifdef LUA_SDK
     EditablePanel( Panel *parent, const char *panelName, lua_State *L );
 #endif
@@ -101,17 +101,17 @@ class EditablePanel : public Panel
     // Handle information requests
     virtual bool RequestInfo( KeyValues *data );
     /* INFO HANDLING
-      "BuildDialog"
+    "BuildDialog"
         input:
-          "BuildGroupPtr" - pointer to the panel/dialog to edit
+        "BuildGroupPtr" - pointer to the panel/dialog to edit
         returns:
-          "PanelPtr" - pointer to a new BuildModeDialog()
+        "PanelPtr" - pointer to a new BuildModeDialog()
 
-      "ControlFactory"
+    "ControlFactory"
         input:
-          "ControlName" - class name of the control to create
+        "ControlName" - class name of the control to create
         returns:
-          "PanelPtr" - pointer to the newly created panel, or NULL if no such class exists
+        "PanelPtr" - pointer to the newly created panel, or NULL if no such class exists
     */
     // registers a file in the list of control settings, so the vgui dialog can choose between them to edit
     virtual void RegisterControlSettingsFile( const char *dialogResourceName, const char *pathID = NULL );
@@ -124,7 +124,7 @@ class EditablePanel : public Panel
         return m_bShouldSkipAutoResize;
     }
 
-   protected:
+    protected:
     virtual void PaintBackground();
 
     // nav group access
@@ -153,7 +153,7 @@ class EditablePanel : public Panel
     // disabled for now
     // virtual bool ShouldFlushText();
 
-   private:
+    private:
     void ForceSubPanelsToUpdateWithNewDialogVariables();
 
     BuildGroup *_buildGroup;

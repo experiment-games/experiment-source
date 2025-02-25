@@ -24,7 +24,7 @@ static ConVar r_waterforceexpensive( "r_waterforceexpensive", "0", FCVAR_ARCHIVE
 DEFINE_FALLBACK_SHADER( Water, Water_DX9_HDR )
 
 BEGIN_VS_SHADER( Water_DX90,
-                 "Help for Water" )
+                "Help for Water" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( REFRACTTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "_rt_WaterRefraction", "" )

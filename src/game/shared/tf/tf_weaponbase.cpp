@@ -937,7 +937,7 @@ void CTFWeaponBase::UpdateExtraWearables()
         if ( pOwner )
         {
             if ( !( pOldWearable && pOldWearable->GetTeamNumber() != pOwner->GetTeamNumber() ) &&
-                 !( pOldWearableVM && pOldWearableVM->GetTeamNumber() != pOwner->GetTeamNumber() ) )
+                !( pOldWearableVM && pOldWearableVM->GetTeamNumber() != pOwner->GetTeamNumber() ) )
             {
                 // No need to destroy and recreate them, because they already match the owner's team
                 return;
@@ -1568,8 +1568,8 @@ ETFDmgCustom CTFWeaponBase::GetPenetrateType() const
     CALL_ATTRIB_HOOK_INT( iMode, projectile_penetration );
 
     return iMode >= 1
-               ? TF_DMG_CUSTOM_PENETRATE_ALL_PLAYERS
-               : TF_DMG_CUSTOM_NONE;
+                ? TF_DMG_CUSTOM_PENETRATE_ALL_PLAYERS
+                : TF_DMG_CUSTOM_NONE;
 }
 
 //-----------------------------------------------------------------------------
@@ -2476,19 +2476,19 @@ Activity CTFWeaponBase::GetInspectActivity( TFWeaponInspectStage inspectStage )
     } s_inspectActivities[] =
         {
             { LOADOUT_POSITION_PRIMARY,
-              { ACT_PRIMARY_VM_INSPECT_START,
+            { ACT_PRIMARY_VM_INSPECT_START,
                 ACT_PRIMARY_VM_INSPECT_IDLE,
                 ACT_PRIMARY_VM_INSPECT_END } },
             { LOADOUT_POSITION_SECONDARY,
-              { ACT_SECONDARY_VM_INSPECT_START,
+            { ACT_SECONDARY_VM_INSPECT_START,
                 ACT_SECONDARY_VM_INSPECT_IDLE,
                 ACT_SECONDARY_VM_INSPECT_END } },
             { LOADOUT_POSITION_MELEE,
-              { ACT_MELEE_VM_INSPECT_START,
+            { ACT_MELEE_VM_INSPECT_START,
                 ACT_MELEE_VM_INSPECT_IDLE,
                 ACT_MELEE_VM_INSPECT_END } },
             { LOADOUT_POSITION_BUILDING,
-              { ACT_BUILDING_VM_INSPECT_START,
+            { ACT_BUILDING_VM_INSPECT_START,
                 ACT_BUILDING_VM_INSPECT_IDLE,
                 ACT_BUILDING_VM_INSPECT_END } },
         };
@@ -2615,8 +2615,8 @@ void CTFWeaponBase::ReloadSinglyPostFrame( void )
         Reload();
     }
     else if ( ( !AutoFiresFullClip() && Clip1() == 0 && GetOwner()->GetAmmoCount( m_iPrimaryAmmoType ) > 0 ) ||
-              // or we are already in the process of reloading but not finished
-              ( m_iReloadMode != TF_RELOAD_START ) )
+            // or we are already in the process of reloading but not finished
+            ( m_iReloadMode != TF_RELOAD_START ) )
     {
         // reload/continue reloading
         Reload();
@@ -2630,7 +2630,7 @@ bool CTFWeaponBase::WeaponShouldBeLowered( void )
 {
     // Can't be in the middle of another animation
     if ( GetIdealActivity() != ACT_VM_IDLE_LOWERED && GetIdealActivity() != ACT_VM_IDLE &&
-         GetIdealActivity() != ACT_VM_IDLE_TO_LOWERED && GetIdealActivity() != ACT_VM_LOWERED_TO_IDLE )
+        GetIdealActivity() != ACT_VM_IDLE_TO_LOWERED && GetIdealActivity() != ACT_VM_LOWERED_TO_IDLE )
         return false;
 
     if ( m_bLowered )
@@ -4851,7 +4851,7 @@ bool CTFWeaponBase::OnFireEvent( C_BaseViewModel *pViewModel, const Vector &orig
 //-----------------------------------------------------------------------------
 class CWeaponInvisProxy : public CBaseInvisMaterialProxy
 {
-   public:
+    public:
     virtual void OnBind( C_BaseEntity *pBaseEntity ) OVERRIDE;
 };
 
@@ -4925,9 +4925,9 @@ void CTFWeaponBase::ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPla
 
         // No ammo for disguised Spies that are NOT stealthed so you can't use this to check for Spies
         if ( pVictim &&
-             pVictim->IsPlayerClass( TF_CLASS_SPY ) &&
-             pVictim->m_Shared.InCond( TF_COND_DISGUISED ) &&
-             !( pVictim->m_Shared.IsStealthed() || pVictim->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
+            pVictim->IsPlayerClass( TF_CLASS_SPY ) &&
+            pVictim->m_Shared.InCond( TF_COND_DISGUISED ) &&
+            !( pVictim->m_Shared.IsStealthed() || pVictim->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
         {
             flPercentage = 0.0f;
         }
@@ -5276,7 +5276,7 @@ void CTFWeaponBase::ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPla
     CALL_ATTRIB_HOOK_FLOAT( flAddDamageDoneBonusOnHit, addperc_ondmgdone_tmpbuff );
     if ( flAddDamageDoneBonusOnHit )
     {
-      pAttacker->m_Shared.AddTmpDamageBonus( flAddDamageDoneBonusOnHit, 10.0 );
+    pAttacker->m_Shared.AddTmpDamageBonus( flAddDamageDoneBonusOnHit, 10.0 );
     }
     */
 
@@ -5466,7 +5466,7 @@ void CTFWeaponBase::ApplyPostHitEffects( const CTakeDamageInfo &info, CTFPlayer 
 
         // don't play effects to attacker if he hit a disguised/cloaked spy
         if ( !pVictim->m_Shared.InCond( TF_COND_DISGUISED ) &&
-             !pVictim->m_Shared.IsStealthed() )
+            !pVictim->m_Shared.IsStealthed() )
         {
             if ( bDidDrain )
             {
@@ -5834,7 +5834,7 @@ bool CTFWeaponBase::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vector
 //-----------------------------------------------------------------------------
 class CTraceFilterDeflection : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterDeflection, CTraceFilterSimple );
 
     CTraceFilterDeflection( const IHandleEntity *passentity, int collisionGroup, int iIgnoreTeam )
@@ -6085,7 +6085,7 @@ void CTFWeaponBase::UpdateWeaponBodyGroups( CTFPlayer *pPlayer, bool bHandleDepl
 //-----------------------------------------------------------------------------
 class CTFKillEaterNotification : public CEconNotification
 {
-   public:
+    public:
     CTFKillEaterNotification( const CSteamID &KillerID, const wchar_t *wszWeaponName, const wchar_t *wszLevelName )
         : CEconNotification()
     {
@@ -6113,7 +6113,7 @@ class CTFKillEaterNotification : public CEconNotification
 //-----------------------------------------------------------------------------
 class CGCPlayerKilledResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCPlayerKilledResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -6162,11 +6162,11 @@ class CGCPlayerKilledResponse : public GCSDK::CGCClientJob
         {
             wchar_t wszNotification[1024] = L"";
             g_pVGuiLocalize->ConstructString_safe( wszNotification,
-                                                   g_pVGuiLocalize->Find( "#TF_HUD_Event_KillEater_Leveled_Chat" ),
-                                                   3,
-                                                   wszPlayerName,
-                                                   wszWeaponName,
-                                                   wszLevelName );
+                                                    g_pVGuiLocalize->Find( "#TF_HUD_Event_KillEater_Leveled_Chat" ),
+                                                    3,
+                                                    wszPlayerName,
+                                                    wszWeaponName,
+                                                    wszLevelName );
 
             char szAnsi[1024];
             g_pVGuiLocalize->ConvertUnicodeToANSI( wszNotification, szAnsi, sizeof( szAnsi ) );
@@ -6183,8 +6183,8 @@ GC_REG_JOB( GCSDK::CGCClient, CGCPlayerKilledResponse, "CGCPlayerKilledResponse"
 bool WeaponID_IsSniperRifle( int iWeaponID )
 {
     if ( iWeaponID == TF_WEAPON_SNIPERRIFLE ||
-         iWeaponID == TF_WEAPON_SNIPERRIFLE_DECAP ||
-         iWeaponID == TF_WEAPON_SNIPERRIFLE_CLASSIC )
+        iWeaponID == TF_WEAPON_SNIPERRIFLE_DECAP ||
+        iWeaponID == TF_WEAPON_SNIPERRIFLE_CLASSIC )
         return true;
     else
         return false;

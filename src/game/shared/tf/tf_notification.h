@@ -26,7 +26,7 @@
 
 class CTFNotification : public GCSDK::CProtoBufSharedObject< CMsgGCNotification, k_EEconTypeNotification >
 {
-   public:
+    public:
     // If using this form, ensure you call BLocalize after filling fields for localized types.
 };
 

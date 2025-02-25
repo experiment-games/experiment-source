@@ -17,7 +17,7 @@ class CTFPrediction : public CPrediction
 {
     DECLARE_CLASS( CTFPrediction, CPrediction );
 
-   public:
+    public:
     virtual void SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move );
 };

@@ -43,8 +43,8 @@ namespace internal
 {
 
 inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                          Atomic32 old_value,
-                                          Atomic32 new_value )
+                                        Atomic32 old_value,
+                                        Atomic32 new_value )
 {
     Atomic32 prev_value;
     do
@@ -59,7 +59,7 @@ inline Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
-                                          Atomic32 new_value )
+                                        Atomic32 new_value )
 {
     Atomic32 old_value;
     do
@@ -70,13 +70,13 @@ inline Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr,
 }
 
 inline Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr,
-                                           Atomic32 increment )
+                                            Atomic32 increment )
 {
     return OSAtomicAdd32( increment, const_cast< Atomic32* >( ptr ) );
 }
 
 inline Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                         Atomic32 increment )
+                                        Atomic32 increment )
 {
     return OSAtomicAdd32Barrier( increment, const_cast< Atomic32* >( ptr ) );
 }
@@ -149,8 +149,8 @@ inline Atomic32 Release_Load( volatile const Atomic32* ptr )
 // 64-bit implementation on 64-bit platform
 
 inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
-                                          Atomic64 old_value,
-                                          Atomic64 new_value )
+                                        Atomic64 old_value,
+                                        Atomic64 new_value )
 {
     Atomic64 prev_value;
     do
@@ -165,7 +165,7 @@ inline Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
 }
 
 inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
-                                          Atomic64 new_value )
+                                        Atomic64 new_value )
 {
     Atomic64 old_value;
     do
@@ -176,16 +176,16 @@ inline Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr,
 }
 
 inline Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr,
-                                           Atomic64 increment )
+                                            Atomic64 increment )
 {
     return OSAtomicAdd64( increment, reinterpret_cast< volatile int64_t* >( ptr ) );
 }
 
 inline Atomic64 Barrier_AtomicIncrement( volatile Atomic64* ptr,
-                                         Atomic64 increment )
+                                        Atomic64 increment )
 {
     return OSAtomicAdd64Barrier( increment,
-                                 reinterpret_cast< volatile int64_t* >( ptr ) );
+                                reinterpret_cast< volatile int64_t* >( ptr ) );
 }
 
 inline Atomic64 Acquire_CompareAndSwap( volatile Atomic64* ptr,
@@ -196,7 +196,7 @@ inline Atomic64 Acquire_CompareAndSwap( volatile Atomic64* ptr,
     do
     {
         if ( OSAtomicCompareAndSwap64Barrier(
-                 old_value, new_value, reinterpret_cast< volatile int64_t* >( ptr ) ) )
+                old_value, new_value, reinterpret_cast< volatile int64_t* >( ptr ) ) )
         {
             return old_value;
         }

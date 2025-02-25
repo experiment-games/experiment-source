@@ -14,7 +14,7 @@ class MeshToolPanel : public CNavUIToolPanel
 {
     DECLARE_CLASS_SIMPLE( MeshToolPanel, CNavUIToolPanel );
 
-   public:
+    public:
     MeshToolPanel( vgui::Panel *parent, const char *toolName );
 };
 

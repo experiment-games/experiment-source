@@ -29,7 +29,7 @@ class CVTFPreviewPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CVTFPreviewPanel, vgui::Panel );
 
-   public:
+    public:
     // constructor
     CVTFPreviewPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CVTFPreviewPanel();
@@ -40,7 +40,7 @@ class CVTFPreviewPanel : public vgui::Panel
     // Paints the texture
     virtual void Paint( void );
 
-   private:
+    private:
     void PaintNormalMapTexture( void );
     void PaintCubeTexture( void );
     void PaintStandardTexture( void );

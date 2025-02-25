@@ -20,9 +20,9 @@ CInviteNotification::CInviteNotification( CSteamID steamID, CTFParty::EPendingTy
                                 CTFDashboardNotification::LEFT,
                                 0.f,
                                 "InviteNotification" ),
-      CEconNotification(),
-      m_eType( eType ),
-      m_bIncoming( bIncoming )
+    CEconNotification(),
+    m_eType( eType ),
+    m_bIncoming( bIncoming )
 {
     m_flExpireTime = -1.f;
     m_bCreateMainMenuPanel = false;

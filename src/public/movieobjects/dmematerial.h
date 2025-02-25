@@ -24,14 +24,14 @@ class CDmeMaterial : public CDmElement
 {
     DEFINE_ELEMENT( CDmeMaterial, CDmElement );
 
-   public:
+    public:
     IMaterial *GetCachedMTL();
     void SetMaterial( const char *pMaterialName );
     const char *GetMaterialName() const;
 
     virtual void Resolve();
 
-   private:
+    private:
     IMaterial *m_pMTL;
     CDmaString m_mtlName;
 };

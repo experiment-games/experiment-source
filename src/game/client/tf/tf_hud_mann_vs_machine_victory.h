@@ -39,7 +39,7 @@ class CVictoryPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CVictoryPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CVictoryPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -49,7 +49,7 @@ class CVictoryPanel : public vgui::EditablePanel
 
     void SetMapAndPopFile();
 
-   private:
+    private:
     enum
     {
         INITIAL_VICTORY = 0,
@@ -101,7 +101,7 @@ class CMvMVictoryMannUpLoot : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMVictoryMannUpLoot, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMVictoryMannUpLoot( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -110,7 +110,7 @@ class CMvMVictoryMannUpLoot : public vgui::EditablePanel
     void HideEconItem();
     void SetEconToolTip( CItemModelPanelToolTip *pToolTip );
 
-   private:
+    private:
     CItemModelPanel *m_pItemModelPanel;
 };
 
@@ -119,7 +119,7 @@ class CMvMVictoryMannUpEntry : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMVictoryMannUpEntry, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMVictoryMannUpEntry( Panel *parent, const char *pName );
     ~CMvMVictoryMannUpEntry();
 
@@ -143,7 +143,7 @@ class CMvMVictoryMannUpEntry : public vgui::EditablePanel
     void ForceFinishAllAnimation();
     void SetLootAnimationPause( float flPause );
 
-   private:
+    private:
     void PlayVCD( const char *pszVCDName );
     bool SetModelPanelInfo( C_TFPlayer *pPlayer );
     void SetBadgeProgressBarProgress( float flPercent );
@@ -208,7 +208,7 @@ class CMvMVictoryMannUpEntry : public vgui::EditablePanel
     {
         DECLARE_CLASS_SIMPLE( CMvMLootItem, CItemModelPanel );
 
-       public:
+        public:
         CMvMLootItem( vgui::Panel *parent, const char *name )
             : CItemModelPanel( parent, name ), m_nIndex( 0 ), m_pUnopenedPanel( NULL )
         {
@@ -241,7 +241,7 @@ class CMvMVictoryMannUpPlayerTab : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMVictoryMannUpPlayerTab, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMVictoryMannUpPlayerTab( Panel *parent, const char *pName );
 
     void SetPlayer( const CSteamID &steamID );
@@ -250,7 +250,7 @@ class CMvMVictoryMannUpPlayerTab : public vgui::EditablePanel
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void OnCommand( const char *command ) OVERRIDE;
 
-   private:
+    private:
     CAvatarImagePanel *m_pAvatarImage;
     vgui::EditablePanel *m_pActiveTab;
     vgui::EditablePanel *m_pMouseoverHighlightPanel;
@@ -262,7 +262,7 @@ class CMvMVictoryMannUpPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMVictoryMannUpPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMVictoryMannUpPanel( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
@@ -281,7 +281,7 @@ class CMvMVictoryMannUpPanel : public vgui::EditablePanel
 
     virtual void OnCommand( const char *command ) OVERRIDE;
 
-   private:
+    private:
     void LoadVictoryData();
     void UpdateHighlight();
     void SetTabActive( int nIndex );
@@ -313,7 +313,7 @@ class CMvMVictoryPanelContainer : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMVictoryPanelContainer, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMVictoryPanelContainer( Panel *parent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -336,7 +336,7 @@ class CMvMVictoryPanelContainer : public vgui::EditablePanel
         return ( m_pVictoryPanelNormal && m_pVictoryPanelNormal->IsVisible() ) || ( m_pVictoryPanelMannUp && m_pVictoryPanelMannUp->IsVisible() );
     }
 
-   private:
+    private:
     CVictoryPanel *m_pVictoryPanelNormal;
     CMvMVictoryMannUpPanel *m_pVictoryPanelMannUp;
     const C_TFObjectiveResource *m_pObjective;

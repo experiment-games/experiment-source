@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossIdle : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
@@ -24,7 +24,7 @@ class CEyeballBossIdle : public Action< CEyeballBoss >
         return "Idle";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_lookAroundTimer;
     PathFollower m_path;
     CountdownTimer m_repathTimer;

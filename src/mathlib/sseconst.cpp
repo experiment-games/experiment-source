@@ -220,8 +220,8 @@ void FourVectors_TransformManyGroupsOfEightBy( FourVectors* RESTRICT pVectors, u
         return;
 
     AssertMsg( ( pOut < pVectors && pOut + numVectors <= pVectors ) ||
-                   ( pOut > pVectors && pVectors + numVectors <= pOut ),
-               "FourVectors::TransformManyBy called with overlapping buffer pointers." );
+                    ( pOut > pVectors && pVectors + numVectors <= pOut ),
+                "FourVectors::TransformManyBy called with overlapping buffer pointers." );
 
     // Splat out each of the entries in the matrix to a fltx4. Do this
     // in the order that we will need them, to hide latency. I'm
@@ -389,8 +389,8 @@ void FourVectors_TransformManyGroupsOfEightBy( FourVectors* RESTRICT pVectors, u
 void FourVectors_TransformManyGroupsOfEightBy_128byteAligned( FourVectors* RESTRICT pVectors, unsigned int numVectors, const matrix3x4_t& rotationMatrix, FourVectors* RESTRICT pOut )
 {
     /* If this has changed, you will need to change all the prefetches, *
-     * and groups of eight are no longer the ideal unit for iterating   *
-     * on many vectors.													*/
+    * and groups of eight are no longer the ideal unit for iterating   *
+    * on many vectors.													*/
     COMPILE_TIME_ASSERT( sizeof( FourVectors ) == 48 );
 
     Assert( numVectors > 0 );
@@ -401,13 +401,13 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned( FourVectors* RESTR
 
     // Assert alignment
     AssertMsg( ( ( reinterpret_cast< uint32 >( pVectors ) & 127 ) == 0 ) &&
-                   ( ( reinterpret_cast< uint32 >( pOut ) & 127 ) == 0 ),
-               "FourVectors_Transform..aligned called with non-128-byte-aligned buffers." );
+                    ( ( reinterpret_cast< uint32 >( pOut ) & 127 ) == 0 ),
+                "FourVectors_Transform..aligned called with non-128-byte-aligned buffers." );
 
     // Assert non overlap
     AssertMsg( ( pOut < pVectors && pOut + numVectors <= pVectors ) ||
-                   ( pOut > pVectors && pVectors + numVectors <= pOut ),
-               "FourVectors::TransformManyBy called with overlapping buffer pointers." );
+                    ( pOut > pVectors && pVectors + numVectors <= pOut ),
+                "FourVectors::TransformManyBy called with overlapping buffer pointers." );
 
     // Here's the plan. 8 four-vecs = 3 cache lines exactly. It takes about 400 cycles to process a group
     // of eight, and cache latency is 600 cycles, so we try to prefetch two iterations ahead (eg fetch
@@ -675,8 +675,8 @@ void FourVectors::TransformManyBy( FourVectors* RESTRICT pVectors, unsigned int 
     Assert( numVectors > 0 );
 
     AssertMsg( ( pOut < pVectors && pOut + numVectors <= pVectors ) ||
-                   ( pOut > pVectors && pVectors + numVectors <= pOut ),
-               "FourVectors::TransformManyBy called with overlapping buffer pointers." );
+                    ( pOut > pVectors && pVectors + numVectors <= pOut ),
+                "FourVectors::TransformManyBy called with overlapping buffer pointers." );
 
 #ifdef _X360
     // The really fast version of this function likes to operate on blocks of eight. So, chug through
@@ -1000,10 +1000,10 @@ void FourVectors::TransformManyBy( FourVectors* RESTRICT pVectors, unsigned int 
 void TransformManyPointsBy( VectorAligned* RESTRICT pVectors, unsigned int numVectors, FLTX4 mRow0, FLTX4 mRow1, FLTX4 mRow2 )
 {
     /**************************************************
-     *  Here is an elaborate and carefully scheduled  *
-     *  algorithm nicked from xboxmath.inl and hacked *
-     *  up for 3x4 matrices.                          *
-     **************************************************/
+    *  Here is an elaborate and carefully scheduled  *
+    *  algorithm nicked from xboxmath.inl and hacked *
+    *  up for 3x4 matrices.                          *
+    **************************************************/
 
     COMPILE_TIME_ASSERT( sizeof( VectorAligned ) == sizeof( XMFLOAT4 ) );  // VectorAligned's need to be 16 bytes
 

@@ -217,10 +217,10 @@ void ClusterMerge( int clusternum )
     numvis = LeafVectorFromPortalVector( portalvector, uncompressed );
 
 #if 0
-	// func_viscluster makes this happen all the time because it allows a non-convex set of portals
-	// My analysis says this is ok, but it does make this check for errors in vis kind of useless
-	if ( CheckBit( uncompressed, clusternum ) )
-		Warning("WARNING: Cluster portals saw into cluster\n");
+    // func_viscluster makes this happen all the time because it allows a non-convex set of portals
+    // My analysis says this is ok, but it does make this check for errors in vis kind of useless
+    if ( CheckBit( uncompressed, clusternum ) )
+        Warning("WARNING: Cluster portals saw into cluster\n");
 #endif
 
     SetBit( uncompressed, clusternum );
@@ -699,22 +699,22 @@ static float CalcDistanceFromLeafToWater( int leafNum )
     leafMax[2] = ( float )dleafs[leafNum].maxs[2];
 
     /*
-      CUtlVector<listplane_t> temp;
+    CUtlVector<listplane_t> temp;
 
-      // build a convex solid out of the planes so that we can get at the triangles.
-      for( j = dleafs[i].firstleafbrush; j < dleafs[i].firstleafbrush + dleafs[i].numleafbrushes; j++ )
-      {
+    // build a convex solid out of the planes so that we can get at the triangles.
+    for( j = dleafs[i].firstleafbrush; j < dleafs[i].firstleafbrush + dleafs[i].numleafbrushes; j++ )
+    {
         dbrush_t *pBrush = &dbrushes[j];
         for( k = pBrush->firstside; k < pBrush->firstside + pBrush->numsides; k++ )
         {
-          dbrushside_t *pside = dbrushsides + k;
-          dplane_t *pplane = dplanes + pside->planenum;
-          AddListPlane( &temp, pplane->normal[0], pplane->normal[1], pplane->normal[2], pplane->dist );
+        dbrushside_t *pside = dbrushsides + k;
+        dplane_t *pplane = dplanes + pside->planenum;
+        AddListPlane( &temp, pplane->normal[0], pplane->normal[1], pplane->normal[2], pplane->dist );
         }
         CPhysConvex *pConvex = physcollision->ConvexFromPlanes( (float *)temp.Base(), temp.Count(), VPHYSICS_MERGE );
         ConvertConvexToCollide(  &pConvex,
-          temp.RemoveAll();
-      }
+        temp.RemoveAll();
+    }
     */
 
     // Iterate over all potentially visible clusters from this leaf
@@ -1230,7 +1230,7 @@ int main( int argc, char **argv )
 // get it going.
 class CVVisDLL : public ILaunchableDLL
 {
-   public:
+    public:
     virtual int main( int argc, char **argv )
     {
         return ::main( argc, argv );

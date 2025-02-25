@@ -33,7 +33,7 @@ typedef bool ( *FnQuitHandler )( void *pvUserData );
 // Exposed from engine to all tools, simplest interface
 class IEngineToolFramework : public IBaseInterface
 {
-   public:
+    public:
     // Input system overrides TBD
     // Something like this
     // virtual void		AddMessageHandler( int wm_message, bool (*pfnCallback)( int wm_message, int wParam, int lParam ) ) = 0;
@@ -64,7 +64,7 @@ struct studiohdr_t;
 // Exposed from engine to tools via, more involved version of above
 class IEngineTool : public IEngineToolFramework
 {
-   public:
+    public:
     virtual void GetServerFactory( CreateInterfaceFn &factory ) = 0;
     virtual void GetClientFactory( CreateInterfaceFn &factory ) = 0;
 
@@ -226,8 +226,8 @@ class IEngineTool : public IEngineToolFramework
     virtual void InstallPartitionQueryCallback( IPartitionQueryCallback *pQuery ) = 0;
     virtual void RemovePartitionQueryCallback( IPartitionQueryCallback *pQuery ) = 0;
     virtual void ElementMoved( SpatialPartitionHandle_t handle,
-                               const Vector &mins,
-                               const Vector &maxs ) = 0;
+                                const Vector &mins,
+                                const Vector &maxs ) = 0;
 };
 
 #define VENGINETOOL_INTERFACE_VERSION "VENGINETOOL003"

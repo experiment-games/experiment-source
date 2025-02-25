@@ -77,7 +77,7 @@ class CItemMaterialCustomizationIconPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CItemMaterialCustomizationIconPanel, vgui::Panel );
 
-   public:
+    public:
     CItemMaterialCustomizationIconPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CItemMaterialCustomizationIconPanel();
 
@@ -101,7 +101,7 @@ class CEmbeddedItemModelPanel : public CBaseModelPanel
 {
     DECLARE_CLASS_SIMPLE( CEmbeddedItemModelPanel, CBaseModelPanel );
 
-   public:
+    public:
     CEmbeddedItemModelPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CEmbeddedItemModelPanel();
 
@@ -156,7 +156,7 @@ class CEmbeddedItemModelPanel : public CBaseModelPanel
     ITexture *GetCachedGeneratedIcon();
     bool m_bOfflineIconGeneration;
 
-   private:
+    private:
     bool ShouldUseRenderTargetAsIcon() const;
     bool UseRenderTargetAsIcon() const
     {
@@ -226,7 +226,7 @@ class CItemModelPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CItemModelPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CItemModelPanel( vgui::Panel *parent, const char *name );
     virtual ~CItemModelPanel( void );
 
@@ -382,7 +382,7 @@ class CItemModelPanel : public vgui::EditablePanel
         m_bFakeButton = true;
     }
 
-   private:
+    private:
     void UpdateEquippedLabel( void );
     void CleanupNoItemWChars( void );
 
@@ -528,7 +528,7 @@ class CItemModelPanelToolTip : public vgui::BaseTooltip
 {
     DECLARE_CLASS_SIMPLE( CItemModelPanelToolTip, vgui::BaseTooltip );
 
-   public:
+    public:
     CItemModelPanelToolTip( vgui::Panel *parent, const char *text = NULL );
 
     void SetText( const char *text )
@@ -554,11 +554,11 @@ class CItemModelPanelToolTip : public vgui::BaseTooltip
         m_iPositioningStrategy = iStrat;
     }
 
-   private:
+    private:
     void GetPosition( itempanel_tooltippos_t iTooltipPosition, CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
     bool ValidatePosition( CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
 
-   private:
+    private:
     CItemModelPanel *m_pMouseOverItemPanel;  // This is the tooltip panel we make visible. Must be a CItemModelPanel.
     vgui::Panel *m_pParentPanel;             // This is the panel that we send item entered/exited messages to
     vgui::DHANDLE< CItemModelPanel > m_hCurrentPanel;
@@ -574,7 +574,7 @@ class CItemModelPanelToolTip : public vgui::BaseTooltip
 //-----------------------------------------------------------------------------
 class CEquippableItemsForSlotGenerator
 {
-   public:
+    public:
     // Flags that control how the data is generated.
     enum
     {
@@ -632,7 +632,7 @@ class CEquippableItemsForSlotGenerator
         return m_DuplicateCountsMap;
     }
 
-   private:
+    private:
     EquippableResultsVec_t m_vecDisplayItems;
     DuplicateCountMap_t m_DuplicateCountsMap;
     CEconItemView *m_pEquippedItemView;  // if kSlotGenerator_EquippedSpecialHandling is passed in, this will store our equipped item; otherwise NULL

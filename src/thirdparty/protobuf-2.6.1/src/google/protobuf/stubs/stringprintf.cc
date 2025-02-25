@@ -68,22 +68,22 @@ void StringAppendV(string* dst, const char* format, va_list ap) {
 
   if (result < kSpaceLength) {
     if (result >= 0) {
-      // Normal case -- everything fit.
-      dst->append(space, result);
-      return;
+    // Normal case -- everything fit.
+    dst->append(space, result);
+    return;
     }
 
     if (IS_COMPILER_MSVC) {
-      // Error or MSVC running out of space.  MSVC 8.0 and higher
-      // can be asked about space needed with the special idiom below:
-      va_copy(backup_ap, ap);
-      result = vsnprintf(NULL, 0, format, backup_ap);
-      va_end(backup_ap);
+    // Error or MSVC running out of space.  MSVC 8.0 and higher
+    // can be asked about space needed with the special idiom below:
+    va_copy(backup_ap, ap);
+    result = vsnprintf(NULL, 0, format, backup_ap);
+    va_end(backup_ap);
     }
 
     if (result < 0) {
-      // Just an error.
-      return;
+    // Just an error.
+    return;
     }
   }
 
@@ -140,9 +140,9 @@ static const char string_printf_empty_block[256] = { '\0' };
 
 string StringPrintfVector(const char* format, const vector<string>& v) {
   GOOGLE_CHECK_LE(v.size(), kStringPrintfVectorMaxArgs)
-      << "StringPrintfVector currently only supports up to "
-      << kStringPrintfVectorMaxArgs << " arguments. "
-      << "Feel free to add support for more if you need it.";
+    << "StringPrintfVector currently only supports up to "
+    << kStringPrintfVectorMaxArgs << " arguments. "
+    << "Feel free to add support for more if you need it.";
 
   // Add filler arguments so that bogus format+args have a harder time
   // crashing the program, corrupting the program (%n),
@@ -163,13 +163,13 @@ string StringPrintfVector(const char* format, const vector<string>& v) {
 
   GOOGLE_COMPILE_ASSERT(kStringPrintfVectorMaxArgs == 32, arg_count_mismatch);
   return StringPrintf(format,
-                      cstr[0], cstr[1], cstr[2], cstr[3], cstr[4],
-                      cstr[5], cstr[6], cstr[7], cstr[8], cstr[9],
-                      cstr[10], cstr[11], cstr[12], cstr[13], cstr[14],
-                      cstr[15], cstr[16], cstr[17], cstr[18], cstr[19],
-                      cstr[20], cstr[21], cstr[22], cstr[23], cstr[24],
-                      cstr[25], cstr[26], cstr[27], cstr[28], cstr[29],
-                      cstr[30], cstr[31]);
+                    cstr[0], cstr[1], cstr[2], cstr[3], cstr[4],
+                    cstr[5], cstr[6], cstr[7], cstr[8], cstr[9],
+                    cstr[10], cstr[11], cstr[12], cstr[13], cstr[14],
+                    cstr[15], cstr[16], cstr[17], cstr[18], cstr[19],
+                    cstr[20], cstr[21], cstr[22], cstr[23], cstr[24],
+                    cstr[25], cstr[26], cstr[27], cstr[28], cstr[29],
+                    cstr[30], cstr[31]);
 }
 }  // namespace protobuf
 }  // namespace google

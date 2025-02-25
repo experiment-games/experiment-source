@@ -46,39 +46,39 @@ import java.util.TreeMap;
 class MessageReflection {
 
   static void writeMessageTo(Message message, CodedOutputStream output,
-      boolean alwaysWriteRequiredFields)
-      throws IOException {
+    boolean alwaysWriteRequiredFields)
+    throws IOException {
     final boolean isMessageSet =
         message.getDescriptorForType().getOptions().getMessageSetWireFormat();
 
     Map<FieldDescriptor, Object> fields = message.getAllFields();
     if (alwaysWriteRequiredFields) {
-      fields = new TreeMap<FieldDescriptor, Object>(fields);
-      for (final FieldDescriptor field :
-          message.getDescriptorForType().getFields()) {
+    fields = new TreeMap<FieldDescriptor, Object>(fields);
+    for (final FieldDescriptor field :
+        message.getDescriptorForType().getFields()) {
         if (field.isRequired() && !fields.containsKey(field)) {
-          fields.put(field, message.getField(field));
+        fields.put(field, message.getField(field));
         }
-      }
+    }
     }
     for (final Map.Entry<Descriptors.FieldDescriptor, Object> entry :
         fields.entrySet()) {
-      final Descriptors.FieldDescriptor field = entry.getKey();
-      final Object value = entry.getValue();
-      if (isMessageSet && field.isExtension() &&
-          field.getType() == Descriptors.FieldDescriptor.Type.MESSAGE &&
-          !field.isRepeated()) {
+    final Descriptors.FieldDescriptor field = entry.getKey();
+    final Object value = entry.getValue();
+    if (isMessageSet && field.isExtension() &&
+        field.getType() == Descriptors.FieldDescriptor.Type.MESSAGE &&
+        !field.isRepeated()) {
         output.writeMessageSetExtension(field.getNumber(), (Message) value);
-      } else {
+    } else {
         FieldSet.writeField(field, value, output);
-      }
+    }
     }
 
     final UnknownFieldSet unknownFields = message.getUnknownFields();
     if (isMessageSet) {
-      unknownFields.writeAsMessageSetTo(output);
+    unknownFields.writeAsMessageSetTo(output);
     } else {
-      unknownFields.writeTo(output);
+    unknownFields.writeTo(output);
     }
   }
 
@@ -89,23 +89,23 @@ class MessageReflection {
 
     for (final Map.Entry<Descriptors.FieldDescriptor, Object> entry :
         message.getAllFields().entrySet()) {
-      final Descriptors.FieldDescriptor field = entry.getKey();
-      final Object value = entry.getValue();
-      if (isMessageSet && field.isExtension() &&
-          field.getType() == Descriptors.FieldDescriptor.Type.MESSAGE &&
-          !field.isRepeated()) {
+    final Descriptors.FieldDescriptor field = entry.getKey();
+    final Object value = entry.getValue();
+    if (isMessageSet && field.isExtension() &&
+        field.getType() == Descriptors.FieldDescriptor.Type.MESSAGE &&
+        !field.isRepeated()) {
         size += CodedOutputStream.computeMessageSetExtensionSize(
             field.getNumber(), (Message) value);
-      } else {
+    } else {
         size += FieldSet.computeFieldSize(field, value);
-      }
+    }
     }
 
     final UnknownFieldSet unknownFields = message.getUnknownFields();
     if (isMessageSet) {
-      size += unknownFields.getSerializedSizeAsMessageSet();
+    size += unknownFields.getSerializedSizeAsMessageSet();
     } else {
-      size += unknownFields.getSerializedSize();
+    size += unknownFields.getSerializedSize();
     }
     return size;
   }
@@ -113,10 +113,10 @@ class MessageReflection {
   static String delimitWithCommas(List<String> parts) {
     StringBuilder result = new StringBuilder();
     for (String part : parts) {
-      if (result.length() > 0) {
+    if (result.length() > 0) {
         result.append(", ");
-      }
-      result.append(part);
+    }
+    result.append(part);
     }
     return result.toString();
   }
@@ -127,96 +127,96 @@ class MessageReflection {
     for (final Descriptors.FieldDescriptor field : message
         .getDescriptorForType()
         .getFields()) {
-      if (field.isRequired()) {
+    if (field.isRequired()) {
         if (!message.hasField(field)) {
-          return false;
+        return false;
         }
-      }
+    }
     }
 
     // Check that embedded messages are initialized.
     for (final Map.Entry<Descriptors.FieldDescriptor, Object> entry :
         message.getAllFields().entrySet()) {
-      final Descriptors.FieldDescriptor field = entry.getKey();
-      if (field.getJavaType() == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
+    final Descriptors.FieldDescriptor field = entry.getKey();
+    if (field.getJavaType() == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
         if (field.isRepeated()) {
-          for (final Message element
-              : (List<Message>) entry.getValue()) {
+        for (final Message element
+            : (List<Message>) entry.getValue()) {
             if (!element.isInitialized()) {
-              return false;
-            }
-          }
-        } else {
-          if (!((Message) entry.getValue()).isInitialized()) {
             return false;
-          }
+            }
         }
-      }
+        } else {
+        if (!((Message) entry.getValue()).isInitialized()) {
+            return false;
+        }
+        }
+    }
     }
 
     return true;
   }
 
   private static String subMessagePrefix(final String prefix,
-      final Descriptors.FieldDescriptor field,
-      final int index) {
+    final Descriptors.FieldDescriptor field,
+    final int index) {
     final StringBuilder result = new StringBuilder(prefix);
     if (field.isExtension()) {
-      result.append('(')
-          .append(field.getFullName())
-          .append(')');
+    result.append('(')
+        .append(field.getFullName())
+        .append(')');
     } else {
-      result.append(field.getName());
+    result.append(field.getName());
     }
     if (index != -1) {
-      result.append('[')
-          .append(index)
-          .append(']');
+    result.append('[')
+        .append(index)
+        .append(']');
     }
     result.append('.');
     return result.toString();
   }
 
   private static void findMissingFields(final MessageOrBuilder message,
-      final String prefix,
-      final List<String> results) {
+    final String prefix,
+    final List<String> results) {
     for (final Descriptors.FieldDescriptor field :
         message.getDescriptorForType().getFields()) {
-      if (field.isRequired() && !message.hasField(field)) {
+    if (field.isRequired() && !message.hasField(field)) {
         results.add(prefix + field.getName());
-      }
+    }
     }
 
     for (final Map.Entry<Descriptors.FieldDescriptor, Object> entry :
         message.getAllFields().entrySet()) {
-      final Descriptors.FieldDescriptor field = entry.getKey();
-      final Object value = entry.getValue();
+    final Descriptors.FieldDescriptor field = entry.getKey();
+    final Object value = entry.getValue();
 
-      if (field.getJavaType() == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
+    if (field.getJavaType() == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
         if (field.isRepeated()) {
-          int i = 0;
-          for (final Object element : (List) value) {
+        int i = 0;
+        for (final Object element : (List) value) {
             findMissingFields((MessageOrBuilder) element,
                 subMessagePrefix(prefix, field, i++),
                 results);
-          }
+        }
         } else {
-          if (message.hasField(field)) {
+        if (message.hasField(field)) {
             findMissingFields((MessageOrBuilder) value,
                 subMessagePrefix(prefix, field, -1),
                 results);
-          }
         }
-      }
+        }
+    }
     }
   }
 
   /**
-   * Populates {@code this.missingFields} with the full "path" of each missing
-   * required field in the given message.
-   */
+    * Populates {@code this.missingFields} with the full "path" of each missing
+    * required field in the given message.
+    */
   static List<String> findMissingFields(
-      final MessageOrBuilder message) {
+    final MessageOrBuilder message) {
     final List<String> results = new ArrayList<String>();
     findMissingFields(message, "", results);
     return results;
@@ -224,12 +224,12 @@ class MessageReflection {
 
   static interface MergeTarget {
     enum ContainerType {
-      MESSAGE, EXTENSION_SET
+    MESSAGE, EXTENSION_SET
     }
 
     /**
-     * Returns the descriptor for the target.
-     */
+    * Returns the descriptor for the target.
+    */
     public Descriptors.Descriptor getDescriptorForType();
 
     public ContainerType getContainerType();
@@ -242,126 +242,126 @@ class MessageReflection {
         int fieldNumber);
 
     /**
-     * Obtains the value of the given field, or the default value if it is not
-     * set.  For primitive fields, the boxed primitive value is returned. For
-     * enum fields, the EnumValueDescriptor for the value is returned. For
-     * embedded message fields, the sub-message is returned.  For repeated
-     * fields, a java.util.List is returned.
-     */
+    * Obtains the value of the given field, or the default value if it is not
+    * set.  For primitive fields, the boxed primitive value is returned. For
+    * enum fields, the EnumValueDescriptor for the value is returned. For
+    * embedded message fields, the sub-message is returned.  For repeated
+    * fields, a java.util.List is returned.
+    */
     public Object getField(Descriptors.FieldDescriptor field);
 
     /**
-     * Returns true if the given field is set.  This is exactly equivalent to
-     * calling the generated "has" accessor method corresponding to the field.
-     *
-     * @throws IllegalArgumentException The field is a repeated field, or {@code
-     *     field.getContainingType() != getDescriptorForType()}.
-     */
+    * Returns true if the given field is set.  This is exactly equivalent to
+    * calling the generated "has" accessor method corresponding to the field.
+    *
+    * @throws IllegalArgumentException The field is a repeated field, or {@code
+    *     field.getContainingType() != getDescriptorForType()}.
+    */
     boolean hasField(Descriptors.FieldDescriptor field);
 
     /**
-     * Sets a field to the given value.  The value must be of the correct type
-     * for this field, i.e. the same type that
-     * {@link Message#getField(Descriptors.FieldDescriptor)}
-     * would return.
-     */
+    * Sets a field to the given value.  The value must be of the correct type
+    * for this field, i.e. the same type that
+    * {@link Message#getField(Descriptors.FieldDescriptor)}
+    * would return.
+    */
     MergeTarget setField(Descriptors.FieldDescriptor field, Object value);
 
     /**
-     * Clears the field.  This is exactly equivalent to calling the generated
-     * "clear" accessor method corresponding to the field.
-     */
+    * Clears the field.  This is exactly equivalent to calling the generated
+    * "clear" accessor method corresponding to the field.
+    */
     MergeTarget clearField(Descriptors.FieldDescriptor field);
 
     /**
-     * Sets an element of a repeated field to the given value.  The value must
-     * be of the correct type for this field, i.e. the same type that {@link
-     * Message#getRepeatedField(Descriptors.FieldDescriptor, int)} would return.
-     *
-     * @throws IllegalArgumentException The field is not a repeated field, or
-     *                                  {@code field.getContainingType() !=
-     *                                  getDescriptorForType()}.
-     */
+    * Sets an element of a repeated field to the given value.  The value must
+    * be of the correct type for this field, i.e. the same type that {@link
+    * Message#getRepeatedField(Descriptors.FieldDescriptor, int)} would return.
+    *
+    * @throws IllegalArgumentException The field is not a repeated field, or
+    *                                  {@code field.getContainingType() !=
+    *                                  getDescriptorForType()}.
+    */
     MergeTarget setRepeatedField(Descriptors.FieldDescriptor field,
         int index, Object value);
 
     /**
-     * Like {@code setRepeatedField}, but appends the value as a new element.
-     *
-     * @throws IllegalArgumentException The field is not a repeated field, or
-     *                                  {@code field.getContainingType() !=
-     *                                  getDescriptorForType()}.
-     */
+    * Like {@code setRepeatedField}, but appends the value as a new element.
+    *
+    * @throws IllegalArgumentException The field is not a repeated field, or
+    *                                  {@code field.getContainingType() !=
+    *                                  getDescriptorForType()}.
+    */
     MergeTarget addRepeatedField(Descriptors.FieldDescriptor field,
         Object value);
 
     /**
-     * Returns true if the given oneof is set.
-     *
-     * @throws IllegalArgumentException if
-     *           {@code oneof.getContainingType() != getDescriptorForType()}.
-     */
+    * Returns true if the given oneof is set.
+    *
+    * @throws IllegalArgumentException if
+    *           {@code oneof.getContainingType() != getDescriptorForType()}.
+    */
     boolean hasOneof(Descriptors.OneofDescriptor oneof);
 
     /**
-     * Clears the oneof.  This is exactly equivalent to calling the generated
-     * "clear" accessor method corresponding to the oneof.
-     */
+    * Clears the oneof.  This is exactly equivalent to calling the generated
+    * "clear" accessor method corresponding to the oneof.
+    */
     MergeTarget clearOneof(Descriptors.OneofDescriptor oneof);
 
     /**
-     * Obtains the FieldDescriptor if the given oneof is set. Returns null
-     * if no field is set.
-     */
+    * Obtains the FieldDescriptor if the given oneof is set. Returns null
+    * if no field is set.
+    */
     Descriptors.FieldDescriptor getOneofFieldDescriptor(Descriptors.OneofDescriptor oneof);
 
     /**
-     * Parse the input stream into a sub field group defined based on either
-     * FieldDescriptor or the default instance.
-     */
+    * Parse the input stream into a sub field group defined based on either
+    * FieldDescriptor or the default instance.
+    */
     Object parseGroup(CodedInputStream input, ExtensionRegistryLite registry,
         Descriptors.FieldDescriptor descriptor, Message defaultInstance)
         throws IOException;
 
     /**
-     * Parse the input stream into a sub field message defined based on either
-     * FieldDescriptor or the default instance.
-     */
+    * Parse the input stream into a sub field message defined based on either
+    * FieldDescriptor or the default instance.
+    */
     Object parseMessage(CodedInputStream input, ExtensionRegistryLite registry,
         Descriptors.FieldDescriptor descriptor, Message defaultInstance)
         throws IOException;
 
     /**
-     * Parse from a ByteString into a sub field message defined based on either
-     * FieldDescriptor or the default instance.  There isn't a varint indicating
-     * the length of the message at the beginning of the input ByteString.
-     */
+    * Parse from a ByteString into a sub field message defined based on either
+    * FieldDescriptor or the default instance.  There isn't a varint indicating
+    * the length of the message at the beginning of the input ByteString.
+    */
     Object parseMessageFromBytes(
         ByteString bytes, ExtensionRegistryLite registry,
         Descriptors.FieldDescriptor descriptor, Message defaultInstance)
         throws IOException;
-    
+
     /**
-     * Read a primitive field from input. Note that builders and mutable
-     * messages may use different Java types to represent a primtive field.
-     */
+    * Read a primitive field from input. Note that builders and mutable
+    * messages may use different Java types to represent a primtive field.
+    */
     Object readPrimitiveField(
         CodedInputStream input, WireFormat.FieldType type,
         boolean checkUtf8) throws IOException;
 
     /**
-     * Returns a new merge target for a sub-field. When defaultInstance is
-     * provided, it indicates the descriptor is for an extension type, and
-     * implementations should create a new instance from the defaultInstance
-     * prototype directly.
-     */
+    * Returns a new merge target for a sub-field. When defaultInstance is
+    * provided, it indicates the descriptor is for an extension type, and
+    * implementations should create a new instance from the defaultInstance
+    * prototype directly.
+    */
     MergeTarget newMergeTargetForField(
         Descriptors.FieldDescriptor descriptor,
         Message defaultInstance);
 
     /**
-     * Finishes the merge and returns the underlying object.
-     */
+    * Finishes the merge and returns the underlying object.
+    */
     Object finish();
   }
 
@@ -370,158 +370,158 @@ class MessageReflection {
     private final Message.Builder builder;
 
     public Descriptors.Descriptor getDescriptorForType() {
-      return builder.getDescriptorForType();
+    return builder.getDescriptorForType();
     }
 
     public BuilderAdapter(Message.Builder builder) {
-      this.builder = builder;
+    this.builder = builder;
     }
 
     public Object getField(Descriptors.FieldDescriptor field) {
-      return builder.getField(field);
+    return builder.getField(field);
     }
 
     @Override
     public boolean hasField(Descriptors.FieldDescriptor field) {
-      return builder.hasField(field);
+    return builder.hasField(field);
     }
 
     public MergeTarget setField(Descriptors.FieldDescriptor field,
         Object value) {
-      builder.setField(field, value);
-      return this;
+    builder.setField(field, value);
+    return this;
     }
 
     public MergeTarget clearField(Descriptors.FieldDescriptor field) {
-      builder.clearField(field);
-      return this;
+    builder.clearField(field);
+    return this;
     }
 
     public MergeTarget setRepeatedField(
         Descriptors.FieldDescriptor field, int index, Object value) {
-      builder.setRepeatedField(field, index, value);
-      return this;
+    builder.setRepeatedField(field, index, value);
+    return this;
     }
 
     public MergeTarget addRepeatedField(
         Descriptors.FieldDescriptor field, Object value) {
-      builder.addRepeatedField(field, value);
-      return this;
+    builder.addRepeatedField(field, value);
+    return this;
     }
 
     @Override
     public boolean hasOneof(Descriptors.OneofDescriptor oneof) {
-      return builder.hasOneof(oneof);
+    return builder.hasOneof(oneof);
     }
 
     @Override
     public MergeTarget clearOneof(Descriptors.OneofDescriptor oneof) {
-      builder.clearOneof(oneof);
-      return this;
+    builder.clearOneof(oneof);
+    return this;
     }
 
     @Override
     public Descriptors.FieldDescriptor getOneofFieldDescriptor(Descriptors.OneofDescriptor oneof) {
-      return builder.getOneofFieldDescriptor(oneof);
+    return builder.getOneofFieldDescriptor(oneof);
     }
 
     public ContainerType getContainerType() {
-      return ContainerType.MESSAGE;
+    return ContainerType.MESSAGE;
     }
 
     public ExtensionRegistry.ExtensionInfo findExtensionByName(
         ExtensionRegistry registry, String name) {
-      return registry.findImmutableExtensionByName(name);
+    return registry.findImmutableExtensionByName(name);
     }
 
     public ExtensionRegistry.ExtensionInfo findExtensionByNumber(
         ExtensionRegistry registry, Descriptors.Descriptor containingType,
         int fieldNumber) {
-      return registry.findImmutableExtensionByNumber(containingType,
-          fieldNumber);
+    return registry.findImmutableExtensionByNumber(containingType,
+        fieldNumber);
     }
 
     public Object parseGroup(CodedInputStream input,
         ExtensionRegistryLite extensionRegistry,
         Descriptors.FieldDescriptor field, Message defaultInstance)
         throws IOException {
-      Message.Builder subBuilder;
-      // When default instance is not null. The field is an extension field.
-      if (defaultInstance != null) {
+    Message.Builder subBuilder;
+    // When default instance is not null. The field is an extension field.
+    if (defaultInstance != null) {
         subBuilder = defaultInstance.newBuilderForType();
-      } else {
+    } else {
         subBuilder = builder.newBuilderForField(field);
-      }
-      if (!field.isRepeated()) {
+    }
+    if (!field.isRepeated()) {
         Message originalMessage = (Message) getField(field);
         if (originalMessage != null) {
-          subBuilder.mergeFrom(originalMessage);
+        subBuilder.mergeFrom(originalMessage);
         }
-      }
-      input.readGroup(field.getNumber(), subBuilder, extensionRegistry);
-      return subBuilder.buildPartial();
+    }
+    input.readGroup(field.getNumber(), subBuilder, extensionRegistry);
+    return subBuilder.buildPartial();
     }
 
     public Object parseMessage(CodedInputStream input,
         ExtensionRegistryLite extensionRegistry,
         Descriptors.FieldDescriptor field, Message defaultInstance)
         throws IOException {
-      Message.Builder subBuilder;
-      // When default instance is not null. The field is an extension field.
-      if (defaultInstance != null) {
+    Message.Builder subBuilder;
+    // When default instance is not null. The field is an extension field.
+    if (defaultInstance != null) {
         subBuilder = defaultInstance.newBuilderForType();
-      } else {
+    } else {
         subBuilder = builder.newBuilderForField(field);
-      }
-      if (!field.isRepeated()) {
+    }
+    if (!field.isRepeated()) {
         Message originalMessage = (Message) getField(field);
         if (originalMessage != null) {
-          subBuilder.mergeFrom(originalMessage);
+        subBuilder.mergeFrom(originalMessage);
         }
-      }
-      input.readMessage(subBuilder, extensionRegistry);
-      return subBuilder.buildPartial();
+    }
+    input.readMessage(subBuilder, extensionRegistry);
+    return subBuilder.buildPartial();
     }
 
     public Object parseMessageFromBytes(ByteString bytes,
         ExtensionRegistryLite extensionRegistry,
         Descriptors.FieldDescriptor field, Message defaultInstance)
         throws IOException {
-      Message.Builder subBuilder;
-      // When default instance is not null. The field is an extension field.
-      if (defaultInstance != null) {
+    Message.Builder subBuilder;
+    // When default instance is not null. The field is an extension field.
+    if (defaultInstance != null) {
         subBuilder = defaultInstance.newBuilderForType();
-      } else {
+    } else {
         subBuilder = builder.newBuilderForField(field);
-      }
-      if (!field.isRepeated()) {
+    }
+    if (!field.isRepeated()) {
         Message originalMessage = (Message) getField(field);
         if (originalMessage != null) {
-          subBuilder.mergeFrom(originalMessage);
+        subBuilder.mergeFrom(originalMessage);
         }
-      }
-      subBuilder.mergeFrom(bytes, extensionRegistry);
-      return subBuilder.buildPartial();
+    }
+    subBuilder.mergeFrom(bytes, extensionRegistry);
+    return subBuilder.buildPartial();
     }
 
     public MergeTarget newMergeTargetForField(Descriptors.FieldDescriptor field,
         Message defaultInstance) {
-      if (defaultInstance != null) {
+    if (defaultInstance != null) {
         return new BuilderAdapter(
             defaultInstance.newBuilderForType());
-      } else {
+    } else {
         return new BuilderAdapter(builder.newBuilderForField(field));
-      }
     }
-    
+    }
+
     public Object readPrimitiveField(
         CodedInputStream input, WireFormat.FieldType type,
         boolean checkUtf8) throws IOException {
-      return FieldSet.readPrimitiveField(input, type, checkUtf8);
+    return FieldSet.readPrimitiveField(input, type, checkUtf8);
     }
 
     public Object finish() {
-      return builder.buildPartial();
+    return builder.buildPartial();
     }
   }
 
@@ -531,160 +531,160 @@ class MessageReflection {
     private final FieldSet<Descriptors.FieldDescriptor> extensions;
 
     ExtensionAdapter(FieldSet<Descriptors.FieldDescriptor> extensions) {
-      this.extensions = extensions;
+    this.extensions = extensions;
     }
 
     public Descriptors.Descriptor getDescriptorForType() {
-      throw new UnsupportedOperationException(
-          "getDescriptorForType() called on FieldSet object");
+    throw new UnsupportedOperationException(
+        "getDescriptorForType() called on FieldSet object");
     }
 
     public Object getField(Descriptors.FieldDescriptor field) {
-      return extensions.getField(field);
+    return extensions.getField(field);
     }
 
     public boolean hasField(Descriptors.FieldDescriptor field) {
-      return extensions.hasField(field);
+    return extensions.hasField(field);
     }
 
     public MergeTarget setField(Descriptors.FieldDescriptor field,
         Object value) {
-      extensions.setField(field, value);
-      return this;
+    extensions.setField(field, value);
+    return this;
     }
 
     public MergeTarget clearField(Descriptors.FieldDescriptor field) {
-      extensions.clearField(field);
-      return this;
+    extensions.clearField(field);
+    return this;
     }
 
     public MergeTarget setRepeatedField(
         Descriptors.FieldDescriptor field, int index, Object value) {
-      extensions.setRepeatedField(field, index, value);
-      return this;
+    extensions.setRepeatedField(field, index, value);
+    return this;
     }
 
     public MergeTarget addRepeatedField(
         Descriptors.FieldDescriptor field, Object value) {
-      extensions.addRepeatedField(field, value);
-      return this;
+    extensions.addRepeatedField(field, value);
+    return this;
     }
 
     @Override
     public boolean hasOneof(Descriptors.OneofDescriptor oneof) {
-      return false;
+    return false;
     }
 
     @Override
     public MergeTarget clearOneof(Descriptors.OneofDescriptor oneof) {
-      // Nothing to clear.
-      return this;
+    // Nothing to clear.
+    return this;
     }
 
     @Override
     public Descriptors.FieldDescriptor getOneofFieldDescriptor(Descriptors.OneofDescriptor oneof) {
-      return null;
+    return null;
     }
 
     public ContainerType getContainerType() {
-      return ContainerType.EXTENSION_SET;
+    return ContainerType.EXTENSION_SET;
     }
 
     public ExtensionRegistry.ExtensionInfo findExtensionByName(
         ExtensionRegistry registry, String name) {
-      return registry.findImmutableExtensionByName(name);
+    return registry.findImmutableExtensionByName(name);
     }
 
     public ExtensionRegistry.ExtensionInfo findExtensionByNumber(
         ExtensionRegistry registry, Descriptors.Descriptor containingType,
         int fieldNumber) {
-      return registry.findImmutableExtensionByNumber(containingType,
-          fieldNumber);
+    return registry.findImmutableExtensionByNumber(containingType,
+        fieldNumber);
     }
 
     public Object parseGroup(CodedInputStream input,
         ExtensionRegistryLite registry, Descriptors.FieldDescriptor field,
         Message defaultInstance) throws IOException {
-      Message.Builder subBuilder =
-          defaultInstance.newBuilderForType();
-      if (!field.isRepeated()) {
+    Message.Builder subBuilder =
+        defaultInstance.newBuilderForType();
+    if (!field.isRepeated()) {
         Message originalMessage = (Message) getField(field);
         if (originalMessage != null) {
-          subBuilder.mergeFrom(originalMessage);
+        subBuilder.mergeFrom(originalMessage);
         }
-      }
-      input.readGroup(field.getNumber(), subBuilder, registry);
-      return subBuilder.buildPartial();
+    }
+    input.readGroup(field.getNumber(), subBuilder, registry);
+    return subBuilder.buildPartial();
     }
 
     public Object parseMessage(CodedInputStream input,
         ExtensionRegistryLite registry, Descriptors.FieldDescriptor field,
         Message defaultInstance) throws IOException {
-      Message.Builder subBuilder =
-          defaultInstance.newBuilderForType();
-      if (!field.isRepeated()) {
+    Message.Builder subBuilder =
+        defaultInstance.newBuilderForType();
+    if (!field.isRepeated()) {
         Message originalMessage = (Message) getField(field);
         if (originalMessage != null) {
-          subBuilder.mergeFrom(originalMessage);
+        subBuilder.mergeFrom(originalMessage);
         }
-      }
-      input.readMessage(subBuilder, registry);
-      return subBuilder.buildPartial();
+    }
+    input.readMessage(subBuilder, registry);
+    return subBuilder.buildPartial();
     }
 
     public Object parseMessageFromBytes(ByteString bytes,
         ExtensionRegistryLite registry, Descriptors.FieldDescriptor field,
         Message defaultInstance) throws IOException {
-      Message.Builder subBuilder =  defaultInstance.newBuilderForType();
-      if (!field.isRepeated()) {
+    Message.Builder subBuilder =  defaultInstance.newBuilderForType();
+    if (!field.isRepeated()) {
         Message originalMessage = (Message) getField(field);
         if (originalMessage != null) {
-          subBuilder.mergeFrom(originalMessage);
+        subBuilder.mergeFrom(originalMessage);
         }
-      }
-      subBuilder.mergeFrom(bytes, registry);
-      return subBuilder.buildPartial();
+    }
+    subBuilder.mergeFrom(bytes, registry);
+    return subBuilder.buildPartial();
     }
 
     public MergeTarget newMergeTargetForField(
         Descriptors.FieldDescriptor descriptor, Message defaultInstance) {
-      throw new UnsupportedOperationException(
-          "newMergeTargetForField() called on FieldSet object");
+    throw new UnsupportedOperationException(
+        "newMergeTargetForField() called on FieldSet object");
     }
-    
+
     public Object readPrimitiveField(
         CodedInputStream input, WireFormat.FieldType type,
         boolean checkUtf8) throws IOException {
-      return FieldSet.readPrimitiveField(input, type, checkUtf8);
+    return FieldSet.readPrimitiveField(input, type, checkUtf8);
     }
 
     public Object finish() {
-      throw new UnsupportedOperationException(
-          "finish() called on FieldSet object");
+    throw new UnsupportedOperationException(
+        "finish() called on FieldSet object");
     }
   }
 
   /**
-   * Parses a single field into MergeTarget. The target can be Message.Builder,
-   * FieldSet or MutableMessage.
-   *
-   * Package-private because it is used by GeneratedMessage.ExtendableMessage.
-   *
-   * @param tag The tag, which should have already been read.
-   * @return {@code true} unless the tag is an end-group tag.
-   */
+    * Parses a single field into MergeTarget. The target can be Message.Builder,
+    * FieldSet or MutableMessage.
+    *
+    * Package-private because it is used by GeneratedMessage.ExtendableMessage.
+    *
+    * @param tag The tag, which should have already been read.
+    * @return {@code true} unless the tag is an end-group tag.
+    */
   static boolean mergeFieldFrom(
-      CodedInputStream input,
-      UnknownFieldSet.Builder unknownFields,
-      ExtensionRegistryLite extensionRegistry,
-      Descriptors.Descriptor type,
-      MergeTarget target,
-      int tag) throws IOException {
+    CodedInputStream input,
+    UnknownFieldSet.Builder unknownFields,
+    ExtensionRegistryLite extensionRegistry,
+    Descriptors.Descriptor type,
+    MergeTarget target,
+    int tag) throws IOException {
     if (type.getOptions().getMessageSetWireFormat() &&
         tag == WireFormat.MESSAGE_SET_ITEM_TAG) {
-      mergeMessageSetExtensionFromCodedStream(
-          input, unknownFields, extensionRegistry, type, target);
-      return true;
+    mergeMessageSetExtensionFromCodedStream(
+        input, unknownFields, extensionRegistry, type, target);
+    return true;
     }
 
     final int wireType = WireFormat.getTagWireType(tag);
@@ -694,128 +694,128 @@ class MessageReflection {
     Message defaultInstance = null;
 
     if (type.isExtensionNumber(fieldNumber)) {
-      // extensionRegistry may be either ExtensionRegistry or
-      // ExtensionRegistryLite.  Since the type we are parsing is a full
-      // message, only a full ExtensionRegistry could possibly contain
-      // extensions of it.  Otherwise we will treat the registry as if it
-      // were empty.
-      if (extensionRegistry instanceof ExtensionRegistry) {
+    // extensionRegistry may be either ExtensionRegistry or
+    // ExtensionRegistryLite.  Since the type we are parsing is a full
+    // message, only a full ExtensionRegistry could possibly contain
+    // extensions of it.  Otherwise we will treat the registry as if it
+    // were empty.
+    if (extensionRegistry instanceof ExtensionRegistry) {
         final ExtensionRegistry.ExtensionInfo extension =
             target.findExtensionByNumber((ExtensionRegistry) extensionRegistry,
                 type, fieldNumber);
         if (extension == null) {
-          field = null;
+        field = null;
         } else {
-          field = extension.descriptor;
-          defaultInstance = extension.defaultInstance;
-          if (defaultInstance == null &&
-              field.getJavaType()
-                  == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
+        field = extension.descriptor;
+        defaultInstance = extension.defaultInstance;
+        if (defaultInstance == null &&
+            field.getJavaType()
+                == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
             throw new IllegalStateException(
                 "Message-typed extension lacked default instance: " +
                     field.getFullName());
-          }
         }
-      } else {
-        field = null;
-      }
-    } else if (target.getContainerType() == MergeTarget.ContainerType.MESSAGE) {
-      field = type.findFieldByNumber(fieldNumber);
+        }
     } else {
-      field = null;
+        field = null;
+    }
+    } else if (target.getContainerType() == MergeTarget.ContainerType.MESSAGE) {
+    field = type.findFieldByNumber(fieldNumber);
+    } else {
+    field = null;
     }
 
     boolean unknown = false;
     boolean packed = false;
     if (field == null) {
-      unknown = true;  // Unknown field.
+    unknown = true;  // Unknown field.
     } else if (wireType == FieldSet.getWireFormatForFieldType(
         field.getLiteType(),
         false  /* isPacked */)) {
-      packed = false;
+    packed = false;
     } else if (field.isPackable() &&
         wireType == FieldSet.getWireFormatForFieldType(
             field.getLiteType(),
             true  /* isPacked */)) {
-      packed = true;
+    packed = true;
     } else {
-      unknown = true;  // Unknown wire type.
+    unknown = true;  // Unknown wire type.
     }
 
     if (unknown) {  // Unknown field or wrong wire type.  Skip.
-      return unknownFields.mergeFieldFrom(tag, input);
+    return unknownFields.mergeFieldFrom(tag, input);
     }
 
     if (packed) {
-      final int length = input.readRawVarint32();
-      final int limit = input.pushLimit(length);
-      if (field.getLiteType() == WireFormat.FieldType.ENUM) {
+    final int length = input.readRawVarint32();
+    final int limit = input.pushLimit(length);
+    if (field.getLiteType() == WireFormat.FieldType.ENUM) {
         while (input.getBytesUntilLimit() > 0) {
-          final int rawValue = input.readEnum();
-          final Object value = field.getEnumType().findValueByNumber(rawValue);
-          if (value == null) {
+        final int rawValue = input.readEnum();
+        final Object value = field.getEnumType().findValueByNumber(rawValue);
+        if (value == null) {
             // If the number isn't recognized as a valid value for this
             // enum, drop it (don't even add it to unknownFields).
             return true;
-          }
-          target.addRepeatedField(field, value);
         }
-      } else {
-        while (input.getBytesUntilLimit() > 0) {
-          final Object value =
-              target.readPrimitiveField(input, field.getLiteType(), field.needsUtf8Check());
-          target.addRepeatedField(field, value);
+        target.addRepeatedField(field, value);
         }
-      }
-      input.popLimit(limit);
     } else {
-      final Object value;
-      switch (field.getType()) {
+        while (input.getBytesUntilLimit() > 0) {
+        final Object value =
+            target.readPrimitiveField(input, field.getLiteType(), field.needsUtf8Check());
+        target.addRepeatedField(field, value);
+        }
+    }
+    input.popLimit(limit);
+    } else {
+    final Object value;
+    switch (field.getType()) {
         case GROUP: {
-          value = target
-              .parseGroup(input, extensionRegistry, field, defaultInstance);
-          break;
+        value = target
+            .parseGroup(input, extensionRegistry, field, defaultInstance);
+        break;
         }
         case MESSAGE: {
-          value = target
-              .parseMessage(input, extensionRegistry, field, defaultInstance);
-          break;
+        value = target
+            .parseMessage(input, extensionRegistry, field, defaultInstance);
+        break;
         }
         case ENUM:
-          final int rawValue = input.readEnum();
-          value = field.getEnumType().findValueByNumber(rawValue);
-          // If the number isn't recognized as a valid value for this enum,
-          // drop it.
-          if (value == null) {
+        final int rawValue = input.readEnum();
+        value = field.getEnumType().findValueByNumber(rawValue);
+        // If the number isn't recognized as a valid value for this enum,
+        // drop it.
+        if (value == null) {
             unknownFields.mergeVarintField(fieldNumber, rawValue);
             return true;
-          }
-          break;
+        }
+        break;
         default:
-          value = target.readPrimitiveField(input, field.getLiteType(), field.needsUtf8Check());
-          break;
-      }
+        value = target.readPrimitiveField(input, field.getLiteType(), field.needsUtf8Check());
+        break;
+    }
 
-      if (field.isRepeated()) {
+    if (field.isRepeated()) {
         target.addRepeatedField(field, value);
-      } else {
+    } else {
         target.setField(field, value);
-      }
+    }
     }
 
     return true;
   }
 
   /**
-   * Called by {@code #mergeFieldFrom()} to parse a MessageSet extension into
-   * MergeTarget.
-   */
+    * Called by {@code #mergeFieldFrom()} to parse a MessageSet extension into
+    * MergeTarget.
+    */
   private static void mergeMessageSetExtensionFromCodedStream(
-      CodedInputStream input,
-      UnknownFieldSet.Builder unknownFields,
-      ExtensionRegistryLite extensionRegistry,
-      Descriptors.Descriptor type,
-      MergeTarget target) throws IOException {
+    CodedInputStream input,
+    UnknownFieldSet.Builder unknownFields,
+    ExtensionRegistryLite extensionRegistry,
+    Descriptors.Descriptor type,
+    MergeTarget target) throws IOException {
 
     // The wire format for MessageSet is:
     //   message MessageSet {
@@ -840,92 +840,92 @@ class MessageReflection {
     // Read bytes from input, if we get it's type first then parse it eagerly,
     // otherwise we store the raw bytes in a local variable.
     while (true) {
-      final int tag = input.readTag();
-      if (tag == 0) {
+    final int tag = input.readTag();
+    if (tag == 0) {
         break;
-      }
+    }
 
-      if (tag == WireFormat.MESSAGE_SET_TYPE_ID_TAG) {
+    if (tag == WireFormat.MESSAGE_SET_TYPE_ID_TAG) {
         typeId = input.readUInt32();
         if (typeId != 0) {
-          // extensionRegistry may be either ExtensionRegistry or
-          // ExtensionRegistryLite. Since the type we are parsing is a full
-          // message, only a full ExtensionRegistry could possibly contain
-          // extensions of it. Otherwise we will treat the registry as if it
-          // were empty.
-          if (extensionRegistry instanceof ExtensionRegistry) {
+        // extensionRegistry may be either ExtensionRegistry or
+        // ExtensionRegistryLite. Since the type we are parsing is a full
+        // message, only a full ExtensionRegistry could possibly contain
+        // extensions of it. Otherwise we will treat the registry as if it
+        // were empty.
+        if (extensionRegistry instanceof ExtensionRegistry) {
             extension = target.findExtensionByNumber(
                 (ExtensionRegistry) extensionRegistry, type, typeId);
-          }
+        }
         }
 
-      } else if (tag == WireFormat.MESSAGE_SET_MESSAGE_TAG) {
+    } else if (tag == WireFormat.MESSAGE_SET_MESSAGE_TAG) {
         if (typeId != 0) {
-          if (extension != null &&
-              ExtensionRegistryLite.isEagerlyParseMessageSets()) {
+        if (extension != null &&
+            ExtensionRegistryLite.isEagerlyParseMessageSets()) {
             // We already know the type, so we can parse directly from the
             // input with no copying.  Hooray!
             eagerlyMergeMessageSetExtension(
                 input, extension, extensionRegistry, target);
             rawBytes = null;
             continue;
-          }
+        }
         }
         // We haven't seen a type ID yet or we want parse message lazily.
         rawBytes = input.readBytes();
 
-      } else { // Unknown tag. Skip it.
+    } else { // Unknown tag. Skip it.
         if (!input.skipField(tag)) {
-          break; // End of group
+        break; // End of group
         }
-      }
+    }
     }
     input.checkLastTagWas(WireFormat.MESSAGE_SET_ITEM_END_TAG);
 
     // Process the raw bytes.
     if (rawBytes != null && typeId != 0) { // Zero is not a valid type ID.
-      if (extension != null) { // We known the type
+    if (extension != null) { // We known the type
         mergeMessageSetExtensionFromBytes(
             rawBytes, extension, extensionRegistry, target);
-      } else { // We don't know how to parse this. Ignore it.
+    } else { // We don't know how to parse this. Ignore it.
         if (rawBytes != null) {
-          unknownFields.mergeField(typeId, UnknownFieldSet.Field.newBuilder()
-              .addLengthDelimited(rawBytes).build());
+        unknownFields.mergeField(typeId, UnknownFieldSet.Field.newBuilder()
+            .addLengthDelimited(rawBytes).build());
         }
-      }
+    }
     }
   }
 
   private static void mergeMessageSetExtensionFromBytes(
-      ByteString rawBytes,
-      ExtensionRegistry.ExtensionInfo extension,
-      ExtensionRegistryLite extensionRegistry,
-      MergeTarget target) throws IOException {
+    ByteString rawBytes,
+    ExtensionRegistry.ExtensionInfo extension,
+    ExtensionRegistryLite extensionRegistry,
+    MergeTarget target) throws IOException {
 
     Descriptors.FieldDescriptor field = extension.descriptor;
     boolean hasOriginalValue = target.hasField(field);
 
     if (hasOriginalValue || ExtensionRegistryLite.isEagerlyParseMessageSets()) {
-      // If the field already exists, we just parse the field.
-      Object value = target.parseMessageFromBytes(
-          rawBytes, extensionRegistry,field, extension.defaultInstance);
-      target.setField(field, value);
+    // If the field already exists, we just parse the field.
+    Object value = target.parseMessageFromBytes(
+        rawBytes, extensionRegistry,field, extension.defaultInstance);
+    target.setField(field, value);
     } else {
-      // Use LazyField to load MessageSet lazily.
-      LazyField lazyField = new LazyField(
-          extension.defaultInstance, extensionRegistry, rawBytes);
-      target.setField(field, lazyField);
+    // Use LazyField to load MessageSet lazily.
+    LazyField lazyField = new LazyField(
+        extension.defaultInstance, extensionRegistry, rawBytes);
+    target.setField(field, lazyField);
     }
   }
 
   private static void eagerlyMergeMessageSetExtension(
-      CodedInputStream input,
-      ExtensionRegistry.ExtensionInfo extension,
-      ExtensionRegistryLite extensionRegistry,
-      MergeTarget target) throws IOException {
+    CodedInputStream input,
+    ExtensionRegistry.ExtensionInfo extension,
+    ExtensionRegistryLite extensionRegistry,
+    MergeTarget target) throws IOException {
     Descriptors.FieldDescriptor field = extension.descriptor;
     Object value = target.parseMessage(input, extensionRegistry, field,
-                                       extension.defaultInstance);
+                                        extension.defaultInstance);
     target.setField(field, value);
   }
 }

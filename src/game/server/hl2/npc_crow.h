@@ -92,7 +92,7 @@ class CNPC_Crow : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Crow, CAI_BaseNPC );
 
-   public:
+    public:
     //
     // CBaseEntity:
     //
@@ -156,7 +156,7 @@ class CNPC_Crow : public CAI_BaseNPC
     int m_iBirdType;
     bool m_bOnJeep;
 
-   protected:
+    protected:
     void SetFlyingState( FlyState_t eState );
     inline bool IsFlying( void ) const
     {
@@ -174,7 +174,7 @@ class CNPC_Crow : public CAI_BaseNPC
         return m_bIsDeaf;
     }
 
-   protected:
+    protected:
     float m_flGroundIdleMoveTime;
 
     float m_flEnemyDist;  // Distance to GetEnemy(), cached in GatherEnemyConditions.
@@ -186,7 +186,7 @@ class CNPC_Crow : public CAI_BaseNPC
 
     bool m_bPlayedLoopingSound;
 
-   private:
+    private:
     Activity NPC_TranslateActivity( Activity eNewActivity );
 
     float m_flSoarTime;
@@ -209,7 +209,7 @@ class CNPC_Seagull : public CNPC_Crow
 {
     DECLARE_CLASS( CNPC_Seagull, CNPC_Crow );
 
-   public:
+    public:
     void Spawn( void )
     {
         SetModelName( AllocPooledString( "models/seagull.mdl" ) );
@@ -241,7 +241,7 @@ class CNPC_Pigeon : public CNPC_Crow
 {
     DECLARE_CLASS( CNPC_Pigeon, CNPC_Crow );
 
-   public:
+    public:
     void Spawn( void )
     {
         SetModelName( AllocPooledString( "models/pigeon.mdl" ) );

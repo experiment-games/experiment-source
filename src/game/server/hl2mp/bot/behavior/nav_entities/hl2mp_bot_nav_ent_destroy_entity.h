@@ -9,7 +9,7 @@
 
 class CHL2MPBotNavEntDestroyEntity : public Action< CHL2MPBot >
 {
-   public:
+    public:
     CHL2MPBotNavEntDestroyEntity( const CFuncNavPrerequisite *prereq );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -21,7 +21,7 @@ class CHL2MPBotNavEntDestroyEntity : public Action< CHL2MPBot >
         return "NavEntDestroyEntity";
     };
 
-   private:
+    private:
     CHandle< CFuncNavPrerequisite > m_prereq;
     PathFollower m_path;  // how we get to the target
     CountdownTimer m_repathTimer;

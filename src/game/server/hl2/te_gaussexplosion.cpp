@@ -16,7 +16,7 @@
 
 class CTEGaussExplosion : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTEGaussExplosion, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 

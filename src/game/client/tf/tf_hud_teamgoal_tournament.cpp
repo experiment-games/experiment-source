@@ -543,9 +543,9 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 bool CHudTeamGoalTournament::ShouldDraw( void )
 {
     if ( !TFGameRules() ||
-         !TFGameRules()->IsInTournamentMode() ||
-         !TFGameRules()->IsInStopWatch() ||
-         ( ( TFGameRules()->State_Get() != GR_STATE_PREROUND ) && !TFGameRules()->InSetup() ) )
+        !TFGameRules()->IsInTournamentMode() ||
+        !TFGameRules()->IsInStopWatch() ||
+        ( ( TFGameRules()->State_Get() != GR_STATE_PREROUND ) && !TFGameRules()->InSetup() ) )
     {
         m_flShowAt = -1.f;
         return false;

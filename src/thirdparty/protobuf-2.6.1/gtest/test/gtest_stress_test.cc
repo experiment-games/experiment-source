@@ -78,9 +78,9 @@ void ExpectKeyAndValueWereRecordedForId(
     int id, const char* suffix) {
   TestPropertyKeyIs matches_key(IdToKey(id, suffix).c_str());
   const std::vector<TestProperty>::const_iterator property =
-      std::find_if(properties.begin(), properties.end(), matches_key);
+    std::find_if(properties.begin(), properties.end(), matches_key);
   ASSERT_TRUE(property != properties.end())
-      << "expecting " << suffix << " value for id " << id;
+    << "expecting " << suffix << " value for id " << id;
   EXPECT_STREQ(IdToString(id).c_str(), property->value());
 }
 
@@ -118,8 +118,8 @@ void CheckTestFailureCount(int expected_failures) {
   const TestInfo* const info = UnitTest::GetInstance()->current_test_info();
   const TestResult* const result = info->result();
   GTEST_CHECK_(expected_failures == result->total_part_count())
-      << "Logged " << result->total_part_count() << " failures "
-      << " vs. " << expected_failures << " expected";
+    << "Logged " << result->total_part_count() << " failures "
+    << " vs. " << expected_failures << " expected";
 }
 
 // Tests using SCOPED_TRACE() and Google Test assertions in many threads
@@ -129,7 +129,7 @@ TEST(StressTest, CanUseScopedTraceAndAssertionsInManyThreads) {
     scoped_ptr<ThreadWithParam<int> > threads[kThreadCount];
     Notification threads_can_start;
     for (int i = 0; i != kThreadCount; i++)
-      threads[i].reset(new ThreadWithParam<int>(&ManyAsserts,
+    threads[i].reset(new ThreadWithParam<int>(&ManyAsserts,
                                                 i,
                                                 &threads_can_start));
 
@@ -137,7 +137,7 @@ TEST(StressTest, CanUseScopedTraceAndAssertionsInManyThreads) {
 
     // Blocks until all the threads are done.
     for (int i = 0; i != kThreadCount; i++)
-      threads[i]->Join();
+    threads[i]->Join();
   }
 
   // Ensures that kThreadCount*kThreadCount failures have been reported.
@@ -151,8 +151,8 @@ TEST(StressTest, CanUseScopedTraceAndAssertionsInManyThreads) {
     properties.push_back(result->GetTestProperty(i));
 
   EXPECT_EQ(kThreadCount * 2 + 1, result->test_property_count())
-      << "String and int values recorded on each thread, "
-      << "as well as one shared_key";
+    << "String and int values recorded on each thread, "
+    << "as well as one shared_key";
   for (int i = 0; i < kThreadCount; ++i) {
     ExpectKeyAndValueWereRecordedForId(properties, i, "string");
     ExpectKeyAndValueWereRecordedForId(properties, i, "int");
@@ -163,10 +163,10 @@ TEST(StressTest, CanUseScopedTraceAndAssertionsInManyThreads) {
 void FailingThread(bool is_fatal) {
   if (is_fatal)
     FAIL() << "Fatal failure in some other thread. "
-           << "(This failure is expected.)";
+            << "(This failure is expected.)";
   else
     ADD_FAILURE() << "Non-fatal failure in some other thread. "
-                  << "(This failure is expected.)";
+                << "(This failure is expected.)";
 }
 
 void GenerateFatalFailureInAnotherThread(bool is_fatal) {
@@ -205,7 +205,7 @@ TEST(FatalFailureOnAllThreadsTest, ExpectFatalFailureOnAllThreads) {
   // This statement should succeed, because failures in all threads are
   // considered.
   EXPECT_FATAL_FAILURE_ON_ALL_THREADS(
-      GenerateFatalFailureInAnotherThread(true), "expected");
+    GenerateFatalFailureInAnotherThread(true), "expected");
   CheckTestFailureCount(0);
   // We need to add a failure, because main() checks that there are failures.
   // But when only this test is run, we shouldn't have any failures.
@@ -216,7 +216,7 @@ TEST(NonFatalFailureTest, ExpectNonFatalFailureIgnoresFailuresInOtherThreads) {
   // This statement should fail, since the current thread doesn't generate a
   // fatal failure, only another one does.
   EXPECT_NONFATAL_FAILURE(GenerateFatalFailureInAnotherThread(false),
-                          "expected");
+                        "expected");
   CheckTestFailureCount(2);
 }
 
@@ -224,7 +224,7 @@ TEST(NonFatalFailureOnAllThreadsTest, ExpectNonFatalFailureOnAllThreads) {
   // This statement should succeed, because failures in all threads are
   // considered.
   EXPECT_NONFATAL_FAILURE_ON_ALL_THREADS(
-      GenerateFatalFailureInAnotherThread(false), "expected");
+    GenerateFatalFailureInAnotherThread(false), "expected");
   CheckTestFailureCount(0);
   // We need to add a failure, because main() checks that there are failures,
   // But when only this test is run, we shouldn't have any failures.
@@ -246,7 +246,7 @@ int main(int argc, char **argv) {
 
 #else
 TEST(StressTest,
-     DISABLED_ThreadSafetyTestsAreSkippedWhenGoogleTestIsNotThreadSafe) {
+    DISABLED_ThreadSafetyTestsAreSkippedWhenGoogleTestIsNotThreadSafe) {
 }
 
 int main(int argc, char **argv) {

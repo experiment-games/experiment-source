@@ -301,12 +301,12 @@ struct is_enum_impl< true, T > : false_type
 template < class T >
 struct is_enum
     : internal::is_enum_impl<
-          is_same< T, void >::value ||
-              is_integral< T >::value ||
-              is_floating_point< T >::value ||
-              is_reference< T >::value ||
-              internal::is_class_or_union< T >::value,
-          T >
+        is_same< T, void >::value ||
+            is_integral< T >::value ||
+            is_floating_point< T >::value ||
+            is_reference< T >::value ||
+            internal::is_class_or_union< T >::value,
+        T >
 {
 };
 
@@ -343,10 +343,10 @@ template < class T >
 struct is_pod
     : integral_constant< bool, ( is_integral< T >::value || is_floating_point< T >::value ||
 #if !defined( _MSC_VER ) && !( defined( __GNUC__ ) && __GNUC__ <= 3 )
-                                 // is_enum is not available on MSVC.
-                                 is_enum< T >::value ||
+                                // is_enum is not available on MSVC.
+                                is_enum< T >::value ||
 #endif
-                                 is_pointer< T >::value ) >
+                                is_pointer< T >::value ) >
 {
 };
 template < class T >
@@ -374,8 +374,8 @@ struct has_trivial_constructor : is_pod< T >
 template < class T, class U >
 struct has_trivial_constructor< std::pair< T, U > >
     : integral_constant< bool,
-                         ( has_trivial_constructor< T >::value &&
-                           has_trivial_constructor< U >::value ) >
+                        ( has_trivial_constructor< T >::value &&
+                            has_trivial_constructor< U >::value ) >
 {
 };
 template < class A, int N >
@@ -401,8 +401,8 @@ struct has_trivial_copy : is_pod< T >
 template < class T, class U >
 struct has_trivial_copy< std::pair< T, U > >
     : integral_constant< bool,
-                         ( has_trivial_copy< T >::value &&
-                           has_trivial_copy< U >::value ) >
+                        ( has_trivial_copy< T >::value &&
+                            has_trivial_copy< U >::value ) >
 {
 };
 template < class A, int N >
@@ -426,8 +426,8 @@ struct has_trivial_assign : is_pod< T >
 template < class T, class U >
 struct has_trivial_assign< std::pair< T, U > >
     : integral_constant< bool,
-                         ( has_trivial_assign< T >::value &&
-                           has_trivial_assign< U >::value ) >
+                        ( has_trivial_assign< T >::value &&
+                            has_trivial_assign< U >::value ) >
 {
 };
 template < class A, int N >
@@ -448,8 +448,8 @@ struct has_trivial_destructor : is_pod< T >
 template < class T, class U >
 struct has_trivial_destructor< std::pair< T, U > >
     : integral_constant< bool,
-                         ( has_trivial_destructor< T >::value &&
-                           has_trivial_destructor< U >::value ) >
+                        ( has_trivial_destructor< T >::value &&
+                            has_trivial_destructor< U >::value ) >
 {
 };
 template < class A, int N >
@@ -577,8 +577,8 @@ struct ConvertHelper
 template < typename From, typename To >
 struct is_convertible
     : integral_constant< bool,
-                         sizeof( internal::ConvertHelper< From, To >::Test(
-                             internal::ConvertHelper< From, To >::Create() ) ) == sizeof( small_ ) >
+                        sizeof( internal::ConvertHelper< From, To >::Test(
+                            internal::ConvertHelper< From, To >::Create() ) ) == sizeof( small_ ) >
 {
 };
 #endif

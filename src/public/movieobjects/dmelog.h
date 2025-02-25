@@ -43,16 +43,16 @@ enum RecordingMode_t
 
 class DmeLog_TimeSelection_t
 {
-   public:
+    public:
     DmeLog_TimeSelection_t()
         : m_flIntensity( 1.0f ),
-          m_bAttachedMode( true ),
-          m_bTimeAdvancing( false ),
-          m_bResampleMode( true ),
-          m_nResampleInterval( DmeTime_t( .05f ) ),  // 50 msec sampling interval by default
-          m_flThreshold( DMELOG_DEFAULT_THRESHHOLD ),
-          m_pPresetValue( 0 ),
-          m_RecordingMode( RECORD_PRESET )
+        m_bAttachedMode( true ),
+        m_bTimeAdvancing( false ),
+        m_bResampleMode( true ),
+        m_nResampleInterval( DmeTime_t( .05f ) ),  // 50 msec sampling interval by default
+        m_flThreshold( DMELOG_DEFAULT_THRESHHOLD ),
+        m_pPresetValue( 0 ),
+        m_RecordingMode( RECORD_PRESET )
     {
         m_nTimes[TS_LEFT_FALLOFF] = m_nTimes[TS_LEFT_HOLD] =
             m_nTimes[TS_RIGHT_HOLD] = m_nTimes[TS_RIGHT_FALLOFF] = DmeTime_t( 0 );
@@ -104,7 +104,7 @@ class DmeLog_TimeSelection_t
     // Also adds zero intensity samples at the falloff edges
     bool m_bResampleMode : 1;
 
-   private:
+    private:
     bool m_bTimeAdvancing : 1;  // Has time ever been advancing
     RecordingMode_t m_RecordingMode;
 };
@@ -150,7 +150,7 @@ abstract_class CDmeLogLayer : public CDmElement
 
     DEFINE_ELEMENT( CDmeLogLayer, CDmElement );
 
-   public:
+    public:
     virtual void CopyLayer( const CDmeLogLayer *src ) = 0;
     virtual void CopyPartialLayer( const CDmeLogLayer *src, DmeTime_t startTime, DmeTime_t endTime, bool bRebaseTimestamps ) = 0;
     virtual void ExplodeLayer( const CDmeLogLayer *src, DmeTime_t startTime, DmeTime_t endTime, bool bRebaseTimestamps, DmeTime_t tResampleInterval ) = 0;
@@ -218,7 +218,7 @@ abstract_class CDmeLogLayer : public CDmElement
     // Removes all keys outside the specified time range
     void RemoveKeysOutsideRange( DmeTime_t tStart, DmeTime_t tEnd );
 
-   protected:
+    protected:
     int FindKey( DmeTime_t time ) const;
 
     void OnUsingCurveTypesChanged();
@@ -240,7 +240,7 @@ abstract_class CDmeCurveInfo : public CDmElement
 {
     DEFINE_ELEMENT( CDmeCurveInfo, CDmElement );
 
-   public:
+    public:
     // Global override for all keys unless overriden by specific key
     void SetDefaultCurveType( int curveType );
     int GetDefaultCurveType() const;
@@ -250,7 +250,7 @@ abstract_class CDmeCurveInfo : public CDmElement
     void SetMaxValue( float val );
     float GetMaxValue() const;
 
-   protected:
+    protected:
     CDmaVar< int > m_DefaultCurveType;
 
     CDmaVar< float > m_MinValue;
@@ -267,7 +267,7 @@ abstract_class CDmeLog : public CDmElement
 {
     DEFINE_ELEMENT( CDmeLog, CDmElement );
 
-   public:
+    public:
     int FindLayerForTime( DmeTime_t time ) const;
     int FindLayerForTimeSkippingTopmost( DmeTime_t time ) const;
     void FindLayersForTime( DmeTime_t time, CUtlVector< int > & list ) const;
@@ -384,7 +384,7 @@ abstract_class CDmeLog : public CDmElement
 
     virtual bool HasDefaultValue() const = 0;
 
-   protected:
+    protected:
     //	int FindKey( DmeTime_t time ) const;
 
     void OnUsingCurveTypesChanged();
@@ -403,7 +403,7 @@ class CDmeTypedCurveInfo : public CDmeCurveInfo
 {
     DEFINE_ELEMENT( CDmeTypedCurveInfo, CDmeCurveInfo );
 
-   public:
+    public:
     // For "faceposer" style left/right edges, this controls whether interpolators try to mimic faceposer left/right edge behavior
     void SetUseEdgeInfo( bool state );
     bool IsUsingEdgeInfo() const;
@@ -423,7 +423,7 @@ class CDmeTypedCurveInfo : public CDmeCurveInfo
     int GetEdgeCurveType( int edge ) const;
     void GetZeroValue( int side, T &val ) const;
 
-   protected:
+    protected:
     CDmaVar< bool > m_bUseEdgeInfo;
     // Array of 2 for left/right edges...
     CDmaVar< bool > m_bEdgeActive[2];
@@ -445,7 +445,7 @@ class CDmeTypedLogLayer : public CDmeLogLayer
 {
     DEFINE_ELEMENT( CDmeTypedLogLayer, CDmeLogLayer );
 
-   public:
+    public:
     virtual void CopyLayer( const CDmeLogLayer *src );
     virtual void CopyPartialLayer( const CDmeLogLayer *src, DmeTime_t startTime, DmeTime_t endTime, bool bRebaseTimestamps );
     virtual void ExplodeLayer( const CDmeLogLayer *src, DmeTime_t startTime, DmeTime_t endTime, bool bRebaseTimestamps, DmeTime_t tResampleInterval );
@@ -501,7 +501,7 @@ class CDmeTypedLogLayer : public CDmeLogLayer
     CDmeTypedLog< T > *GetTypedOwnerLog();
     const CDmeTypedLog< T > *GetTypedOwnerLog() const;
 
-   protected:
+    protected:
     int GetEdgeCurveType( int edge ) const;
     void GetZeroValue( int side, T &val ) const;
 
@@ -513,7 +513,7 @@ class CDmeTypedLogLayer : public CDmeLogLayer
 
     friend CDmeTypedLog< T >;
 
-   protected:
+    protected:
     CDmaArray< T > m_values;
 };
 
@@ -525,7 +525,7 @@ class CDmeTypedLog : public CDmeLog
 {
     DEFINE_ELEMENT( CDmeTypedLog, CDmeLog );
 
-   public:
+    public:
     virtual void OnAttributeArrayElementAdded( CDmAttribute *pAttribute, int nFirstElem, int nLastElem );
 
     CDmeTypedLogLayer< T > *GetLayer( int index );
@@ -633,14 +633,14 @@ class CDmeTypedLog : public CDmeLog
 
     static float s_defaultThreshold;
 
-   protected:
+    protected:
     void RemoveKeys( DmeTime_t starttime );
 
     void _StampKeyAtHeadResample( DmeTime_t tHeadPosition, const DmeLog_TimeSelection_t &params, const T &value, bool bSkipToHead, bool bClearPreviousKeys );
     void _StampKeyAtHeadFilteredByTimeSelection( DmeTime_t tHeadPosition, DmeTime_t tPreviousHeadPosition, const DmeLog_TimeSelection_t &params, const T &value );
     void _StampKeyFilteredByTimeSelection( CDmeTypedLogLayer< T > *pWriteLayer, DmeTime_t t, const DmeLog_TimeSelection_t &params, const T &value, bool bForce = false );
 
-   protected:
+    protected:
     // this really only makes sense for some of our subclasses, basically those which have float data
     // anything else's threshhold is almost certainly 0, and that class just ignores m_threshold
     float m_threshold;

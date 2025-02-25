@@ -50,7 +50,7 @@ class CUpgradeBuyPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CUpgradeBuyPanel, vgui::EditablePanel );
 
-   public:
+    public:
     enum ColorSet
     {
         COLOR_SET_DEFAULT,
@@ -59,7 +59,7 @@ class CUpgradeBuyPanel : public vgui::EditablePanel
         COLOR_SET_DISABLED,
     };
 
-   public:
+    public:
     CUpgradeBuyPanel( Panel *parent, const char *panelName );
     virtual ~CUpgradeBuyPanel();
 
@@ -83,7 +83,7 @@ class CUpgradeBuyPanel : public vgui::EditablePanel
 
     void UpdateImages( int nCurrentMoney );
 
-   public:
+    public:
     KeyValues *m_pSkillTreeButtonKVs;
 
     vgui::ImagePanel *m_pIcon;
@@ -122,7 +122,7 @@ class CUpgradeBuyPanel : public vgui::EditablePanel
     static Color m_rgbaDisabledFG;
     static Color m_rgbaDisabledBG;
 
-   private:
+    private:
     CHandle< C_TFPlayer > m_hPlayer;
 };
 
@@ -134,7 +134,7 @@ struct ItemSlotBuyPanels
     typedef CUpgradeBuyPanel *UPGRADEPTR;
     class CUpgradeBuyPanelLess
     {
-       public:
+        public:
         bool Less( const UPGRADEPTR &src1, const UPGRADEPTR &src2, void *pCtx )
         {
             if ( src1->m_nPrice > src2->m_nPrice )
@@ -174,7 +174,7 @@ class CHudUpgradePanel : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudUpgradePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CHudUpgradePanel( const char *pElementName );
     virtual ~CHudUpgradePanel();
 
@@ -212,7 +212,7 @@ class CHudUpgradePanel : public CHudElement, public vgui::EditablePanel
         return IsActive() ? GAME_ACTION_SET_MENUCONTROLS : GAME_ACTION_SET_NONE;
     }
 
-   protected:
+    protected:
     void CreateItemModelPanel( int iLoadoutSlot );
     void UpdateModelPanels( void );
     virtual void SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver );
@@ -229,7 +229,7 @@ class CHudUpgradePanel : public CHudElement, public vgui::EditablePanel
     CEconItemView *GetLocalPlayerBottleFromInventory( void );
     bool QuickEquipBottle( void );
 
-   protected:
+    protected:
     vgui::EditablePanel *m_pTipPanel;
     vgui::EditablePanel *m_pSelectWeaponPanel;
     CExLabel *m_pUpgradeItemStatsLabel;
@@ -275,7 +275,7 @@ class CHudUpgradePanel : public CHudElement, public vgui::EditablePanel
     bool m_bNavButtonPressed;
     bool m_bUsingController;
 
-   private:
+    private:
     void UpdateTip();
     CHandle< C_TFPlayer > m_hPlayer;
 };

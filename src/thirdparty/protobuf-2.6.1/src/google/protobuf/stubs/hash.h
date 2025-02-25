@@ -97,16 +97,16 @@ struct hash< const char* >
 template < typename Key, typename Data, typename HashFcn = hash< Key >, typename EqualKey = int >
 class hash_map : public std::map< Key, Data, HashFcn >
 {
-   public:
+    public:
     hash_map( int = 0 ) {}
 };
 
 template < typename Key,
-           typename HashFcn = hash< Key >,
-           typename EqualKey = int >
+            typename HashFcn = hash< Key >,
+            typename EqualKey = int >
 class hash_set : public std::set< Key, HashFcn >
 {
-   public:
+    public:
     hash_set( int = 0 ) {}
 };
 
@@ -121,7 +121,7 @@ struct hash : public HASH_NAMESPACE::hash_compare< Key >
 // compares based on the string pointer.  WTF?
 class CstringLess
 {
-   public:
+    public:
     inline bool operator()( const char* a, const char* b ) const
     {
         return strcmp( a, b ) < 0;
@@ -136,22 +136,22 @@ struct hash< const char* >
 
 template < typename Key, typename Data, typename HashFcn = hash< Key >, typename EqualKey = int >
 class hash_map : public HASH_NAMESPACE::hash_map<
-                     Key,
-                     Data,
-                     HashFcn >
+                    Key,
+                    Data,
+                    HashFcn >
 {
-   public:
+    public:
     hash_map( int = 0 ) {}
 };
 
 template < typename Key,
-           typename HashFcn = hash< Key >,
-           typename EqualKey = int >
+            typename HashFcn = hash< Key >,
+            typename EqualKey = int >
 class hash_set : public HASH_NAMESPACE::hash_set<
-                     Key,
-                     HashFcn >
+                    Key,
+                    HashFcn >
 {
-   public:
+    public:
     hash_set( int = 0 ) {}
 };
 
@@ -189,24 +189,24 @@ struct hash< const char* >
 
 template < typename Key, typename Data, typename HashFcn = hash< Key >, typename EqualKey = std::equal_to< Key > >
 class hash_map : public HASH_NAMESPACE::HASH_MAP_CLASS<
-                     Key,
-                     Data,
-                     HashFcn,
-                     EqualKey >
+                    Key,
+                    Data,
+                    HashFcn,
+                    EqualKey >
 {
-   public:
+    public:
     hash_map( int = 0 ) {}
 };
 
 template < typename Key,
-           typename HashFcn = hash< Key >,
-           typename EqualKey = std::equal_to< Key > >
+            typename HashFcn = hash< Key >,
+            typename EqualKey = std::equal_to< Key > >
 class hash_set : public HASH_NAMESPACE::HASH_SET_CLASS<
-                     Key,
-                     HashFcn,
-                     EqualKey >
+                    Key,
+                    HashFcn,
+                    EqualKey >
 {
-   public:
+    public:
     hash_set( int = 0 ) {}
 };
 
@@ -244,7 +244,7 @@ struct hash< pair< First, Second > >
     static const size_t bucket_size = 4;
     static const size_t min_buckets = 8;
     inline size_t operator()( const pair< First, Second >& a,
-                              const pair< First, Second >& b ) const
+                            const pair< First, Second >& b ) const
     {
         return a < b;
     }

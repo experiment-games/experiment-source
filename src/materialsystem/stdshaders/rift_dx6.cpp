@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_SHADER( Rift_DX6,
-              "Help for Rift_DX6" )
+            "Help for Rift_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( TEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "second texture" )

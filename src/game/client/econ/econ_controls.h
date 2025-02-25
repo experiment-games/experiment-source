@@ -68,7 +68,7 @@ class CSimplePanelToolTip : public vgui::BaseTooltip
 {
     DECLARE_CLASS_SIMPLE( CSimplePanelToolTip, vgui::BaseTooltip );
 
-   public:
+    public:
     CSimplePanelToolTip( vgui::Panel *parent, const char *text = NULL )
         : vgui::BaseTooltip( parent, text )
     {
@@ -96,7 +96,7 @@ class CSimplePanelToolTip : public vgui::BaseTooltip
         m_pControlledPanel = pPanel;
     }
 
-   protected:
+    protected:
     vgui::Panel *m_pControlledPanel;
 };
 
@@ -105,7 +105,7 @@ class CSimplePanelToolTip : public vgui::BaseTooltip
 //-----------------------------------------------------------------------------
 class CExButton : public vgui::Button
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CExButton, vgui::Button );
 
     CExButton( vgui::Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL );
@@ -127,7 +127,7 @@ class CExButton : public vgui::Button
         m_bbCursorEnterExitEvent = bCursorEnterExitEvent;
     }
 
-   private:
+    private:
     char m_szFont[64];
     char m_szColor[64];
 
@@ -144,7 +144,7 @@ class CExButton : public vgui::Button
 //-----------------------------------------------------------------------------
 class CExImageButton : public CExButton
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CExImageButton, CExButton );
 
     CExImageButton( vgui::Panel *parent, const char *name, const char *text = "", vgui::Panel *pActionSignalTarget = NULL, const char *cmd = NULL );
@@ -170,7 +170,7 @@ class CExImageButton : public CExButton
         return m_pEmbeddedImagePanel;
     }
 
-   private:
+    private:
     // Embedded image panels
     vgui::ImagePanel *m_pEmbeddedImagePanel;
     Color m_ImageDrawColor;
@@ -188,7 +188,7 @@ class CExImageButton : public CExButton
 //-----------------------------------------------------------------------------
 class CExLabel : public vgui::Label
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CExLabel, vgui::Label );
 
     CExLabel( vgui::Panel *parent, const char *panelName, const char *text );
@@ -200,7 +200,7 @@ class CExLabel : public vgui::Label
     void SetColorStr( const char *pColor );
     void SetColorStr( Color cColor );
 
-   private:
+    private:
     char m_szColor[64];
 };
 
@@ -209,7 +209,7 @@ class CExLabel : public vgui::Label
 //-----------------------------------------------------------------------------
 class CExRichText : public vgui::RichText
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CExRichText, vgui::RichText );
 
     CExRichText( vgui::Panel *parent, const char *panelName );
@@ -229,7 +229,7 @@ class CExRichText : public vgui::RichText
 
     void CreateImagePanels( void );
 
-   protected:
+    protected:
     char m_szFont[64];
     char m_szColor[64];
     char m_szImageUpArrow[MAX_PATH];
@@ -250,7 +250,7 @@ class CExRichText : public vgui::RichText
 //-----------------------------------------------------------------------------
 class CRichTextWithScrollbarBorders : public CExRichText
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CRichTextWithScrollbarBorders, CExRichText );
 
     CRichTextWithScrollbarBorders( vgui::Panel *parent, const char *panelName )
@@ -266,7 +266,7 @@ class CRichTextWithScrollbarBorders : public CExRichText
 //-----------------------------------------------------------------------------
 class CEconItemDetailsRichText : public CRichTextWithScrollbarBorders
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CEconItemDetailsRichText, CRichTextWithScrollbarBorders );
 
     CEconItemDetailsRichText( vgui::Panel *parent, const char *panelName );
@@ -286,7 +286,7 @@ class CEconItemDetailsRichText : public CRichTextWithScrollbarBorders
         m_bLimitedItem = bLimited;
     }
 
-   private:
+    private:
     void InsertItemLink( const wchar_t *pwzItemName, int nItemIndex, Color *pColorOverride = NULL );
     void AddDataText( const char *pszText, bool bAddPostLines = true, const wchar_t *wpszArg = NULL, const wchar_t *wpszArg2 = NULL, const int *pItemDefIndex = NULL );
     void DataText_AppendStoreFlags( const CEconItemDefinition *pDef );
@@ -298,7 +298,7 @@ class CEconItemDetailsRichText : public CRichTextWithScrollbarBorders
     void DataText_AppendToolUsage( const CEconItemDefinition *pDef );
     void UpdateToolList( void );
 
-   private:
+    private:
     Color m_colTextHighlight;
     Color m_colItemSet;
     Color m_colLink;
@@ -320,7 +320,7 @@ class CEconItemDetailsRichText : public CRichTextWithScrollbarBorders
 //-----------------------------------------------------------------------------
 class CExplanationPopupCalloutArrow : public vgui::Panel
 {
-   public:
+    public:
     CExplanationPopupCalloutArrow( Panel *parent )
         : vgui::Panel( parent, "calloutarrow" )
     {
@@ -341,7 +341,7 @@ class CExplanationPopupCalloutArrow : public vgui::Panel
 
     virtual void Paint( void );
 
-   private:
+    private:
     int m_iArrowA[2];
     int m_iArrowB[2];
     int m_iArrowC[2];
@@ -354,7 +354,7 @@ class CExplanationPopup : public vgui::EditablePanel, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CExplanationPopup, vgui::EditablePanel );
 
-   public:
+    public:
     CExplanationPopup( Panel *parent, const char *panelName );
     ~CExplanationPopup( void );
 
@@ -385,7 +385,7 @@ class CExplanationPopup : public vgui::EditablePanel, public CGameEventListener
     void PositionCallout( float flElapsed );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     int m_iCalloutSide;
     float m_flStartTime;
     float m_flEndTime;
@@ -420,7 +420,7 @@ class CExplanationPopup : public vgui::EditablePanel, public CGameEventListener
 //-----------------------------------------------------------------------------
 class CPanelModalStack
 {
-   public:
+    public:
     void PushModal( vgui::Panel *pDialog );
     void PopModal( vgui::Panel *pDialog );
 
@@ -430,10 +430,10 @@ class CPanelModalStack
 
     bool IsEmpty() const;
 
-   private:
+    private:
     void PopModal( int iIdx );
 
-   private:
+    private:
     CUtlVector< vgui::VPanelHandle > m_pDialogs;
 };
 
@@ -446,13 +446,13 @@ class CGenericWaitingDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CGenericWaitingDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CGenericWaitingDialog( vgui::Panel *pParent );
 
     void Close();
     void ShowStatusUpdate( bool bAnimateEllipses, bool bAllowClose, float flMaxWaitTime = 0 );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnCommand( const char *command );
     virtual void OnTick( void );

@@ -48,15 +48,15 @@ enum seentype_t
 
 class CAI_Senses : public CAI_Component
 {
-   public:
+    public:
     CAI_Senses()
         : m_LookDist( 2048 ),
-          m_LastLookDist( -1 ),
-          m_TimeLastLook( -1 ),
-          m_iAudibleList( 0 ),
-          m_TimeLastLookHighPriority( -1 ),
-          m_TimeLastLookNPCs( -1 ),
-          m_TimeLastLookMisc( -1 )
+        m_LastLookDist( -1 ),
+        m_TimeLastLook( -1 ),
+        m_iAudibleList( 0 ),
+        m_TimeLastLookHighPriority( -1 ),
+        m_TimeLastLookNPCs( -1 ),
+        m_TimeLastLookMisc( -1 )
     {
         m_SeenArrays[0] = &m_SeenHighPriority;
         m_SeenArrays[1] = &m_SeenNPCs;
@@ -116,7 +116,7 @@ class CAI_Senses : public CAI_Component
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     int GetAudibleList() const
     {
         return m_iAudibleList;
@@ -162,7 +162,7 @@ class CAI_Senses : public CAI_Component
 
 class CAI_SensedObjectsManager : public IEntityListener
 {
-   public:
+    public:
     void Init();
     void Term();
 
@@ -171,7 +171,7 @@ class CAI_SensedObjectsManager : public IEntityListener
 
     virtual void AddEntity( CBaseEntity *pEntity );
 
-   private:
+    private:
     virtual void OnEntitySpawned( CBaseEntity *pEntity );
     virtual void OnEntityDeleted( CBaseEntity *pEntity );
 

@@ -35,7 +35,7 @@
 template < typename VALUE_TYPE = int, typename OUTER_TYPE = void >
 class CUtlIndexRange
 {
-   public:
+    public:
     typedef VALUE_TYPE ValueType_t;
     // Defaults to full range of base type
     CUtlIndexRange() {}
@@ -47,7 +47,7 @@ class CUtlIndexRange
 
     struct index
     {
-       public:
+        public:
         index& operator++()
         {
             value++;
@@ -106,7 +106,7 @@ class CUtlIndexRange
         return i >= begin() && i < end();
     }
 
-   private:
+    private:
     const VALUE_TYPE m_begin = std::numeric_limits< VALUE_TYPE >::min();
     const VALUE_TYPE m_end = std::numeric_limits< VALUE_TYPE >::max();
 };

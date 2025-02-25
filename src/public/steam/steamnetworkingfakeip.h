@@ -28,7 +28,7 @@ constexpr int k_cbSteamNetworkingSocketsFakeUDPPortMaxMessageSize = 4096;
 
 class ISteamNetworkingFakeUDPPort
 {
-   public:
+    public:
     /// Destroy the object and cleanup any internal connections.
     /// Note that this function call is not threadsafe with respect
     /// to any other method of this interface.  (However, in general

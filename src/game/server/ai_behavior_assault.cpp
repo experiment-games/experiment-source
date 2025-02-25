@@ -461,9 +461,9 @@ void CAI_AssaultBehavior::StartTask( const Task_t *pTask )
         {
             // If we're at an assault point that can never be cleared, keep waiting forever (if it's the last point in the assault)
             if ( m_hAssaultPoint &&
-                 !m_hAssaultPoint->HasSpawnFlags( SF_ASSAULTPOINT_CLEARONARRIVAL ) &&
-                 m_hAssaultPoint->m_bNeverTimeout &&
-                 m_hAssaultPoint->m_NextAssaultPointName == NULL_STRING )
+                !m_hAssaultPoint->HasSpawnFlags( SF_ASSAULTPOINT_CLEARONARRIVAL ) &&
+                m_hAssaultPoint->m_bNeverTimeout &&
+                m_hAssaultPoint->m_NextAssaultPointName == NULL_STRING )
             {
                 TaskComplete();
                 return;
@@ -1326,8 +1326,8 @@ void CAI_AssaultBehavior::BuildScheduleTestBits()
     if ( IsAllowedToDivert() )
     {
         if ( IsCurSchedule( SCHED_MOVE_TO_ASSAULT_POINT ) ||
-             IsCurSchedule( SCHED_MOVE_TO_RALLY_POINT ) ||
-             IsCurSchedule( SCHED_HOLD_RALLY_POINT ) )
+            IsCurSchedule( SCHED_MOVE_TO_RALLY_POINT ) ||
+            IsCurSchedule( SCHED_HOLD_RALLY_POINT ) )
         {
             GetOuter()->SetCustomInterruptCondition( COND_NEW_ENEMY );
             GetOuter()->SetCustomInterruptCondition( COND_SEE_ENEMY );
@@ -1477,11 +1477,11 @@ int CAI_AssaultBehavior::SelectSchedule()
     {
         // Don't allow the base class to select a schedule cause it will probably move the NPC.
         if ( !HasCondition( COND_CAN_RANGE_ATTACK1 ) &&
-             !HasCondition( COND_CAN_RANGE_ATTACK2 ) &&
-             !HasCondition( COND_CAN_MELEE_ATTACK1 ) &&
-             !HasCondition( COND_CAN_MELEE_ATTACK2 ) &&
-             !HasCondition( COND_TOO_CLOSE_TO_ATTACK ) &&
-             !HasCondition( COND_NOT_FACING_ATTACK ) )
+            !HasCondition( COND_CAN_RANGE_ATTACK2 ) &&
+            !HasCondition( COND_CAN_MELEE_ATTACK1 ) &&
+            !HasCondition( COND_CAN_MELEE_ATTACK2 ) &&
+            !HasCondition( COND_TOO_CLOSE_TO_ATTACK ) &&
+            !HasCondition( COND_NOT_FACING_ATTACK ) )
         {
             return SCHED_WAIT_AND_CLEAR;
         }

@@ -42,7 +42,7 @@ class CMMDashboardParentManager* GetMMDashboardParentManager();
 //-----------------------------------------------------------------------------
 class CMMDashboardParentManager : public CGameEventListener
 {
-   public:
+    public:
     CMMDashboardParentManager();
 
     void UpdateParenting();
@@ -52,7 +52,7 @@ class CMMDashboardParentManager : public CGameEventListener
 
     virtual void FireGameEvent( IGameEvent* event ) OVERRIDE;
 
-   private:
+    private:
     void AttachToGameUI();
     void AttachToTopMostPopup();
 
@@ -60,7 +60,7 @@ class CMMDashboardParentManager : public CGameEventListener
 
     class CUtlSortVectorPanelZPos
     {
-       public:
+        public:
         bool Less( const vgui::Panel* lhs, const vgui::Panel* rhs, void* )
         {
             return lhs->GetZPos() < rhs->GetZPos();

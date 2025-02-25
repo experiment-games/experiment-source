@@ -348,7 +348,7 @@ bool CTFAutoRP::ReplaceWord( replacementcheck_t *pCheck, char *szRep, int iRepSi
 
             // Randomly append "eth" to words with appropriate last letters.
             if ( RandomInt( 1, 5 ) == 1 &&
-                 ( lc == 't' || lc == 'p' || lc == 'k' || lc == 'g' || lc == 'b' || lc == 'w' ) )
+                ( lc == 't' || lc == 'p' || lc == 'k' || lc == 'g' || lc == 'b' || lc == 'w' ) )
             {
                 Q_strncpy( szRep, pCheck->szWord, MIN( iRepSize, pCheck->iWordLen + 1 ) );
                 Q_strncat( szRep, "eth", iRepSize );

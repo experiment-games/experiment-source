@@ -51,7 +51,7 @@ public class UninitializedMessageException extends RuntimeException {
 
   public UninitializedMessageException(final MessageLite message) {
     super("Message was missing required fields.  (Lite runtime could not " +
-          "determine which fields were missing).");
+        "determine which fields were missing).");
     missingFields = null;
   }
 
@@ -63,20 +63,20 @@ public class UninitializedMessageException extends RuntimeException {
   private final List<String> missingFields;
 
   /**
-   * Get a list of human-readable names of required fields missing from this
-   * message.  Each name is a full path to a field, e.g. "foo.bar[5].baz".
-   * Returns null if the lite runtime was used, since it lacks the ability to
-   * find missing fields.
-   */
+    * Get a list of human-readable names of required fields missing from this
+    * message.  Each name is a full path to a field, e.g. "foo.bar[5].baz".
+    * Returns null if the lite runtime was used, since it lacks the ability to
+    * find missing fields.
+    */
   public List<String> getMissingFields() {
     return Collections.unmodifiableList(missingFields);
   }
 
   /**
-   * Converts this exception to an {@link InvalidProtocolBufferException}.
-   * When a parsed message is missing required fields, this should be thrown
-   * instead of {@code UninitializedMessageException}.
-   */
+    * Converts this exception to an {@link InvalidProtocolBufferException}.
+    * When a parsed message is missing required fields, this should be thrown
+    * instead of {@code UninitializedMessageException}.
+    */
   public InvalidProtocolBufferException asInvalidProtocolBufferException() {
     return new InvalidProtocolBufferException(getMessage());
   }
@@ -84,15 +84,15 @@ public class UninitializedMessageException extends RuntimeException {
   /** Construct the description string for this exception. */
   private static String buildDescription(final List<String> missingFields) {
     final StringBuilder description =
-      new StringBuilder("Message missing required fields: ");
+    new StringBuilder("Message missing required fields: ");
     boolean first = true;
     for (final String field : missingFields) {
-      if (first) {
+    if (first) {
         first = false;
-      } else {
+    } else {
         description.append(", ");
-      }
-      description.append(field);
+    }
+    description.append(field);
     }
     return description.toString();
   }

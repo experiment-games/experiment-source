@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CMerasmusAttack : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
 
@@ -22,7 +22,7 @@ class CMerasmusAttack : public Action< CMerasmus >
         return "Attack";
     }  // return name of this action
 
-   private:
+    private:
     PathFollower m_path;
 
     Vector m_homePos;
@@ -49,7 +49,7 @@ class CMerasmusAttack : public Action< CMerasmus >
 //---------------------------------------------------------------------------------------------
 class CMerasmusTaunt : public Action< CMerasmus >
 {
-   public:
+    public:
     virtual ActionResult< CMerasmus > OnStart( CMerasmus *me, Action< CMerasmus > *priorAction );
     virtual ActionResult< CMerasmus > Update( CMerasmus *me, float interval );
     virtual void OnEnd( CMerasmus *me, Action< CMerasmus > *nextAction );
@@ -59,7 +59,7 @@ class CMerasmusTaunt : public Action< CMerasmus >
         return "Taunt";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 

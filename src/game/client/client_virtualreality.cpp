@@ -1353,8 +1353,8 @@ void CClientVirtualReality::Activate()
         if ( materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter != nVRModeAdapter )
         {
             Warning( "VR Mode expects adapter %d which is different from %d which we are currently using. Try restarting and enabling VR mode again.\n",
-                     nVRModeAdapter,
-                     materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter );
+                    nVRModeAdapter,
+                    materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter );
             engine->ExecuteClientCmd( "mat_enable_vrmode 0\n" );
             return;
         }

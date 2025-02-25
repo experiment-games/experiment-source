@@ -12,16 +12,16 @@ $include "$SRCDIR\gcsdk\steammessages_include.vpc"
 
 $Configuration
 {
-	$General
-	{
-		$AdditionalProjectDependencies			"gcsdk"
-	}
+    $General
+    {
+        $AdditionalProjectDependencies			"gcsdk"
+    }
 }
 
 $Project
 {
-	$Folder "Link Libraries"
-	{
-		$Lib	gcsdk_sdk
-	}
+    $Folder "Link Libraries"
+    {
+        $Lib	gcsdk_sdk
+    }
 }

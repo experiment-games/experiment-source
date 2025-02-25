@@ -22,7 +22,7 @@ class CHudTeamGoalTournament : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTeamGoalTournament, EditablePanel );
 
-   public:
+    public:
     CHudTeamGoalTournament( const char *pElementName );
 
     virtual void LevelInit( void ) OVERRIDE;
@@ -35,7 +35,7 @@ class CHudTeamGoalTournament : public CHudElement, public EditablePanel
     void PrepareStopWatchString( wchar_t *pszString, CExRichText *pText );
     void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     float m_flShowAt;
 
     EditablePanel *m_pStopWatchGoal;

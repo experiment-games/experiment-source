@@ -1652,19 +1652,19 @@ int _V_UTF8ToUCS2( const char *pUTF8, int cubSrcInBytes, ucs2 *pUCS2, int cubDes
 unsigned char V_nibble( char c )
 {
     if ( ( c >= '0' ) &&
-         ( c <= '9' ) )
+        ( c <= '9' ) )
     {
         return ( unsigned char )( c - '0' );
     }
 
     if ( ( c >= 'A' ) &&
-         ( c <= 'F' ) )
+        ( c <= 'F' ) )
     {
         return ( unsigned char )( c - 'A' + 0x0a );
     }
 
     if ( ( c >= 'a' ) &&
-         ( c <= 'f' ) )
+        ( c <= 'f' ) )
     {
         return ( unsigned char )( c - 'a' + 0x0a );
     }
@@ -1696,8 +1696,8 @@ void V_hextobinary( char const *in, int numchars, byte *out, int maxoutputbytes 
 
     p = out;
     for ( i = 0;
-          ( i < numchars ) && ( ( p - out ) < maxoutputbytes );
-          i += 2, p++ )
+        ( i < numchars ) && ( ( p - out ) < maxoutputbytes );
+        i += 2, p++ )
     {
         *p = ( V_nibble( in[i] ) << 4 ) | V_nibble( in[i + 1] );
     }
@@ -2110,8 +2110,8 @@ void V_FixDoubleSlashes( char *pStr )
 bool V_StripLastDir( char *dirName, int maxlen )
 {
     if ( dirName[0] == 0 ||
-         !V_stricmp( dirName, "./" ) ||
-         !V_stricmp( dirName, ".\\" ) )
+        !V_stricmp( dirName, "./" ) ||
+        !V_stricmp( dirName, ".\\" ) )
         return false;
 
     int len = V_strlen( dirName );
@@ -2365,9 +2365,9 @@ bool V_RemoveDotSlashes( char *pFilename, char separator, bool bRemoveDoubleSlas
     while ( *pIn )
     {
         if ( pIn[0] == '.' &&
-             pIn[1] == '.' &&
-             ( pIn == pFilename || separator == pIn[-1] ) &&  // Preceding character must be a slash.
-             ( pIn[2] == 0 || separator == pIn[2] ) )         // Following character must be a slash or the end of the string.
+            pIn[1] == '.' &&
+            ( pIn == pFilename || separator == pIn[-1] ) &&  // Preceding character must be a slash.
+            ( pIn[2] == 0 || separator == pIn[2] ) )         // Following character must be a slash or the end of the string.
         {
             // If there is no previous directory we cannot go up
             if ( pIn == pFilename || pIn - 1 == pFilename )

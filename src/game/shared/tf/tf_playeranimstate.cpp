@@ -143,8 +143,8 @@ Activity CTFPlayerAnimState::TranslateActivity( Activity actDesired )
     if ( pPlayer->m_Shared.InCond( TF_COND_COMPETITIVE_WINNER ) )
     {
         if ( translateActivity == ACT_MP_STAND_PRIMARY ||
-             ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( translateActivity == ACT_MP_STAND_MELEE ) ) ||
-             ( pPlayer->IsPlayerClass( TF_CLASS_DEMOMAN ) && ( translateActivity == ACT_MP_STAND_SECONDARY ) ) )
+            ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( translateActivity == ACT_MP_STAND_MELEE ) ) ||
+            ( pPlayer->IsPlayerClass( TF_CLASS_DEMOMAN ) && ( translateActivity == ACT_MP_STAND_SECONDARY ) ) )
         {
             translateActivity = ACT_MP_COMPETITIVE_WINNERSTATE;
         }
@@ -469,18 +469,18 @@ void CTFPlayerAnimState::Update( float eyeYaw, float eyePitch )
             VectorAngles( vForward, m_vecSmoothedUp, m_angRender );
 
 #if 0
-			if ( tr.DidHit() )
-			{
+            if ( tr.DidHit() )
+            {
 #ifdef GAME_DLL
-				NDebugOverlay::Line( tr.endpos, tr.endpos + tr.plane.normal * 100, 255, 0, 0, true, 1.f );
-				NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + m_vecSmoothedUp * 100, 255, 0, 0, true, 1.f );
-				NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + vForward * 100, 255, 0, 0, true, 1.f );
+                NDebugOverlay::Line( tr.endpos, tr.endpos + tr.plane.normal * 100, 255, 0, 0, true, 1.f );
+                NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + m_vecSmoothedUp * 100, 255, 0, 0, true, 1.f );
+                NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + vForward * 100, 255, 0, 0, true, 1.f );
 #else
-				NDebugOverlay::Line( tr.endpos, tr.endpos + tr.plane.normal * 100, 0, 0, 255, true, 1.f );
-				NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + m_vecSmoothedUp * 100, 0, 0, 255, true, 1.f );
-				NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + vForward * 100, 0, 0, 255, true, 1.f );
+                NDebugOverlay::Line( tr.endpos, tr.endpos + tr.plane.normal * 100, 0, 0, 255, true, 1.f );
+                NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + m_vecSmoothedUp * 100, 0, 0, 255, true, 1.f );
+                NDebugOverlay::Line( pTFPlayer->GetAbsOrigin(), pTFPlayer->GetAbsOrigin() + vForward * 100, 0, 0, 255, true, 1.f );
 #endif
-			}
+            }
 #endif
         }
         else if ( TFGameRules()->PlayersAreOnMatchSummaryStage() )
@@ -667,15 +667,15 @@ void CTFPlayerAnimState::CheckStunAnimation()
 
     // State machine to determine the correct stun activity.
     if ( !pPlayer->m_Shared.IsControlStunned() &&
-         ( pPlayer->m_Shared.m_iStunAnimState == STUN_ANIM_LOOP ) )
+        ( pPlayer->m_Shared.m_iStunAnimState == STUN_ANIM_LOOP ) )
     {
         // Clean up if the condition went away before we finished.
         pPlayer->DoAnimationEvent( PLAYERANIMEVENT_STUN_END );
         pPlayer->m_Shared.m_iStunAnimState = STUN_ANIM_NONE;
     }
     else if ( pPlayer->m_Shared.IsControlStunned() &&
-              ( pPlayer->m_Shared.m_iStunAnimState == STUN_ANIM_NONE ) &&
-              ( gpGlobals->curtime < pPlayer->m_Shared.GetStunExpireTime() ) )
+            ( pPlayer->m_Shared.m_iStunAnimState == STUN_ANIM_NONE ) &&
+            ( gpGlobals->curtime < pPlayer->m_Shared.GetStunExpireTime() ) )
     {
         // Play the start up animation.
         int iSeq = pPlayer->SelectWeightedSequence( ACT_MP_STUN_BEGIN );

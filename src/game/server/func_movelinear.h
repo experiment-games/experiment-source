@@ -17,7 +17,7 @@ class IPhysicsFluidController;
 
 class CFuncMoveLinear : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncMoveLinear, CBaseToggle );
 
     void Spawn( void );

@@ -31,7 +31,7 @@ DECLARE_HUDELEMENT( CReplayReminderPanel );
 
 CReplayReminderPanel::CReplayReminderPanel( const char *pElementName )
     : EditablePanel( g_pClientMode->GetViewport(), "ReplayReminder" ),
-      CHudElement( pElementName )
+    CHudElement( pElementName )
 {
     SetScheme( "ClientScheme" );
 

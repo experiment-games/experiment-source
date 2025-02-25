@@ -26,7 +26,7 @@ class CUserCmd;
 class CPrediction : public IPrediction
 {
     // Construction
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CPrediction, IPrediction );
 
     CPrediction( void );
@@ -36,7 +36,7 @@ class CPrediction : public IPrediction
     virtual void Shutdown( void );
 
     // Implement IPrediction
-   public:
+    public:
     virtual void Update(
         int startframe,             // World update ( un-modded ) most recently received
         bool validframe,            // Is frame data valid
@@ -74,7 +74,7 @@ class CPrediction : public IPrediction
     virtual void RunCommand( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *moveHelper );
 
     // Internal
-   protected:
+    protected:
     virtual void SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move );
     virtual void SetIdealPitch( C_BasePlayer *player, const Vector &origin, const QAngle &angles, const Vector &viewheight );
@@ -91,7 +91,7 @@ class CPrediction : public IPrediction
     void CheckMovingGround( C_BasePlayer *player, double frametime );
     void RunPostThink( C_BasePlayer *player );
 
-   private:
+    private:
     virtual void _Update(
         bool received_new_world_update,
         bool validframe,            // Is frame data valid
@@ -122,11 +122,11 @@ class CPrediction : public IPrediction
 
 #if !defined( NO_ENTITY_PREDICTION )
     // Data
-   protected:
+    protected:
     // Last object the player was standing on
     CHandle< C_BaseEntity > m_hLastGround;
 
-   private:
+    private:
     bool m_bInPrediction;
     bool m_bFirstTimePredicted;
     bool m_bOldCLPredictValue;

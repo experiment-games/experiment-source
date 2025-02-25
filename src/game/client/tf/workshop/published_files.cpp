@@ -62,7 +62,7 @@ static void MakeModalAndBringToFront( vgui::EditablePanel *dialog )
 //-----------------------------------------------------------------------------
 class CPublishedFiles
 {
-   public:
+    public:
     enum
     {
         kState_Initialized,
@@ -151,12 +151,12 @@ bool CPublishedFiles::EnumerateUserPublishedFiles( uint32 unPage )
         AccountID_t nAccountID = pUser->GetSteamID().GetAccountID();
 
         UGCQueryHandle_t ugcHandle = pUGC->CreateQueryUserUGCRequest( nAccountID,
-                                                                      k_EUserUGCList_Published,
-                                                                      k_EUGCMatchingUGCType_Items,
-                                                                      k_EUserUGCListSortOrder_CreationOrderDesc,
-                                                                      engine->GetAppID(),
-                                                                      engine->GetAppID(),
-                                                                      unPage );
+                                                                    k_EUserUGCList_Published,
+                                                                    k_EUGCMatchingUGCType_Items,
+                                                                    k_EUserUGCListSortOrder_CreationOrderDesc,
+                                                                    engine->GetAppID(),
+                                                                    engine->GetAppID(),
+                                                                    unPage );
 
         // make sure we get the entire description and not a truncated version
         pUGC->SetReturnLongDescription( ugcHandle, true );
@@ -372,7 +372,7 @@ class CTFFilePublishDialog : public CFilePublishDialog
 {
     DECLARE_CLASS_SIMPLE( CTFFilePublishDialog, CFilePublishDialog );
 
-   public:
+    public:
     CTFFilePublishDialog( Panel *parent, const char *name, PublishedFileDetails_t *pDetails )
         : CFilePublishDialog( parent, name, pDetails ), m_bImported( false ) {}
 
@@ -716,7 +716,7 @@ class CTFFilePublishDialog : public CFilePublishDialog
         }
     }
 
-   protected:
+    protected:
     virtual void PopulateEditFields( void )
     {
         BaseClass::PopulateEditFields();
@@ -822,7 +822,7 @@ class CTFFilePublishDialog : public CFilePublishDialog
         }
     }
 
-   private:
+    private:
     CUtlVector< const char * > m_vecTags;
 
     CRC32_t m_fileCRC;
@@ -835,7 +835,7 @@ class CTFFilePublishDialog : public CFilePublishDialog
 //-----------------------------------------------------------------------------
 class CUGCFileRequestCache
 {
-   public:
+    public:
     CUGCFileRequestCache()
     {
         m_mapPreviewFileRequests.SetLessFunc( DefLessFunc( UGCHandle_t ) );
@@ -856,7 +856,7 @@ class CUGCFileRequestCache
         return m_mapPreviewFileRequests[idx];
     }
 
-   private:
+    private:
     CUtlMap< UGCHandle_t, CUGCFileRequest * > m_mapPreviewFileRequests;
 };
 
@@ -867,7 +867,7 @@ class CSteamWorkshopItemPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSteamWorkshopItemPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CSteamWorkshopItemPanel( vgui::Panel *parent, const char *panelName, CUGCFileRequestCache &previewFileCache )
         : vgui::EditablePanel( parent, panelName ), m_bSelected( false ), m_bPreviewDownloadPending( false ), m_pUGCPreviewFileRequest( NULL ), m_previewFileCache( previewFileCache )
 
@@ -975,7 +975,7 @@ class CSteamWorkshopItemPanel : public vgui::EditablePanel
         return m_FileDetails.m_nPublishedFileId;
     }
 
-   protected:
+    protected:
     void DownloadPreviewImage()
     {
         m_pCroppedTextureImagePanel->SetImage( NULL );
@@ -1058,7 +1058,7 @@ class CSteamWorkshopDialog : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSteamWorkshopDialog, vgui::EditablePanel );
 
-   public:
+    public:
     CSteamWorkshopDialog( vgui::Panel *parent )
         : vgui::EditablePanel( parent, "SteamWorkshopDialog" ), m_lastPublishedFilesState( CPublishedFiles::kState_Initialized )
     {
@@ -1378,7 +1378,7 @@ class CSteamWorkshopDialog : public vgui::EditablePanel
         m_publishedFiles.RefreshPublishedFileDetails( nPublishedFileID );
     }
 
-   protected:
+    protected:
     bool CheckSteamSignOn()
     {
         // Make sure we are connected to steam, or they are going to be disappointed
@@ -1507,7 +1507,7 @@ class CSteamWorkshopDialog : public vgui::EditablePanel
             MakeModalAndBringToFront( pPublishDialog );
 
             if ( fileDetails.publishedFileDetails.m_eFileType == k_EWorkshopFileTypeMicrotransaction &&
-                 !Q_strstr( fileDetails.publishedFileDetails.m_rgchTags, kImportedTag ) )
+                !Q_strstr( fileDetails.publishedFileDetails.m_rgchTags, kImportedTag ) )
             {
                 ShowMessageBox( "#TF_ImportFile_Warning", "#TF_ImportFile_NotCompatible" );
             }
@@ -1594,7 +1594,7 @@ class CItemTestHUDPanel : public CHudElement, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CItemTestHUDPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CItemTestHUDPanel( const char *pElementName )
         : CHudElement( pElementName ), BaseClass( NULL, "ItemTestHUDPanel" )
     {
@@ -1685,7 +1685,7 @@ class CItemTestHUDPanel : public CHudElement, public vgui::EditablePanel
         return 1;  // key not handled
     }
 
-   protected:
+    protected:
     vgui::Panel *m_pBGPanel_Blue;
     vgui::Panel *m_pBGPanel_Red;
 };

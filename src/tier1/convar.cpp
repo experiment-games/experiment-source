@@ -42,7 +42,7 @@ static bool s_bRegistered = false;
 
 class CDefaultAccessor : public IConCommandBaseAccessor
 {
-   public:
+    public:
     virtual bool RegisterConCommandBase( ConCommandBase *pVar )
     {
         // Link to engine's list instead
@@ -1205,7 +1205,7 @@ bool UIConVarRef::CanSetWithoutEngine()
 //-----------------------------------------------------------------------------
 class CEmptyConVar : public ConVar
 {
-   public:
+    public:
     CEmptyConVar()
         : ConVar( "", "0" ) {}
     // Used for optimal read access

@@ -10,7 +10,7 @@
 
 class CTFBotMissionSuicideBomber : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMissionSuicideBomber( void );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -27,7 +27,7 @@ class CTFBotMissionSuicideBomber : public Action< CTFBot >
         return "MissionSuicideBomber";
     };
 
-   private:
+    private:
     CHandle< CBaseEntity > m_victim;  // the victim we are trying to destroy
     Vector m_lastKnownVictimPosition;
 

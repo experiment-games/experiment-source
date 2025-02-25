@@ -16,7 +16,7 @@ class INetMessage;
 
 abstract_class INetworkMessage
 {
-   public:
+    public:
     virtual void SetReliable( bool state ) = 0;
     virtual bool IsReliable( void ) const = 0;
 
@@ -30,14 +30,14 @@ abstract_class INetworkMessage
 
     virtual void Release() = 0;
 
-   protected:
+    protected:
     virtual ~INetworkMessage(){};
 };
 
 // Basic empty network message that can be extended
 class CNetworkMessage : public INetworkMessage
 {
-   public:
+    public:
     CNetworkMessage()
     {
         m_bReliable = true;
@@ -60,7 +60,7 @@ class CNetworkMessage : public INetworkMessage
         return m_bReliable;
     }
 
-   protected:
+    protected:
     bool m_bReliable;
 };
 
@@ -68,7 +68,7 @@ class CNetworkMessage : public INetworkMessage
 // data from a buffer
 class CDynamicWriteNetworkMessage : public CNetworkMessage
 {
-   public:
+    public:
     CDynamicWriteNetworkMessage( int group, int typeId )
     {
         m_nGroup = group;
@@ -116,7 +116,7 @@ class CDynamicWriteNetworkMessage : public CNetworkMessage
         return "CDynamicNetworkMessage";
     }
 
-   protected:
+    protected:
     int m_nGroup;
     int m_nTypeId;
     const char *m_pBuffer;
@@ -125,7 +125,7 @@ class CDynamicWriteNetworkMessage : public CNetworkMessage
 
 abstract_class IConnectedClient
 {
-   public:
+    public:
     virtual bool SendNetMessage( INetworkMessage * pMessage ) = 0;
 
     const char *GetRemoteAddress() const

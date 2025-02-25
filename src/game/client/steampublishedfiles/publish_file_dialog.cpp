@@ -43,7 +43,7 @@ CFilePublishDialog *g_pSteamFilePublishDialog = NULL;
 
 class CPrepareFileThread : public CThread
 {
-   public:
+    public:
     CPrepareFileThread( const char *pszInputFile, const char *pszOutputFile )
         : m_strInput( pszInputFile ), m_strOutput( pszOutputFile )
     {
@@ -63,7 +63,7 @@ class CPrepareFileThread : public CThread
         }
     }
 
-   private:
+    private:
     CUtlString m_strInput;
     CUtlString m_strOutput;
 };

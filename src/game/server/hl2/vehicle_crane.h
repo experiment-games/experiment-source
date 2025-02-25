@@ -52,7 +52,7 @@ class CCraneTip : public CBaseAnimating
 {
     DECLARE_CLASS( CCraneTip, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     ~CCraneTip( void )
@@ -69,7 +69,7 @@ class CCraneTip : public CBaseAnimating
     bool CreateConstraint( CBaseAnimating *pMagnet, IPhysicsConstraintGroup *pGroup );
     static CCraneTip *Create( CBaseAnimating *pCraneMagnet, IPhysicsConstraintGroup *pGroup, const Vector &vecOrigin, const QAngle &vecAngles );
 
-   public:
+    public:
     IPhysicsSpring *m_pSpring;
 };
 
@@ -80,7 +80,7 @@ class CCraneServerVehicle : public CBaseServerVehicle
 {
     typedef CBaseServerVehicle BaseClass;
     // IServerVehicle
-   public:
+    public:
     void GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV = NULL );
 
     // NPC Driving
@@ -96,7 +96,7 @@ class CCraneServerVehicle : public CBaseServerVehicle
         return false;
     }
 
-   protected:
+    protected:
     CPropCrane *GetCrane( void );
 };
 
@@ -107,7 +107,7 @@ class CPropCrane : public CBaseProp, public IDrivableVehicle
 {
     DECLARE_CLASS( CPropCrane, CBaseProp );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -196,7 +196,7 @@ class CPropCrane : public CBaseProp, public IDrivableVehicle
     void SetNPCDriver( CNPC_VehicleDriver *pDriver );
 
     // IDrivableVehicle
-   public:
+    public:
     virtual CBaseEntity *GetDriver( void );
     virtual void ItemPostFrame( CBasePlayer *pPlayer );
     virtual void SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
@@ -242,13 +242,13 @@ class CPropCrane : public CBaseProp, public IDrivableVehicle
         return &m_ServerVehicle;
     }
 
-   protected:
+    protected:
     // Contained IServerVehicle
     CCraneServerVehicle m_ServerVehicle;
     // Contained Bone Follower manager
     CBoneFollowerManager m_BoneFollowerManager;
 
-   private:
+    private:
     CNetworkHandle( CBasePlayer, m_hPlayer );
     CNetworkVar( bool, m_bMagnetOn );
 

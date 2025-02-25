@@ -192,7 +192,7 @@ void Disp_AddCollisionModels( CUtlVector< CPhysCollisionEntry * > &collisionList
 
 class CDispMeshEvent : public IVirtualMeshEvent
 {
-   public:
+    public:
     CDispMeshEvent( unsigned short *pIndices, int indexCount, CCoreDispInfo *pDispInfo );
     virtual void GetVirtualMesh( void *userData, virtualmeshlist_t *pList );
     virtual void GetWorldspaceBounds( void *userData, Vector *pMins, Vector *pMaxs );

@@ -24,7 +24,7 @@ class CDmeModel : public CDmeDag
 {
     DEFINE_ELEMENT( CDmeModel, CDmeDag );
 
-   public:
+    public:
     // Add joint
     CDmeJoint *AddJoint( const char *pJointName, CDmeDag *pParent = NULL );
     int AddJoint( CDmeDag *pJoint );
@@ -57,7 +57,7 @@ class CDmeModel : public CDmeDag
     // Returns true if the DmeModel is Z Up.
     bool IsZUp() const;
 
-   protected:
+    protected:
     // The order in which the joint transform names appear in this list
     // indicates the joint index for each dag
     CDmaElementArray< CDmeTransform > m_JointTransforms;
@@ -65,7 +65,7 @@ class CDmeModel : public CDmeDag
     // Stores a list of base poses for all the joint transforms
     CDmaElementArray< CDmeTransformList > m_BaseStates;
 
-   private:
+    private:
     enum SetupBoneRetval_t
     {
         NO_SKIN_DATA = 0,

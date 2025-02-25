@@ -26,7 +26,7 @@ DEFINE_KEYFIELD( m_displayText, FIELD_STRING, "display_text" ),
 
 CTrainingAnnotation::CTrainingAnnotation()
     : m_flLifetime( 1.0f ),
-      m_flVerticalOffset( 0.0f )
+    m_flVerticalOffset( 0.0f )
 {
 }
 

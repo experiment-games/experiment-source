@@ -24,7 +24,7 @@ class CTEBeamFollow : public CTEBaseBeam
 {
     DECLARE_CLASS( CTEBeamFollow, CTEBaseBeam );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CTEBeamFollow( const char* name );
@@ -32,7 +32,7 @@ class CTEBeamFollow : public CTEBaseBeam
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVar( int, m_iEntIndex );
 };
 

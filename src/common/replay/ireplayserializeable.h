@@ -21,7 +21,7 @@ class KeyValues;
 
 class IReplaySerializeable : public IBaseInterface
 {
-   public:
+    public:
     virtual void SetHandle( ReplayHandle_t h ) = 0;
     virtual ReplayHandle_t GetHandle() const = 0;
 

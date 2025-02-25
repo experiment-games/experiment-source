@@ -56,7 +56,7 @@ static ConVar r_flashlightdrawdepth( "r_flashlightdrawdepth", "0" );
 //-----------------------------------------------------------------------------
 class CLightmapDebugView : public CRendering3dView
 {
-   public:
+    public:
     CLightmapDebugView( CViewRender *pMainView )
         : CRendering3dView( pMainView ) {}
 

@@ -16,7 +16,7 @@ class CSpellPickup : public CTFPowerup
     DECLARE_CLASS( CSpellPickup, CTFPowerup )
     DECLARE_DATADESC();
 
-   public:
+    public:
     CSpellPickup();
 
     virtual void Spawn( void ) OVERRIDE;
@@ -35,7 +35,7 @@ class CSpellPickup : public CTFPowerup
         m_nTier = nTier;
     }
 
-   private:
+    private:
     int m_nTier;
 };
 

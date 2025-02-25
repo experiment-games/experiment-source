@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 class CStrangeCountTransferPanel : public vgui::EditablePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStrangeCountTransferPanel, vgui::EditablePanel );
     CStrangeCountTransferPanel( vgui::Panel *parent, CEconItemView *pToolItem );
     ~CStrangeCountTransferPanel( void );
@@ -42,7 +42,7 @@ class CStrangeCountTransferPanel : public vgui::EditablePanel, public CGameEvent
     MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
     MESSAGE_FUNC_PARAMS( OnSelectionReturned, "SelectionReturned", data );
 
-   private:
+    private:
     void UpdateOKButton();
 
     CTFTextToolTip *m_pToolTip;

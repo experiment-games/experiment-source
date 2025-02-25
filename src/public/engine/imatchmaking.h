@@ -78,7 +78,7 @@ struct MM_QOS_t
 
 abstract_class IMatchmaking
 {
-   public:
+    public:
     virtual void SessionNotification( const SESSION_NOTIFY notification, const int param = 0 ) = 0;
     virtual void AddSessionProperty( const uint nType, const char *pID, const char *pValue, const char *pValueType ) = 0;
     virtual void SetSessionProperties( KeyValues * pPropertyKeys ) = 0;

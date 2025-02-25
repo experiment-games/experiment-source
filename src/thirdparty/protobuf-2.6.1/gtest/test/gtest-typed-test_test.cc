@@ -204,20 +204,20 @@ typedef TypedTestCasePStateTest TypedTestCasePStateDeathTest;
 
 TEST_F(TypedTestCasePStateDeathTest, DetectsDuplicates) {
   EXPECT_DEATH_IF_SUPPORTED(
-      state_.VerifyRegisteredTestNames("foo.cc", 1, "A, B, A, C"),
-      "foo\\.cc.1.?: Test A is listed more than once\\.");
+    state_.VerifyRegisteredTestNames("foo.cc", 1, "A, B, A, C"),
+    "foo\\.cc.1.?: Test A is listed more than once\\.");
 }
 
 TEST_F(TypedTestCasePStateDeathTest, DetectsExtraTest) {
   EXPECT_DEATH_IF_SUPPORTED(
-      state_.VerifyRegisteredTestNames("foo.cc", 1, "A, B, C, D"),
-      "foo\\.cc.1.?: No test named D can be found in this test case\\.");
+    state_.VerifyRegisteredTestNames("foo.cc", 1, "A, B, C, D"),
+    "foo\\.cc.1.?: No test named D can be found in this test case\\.");
 }
 
 TEST_F(TypedTestCasePStateDeathTest, DetectsMissedTest) {
   EXPECT_DEATH_IF_SUPPORTED(
-      state_.VerifyRegisteredTestNames("foo.cc", 1, "A, C"),
-      "foo\\.cc.1.?: You forgot to list test B\\.");
+    state_.VerifyRegisteredTestNames("foo.cc", 1, "A, C"),
+    "foo\\.cc.1.?: You forgot to list test B\\.");
 }
 
 // Tests that defining a test for a parameterized test case generates
@@ -225,9 +225,9 @@ TEST_F(TypedTestCasePStateDeathTest, DetectsMissedTest) {
 TEST_F(TypedTestCasePStateDeathTest, DetectsTestAfterRegistration) {
   state_.VerifyRegisteredTestNames("foo.cc", 1, "A, B, C");
   EXPECT_DEATH_IF_SUPPORTED(
-      state_.AddTestName("foo.cc", 2, "FooTest", "D"),
-      "foo\\.cc.2.?: Test D must be defined before REGISTER_TYPED_TEST_CASE_P"
-      "\\(FooTest, \\.\\.\\.\\)\\.");
+    state_.AddTestName("foo.cc", 2, "FooTest", "D"),
+    "foo\\.cc.2.?: Test D must be defined before REGISTER_TYPED_TEST_CASE_P"
+    "\\(FooTest, \\.\\.\\.\\)\\.");
 }
 
 // Tests that SetUpTestCase()/TearDownTestCase(), fixture ctor/dtor,
@@ -260,7 +260,7 @@ TYPED_TEST_P(DerivedTest, ValuesAreStillCorrect) {
 }
 
 REGISTER_TYPED_TEST_CASE_P(DerivedTest,
-                           ValuesAreCorrect, ValuesAreStillCorrect);
+                            ValuesAreCorrect, ValuesAreStillCorrect);
 
 typedef Types<short, long> MyTwoTypes;
 INSTANTIATE_TYPED_TEST_CASE_P(My, DerivedTest, MyTwoTypes);
@@ -339,7 +339,7 @@ TYPED_TEST_P(NumericTest, ZeroIsLessThanOne) {
 }
 
 REGISTER_TYPED_TEST_CASE_P(NumericTest,
-                           DefaultIsZero, ZeroIsLessThanOne);
+                            DefaultIsZero, ZeroIsLessThanOne);
 typedef Types<int, double> NumericTypes;
 INSTANTIATE_TYPED_TEST_CASE_P(My, NumericTest, NumericTypes);
 

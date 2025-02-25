@@ -1060,7 +1060,7 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
     }
 
     if ( ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_TERRITORY_CONTROL ) &&
-         pOther->GetTeamNumber() != GetTeamNumber() )
+        pOther->GetTeamNumber() != GetTeamNumber() )
     {
         return;
     }
@@ -1231,7 +1231,7 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
     if ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SPY && m_nType != TF_FLAGTYPE_PLAYER_DESTRUCTION )
     {
         if ( pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) ||
-             pPlayer->m_Shared.InCond( TF_COND_DISGUISING ) )
+            pPlayer->m_Shared.InCond( TF_COND_DISGUISING ) )
         {
             pPlayer->m_Shared.RemoveDisguise();
         }

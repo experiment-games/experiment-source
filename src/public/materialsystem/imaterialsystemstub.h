@@ -18,7 +18,7 @@
 
 class IMaterialSystemStub : public IMaterialSystem
 {
-   public:
+    public:
     // If this is called, then the stub will call through to the real material
     // system in some functions.
     virtual void SetRealMaterialSystem( IMaterialSystem *pSys ) = 0;

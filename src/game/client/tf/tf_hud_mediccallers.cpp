@@ -285,8 +285,8 @@ void CTFMedicCallerPanel::OnTick( void )
             {
                 // If we're pointing to an enemy spy and they are no longer disguised, remove ourselves
                 if ( pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) &&
-                     pTFPlayer->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() &&
-                     !( pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == pLocalTFPlayer->GetTeamNumber() ) )
+                    pTFPlayer->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() &&
+                    !( pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == pLocalTFPlayer->GetTeamNumber() ) )
                 {
                     MarkForDeletion();
                     return;

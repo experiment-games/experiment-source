@@ -125,7 +125,7 @@ RAPIDJSON_DIAG_OFF( 4512 )  // assignment operator could not be generated
 template < typename InputStream, typename Encoding = UTF8<> >
 class GenericStreamWrapper
 {
-   public:
+    public:
     typedef typename Encoding::Ch Ch;
     GenericStreamWrapper( InputStream& is )
         : is_( is ) {}
@@ -175,7 +175,7 @@ class GenericStreamWrapper
         return is_.HasBOM();
     }
 
-   protected:
+    protected:
     InputStream& is_;
 };
 

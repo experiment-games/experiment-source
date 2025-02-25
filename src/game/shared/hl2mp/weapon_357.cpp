@@ -29,7 +29,7 @@ class CWeapon357 : public CBaseHL2MPCombatWeapon
 {
     DECLARE_CLASS( CWeapon357, CBaseHL2MPCombatWeapon );
 
-   public:
+    public:
     CWeapon357( void );
 
     void PrimaryAttack( void );
@@ -40,7 +40,7 @@ class CWeapon357 : public CBaseHL2MPCombatWeapon
     DECLARE_ACTTABLE();
 #endif
 
-   private:
+    private:
     CWeapon357( const CWeapon357 & );
 };
 

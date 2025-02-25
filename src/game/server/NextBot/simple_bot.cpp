@@ -100,7 +100,7 @@ void CSimpleBot::Spawn( void )
  */
 class SelectNthAreaFunctor
 {
-   public:
+    public:
     SelectNthAreaFunctor( int count )
     {
         m_count = count;
@@ -126,7 +126,7 @@ class SelectNthAreaFunctor
  */
 class CSimpleBotRoam : public Action< CSimpleBot >
 {
-   public:
+    public:
     //----------------------------------------------------------------------------------
     // OnStart is called once when the Action first becomes active
     virtual ActionResult< CSimpleBot > OnStart( CSimpleBot *me, Action< CSimpleBot > *priorAction )
@@ -179,7 +179,7 @@ class CSimpleBotRoam : public Action< CSimpleBot >
         return "Roam";
     }  // return name of this action
 
-   private:
+    private:
     PathFollower m_path;
     CountdownTimer m_timer;
 };

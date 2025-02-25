@@ -134,27 +134,27 @@ bool CAI_BaseHumanoid::OnMoveBlocked( AIMoveResult_t *pResult )
         float massBonus = ( IsNavigationUrgent() ) ? 40.0 : 0;
 
         if ( pBlocker->GetMoveType() == MOVETYPE_VPHYSICS &&
-             pBlocker != GetGroundEntity() &&
-             !pBlocker->IsNavIgnored() &&
-             !dynamic_cast< CBasePropDoor * >( pBlocker ) &&
-             pBlocker->VPhysicsGetObject() &&
-             pBlocker->VPhysicsGetObject()->IsMoveable() &&
-             ( pBlocker->VPhysicsGetObject()->GetMass() <= 35.0 + massBonus + 0.1 ||
-               ( pBlocker->VPhysicsGetObject()->GetMass() <= 50.0 + massBonus + 0.1 && IsSmall( pBlocker ) ) ) )
+            pBlocker != GetGroundEntity() &&
+            !pBlocker->IsNavIgnored() &&
+            !dynamic_cast< CBasePropDoor * >( pBlocker ) &&
+            pBlocker->VPhysicsGetObject() &&
+            pBlocker->VPhysicsGetObject()->IsMoveable() &&
+            ( pBlocker->VPhysicsGetObject()->GetMass() <= 35.0 + massBonus + 0.1 ||
+                ( pBlocker->VPhysicsGetObject()->GetMass() <= 50.0 + massBonus + 0.1 && IsSmall( pBlocker ) ) ) )
         {
             DbgNavMsg1( this, "Setting ignore on object %s", pBlocker->GetDebugName() );
             pBlocker->SetNavIgnore( 2.5 );
         }
 #if 0
-		else
-		{
-			CPhysicsProp *pProp = dynamic_cast<CPhysicsProp*>( pBlocker );
-			if ( pProp && pProp->GetHealth() && pProp->GetExplosiveDamage() == 0.0 && GetActiveWeapon() && !GetActiveWeapon()->ClassMatches( "weapon_rpg" ) )
-			{
-				Msg( "!\n" );
-				// Destroy!
-			}
-		}
+        else
+        {
+            CPhysicsProp *pProp = dynamic_cast<CPhysicsProp*>( pBlocker );
+            if ( pProp && pProp->GetHealth() && pProp->GetExplosiveDamage() == 0.0 && GetActiveWeapon() && !GetActiveWeapon()->ClassMatches( "weapon_rpg" ) )
+            {
+                Msg( "!\n" );
+                // Destroy!
+            }
+        }
 #endif
     }
 
@@ -278,8 +278,8 @@ void CAI_BaseHumanoid::RunTaskRangeAttack1( const Task_t *pTask )
     if ( vecEnemyLKP != vec3_origin )
     {
         if ( ( pTask->iTask == TASK_RANGE_ATTACK1 || pTask->iTask == TASK_RELOAD ) &&
-             ( CapabilitiesGet() & bits_CAP_AIM_GUN ) &&
-             FInAimCone( vecEnemyLKP ) )
+            ( CapabilitiesGet() & bits_CAP_AIM_GUN ) &&
+            FInAimCone( vecEnemyLKP ) )
         {
             // Arms will aim, so leave body yaw as is
             GetMotor()->SetIdealYawAndUpdate( GetMotor()->GetIdealYaw(), AI_KEEP_YAW_SPEED );

@@ -45,7 +45,7 @@ class CWeaponFrag : public CBaseHL2MPCombatWeapon
 {
     DECLARE_CLASS( CWeaponFrag, CBaseHL2MPCombatWeapon );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
@@ -72,7 +72,7 @@ class CWeaponFrag : public CBaseHL2MPCombatWeapon
         return ( m_AttackPaused != 0 );
     }
 
-   private:
+    private:
     void RollGrenade( CBasePlayer *pPlayer );
     void LobGrenade( CBasePlayer *pPlayer );
     // check a throw from vecSrc.  If not valid, move the position back along the line to vecEye

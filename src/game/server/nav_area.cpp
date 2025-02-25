@@ -467,7 +467,7 @@ void CNavArea::GetNodes( NavDirType dir, CUtlVector< CNavNode * > *nodes ) const
 //--------------------------------------------------------------------------------------------------------------
 class ForgetArea
 {
-   public:
+    public:
     ForgetArea( CNavArea *area )
     {
         m_area = area;
@@ -495,7 +495,7 @@ class AreaDestroyNotification
 {
     CNavArea *m_area;
 
-   public:
+    public:
     AreaDestroyNotification( CNavArea *area )
     {
         m_area = area;
@@ -633,11 +633,11 @@ void CNavArea::ConnectElevators( void )
                         else
                         {
                             Warning( "Floor %d ('%s') of elevator at ( %3.2f, %3.2f, %3.2f ) has no matching navigation areas\n",
-                                     of,
-                                     otherFloor->name.ToCStr(),
-                                     elevator->GetAbsOrigin().x,
-                                     elevator->GetAbsOrigin().y,
-                                     elevator->GetAbsOrigin().z );
+                                    of,
+                                    otherFloor->name.ToCStr(),
+                                    elevator->GetAbsOrigin().x,
+                                    elevator->GetAbsOrigin().y,
+                                    elevator->GetAbsOrigin().z );
                         }
                     }
 
@@ -934,7 +934,7 @@ class LadderConnectionReplacement
     CNavArea *m_originalArea;
     CNavArea *m_replacementArea;
 
-   public:
+    public:
     LadderConnectionReplacement( CNavArea *originalArea, CNavArea *replacementArea )
     {
         m_originalArea = originalArea;
@@ -1067,7 +1067,7 @@ class SplitNotification
     CNavArea *m_alphaArea;
     CNavArea *m_betaArea;
 
-   public:
+    public:
     SplitNotification( CNavArea *originalArea, CNavArea *alphaArea, CNavArea *betaArea )
     {
         m_originalArea = originalArea;
@@ -1274,9 +1274,9 @@ bool CNavArea::IsConnected( const CNavArea *area, NavDirType dir ) const
             CNavLadder *ladder = m_ladder[CNavLadder::LADDER_UP][it].ladder;
 
             if ( ladder->m_topBehindArea == area ||
-                 ladder->m_topForwardArea == area ||
-                 ladder->m_topLeftArea == area ||
-                 ladder->m_topRightArea == area )
+                ladder->m_topForwardArea == area ||
+                ladder->m_topLeftArea == area ||
+                ladder->m_topRightArea == area )
                 return true;
         }
 
@@ -1698,11 +1698,11 @@ bool CNavArea::MergeEdit( CNavArea *adj )
     const float tolerance = 1.0f;
     bool merge = false;
     if ( fabs( m_nwCorner.x - adj->m_nwCorner.x ) < tolerance &&
-         fabs( m_seCorner.x - adj->m_seCorner.x ) < tolerance )
+        fabs( m_seCorner.x - adj->m_seCorner.x ) < tolerance )
         merge = true;
 
     if ( fabs( m_nwCorner.y - adj->m_nwCorner.y ) < tolerance &&
-         fabs( m_seCorner.y - adj->m_seCorner.y ) < tolerance )
+        fabs( m_seCorner.y - adj->m_seCorner.y ) < tolerance )
         merge = true;
 
     if ( merge == false )
@@ -1839,7 +1839,7 @@ bool CNavArea::IsRoughlySquare( void ) const
 bool CNavArea::IsOverlapping( const Vector &pos, float tolerance ) const
 {
     if ( pos.x + tolerance >= m_nwCorner.x && pos.x - tolerance <= m_seCorner.x &&
-         pos.y + tolerance >= m_nwCorner.y && pos.y - tolerance <= m_seCorner.y )
+        pos.y + tolerance >= m_nwCorner.y && pos.y - tolerance <= m_seCorner.y )
         return true;
 
     return false;
@@ -1852,7 +1852,7 @@ bool CNavArea::IsOverlapping( const Vector &pos, float tolerance ) const
 bool CNavArea::IsOverlapping( const CNavArea *area ) const
 {
     if ( area->m_nwCorner.x < m_seCorner.x && area->m_seCorner.x > m_nwCorner.x &&
-         area->m_nwCorner.y < m_seCorner.y && area->m_seCorner.y > m_nwCorner.y )
+        area->m_nwCorner.y < m_seCorner.y && area->m_seCorner.y > m_nwCorner.y )
         return true;
 
     return false;
@@ -1865,7 +1865,7 @@ bool CNavArea::IsOverlapping( const CNavArea *area ) const
 bool CNavArea::IsOverlapping( const Extent &extent ) const
 {
     return ( extent.lo.x < m_seCorner.x && extent.hi.x > m_nwCorner.x &&
-             extent.lo.y < m_seCorner.y && extent.hi.y > m_nwCorner.y );
+            extent.lo.y < m_seCorner.y && extent.hi.y > m_nwCorner.y );
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -1895,7 +1895,7 @@ bool CNavArea::IsOverlappingY( const CNavArea *area ) const
 //--------------------------------------------------------------------------------------------------------------
 class COverlapCheck
 {
-   public:
+    public:
     COverlapCheck( const CNavArea *me, const Vector &pos )
         : m_pos( pos )
     {
@@ -1966,8 +1966,8 @@ bool CNavArea::Contains( const Vector &pos ) const
 bool CNavArea::Contains( const CNavArea *area ) const
 {
     return ( ( m_nwCorner.x <= area->m_nwCorner.x ) && ( m_seCorner.x >= area->m_seCorner.x ) &&
-             ( m_nwCorner.y <= area->m_nwCorner.y ) && ( m_seCorner.y >= area->m_seCorner.y ) &&
-             ( m_nwCorner.z <= area->m_nwCorner.z ) && ( m_seCorner.z >= area->m_seCorner.z ) );
+            ( m_nwCorner.y <= area->m_nwCorner.y ) && ( m_seCorner.y >= area->m_seCorner.y ) &&
+            ( m_nwCorner.z <= area->m_nwCorner.z ) && ( m_seCorner.z >= area->m_seCorner.z ) );
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -2036,9 +2036,9 @@ bool CNavArea::IsFlat( void ) const
 
     float tolerance = nav_coplanar_slope_limit.GetFloat();
     if ( ( m_node[NORTH_WEST] && m_node[NORTH_WEST]->IsOnDisplacement() ) ||
-         ( m_node[NORTH_EAST] && m_node[NORTH_EAST]->IsOnDisplacement() ) ||
-         ( m_node[SOUTH_EAST] && m_node[SOUTH_EAST]->IsOnDisplacement() ) ||
-         ( m_node[SOUTH_WEST] && m_node[SOUTH_WEST]->IsOnDisplacement() ) )
+        ( m_node[NORTH_EAST] && m_node[NORTH_EAST]->IsOnDisplacement() ) ||
+        ( m_node[SOUTH_EAST] && m_node[SOUTH_EAST]->IsOnDisplacement() ) ||
+        ( m_node[SOUTH_WEST] && m_node[SOUTH_WEST]->IsOnDisplacement() ) )
     {
         tolerance = nav_coplanar_slope_limit_displacement.GetFloat();
     }
@@ -2081,9 +2081,9 @@ bool CNavArea::IsCoplanar( const CNavArea *area ) const
     // can only merge areas that are nearly planar, to ensure areas do not differ from underlying geometry much
     float tolerance = nav_coplanar_slope_limit.GetFloat();
     if ( ( m_node[NORTH_WEST] && m_node[NORTH_WEST]->IsOnDisplacement() ) ||
-         ( m_node[NORTH_EAST] && m_node[NORTH_EAST]->IsOnDisplacement() ) ||
-         ( m_node[SOUTH_EAST] && m_node[SOUTH_EAST]->IsOnDisplacement() ) ||
-         ( m_node[SOUTH_WEST] && m_node[SOUTH_WEST]->IsOnDisplacement() ) )
+        ( m_node[NORTH_EAST] && m_node[NORTH_EAST]->IsOnDisplacement() ) ||
+        ( m_node[SOUTH_EAST] && m_node[SOUTH_EAST]->IsOnDisplacement() ) ||
+        ( m_node[SOUTH_WEST] && m_node[SOUTH_WEST]->IsOnDisplacement() ) )
     {
         tolerance = nav_coplanar_slope_limit_displacement.GetFloat();
     }
@@ -2113,7 +2113,7 @@ float CNavArea::GetZ( float x, float y ) const RESTRICT
     //
     // oddly, the compiler isn't smart enough to do this on its own
     if ( *reinterpret_cast< const unsigned * >( &m_invDxCorners ) == 0 ||
-         *reinterpret_cast< const unsigned * >( &m_invDyCorners ) == 0 )
+        *reinterpret_cast< const unsigned * >( &m_invDyCorners ) == 0 )
         return m_neZ;
 #else
     if ( m_invDxCorners == 0.0f || m_invDyCorners == 0.0f )
@@ -2424,15 +2424,15 @@ void CNavArea::ComputeClosestPointInPortal( const CNavArea *to, NavDirType dir, 
         // no good - need to push into to area for margins
         /*
         if (left < m_nwCorner.x)
-          left = m_nwCorner.x;
+        left = m_nwCorner.x;
         else if (left > m_seCorner.x)
-          left = m_seCorner.x;
+        left = m_seCorner.x;
 
         if (right < m_nwCorner.x)
-          right = m_nwCorner.x;
+        right = m_nwCorner.x;
         else if (right > m_seCorner.x)
-          right = m_seCorner.x;
-          */
+        right = m_seCorner.x;
+        */
 
         // keep margin if against edge
         /// @todo Need better check whether edge is outer edge or not - partial overlap is missed
@@ -2480,14 +2480,14 @@ void CNavArea::ComputeClosestPointInPortal( const CNavArea *to, NavDirType dir, 
         // no good - need to push into to area for margins
         /*
         if (top < m_nwCorner.y)
-          top = m_nwCorner.y;
+        top = m_nwCorner.y;
         else if (top > m_seCorner.y)
-          top = m_seCorner.y;
+        top = m_seCorner.y;
 
         if (bottom < m_nwCorner.y)
-          bottom = m_nwCorner.y;
+        bottom = m_nwCorner.y;
         else if (bottom > m_seCorner.y)
-          bottom = m_seCorner.y;
+        bottom = m_seCorner.y;
         */
 
         // keep margin if against edge
@@ -2949,8 +2949,8 @@ void CNavArea::Draw( void ) const
                 float x = m_nwCorner.x + t * GetSizeX();
 
                 NavDrawLine( Vector( x, m_nwCorner.y, GetZ( x, m_nwCorner.y ) ),
-                             Vector( x, m_seCorner.y, GetZ( x, m_seCorner.y ) ),
-                             color );
+                            Vector( x, m_seCorner.y, GetZ( x, m_seCorner.y ) ),
+                            color );
             }
         }
         else
@@ -2962,8 +2962,8 @@ void CNavArea::Draw( void ) const
                 float y = m_nwCorner.y + t * GetSizeY();
 
                 NavDrawLine( Vector( m_nwCorner.x, y, GetZ( m_nwCorner.x, y ) ),
-                             Vector( m_seCorner.x, y, GetZ( m_seCorner.x, y ) ),
-                             color );
+                            Vector( m_seCorner.x, y, GetZ( m_seCorner.x, y ) ),
+                            color );
             }
         }
     }
@@ -4902,11 +4902,11 @@ void CNavArea::CheckFloor( CBaseEntity *ignore )
     /*
     if ( IsBlocked( TEAM_ANY ) )
     {
-      NDebugOverlay::Box( origin, mins, maxs, 255, 0, 0, 64, 3.0f );
+    NDebugOverlay::Box( origin, mins, maxs, 255, 0, 0, 64, 3.0f );
     }
     else
     {
-      NDebugOverlay::Box( origin, mins, maxs, 0, 255, 0, 64, 3.0f );
+    NDebugOverlay::Box( origin, mins, maxs, 0, 255, 0, 64, 3.0f );
     }
     */
 }
@@ -5371,7 +5371,7 @@ const CNavArea::CAreaBindInfoArray &CNavArea::ComputeVisibilityDelta( const CNav
             for ( j = 0; j < other->m_potentiallyVisibleAreas.Count(); ++j )
             {
                 if ( m_potentiallyVisibleAreas[i].area == other->m_potentiallyVisibleAreas[j].area &&
-                     m_potentiallyVisibleAreas[i].attributes == other->m_potentiallyVisibleAreas[j].attributes )
+                    m_potentiallyVisibleAreas[i].attributes == other->m_potentiallyVisibleAreas[j].attributes )
                 {
                     // mutually identically visible
                     break;

@@ -31,7 +31,7 @@ class CConfirmGiftWrapDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmGiftWrapDialog, CBaseToolUsageDialog );
 
-   public:
+    public:
     CConfirmGiftWrapDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject );
 
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -43,13 +43,13 @@ class CConfirmGiftWrapDialog : public CBaseToolUsageDialog
 //-----------------------------------------------------------------------------
 class CWaitForGiftWrapDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitForGiftWrapDialog( vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         // Play an exciting sound!
@@ -137,7 +137,7 @@ void CEconTool_GiftWrap::OnClientApplyTool( CEconItemView *pTool, CEconItemView 
 //-----------------------------------------------------------------------------
 class CGCGiftGivenResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCGiftGivenResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -180,7 +180,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCGiftGivenResponse, "CGCGiftGivenResponse", k_EM
 //-----------------------------------------------------------------------------
 class CGCGiftReceivedResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCGiftReceivedResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -201,13 +201,13 @@ GC_REG_JOB( GCSDK::CGCClient, CGCGiftReceivedResponse, "CGCGiftReceivedResponse"
 //-----------------------------------------------------------------------------
 class CWaitForGiftUnwrapDialog : public CGenericWaitingDialog
 {
-   public:
+    public:
     CWaitForGiftUnwrapDialog( vgui::Panel *pParent )
         : CGenericWaitingDialog( pParent )
     {
     }
 
-   protected:
+    protected:
     virtual void OnTimeout()
     {
         // Play an exciting sound!

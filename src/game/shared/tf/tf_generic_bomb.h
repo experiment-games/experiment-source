@@ -17,7 +17,7 @@ class CTFGenericBombShim : public CBaseAnimating
 {
     virtual void GenericTouch( CBaseEntity *pOther ) = 0;
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther )
     {
         return GenericTouch( pOther );
@@ -37,7 +37,7 @@ class CTFGenericBomb : public CTFGenericBombShim, public ITFGenericBomb
         DAMAGE_EVERYONE
     };
 
-   public:
+    public:
     CTFGenericBomb();
     ~CTFGenericBomb() {}
 
@@ -55,7 +55,7 @@ class CTFGenericBomb : public CTFGenericBombShim, public ITFGenericBomb
     }
 #endif
 
-   private:
+    private:
 #ifdef GAME_DLL
     void Detonate( inputdata_t &inputdata );
     COutputEvent m_OnDetonate;

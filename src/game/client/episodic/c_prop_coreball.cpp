@@ -12,7 +12,7 @@ class C_PropCoreBall : public C_BaseAnimating
     DECLARE_CLIENTCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     C_PropCoreBall();
 
     void ApplyBoneMatrixTransform( matrix3x4_t &transform );
@@ -33,7 +33,7 @@ class C_PropCoreBall : public C_BaseAnimating
     bool m_bRunningScale[3];
     float m_flTargetScale[3];
 
-   private:
+    private:
 };
 
 void RecvProxy_ScaleX( const CRecvProxyData *pData, void *pStruct, void *pOut )

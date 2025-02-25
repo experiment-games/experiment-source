@@ -135,7 +135,7 @@ static ConCommand SetDebugFilter( "nb_debug_filter", CC_SetDebugFilter, "Add ite
 //---------------------------------------------------------------------------------------------
 class Selector
 {
-   public:
+    public:
     Selector( CBasePlayer *player, bool useLOS )
     {
         m_player = player;
@@ -517,7 +517,7 @@ void NextBotManager::OnBeginChangeLevel( void )
 //----------------------------------------------------------------------------------------------------------
 class NextBotKilledNotifyScan
 {
-   public:
+    public:
     NextBotKilledNotifyScan( CBaseCombatCharacter *victim, const CTakeDamageInfo &info )
     {
         m_victim = victim;
@@ -550,7 +550,7 @@ void NextBotManager::OnKilled( CBaseCombatCharacter *victim, const CTakeDamageIn
 //----------------------------------------------------------------------------------------------------------
 class NextBotSoundNotifyScan
 {
-   public:
+    public:
     NextBotSoundNotifyScan( CBaseEntity *source, const Vector &pos, KeyValues *keys )
         : m_source( source ), m_pos( pos ), m_keys( keys )
     {
@@ -607,7 +607,7 @@ void NextBotManager::OnSound( CBaseEntity *source, const Vector &pos, KeyValues 
 //----------------------------------------------------------------------------------------------------------
 class NextBotResponseNotifyScan
 {
-   public:
+    public:
     NextBotResponseNotifyScan( CBaseCombatCharacter *who, AIConcept_t concept, AI_Response *response )
         : m_who( who ), m_concept( concept ), m_response( response )
     {
@@ -648,7 +648,7 @@ void NextBotManager::OnSpokeConcept( CBaseCombatCharacter *who, AIConcept_t conc
 //----------------------------------------------------------------------------------------------------------
 class NextBotWeaponFiredNotifyScan
 {
-   public:
+    public:
     NextBotWeaponFiredNotifyScan( CBaseCombatCharacter *who, CBaseCombatWeapon *weapon )
         : m_who( who ), m_weapon( weapon )
     {
@@ -735,7 +735,7 @@ void NextBotManager::DebugFilterRemove( const char *name )
     for ( int i = 0; i < m_debugFilterList.Count(); ++i )
     {
         if ( m_debugFilterList[i].name[0] != '\000' &&
-             !Q_strnicmp( name, m_debugFilterList[i].name, MIN( Q_strlen( name ), sizeof( m_debugFilterList[i].name ) ) ) )
+            !Q_strnicmp( name, m_debugFilterList[i].name, MIN( Q_strlen( name ), sizeof( m_debugFilterList[i].name ) ) ) )
         {
             m_debugFilterList.Remove( i );
             break;

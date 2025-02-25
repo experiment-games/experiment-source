@@ -70,17 +70,17 @@ import java.util.Stack;
 class RopeByteString extends ByteString {
 
   /**
-   * BAP95. Let Fn be the nth Fibonacci number. A {@link RopeByteString} of
-   * depth n is "balanced", i.e flat enough, if its length is at least Fn+2,
-   * e.g. a "balanced" {@link RopeByteString} of depth 1 must have length at
-   * least 2, of depth 4 must have length >= 8, etc.
-   *
-   * <p>There's nothing special about using the Fibonacci numbers for this, but
-   * they are a reasonable sequence for encapsulating the idea that we are OK
-   * with longer strings being encoded in deeper binary trees.
-   *
-   * <p>For 32-bit integers, this array has length 46.
-   */
+    * BAP95. Let Fn be the nth Fibonacci number. A {@link RopeByteString} of
+    * depth n is "balanced", i.e flat enough, if its length is at least Fn+2,
+    * e.g. a "balanced" {@link RopeByteString} of depth 1 must have length at
+    * least 2, of depth 4 must have length >= 8, etc.
+    *
+    * <p>There's nothing special about using the Fibonacci numbers for this, but
+    * they are a reasonable sequence for encapsulating the idea that we are OK
+    * with longer strings being encoded in deeper binary trees.
+    *
+    * <p>For 32-bit integers, this array has length 46.
+    */
   private static final int[] minLengthByDepth;
 
   static {
@@ -95,10 +95,10 @@ class RopeByteString extends ByteString {
 
     // get all the values until we roll over.
     while (f2 > 0) {
-      numbers.add(f2);
-      int temp = f1 + f2;
-      f1 = f2;
-      f2 = temp;
+    numbers.add(f2);
+    int temp = f1 + f2;
+    f1 = f2;
+    f2 = temp;
     }
 
     // we include this here so that we can index this array to [x + 1] in the
@@ -106,8 +106,8 @@ class RopeByteString extends ByteString {
     numbers.add(Integer.MAX_VALUE);
     minLengthByDepth = new int[numbers.size()];
     for (int i = 0; i < minLengthByDepth.length; i++) {
-      // unbox all the values
-      minLengthByDepth[i] = numbers.get(i);
+    // unbox all the values
+    minLengthByDepth[i] = numbers.get(i);
     }
   }
 
@@ -118,14 +118,14 @@ class RopeByteString extends ByteString {
   private final int treeDepth;
 
   /**
-   * Create a new RopeByteString, which can be thought of as a new tree node, by
-   * recording references to the two given strings.
-   *
-   * @param left  string on the left of this node, should have {@code size() >
-   *              0}
-   * @param right string on the right of this node, should have {@code size() >
-   *              0}
-   */
+    * Create a new RopeByteString, which can be thought of as a new tree node, by
+    * recording references to the two given strings.
+    *
+    * @param left  string on the left of this node, should have {@code size() >
+    *              0}
+    * @param right string on the right of this node, should have {@code size() >
+    *              0}
+    */
   private RopeByteString(ByteString left, ByteString right) {
     this.left = left;
     this.right = right;
@@ -135,35 +135,35 @@ class RopeByteString extends ByteString {
   }
 
   /**
-   * Concatenate the given strings while performing various optimizations to
-   * slow the growth rate of tree depth and tree node count. The result is
-   * either a {@link LiteralByteString} or a {@link RopeByteString}
-   * depending on which optimizations, if any, were applied.
-   *
-   * <p>Small pieces of length less than {@link
-   * ByteString#CONCATENATE_BY_COPY_SIZE} may be copied by value here, as in
-   * BAP95.  Large pieces are referenced without copy.
-   *
-   * @param left  string on the left
-   * @param right string on the right
-   * @return concatenation representing the same sequence as the given strings
-   */
+    * Concatenate the given strings while performing various optimizations to
+    * slow the growth rate of tree depth and tree node count. The result is
+    * either a {@link LiteralByteString} or a {@link RopeByteString}
+    * depending on which optimizations, if any, were applied.
+    *
+    * <p>Small pieces of length less than {@link
+    * ByteString#CONCATENATE_BY_COPY_SIZE} may be copied by value here, as in
+    * BAP95.  Large pieces are referenced without copy.
+    *
+    * @param left  string on the left
+    * @param right string on the right
+    * @return concatenation representing the same sequence as the given strings
+    */
   static ByteString concatenate(ByteString left, ByteString right) {
     ByteString result;
     RopeByteString leftRope =
         (left instanceof RopeByteString) ? (RopeByteString) left : null;
     if (right.size() == 0) {
-      result = left;
+    result = left;
     } else if (left.size() == 0) {
-      result = right;
+    result = right;
     } else {
-      int newLength = left.size() + right.size();
-      if (newLength < ByteString.CONCATENATE_BY_COPY_SIZE) {
+    int newLength = left.size() + right.size();
+    if (newLength < ByteString.CONCATENATE_BY_COPY_SIZE) {
         // Optimization from BAP95: For short (leaves in paper, but just short
         // here) total length, do a copy of data to a new leaf.
         result = concatenateBytes(left, right);
-      } else if (leftRope != null
-          && leftRope.right.size() + right.size() < CONCATENATE_BY_COPY_SIZE) {
+    } else if (leftRope != null
+        && leftRope.right.size() + right.size() < CONCATENATE_BY_COPY_SIZE) {
         // Optimization from BAP95: As an optimization of the case where the
         // ByteString is constructed by repeated concatenate, recognize the case
         // where a short string is concatenated to a left-hand node whose
@@ -176,9 +176,9 @@ class RopeByteString extends ByteString {
         // given left tree.
         ByteString newRight = concatenateBytes(leftRope.right, right);
         result = new RopeByteString(leftRope.left, newRight);
-      } else if (leftRope != null
-          && leftRope.left.getTreeDepth() > leftRope.right.getTreeDepth()
-          && leftRope.getTreeDepth() > right.getTreeDepth()) {
+    } else if (leftRope != null
+        && leftRope.left.getTreeDepth() > leftRope.right.getTreeDepth()
+        && leftRope.getTreeDepth() > right.getTreeDepth()) {
         // Typically for concatenate-built strings the left-side is deeper than
         // the right.  This is our final attempt to concatenate without
         // increasing the tree depth.  We'll redo the the node on the RHS.  This
@@ -186,31 +186,31 @@ class RopeByteString extends ByteString {
         // concatenating on the right.
         ByteString newRight = new RopeByteString(leftRope.right, right);
         result = new RopeByteString(leftRope.left, newRight);
-      } else {
+    } else {
         // Fine, we'll add a node and increase the tree depth--unless we
         // rebalance ;^)
         int newDepth = Math.max(left.getTreeDepth(), right.getTreeDepth()) + 1;
         if (newLength >= minLengthByDepth[newDepth]) {
-          // The tree is shallow enough, so don't rebalance
-          result = new RopeByteString(left, right);
+        // The tree is shallow enough, so don't rebalance
+        result = new RopeByteString(left, right);
         } else {
-          result = new Balancer().balance(left, right);
+        result = new Balancer().balance(left, right);
         }
-      }
+    }
     }
     return result;
   }
 
   /**
-   * Concatenates two strings by copying data values. This is called in a few
-   * cases in order to reduce the growth of the number of tree nodes.
-   *
-   * @param left  string on the left
-   * @param right string on the right
-   * @return string formed by copying data bytes
-   */
+    * Concatenates two strings by copying data values. This is called in a few
+    * cases in order to reduce the growth of the number of tree nodes.
+    *
+    * @param left  string on the left
+    * @param right string on the right
+    * @return string formed by copying data bytes
+    */
   private static LiteralByteString concatenateBytes(ByteString left,
-      ByteString right) {
+    ByteString right) {
     int leftSize = left.size();
     int rightSize = right.size();
     byte[] bytes = new byte[leftSize + rightSize];
@@ -220,46 +220,46 @@ class RopeByteString extends ByteString {
   }
 
   /**
-   * Create a new RopeByteString for testing only while bypassing all the
-   * defenses of {@link #concatenate(ByteString, ByteString)}. This allows
-   * testing trees of specific structure. We are also able to insert empty
-   * leaves, though these are dis-allowed, so that we can make sure the
-   * implementation can withstand their presence.
-   *
-   * @param left  string on the left of this node
-   * @param right string on the right of this node
-   * @return an unsafe instance for testing only
-   */
+    * Create a new RopeByteString for testing only while bypassing all the
+    * defenses of {@link #concatenate(ByteString, ByteString)}. This allows
+    * testing trees of specific structure. We are also able to insert empty
+    * leaves, though these are dis-allowed, so that we can make sure the
+    * implementation can withstand their presence.
+    *
+    * @param left  string on the left of this node
+    * @param right string on the right of this node
+    * @return an unsafe instance for testing only
+    */
   static RopeByteString newInstanceForTest(ByteString left, ByteString right) {
     return new RopeByteString(left, right);
   }
 
   /**
-   * Gets the byte at the given index.
-   * Throws {@link ArrayIndexOutOfBoundsException} for backwards-compatibility
-   * reasons although it would more properly be {@link
-   * IndexOutOfBoundsException}.
-   *
-   * @param index index of byte
-   * @return the value
-   * @throws ArrayIndexOutOfBoundsException {@code index} is < 0 or >= size
-   */
+    * Gets the byte at the given index.
+    * Throws {@link ArrayIndexOutOfBoundsException} for backwards-compatibility
+    * reasons although it would more properly be {@link
+    * IndexOutOfBoundsException}.
+    *
+    * @param index index of byte
+    * @return the value
+    * @throws ArrayIndexOutOfBoundsException {@code index} is < 0 or >= size
+    */
   @Override
   public byte byteAt(int index) {
     if (index < 0) {
-      throw new ArrayIndexOutOfBoundsException("Index < 0: " + index);
+    throw new ArrayIndexOutOfBoundsException("Index < 0: " + index);
     }
     if (index > totalLength) {
-      throw new ArrayIndexOutOfBoundsException(
-          "Index > length: " + index + ", " + totalLength);
+    throw new ArrayIndexOutOfBoundsException(
+        "Index > length: " + index + ", " + totalLength);
     }
 
     byte result;
     // Find the relevant piece by recursive descent
     if (index < leftLength) {
-      result = left.byteAt(index);
+    result = left.byteAt(index);
     } else {
-      result = right.byteAt(index - leftLength);
+    result = right.byteAt(index - leftLength);
     }
     return result;
   }
@@ -278,67 +278,67 @@ class RopeByteString extends ByteString {
   }
 
   /**
-   * Determines if the tree is balanced according to BAP95, which means the tree
-   * is flat-enough with respect to the bounds. Note that this definition of
-   * balanced is one where sub-trees of balanced trees are not necessarily
-   * balanced.
-   *
-   * @return true if the tree is balanced
-   */
+    * Determines if the tree is balanced according to BAP95, which means the tree
+    * is flat-enough with respect to the bounds. Note that this definition of
+    * balanced is one where sub-trees of balanced trees are not necessarily
+    * balanced.
+    *
+    * @return true if the tree is balanced
+    */
   @Override
   protected boolean isBalanced() {
     return totalLength >= minLengthByDepth[treeDepth];
   }
 
   /**
-   * Takes a substring of this one. This involves recursive descent along the
-   * left and right edges of the substring, and referencing any wholly contained
-   * segments in between. Any leaf nodes entirely uninvolved in the substring
-   * will not be referenced by the substring.
-   *
-   * <p>Substrings of {@code length < 2} should result in at most a single
-   * recursive call chain, terminating at a leaf node. Thus the result will be a
-   * {@link LiteralByteString}. {@link #RopeByteString(ByteString,
-   * ByteString)}.
-   *
-   * @param beginIndex start at this index
-   * @param endIndex   the last character is the one before this index
-   * @return substring leaf node or tree
-   */
+    * Takes a substring of this one. This involves recursive descent along the
+    * left and right edges of the substring, and referencing any wholly contained
+    * segments in between. Any leaf nodes entirely uninvolved in the substring
+    * will not be referenced by the substring.
+    *
+    * <p>Substrings of {@code length < 2} should result in at most a single
+    * recursive call chain, terminating at a leaf node. Thus the result will be a
+    * {@link LiteralByteString}. {@link #RopeByteString(ByteString,
+    * ByteString)}.
+    *
+    * @param beginIndex start at this index
+    * @param endIndex   the last character is the one before this index
+    * @return substring leaf node or tree
+    */
   @Override
   public ByteString substring(int beginIndex, int endIndex) {
     if (beginIndex < 0) {
-      throw new IndexOutOfBoundsException(
-          "Beginning index: " + beginIndex + " < 0");
+    throw new IndexOutOfBoundsException(
+        "Beginning index: " + beginIndex + " < 0");
     }
     if (endIndex > totalLength) {
-      throw new IndexOutOfBoundsException(
-          "End index: " + endIndex + " > " + totalLength);
+    throw new IndexOutOfBoundsException(
+        "End index: " + endIndex + " > " + totalLength);
     }
     int substringLength = endIndex - beginIndex;
     if (substringLength < 0) {
-      throw new IndexOutOfBoundsException(
-          "Beginning index larger than ending index: " + beginIndex + ", "
-              + endIndex);
+    throw new IndexOutOfBoundsException(
+        "Beginning index larger than ending index: " + beginIndex + ", "
+            + endIndex);
     }
 
     ByteString result;
     if (substringLength == 0) {
-      // Empty substring
-      result = ByteString.EMPTY;
+    // Empty substring
+    result = ByteString.EMPTY;
     } else if (substringLength == totalLength) {
-      // The whole string
-      result = this;
+    // The whole string
+    result = this;
     } else {
-      // Proper substring
-      if (endIndex <= leftLength) {
+    // Proper substring
+    if (endIndex <= leftLength) {
         // Substring on the left
         result = left.substring(beginIndex, endIndex);
-      } else if (beginIndex >= leftLength) {
+    } else if (beginIndex >= leftLength) {
         // Substring on the right
         result = right
             .substring(beginIndex - leftLength, endIndex - leftLength);
-      } else {
+    } else {
         // Split substring
         ByteString leftSub = left.substring(beginIndex);
         ByteString rightSub = right.substring(0, endIndex - leftLength);
@@ -346,7 +346,7 @@ class RopeByteString extends ByteString {
         // substrings will already be less deep than the top-level
         // RopeByteString we're taking a substring of.
         result = new RopeByteString(leftSub, rightSub);
-      }
+    }
     }
     return result;
   }
@@ -356,17 +356,17 @@ class RopeByteString extends ByteString {
 
   @Override
   protected void copyToInternal(byte[] target, int sourceOffset,
-      int targetOffset, int numberToCopy) {
-   if (sourceOffset + numberToCopy <= leftLength) {
-      left.copyToInternal(target, sourceOffset, targetOffset, numberToCopy);
+    int targetOffset, int numberToCopy) {
+    if (sourceOffset + numberToCopy <= leftLength) {
+    left.copyToInternal(target, sourceOffset, targetOffset, numberToCopy);
     } else if (sourceOffset >= leftLength) {
-      right.copyToInternal(target, sourceOffset - leftLength, targetOffset,
-          numberToCopy);
+    right.copyToInternal(target, sourceOffset - leftLength, targetOffset,
+        numberToCopy);
     } else {
-      int leftLength = this.leftLength - sourceOffset;
-      left.copyToInternal(target, sourceOffset, targetOffset, leftLength);
-      right.copyToInternal(target, 0, targetOffset + leftLength,
-          numberToCopy - leftLength);
+    int leftLength = this.leftLength - sourceOffset;
+    left.copyToInternal(target, sourceOffset, targetOffset, leftLength);
+    right.copyToInternal(target, 0, targetOffset + leftLength,
+        numberToCopy - leftLength);
     }
   }
 
@@ -389,8 +389,8 @@ class RopeByteString extends ByteString {
     List<ByteBuffer> result = new ArrayList<ByteBuffer>();
     PieceIterator pieces = new PieceIterator(this);
     while (pieces.hasNext()) {
-      LiteralByteString byteString = pieces.next();
-      result.add(byteString.asReadOnlyByteBuffer());
+    LiteralByteString byteString = pieces.next();
+    result.add(byteString.asReadOnlyByteBuffer());
     }
     return result;
   }
@@ -403,21 +403,21 @@ class RopeByteString extends ByteString {
 
   @Override
   void writeToInternal(OutputStream out, int sourceOffset,
-      int numberToWrite) throws IOException {
+    int numberToWrite) throws IOException {
     if (sourceOffset + numberToWrite <= leftLength) {
-      left.writeToInternal(out, sourceOffset, numberToWrite);
+    left.writeToInternal(out, sourceOffset, numberToWrite);
     } else if (sourceOffset >= leftLength) {
-      right.writeToInternal(out, sourceOffset - leftLength, numberToWrite);
+    right.writeToInternal(out, sourceOffset - leftLength, numberToWrite);
     } else {
-      int numberToWriteInLeft = leftLength - sourceOffset;
-      left.writeToInternal(out, sourceOffset, numberToWriteInLeft);
-      right.writeToInternal(out, 0, numberToWrite - numberToWriteInLeft);
+    int numberToWriteInLeft = leftLength - sourceOffset;
+    left.writeToInternal(out, sourceOffset, numberToWriteInLeft);
+    right.writeToInternal(out, 0, numberToWrite - numberToWriteInLeft);
     }
   }
 
   @Override
   public String toString(String charsetName)
-      throws UnsupportedEncodingException {
+    throws UnsupportedEncodingException {
     return new String(toByteArray(), charsetName);
   }
 
@@ -435,13 +435,13 @@ class RopeByteString extends ByteString {
   protected int partialIsValidUtf8(int state, int offset, int length) {
     int toIndex = offset + length;
     if (toIndex <= leftLength) {
-      return left.partialIsValidUtf8(state, offset, length);
+    return left.partialIsValidUtf8(state, offset, length);
     } else if (offset >= leftLength) {
-      return right.partialIsValidUtf8(state, offset - leftLength, length);
+    return right.partialIsValidUtf8(state, offset - leftLength, length);
     } else {
-      int leftLength = this.leftLength - offset;
-      int leftPartial = left.partialIsValidUtf8(state, offset, leftLength);
-      return right.partialIsValidUtf8(leftPartial, 0, length - leftLength);
+    int leftLength = this.leftLength - offset;
+    int leftPartial = left.partialIsValidUtf8(state, offset, leftLength);
+    return right.partialIsValidUtf8(leftPartial, 0, length - leftLength);
     }
   }
 
@@ -451,18 +451,18 @@ class RopeByteString extends ByteString {
   @Override
   public boolean equals(Object other) {
     if (other == this) {
-      return true;
+    return true;
     }
     if (!(other instanceof ByteString)) {
-      return false;
+    return false;
     }
 
     ByteString otherByteString = (ByteString) other;
     if (totalLength != otherByteString.size()) {
-      return false;
+    return false;
     }
     if (totalLength == 0) {
-      return true;
+    return true;
     }
 
     // You don't really want to be calling equals on long strings, but since
@@ -471,24 +471,24 @@ class RopeByteString extends ByteString {
     // hashCode here, and if we're going to be testing a bunch of byteStrings,
     // it might even make sense.
     if (hash != 0) {
-      int cachedOtherHash = otherByteString.peekCachedHashCode();
-      if (cachedOtherHash != 0 && hash != cachedOtherHash) {
+    int cachedOtherHash = otherByteString.peekCachedHashCode();
+    if (cachedOtherHash != 0 && hash != cachedOtherHash) {
         return false;
-      }
+    }
     }
 
     return equalsFragments(otherByteString);
   }
 
   /**
-   * Determines if this string is equal to another of the same length by
-   * iterating over the leaf nodes. On each step of the iteration, the
-   * overlapping segments of the leaves are compared.
-   *
-   * @param other string of the same length as this one
-   * @return true if the values of this string equals the value of the given
-   *         one
-   */
+    * Determines if this string is equal to another of the same length by
+    * iterating over the leaf nodes. On each step of the iteration, the
+    * overlapping segments of the leaves are compared.
+    *
+    * @param other string of the same length as this one
+    * @return true if the values of this string equals the value of the given
+    *         one
+    */
   private boolean equalsFragments(ByteString other) {
     int thisOffset = 0;
     Iterator<LiteralByteString> thisIter = new PieceIterator(this);
@@ -500,46 +500,46 @@ class RopeByteString extends ByteString {
 
     int pos = 0;
     while (true) {
-      int thisRemaining = thisString.size() - thisOffset;
-      int thatRemaining = thatString.size() - thatOffset;
-      int bytesToCompare = Math.min(thisRemaining, thatRemaining);
+    int thisRemaining = thisString.size() - thisOffset;
+    int thatRemaining = thatString.size() - thatOffset;
+    int bytesToCompare = Math.min(thisRemaining, thatRemaining);
 
-      // At least one of the offsets will be zero
-      boolean stillEqual = (thisOffset == 0)
-          ? thisString.equalsRange(thatString, thatOffset, bytesToCompare)
-          : thatString.equalsRange(thisString, thisOffset, bytesToCompare);
-      if (!stillEqual) {
+    // At least one of the offsets will be zero
+    boolean stillEqual = (thisOffset == 0)
+        ? thisString.equalsRange(thatString, thatOffset, bytesToCompare)
+        : thatString.equalsRange(thisString, thisOffset, bytesToCompare);
+    if (!stillEqual) {
         return false;
-      }
+    }
 
-      pos += bytesToCompare;
-      if (pos >= totalLength) {
+    pos += bytesToCompare;
+    if (pos >= totalLength) {
         if (pos == totalLength) {
-          return true;
+        return true;
         }
         throw new IllegalStateException();
-      }
-      // We always get to the end of at least one of the pieces
-      if (bytesToCompare == thisRemaining) { // If reached end of this
+    }
+    // We always get to the end of at least one of the pieces
+    if (bytesToCompare == thisRemaining) { // If reached end of this
         thisOffset = 0;
         thisString = thisIter.next();
-      } else {
+    } else {
         thisOffset += bytesToCompare;
-      }
-      if (bytesToCompare == thatRemaining) { // If reached end of that
+    }
+    if (bytesToCompare == thatRemaining) { // If reached end of that
         thatOffset = 0;
         thatString = thatIter.next();
-      } else {
+    } else {
         thatOffset += bytesToCompare;
-      }
+    }
     }
   }
 
   /**
-   * Cached hash value.  Intentionally accessed via a data race, which is safe
-   * because of the Java Memory Model's "no out-of-thin-air values" guarantees
-   * for ints.
-   */
+    * Cached hash value.  Intentionally accessed via a data race, which is safe
+    * because of the Java Memory Model's "no out-of-thin-air values" guarantees
+    * for ints.
+    */
   private int hash = 0;
 
   @Override
@@ -547,12 +547,12 @@ class RopeByteString extends ByteString {
     int h = hash;
 
     if (h == 0) {
-      h = totalLength;
-      h = partialHash(h, 0, totalLength);
-      if (h == 0) {
+    h = totalLength;
+    h = partialHash(h, 0, totalLength);
+    if (h == 0) {
         h = 1;
-      }
-      hash = h;
+    }
+    hash = h;
     }
     return h;
   }
@@ -566,13 +566,13 @@ class RopeByteString extends ByteString {
   protected int partialHash(int h, int offset, int length) {
     int toIndex = offset + length;
     if (toIndex <= leftLength) {
-      return left.partialHash(h, offset, length);
+    return left.partialHash(h, offset, length);
     } else if (offset >= leftLength) {
-      return right.partialHash(h, offset - leftLength, length);
+    return right.partialHash(h, offset - leftLength, length);
     } else {
-      int leftLength = this.leftLength - offset;
-      int leftPartial = left.partialHash(h, offset, leftLength);
-      return right.partialHash(leftPartial, 0, length - leftLength);
+    int leftLength = this.leftLength - offset;
+    int leftPartial = left.partialHash(h, offset, leftLength);
+    return right.partialHash(leftPartial, 0, length - leftLength);
     }
   }
 
@@ -590,15 +590,15 @@ class RopeByteString extends ByteString {
   }
 
   /**
-   * This class implements the balancing algorithm of BAP95. In the paper the
-   * authors use an array to keep track of pieces, while here we use a stack.
-   * The tree is balanced by traversing subtrees in left to right order, and the
-   * stack always contains the part of the string we've traversed so far.
-   *
-   * <p>One surprising aspect of the algorithm is the result of balancing is not
-   * necessarily balanced, though it is nearly balanced.  For details, see
-   * BAP95.
-   */
+    * This class implements the balancing algorithm of BAP95. In the paper the
+    * authors use an array to keep track of pieces, while here we use a stack.
+    * The tree is balanced by traversing subtrees in left to right order, and the
+    * stack always contains the part of the string we've traversed so far.
+    *
+    * <p>One surprising aspect of the algorithm is the result of balancing is not
+    * necessarily balanced, though it is nearly balanced.  For details, see
+    * BAP95.
+    */
   private static class Balancer {
     // Stack containing the part of the string, starting from the left, that
     // we've already traversed.  The final string should be the equivalent of
@@ -606,71 +606,71 @@ class RopeByteString extends ByteString {
     private final Stack<ByteString> prefixesStack = new Stack<ByteString>();
 
     private ByteString balance(ByteString left, ByteString right) {
-      doBalance(left);
-      doBalance(right);
+    doBalance(left);
+    doBalance(right);
 
-      // Sweep stack to gather the result
-      ByteString partialString = prefixesStack.pop();
-      while (!prefixesStack.isEmpty()) {
+    // Sweep stack to gather the result
+    ByteString partialString = prefixesStack.pop();
+    while (!prefixesStack.isEmpty()) {
         ByteString newLeft = prefixesStack.pop();
         partialString = new RopeByteString(newLeft, partialString);
-      }
-      // We should end up with a RopeByteString since at a minimum we will
-      // create one from concatenating left and right
-      return partialString;
+    }
+    // We should end up with a RopeByteString since at a minimum we will
+    // create one from concatenating left and right
+    return partialString;
     }
 
     private void doBalance(ByteString root) {
-      // BAP95: Insert balanced subtrees whole. This means the result might not
-      // be balanced, leading to repeated rebalancings on concatenate. However,
-      // these rebalancings are shallow due to ignoring balanced subtrees, and
-      // relatively few calls to insert() result.
-      if (root.isBalanced()) {
+    // BAP95: Insert balanced subtrees whole. This means the result might not
+    // be balanced, leading to repeated rebalancings on concatenate. However,
+    // these rebalancings are shallow due to ignoring balanced subtrees, and
+    // relatively few calls to insert() result.
+    if (root.isBalanced()) {
         insert(root);
-      } else if (root instanceof RopeByteString) {
+    } else if (root instanceof RopeByteString) {
         RopeByteString rbs = (RopeByteString) root;
         doBalance(rbs.left);
         doBalance(rbs.right);
-      } else {
+    } else {
         throw new IllegalArgumentException(
             "Has a new type of ByteString been created? Found " +
                 root.getClass());
-      }
+    }
     }
 
     /**
-     * Push a string on the balance stack (BAP95).  BAP95 uses an array and
-     * calls the elements in the array 'bins'.  We instead use a stack, so the
-     * 'bins' of lengths are represented by differences between the elements of
-     * minLengthByDepth.
-     *
-     * <p>If the length bin for our string, and all shorter length bins, are
-     * empty, we just push it on the stack.  Otherwise, we need to start
-     * concatenating, putting the given string in the "middle" and continuing
-     * until we land in an empty length bin that matches the length of our
-     * concatenation.
-     *
-     * @param byteString string to place on the balance stack
-     */
+    * Push a string on the balance stack (BAP95).  BAP95 uses an array and
+    * calls the elements in the array 'bins'.  We instead use a stack, so the
+    * 'bins' of lengths are represented by differences between the elements of
+    * minLengthByDepth.
+    *
+    * <p>If the length bin for our string, and all shorter length bins, are
+    * empty, we just push it on the stack.  Otherwise, we need to start
+    * concatenating, putting the given string in the "middle" and continuing
+    * until we land in an empty length bin that matches the length of our
+    * concatenation.
+    *
+    * @param byteString string to place on the balance stack
+    */
     private void insert(ByteString byteString) {
-      int depthBin = getDepthBinForLength(byteString.size());
-      int binEnd = minLengthByDepth[depthBin + 1];
+    int depthBin = getDepthBinForLength(byteString.size());
+    int binEnd = minLengthByDepth[depthBin + 1];
 
-      // BAP95: Concatenate all trees occupying bins representing the length of
-      // our new piece or of shorter pieces, to the extent that is possible.
-      // The goal is to clear the bin which our piece belongs in, but that may
-      // not be entirely possible if there aren't enough longer bins occupied.
-      if (prefixesStack.isEmpty() || prefixesStack.peek().size() >= binEnd) {
+    // BAP95: Concatenate all trees occupying bins representing the length of
+    // our new piece or of shorter pieces, to the extent that is possible.
+    // The goal is to clear the bin which our piece belongs in, but that may
+    // not be entirely possible if there aren't enough longer bins occupied.
+    if (prefixesStack.isEmpty() || prefixesStack.peek().size() >= binEnd) {
         prefixesStack.push(byteString);
-      } else {
+    } else {
         int binStart = minLengthByDepth[depthBin];
 
         // Concatenate the subtrees of shorter length
         ByteString newTree = prefixesStack.pop();
         while (!prefixesStack.isEmpty()
             && prefixesStack.peek().size() < binStart) {
-          ByteString left = prefixesStack.pop();
-          newTree = new RopeByteString(left, newTree);
+        ByteString left = prefixesStack.pop();
+        newTree = new RopeByteString(left, newTree);
         }
 
         // Concatenate the given string
@@ -678,41 +678,41 @@ class RopeByteString extends ByteString {
 
         // Continue concatenating until we land in an empty bin
         while (!prefixesStack.isEmpty()) {
-          depthBin = getDepthBinForLength(newTree.size());
-          binEnd = minLengthByDepth[depthBin + 1];
-          if (prefixesStack.peek().size() < binEnd) {
+        depthBin = getDepthBinForLength(newTree.size());
+        binEnd = minLengthByDepth[depthBin + 1];
+        if (prefixesStack.peek().size() < binEnd) {
             ByteString left = prefixesStack.pop();
             newTree = new RopeByteString(left, newTree);
-          } else {
+        } else {
             break;
-          }
+        }
         }
         prefixesStack.push(newTree);
-      }
+    }
     }
 
     private int getDepthBinForLength(int length) {
-      int depth = Arrays.binarySearch(minLengthByDepth, length);
-      if (depth < 0) {
+    int depth = Arrays.binarySearch(minLengthByDepth, length);
+    if (depth < 0) {
         // It wasn't an exact match, so convert to the index of the containing
         // fragment, which is one less even than the insertion point.
         int insertionPoint = -(depth + 1);
         depth = insertionPoint - 1;
-      }
+    }
 
-      return depth;
+    return depth;
     }
   }
 
   /**
-   * This class is a continuable tree traversal, which keeps the state
-   * information which would exist on the stack in a recursive traversal instead
-   * on a stack of "Bread Crumbs". The maximum depth of the stack in this
-   * iterator is the same as the depth of the tree being traversed.
-   *
-   * <p>This iterator is used to implement
-   * {@link RopeByteString#equalsFragments(ByteString)}.
-   */
+    * This class is a continuable tree traversal, which keeps the state
+    * information which would exist on the stack in a recursive traversal instead
+    * on a stack of "Bread Crumbs". The maximum depth of the stack in this
+    * iterator is the same as the depth of the tree being traversed.
+    *
+    * <p>This iterator is used to implement
+    * {@link RopeByteString#equalsFragments(ByteString)}.
+    */
   private static class PieceIterator implements Iterator<LiteralByteString> {
 
     private final Stack<RopeByteString> breadCrumbs =
@@ -720,54 +720,54 @@ class RopeByteString extends ByteString {
     private LiteralByteString next;
 
     private PieceIterator(ByteString root) {
-      next = getLeafByLeft(root);
+    next = getLeafByLeft(root);
     }
 
     private LiteralByteString getLeafByLeft(ByteString root) {
-      ByteString pos = root;
-      while (pos instanceof RopeByteString) {
+    ByteString pos = root;
+    while (pos instanceof RopeByteString) {
         RopeByteString rbs = (RopeByteString) pos;
         breadCrumbs.push(rbs);
         pos = rbs.left;
-      }
-      return (LiteralByteString) pos;
+    }
+    return (LiteralByteString) pos;
     }
 
     private LiteralByteString getNextNonEmptyLeaf() {
-      while (true) {
+    while (true) {
         // Almost always, we go through this loop exactly once.  However, if
         // we discover an empty string in the rope, we toss it and try again.
         if (breadCrumbs.isEmpty()) {
-          return null;
+        return null;
         } else {
-          LiteralByteString result = getLeafByLeft(breadCrumbs.pop().right);
-          if (!result.isEmpty()) {
+        LiteralByteString result = getLeafByLeft(breadCrumbs.pop().right);
+        if (!result.isEmpty()) {
             return result;
-          }
         }
-      }
+        }
+    }
     }
 
     public boolean hasNext() {
-      return next != null;
+    return next != null;
     }
 
     /**
-     * Returns the next item and advances one {@code LiteralByteString}.
-     *
-     * @return next non-empty LiteralByteString or {@code null}
-     */
+    * Returns the next item and advances one {@code LiteralByteString}.
+    *
+    * @return next non-empty LiteralByteString or {@code null}
+    */
     public LiteralByteString next() {
-      if (next == null) {
+    if (next == null) {
         throw new NoSuchElementException();
-      }
-      LiteralByteString result = next;
-      next = getNextNonEmptyLeaf();
-      return result;
+    }
+    LiteralByteString result = next;
+    next = getNextNonEmptyLeaf();
+    return result;
     }
 
     public void remove() {
-      throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException();
     }
   }
 
@@ -786,36 +786,36 @@ class RopeByteString extends ByteString {
     int bytesRemaining;
 
     private RopeByteIterator() {
-      pieces = new PieceIterator(RopeByteString.this);
-      bytes = pieces.next().iterator();
-      bytesRemaining = size();
+    pieces = new PieceIterator(RopeByteString.this);
+    bytes = pieces.next().iterator();
+    bytesRemaining = size();
     }
 
     public boolean hasNext() {
-      return (bytesRemaining > 0);
+    return (bytesRemaining > 0);
     }
 
     public Byte next() {
-      return nextByte(); // Does not instantiate a Byte
+    return nextByte(); // Does not instantiate a Byte
     }
 
     public byte nextByte() {
-      if (!bytes.hasNext()) {
+    if (!bytes.hasNext()) {
         bytes = pieces.next().iterator();
-      }
-      --bytesRemaining;
-      return bytes.nextByte();
+    }
+    --bytesRemaining;
+    return bytes.nextByte();
     }
 
     public void remove() {
-      throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException();
     }
   }
 
   /**
-   * This class is the {@link RopeByteString} equivalent for
-   * {@link ByteArrayInputStream}.
-   */
+    * This class is the {@link RopeByteString} equivalent for
+    * {@link ByteArrayInputStream}.
+    */
   private class RopeInputStream extends InputStream {
     // Iterates through the pieces of the rope
     private PieceIterator pieceIterator;
@@ -831,127 +831,127 @@ class RopeByteString extends ByteString {
     private int mark;
 
     public RopeInputStream() {
-      initialize();
+    initialize();
     }
 
     @Override
     public int read(byte b[], int offset, int length)  {
-      if (b == null) {
+    if (b == null) {
         throw new NullPointerException();
-      } else if (offset < 0 || length < 0 || length > b.length - offset) {
+    } else if (offset < 0 || length < 0 || length > b.length - offset) {
         throw new IndexOutOfBoundsException();
-      }
-      return readSkipInternal(b, offset, length);
+    }
+    return readSkipInternal(b, offset, length);
     }
 
     @Override
     public long skip(long length) {
-      if (length < 0) {
+    if (length < 0) {
         throw new IndexOutOfBoundsException();
-      } else if (length > Integer.MAX_VALUE) {
+    } else if (length > Integer.MAX_VALUE) {
         length = Integer.MAX_VALUE;
-      }
-      return readSkipInternal(null, 0, (int) length);
+    }
+    return readSkipInternal(null, 0, (int) length);
     }
 
     /**
-     * Internal implementation of read and skip.  If b != null, then read the
-     * next {@code length} bytes into the buffer {@code b} at
-     * offset {@code offset}.  If b == null, then skip the next {@code length)
-     * bytes.
-     * <p>
-     * This method assumes that all error checking has already happened.
-     * <p>
-     * Returns the actual number of bytes read or skipped.
-     */
+    * Internal implementation of read and skip.  If b != null, then read the
+    * next {@code length} bytes into the buffer {@code b} at
+    * offset {@code offset}.  If b == null, then skip the next {@code length)
+    * bytes.
+    * <p>
+    * This method assumes that all error checking has already happened.
+    * <p>
+    * Returns the actual number of bytes read or skipped.
+    */
     private int readSkipInternal(byte b[], int offset, int length)  {
-      int bytesRemaining = length;
-      while (bytesRemaining > 0) {
+    int bytesRemaining = length;
+    while (bytesRemaining > 0) {
         advanceIfCurrentPieceFullyRead();
         if (currentPiece == null) {
-          if (bytesRemaining == length) {
-             // We didn't manage to read anything
-             return -1;
-           }
-          break;
+        if (bytesRemaining == length) {
+            // We didn't manage to read anything
+            return -1;
+            }
+        break;
         } else {
-          // Copy the bytes from this piece.
-          int currentPieceRemaining = currentPieceSize - currentPieceIndex;
-          int count = Math.min(currentPieceRemaining, bytesRemaining);
-          if (b != null) {
+        // Copy the bytes from this piece.
+        int currentPieceRemaining = currentPieceSize - currentPieceIndex;
+        int count = Math.min(currentPieceRemaining, bytesRemaining);
+        if (b != null) {
             currentPiece.copyTo(b, currentPieceIndex, offset, count);
             offset += count;
-          }
-          currentPieceIndex += count;
-          bytesRemaining -= count;
         }
-      }
-       // Return the number of bytes read.
-      return length - bytesRemaining;
+        currentPieceIndex += count;
+        bytesRemaining -= count;
+        }
+    }
+        // Return the number of bytes read.
+    return length - bytesRemaining;
     }
 
     @Override
     public int read() throws IOException {
-      advanceIfCurrentPieceFullyRead();
-      if (currentPiece == null) {
+    advanceIfCurrentPieceFullyRead();
+    if (currentPiece == null) {
         return -1;
-      } else {
+    } else {
         return currentPiece.byteAt(currentPieceIndex++) & 0xFF;
-      }
+    }
     }
 
     @Override
     public int available() throws IOException {
-      int bytesRead = currentPieceOffsetInRope + currentPieceIndex;
-      return RopeByteString.this.size() - bytesRead;
+    int bytesRead = currentPieceOffsetInRope + currentPieceIndex;
+    return RopeByteString.this.size() - bytesRead;
     }
 
     @Override
     public boolean markSupported() {
-      return true;
+    return true;
     }
 
     @Override
     public void mark(int readAheadLimit) {
-      // Set the mark to our position in the byte string
-      mark = currentPieceOffsetInRope + currentPieceIndex;
+    // Set the mark to our position in the byte string
+    mark = currentPieceOffsetInRope + currentPieceIndex;
     }
 
     @Override
     public synchronized void reset() {
-      // Just reinitialize and skip the specified number of bytes.
-      initialize();
-      readSkipInternal(null, 0, mark);
+    // Just reinitialize and skip the specified number of bytes.
+    initialize();
+    readSkipInternal(null, 0, mark);
     }
 
     /** Common initialization code used by both the constructor and reset() */
     private void initialize() {
-      pieceIterator = new PieceIterator(RopeByteString.this);
-      currentPiece = pieceIterator.next();
-      currentPieceSize = currentPiece.size();
-      currentPieceIndex = 0;
-      currentPieceOffsetInRope = 0;
+    pieceIterator = new PieceIterator(RopeByteString.this);
+    currentPiece = pieceIterator.next();
+    currentPieceSize = currentPiece.size();
+    currentPieceIndex = 0;
+    currentPieceOffsetInRope = 0;
     }
 
     /**
-     * Skips to the next piece if we have read all the data in the current
-     * piece.  Sets currentPiece to null if we have reached the end of the
-     * input.
-     */
+    * Skips to the next piece if we have read all the data in the current
+    * piece.  Sets currentPiece to null if we have reached the end of the
+    * input.
+    */
     private void advanceIfCurrentPieceFullyRead() {
-      if (currentPiece != null && currentPieceIndex == currentPieceSize) {
+    if (currentPiece != null && currentPieceIndex == currentPieceSize) {
         // Generally, we can only go through this loop at most once, since
         // empty strings can't end up in a rope.  But better to test.
         currentPieceOffsetInRope += currentPieceSize;
         currentPieceIndex = 0;
         if (pieceIterator.hasNext()) {
-          currentPiece = pieceIterator.next();
-          currentPieceSize = currentPiece.size();
+        currentPiece = pieceIterator.next();
+        currentPieceSize = currentPiece.size();
         } else {
-          currentPiece = null;
-          currentPieceSize = 0;
+        currentPiece = null;
+        currentPieceSize = 0;
         }
-      }
+    }
     }
   }
 }

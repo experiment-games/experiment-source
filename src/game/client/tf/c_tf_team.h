@@ -28,7 +28,7 @@ class C_TFTeam : public C_Team
     DECLARE_CLASS( C_TFTeam, C_Team );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_TFTeam();
     virtual ~C_TFTeam();
 
@@ -64,7 +64,7 @@ class C_TFTeam : public C_Team
     // IClientThinkable override
     virtual void ClientThink();
 
-   private:
+    private:
     int m_nFlagCaptures;
     int m_iRole;
 

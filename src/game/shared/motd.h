@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CMOTDEntryDefinition
 {
-   public:
+    public:
     CMOTDEntryDefinition( void );
     ~CMOTDEntryDefinition( void ) {}
 
@@ -71,7 +71,7 @@ class CMOTDEntryDefinition
         return m_pKVMOTD ? V_atoi( m_pKVMOTD->GetName() ) : -1;
     }
 
-   private:
+    private:
     KeyValues *m_pKVMOTD;
     RTime32 m_PostTime;
     RTime32 m_ChangedTime;
@@ -82,7 +82,7 @@ class CMOTDEntryDefinition
 //-----------------------------------------------------------------------------
 class CMOTDManager
 {
-   public:
+    public:
     // MOTD handling
     bool BInitMOTDEntries( KeyValues *pKVMOTDEntries, CUtlVector< CUtlString > *pVecErrors );
     int GetNumMOTDAfter( RTime32 iTime );
@@ -95,7 +95,7 @@ class CMOTDManager
 
     void PurgeUnusedMOTDEntries( KeyValues *pKVMOTDEntries );
 
-   private:
+    private:
     // Contains the list of MOTD entries.
     CUtlVector< CMOTDEntryDefinition > m_vecMOTDEntries;
 };

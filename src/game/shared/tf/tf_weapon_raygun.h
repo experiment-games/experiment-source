@@ -20,7 +20,7 @@
 
 class CTFRaygun : public CTFRocketLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRaygun, CTFRocketLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -95,7 +95,7 @@ class CTFRaygun : public CTFRocketLauncher
         return m_bUseNewProjectileCode;
     }
 
-   private:
+    private:
     float m_flIrradiateTime;
     bool m_bEffectsThinking;
 
@@ -105,7 +105,7 @@ class CTFRaygun : public CTFRocketLauncher
 //---------------------------------------------------------
 class CTFDRGPomson : public CTFRaygun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFDRGPomson, CTFRaygun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

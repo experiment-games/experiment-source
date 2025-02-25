@@ -17,7 +17,7 @@ class IMaterialVar;
 
 class CBaseAnimatedTextureProxy : public IMaterialProxy
 {
-   public:
+    public:
     CBaseAnimatedTextureProxy();
     virtual ~CBaseAnimatedTextureProxy();
 
@@ -29,7 +29,7 @@ class CBaseAnimatedTextureProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   protected:
+    protected:
     // derived classes must implement this; it returns the time
     // that the animation began
     virtual float GetAnimationStartTime( void *pBaseEntity ) = 0;
@@ -38,7 +38,7 @@ class CBaseAnimatedTextureProxy : public IMaterialProxy
     // this method is called whenever the animation wraps...
     virtual void AnimationWrapped( void *pBaseEntity ) {}
 
-   protected:
+    protected:
     void Cleanup();
 
     IMaterialVar *m_AnimatedTextureVar;

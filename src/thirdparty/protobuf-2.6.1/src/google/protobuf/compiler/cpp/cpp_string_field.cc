@@ -51,17 +51,17 @@ void SetStringVariables(const FieldDescriptor* descriptor,
   SetCommonFieldVariables(descriptor, variables, options);
   (*variables)["default"] = DefaultValue(descriptor);
   (*variables)["default_length"] =
-      SimpleItoa(descriptor->default_value_string().length());
+    SimpleItoa(descriptor->default_value_string().length());
   (*variables)["default_variable"] = descriptor->default_value_string().empty()
-      ? "&::google::protobuf::internal::GetEmptyStringAlreadyInited()"
-      : "_default_" + FieldName(descriptor) + "_";
+    ? "&::google::protobuf::internal::GetEmptyStringAlreadyInited()"
+    : "_default_" + FieldName(descriptor) + "_";
   (*variables)["pointer_type"] =
-      descriptor->type() == FieldDescriptor::TYPE_BYTES ? "void" : "char";
+    descriptor->type() == FieldDescriptor::TYPE_BYTES ? "void" : "char";
   // NOTE: Escaped here to unblock proto1->proto2 migration.
   // TODO(liujisi): Extend this to apply for other conflicting methods.
   (*variables)["release_name"] =
-      SafeFunctionName(descriptor->containing_type(),
-                       descriptor, "release_");
+    SafeFunctionName(descriptor->containing_type(),
+                        descriptor, "release_");
   (*variables)["full_name"] = descriptor->full_name();
 }
 
@@ -71,7 +71,7 @@ void SetStringVariables(const FieldDescriptor* descriptor,
 
 StringFieldGenerator::
 StringFieldGenerator(const FieldDescriptor* descriptor,
-                     const Options& options)
+                    const Options& options)
   : descriptor_(descriptor) {
   SetStringVariables(descriptor, &variables_, options);
 }
@@ -111,8 +111,8 @@ GenerateAccessorDeclarations(io::Printer* printer) const {
   if (descriptor_->options().ctype() != FieldOptions::STRING) {
     printer->Outdent();
     printer->Print(
-      " private:\n"
-      "  // Hidden due to unknown ctype option.\n");
+    " private:\n"
+    "  // Hidden due to unknown ctype option.\n");
     printer->Indent();
   }
 
@@ -121,7 +121,7 @@ GenerateAccessorDeclarations(io::Printer* printer) const {
     "inline void set_$name$(const ::std::string& value)$deprecation$;\n"
     "inline void set_$name$(const char* value)$deprecation$;\n"
     "inline void set_$name$(const $pointer_type$* value, size_t size)"
-                 "$deprecation$;\n"
+                "$deprecation$;\n"
     "inline ::std::string* mutable_$name$()$deprecation$;\n"
     "inline ::std::string* $release_name$()$deprecation$;\n"
     "inline void set_allocated_$name$(::std::string* $name$)$deprecation$;\n");
@@ -171,10 +171,10 @@ GenerateInlineAccessorDefinitions(io::Printer* printer) const {
     "  if ($name$_ == $default_variable$) {\n");
   if (descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "    $name$_ = new ::std::string;\n");
+    "    $name$_ = new ::std::string;\n");
   } else {
     printer->Print(variables_,
-      "    $name$_ = new ::std::string(*$default_variable$);\n");
+    "    $name$_ = new ::std::string(*$default_variable$);\n");
   }
   printer->Print(variables_,
     "  }\n"
@@ -211,7 +211,7 @@ GenerateNonInlineAccessorDefinitions(io::Printer* printer) const {
   if (!descriptor_->default_value_string().empty()) {
     // Initialized in GenerateDefaultInstanceAllocator.
     printer->Print(variables_,
-      "::std::string* $classname$::$default_variable$ = NULL;\n");
+    "::std::string* $classname$::$default_variable$ = NULL;\n");
   }
 }
 
@@ -219,14 +219,14 @@ void StringFieldGenerator::
 GenerateClearingCode(io::Printer* printer) const {
   if (descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "if ($name$_ != $default_variable$) {\n"
-      "  $name$_->clear();\n"
-      "}\n");
+    "if ($name$_ != $default_variable$) {\n"
+    "  $name$_->clear();\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "if ($name$_ != $default_variable$) {\n"
-      "  $name$_->assign(*$default_variable$);\n"
-      "}\n");
+    "if ($name$_ != $default_variable$) {\n"
+    "  $name$_->assign(*$default_variable$);\n"
+    "}\n");
   }
 }
 
@@ -258,8 +258,8 @@ void StringFieldGenerator::
 GenerateDefaultInstanceAllocator(io::Printer* printer) const {
   if (!descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "$classname$::$default_variable$ =\n"
-      "    new ::std::string($default$, $default_length$);\n");
+    "$classname$::$default_variable$ =\n"
+    "    new ::std::string($default$, $default_length$);\n");
   }
 }
 
@@ -267,7 +267,7 @@ void StringFieldGenerator::
 GenerateShutdownCode(io::Printer* printer) const {
   if (!descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "delete $classname$::$default_variable$;\n");
+    "delete $classname$::$default_variable$;\n");
   }
 }
 
@@ -277,24 +277,24 @@ GenerateMergeFromCodedStream(io::Printer* printer) const {
     "DO_(::google::protobuf::internal::WireFormatLite::Read$declared_type$(\n"
     "      input, this->mutable_$name$()));\n");
   if (HasUtf8Verification(descriptor_->file()) &&
-      descriptor_->type() == FieldDescriptor::TYPE_STRING) {
+    descriptor_->type() == FieldDescriptor::TYPE_STRING) {
     printer->Print(variables_,
-      "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
-      "  this->$name$().data(), this->$name$().length(),\n"
-      "  ::google::protobuf::internal::WireFormat::PARSE,\n"
-      "  \"$name$\");\n");
+    "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
+    "  this->$name$().data(), this->$name$().length(),\n"
+    "  ::google::protobuf::internal::WireFormat::PARSE,\n"
+    "  \"$name$\");\n");
   }
 }
 
 void StringFieldGenerator::
 GenerateSerializeWithCachedSizes(io::Printer* printer) const {
   if (HasUtf8Verification(descriptor_->file()) &&
-      descriptor_->type() == FieldDescriptor::TYPE_STRING) {
+    descriptor_->type() == FieldDescriptor::TYPE_STRING) {
     printer->Print(variables_,
-      "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
-      "  this->$name$().data(), this->$name$().length(),\n"
-      "  ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
-      "  \"$name$\");\n");
+    "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
+    "  this->$name$().data(), this->$name$().length(),\n"
+    "  ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
+    "  \"$name$\");\n");
   }
   printer->Print(variables_,
     "::google::protobuf::internal::WireFormatLite::Write$declared_type$MaybeAliased(\n"
@@ -304,12 +304,12 @@ GenerateSerializeWithCachedSizes(io::Printer* printer) const {
 void StringFieldGenerator::
 GenerateSerializeWithCachedSizesToArray(io::Printer* printer) const {
   if (HasUtf8Verification(descriptor_->file()) &&
-      descriptor_->type() == FieldDescriptor::TYPE_STRING) {
+    descriptor_->type() == FieldDescriptor::TYPE_STRING) {
     printer->Print(variables_,
-      "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
-      "  this->$name$().data(), this->$name$().length(),\n"
-      "  ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
-      "  \"$name$\");\n");
+    "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
+    "  this->$name$().data(), this->$name$().length(),\n"
+    "  ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
+    "  \"$name$\");\n");
   }
   printer->Print(variables_,
     "target =\n"
@@ -329,7 +329,7 @@ GenerateByteSize(io::Printer* printer) const {
 
 StringOneofFieldGenerator::
 StringOneofFieldGenerator(const FieldDescriptor* descriptor,
-                          const Options& options)
+                        const Options& options)
   : StringFieldGenerator(descriptor, options) {
   SetCommonOneofFieldVariables(descriptor, &variables_);
 }
@@ -345,10 +345,10 @@ GenerateInlineAccessorDefinitions(io::Printer* printer) const {
     "  }\n");
   if (descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "  return ::google::protobuf::internal::GetEmptyStringAlreadyInited();\n");
+    "  return ::google::protobuf::internal::GetEmptyStringAlreadyInited();\n");
   } else {
     printer->Print(variables_,
-      "  return *$default_variable$;\n");
+    "  return *$default_variable$;\n");
   }
   printer->Print(variables_,
     "}\n"
@@ -384,10 +384,10 @@ GenerateInlineAccessorDefinitions(io::Printer* printer) const {
     "    set_has_$name$();\n");
   if (descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "    $oneof_prefix$$name$_ = new ::std::string;\n");
+    "    $oneof_prefix$$name$_ = new ::std::string;\n");
   } else {
     printer->Print(variables_,
-      "    $oneof_prefix$$name$_ = new ::std::string(*$default_variable$);\n");
+    "    $oneof_prefix$$name$_ = new ::std::string(*$default_variable$);\n");
   }
   printer->Print(variables_,
     "  }\n"
@@ -415,7 +415,7 @@ GenerateInlineAccessorDefinitions(io::Printer* printer) const {
 void StringOneofFieldGenerator::
 GenerateClearingCode(io::Printer* printer) const {
     printer->Print(variables_,
-      "delete $oneof_prefix$$name$_;\n");
+    "delete $oneof_prefix$$name$_;\n");
 }
 
 void StringOneofFieldGenerator::
@@ -427,12 +427,12 @@ void StringOneofFieldGenerator::
 GenerateConstructorCode(io::Printer* printer) const {
   if (!descriptor_->default_value_string().empty()) {
     printer->Print(variables_,
-      "  $classname$_default_oneof_instance_->$name$_ = "
-      "$classname$::$default_variable$;\n");
+    "  $classname$_default_oneof_instance_->$name$_ = "
+    "$classname$::$default_variable$;\n");
   } else {
     printer->Print(variables_,
-      "  $classname$_default_oneof_instance_->$name$_ = "
-      "$default_variable$;\n");
+    "  $classname$_default_oneof_instance_->$name$_ = "
+    "$default_variable$;\n");
   }
 }
 
@@ -448,7 +448,7 @@ GenerateDestructorCode(io::Printer* printer) const {
 
 RepeatedStringFieldGenerator::
 RepeatedStringFieldGenerator(const FieldDescriptor* descriptor,
-                             const Options& options)
+                            const Options& options)
   : descriptor_(descriptor) {
   SetStringVariables(descriptor, &variables_, options);
 }
@@ -467,8 +467,8 @@ GenerateAccessorDeclarations(io::Printer* printer) const {
   if (descriptor_->options().ctype() != FieldOptions::STRING) {
     printer->Outdent();
     printer->Print(
-      " private:\n"
-      "  // Hidden due to unknown ctype option.\n");
+    " private:\n"
+    "  // Hidden due to unknown ctype option.\n");
     printer->Indent();
   }
 
@@ -479,18 +479,18 @@ GenerateAccessorDeclarations(io::Printer* printer) const {
     "inline void set_$name$(int index, const char* value)$deprecation$;\n"
     "inline "
     "void set_$name$(int index, const $pointer_type$* value, size_t size)"
-                 "$deprecation$;\n"
+                "$deprecation$;\n"
     "inline ::std::string* add_$name$()$deprecation$;\n"
     "inline void add_$name$(const ::std::string& value)$deprecation$;\n"
     "inline void add_$name$(const char* value)$deprecation$;\n"
     "inline void add_$name$(const $pointer_type$* value, size_t size)"
-                 "$deprecation$;\n");
+                "$deprecation$;\n");
 
   printer->Print(variables_,
     "inline const ::google::protobuf::RepeatedPtrField< ::std::string>& $name$() const"
-                 "$deprecation$;\n"
+                "$deprecation$;\n"
     "inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_$name$()"
-                 "$deprecation$;\n");
+                "$deprecation$;\n");
 
   if (descriptor_->options().ctype() != FieldOptions::STRING) {
     printer->Outdent();
@@ -580,13 +580,13 @@ GenerateMergeFromCodedStream(io::Printer* printer) const {
     "DO_(::google::protobuf::internal::WireFormatLite::Read$declared_type$(\n"
     "      input, this->add_$name$()));\n");
   if (HasUtf8Verification(descriptor_->file()) &&
-      descriptor_->type() == FieldDescriptor::TYPE_STRING) {
+    descriptor_->type() == FieldDescriptor::TYPE_STRING) {
     printer->Print(variables_,
-      "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
-      "  this->$name$(this->$name$_size() - 1).data(),\n"
-      "  this->$name$(this->$name$_size() - 1).length(),\n"
-      "  ::google::protobuf::internal::WireFormat::PARSE,\n"
-      "  \"$name$\");\n");
+    "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
+    "  this->$name$(this->$name$_size() - 1).data(),\n"
+    "  this->$name$(this->$name$_size() - 1).length(),\n"
+    "  ::google::protobuf::internal::WireFormat::PARSE,\n"
+    "  \"$name$\");\n");
   }
 }
 
@@ -595,12 +595,12 @@ GenerateSerializeWithCachedSizes(io::Printer* printer) const {
   printer->Print(variables_,
     "for (int i = 0; i < this->$name$_size(); i++) {\n");
   if (HasUtf8Verification(descriptor_->file()) &&
-      descriptor_->type() == FieldDescriptor::TYPE_STRING) {
+    descriptor_->type() == FieldDescriptor::TYPE_STRING) {
     printer->Print(variables_,
-      "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
-      "  this->$name$(i).data(), this->$name$(i).length(),\n"
-      "  ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
-      "  \"$name$\");\n");
+    "::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
+    "  this->$name$(i).data(), this->$name$(i).length(),\n"
+    "  ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
+    "  \"$name$\");\n");
   }
   printer->Print(variables_,
     "  ::google::protobuf::internal::WireFormatLite::Write$declared_type$(\n"
@@ -613,12 +613,12 @@ GenerateSerializeWithCachedSizesToArray(io::Printer* printer) const {
   printer->Print(variables_,
     "for (int i = 0; i < this->$name$_size(); i++) {\n");
   if (HasUtf8Verification(descriptor_->file()) &&
-      descriptor_->type() == FieldDescriptor::TYPE_STRING) {
+    descriptor_->type() == FieldDescriptor::TYPE_STRING) {
     printer->Print(variables_,
-      "  ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
-      "    this->$name$(i).data(), this->$name$(i).length(),\n"
-      "    ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
-      "    \"$name$\");\n");
+    "  ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(\n"
+    "    this->$name$(i).data(), this->$name$(i).length(),\n"
+    "    ::google::protobuf::internal::WireFormat::SERIALIZE,\n"
+    "    \"$name$\");\n");
   }
   printer->Print(variables_,
     "  target = ::google::protobuf::internal::WireFormatLite::\n"

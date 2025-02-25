@@ -104,7 +104,7 @@ class SharedPtrControlBlock
     template < typename T >
     friend class weak_ptr;
 
-   private:
+    private:
     SharedPtrControlBlock()
         : refcount_( 1 ), weak_count_( 1 ) {}
     Atomic32 refcount_;
@@ -121,7 +121,7 @@ class shared_ptr
     template < typename U >
     friend class weak_ptr;
 
-   public:
+    public:
     typedef T element_type;
 
     shared_ptr()
@@ -129,7 +129,7 @@ class shared_ptr
 
     explicit shared_ptr( T* ptr )
         : ptr_( ptr ),
-          control_block_( ptr != NULL ? new SharedPtrControlBlock : NULL )
+        control_block_( ptr != NULL ? new SharedPtrControlBlock : NULL )
     {
         // If p is non-null and T inherits from enable_shared_from_this, we
         // set up the data that shared_from_this needs.
@@ -141,14 +141,14 @@ class shared_ptr
     template < typename U >
     shared_ptr( const shared_ptr< U >& ptr )
         : ptr_( NULL ),
-          control_block_( NULL )
+        control_block_( NULL )
     {
         Initialize( ptr );
     }
     // Need non-templated version to prevent the compiler-generated default
     shared_ptr( const shared_ptr< T >& ptr )
         : ptr_( NULL ),
-          control_block_( NULL )
+        control_block_( NULL )
     {
         Initialize( ptr );
     }
@@ -264,7 +264,7 @@ class shared_ptr
         return use_count() == 1;
     }
 
-   private:
+    private:
     // If r is non-empty, initialize *this to share ownership with r,
     // increasing the underlying reference count.
     // If r is empty, *this remains empty.
@@ -338,7 +338,7 @@ class weak_ptr
     template < typename U >
     friend class weak_ptr;
 
-   public:
+    public:
     typedef T element_type;
 
     // Create an empty (i.e. already expired) weak_ptr.
@@ -380,7 +380,7 @@ class weak_ptr
     ~weak_ptr()
     {
         if ( control_block_ != NULL &&
-             !RefCountDec( &control_block_->weak_count_ ) )
+            !RefCountDec( &control_block_->weak_count_ ) )
         {
             delete control_block_;
         }
@@ -454,8 +454,8 @@ class weak_ptr
                 if ( old_refcount == 0 )
                     break;
             } while ( old_refcount !=
-                      NoBarrier_CompareAndSwap(
-                          &control_block_->refcount_, old_refcount, old_refcount + 1 ) );
+                    NoBarrier_CompareAndSwap(
+                        &control_block_->refcount_, old_refcount, old_refcount + 1 ) );
             if ( old_refcount > 0 )
             {
                 result.ptr_ = ptr_;
@@ -466,7 +466,7 @@ class weak_ptr
         return result;
     }
 
-   private:
+    private:
     void CopyFrom( T* ptr, SharedPtrControlBlock* control_block )
     {
         ptr_ = ptr;
@@ -475,7 +475,7 @@ class weak_ptr
             RefCountInc( &control_block_->weak_count_ );
     }
 
-   private:
+    private:
     element_type* ptr_;
     SharedPtrControlBlock* control_block_;
 };
@@ -494,7 +494,7 @@ class enable_shared_from_this
 {
     friend class shared_ptr< T >;
 
-   public:
+    public:
     // Precondition: there must be a shared_ptr that owns *this and that was
     // created, directly or indirectly, from a raw pointer of type T*. (The
     // latter part of the condition is technical but not quite redundant; it
@@ -512,7 +512,7 @@ class enable_shared_from_this
         return weak_this_.lock();
     }
 
-   protected:
+    protected:
     enable_shared_from_this() {}
     enable_shared_from_this( const enable_shared_from_this& other ) {}
     enable_shared_from_this& operator=( const enable_shared_from_this& other )
@@ -521,7 +521,7 @@ class enable_shared_from_this
     }
     ~enable_shared_from_this() {}
 
-   private:
+    private:
     weak_ptr< T > weak_this_;
 };
 

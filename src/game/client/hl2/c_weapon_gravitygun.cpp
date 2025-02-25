@@ -21,7 +21,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_BeamQuadratic : public CDefaultClientRenderable
 {
-   public:
+    public:
     C_BeamQuadratic();
     void Update( C_BaseEntity *pOwner );
 
@@ -68,7 +68,7 @@ class C_WeaponGravityGun : public C_BaseCombatWeapon
 {
     DECLARE_CLASS( C_WeaponGravityGun, C_BaseCombatWeapon );
 
-   public:
+    public:
     C_WeaponGravityGun() {}
 
     DECLARE_CLIENTCLASS();
@@ -100,7 +100,7 @@ class C_WeaponGravityGun : public C_BaseCombatWeapon
         m_beam.Update( this );
     }
 
-   private:
+    private:
     C_WeaponGravityGun( const C_WeaponGravityGun & );
 
     C_BeamQuadratic m_beam;

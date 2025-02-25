@@ -33,7 +33,7 @@ class CTFCasualWelcomeDialog : public CTFMessageBoxDialog
 {
     DECLARE_CLASS_SIMPLE( CTFCasualWelcomeDialog, CTFMessageBoxDialog );
 
-   public:
+    public:
     CTFCasualWelcomeDialog()
         : CTFMessageBoxDialog( NULL, ( const char * )NULL, NULL, NULL, NULL )
     {

@@ -17,7 +17,7 @@ class INextBot;
  */
 class CMerasmusBody : public IBody
 {
-   public:
+    public:
     CMerasmusBody( INextBot *bot );
     virtual ~CMerasmusBody() {}
 
@@ -29,7 +29,7 @@ class CMerasmusBody : public IBody
 
     virtual unsigned int GetSolidMask( void ) const;  // return the bot's collision mask (hack until we get a general hull trace abstraction here or in the locomotion interface)
 
-   private:
+    private:
     int m_currentActivity;
     int m_moveXPoseParameter;
     int m_moveYPoseParameter;

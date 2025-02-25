@@ -208,11 +208,11 @@ extern "C"
         SPNG_CRC_ERROR = 0,
 
         /* Discard chunk, invalid for critical chunks.
-           Since v0.6.2: default for ancillary chunks */
+            Since v0.6.2: default for ancillary chunks */
         SPNG_CRC_DISCARD = 1,
 
         /* Ignore and don't calculate checksum.
-           Since v0.6.2: also ignores checksums in DEFLATE streams */
+            Since v0.6.2: also ignores checksums in DEFLATE streams */
         SPNG_CRC_USE = 2
     };
 

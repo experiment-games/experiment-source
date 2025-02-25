@@ -19,7 +19,7 @@
 CUtlLinkedList< CParticleEffect *, int > g_ParticleEffects;
 class CEffectChecker
 {
-   public:
+    public:
     ~CEffectChecker()
     {
         Assert( g_ParticleEffects.Count() == 0 );

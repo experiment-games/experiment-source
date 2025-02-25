@@ -40,7 +40,7 @@ IClientMode *g_pClientMode = NULL;
 
 class CSDKModeManager : public IVModeManager
 {
-   public:
+    public:
     virtual void Init();
     virtual void SwitchMode( bool commander, bool force ) {}
     virtual void LevelInit( const char *newmap );

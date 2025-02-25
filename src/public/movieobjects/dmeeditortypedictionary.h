@@ -24,7 +24,7 @@ class CDmeEditorAttributeInfo : public CDmElement
 {
     DEFINE_ELEMENT( CDmeEditorAttributeInfo, CDmElement );
 
-   public:
+    public:
     // Returns the attribute name this info is associated with
     const char *GetAttributeName() const;
 
@@ -46,7 +46,7 @@ class CDmeEditorAttributeInfo : public CDmElement
     CDmaVar< bool > m_bHideValue;
     CDmaString m_Help;
 
-   private:
+    private:
     // If this attribute is an array attribute, how do we edit the array entries?
     CDmaElement< CDmeEditorAttributeInfo > m_ArrayEntries;
 };
@@ -58,7 +58,7 @@ class CDmeEditorChoicesInfo : public CDmeEditorAttributeInfo
 {
     DEFINE_ELEMENT( CDmeEditorChoicesInfo, CDmeEditorAttributeInfo );
 
-   public:
+    public:
     void SetChoiceType( const char *pChoiceType );
 
     // Gets the choices
@@ -67,7 +67,7 @@ class CDmeEditorChoicesInfo : public CDmeEditorAttributeInfo
     const char *GetChoiceType() const;
     bool HasChoiceType() const;
 
-   protected:
+    protected:
     CDmElement *CreateChoice( const char *pChoiceString );
 
     CDmaElementArray< CDmElement > m_Choices;
@@ -81,7 +81,7 @@ class CDmeEditorType : public CDmElement
 {
     DEFINE_ELEMENT( CDmeEditorType, CDmElement );
 
-   public:
+    public:
     // Adds a editor type to be associated with a particular attribute
     void AddAttributeInfo( const char *pAttributeName, CDmeEditorAttributeInfo *pInfo );
 
@@ -94,7 +94,7 @@ class CDmeEditorType : public CDmElement
     // Returns the editor info associated with a single entry in an attribute array
     CDmeEditorAttributeInfo *GetAttributeArrayInfo( const char *pAttributeName );
 
-   private:
+    private:
     // Computes the actual attribute name stored in the type
     const char *GetActualAttributeName( const char *pAttributeName );
 };
@@ -106,7 +106,7 @@ class CDmeEditorTypeDictionary : public CDmElement
 {
     DEFINE_ELEMENT( CDmeEditorTypeDictionary, CDmElement );
 
-   public:
+    public:
     void AddEditorTypesFromFile( const char *pFileName, const char *pPathID );
     void AddEditorType( CDmeEditorType *pEditorType );
 
@@ -116,7 +116,7 @@ class CDmeEditorTypeDictionary : public CDmElement
     // Returns the editor info associated with a single entry in an attribute array
     CDmeEditorAttributeInfo *GetAttributeArrayInfo( CDmElement *pElement, const char *pAttributeName );
 
-   private:
+    private:
     // Returns the editor type to use with an element
     CDmeEditorType *GetEditorType( CDmElement *pElement );
 };

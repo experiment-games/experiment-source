@@ -22,13 +22,13 @@ class CAI_TrackPather : public CAI_BaseNPC
     DECLARE_CLASS( CAI_TrackPather, CAI_BaseNPC );
     DECLARE_DATADESC();
 
-   public:
+    public:
     bool IsOnPathTrack()
     {
         return ( m_pCurrentPathTarget != NULL );
     }
 
-   protected:
+    protected:
     void InitPathingData( float flTrackArrivalTolerance, float flTargetDistance, float flAvoidDistance );
     virtual bool GetTrackPatherTarget( Vector *pPos )
     {
@@ -88,7 +88,7 @@ class CAI_TrackPather : public CAI_BaseNPC
     void OnSave( IEntitySaveUtils *pUtils );
     void OnRestore( void );
 
-   protected:
+    protected:
     enum PauseState_t
     {
         PAUSE_NO_PAUSE = 0,
@@ -202,7 +202,7 @@ class CAI_TrackPather : public CAI_BaseNPC
     // Deal with teleportation
     void Teleported();
 
-   private:
+    private:
     CPathTrack *BestPointOnPath( CPathTrack *pPath, const Vector &targetPos, float avoidRadius, bool visible, bool bFarthestPointOnPath );
 
     // Input methods
@@ -268,7 +268,7 @@ class CAI_TrackPather : public CAI_BaseNPC
     // Compute the distance to a particular point on the path
     float ComputeDistanceAlongPathToPoint( CPathTrack *pStartTrack, CPathTrack *pDestTrack, const Vector &vecDestPosition, bool bMovingForward );
 
-   private:
+    private:
     //---------------------------------
     Vector m_vecDesiredPosition;
     Vector m_vecGoalOrientation;  // orientation of the goal entity.

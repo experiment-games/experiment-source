@@ -22,7 +22,7 @@ class CNextMapVotingDashboardState : public CTFMatchmakingPopup
 {
     DECLARE_CLASS_SIMPLE( CNextMapVotingDashboardState, CTFMatchmakingPopup );
 
-   public:
+    public:
     CNextMapVotingDashboardState( const char* pszName )
         : CTFMatchmakingPopup( pszName ), m_pTimerProgressBar( NULL )
     {
@@ -87,10 +87,10 @@ class CNextMapVotingDashboardState : public CTFMatchmakingPopup
     virtual bool ShouldBeActve() const OVERRIDE
     {
         if ( engine->IsInGame() &&
-             BInEndOfMatch() &&
-             TFGameRules() &&
-             TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_WAITING_FOR_USERS_TO_VOTE &&
-             GTFGCClientSystem()->BConnectedToMatchServer( false ) )
+            BInEndOfMatch() &&
+            TFGameRules() &&
+            TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_WAITING_FOR_USERS_TO_VOTE &&
+            GTFGCClientSystem()->BConnectedToMatchServer( false ) )
         {
             return true;
         }
@@ -101,7 +101,7 @@ class CNextMapVotingDashboardState : public CTFMatchmakingPopup
     virtual void OnCommand( const char* pszCommand )
     {
         if ( Q_strnicmp( pszCommand, "choice", 6 ) == 0 &&
-             GetPlayerVoteState() == CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED )
+            GetPlayerVoteState() == CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED )
         {
             int nIndex = atoi( pszCommand + 6 );
             Assert( nIndex >= 0 && nIndex <= 2 );
@@ -119,7 +119,7 @@ class CNextMapVotingDashboardState : public CTFMatchmakingPopup
     virtual void FireGameEvent( IGameEvent* pEvent )
     {
         if ( FStrEq( pEvent->GetName(), "player_next_map_vote_change" ) &&
-             TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_WAITING_FOR_USERS_TO_VOTE )
+            TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_WAITING_FOR_USERS_TO_VOTE )
         {
             ShowVoteByOtherPlayer( pEvent->GetInt( "map_index" ) );
             InvalidateLayout();
@@ -143,7 +143,7 @@ class CNextMapVotingDashboardState : public CTFMatchmakingPopup
         CTFMatchmakingPopup::OnEnter();
     }
 
-   private:
+    private:
     void SetHidden( bool bSetHidden )
     {
         m_bHidden = bSetHidden;

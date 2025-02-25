@@ -39,14 +39,14 @@ enum
 
 class CHL2MPGameRulesProxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPGameRulesProxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 };
 
 class HL2MPViewVectors : public CViewVectors
 {
-   public:
+    public:
     HL2MPViewVectors(
         Vector vView,
         Vector vHullMin,
@@ -60,15 +60,15 @@ class HL2MPViewVectors : public CViewVectors
         Vector vCrouchTraceMin,
         Vector vCrouchTraceMax )
         : CViewVectors(
-              vView,
-              vHullMin,
-              vHullMax,
-              vDuckHullMin,
-              vDuckHullMax,
-              vDuckView,
-              vObsHullMin,
-              vObsHullMax,
-              vDeadViewHeight )
+            vView,
+            vHullMin,
+            vHullMax,
+            vDuckHullMin,
+            vDuckHullMax,
+            vDuckView,
+            vObsHullMin,
+            vObsHullMax,
+            vDeadViewHeight )
     {
         m_vCrouchTraceMin = vCrouchTraceMin;
         m_vCrouchTraceMax = vCrouchTraceMax;
@@ -80,7 +80,7 @@ class HL2MPViewVectors : public CViewVectors
 
 class CHL2MPRules : public CTeamplayRules
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPRules, CTeamplayRules );
 
 #ifdef CLIENT_DLL
@@ -157,7 +157,7 @@ class CHL2MPRules : public CTeamplayRules
 
     virtual bool IsConnectedUserInfoChangeAllowed( CBasePlayer *pPlayer );
 
-   private:
+    private:
     CNetworkVar( bool, m_bTeamPlayEnabled );
     CNetworkVar( float, m_flGameStartTime );
     CUtlVector< EHANDLE > m_hRespawnableItemsAndWeapons;

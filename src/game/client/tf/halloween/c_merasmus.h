@@ -14,14 +14,14 @@
  */
 class C_Merasmus : public C_NextBotCombatCharacter
 {
-   public:
+    public:
     DECLARE_CLASS( C_Merasmus, C_NextBotCombatCharacter );
     DECLARE_CLIENTCLASS();
 
     C_Merasmus();
     virtual ~C_Merasmus();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual bool IsNextBot()
     {
@@ -35,7 +35,7 @@ class C_Merasmus : public C_NextBotCombatCharacter
 
     virtual int GetSkin();
 
-   private:
+    private:
     C_Merasmus( const C_Merasmus& );  // not defined, not accessible
 
     HPARTICLEFFECT m_ghostEffect;

@@ -7,7 +7,7 @@ class CObjectTeleporter;
 
 class CHL2MPBotTacticalMonitor : public Action< CHL2MPBot >
 {
-   public:
+    public:
     virtual Action< CHL2MPBot > *InitialContainedAction( CHL2MPBot *me );
 
     virtual ActionResult< CHL2MPBot > OnStart( CHL2MPBot *me, Action< CHL2MPBot > *priorAction );
@@ -25,7 +25,7 @@ class CHL2MPBotTacticalMonitor : public Action< CHL2MPBot >
         return "TacticalMonitor";
     }
 
-   private:
+    private:
     CountdownTimer m_maintainTimer;
 
     CountdownTimer m_acknowledgeAttentionTimer;

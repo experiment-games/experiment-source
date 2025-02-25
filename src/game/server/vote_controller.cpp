@@ -72,7 +72,7 @@ static int s_nVoteIdx = 0;
 //-----------------------------------------------------------------------------
 class CVoteControllerSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CVoteControllerSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -190,7 +190,7 @@ class CVoteControllerSystem : public CAutoGameSystemPerFrame
         }
     }
 
-   private:
+    private:
     CUtlMap< CSteamID, float > m_mapKickWatchList;
     CUtlMap< CSteamID, float > m_mapNameLockedList;
     float m_flNextKickCheckTime;
@@ -825,11 +825,11 @@ void CVoteController::VoteControllerThink( void )
     {
         CBaseIssue *pCurrentIssue = m_potentialIssues[m_iActiveIssueIndex];
         CBaseIssue::EVoteAction eVoteAction = pCurrentIssue->ProcessResults( m_VoteOptions,
-                                                                             m_nVoteOptionCount.Base(),
-                                                                             m_mapVotesBySteamID,
-                                                                             GetVoteIssueIndexWithHighestCount(),
-                                                                             GetNumVotesCast(),
-                                                                             m_nPotentialVotes );
+                                                                            m_nVoteOptionCount.Base(),
+                                                                            m_mapVotesBySteamID,
+                                                                            GetVoteIssueIndexWithHighestCount(),
+                                                                            GetNumVotesCast(),
+                                                                            m_nPotentialVotes );
 
         bool bVotePassed = false;
         switch ( eVoteAction )

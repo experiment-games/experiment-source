@@ -82,14 +82,14 @@ void CTFPowerupBottle::Reset( void )
 #ifdef GAME_DLL
     class CAttributeIterator_ZeroRefundableCurrency : public IEconItemUntypedAttributeIterator
     {
-       public:
+        public:
         CAttributeIterator_ZeroRefundableCurrency( CAttributeList *pAttrList )
             : m_pAttrList( pAttrList )
         {
             Assert( m_pAttrList );
         }
 
-       private:
+        private:
         virtual bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef )
         {
             if ( ::FindAttribute( m_pAttrList, pAttrDef ) )
@@ -282,7 +282,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
                         if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
                         {
                             if ( ( pWeapon->UsesPrimaryAmmo() && !pWeapon->HasPrimaryAmmo() ) ||
-                                 ( pWeapon->UsesSecondaryAmmo() && !pWeapon->HasSecondaryAmmo() ) )
+                                ( pWeapon->UsesSecondaryAmmo() && !pWeapon->HasSecondaryAmmo() ) )
                             {
                                 pTFPlayer->AwardAchievement( ACHIEVEMENT_TF_MVM_USE_AMMO_BOTTLE );
                             }
@@ -400,7 +400,7 @@ bool CTFPowerupBottle::Use()
         // Use up one charge worth of refundable money when a charge is used
         class CAttributeIterator_ConsumeOneRefundableCharge : public IEconItemUntypedAttributeIterator
         {
-           public:
+            public:
             CAttributeIterator_ConsumeOneRefundableCharge( CAttributeList *pAttrList, int iNumCharges )
                 : m_pAttrList( pAttrList ), m_iNumCharges( iNumCharges )
             {
@@ -408,7 +408,7 @@ bool CTFPowerupBottle::Use()
                 Assert( m_iNumCharges > 0 );
             }
 
-           private:
+            private:
             virtual bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef )
             {
                 if ( ::FindAttribute( m_pAttrList, pAttrDef ) )

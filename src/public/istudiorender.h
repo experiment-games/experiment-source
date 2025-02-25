@@ -317,7 +317,7 @@ struct GetTriangles_Output_t
 
 abstract_class IStudioDataCache : public IAppSystem
 {
-   public:
+    public:
     virtual bool VerifyHeaders( studiohdr_t * pStudioHdr ) = 0;
     virtual vertexFileHeader_t *CacheVertexData( studiohdr_t * pStudioHdr ) = 0;
 };
@@ -329,7 +329,7 @@ abstract_class IStudioDataCache : public IAppSystem
 
 abstract_class IStudioRender : public IAppSystem
 {
-   public:
+    public:
     virtual void BeginFrame( void ) = 0;
     virtual void EndFrame( void ) = 0;
 

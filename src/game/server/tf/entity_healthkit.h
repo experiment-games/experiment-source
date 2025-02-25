@@ -30,7 +30,7 @@ DECLARE_AUTO_LIST( IHealthKitAutoList );
 
 class CHealthKit : public CTFPowerup, public IHealthKitAutoList
 {
-   public:
+    public:
     DECLARE_CLASS( CHealthKit, CTFPowerup );
 
     void Spawn( void );
@@ -71,7 +71,7 @@ class CHealthKit : public CTFPowerup, public IHealthKitAutoList
 
 class CHealthKitSmall : public CHealthKit
 {
-   public:
+    public:
     DECLARE_CLASS( CHealthKitSmall, CHealthKit );
     powerupsize_t GetPowerupSize( void )
     {
@@ -112,7 +112,7 @@ class CHealthKitSmall : public CHealthKit
 
 class CHealthKitMedium : public CHealthKit
 {
-   public:
+    public:
     DECLARE_CLASS( CHealthKitMedium, CHealthKit );
     powerupsize_t GetPowerupSize( void )
     {
@@ -163,7 +163,7 @@ class CHealthKitMedium : public CHealthKit
 
 class CHealthAmmoKit : public CHealthKit
 {
-   public:
+    public:
     DECLARE_CLASS( CHealthAmmoKit, CHealthKit );
     powerupsize_t GetPowerupSize( void )
     {

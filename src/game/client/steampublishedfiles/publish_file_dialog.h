@@ -83,7 +83,7 @@ class CFilePublishDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( CFilePublishDialog, Frame );
 
-   public:
+    public:
     enum ErrorCode_t
     {
         kNoError,
@@ -115,7 +115,7 @@ class CFilePublishDialog : public Frame
 
     virtual void SetFile( const char *lpszFilename, bool bImported = false );
 
-   protected:
+    protected:
     virtual void OnCommand( const char *command );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnTick( void );

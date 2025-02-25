@@ -453,8 +453,8 @@ void CTFTeamStatus::PerformLayout( void )
 
         // Local player is always the innermost panel
         int nTeamPanelIndex = bIsLocalPlayerPanel         ? 0
-                              : iTeam == nLocalPlayerTeam ? iProcessed + 1
-                                                          : iProcessed;
+                            : iTeam == nLocalPlayerTeam ? iProcessed + 1
+                                                        : iProcessed;
 
         // Setup X-position and widths
         // Use the max width if less than 6 (to fill out the space)

@@ -38,7 +38,7 @@ class COperationFileListFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( COperationFileListFrame, vgui::Frame );
 
-   public:
+    public:
     // NOTE: The dialog ID is used to allow dialogs to have different configurations saved
     COperationFileListFrame( vgui::Panel *pParent, const char *pTitle, const char *pColumnHeader, bool bShowDescription, bool bShowOkOnly = false, int nDialogID = 1 );
     virtual ~COperationFileListFrame();
@@ -69,7 +69,7 @@ class COperationFileListFrame : public vgui::Frame
     // Retreives the description (only if it was shown)
     const char *GetDescription();
 
-   private:
+    private:
     virtual bool PerformOperation()
     {
         return true;
@@ -107,7 +107,7 @@ class CPerforceFileListFrame : public COperationFileListFrame
 {
     DECLARE_CLASS_SIMPLE( CPerforceFileListFrame, COperationFileListFrame );
 
-   public:
+    public:
     CPerforceFileListFrame( vgui::Panel *pParent, const char *pTitle, const char *pColumnHeader, PerforceAction_t action );
     virtual ~CPerforceFileListFrame();
 
@@ -118,7 +118,7 @@ class CPerforceFileListFrame : public COperationFileListFrame
 
     void DoModal( KeyValues *pContextKeys = NULL, const char *pMessage = NULL );
 
-   private:
+    private:
     virtual bool PerformOperation();
 
     // Adds files for open, submit

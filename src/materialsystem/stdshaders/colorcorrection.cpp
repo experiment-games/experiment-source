@@ -113,9 +113,9 @@ SHADER_DRAW
 
         float default_weight = params[WEIGHT_DEFAULT]->GetFloatValue();
         float weights[4] = { params[WEIGHT0]->GetFloatValue(),
-                             params[WEIGHT1]->GetFloatValue(),
-                             params[WEIGHT2]->GetFloatValue(),
-                             params[WEIGHT3]->GetFloatValue() };
+                            params[WEIGHT1]->GetFloatValue(),
+                            params[WEIGHT2]->GetFloatValue(),
+                            params[WEIGHT3]->GetFloatValue() };
 
         pShaderAPI->SetPixelShaderConstant( 0, &default_weight );
         pShaderAPI->SetPixelShaderConstant( 1, &weights[0] );

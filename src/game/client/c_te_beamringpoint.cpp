@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class C_TEBeamRingPoint : public C_TEBaseBeam
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBeamRingPoint, C_TEBaseBeam );
     DECLARE_CLIENTCLASS();
 
@@ -31,7 +31,7 @@ class C_TEBeamRingPoint : public C_TEBaseBeam
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecCenter;
     float m_flStartRadius;
     float m_flEndRadius;

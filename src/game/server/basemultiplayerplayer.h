@@ -16,7 +16,7 @@ class CBaseMultiplayerPlayer : public CAI_ExpresserHost< CBasePlayer >
     DECLARE_CLASS( CBaseMultiplayerPlayer, CAI_ExpresserHost< CBasePlayer > );
     DECLARE_ENT_SCRIPTDESC();
 
-   public:
+    public:
     CBaseMultiplayerPlayer();
     ~CBaseMultiplayerPlayer();
 
@@ -123,12 +123,12 @@ class CBaseMultiplayerPlayer : public CAI_ExpresserHost< CBasePlayer >
     bool ShouldRunRateLimitedCommand( const CCommand &args );
     bool ShouldRunRateLimitedCommand( const char *pszCommand );
 
-   protected:
+    protected:
     virtual CAI_Expresser *CreateExpresser( void );
 
     int m_iCurrentConcept;
 
-   private:
+    private:
     //---------------------------------
     CMultiplayer_Expresser *m_pExpresser;
 

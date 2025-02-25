@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossBehavior : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual Action< CEyeballBoss > *InitialContainedAction( CEyeballBoss *me );
 
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
@@ -24,7 +24,7 @@ class CEyeballBossBehavior : public Action< CEyeballBoss >
         return "Behavior";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_stunCooldownTimer;
 };
 
@@ -32,7 +32,7 @@ class CEyeballBossBehavior : public Action< CEyeballBoss >
 //---------------------------------------------------------------------------------------------
 class CEyeballBossDead : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
@@ -41,7 +41,7 @@ class CEyeballBossDead : public Action< CEyeballBoss >
         return "Dead";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_giveUpTimer;
 };
 

@@ -33,7 +33,7 @@ typedef struct SDL_Cursor SDL_Cursor;
 
 class ILauncherMgr : public IAppSystem
 {
-   public:
+    public:
     virtual bool Connect( CreateInterfaceFn factory ) = 0;
     virtual void Disconnect() = 0;
 
@@ -138,7 +138,7 @@ enum ECocoaKeyModifier
 
 class CCocoaEvent
 {
-   public:
+    public:
     CocoaEventType_t m_EventType;
     int m_VirtualKeyCode;
     wchar_t m_UnicodeKey;

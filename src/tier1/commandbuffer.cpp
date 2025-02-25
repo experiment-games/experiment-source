@@ -408,69 +408,69 @@ Creates a new command that executes a command string (possibly ; seperated)
 */
 void Cmd_Alias_f (void)
 {
-	cmdalias_t	*a;
-	char		cmd[MAX_COMMAND_LENGTH];
-	int			i, c;
-	char		*s;
+    cmdalias_t	*a;
+    char		cmd[MAX_COMMAND_LENGTH];
+    int			i, c;
+    char		*s;
 
-	if (Cmd_Argc() == 1)
-	{
-		Con_Printf ("Current alias commands:\n");
-		for (a = cmd_alias ; a ; a=a->next)
-			Con_Printf ("%s : %s\n", a->name, a->value);
-		return;
-	}
+    if (Cmd_Argc() == 1)
+    {
+        Con_Printf ("Current alias commands:\n");
+        for (a = cmd_alias ; a ; a=a->next)
+            Con_Printf ("%s : %s\n", a->name, a->value);
+        return;
+    }
 
-	s = Cmd_Argv(1);
-	if (strlen(s) >= MAX_ALIAS_NAME)
-	{
-		Con_Printf ("Alias name is too long\n");
-		return;
-	}
+    s = Cmd_Argv(1);
+    if (strlen(s) >= MAX_ALIAS_NAME)
+    {
+        Con_Printf ("Alias name is too long\n");
+        return;
+    }
 
 // copy the rest of the command line
-	cmd[0] = 0;		// start out with a null string
-	c = Cmd_Argc();
-	for (i=2 ; i< c ; i++)
-	{
-		Q_strncat(cmd, Cmd_Argv(i), sizeof( cmd ), COPY_ALL_CHARACTERS);
-		if (i != c)
-		{
-			Q_strncat (cmd, " ", sizeof( cmd ), COPY_ALL_CHARACTERS );
-		}
-	}
-	Q_strncat (cmd, "\n", sizeof( cmd ), COPY_ALL_CHARACTERS);
+    cmd[0] = 0;		// start out with a null string
+    c = Cmd_Argc();
+    for (i=2 ; i< c ; i++)
+    {
+        Q_strncat(cmd, Cmd_Argv(i), sizeof( cmd ), COPY_ALL_CHARACTERS);
+        if (i != c)
+        {
+            Q_strncat (cmd, " ", sizeof( cmd ), COPY_ALL_CHARACTERS );
+        }
+    }
+    Q_strncat (cmd, "\n", sizeof( cmd ), COPY_ALL_CHARACTERS);
 
-	// if the alias already exists, reuse it
-	for (a = cmd_alias ; a ; a=a->next)
-	{
-		if (!strcmp(s, a->name))
-		{
-			if ( !strcmp( a->value, cmd ) )		// Re-alias the same thing
-				return;
+    // if the alias already exists, reuse it
+    for (a = cmd_alias ; a ; a=a->next)
+    {
+        if (!strcmp(s, a->name))
+        {
+            if ( !strcmp( a->value, cmd ) )		// Re-alias the same thing
+                return;
 
-			delete[] a->value;
-			break;
-		}
-	}
+            delete[] a->value;
+            break;
+        }
+    }
 
-	if (!a)
-	{
-		a = (cmdalias_t *)new cmdalias_t;
-		a->next = cmd_alias;
-		cmd_alias = a;
-	}
-	Q_strncpy (a->name, s, sizeof( a->name ) );	
+    if (!a)
+    {
+        a = (cmdalias_t *)new cmdalias_t;
+        a->next = cmd_alias;
+        cmd_alias = a;
+    }
+    Q_strncpy (a->name, s, sizeof( a->name ) );
 
-	a->value = COM_StringCopy(cmd);
+    a->value = COM_StringCopy(cmd);
 }
 
 
-	
+
 /*
 =============================================================================
 
-					COMMAND EXECUTION
+                    COMMAND EXECUTION
 
 =============================================================================
 */
@@ -485,23 +485,23 @@ static	const char	*cmd_args = NULL;
 cmd_source_t	cmd_source;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Cmd_Init
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Cmd_Shutdown( void )
 {
-	// TODO, cleanup
-	while ( cmd_alias )
-	{
-		cmdalias_t *next = cmd_alias->next;
-		delete cmd_alias->value;	// created by StringCopy()
-		delete cmd_alias;
-		cmd_alias = next;
-	}
+    // TODO, cleanup
+    while ( cmd_alias )
+    {
+        cmdalias_t *next = cmd_alias->next;
+        delete cmd_alias->value;	// created by StringCopy()
+        delete cmd_alias;
+        cmd_alias = next;
+    }
 }
 
 
@@ -515,105 +515,105 @@ FIXME: lookupnoadd the token to speed search?
 ============
 */
 const ConCommandBase *Cmd_ExecuteString (const char *text, cmd_source_t src)
-{	
-	cmdalias_t		*a;
+{
+    cmdalias_t		*a;
 
-	cmd_source = src;
-	Cmd_TokenizeString (text);
-			
+    cmd_source = src;
+    Cmd_TokenizeString (text);
+
 // execute the command line
-	if (!Cmd_Argc())
-		return NULL;		// no tokens
+    if (!Cmd_Argc())
+        return NULL;		// no tokens
 
 // check alias
-	for (a=cmd_alias ; a ; a=a->next)
-	{
-		if (!Q_strcasecmp (cmd_argv[0], a->name))
-		{
-			Cbuf_InsertText (a->value);
-			return NULL;
-		}
-	}
-	
-// check ConCommands
-	ConCommandBase const *pCommand = ConCommandBase::FindCommand( cmd_argv[ 0 ] );
-	if ( pCommand && pCommand->IsCommand() )
-	{
-		bool isServerCommand = ( pCommand->IsBitSet( FCVAR_GAMEDLL ) && 
-								// Typed at console
-								cmd_source == src_command &&
-								// Not HLDS
-								!sv.IsDedicated() );
+    for (a=cmd_alias ; a ; a=a->next)
+    {
+        if (!Q_strcasecmp (cmd_argv[0], a->name))
+        {
+            Cbuf_InsertText (a->value);
+            return NULL;
+        }
+    }
 
-		// Hook to allow game .dll to figure out who type the message on a listen server
-		if ( serverGameClients )
-		{
-			// We're actually the server, so set it up locally
-			if ( sv.IsActive() )
-			{
-				g_pServerPluginHandler->SetCommandClient( -1 );
+// check ConCommands
+    ConCommandBase const *pCommand = ConCommandBase::FindCommand( cmd_argv[ 0 ] );
+    if ( pCommand && pCommand->IsCommand() )
+    {
+        bool isServerCommand = ( pCommand->IsBitSet( FCVAR_GAMEDLL ) &&
+                                // Typed at console
+                                cmd_source == src_command &&
+                                // Not HLDS
+                                !sv.IsDedicated() );
+
+        // Hook to allow game .dll to figure out who type the message on a listen server
+        if ( serverGameClients )
+        {
+            // We're actually the server, so set it up locally
+            if ( sv.IsActive() )
+            {
+                g_pServerPluginHandler->SetCommandClient( -1 );
 
 #ifndef SWDS
-				// Special processing for listen server player
-				if ( isServerCommand )
-				{
-					g_pServerPluginHandler->SetCommandClient( cl.m_nPlayerSlot );
-				}
+                // Special processing for listen server player
+                if ( isServerCommand )
+                {
+                    g_pServerPluginHandler->SetCommandClient( cl.m_nPlayerSlot );
+                }
 #endif
-			}
-			// We're not the server, but we've been a listen server (game .dll loaded)
-			//  forward this command tot he server instead of running it locally if we're still
-			//  connected
-			// Otherwise, things like "say" won't work unless you quit and restart
-			else if ( isServerCommand )
-			{
-				if ( cl.IsConnected() )
-				{
-					Cmd_ForwardToServer();
-					return NULL;
-				}
-				else
-				{
-					// It's a server command, but we're not connected to a server.  Don't try to execute it.
-					return NULL;
-				}
-			}
-		}
+            }
+            // We're not the server, but we've been a listen server (game .dll loaded)
+            //  forward this command tot he server instead of running it locally if we're still
+            //  connected
+            // Otherwise, things like "say" won't work unless you quit and restart
+            else if ( isServerCommand )
+            {
+                if ( cl.IsConnected() )
+                {
+                    Cmd_ForwardToServer();
+                    return NULL;
+                }
+                else
+                {
+                    // It's a server command, but we're not connected to a server.  Don't try to execute it.
+                    return NULL;
+                }
+            }
+        }
 
-		// Allow cheat commands in singleplayer, debug, or multiplayer with sv_cheats on
+        // Allow cheat commands in singleplayer, debug, or multiplayer with sv_cheats on
 #ifndef _DEBUG
-		if ( pCommand->IsBitSet( FCVAR_CHEAT ) )
-		{
-			if ( !Host_IsSinglePlayerGame() && sv_cheats.GetInt() == 0 )
-			{
-				Msg( "Can't use cheat command %s in multiplayer, unless the server has sv_cheats set to 1.\n", pCommand->GetName() );
-				return NULL;
-			}
-		}
+        if ( pCommand->IsBitSet( FCVAR_CHEAT ) )
+        {
+            if ( !Host_IsSinglePlayerGame() && sv_cheats.GetInt() == 0 )
+            {
+                Msg( "Can't use cheat command %s in multiplayer, unless the server has sv_cheats set to 1.\n", pCommand->GetName() );
+                return NULL;
+            }
+        }
 #endif
 
-		(( ConCommand * )pCommand )->Dispatch();
-		return pCommand;
-	}
+        (( ConCommand * )pCommand )->Dispatch();
+        return pCommand;
+    }
 
-	// check cvars
-	if ( cv->IsCommand() )
-	{
-		return pCommand;
-	}
+    // check cvars
+    if ( cv->IsCommand() )
+    {
+        return pCommand;
+    }
 
-	// forward the command line to the server, so the entity DLL can parse it
-	if ( cmd_source == src_command )
-	{
-		if ( cl.IsConnected() )
-		{
-			Cmd_ForwardToServer();
-			return NULL;
-		}
-	}
-	
-	Msg("Unknown command \"%s\"\n", Cmd_Argv(0));
+    // forward the command line to the server, so the entity DLL can parse it
+    if ( cmd_source == src_command )
+    {
+        if ( cl.IsConnected() )
+        {
+            Cmd_ForwardToServer();
+            return NULL;
+        }
+    }
 
-	return NULL;
+    Msg("Unknown command \"%s\"\n", Cmd_Argv(0));
+
+    return NULL;
 }
 #endif

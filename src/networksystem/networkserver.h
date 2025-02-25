@@ -10,7 +10,7 @@ class CConnectedClient;
 
 class CNetworkServer : public INetworkPeerBase
 {
-   public:
+    public:
     CNetworkServer( INetworkSystem *networkSystem );
     virtual ~CNetworkServer();
 
@@ -27,7 +27,7 @@ class CNetworkServer : public INetworkPeerBase
 
 class CConnectedClient : public IConnectedClient
 {
-   public:
+    public:
     CConnectedClient( CNetworkServer *server, netadr_t &remote, CTcpClientSocket *pSocket );
     virtual ~CConnectedClient();
 

@@ -72,7 +72,7 @@ extern BonusEffect_t g_BonusEffects[kBonusEffect_Count];
 //-----------------------------------------------------------------------------
 class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventoryUpdateListener, public C_TFMvMBossProgressUser
 {
-   public:
+    public:
     DECLARE_CLASS( C_TFPlayer, C_BasePlayer );
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
@@ -396,14 +396,14 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
     virtual const char *GetBossProgressImageName() const OVERRIDE;
     virtual float GetBossStatusProgress() const OVERRIDE;
 
-   protected:
+    protected:
     CNetworkVarEmbedded( CAttributeContainerPlayer, m_AttributeManager );
 
     // IClientNetworkable implementation.
-   public:
+    public:
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
 
-   public:
+    public:
     // Shared functions
     float GetMovementForwardPull( void ) const;
     bool CanPlayerMove() const;
@@ -654,7 +654,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
 
     bool IsPlayerOnSteamFriendsList( C_BasePlayer *pPlayer );
 
-   protected:
+    protected:
     void ResetFlexWeights( CStudioHdr *pStudioHdr );
 
     virtual void CalcInEyeCamView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
@@ -662,7 +662,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
     virtual void UpdateGlowEffect( void );
     virtual void DestroyGlowEffect( void );
 
-   private:
+    private:
     bool ShouldShowPowerupGlowEffect();
     void GetPowerupGlowEffectColor( float *r, float *g, float *b );
 
@@ -751,7 +751,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
 
     C_BaseAnimating *m_pKart;
 
-   public:
+    public:
     float GetKartSpeedBoost( void );
     float GetKartHealth( void )
     {
@@ -762,7 +762,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
     friend class CTFPlayerShared;
 
     // Called by shared code.
-   public:
+    public:
     float GetClassChangeTime() const
     {
         return m_flChangeClassTime;
@@ -821,7 +821,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
     bool m_bOldSaveMeParity;
     bool m_bIsCoaching;
 
-   private:
+    private:
     void UpdateTauntItem();
     void ParseSharedTauntDataFromEconItemView( const CEconItemView *pEconItemView );
 
@@ -851,7 +851,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
 
     CEconItemView m_TauntEconItemView;
 
-   public:
+    public:
     int m_nOldWaterLevel;
     float m_flWaterEntryTime;
     bool m_bWaterExitEffectActive;
@@ -975,7 +975,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
 
     //----------------------------
     // INVENTORY MANAGEMENT
-   public:
+    public:
     // IInventoryUpdateListener
     virtual void InventoryUpdated( CPlayerInventory *pInventory );
     virtual void SOCacheUnsubscribed( const CSteamID &steamIDOwner )
@@ -993,11 +993,11 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
     bool CanDisplayAllSeeEffect( EAttackBonusEffects_t effect ) const;
     void SetNextAllSeeEffectTime( EAttackBonusEffects_t effect, float flTime );
 
-   private:
+    private:
     CTFPlayerInventory m_Inventory;
     bool m_bInventoryReceived;
 
-   private:
+    private:
     float m_flChangeClassTime;
 
     float m_flWaterImpactTime;
@@ -1055,7 +1055,7 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
 
     vgui::DHANDLE< CTFReviveDialog > m_hRevivePrompt;
 
-   public:
+    public:
     void SetShowHudMenuTauntSelection( bool bShow )
     {
         m_bShowHudMenuTauntSelection = bShow;
@@ -1065,10 +1065,10 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
         return m_bShowHudMenuTauntSelection;
     }
 
-   private:
+    private:
     bool m_bShowHudMenuTauntSelection;
 
-   public:
+    public:
     CBaseEntity *GetGrapplingHookTarget() const
     {
         return m_hGrapplingHookTarget;
@@ -1125,10 +1125,10 @@ class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventory
     virtual void ClientAdjustStartSoundParams( EmitSound_t &params ) override;
     virtual void ClientAdjustStartSoundParams( StartSoundParams_t &params ) override;
 
-   private:
+    private:
     void ClientAdjustVOPitch( int &pitch );
 
-   private:
+    private:
     CNetworkHandle( CBaseEntity, m_hGrapplingHookTarget );
     CNetworkHandle( CBaseCombatWeapon, m_hSecondaryLastWeapon );
     CNetworkVar( bool, m_bUsingActionSlot );
@@ -1166,7 +1166,7 @@ void SetAppropriateCamera( C_TFPlayer *pPlayer );
 
 class C_TFPlayerPreviewEffect
 {
-   public:
+    public:
     // If you re-order this list, please update TF_ImportPreview_Effect* in tf_english.txt
     enum PREVIEW_EFFECT
     {
@@ -1180,7 +1180,7 @@ class C_TFPlayerPreviewEffect
         NUM_PREVIEW_EFFECTS
     };
 
-   public:
+    public:
     C_TFPlayerPreviewEffect();
 
     void SetEffect( PREVIEW_EFFECT nEffect )
@@ -1205,7 +1205,7 @@ class C_TFPlayerPreviewEffect
 
     void Reset();
 
-   protected:
+    protected:
     PREVIEW_EFFECT m_nPreviewEffect;
     int m_nTeam;
     CMaterialReference m_InvulnerableMaterial;
@@ -1214,7 +1214,7 @@ extern C_TFPlayerPreviewEffect g_PlayerPreviewEffect;
 
 class C_TFRagdoll : public C_BaseFlex
 {
-   public:
+    public:
     DECLARE_CLASS( C_TFRagdoll, C_BaseFlex );
     DECLARE_CLIENTCLASS();
 
@@ -1295,7 +1295,7 @@ class C_TFRagdoll : public C_BaseFlex
         return m_flHandScale;
     }
 
-   private:
+    private:
     C_TFRagdoll( const C_TFRagdoll & ) {}
 
     void Interp_Copy( C_BaseAnimatingOverlay *pSourceEntity );
@@ -1312,7 +1312,7 @@ class C_TFRagdoll : public C_BaseFlex
 
     virtual int InternalDrawModel( int flags );
 
-   private:
+    private:
     CNetworkVector( m_vecRagdollVelocity );
     CNetworkVector( m_vecRagdollOrigin );
     CNetworkHandle( CTFPlayer, m_hPlayer );

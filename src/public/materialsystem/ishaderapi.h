@@ -30,7 +30,7 @@ class IMaterialVar;
 //-----------------------------------------------------------------------------
 abstract_class IShaderInit
 {
-   public:
+    public:
     // Loads up a texture
     virtual void LoadTexture( IMaterialVar * pTextureVar, const char *pTextureGroupName, int nAdditionalCreationFlags = 0 ) = 0;
     virtual void LoadBumpMap( IMaterialVar * pTextureVar, const char *pTextureGroupName ) = 0;

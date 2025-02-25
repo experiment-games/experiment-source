@@ -25,7 +25,7 @@
 //
 class CTFWrench : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWrench, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -60,7 +60,7 @@ class CTFWrench : public CTFWeaponBaseMelee
     virtual void ItemPostFrame();
 #endif
 
-   private:
+    private:
     bool m_bReloadDown;
     CTFWrench( const CTFWrench & ) {}
 };
@@ -71,7 +71,7 @@ class CTFWrench : public CTFWeaponBaseMelee
 //
 class CTFRobotArm : public CTFWrench
 {
-   public:
+    public:
     DECLARE_CLASS( CTFRobotArm, CTFWrench );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -101,7 +101,7 @@ class CTFRobotArm : public CTFWrench
 
     virtual void DoViewModelAnimation( void );
 
-   private:
+    private:
     CNetworkHandle( CTFWearable, m_hRobotArm );
 
     int m_iComboCount;
@@ -112,7 +112,7 @@ class CTFRobotArm : public CTFWrench
 
 class CTFWearableRobotArm : public CTFWearable
 {
-   public:
+    public:
     DECLARE_CLASS( CTFWearableRobotArm, CTFWearable );
     DECLARE_NETWORKCLASS();
 };

@@ -35,7 +35,7 @@ class CRepeatingContainer : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CRepeatingContainer, EditablePanel );
 
-   public:
+    public:
     CRepeatingContainer( Panel *pParent, const char *pszName );
     virtual ~CRepeatingContainer();
 
@@ -47,7 +47,7 @@ class CRepeatingContainer : public EditablePanel
         return m_vecChildren[nIndex];
     }
 
-   private:
+    private:
     enum ELayoutMethod_t
     {
         METHOD_EVEN,
@@ -66,7 +66,7 @@ class CTFItemCardPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFItemCardPanel, EditablePanel );
 
-   public:
+    public:
     CTFItemCardPanel( Panel *parent, const char *name );
     virtual ~CTFItemCardPanel( void );
 
@@ -88,7 +88,7 @@ class CTFItemCardPanel : public EditablePanel
         return m_bPinned;
     }
 
-   private:
+    private:
     void UpdateDescription();
     void UpdateModelOrIcon();
     void LoadResFileForCurrentItem();
@@ -140,7 +140,7 @@ class CItemCardPanelToolTip : public vgui::BaseTooltip
 {
     DECLARE_CLASS_SIMPLE( CItemCardPanelToolTip, vgui::BaseTooltip );
 
-   public:
+    public:
     CItemCardPanelToolTip( vgui::Panel *parent, const char *text = NULL );
 
     void SetText( const char *text )
@@ -166,11 +166,11 @@ class CItemCardPanelToolTip : public vgui::BaseTooltip
         m_iPositioningStrategy = iStrat;
     }
 
-   private:
+    private:
     void GetPosition( itempanel_tooltippos_t iTooltipPosition, CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
     bool ValidatePosition( CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
 
-   private:
+    private:
     CTFItemCardPanel *m_pMouseOverItemPanel;  // This is the tooltip panel we make visible. Must be a CItemModelPanel.
     vgui::Panel *m_pParentPanel;              // This is the panel that we send item entered/exited messages to
     vgui::DHANDLE< CItemModelPanel > m_hCurrentPanel;

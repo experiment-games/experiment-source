@@ -249,22 +249,22 @@ void CTF_Presence::SetupGameProperties( CUtlVector< XUSER_CONTEXT > &contexts, C
     char buffer[MAX_PATH];
 
 #if 0  // defined( _X360 ) // absolutely nothing happens in this loop, so I disabled it. It was breaking the compiler in LTCG mode. -egr
-	int count = contexts.Count();
-	for ( int i = 0; i < count; ++i )
-	{
-		XUSER_CONTEXT &ctx = contexts[i];
-		switch( ctx.dwContextId )
-		{
-		case X_CONTEXT_GAME_TYPE:
-			if ( ctx.dwValue == X_CONTEXT_GAME_TYPE_RANKED )
-			{
-			}
-			else if ( ctx.dwValue == X_CONTEXT_GAME_TYPE_STANDARD )
-			{
-			}
-			break;
-		}
-	}
+    int count = contexts.Count();
+    for ( int i = 0; i < count; ++i )
+    {
+        XUSER_CONTEXT &ctx = contexts[i];
+        switch( ctx.dwContextId )
+        {
+        case X_CONTEXT_GAME_TYPE:
+            if ( ctx.dwValue == X_CONTEXT_GAME_TYPE_RANKED )
+            {
+            }
+            else if ( ctx.dwValue == X_CONTEXT_GAME_TYPE_STANDARD )
+            {
+            }
+            break;
+        }
+    }
 #endif
 
     for ( int i = 0; i < properties.Count(); ++i )

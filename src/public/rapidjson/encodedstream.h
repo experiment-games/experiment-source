@@ -40,7 +40,7 @@ class EncodedInputStream
 {
     RAPIDJSON_STATIC_ASSERT( sizeof( typename InputByteStream::Ch ) == 1 );
 
-   public:
+    public:
     typedef typename Encoding::Ch Ch;
 
     EncodedInputStream( InputByteStream& is )
@@ -84,7 +84,7 @@ class EncodedInputStream
         return 0;
     }
 
-   private:
+    private:
     EncodedInputStream( const EncodedInputStream& );
     EncodedInputStream& operator=( const EncodedInputStream& );
 
@@ -96,7 +96,7 @@ class EncodedInputStream
 template <>
 class EncodedInputStream< UTF8<>, MemoryStream >
 {
-   public:
+    public:
     typedef UTF8<>::Ch Ch;
 
     EncodedInputStream( MemoryStream& is )
@@ -133,7 +133,7 @@ class EncodedInputStream< UTF8<>, MemoryStream >
 
     MemoryStream& is_;
 
-   private:
+    private:
     EncodedInputStream( const EncodedInputStream& );
     EncodedInputStream& operator=( const EncodedInputStream& );
 };
@@ -148,7 +148,7 @@ class EncodedOutputStream
 {
     RAPIDJSON_STATIC_ASSERT( sizeof( typename OutputByteStream::Ch ) == 1 );
 
-   public:
+    public:
     typedef typename Encoding::Ch Ch;
 
     EncodedOutputStream( OutputByteStream& os, bool putBOM = true )
@@ -194,7 +194,7 @@ class EncodedOutputStream
         return 0;
     }
 
-   private:
+    private:
     EncodedOutputStream( const EncodedOutputStream& );
     EncodedOutputStream& operator=( const EncodedOutputStream& );
 
@@ -213,7 +213,7 @@ class AutoUTFInputStream
 {
     RAPIDJSON_STATIC_ASSERT( sizeof( typename InputByteStream::Ch ) == 1 );
 
-   public:
+    public:
     typedef CharType Ch;
 
     //! Constructor.
@@ -275,7 +275,7 @@ class AutoUTFInputStream
         return 0;
     }
 
-   private:
+    private:
     AutoUTFInputStream( const AutoUTFInputStream& );
     AutoUTFInputStream& operator=( const AutoUTFInputStream& );
 
@@ -395,7 +395,7 @@ class AutoUTFOutputStream
 {
     RAPIDJSON_STATIC_ASSERT( sizeof( typename OutputByteStream::Ch ) == 1 );
 
-   public:
+    public:
     typedef CharType Ch;
 
     //! Constructor.
@@ -461,7 +461,7 @@ class AutoUTFOutputStream
         return 0;
     }
 
-   private:
+    private:
     AutoUTFOutputStream( const AutoUTFOutputStream& );
     AutoUTFOutputStream& operator=( const AutoUTFOutputStream& );
 

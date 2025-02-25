@@ -43,14 +43,14 @@ class CConfirmApplyPaintCanBaseDialog : public CBaseToolUsageDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmApplyPaintCanBaseDialog, CBaseToolUsageDialog );
 
-   protected:
+    protected:
     CConfirmApplyPaintCanBaseDialog( vgui::Panel *pParent, const char *szType, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CBaseToolUsageDialog( pParent, szType, pTool, pToolSubject )
     {
         //
     }
 
-   public:
+    public:
     virtual void Apply( void )
     {
         // Send the apply request to the GC
@@ -64,7 +64,7 @@ class CConfirmApplyPaintCanBaseDialog : public CBaseToolUsageDialog
         GCClientSystem()->BSendMessage( msg );
     }
 
-   protected:
+    protected:
     // Set up a particular panel for a certain item with a certain preview color.
     static void SetupPaintModelPanel( CItemModelPanel *pPaintModelPanel, CEconItemView *pToolSubjectView, int iTeam, int iPaintRGB )
     {
@@ -105,7 +105,7 @@ class CConfirmApplyPaintCanDialog : public CConfirmApplyPaintCanBaseDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmApplyPaintCanDialog, CConfirmApplyPaintCanBaseDialog );
 
-   public:
+    public:
     CConfirmApplyPaintCanDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CConfirmApplyPaintCanBaseDialog( pParent, "ConfirmApplyPaintCanDialog", pTool, pToolSubject )
     {
@@ -122,7 +122,7 @@ class CConfirmApplyPaintCanDialog : public CConfirmApplyPaintCanBaseDialog
         SetupPaintModelPanel( m_pPaintModelPanel, m_pSubjectModelPanel->GetItem(), kTeamID0, m_pToolModelPanel->GetItem()->GetModifiedRGBValue( false ) );
     }
 
-   private:
+    private:
     CItemModelPanel *m_pPaintModelPanel;
 };
 
@@ -133,7 +133,7 @@ class CConfirmApplyTeamColorPaintCanDialog : public CConfirmApplyPaintCanBaseDia
 {
     DECLARE_CLASS_SIMPLE( CConfirmApplyTeamColorPaintCanDialog, CConfirmApplyPaintCanBaseDialog );
 
-   public:
+    public:
     CConfirmApplyTeamColorPaintCanDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
         : CConfirmApplyPaintCanBaseDialog( pParent, "ConfirmApplyTeamColorPaintCanDialog", pTool, pToolSubject )
     {
@@ -158,7 +158,7 @@ class CConfirmApplyTeamColorPaintCanDialog : public CConfirmApplyPaintCanBaseDia
         m_pPaintModelPanel_Red->GetItem()->SetItemID( m_pPaintModelPanel_Red->GetItem()->GetItemID() | ( 1LL << 63 ) );
     }
 
-   private:
+    private:
     CItemModelPanel *m_pPaintModelPanel_Red;
     CItemModelPanel *m_pPaintModelPanel_Blue;
 };
@@ -189,7 +189,7 @@ void CEconTool_PaintCan::OnClientApplyTool( CEconItemView *pTool, CEconItemView 
 //-----------------------------------------------------------------------------
 class CGCPaintItemResponse : public GCSDK::CGCClientJob
 {
-   public:
+    public:
     CGCPaintItemResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 

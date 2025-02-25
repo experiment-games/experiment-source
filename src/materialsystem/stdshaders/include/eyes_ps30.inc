@@ -19,14 +19,14 @@
 class eyes_ps30_Static_Index
 {
 public:
-	eyes_ps30_Static_Index(  )
-	{
-	}
+    eyes_ps30_Static_Index(  )
+    {
+    }
 
-	int GetIndex() const
-	{
-		return 0;
-	}
+    int GetIndex() const
+    {
+        return 0;
+    }
 };
 
 #define shaderStaticTest_eyes_ps30 1
@@ -34,47 +34,46 @@ public:
 
 class eyes_ps30_Dynamic_Index
 {
-	unsigned int m_nWRITE_DEPTH_TO_DESTALPHA : 2;
-	unsigned int m_nPIXELFOGTYPE : 2;
+    unsigned int m_nWRITE_DEPTH_TO_DESTALPHA : 2;
+    unsigned int m_nPIXELFOGTYPE : 2;
 #ifdef _DEBUG
-	bool m_bWRITE_DEPTH_TO_DESTALPHA : 1;
-	bool m_bPIXELFOGTYPE : 1;
+    bool m_bWRITE_DEPTH_TO_DESTALPHA : 1;
+    bool m_bPIXELFOGTYPE : 1;
 #endif	// _DEBUG
 public:
-	void SetWRITE_DEPTH_TO_DESTALPHA( int i )
-	{
-		Assert( i >= 0 && i <= 1 );
-		m_nWRITE_DEPTH_TO_DESTALPHA = i;
+    void SetWRITE_DEPTH_TO_DESTALPHA( int i )
+    {
+        Assert( i >= 0 && i <= 1 );
+        m_nWRITE_DEPTH_TO_DESTALPHA = i;
 #ifdef _DEBUG
-		m_bWRITE_DEPTH_TO_DESTALPHA = true;
+        m_bWRITE_DEPTH_TO_DESTALPHA = true;
 #endif	// _DEBUG
-	}
+    }
 
-	void SetPIXELFOGTYPE( int i )
-	{
-		Assert( i >= 0 && i <= 2 );
-		m_nPIXELFOGTYPE = i;
+    void SetPIXELFOGTYPE( int i )
+    {
+        Assert( i >= 0 && i <= 2 );
+        m_nPIXELFOGTYPE = i;
 #ifdef _DEBUG
-		m_bPIXELFOGTYPE = true;
+        m_bPIXELFOGTYPE = true;
 #endif	// _DEBUG
-	}
+    }
 
-	eyes_ps30_Dynamic_Index(  )
-	{
-		m_nWRITE_DEPTH_TO_DESTALPHA = 0;
-		m_nPIXELFOGTYPE = 0;
+    eyes_ps30_Dynamic_Index(  )
+    {
+        m_nWRITE_DEPTH_TO_DESTALPHA = 0;
+        m_nPIXELFOGTYPE = 0;
 #ifdef _DEBUG
-		m_bWRITE_DEPTH_TO_DESTALPHA = false;
-		m_bPIXELFOGTYPE = false;
+        m_bWRITE_DEPTH_TO_DESTALPHA = false;
+        m_bPIXELFOGTYPE = false;
 #endif	// _DEBUG
-	}
+    }
 
-	int GetIndex() const
-	{
-		Assert( m_bWRITE_DEPTH_TO_DESTALPHA && m_bPIXELFOGTYPE );
-		return ( 1 * m_nWRITE_DEPTH_TO_DESTALPHA ) + ( 2 * m_nPIXELFOGTYPE ) + 0;
-	}
+    int GetIndex() const
+    {
+        Assert( m_bWRITE_DEPTH_TO_DESTALPHA && m_bPIXELFOGTYPE );
+        return ( 1 * m_nWRITE_DEPTH_TO_DESTALPHA ) + ( 2 * m_nPIXELFOGTYPE ) + 0;
+    }
 };
 
 #define shaderDynamicTest_eyes_ps30 psh_forgot_to_set_dynamic_WRITE_DEPTH_TO_DESTALPHA + psh_forgot_to_set_dynamic_PIXELFOGTYPE
-

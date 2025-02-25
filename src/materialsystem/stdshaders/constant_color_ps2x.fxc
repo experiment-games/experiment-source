@@ -9,10 +9,10 @@
 
 struct PS_INPUT
 {
-	float2 coordTap0				: TEXCOORD0;
-	
-#if defined( _X360 ) //matching pixel shader inputs to vertex shader outputs to avoid shader patches	
-	float2 ZeroTexCoord				: TEXCOORD1;
+    float2 coordTap0				: TEXCOORD0;
+
+#if defined( _X360 ) //matching pixel shader inputs to vertex shader outputs to avoid shader patches
+    float2 ZeroTexCoord				: TEXCOORD1;
     float2 bloomTexCoord            : TEXCOORD2;
 #endif
 };
@@ -21,6 +21,5 @@ float4 Constant_color : register( c0 );
 
 float4 main( PS_INPUT i ) : COLOR
 {
-	return FinalOutput( float4(0,1,0,1), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE ); //Constant_color;
+    return FinalOutput( float4(0,1,0,1), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE ); //Constant_color;
 }
-

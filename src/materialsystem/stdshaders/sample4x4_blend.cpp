@@ -69,7 +69,7 @@ SHADER_DRAW
 
         pShaderShadow->EnableBlending( true );
         pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA,
-                                  SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
+                                SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
     }
 
     DYNAMIC_STATE

@@ -40,7 +40,7 @@ class CBarnacleTongueTip : public CBaseAnimating
 {
     DECLARE_CLASS( CBarnacleTongueTip, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Spawn( void );
@@ -55,7 +55,7 @@ class CBarnacleTongueTip : public CBaseAnimating
 
     IPhysicsSpring *m_pSpring;
 
-   private:
+    private:
     CHandle< CNPC_Barnacle > m_hBarnacle;
 };
 
@@ -66,7 +66,7 @@ class CNPC_Barnacle : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Barnacle, CAI_BaseNPC );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -86,7 +86,7 @@ class CNPC_Barnacle : public CAI_BaseNPC
     // The tongue's vphysics updated
     void OnTongueTipUpdated();
 
-   private:
+    private:
     void SetAltitude( float flAltitude );
     void SpawnDeathGibs( void );
 
@@ -223,7 +223,7 @@ inline bool CNPC_Barnacle::IsEnemyARagdoll()
 inline bool CNPC_Barnacle::IsEnemyAPhysicsObject()
 {
     return !m_hRagdoll && GetEnemy() && !GetEnemy()->IsPlayer() &&
-           !GetEnemy()->MyNPCPointer() && ( GetEnemy()->GetMoveType() == MOVETYPE_VPHYSICS );
+            !GetEnemy()->MyNPCPointer() && ( GetEnemy()->GetMoveType() == MOVETYPE_VPHYSICS );
 }
 
 inline bool CNPC_Barnacle::IsEnemyAnNPC()

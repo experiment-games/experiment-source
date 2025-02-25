@@ -76,21 +76,21 @@ public class LazyFieldLite {
   }
 
   /**
-   * Returns message instance. At first time, serialized data is parsed by
-   * {@code defaultInstance.getParserForType()}.
-   *
-   * @param defaultInstance its message's default instance. It's also used to get parser for the
-   * message type.
-   */
+    * Returns message instance. At first time, serialized data is parsed by
+    * {@code defaultInstance.getParserForType()}.
+    *
+    * @param defaultInstance its message's default instance. It's also used to get parser for the
+    * message type.
+    */
   public MessageLite getValue(MessageLite defaultInstance) {
     ensureInitialized(defaultInstance);
     return value;
   }
 
   /**
-   * LazyField is not thread-safe for write access. Synchronizations are needed
-   * under read/write situations.
-   */
+    * LazyField is not thread-safe for write access. Synchronizations are needed
+    * under read/write situations.
+    */
   public MessageLite setValue(MessageLite value) {
     MessageLite originalValue = this.value;
     this.value = value;
@@ -101,13 +101,13 @@ public class LazyFieldLite {
 
   public void merge(LazyFieldLite value) {
     if (value.containsDefaultInstance()) {
-      return;
+    return;
     }
 
     if (bytes == null) {
-      this.bytes = value.bytes;
+    this.bytes = value.bytes;
     } else {
-      this.bytes.concat(value.toByteString());
+    this.bytes.concat(value.toByteString());
     }
     isDirty = false;
   }
@@ -123,54 +123,54 @@ public class LazyFieldLite {
   }
 
   /**
-   * Due to the optional field can be duplicated at the end of serialized
-   * bytes, which will make the serialized size changed after LazyField
-   * parsed. Be careful when using this method.
-   */
+    * Due to the optional field can be duplicated at the end of serialized
+    * bytes, which will make the serialized size changed after LazyField
+    * parsed. Be careful when using this method.
+    */
   public int getSerializedSize() {
     if (isDirty) {
-      return value.getSerializedSize();
+    return value.getSerializedSize();
     }
     return bytes.size();
   }
 
   public ByteString toByteString() {
     if (!isDirty) {
-      return bytes;
+    return bytes;
     }
     synchronized (this) {
-      if (!isDirty) {
+    if (!isDirty) {
         return bytes;
-      }
-      if (value == null) {
+    }
+    if (value == null) {
         bytes = ByteString.EMPTY;
-      } else {
+    } else {
         bytes = value.toByteString();
-      }
-      isDirty = false;
-      return bytes;
+    }
+    isDirty = false;
+    return bytes;
     }
   }
 
   protected void ensureInitialized(MessageLite defaultInstance) {
     if (value != null) {
-      return;
+    return;
     }
     synchronized (this) {
-      if (value != null) {
+    if (value != null) {
         return;
-      }
-      try {
+    }
+    try {
         if (bytes != null) {
-          value = defaultInstance.getParserForType()
-              .parseFrom(bytes, extensionRegistry);
+        value = defaultInstance.getParserForType()
+            .parseFrom(bytes, extensionRegistry);
         } else {
-          value = defaultInstance;
+        value = defaultInstance;
         }
-      } catch (IOException e) {
+    } catch (IOException e) {
         // TODO(xiangl): Refactory the API to support the exception thrown from
         // lazily load messages.
-      }
+    }
     }
   }
 }

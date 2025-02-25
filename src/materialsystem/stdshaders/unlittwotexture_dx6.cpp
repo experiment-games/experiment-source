@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( UnlitTwoTexture, UnlitTwoTexture_DX6 )
 
 BEGIN_SHADER( UnlitTwoTexture_DX6,
-              "Help for UnlitTwoTexture_DX6" )
+            "Help for UnlitTwoTexture_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( TEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "second texture" )
@@ -69,7 +69,7 @@ SHADER_DRAW
         }
 
         pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD0 |
-                                  SHADER_DRAW_TEXCOORD1 );
+                                SHADER_DRAW_TEXCOORD1 );
         DefaultFog();
     }
     DYNAMIC_STATE

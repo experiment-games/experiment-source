@@ -21,7 +21,7 @@ class CHudTournament : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTournament, EditablePanel );
 
-   public:
+    public:
     CHudTournament( const char *pElementName );
     ~CHudTournament();
 
@@ -43,7 +43,7 @@ class CHudTournament : public CHudElement, public EditablePanel
         return m_bShouldBeVisible;
     }
 
-   private:
+    private:
     void RecalculatePlayerPanels( void );
     void UpdatePlayerPanels( void );
     void SetPlayerPanelsVisible( bool bVisible );
@@ -56,7 +56,7 @@ class CHudTournament : public CHudElement, public EditablePanel
 
     void UpdateTeamInfo();
 
-   private:
+    private:
     Label *m_pTournamentLabel;
     Label *m_pReasonLabel;
     bool m_bShouldBeVisible;
@@ -101,7 +101,7 @@ class CHudTournamentSetup : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudTournamentSetup, EditablePanel );
 
-   public:
+    public:
     CHudTournamentSetup( const char *pElementName );
 
     virtual void Init( void );
@@ -128,7 +128,7 @@ class CHudTournamentSetup : public CHudElement, public EditablePanel
         }
     }
 
-   private:
+    private:
     TextEntry *m_pNameEntry;
     CTFImagePanel *m_pEntryBG;
     CExButton *m_pReadyButton;
@@ -142,7 +142,7 @@ class CHudStopWatch : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudStopWatch, EditablePanel );
 
-   public:
+    public:
     CHudStopWatch( const char *pElementName );
 
     virtual void LevelInit( void );
@@ -151,7 +151,7 @@ class CHudStopWatch : public CHudElement, public EditablePanel
     virtual bool ShouldDraw( void );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     CTFHudTimeStatus *m_pTimePanel;
     CExLabel *m_pStopWatchLabel;
     CExLabel *m_pStopWatchScore;

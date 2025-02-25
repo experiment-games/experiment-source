@@ -20,7 +20,7 @@
 template < int NUM_ARRAYS >
 class CBoneToWorldArrays
 {
-   public:
+    public:
     enum
     {
         ALIGNMENT = 128,
@@ -63,7 +63,7 @@ class CBoneToWorldArrays
         m_Free.Push( ( TSLNodeBase_t * )p );
     }
 
-   private:
+    private:
     CTSListBase m_Free;
     matrix3x4_t *m_pBase;
 };

@@ -28,7 +28,7 @@
 //-----------------------------------------------------------------------------
 class CNPC_GMan : public CAI_PlayerAlly
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_GMan, CAI_PlayerAlly );
     DECLARE_DATADESC();
 
@@ -41,7 +41,7 @@ class CNPC_GMan : public CAI_PlayerAlly
     bool CreateBehaviors( void );
     int SelectSchedule( void );
 
-   private:
+    private:
     CAI_FollowBehavior m_FollowBehavior;
 };
 

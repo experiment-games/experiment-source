@@ -16,7 +16,7 @@ class CTFPlayer;
 
 class CMannVsMachineUpgrades
 {
-   public:
+    public:
     char szAttrib[MAX_ATTRIBUTE_DESCRIPTION_LENGTH];
     char szIcon[MAX_PATH];
     float flIncrement;
@@ -29,7 +29,7 @@ class CMannVsMachineUpgrades
 
 class CMannVsMachineUpgradeManager : public CAutoGameSystem
 {
-   public:
+    public:
     CMannVsMachineUpgradeManager();
 
     virtual void LevelInitPostEntity();
@@ -42,10 +42,10 @@ class CMannVsMachineUpgradeManager : public CAutoGameSystem
     void LoadUpgradesFile( void );
     void LoadUpgradesFileFromPath( const char *pszPath );
 
-   public:
+    public:
     CUtlVector< CMannVsMachineUpgrades > m_Upgrades;
 
-   private:
+    private:
     CUtlMap< const char *, int > m_AttribMap;
 };
 

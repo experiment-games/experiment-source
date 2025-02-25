@@ -70,7 +70,7 @@ const char kInternalRunDeathTestFlag[] = "internal_run_death_test";
 //               returned from main()
 class GTEST_API_ DeathTest
 {
-   public:
+    public:
     // Create returns false if there was an error determining the
     // appropriate action to take for the current death test; for example,
     // if the gtest_death_test_style flag is set to an invalid value.
@@ -86,7 +86,7 @@ class GTEST_API_ DeathTest
     // A helper class that aborts a death test when it's deleted.
     class ReturnSentinel
     {
-       public:
+        public:
         explicit ReturnSentinel( DeathTest* test )
             : test_( test ) {}
         ~ReturnSentinel()
@@ -94,7 +94,7 @@ class GTEST_API_ DeathTest
             test_->Abort( TEST_ENCOUNTERED_RETURN_STATEMENT );
         }
 
-       private:
+        private:
         DeathTest* const test_;
         GTEST_DISALLOW_COPY_AND_ASSIGN_( ReturnSentinel );
     } GTEST_ATTRIBUTE_UNUSED_;
@@ -142,7 +142,7 @@ class GTEST_API_ DeathTest
 
     static void set_last_death_test_message( const std::string& message );
 
-   private:
+    private:
     // A string containing a description of the outcome of the last death test.
     static std::string last_death_test_message_;
 
@@ -152,7 +152,7 @@ class GTEST_API_ DeathTest
 // Factory interface for death tests.  May be mocked out for testing.
 class DeathTestFactory
 {
-   public:
+    public:
     virtual ~DeathTestFactory() {}
     virtual bool Create( const char* statement, const RE* regex, const char* file, int line, DeathTest** test ) = 0;
 };
@@ -160,7 +160,7 @@ class DeathTestFactory
 // A concrete DeathTestFactory implementation for normal use.
 class DefaultDeathTestFactory : public DeathTestFactory
 {
-   public:
+    public:
     virtual bool Create( const char* statement, const RE* regex, const char* file, int line, DeathTest** test );
 };
 
@@ -258,11 +258,11 @@ GTEST_API_ bool ExitedUnsuccessfully( int exit_status );
 // RUN_ALL_TESTS was called.
 class InternalRunDeathTestFlag
 {
-   public:
+    public:
     InternalRunDeathTestFlag( const std::string& a_file,
-                              int a_line,
-                              int an_index,
-                              int a_write_fd )
+                            int a_line,
+                            int an_index,
+                            int a_write_fd )
         : file_( a_file ), line_( a_line ), index_( an_index ), write_fd_( a_write_fd ) {}
 
     ~InternalRunDeathTestFlag()
@@ -288,7 +288,7 @@ class InternalRunDeathTestFlag
         return write_fd_;
     }
 
-   private:
+    private:
     std::string file_;
     int line_;
     int index_;

@@ -59,7 +59,7 @@ static bool BIsCurrentCriteriaMvM()
 {
     // UI-Wise, we care what *we* are looking at
     return GTFPartyClient()->GetLocalUIState().match_group() == k_eTFMatchGroup_MvM_Practice ||
-           GTFPartyClient()->GetLocalUIState().match_group() == k_eTFMatchGroup_MvM_MannUp;
+            GTFPartyClient()->GetLocalUIState().match_group() == k_eTFMatchGroup_MvM_MannUp;
 }
 
 static ETFSyncedMMMenuStep GetMenuStep()
@@ -197,7 +197,7 @@ class CMvMPlayerTicketStatusPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMvMPlayerTicketStatusPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CMvMPlayerTicketStatusPanel( vgui::Panel *pParent, const char *pszName )
         : vgui::EditablePanel( pParent, pszName )
     {
@@ -266,7 +266,7 @@ class CMvMPlayerTicketStatusPanel : public vgui::EditablePanel
         m_pSquadVoucherImage->SetVisible( steamIDMember != k_steamIDNil );
     }
 
-   private:
+    private:
     CAvatarImagePanel *m_pAvatarImage;
     vgui::ImagePanel *m_pTourTicketImage;
     vgui::ImagePanel *m_pSquadVoucherImage;
@@ -336,8 +336,8 @@ void CMVMCriteriaPanel::FireGameEvent( IGameEvent *event )
     const char *pszEventName = event->GetName();
 
     if ( FStrEq( pszEventName, "party_criteria_changed" ) ||
-         FStrEq( pszEventName, "party_updated" ) ||
-         FStrEq( pszEventName, "inventory_updated" ) )
+        FStrEq( pszEventName, "party_updated" ) ||
+        FStrEq( pszEventName, "inventory_updated" ) )
     {
         if ( BIsCurrentCriteriaMvM() )
         {

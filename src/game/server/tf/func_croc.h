@@ -20,12 +20,12 @@ class CEntityCroc : public CBaseAnimating
 {
     DECLARE_CLASS( CEntityCroc, CBaseAnimating );
 
-   public:
+    public:
     CEntityCroc();
     void InitCroc( CBaseEntity *pOther, const char *pszModel );
     virtual void Think( void ) OVERRIDE;
 
-   private:
+    private:
     void CrocAttack( void );
     CHandle< CTFPlayer > m_hTarget;
 };
@@ -34,7 +34,7 @@ class CFuncCroc : public CBaseTrigger
 {
     DECLARE_CLASS( CFuncCroc, CBaseTrigger );
 
-   public:
+    public:
     CFuncCroc();
 
     DECLARE_DATADESC();
@@ -51,7 +51,7 @@ class CFuncCroc : public CBaseTrigger
 
     const char *GetCrocModel( void );
 
-   private:
+    private:
     string_t m_iszModel;
 
     COutputEvent m_OnEat;

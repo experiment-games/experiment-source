@@ -68,7 +68,7 @@ typedef void *EntitySearchResult;
 //-----------------------------------------------------------------------------
 class IClientTools : public IBaseInterface
 {
-   public:
+    public:
     // Allocates or returns the handle to an entity previously found using the Find* APIs below
     virtual HTOOLHANDLE AttachToEntity( EntitySearchResult entityToAttach ) = 0;
     virtual void DetachFromEntity( EntitySearchResult entityToDetach ) = 0;
@@ -169,7 +169,7 @@ class IClientTools : public IBaseInterface
 //-----------------------------------------------------------------------------
 class IServerTools : public IBaseInterface
 {
-   public:
+    public:
     virtual IServerEntity *GetIServerEntity( IClientEntity *pClientEntity ) = 0;
     virtual bool SnapPlayerToPosition( const Vector &org, const QAngle &ang, IClientEntity *pClientPlayer = NULL ) = 0;
     virtual bool GetPlayerPosition( Vector &org, QAngle &ang, IClientEntity *pClientPlayer = NULL ) = 0;
@@ -253,7 +253,7 @@ typedef IServerTools IServerTools002;
 //-----------------------------------------------------------------------------
 class IServerChoreoTools : public IBaseInterface
 {
-   public:
+    public:
     // Iterates through ALL entities (separate list for client vs. server)
     virtual EntitySearchResult NextChoreoEntity( EntitySearchResult currentEnt ) = 0;
     EntitySearchResult FirstChoreoEntity()

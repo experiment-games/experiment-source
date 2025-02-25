@@ -85,9 +85,9 @@ public class DescriptorsTest extends TestCase {
     assertEquals(FieldDescriptor.Type.values().length,
         FieldDescriptorProto.Type.values().length);
     for (FieldDescriptor.Type type : FieldDescriptor.Type.values()) {
-      FieldDescriptorProto.Type protoType = type.toProto();
-      assertEquals("TYPE_" + type.name(), protoType.name());
-      assertEquals(type, FieldDescriptor.Type.valueOf(protoType));
+    FieldDescriptorProto.Type protoType = type.toProto();
+    assertEquals("TYPE_" + type.name(), protoType.name());
+    assertEquals(type, FieldDescriptor.Type.valueOf(protoType));
     }
   }
 
@@ -99,10 +99,10 @@ public class DescriptorsTest extends TestCase {
 
     assertEquals("UnittestProto", file.getOptions().getJavaOuterClassname());
     assertEquals("google/protobuf/unittest.proto",
-                 file.toProto().getName());
+                file.toProto().getName());
 
     assertEquals(Arrays.asList(UnittestImport.getDescriptor()),
-                 file.getDependencies());
+                file.getDependencies());
 
     Descriptor messageType = TestAllTypes.getDescriptor();
     assertEquals(messageType, file.getMessageTypes().get(0));
@@ -110,7 +110,7 @@ public class DescriptorsTest extends TestCase {
     assertNull(file.findMessageTypeByName("NoSuchType"));
     assertNull(file.findMessageTypeByName("protobuf_unittest.TestAllTypes"));
     for (int i = 0; i < file.getMessageTypes().size(); i++) {
-      assertEquals(i, file.getMessageTypes().get(i).getIndex());
+    assertEquals(i, file.getMessageTypes().get(i).getIndex());
     }
 
     EnumDescriptor enumType = ForeignEnum.getDescriptor();
@@ -119,9 +119,9 @@ public class DescriptorsTest extends TestCase {
     assertNull(file.findEnumTypeByName("NoSuchType"));
     assertNull(file.findEnumTypeByName("protobuf_unittest.ForeignEnum"));
     assertEquals(Arrays.asList(ImportEnum.getDescriptor()),
-                 UnittestImport.getDescriptor().getEnumTypes());
+                UnittestImport.getDescriptor().getEnumTypes());
     for (int i = 0; i < file.getEnumTypes().size(); i++) {
-      assertEquals(i, file.getEnumTypes().get(i).getIndex());
+    assertEquals(i, file.getEnumTypes().get(i).getIndex());
     }
 
     ServiceDescriptor service = TestService.getDescriptor();
@@ -130,23 +130,23 @@ public class DescriptorsTest extends TestCase {
     assertNull(file.findServiceByName("NoSuchType"));
     assertNull(file.findServiceByName("protobuf_unittest.TestService"));
     assertEquals(Collections.emptyList(),
-                 UnittestImport.getDescriptor().getServices());
+                UnittestImport.getDescriptor().getServices());
     for (int i = 0; i < file.getServices().size(); i++) {
-      assertEquals(i, file.getServices().get(i).getIndex());
+    assertEquals(i, file.getServices().get(i).getIndex());
     }
 
     FieldDescriptor extension =
-      UnittestProto.optionalInt32Extension.getDescriptor();
+    UnittestProto.optionalInt32Extension.getDescriptor();
     assertEquals(extension, file.getExtensions().get(0));
     assertEquals(extension,
-                 file.findExtensionByName("optional_int32_extension"));
+                file.findExtensionByName("optional_int32_extension"));
     assertNull(file.findExtensionByName("no_such_ext"));
     assertNull(file.findExtensionByName(
-      "protobuf_unittest.optional_int32_extension"));
+    "protobuf_unittest.optional_int32_extension"));
     assertEquals(Collections.emptyList(),
-                 UnittestImport.getDescriptor().getExtensions());
+                UnittestImport.getDescriptor().getExtensions());
     for (int i = 0; i < file.getExtensions().size(); i++) {
-      assertEquals(i, file.getExtensions().get(i).getIndex());
+    assertEquals(i, file.getExtensions().get(i).getIndex());
     }
   }
 
@@ -159,12 +159,12 @@ public class DescriptorsTest extends TestCase {
     assertEquals(UnittestProto.getDescriptor(), messageType.getFile());
     assertNull(messageType.getContainingType());
     assertEquals(DescriptorProtos.MessageOptions.getDefaultInstance(),
-                 messageType.getOptions());
+                messageType.getOptions());
     assertEquals("TestAllTypes", messageType.toProto().getName());
 
     assertEquals("NestedMessage", nestedType.getName());
     assertEquals("protobuf_unittest.TestAllTypes.NestedMessage",
-                 nestedType.getFullName());
+                nestedType.getFullName());
     assertEquals(UnittestProto.getDescriptor(), nestedType.getFile());
     assertEquals(messageType, nestedType.getContainingType());
 
@@ -175,14 +175,14 @@ public class DescriptorsTest extends TestCase {
     assertEquals(field, messageType.findFieldByNumber(1));
     assertNull(messageType.findFieldByNumber(571283));
     for (int i = 0; i < messageType.getFields().size(); i++) {
-      assertEquals(i, messageType.getFields().get(i).getIndex());
+    assertEquals(i, messageType.getFields().get(i).getIndex());
     }
 
     assertEquals(nestedType, messageType.getNestedTypes().get(0));
     assertEquals(nestedType, messageType.findNestedTypeByName("NestedMessage"));
     assertNull(messageType.findNestedTypeByName("NoSuchType"));
     for (int i = 0; i < messageType.getNestedTypes().size(); i++) {
-      assertEquals(i, messageType.getNestedTypes().get(i).getIndex());
+    assertEquals(i, messageType.getNestedTypes().get(i).getIndex());
     }
 
     EnumDescriptor enumType = TestAllTypes.NestedEnum.getDescriptor();
@@ -190,34 +190,34 @@ public class DescriptorsTest extends TestCase {
     assertEquals(enumType, messageType.findEnumTypeByName("NestedEnum"));
     assertNull(messageType.findEnumTypeByName("NoSuchType"));
     for (int i = 0; i < messageType.getEnumTypes().size(); i++) {
-      assertEquals(i, messageType.getEnumTypes().get(i).getIndex());
+    assertEquals(i, messageType.getEnumTypes().get(i).getIndex());
     }
   }
 
   public void testFieldDescriptor() throws Exception {
     Descriptor messageType = TestAllTypes.getDescriptor();
     FieldDescriptor primitiveField =
-      messageType.findFieldByName("optional_int32");
+    messageType.findFieldByName("optional_int32");
     FieldDescriptor enumField =
-      messageType.findFieldByName("optional_nested_enum");
+    messageType.findFieldByName("optional_nested_enum");
     FieldDescriptor messageField =
-      messageType.findFieldByName("optional_foreign_message");
+    messageType.findFieldByName("optional_foreign_message");
     FieldDescriptor cordField =
-      messageType.findFieldByName("optional_cord");
+    messageType.findFieldByName("optional_cord");
     FieldDescriptor extension =
-      UnittestProto.optionalInt32Extension.getDescriptor();
+    UnittestProto.optionalInt32Extension.getDescriptor();
     FieldDescriptor nestedExtension = TestRequired.single.getDescriptor();
 
     assertEquals("optional_int32", primitiveField.getName());
     assertEquals("protobuf_unittest.TestAllTypes.optional_int32",
-                 primitiveField.getFullName());
+                primitiveField.getFullName());
     assertEquals(1, primitiveField.getNumber());
     assertEquals(messageType, primitiveField.getContainingType());
     assertEquals(UnittestProto.getDescriptor(), primitiveField.getFile());
     assertEquals(FieldDescriptor.Type.INT32, primitiveField.getType());
     assertEquals(FieldDescriptor.JavaType.INT, primitiveField.getJavaType());
     assertEquals(DescriptorProtos.FieldOptions.getDefaultInstance(),
-                 primitiveField.getOptions());
+                primitiveField.getOptions());
     assertFalse(primitiveField.isExtension());
     assertEquals("optional_int32", primitiveField.toProto().getName());
 
@@ -225,7 +225,7 @@ public class DescriptorsTest extends TestCase {
     assertEquals(FieldDescriptor.Type.ENUM, enumField.getType());
     assertEquals(FieldDescriptor.JavaType.ENUM, enumField.getJavaType());
     assertEquals(TestAllTypes.NestedEnum.getDescriptor(),
-                 enumField.getEnumType());
+                enumField.getEnumType());
 
     assertEquals("optional_foreign_message", messageField.getName());
     assertEquals(FieldDescriptor.Type.MESSAGE, messageField.getType());
@@ -236,37 +236,37 @@ public class DescriptorsTest extends TestCase {
     assertEquals(FieldDescriptor.Type.STRING, cordField.getType());
     assertEquals(FieldDescriptor.JavaType.STRING, cordField.getJavaType());
     assertEquals(DescriptorProtos.FieldOptions.CType.CORD,
-                 cordField.getOptions().getCtype());
+                cordField.getOptions().getCtype());
 
     assertEquals("optional_int32_extension", extension.getName());
     assertEquals("protobuf_unittest.optional_int32_extension",
-                 extension.getFullName());
+                extension.getFullName());
     assertEquals(1, extension.getNumber());
     assertEquals(TestAllExtensions.getDescriptor(),
-                 extension.getContainingType());
+                extension.getContainingType());
     assertEquals(UnittestProto.getDescriptor(), extension.getFile());
     assertEquals(FieldDescriptor.Type.INT32, extension.getType());
     assertEquals(FieldDescriptor.JavaType.INT, extension.getJavaType());
     assertEquals(DescriptorProtos.FieldOptions.getDefaultInstance(),
-                 extension.getOptions());
+                extension.getOptions());
     assertTrue(extension.isExtension());
     assertEquals(null, extension.getExtensionScope());
     assertEquals("optional_int32_extension", extension.toProto().getName());
 
     assertEquals("single", nestedExtension.getName());
     assertEquals("protobuf_unittest.TestRequired.single",
-                 nestedExtension.getFullName());
+                nestedExtension.getFullName());
     assertEquals(TestRequired.getDescriptor(),
-                 nestedExtension.getExtensionScope());
+                nestedExtension.getExtensionScope());
   }
 
   public void testFieldDescriptorLabel() throws Exception {
     FieldDescriptor requiredField =
-      TestRequired.getDescriptor().findFieldByName("a");
+    TestRequired.getDescriptor().findFieldByName("a");
     FieldDescriptor optionalField =
-      TestAllTypes.getDescriptor().findFieldByName("optional_int32");
+    TestAllTypes.getDescriptor().findFieldByName("optional_int32");
     FieldDescriptor repeatedField =
-      TestAllTypes.getDescriptor().findFieldByName("repeated_int32");
+    TestAllTypes.getDescriptor().findFieldByName("repeated_int32");
 
     assertTrue(requiredField.isRequired());
     assertFalse(requiredField.isRepeated());
@@ -285,9 +285,9 @@ public class DescriptorsTest extends TestCase {
 
     d = TestExtremeDefaultValues.getDescriptor();
     assertEquals(
-      ByteString.copyFrom(
+    ByteString.copyFrom(
         "\0\001\007\b\f\n\r\t\013\\\'\"\u00fe".getBytes("ISO-8859-1")),
-      d.findFieldByName("escaped_bytes").getDefaultValue());
+    d.findFieldByName("escaped_bytes").getDefaultValue());
     assertEquals(-1, d.findFieldByName("large_uint32").getDefaultValue());
     assertEquals(-1L, d.findFieldByName("large_uint64").getDefaultValue());
   }
@@ -301,11 +301,11 @@ public class DescriptorsTest extends TestCase {
     assertEquals(UnittestProto.getDescriptor(), enumType.getFile());
     assertNull(enumType.getContainingType());
     assertEquals(DescriptorProtos.EnumOptions.getDefaultInstance(),
-                 enumType.getOptions());
+                enumType.getOptions());
 
     assertEquals("NestedEnum", nestedType.getName());
     assertEquals("protobuf_unittest.TestAllTypes.NestedEnum",
-                 nestedType.getFullName());
+                nestedType.getFullName());
     assertEquals(UnittestProto.getDescriptor(), nestedType.getFile());
     assertEquals(TestAllTypes.getDescriptor(), nestedType.getContainingType());
 
@@ -318,7 +318,7 @@ public class DescriptorsTest extends TestCase {
     assertEquals(value, enumType.findValueByNumber(4));
     assertNull(enumType.findValueByName("NO_SUCH_VALUE"));
     for (int i = 0; i < enumType.getValues().size(); i++) {
-      assertEquals(i, enumType.getValues().get(i).getIndex());
+    assertEquals(i, enumType.getValues().get(i).getIndex());
     }
   }
 
@@ -333,23 +333,23 @@ public class DescriptorsTest extends TestCase {
     MethodDescriptor fooMethod = service.getMethods().get(0);
     assertEquals("Foo", fooMethod.getName());
     assertEquals(UnittestProto.FooRequest.getDescriptor(),
-                 fooMethod.getInputType());
+                fooMethod.getInputType());
     assertEquals(UnittestProto.FooResponse.getDescriptor(),
-                 fooMethod.getOutputType());
+                fooMethod.getOutputType());
     assertEquals(fooMethod, service.findMethodByName("Foo"));
 
     MethodDescriptor barMethod = service.getMethods().get(1);
     assertEquals("Bar", barMethod.getName());
     assertEquals(UnittestProto.BarRequest.getDescriptor(),
-                 barMethod.getInputType());
+                barMethod.getInputType());
     assertEquals(UnittestProto.BarResponse.getDescriptor(),
-                 barMethod.getOutputType());
+                barMethod.getOutputType());
     assertEquals(barMethod, service.findMethodByName("Bar"));
 
     assertNull(service.findMethodByName("NoSuchMethod"));
 
     for (int i = 0; i < service.getMethods().size(); i++) {
-      assertEquals(i, service.getMethods().get(i).getIndex());
+    assertEquals(i, service.getMethods().get(i).getIndex());
     }
   }
 
@@ -363,47 +363,47 @@ public class DescriptorsTest extends TestCase {
         .findFieldByName("field").getMessageType();
 
     assertTrue(
-      descriptor.getOptions().hasExtension(UnittestCustomOptions.messageOpt1));
+    descriptor.getOptions().hasExtension(UnittestCustomOptions.messageOpt1));
     assertEquals(Integer.valueOf(-56),
-      descriptor.getOptions().getExtension(UnittestCustomOptions.messageOpt1));
+    descriptor.getOptions().getExtension(UnittestCustomOptions.messageOpt1));
 
     FieldDescriptor field = descriptor.findFieldByName("field1");
     assertNotNull(field);
 
     assertTrue(
-      field.getOptions().hasExtension(UnittestCustomOptions.fieldOpt1));
+    field.getOptions().hasExtension(UnittestCustomOptions.fieldOpt1));
     assertEquals(Long.valueOf(8765432109L),
-      field.getOptions().getExtension(UnittestCustomOptions.fieldOpt1));
+    field.getOptions().getExtension(UnittestCustomOptions.fieldOpt1));
 
     EnumDescriptor enumType =
-      UnittestCustomOptions.TestMessageWithCustomOptions.AnEnum.getDescriptor();
+    UnittestCustomOptions.TestMessageWithCustomOptions.AnEnum.getDescriptor();
 
     assertTrue(
-      enumType.getOptions().hasExtension(UnittestCustomOptions.enumOpt1));
+    enumType.getOptions().hasExtension(UnittestCustomOptions.enumOpt1));
     assertEquals(Integer.valueOf(-789),
-      enumType.getOptions().getExtension(UnittestCustomOptions.enumOpt1));
+    enumType.getOptions().getExtension(UnittestCustomOptions.enumOpt1));
 
     ServiceDescriptor service =
-      UnittestCustomOptions.TestServiceWithCustomOptions.getDescriptor();
+    UnittestCustomOptions.TestServiceWithCustomOptions.getDescriptor();
 
     assertTrue(
-      service.getOptions().hasExtension(UnittestCustomOptions.serviceOpt1));
+    service.getOptions().hasExtension(UnittestCustomOptions.serviceOpt1));
     assertEquals(Long.valueOf(-9876543210L),
-      service.getOptions().getExtension(UnittestCustomOptions.serviceOpt1));
+    service.getOptions().getExtension(UnittestCustomOptions.serviceOpt1));
 
     MethodDescriptor method = service.findMethodByName("Foo");
     assertNotNull(method);
 
     assertTrue(
-      method.getOptions().hasExtension(UnittestCustomOptions.methodOpt1));
+    method.getOptions().hasExtension(UnittestCustomOptions.methodOpt1));
     assertEquals(UnittestCustomOptions.MethodOpt1.METHODOPT1_VAL2,
-      method.getOptions().getExtension(UnittestCustomOptions.methodOpt1));
+    method.getOptions().getExtension(UnittestCustomOptions.methodOpt1));
   }
 
   /**
-   * Test that the FieldDescriptor.Type enum is the same as the
-   * WireFormat.FieldType enum.
-   */
+    * Test that the FieldDescriptor.Type enum is the same as the
+    * WireFormat.FieldType enum.
+    */
   public void testFieldTypeTablesMatch() throws Exception {
     FieldDescriptor.Type[] values1 = FieldDescriptor.Type.values();
     WireFormat.FieldType[] values2 = WireFormat.FieldType.values();
@@ -411,14 +411,14 @@ public class DescriptorsTest extends TestCase {
     assertEquals(values1.length, values2.length);
 
     for (int i = 0; i < values1.length; i++) {
-      assertEquals(values1[i].toString(), values2[i].toString());
+    assertEquals(values1[i].toString(), values2[i].toString());
     }
   }
 
   /**
-   * Test that the FieldDescriptor.JavaType enum is the same as the
-   * WireFormat.JavaType enum.
-   */
+    * Test that the FieldDescriptor.JavaType enum is the same as the
+    * WireFormat.JavaType enum.
+    */
   public void testJavaTypeTablesMatch() throws Exception {
     FieldDescriptor.JavaType[] values1 = FieldDescriptor.JavaType.values();
     WireFormat.JavaType[] values2 = WireFormat.JavaType.values();
@@ -426,7 +426,7 @@ public class DescriptorsTest extends TestCase {
     assertEquals(values1.length, values2.length);
 
     for (int i = 0; i < values1.length; i++) {
-      assertEquals(values1[i].toString(), values2[i].toString());
+    assertEquals(values1[i].toString(), values2[i].toString());
     }
   }
 
@@ -435,70 +435,70 @@ public class DescriptorsTest extends TestCase {
     // a compiler error due to an over-long string literal.
     assertTrue(
         UnittestEnormousDescriptor.getDescriptor()
-          .toProto().getSerializedSize() > 65536);
+        .toProto().getSerializedSize() > 65536);
   }
 
   /**
-   * Tests that the DescriptorValidationException works as intended.
-   */
+    * Tests that the DescriptorValidationException works as intended.
+    */
   public void testDescriptorValidatorException() throws Exception {
     FileDescriptorProto fileDescriptorProto = FileDescriptorProto.newBuilder()
-      .setName("foo.proto")
-      .addMessageType(DescriptorProto.newBuilder()
-      .setName("Foo")
+    .setName("foo.proto")
+    .addMessageType(DescriptorProto.newBuilder()
+    .setName("Foo")
         .addField(FieldDescriptorProto.newBuilder()
-          .setLabel(FieldDescriptorProto.Label.LABEL_OPTIONAL)
-          .setType(FieldDescriptorProto.Type.TYPE_INT32)
-          .setName("foo")
-          .setNumber(1)
-          .setDefaultValue("invalid")
-          .build())
+        .setLabel(FieldDescriptorProto.Label.LABEL_OPTIONAL)
+        .setType(FieldDescriptorProto.Type.TYPE_INT32)
+        .setName("foo")
+        .setNumber(1)
+        .setDefaultValue("invalid")
         .build())
-      .build();
+        .build())
+    .build();
     try {
-      Descriptors.FileDescriptor.buildFrom(fileDescriptorProto,
-          new FileDescriptor[0]);
-      fail("DescriptorValidationException expected");
+    Descriptors.FileDescriptor.buildFrom(fileDescriptorProto,
+        new FileDescriptor[0]);
+    fail("DescriptorValidationException expected");
     } catch (DescriptorValidationException e) {
-      // Expected; check that the error message contains some useful hints
-      assertTrue(e.getMessage().indexOf("foo") != -1);
-      assertTrue(e.getMessage().indexOf("Foo") != -1);
-      assertTrue(e.getMessage().indexOf("invalid") != -1);
-      assertTrue(e.getCause() instanceof NumberFormatException);
-      assertTrue(e.getCause().getMessage().indexOf("invalid") != -1);
+    // Expected; check that the error message contains some useful hints
+    assertTrue(e.getMessage().indexOf("foo") != -1);
+    assertTrue(e.getMessage().indexOf("Foo") != -1);
+    assertTrue(e.getMessage().indexOf("invalid") != -1);
+    assertTrue(e.getCause() instanceof NumberFormatException);
+    assertTrue(e.getCause().getMessage().indexOf("invalid") != -1);
     }
   }
 
   /**
-   * Tests the translate/crosslink for an example where a message field's name
-   * and type name are the same.
-   */
+    * Tests the translate/crosslink for an example where a message field's name
+    * and type name are the same.
+    */
   public void testDescriptorComplexCrosslink() throws Exception {
     FileDescriptorProto fileDescriptorProto = FileDescriptorProto.newBuilder()
-      .setName("foo.proto")
-      .addMessageType(DescriptorProto.newBuilder()
+    .setName("foo.proto")
+    .addMessageType(DescriptorProto.newBuilder()
         .setName("Foo")
         .addField(FieldDescriptorProto.newBuilder()
-          .setLabel(FieldDescriptorProto.Label.LABEL_OPTIONAL)
-          .setType(FieldDescriptorProto.Type.TYPE_INT32)
-          .setName("foo")
-          .setNumber(1)
-          .build())
+        .setLabel(FieldDescriptorProto.Label.LABEL_OPTIONAL)
+        .setType(FieldDescriptorProto.Type.TYPE_INT32)
+        .setName("foo")
+        .setNumber(1)
         .build())
-      .addMessageType(DescriptorProto.newBuilder()
+        .build())
+    .addMessageType(DescriptorProto.newBuilder()
         .setName("Bar")
         .addField(FieldDescriptorProto.newBuilder()
-          .setLabel(FieldDescriptorProto.Label.LABEL_OPTIONAL)
-          .setTypeName("Foo")
-          .setName("Foo")
-          .setNumber(1)
-          .build())
+        .setLabel(FieldDescriptorProto.Label.LABEL_OPTIONAL)
+        .setTypeName("Foo")
+        .setName("Foo")
+        .setNumber(1)
         .build())
-      .build();
+        .build())
+    .build();
     // translate and crosslink
     FileDescriptor file =
-      Descriptors.FileDescriptor.buildFrom(fileDescriptorProto, 
-          new FileDescriptor[0]);
+    Descriptors.FileDescriptor.buildFrom(fileDescriptorProto,
+        new FileDescriptor[0]);
     // verify resulting descriptors
     assertNotNull(file);
     List<Descriptor> msglist = file.getMessageTypes();
@@ -506,7 +506,7 @@ public class DescriptorsTest extends TestCase {
     assertTrue(msglist.size() == 2);
     boolean barFound = false;
     for (Descriptor desc : msglist) {
-      if (desc.getName().equals("Bar")) {
+    if (desc.getName().equals("Bar")) {
         barFound = true;
         assertNotNull(desc.getFields());
         List<FieldDescriptor> fieldlist = desc.getFields();
@@ -514,11 +514,11 @@ public class DescriptorsTest extends TestCase {
         assertTrue(fieldlist.size() == 1);
         assertTrue(fieldlist.get(0).getType() == FieldDescriptor.Type.MESSAGE);
         assertTrue(fieldlist.get(0).getMessageType().getName().equals("Foo"));
-      }
+    }
     }
     assertTrue(barFound);
   }
-  
+
   public void testDependencyOrder() throws Exception {
     FileDescriptorProto fooProto = FileDescriptorProto.newBuilder()
         .setName("foo.proto").build();
@@ -537,14 +537,14 @@ public class DescriptorsTest extends TestCase {
         new FileDescriptor[0]);
     FileDescriptor barFile = Descriptors.FileDescriptor.buildFrom(barProto,
         new FileDescriptor[] {fooFile});
-    
-    // Items in the FileDescriptor array can be in any order. 
+
+    // Items in the FileDescriptor array can be in any order.
     Descriptors.FileDescriptor.buildFrom(bazProto,
         new FileDescriptor[] {fooFile, barFile});
     Descriptors.FileDescriptor.buildFrom(bazProto,
         new FileDescriptor[] {barFile, fooFile});
   }
-  
+
   public void testInvalidPublicDependency() throws Exception {
     FileDescriptorProto fooProto = FileDescriptorProto.newBuilder()
         .setName("foo.proto").build();
@@ -556,12 +556,12 @@ public class DescriptorsTest extends TestCase {
     FileDescriptor fooFile = Descriptors.FileDescriptor.buildFrom(fooProto,
         new FileDescriptor[0]);
     try {
-      Descriptors.FileDescriptor.buildFrom(barProto,
-          new FileDescriptor[] {fooFile});
-      fail("DescriptorValidationException expected");
+    Descriptors.FileDescriptor.buildFrom(barProto,
+        new FileDescriptor[] {fooFile});
+    fail("DescriptorValidationException expected");
     } catch (DescriptorValidationException e) {
-      assertTrue(
-          e.getMessage().indexOf("Invalid public dependency index.") != -1);
+    assertTrue(
+        e.getMessage().indexOf("Invalid public dependency index.") != -1);
     }
   }
 
@@ -591,12 +591,12 @@ public class DescriptorsTest extends TestCase {
         forwardProto, new FileDescriptor[] {barFile});
 
     try {
-      Descriptors.FileDescriptor.buildFrom(
-          fooProto, new FileDescriptor[] {forwardFile});
-      fail("DescriptorValidationException expected");
+    Descriptors.FileDescriptor.buildFrom(
+        fooProto, new FileDescriptor[] {forwardFile});
+    fail("DescriptorValidationException expected");
     } catch (DescriptorValidationException e) {
-      assertTrue(e.getMessage().indexOf("Bar") != -1);
-      assertTrue(e.getMessage().indexOf("is not defined") != -1);
+    assertTrue(e.getMessage().indexOf("Bar") != -1);
+    assertTrue(e.getMessage().indexOf("is not defined") != -1);
     }
   }
 
@@ -628,11 +628,11 @@ public class DescriptorsTest extends TestCase {
     Descriptors.FileDescriptor.buildFrom(
         fooProto, new FileDescriptor[] {forwardFile});
   }
-  
+
   /**
-   * Tests the translate/crosslink for an example with a more complex namespace
-   * referencing.
-   */
+    * Tests the translate/crosslink for an example with a more complex namespace
+    * referencing.
+    */
   public void testComplexNamespacePublicDependency() throws Exception {
     FileDescriptorProto fooProto = FileDescriptorProto.newBuilder()
         .setName("bar.proto")
@@ -667,17 +667,17 @@ public class DescriptorsTest extends TestCase {
     assertTrue(msglist.size() == 1);
     Descriptor desc = msglist.get(0);
     if (desc.getName().equals("MyMessage")) {
-      assertNotNull(desc.getFields());
-      List<FieldDescriptor> fieldlist = desc.getFields();
-      assertNotNull(fieldlist);
-      assertTrue(fieldlist.size() == 1);
-      FieldDescriptor field = fieldlist.get(0);
-      assertTrue(field.getType() == FieldDescriptor.Type.ENUM);
-      assertTrue(field.getEnumType().getName().equals("MyEnum"));
-      assertTrue(field.getEnumType().getFile().getName().equals("bar.proto"));
-      assertTrue(field.getEnumType().getFile().getPackage().equals(
-          "a.b.c.d.bar.shared"));
-    }   
+    assertNotNull(desc.getFields());
+    List<FieldDescriptor> fieldlist = desc.getFields();
+    assertNotNull(fieldlist);
+    assertTrue(fieldlist.size() == 1);
+    FieldDescriptor field = fieldlist.get(0);
+    assertTrue(field.getType() == FieldDescriptor.Type.ENUM);
+    assertTrue(field.getEnumType().getName().equals("MyEnum"));
+    assertTrue(field.getEnumType().getFile().getName().equals("bar.proto"));
+    assertTrue(field.getEnumType().getFile().getPackage().equals(
+        "a.b.c.d.bar.shared"));
+    }
   }
 
   public void testOneofDescriptor() throws Exception {
@@ -710,24 +710,24 @@ public class DescriptorsTest extends TestCase {
     FileDescriptorProto fileDescriptorProto = FileDescriptorProto.newBuilder()
         .setName("foo.proto")
         .addEnumType(EnumDescriptorProto.newBuilder()
-          .setName("Enum")
-          .addValue(EnumValueDescriptorProto.newBuilder()
+        .setName("Enum")
+        .addValue(EnumValueDescriptorProto.newBuilder()
             .setName("FOO")
             .setNumber(1)
             .build())
-          .build())
+        .build())
         .addMessageType(DescriptorProto.newBuilder()
-          .setName("Message")
-          .addField(FieldDescriptorProto.newBuilder()
+        .setName("Message")
+        .addField(FieldDescriptorProto.newBuilder()
             .setName("foo")
             .setTypeName("Enum")
             .setNumber(1)
             .setLabel(FieldDescriptorProto.Label.LABEL_REPEATED)
             .setOptions(DescriptorProtos.FieldOptions.newBuilder()
-              .setPacked(true)
-              .build())
+            .setPacked(true)
             .build())
-          .build())
+            .build())
+        .build())
         .build();
     Descriptors.FileDescriptor.buildFrom(
         fileDescriptorProto, new FileDescriptor[0]);

@@ -1097,7 +1097,7 @@ void CViewRender::Render( vrect_t *rect )
             float aspectRatio = engine->GetScreenAspectRatio() * 0.75f;  // / (4/3)
             float limitedAspectRatio = aspectRatio;
             if ( ( sv_restrict_aspect_ratio_fov.GetInt() > 0 && engine->IsWindowedMode() && gpGlobals->maxClients > 1 ) ||
-                 sv_restrict_aspect_ratio_fov.GetInt() == 2 )
+                sv_restrict_aspect_ratio_fov.GetInt() == 2 )
             {
                 limitedAspectRatio = MIN( aspectRatio, 1.85f * 0.75f );  // cap out the FOV advantage at a 1.85:1 ratio (about the widest any legit user should be)
             }
@@ -1125,10 +1125,10 @@ void CViewRender::Render( vrect_t *rect )
                 {
 #if 0
                 // Good test mode for debugging viewports that are not full-size.
-	            view.width			= vr.width * flViewportScale * 0.75f;
-	            view.height			= vr.height * flViewportScale * 0.75f;
-	            view.x				= vr.x + view.width * 0.10f;
-	            view.y				= vr.y + view.height * 0.20f;
+                view.width			= vr.width * flViewportScale * 0.75f;
+                view.height			= vr.height * flViewportScale * 0.75f;
+                view.x				= vr.x + view.width * 0.10f;
+                view.y				= vr.y + view.height * 0.20f;
 #else
                     view.x = vr.x * flViewportScale;
                     view.y = vr.y * flViewportScale;

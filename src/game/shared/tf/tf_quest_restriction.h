@@ -54,7 +54,7 @@ void GetInvalidReasonsNames( const InvalidReasonsContainer_t&, CUtlVector< CUtlS
 //-----------------------------------------------------------------------------
 class CTFQuestCondition
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CTFQuestCondition )
 
     CTFQuestCondition();
@@ -139,14 +139,14 @@ class CTFQuestCondition
         m_pszTypeName = pszTypeName;
     }
 
-   protected:
+    protected:
     void GetValidRestrictions( CUtlVector< const char* >& vecOutValidChildren ) const;
     void GetValidEvaluators( CUtlVector< const char* >& vecOutValidChildren ) const;
 
     const char* m_pszFieldName;
     const char* m_pszTypeName;
 
-   private:
+    private:
     CTFQuestCondition* m_pParent;
 };
 
@@ -155,7 +155,7 @@ class CTFQuestCondition
 //-----------------------------------------------------------------------------
 class CTFQuestRestriction : public CTFQuestCondition
 {
-   public:
+    public:
     DECLARE_CLASS( CTFQuestRestriction, CTFQuestCondition )
 
     virtual const char* GetBaseName() const OVERRIDE
@@ -175,7 +175,7 @@ class CTFQuestRestriction : public CTFQuestCondition
     virtual void GetValidTypes( CUtlVector< const char* >& vecOutValidChildren ) const OVERRIDE;
     virtual void GetValidChildren( CUtlVector< const char* >& vecOutValidChildren ) const OVERRIDE;
 
-   protected:
+    protected:
     const char* m_pszEventName;
 };
 
@@ -186,7 +186,7 @@ class CTFQuestRestriction : public CTFQuestCondition
 //
 class ITFQuestModifier
 {
-   public:
+    public:
     virtual ~ITFQuestModifier() {}
     virtual bool BPassesModifier( const CTFPlayer* pOwner, InvalidReasonsContainer_t& invalidReasons ) const = 0;
 };
@@ -194,7 +194,7 @@ class ITFQuestModifier
 // Have to be this class
 class CTFClassQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFClassQuestModifier( uint32 nValidClassesMask )
         : m_nValidClassesMask( nValidClassesMask )
     {
@@ -202,14 +202,14 @@ class CTFClassQuestModifier : public ITFQuestModifier
 
     virtual bool BPassesModifier( const CTFPlayer* pOwner, InvalidReasonsContainer_t& invalidReasons ) const OVERRIDE;
 
-   private:
+    private:
     uint32 m_nValidClassesMask;
 };
 
 // Have to be on this map
 class CTFMapQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFMapQuestModifier()
     {
     }
@@ -217,14 +217,14 @@ class CTFMapQuestModifier : public ITFQuestModifier
     void AddMapName( const char* pszMapName );
     virtual bool BPassesModifier( const CTFPlayer* pOwner, InvalidReasonsContainer_t& invalidReasons ) const OVERRIDE;
 
-   private:
+    private:
     CUtlVector< CUtlString > m_vecStrMapNames;
 };
 
 // Have to be on this game mode
 class CTFGameModeQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFGameModeQuestModifier( uint32 nValidGameModeMask )
         : m_nValidGameModesMask( nValidGameModeMask )
     {
@@ -232,14 +232,14 @@ class CTFGameModeQuestModifier : public ITFQuestModifier
 
     virtual bool BPassesModifier( const CTFPlayer* pOwner, InvalidReasonsContainer_t& invalidReasons ) const OVERRIDE;
 
-   private:
+    private:
     uint32 m_nValidGameModesMask;
 };
 
 // Have to be on this team
 class CTFTeamQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFTeamQuestModifier( uint32 nTeamNumber )
         : m_nTeamNum( nTeamNumber )
     {
@@ -247,14 +247,14 @@ class CTFTeamQuestModifier : public ITFQuestModifier
 
     bool BPassesModifier( const CTFPlayer* pOwner, InvalidReasonsContainer_t& invalidReasons ) const OVERRIDE;
 
-   private:
+    private:
     int m_nTeamNum;
 };
 
 // Have to have this condition at the time
 class CTFConditionQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFConditionQuestModifier( const LogicalOperation& operation )
         : m_Operation( operation )
     {
@@ -266,7 +266,7 @@ class CTFConditionQuestModifier : public ITFQuestModifier
         m_vecRequiredConditions.AddToTail( eCond );
     }
 
-   private:
+    private:
     CUtlVector< ETFCond > m_vecRequiredConditions;
     LogicalOperation m_Operation;
 };
@@ -274,7 +274,7 @@ class CTFConditionQuestModifier : public ITFQuestModifier
 // Have to have these items equipped at the time
 class CTFEquippedItemsQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFEquippedItemsQuestModifier( const LogicalOperation& operation )
         : m_Operation( operation )
     {
@@ -286,7 +286,7 @@ class CTFEquippedItemsQuestModifier : public ITFQuestModifier
         m_vecRequiredItemDefs.AddToTail( CSchemaItemDefHandle( pszName ) );
     }
 
-   private:
+    private:
     CUtlVector< CSchemaItemDefHandle > m_vecRequiredItemDefs;
     LogicalOperation m_Operation;
 };
@@ -294,7 +294,7 @@ class CTFEquippedItemsQuestModifier : public ITFQuestModifier
 // Have to be on this team
 class CTFJumpStateQuestModifier : public ITFQuestModifier
 {
-   public:
+    public:
     CTFJumpStateQuestModifier( uint32 nJumpCount )
         : m_nJumpCount( nJumpCount )
     {
@@ -302,7 +302,7 @@ class CTFJumpStateQuestModifier : public ITFQuestModifier
 
     bool BPassesModifier( const CTFPlayer* pOwner, InvalidReasonsContainer_t& invalidReasons ) const OVERRIDE;
 
-   private:
+    private:
     int m_nJumpCount;  // 0: On the ground, 1: Jumped, 2: Double-Jumped, 3: Double Jumped
 };
 
@@ -311,7 +311,7 @@ class CTFJumpStateQuestModifier : public ITFQuestModifier
 //-----------------------------------------------------------------------------
 class CTFQuestEvaluator : public CTFQuestCondition
 {
-   public:
+    public:
     CTFQuestEvaluator();
     ~CTFQuestEvaluator();
 
@@ -347,7 +347,7 @@ class CTFQuestEvaluator : public CTFQuestCondition
 
     void AddModifiers( ITFQuestModifier* pModifier );  // This takes ownership
 
-   private:
+    private:
     const char* m_pszAction;
     CUtlVector< ITFQuestModifier* > m_vecModifiers;
 };

@@ -20,7 +20,7 @@ class CExperiment_Player;
 // ------------------------------------------------------------------------------------------------ //
 class CExperimentPlayerAnimState : public CMultiPlayerAnimState
 {
-   public:
+    public:
     DECLARE_CLASS( CExperimentPlayerAnimState, CMultiPlayerAnimState );
 
     CExperimentPlayerAnimState();
@@ -47,13 +47,13 @@ class CExperimentPlayerAnimState : public CMultiPlayerAnimState
 
     virtual float GetCurrentMaxGroundSpeed();
 
-   protected:
+    protected:
     virtual bool ShouldResetMainSequence( int iCurrentSequence,
-                                          int iNewSequence ) OVERRIDE;
+                                        int iNewSequence ) OVERRIDE;
 
     bool IsAirborne();
 
-   private:
+    private:
     bool SetupPoseParameters( CStudioHdr *pStudioHdr );
     virtual void EstimateYaw( void );
     virtual void ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr );

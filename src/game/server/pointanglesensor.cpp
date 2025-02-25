@@ -25,7 +25,7 @@ class CPointAngleSensor : public CPointEntity
 {
     DECLARE_CLASS( CPointAngleSensor, CPointEntity );
 
-   public:
+    public:
     bool KeyValue( const char *szKeyName, const char *szValue );
     void Activate( void );
     void Spawn( void );
@@ -33,7 +33,7 @@ class CPointAngleSensor : public CPointEntity
 
     int DrawDebugTextOverlays( void );
 
-   protected:
+    protected:
     void Enable();
     void Disable();
 
@@ -385,10 +385,10 @@ class CPointProximitySensor : public CPointEntity
 {
     DECLARE_CLASS( CPointProximitySensor, CPointEntity );
 
-   public:
+    public:
     virtual void Activate( void );
 
-   protected:
+    protected:
     void Think( void );
     void Enable( void );
     void Disable( void );
@@ -399,7 +399,7 @@ class CPointProximitySensor : public CPointEntity
     void InputToggle( inputdata_t &inputdata );
     void InputSetTargetEntity( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bDisabled;         // When disabled, we do not think or fire outputs.
     EHANDLE m_hTargetEntity;  // Entity whose angles are being monitored.
 

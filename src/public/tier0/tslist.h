@@ -143,7 +143,7 @@ union TSLIST_HEAD_ALIGN TSLHead_t
 //-------------------------------------
 class CTSListBase
 {
-   public:
+    public:
     // override new/delete so we can guarantee 8-byte aligned allocs
     static void *operator new( size_t size )
     {
@@ -167,12 +167,12 @@ class CTSListBase
         MemAlloc_FreeAligned( p );
     }
 
-   private:
+    private:
     // These ain't gonna work
     static void *operator new[]( size_t size );
     static void operator delete[]( void *p );
 
-   public:
+    public:
     CTSListBase()
     {
         if ( ( ( size_t )&m_Head ) % TSLIST_HEAD_ALIGNMENT != 0 )
@@ -331,7 +331,7 @@ class CTSListBase
 #endif
     }
 
-   private:
+    private:
     TSLHead_t m_Head;
 } TSLIST_HEAD_ALIGN_POST;
 
@@ -340,7 +340,7 @@ class CTSListBase
 template < typename T >
 class TSLIST_HEAD_ALIGN CTSSimpleList : public CTSListBase
 {
-   public:
+    public:
     void Push( T *pNode )
     {
         Assert( sizeof( T ) >= sizeof( TSLNodeBase_t ) );
@@ -368,7 +368,7 @@ class TSLIST_HEAD_ALIGN CTSPool : public CTSListBase
         T elem;
     } TSLIST_NODE_ALIGN_POST;
 
-   public:
+    public:
     ~CTSPool()
     {
         Purge();
@@ -416,7 +416,7 @@ class TSLIST_HEAD_ALIGN CTSPool : public CTSListBase
 template < typename T >
 class TSLIST_HEAD_ALIGN CTSList : public CTSListBase
 {
-   public:
+    public:
     struct TSLIST_NODE_ALIGN Node_t : public TSLNodeBase_t
     {
         Node_t() {}
@@ -508,7 +508,7 @@ class TSLIST_HEAD_ALIGN CTSList : public CTSListBase
 template < typename T >
 class TSLIST_HEAD_ALIGN CTSListWithFreeList : public CTSListBase
 {
-   public:
+    public:
     struct TSLIST_NODE_ALIGN Node_t : public TSLNodeBase_t
     {
         Node_t() {}
@@ -595,7 +595,7 @@ class TSLIST_HEAD_ALIGN CTSListWithFreeList : public CTSListBase
         m_FreeList.Push( pNode );
     }
 
-   private:
+    private:
     CTSListBase m_FreeList;
 } TSLIST_HEAD_ALIGN_POST;
 
@@ -616,7 +616,7 @@ class TSLIST_HEAD_ALIGN CTSListWithFreeList : public CTSListBase
 template < typename T, bool bTestOptimizer = false >
 class TSLIST_HEAD_ALIGN CTSQueue
 {
-   public:
+    public:
     // override new/delete so we can guarantee 8-byte aligned allocs
     static void *operator new( size_t size )
     {
@@ -641,7 +641,7 @@ class TSLIST_HEAD_ALIGN CTSQueue
         MemAlloc_FreeAligned( p );
     }
 
-   private:
+    private:
     // These ain't gonna work
     static void *operator new[]( size_t size ) throw()
     {
@@ -652,7 +652,7 @@ class TSLIST_HEAD_ALIGN CTSQueue
     {
     }
 
-   public:
+    public:
     struct TSLIST_NODE_ALIGN Node_t
     {
         // override new/delete so we can guarantee 8-byte aligned allocs
@@ -984,7 +984,7 @@ class TSLIST_HEAD_ALIGN CTSQueue
         return m_Count;
     }
 
-   private:
+    private:
     Node_t *End()
     {
         return ( Node_t * )this;

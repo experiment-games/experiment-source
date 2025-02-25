@@ -134,7 +134,7 @@ void Hack_FixEscapeChars( char *str )
 //-----------------------------------------------------------------------------
 class CSoundEmitterSystem : public CBaseGameSystem
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "CSoundEmitterSystem";
@@ -145,10 +145,10 @@ class CSoundEmitterSystem : public CBaseGameSystem
     FileHandle_t m_hPrecacheLogFile;
     CUtlSymbolTable m_PrecachedScriptSounds;
 
-   public:
+    public:
     CSoundEmitterSystem( char const *pszName )
         : m_bLogPrecache( false ),
-          m_hPrecacheLogFile( FILESYSTEM_INVALID_HANDLE )
+        m_hPrecacheLogFile( FILESYSTEM_INVALID_HANDLE )
     {
     }
 
@@ -452,7 +452,7 @@ class CSoundEmitterSystem : public CBaseGameSystem
         InternalPrefetchWaves( soundIndex );
     }
 
-   public:
+    public:
     void EmitSoundByHandle( IRecipientFilter &filter, int entindex, const EmitSound_t &ep, HSOUNDSCRIPTHANDLE &handle )
     {
         // Pull data from parameters
@@ -510,7 +510,7 @@ class CSoundEmitterSystem : public CBaseGameSystem
 
         float st = ep.m_flSoundTime;
         if ( !st &&
-             params.delay_msec != 0 )
+            params.delay_msec != 0 )
         {
             st = gpGlobals->curtime + ( float )params.delay_msec / 1000.f;
         }
@@ -557,9 +557,9 @@ class CSoundEmitterSystem : public CBaseGameSystem
         VPROF( "CSoundEmitterSystem::EmitSound (calls engine)" );
 
         if ( ep.m_pSoundName &&
-             ( Q_stristr( ep.m_pSoundName, ".wav" ) ||
-               Q_stristr( ep.m_pSoundName, ".mp3" ) ||
-               ep.m_pSoundName[0] == '!' ) )
+            ( Q_stristr( ep.m_pSoundName, ".wav" ) ||
+                Q_stristr( ep.m_pSoundName, ".mp3" ) ||
+                ep.m_pSoundName[0] == '!' ) )
         {
 #if !defined( CLIENT_DLL )
             bool bSwallowed = CEnvMicrophone::OnSoundPlayed(
@@ -577,7 +577,7 @@ class CSoundEmitterSystem : public CBaseGameSystem
 #endif
 
             if ( ep.m_bWarnOnDirectWaveReference &&
-                 Q_stristr( ep.m_pSoundName, ".wav" ) )
+                Q_stristr( ep.m_pSoundName, ".wav" ) )
             {
                 WaveTrace( ep.m_pSoundName, "Emitsound" );
             }
@@ -1382,8 +1382,8 @@ void UTIL_EmitAmbientSound( int entindex, const Vector &vecOrigin, const char *s
             }
 
             g_SoundEmitterSystem.TraceEmitSound( "UTIL_EmitAmbientSound:  Sentence emitted '%s' (ent %i)\n",
-                                                 name,
-                                                 entindex );
+                                                name,
+                                                entindex );
         }
     }
     else

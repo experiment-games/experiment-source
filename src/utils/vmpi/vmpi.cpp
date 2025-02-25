@@ -70,7 +70,7 @@ CUtlLinkedList< PersistentPacket * > g_PersistentPackets;
 #define VMPI_PARAM( paramName, paramFlags, helpText ) { paramName, paramFlags, "-" #paramName, helpText },
 class CVMPIParam
 {
-   public:
+    public:
     EVMPICmdLineParam m_eParam;
     int m_ParamFlags;
     const char *m_pName;
@@ -170,10 +170,10 @@ static CVMPIPacketIDReg *g_pVMPIPacketIDRegHead = NULL;
 // This class is used while discovering what files the workers need.
 class CDependencyInfo
 {
-   public:
+    public:
     class CDependencyFile
     {
-       public:
+        public:
         char m_Name[MAX_PATH];
     };
 
@@ -185,7 +185,7 @@ class CDependencyInfo
 
     CUtlVector< CDependencyFile * > m_Files;
 
-   public:
+    public:
     CDependencyFile *FindFile( const char *pFilename )
     {
         for ( int i = 0; i < m_Files.Count(); i++ )
@@ -199,7 +199,7 @@ class CDependencyInfo
 
 class CVMPIConnectionCreator : public IHandlerCreator
 {
-   public:
+    public:
     virtual ITCPSocketHandler *CreateNewHandler();
 
     static void ReleaseHandle( int nConnection );
@@ -209,7 +209,7 @@ class CVMPIConnection : public ITCPSocketHandler
 {
     friend class CVMPIConnectionCreator;
 
-   public:
+    public:
     CVMPIConnection( int iConnection )
     {
         m_iConnection = iConnection;
@@ -225,14 +225,14 @@ class CVMPIConnection : public ITCPSocketHandler
         m_bInErrorState = false;
     }
 
-   private:
+    private:
     virtual ~CVMPIConnection()
     {
         // NOTE that only CVMPIConnectionCreator can delete us. Use DeleteSelf() to delete the connection properly.
         Assert( !m_pSocket );
     }
 
-   public:
+    public:
     void DeleteSelf()
     {
         if ( m_pSocket )
@@ -291,7 +291,7 @@ class CVMPIConnection : public ITCPSocketHandler
     }
 
     // ITCPSocketHandler implementation (thread-safe stuff).
-   public:
+    public:
     virtual void Init( IThreadedTCPSocket *pSocket )
     {
         m_pSocket = pSocket;
@@ -358,14 +358,14 @@ class CVMPIConnection : public ITCPSocketHandler
         return m_iConnection;
     }
 
-   public:
+    public:
     unsigned long m_JobWorkerID;
     bool m_bIsAService;  // If true, then this is just a service getting the files. Don't count it as an active worker.
 
     CUtlVector< int > m_GroupedChunkLengths;
     CUtlVector< void * > m_GroupedChunks;
 
-   private:
+    private:
     CUtlVector< char > m_MachineName;
     CUtlVector< char > m_ErrorString;
     long m_ErrorSignal;
@@ -900,7 +900,7 @@ void VMPI_ReceiveExeName()
 
 class CMasterBroadcaster
 {
-   public:
+    public:
     CMasterBroadcaster();
     ~CMasterBroadcaster();
 
@@ -916,14 +916,14 @@ class CMasterBroadcaster
     void SetPassword( const char *pPassword );
     void SetNoTimeoutOption();
 
-   private:
+    private:
     void GetPatchWorkerList( int argc, char **argv );
     bool AskSomeWorkersToConnect();
 
-   private:
+    private:
     class CMasterBroadcastInfo
     {
-       public:
+        public:
         int m_JobID[4];
         char m_Password[256];
         char m_WorkerExeFilename[MAX_PATH];
@@ -937,7 +937,7 @@ class CMasterBroadcaster
     bool Update();
     void BuildBroadcastPacket( bf_write &buf );
 
-   private:
+    private:
     ITCPConnectSocket *m_pListenSocket;
     ITCPConnectSocket *m_pDownloaderListenSocket;
     ISocket *m_pSocket;
@@ -1221,7 +1221,7 @@ bool CMasterBroadcaster::Update()
 #if USE_VMPI_REGISTRY
     double flNow = Plat_FloatTime();
     if ( m_flLastWorkerQueryTime < 0.0f ||
-         flNow - m_flLastWorkerQueryTime >= MASTER_WORKER_QUERY_INTERVAL )
+        flNow - m_flLastWorkerQueryTime >= MASTER_WORKER_QUERY_INTERVAL )
     {
         VMPI_QueryRegistryForWorkers( m_registeredWorkers );
         m_flLastWorkerQueryTime = flNow;
@@ -1256,7 +1256,7 @@ bool CMasterBroadcaster::Update()
                     }
                 }
 #if 1  //! USE_VMPI_REGISTRY
-       // Keep broadcasting as well as pinging workers through the registry for the time being.
+        // Keep broadcasting as well as pinging workers through the registry for the time being.
                 else
                 {
                     m_pSocket->Broadcast( packetBuf.GetBasePointer(), packetBuf.GetNumBytesWritten(), iBroadcastPort );
@@ -1666,17 +1666,17 @@ bool SpawnLocalWorker( int argc, char **argv, int iListenPort, bool bShowConsole
     memset( &pi, 0, sizeof( pi ) );
 
     if ( CreateProcess(
-             NULL,
-             commandLine,
-             NULL,  // security
-             NULL,
-             TRUE,
-             ( bShowConsoleWindow ? CREATE_NEW_CONSOLE : CREATE_NO_WINDOW ) | IDLE_PRIORITY_CLASS,  // flags
-             NULL,                                                                                  // environment
-             workingDir,                                                                            // current directory (use c:\\ because we don't want it to accidentally share
+            NULL,
+            commandLine,
+            NULL,  // security
+            NULL,
+            TRUE,
+            ( bShowConsoleWindow ? CREATE_NEW_CONSOLE : CREATE_NO_WINDOW ) | IDLE_PRIORITY_CLASS,  // flags
+            NULL,                                                                                  // environment
+            workingDir,                                                                            // current directory (use c:\\ because we don't want it to accidentally share
                                                                                                     // DLLs like vstdlib with us).
-             &si,
-             &pi ) )
+            &si,
+            &pi ) )
     {
         return true;
     }
@@ -1962,16 +1962,16 @@ bool VMPI_HandleAutoRestart()
     memset( &pi, 0, sizeof( pi ) );
 
     if ( CreateProcess(
-             NULL,
-             commandLine,
-             NULL,  // security
-             NULL,
-             TRUE,
-             CREATE_NEW_CONSOLE | curPriority,  // flags
-             NULL,                              // environment
-             NULL,
-             &si,
-             &pi ) )
+            NULL,
+            commandLine,
+            NULL,  // security
+            NULL,
+            TRUE,
+            CREATE_NEW_CONSOLE | curPriority,  // flags
+            NULL,                              // environment
+            NULL,
+            &si,
+            &pi ) )
     {
         g_OriginalCommandLineParameters.Purge();
         return true;
@@ -2261,8 +2261,8 @@ bool VMPI_GetNextMessage( MessageBuffer *pBuf, int *pSource, unsigned long start
 bool VMPI_InternalDispatch( MessageBuffer *pBuf, int iSource )
 {
     if ( pBuf->getLen() >= 1 &&
-         pBuf->data[0] >= 0 && pBuf->data[0] < MAX_VMPI_PACKET_IDS &&
-         g_VMPIDispatch[pBuf->data[0]] )
+        pBuf->data[0] >= 0 && pBuf->data[0] < MAX_VMPI_PACKET_IDS &&
+        g_VMPIDispatch[pBuf->data[0]] )
     {
         return g_VMPIDispatch[pBuf->data[0]]( pBuf, iSource, pBuf->data[0] );
     }

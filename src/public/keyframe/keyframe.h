@@ -10,7 +10,7 @@
 
 class IPositionInterpolator
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     virtual void GetDetails( char **outName, int *outMinKeyReq, int *outMaxKeyReq ) = 0;

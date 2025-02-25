@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class ScopeExitRunner
 {
-   public:
+    public:
     ScopeExitRunner( std::function< void() >&& func )
         : m_func( std::move( func ) ) {}
     ~ScopeExitRunner()
@@ -33,7 +33,7 @@ class ScopeExitRunner
         m_func = nullptr;
     }
 
-   private:
+    private:
     std::function< void() > m_func;
 };
 

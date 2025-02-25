@@ -41,7 +41,7 @@ class CStorePreviewClassIcon : public CBaseStorePreviewIcon
 {
     DECLARE_CLASS_SIMPLE( CStorePreviewClassIcon, CBaseStorePreviewIcon );
 
-   public:
+    public:
     CStorePreviewClassIcon( vgui::Panel *parent, const char *name )
         : CBaseStorePreviewIcon( parent, name )
     {
@@ -91,7 +91,7 @@ class CStorePreviewClassIcon : public CBaseStorePreviewIcon
         return m_iClass;
     }
 
-   private:
+    private:
     vgui::ImagePanel *m_pImagePanel;
     int m_iClass;
 };
@@ -103,11 +103,11 @@ class CTFStorePageBase : public CStorePage
 {
     DECLARE_CLASS_SIMPLE( CTFStorePageBase, CStorePage );
 
-   protected:
+    protected:
     // CTFStorePageBase should not be instantiated directly
     CTFStorePageBase( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
 
-   public:
+    public:
     virtual void OnCommand( const char *command );
     virtual void ShowPreview( int iClass, const econ_store_entry_t *pEntry );
 
@@ -122,7 +122,7 @@ class CTFStorePageBase : public CStorePage
         return FILTER_UNOWNED_ITEMS + 1;
     }
 
-   protected:
+    protected:
     float m_flStartExplanationsAt;
 };
 

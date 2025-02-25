@@ -41,7 +41,7 @@ enum StereoEye_t
 //-----------------------------------------------------------------------------
 class CViewSetup
 {
-   public:
+    public:
     CViewSetup()
     {
         m_flAspectRatio = 0.0f;

@@ -745,11 +745,11 @@ void CTFHudTimeStatus::OnThink()
                 int nServerTimeLimit = mp_timelimit.GetInt() * 60;
 
                 bool bDisplayServerTimerEnabled = tf_hud_show_servertimelimit.GetInt() &&
-                                                  TFGameRules() &&
-                                                  !TFGameRules()->InSetup() &&
-                                                  !TFGameRules()->IsInWaitingForPlayers() &&
-                                                  pTimer->IsRoundMaxTimerSet() &&
-                                                  nServerTimeLimit;
+                                                TFGameRules() &&
+                                                !TFGameRules()->InSetup() &&
+                                                !TFGameRules()->IsInWaitingForPlayers() &&
+                                                pTimer->IsRoundMaxTimerSet() &&
+                                                nServerTimeLimit;
 
                 if ( m_pServerTimeLabel->IsVisible() != bDisplayServerTimerEnabled )
                 {

@@ -36,7 +36,7 @@ class CBaseStorePreviewIcon : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseStorePreviewIcon, vgui::EditablePanel );
 
-   public:
+    public:
     CBaseStorePreviewIcon( vgui::Panel *parent, const char *name )
         : vgui::EditablePanel( parent, name )
     {
@@ -82,7 +82,7 @@ class CBaseStorePreviewIcon : public vgui::EditablePanel
 
     virtual void SetInternalImageBounds( int iX, int iY, int iWide, int iTall ) = 0;
 
-   private:
+    private:
     Color m_colPanelBG;
     Color m_colPanelBGMouseover;
     CPanelAnimationVarAliasType( int, m_iImageIndent, "image_indent", "0", "proportional_int" );
@@ -110,7 +110,7 @@ class CStorePreviewItemIcon : public CBaseStorePreviewIcon
 {
     DECLARE_CLASS_SIMPLE( CStorePreviewItemIcon, CBaseStorePreviewIcon );
 
-   public:
+    public:
     CStorePreviewItemIcon( vgui::Panel *parent, const char *name )
         : CBaseStorePreviewIcon( parent, name )
     {
@@ -183,7 +183,7 @@ class CStorePreviewItemIcon : public CBaseStorePreviewIcon
         return m_pItemPanel;
     }
 
-   private:
+    private:
     CItemModelPanel *m_pItemPanel;
     int m_iIconIndex;
 };
@@ -194,7 +194,7 @@ class CStorePreviewItemIcon : public CBaseStorePreviewIcon
 class CStoreItemControlsPanel;
 class CStoreItemControlsPanel : public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStoreItemControlsPanel, vgui::EditablePanel );
 
     CStoreItemControlsPanel( vgui::Panel *pParent, const char *pPanelName, CItemModelPanel *pItemModelPanel );
@@ -221,7 +221,7 @@ class CStoreItemControlsPanel : public vgui::EditablePanel
         return m_pItemModelPanel;
     }
 
-   protected:
+    protected:
     CItemModelPanel *m_pItemModelPanel;
     const econ_store_entry_t *m_pEntry;
     bool m_bButtonsVisible;
@@ -234,7 +234,7 @@ class CStoreItemControlsPanel : public vgui::EditablePanel
 //-----------------------------------------------------------------------------
 class CStorePricePanel : public vgui::EditablePanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CStorePricePanel, vgui::EditablePanel );
 
     CStorePricePanel( vgui::Panel *pParent, const char *pPanelName );
@@ -249,7 +249,7 @@ class CStorePricePanel : public vgui::EditablePanel
 
     MESSAGE_FUNC_PARAMS( OnStoreItemControlsPanelHover, "StoreItemControlsPanelHover", data );
 
-   protected:
+    protected:
     bool m_bOldDiscountVisibility;
     CExLabel *m_pPrice;
     CExLabel *m_pDiscount;
@@ -269,7 +269,7 @@ class CStorePage : public vgui::PropertyPage, public CGameEventListener
 {
     DECLARE_CLASS_SIMPLE( CStorePage, vgui::PropertyPage );
 
-   public:
+    public:
     CStorePage( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile = NULL );
     virtual ~CStorePage();
 
@@ -333,7 +333,7 @@ class CStorePage : public vgui::PropertyPage, public CGameEventListener
     virtual const char *GetPageResFile();
     virtual CStorePreviewItemPanel *CreatePreviewPanel( void );
 
-   protected:
+    protected:
     // Filtering
     virtual bool DoesEntryFilterPassSecondaryFilter( const econ_store_entry_t *pEntry )
     {
@@ -354,7 +354,7 @@ class CStorePage : public vgui::PropertyPage, public CGameEventListener
     static int ItemDisplayOrderSort_UseSortOverride( const econ_store_entry_t *const *ppA, const econ_store_entry_t *const *ppB );
     virtual void OrderItemsForDisplay( CUtlVector< const econ_store_entry_t * > &vecItems ) const;
 
-   protected:
+    protected:
     void CreateItemPanels( void );
     void DeSelectAllItemPanels( void );
     void ToggleSelectItemPanel( CItemModelPanel *pPanel );
@@ -365,7 +365,7 @@ class CStorePage : public vgui::PropertyPage, public CGameEventListener
         return m_pPageData && m_pPageData->m_bIsHome;
     }
 
-   protected:
+    protected:
     const CEconStoreCategoryManager::StoreCategory_t *m_pPageData;
     CStorePreviewItemPanel *m_pPreviewPanel;
     const char *m_pPreviewItemResFile;

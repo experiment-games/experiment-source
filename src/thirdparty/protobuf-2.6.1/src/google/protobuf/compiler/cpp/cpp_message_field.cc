@@ -45,19 +45,19 @@ namespace cpp {
 namespace {
 
 void SetMessageVariables(const FieldDescriptor* descriptor,
-                         map<string, string>* variables,
-                         const Options& options) {
+                        map<string, string>* variables,
+                        const Options& options) {
   SetCommonFieldVariables(descriptor, variables, options);
   (*variables)["type"] = FieldMessageTypeName(descriptor);
   (*variables)["stream_writer"] = (*variables)["declared_type"] +
-      (HasFastArraySerialization(descriptor->message_type()->file()) ?
-       "MaybeToArray" :
-       "");
+    (HasFastArraySerialization(descriptor->message_type()->file()) ?
+        "MaybeToArray" :
+        "");
   // NOTE: Escaped here to unblock proto1->proto2 migration.
   // TODO(liujisi): Extend this to apply for other conflicting methods.
   (*variables)["release_name"] =
-      SafeFunctionName(descriptor->containing_type(),
-                       descriptor, "release_");
+    SafeFunctionName(descriptor->containing_type(),
+                        descriptor, "release_");
   (*variables)["full_name"] = descriptor->full_name();
 }
 
@@ -67,7 +67,7 @@ void SetMessageVariables(const FieldDescriptor* descriptor,
 
 MessageFieldGenerator::
 MessageFieldGenerator(const FieldDescriptor* descriptor,
-                      const Options& options)
+                    const Options& options)
   : descriptor_(descriptor) {
   SetMessageVariables(descriptor, &variables_, options);
 }
@@ -153,12 +153,12 @@ void MessageFieldGenerator::
 GenerateMergeFromCodedStream(io::Printer* printer) const {
   if (descriptor_->type() == FieldDescriptor::TYPE_MESSAGE) {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
-      "     input, mutable_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
+    "     input, mutable_$name$()));\n");
   } else {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
-      "      $number$, input, mutable_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
+    "      $number$, input, mutable_$name$()));\n");
   }
 }
 
@@ -189,7 +189,7 @@ GenerateByteSize(io::Printer* printer) const {
 
 MessageOneofFieldGenerator::
 MessageOneofFieldGenerator(const FieldDescriptor* descriptor,
-                           const Options& options)
+                            const Options& options)
   : MessageFieldGenerator(descriptor, options) {
   SetCommonOneofFieldVariables(descriptor, &variables_);
 }
@@ -252,7 +252,7 @@ GenerateConstructorCode(io::Printer* printer) const {
 
 RepeatedMessageFieldGenerator::
 RepeatedMessageFieldGenerator(const FieldDescriptor* descriptor,
-                              const Options& options)
+                            const Options& options)
   : descriptor_(descriptor) {
   SetMessageVariables(descriptor, &variables_, options);
 }
@@ -330,12 +330,12 @@ void RepeatedMessageFieldGenerator::
 GenerateMergeFromCodedStream(io::Printer* printer) const {
   if (descriptor_->type() == FieldDescriptor::TYPE_MESSAGE) {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
-      "      input, add_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
+    "      input, add_$name$()));\n");
   } else {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
-      "      $number$, input, add_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
+    "      $number$, input, add_$name$()));\n");
   }
 }
 

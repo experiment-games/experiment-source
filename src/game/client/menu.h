@@ -24,7 +24,7 @@ class CHudMenu : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudMenu, vgui::Panel );
 
-   public:
+    public:
     CHudMenu( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -38,12 +38,12 @@ class CHudMenu : public CHudElement, public vgui::Panel
     bool IsMenuOpen( void );
     void SelectMenuItem( int menu_item );
 
-   private:
+    private:
     virtual void OnThink();
     virtual void Paint();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     void ProcessText( void );
 
     void PaintString( const wchar_t *text, int textlen, vgui::HFont &font, int x, int y );

@@ -15,7 +15,7 @@
  */
 class PressFireButtonReply : public INextBotReply
 {
-   public:
+    public:
     virtual void OnSuccess( INextBot *bot );  // invoked when process completed successfully
 };
 
@@ -26,7 +26,7 @@ class PressFireButtonReply : public INextBotReply
  */
 class PressAltFireButtonReply : public INextBotReply
 {
-   public:
+    public:
     virtual void OnSuccess( INextBot *bot );  // invoked when process completed successfully
 };
 
@@ -37,7 +37,7 @@ class PressAltFireButtonReply : public INextBotReply
  */
 class PressJumpButtonReply : public INextBotReply
 {
-   public:
+    public:
     virtual void OnSuccess( INextBot *bot );  // invoked when process completed successfully
 };
 
@@ -47,7 +47,7 @@ class PressJumpButtonReply : public INextBotReply
  */
 class PlayerBody : public IBody
 {
-   public:
+    public:
     PlayerBody( INextBot *bot );
     virtual ~PlayerBody();
 
@@ -60,16 +60,16 @@ class PlayerBody : public IBody
     virtual const Vector &GetViewVector( void ) const;   // return the view unit direction vector in world coordinates
 
     virtual void AimHeadTowards( const Vector &lookAtPos,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // aim the bot's head towards the given goal
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // aim the bot's head towards the given goal
 
     virtual void AimHeadTowards( CBaseEntity *subject,
-                                 LookAtPriorityType priority = BORING,
-                                 float duration = 0.0f,
-                                 INextBotReply *replyWhenAimed = NULL,
-                                 const char *reason = NULL );  // continually aim the bot's head towards the given subject
+                                LookAtPriorityType priority = BORING,
+                                float duration = 0.0f,
+                                INextBotReply *replyWhenAimed = NULL,
+                                const char *reason = NULL );  // continually aim the bot's head towards the given subject
 
     virtual bool IsHeadAimingOnTarget( void ) const;    // return true if the bot's head has achieved its most recent lookat target
     virtual bool IsHeadSteady( void ) const;            // return true if head is not rapidly turning to look somewhere else
@@ -111,7 +111,7 @@ class PlayerBody : public IBody
 
     CBaseEntity *GetLookAtSubject( void ) const;
 
-   private:
+    private:
     CBasePlayer *m_player;
 
     PostureType m_posture;

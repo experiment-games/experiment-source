@@ -221,9 +221,9 @@ bool CTFBotSquad::ShouldSquadLeaderWaitForFormation( void ) const
         if ( m_roster[i].Get() != NULL && m_roster[i]->IsAlive() )
         {
             if ( m_roster[i]->GetSquadFormationError() >= 1.0f &&
-                 !m_roster[i]->HasBrokenFormation() &&
-                 !m_roster[i]->GetLocomotionInterface()->IsStuck() &&
-                 !m_roster[i]->IsPlayerClass( TF_CLASS_MEDIC ) )  // Medics do their own thing
+                !m_roster[i]->HasBrokenFormation() &&
+                !m_roster[i]->GetLocomotionInterface()->IsStuck() &&
+                !m_roster[i]->IsPlayerClass( TF_CLASS_MEDIC ) )  // Medics do their own thing
             {
                 // wait for me!
                 return true;
@@ -244,8 +244,8 @@ bool CTFBotSquad::IsInFormation( void ) const
         if ( m_roster[i].Get() != NULL && m_roster[i]->IsAlive() )
         {
             if ( m_roster[i]->HasBrokenFormation() ||
-                 m_roster[i]->GetLocomotionInterface()->IsStuck() ||
-                 m_roster[i]->IsPlayerClass( TF_CLASS_MEDIC ) )  // Medics do their own thing
+                m_roster[i]->GetLocomotionInterface()->IsStuck() ||
+                m_roster[i]->IsPlayerClass( TF_CLASS_MEDIC ) )  // Medics do their own thing
             {
                 // I'm not "in formation"
                 continue;

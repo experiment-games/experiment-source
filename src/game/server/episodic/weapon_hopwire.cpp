@@ -34,7 +34,7 @@ class CWeaponHopwire : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponHopwire, CBaseHLCombatWeapon );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     void Precache( void );
@@ -56,7 +56,7 @@ class CWeaponHopwire : public CBaseHLCombatWeapon
 
     bool Reload( void );
 
-   private:
+    private:
     void ThrowGrenade( CBasePlayer *pPlayer );
     void RollGrenade( CBasePlayer *pPlayer );
     void LobGrenade( CBasePlayer *pPlayer );
@@ -246,20 +246,20 @@ void CWeaponHopwire::SecondaryAttack( void )
 {
     /*
     if ( m_bRedraw )
-      return;
+    return;
 
     if ( !HasPrimaryAmmo() )
-      return;
+    return;
 
     CBaseCombatCharacter *pOwner  = GetOwner();
 
     if ( pOwner == NULL )
-      return;
+    return;
 
     CBasePlayer *pPlayer = ToBasePlayer( pOwner );
 
     if ( pPlayer == NULL )
-      return;
+    return;
 
     // Note that this is a secondary attack and prepare the grenade attack to pause.
     m_AttackPaused = GRENADE_PAUSED_SECONDARY;
@@ -272,7 +272,7 @@ void CWeaponHopwire::SecondaryAttack( void )
     // If I'm now out of ammo, switch away
     if ( !HasPrimaryAmmo() )
     {
-      pPlayer->SwitchToNextBestWeapon( this );
+    pPlayer->SwitchToNextBestWeapon( this );
     }
     */
 }
@@ -338,7 +338,7 @@ void CWeaponHopwire::PrimaryAttack( void )
     /*
     if ( !HasPrimaryAmmo() )
     {
-      pPlayer->SwitchToNextBestWeapon( this );
+    pPlayer->SwitchToNextBestWeapon( this );
     }
     */
 }

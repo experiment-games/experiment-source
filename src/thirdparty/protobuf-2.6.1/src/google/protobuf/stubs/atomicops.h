@@ -94,8 +94,8 @@ typedef intptr_t AtomicWord;
 //
 // This routine implies no memory barriers.
 Atomic32 NoBarrier_CompareAndSwap( volatile Atomic32* ptr,
-                                   Atomic32 old_value,
-                                   Atomic32 new_value );
+                                    Atomic32 old_value,
+                                    Atomic32 new_value );
 
 // Atomically store new_value into *ptr, returning the previous value held in
 // *ptr.  This routine implies no memory barriers.
@@ -106,7 +106,7 @@ Atomic32 NoBarrier_AtomicExchange( volatile Atomic32* ptr, Atomic32 new_value );
 Atomic32 NoBarrier_AtomicIncrement( volatile Atomic32* ptr, Atomic32 increment );
 
 Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
-                                  Atomic32 increment );
+                                Atomic32 increment );
 
 // These following lower-level operations are typically useful only to people
 // implementing higher-level synchronization operations like spinlocks,
@@ -118,11 +118,11 @@ Atomic32 Barrier_AtomicIncrement( volatile Atomic32* ptr,
 // semantics.   A MemoryBarrier() has "Barrier" semantics, but does no memory
 // access.
 Atomic32 Acquire_CompareAndSwap( volatile Atomic32* ptr,
-                                 Atomic32 old_value,
-                                 Atomic32 new_value );
+                                Atomic32 old_value,
+                                Atomic32 new_value );
 Atomic32 Release_CompareAndSwap( volatile Atomic32* ptr,
-                                 Atomic32 old_value,
-                                 Atomic32 new_value );
+                                Atomic32 old_value,
+                                Atomic32 new_value );
 
 #if defined( __MINGW32__ ) && defined( MemoryBarrier )
 #undef MemoryBarrier
@@ -139,18 +139,18 @@ Atomic32 Release_Load( volatile const Atomic32* ptr );
 // 64-bit atomic operations (only available on 64-bit processors).
 #ifdef GOOGLE_PROTOBUF_ARCH_64_BIT
 Atomic64 NoBarrier_CompareAndSwap( volatile Atomic64* ptr,
-                                   Atomic64 old_value,
-                                   Atomic64 new_value );
+                                    Atomic64 old_value,
+                                    Atomic64 new_value );
 Atomic64 NoBarrier_AtomicExchange( volatile Atomic64* ptr, Atomic64 new_value );
 Atomic64 NoBarrier_AtomicIncrement( volatile Atomic64* ptr, Atomic64 increment );
 Atomic64 Barrier_AtomicIncrement( volatile Atomic64* ptr, Atomic64 increment );
 
 Atomic64 Acquire_CompareAndSwap( volatile Atomic64* ptr,
-                                 Atomic64 old_value,
-                                 Atomic64 new_value );
+                                Atomic64 old_value,
+                                Atomic64 new_value );
 Atomic64 Release_CompareAndSwap( volatile Atomic64* ptr,
-                                 Atomic64 old_value,
-                                 Atomic64 new_value );
+                                Atomic64 old_value,
+                                Atomic64 new_value );
 void NoBarrier_Store( volatile Atomic64* ptr, Atomic64 value );
 void Acquire_Store( volatile Atomic64* ptr, Atomic64 value );
 void Release_Store( volatile Atomic64* ptr, Atomic64 value );

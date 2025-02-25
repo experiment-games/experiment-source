@@ -25,7 +25,7 @@ typedef uint32 HTTPCookieContainerHandle;
 //-----------------------------------------------------------------------------
 class ISteamHTTP
 {
-   public:
+    public:
     // Initializes a new HTTP request, returning a handle to use in further operations on it.  Requires
     // the method (GET or POST) and the absolute URL for the request.  Both http and https are supported,
     // so this string must start with http:// or https:// and should look like http://store.steampowered.com/app/250/

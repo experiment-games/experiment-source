@@ -386,9 +386,9 @@ void CHudSpellMenu::OnTick( void )
 void CHudSpellMenu::FireGameEvent( IGameEvent *event )
 {
     if ( FStrEq( event->GetName(), "post_inventory_application" ) ||
-         FStrEq( event->GetName(), "localplayer_respawn" ) ||
-         FStrEq( event->GetName(), "localplayer_changeclass" ) ||
-         FStrEq( event->GetName(), "inventory_updated" ) )
+        FStrEq( event->GetName(), "localplayer_respawn" ) ||
+        FStrEq( event->GetName(), "localplayer_changeclass" ) ||
+        FStrEq( event->GetName(), "inventory_updated" ) )
     {
         vgui::ivgui()->AddTickSignal( GetVPanel(), 10 );
     }
@@ -1566,7 +1566,7 @@ bool CTFSpellBook::CastKartBombHead( CTFPlayer *pPlayer )
 //************************************************************************************************************************
 class CTFProjectile_SpellFireball : public CTFProjectile_Rocket
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellFireball, CTFProjectile_Rocket );
     DECLARE_NETWORKCLASS();
 
@@ -1818,13 +1818,13 @@ class CTFProjectile_SpellFireball : public CTFProjectile_Rocket
     }
 #endif
 
-   protected:
+    protected:
     virtual float GetFireballScale() const
     {
         return 0.01f;
     }
 
-   private:
+    private:
     bool m_bIsMeteor;
 
 #ifdef GAME_DLL
@@ -1843,7 +1843,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellfireball );
 // *************************************************************************************************************************
 class CTFProjectile_SpellBats : public CTFProjectile_Jar
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellBats, CTFProjectile_Jar );
     DECLARE_NETWORKCLASS();
 
@@ -2076,7 +2076,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellbats );
 // *************************************************************************************************************************
 class CTFProjectile_SpellSpawnZombie : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellSpawnZombie, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2221,7 +2221,7 @@ CBaseEntity *CreateSpellSpawnZombie( CBaseCombatCharacter *pCaster, const Vector
 // *************************************************************************************************************************
 class CTFProjectile_SpellSpawnHorde : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellSpawnHorde, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2298,7 +2298,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellspawnhorde );
 // *************************************************************************************************************************
 class CTFProjectile_SpellPumpkin : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellPumpkin, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2392,7 +2392,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellpumpkin );
 // *************************************************************************************************************************
 class CTFProjectile_SpellMirv : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellMirv, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2502,7 +2502,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellmirv );
 // *************************************************************************************************************************
 class CTFProjectile_SpellSpawnBoss : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellSpawnBoss, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2635,7 +2635,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellspawnboss );
 #ifdef GAME_DLL
 class CTFSpell_MeteorShowerSpawner : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CTFSpell_MeteorShowerSpawner, CBaseEntity );
 
@@ -2734,7 +2734,7 @@ class CTFSpell_MeteorShowerSpawner : public CBaseEntity
         m_vecImpactNormal = vecNormal;
     }
 
-   private:
+    private:
     float m_flFinishTime;
     Vector m_vecImpactNormal;
 };
@@ -2749,7 +2749,7 @@ END_DATADESC()
 // *************************************************************************************************************************
 class CTFProjectile_SpellMeteorShower : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellMeteorShower, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2839,7 +2839,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellmeteorshower );
 // *************************************************************************************************************************
 class CTFProjectile_SpellTransposeTeleport : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellTransposeTeleport, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 
@@ -2959,7 +2959,7 @@ class CTFProjectile_SpellTransposeTeleport : public CTFProjectile_SpellBats
     }
 #endif
 
-   private:
+    private:
 #ifdef GAME_DLL
     CUtlVector< Vector > m_vecTrailingPos;
 #endif
@@ -2987,7 +2987,7 @@ void RemoveAll2013HalloweenTeleportSpellsInMidFlight( void )
 // *************************************************************************************************************************
 class CTFProjectile_SpellLightningOrb : public CTFProjectile_SpellFireball
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellLightningOrb, CTFProjectile_SpellFireball );
     DECLARE_NETWORKCLASS();
 
@@ -3259,7 +3259,7 @@ class CTFProjectile_SpellLightningOrb : public CTFProjectile_SpellFireball
         }
     }
 
-   private:
+    private:
     CNewParticleEffect *m_pTrailParticle;
 #endif  // CLIENT_DLL
 };
@@ -3288,7 +3288,7 @@ class CTFHellZap : public CBaseEntity
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     CTFHellZap()
 #ifdef GAME_DLL
         : m_eType( ZAP_ON_TOUCH )
@@ -3396,7 +3396,7 @@ class CTFHellZap : public CBaseEntity
         ZapAllTouching();
     }
 
-   private:
+    private:
     EZapperType m_eType;
     bool m_bEnabled;
     EHANDLE m_hTouchTrigger;
@@ -3429,7 +3429,7 @@ END_NETWORK_TABLE()
 //*******************************************************************************************************************************************************
 class CTFProjectile_SpellKartOrb : public CTFProjectile_SpellFireball
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellKartOrb, CTFProjectile_SpellFireball );
     DECLARE_NETWORKCLASS();
 
@@ -3632,7 +3632,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellkartorb );
 
 class CTFProjectile_SpellKartBats : public CTFProjectile_SpellBats
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_SpellKartBats, CTFProjectile_SpellBats );
     DECLARE_NETWORKCLASS();
 

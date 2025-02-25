@@ -196,14 +196,14 @@ void CTFGrenadeEmpProjectile::Detonate()
     UTIL_Remove( this );
 
 #if 0
-	// Tell the bots an HE grenade has exploded
-	CTFPlayer *pPlayer = ToTFPlayer( GetThrower() );
-	if ( pPlayer )
-	{
-		KeyValues *pEvent = new KeyValues( "tf_weapon_grenade_detonate" );
-		pEvent->SetInt( "userid", pPlayer->GetUserID() );
-		gameeventmanager->FireEventServerOnly( pEvent );
-	}
+    // Tell the bots an HE grenade has exploded
+    CTFPlayer *pPlayer = ToTFPlayer( GetThrower() );
+    if ( pPlayer )
+    {
+        KeyValues *pEvent = new KeyValues( "tf_weapon_grenade_detonate" );
+        pEvent->SetInt( "userid", pPlayer->GetUserID() );
+        gameeventmanager->FireEventServerOnly( pEvent );
+    }
 #endif
 }
 

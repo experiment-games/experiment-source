@@ -55,7 +55,7 @@ extern IClientMode *GetClientModeNormal();  // must be implemented
 class ClientModeShared : public IClientMode, public CGameEventListener
 {
     // IClientMode overrides.
-   public:
+    public:
     DECLARE_CLASS_NOBASE( ClientModeShared );
 
     ClientModeShared();
@@ -153,10 +153,10 @@ class ClientModeShared : public IClientMode, public CGameEventListener
     virtual bool DoPostScreenSpaceEffects( const CViewSetup *pSetup );
 
     virtual void DisplayReplayMessage( const char *pLocalizeName,
-                                       float flDuration,
-                                       bool bUrgent,
-                                       const char *pSound,
-                                       bool bDlg );
+                                        float flDuration,
+                                        bool bUrgent,
+                                        const char *pSound,
+                                        bool bDlg );
 
     virtual bool IsInfoPanelAllowed() OVERRIDE
     {
@@ -182,7 +182,7 @@ class ClientModeShared : public IClientMode, public CGameEventListener
     virtual void OnDemoRecordStart( char const *pDemoBaseName ) OVERRIDE {}
     virtual void OnDemoRecordStop() OVERRIDE {}
 
-   protected:
+    protected:
 #ifdef LUA_SDK
     CScriptedHudViewport *m_pScriptedViewport;
 #endif
@@ -190,7 +190,7 @@ class ClientModeShared : public IClientMode, public CGameEventListener
 
     void DisplayReplayReminder();
 
-   private:
+    private:
     virtual bool BCanSendPartyChatMessages() const
     {
         return false;

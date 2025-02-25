@@ -10,7 +10,7 @@
 
 class CTFBotEscort : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotEscort( CBaseEntity *who );
     virtual ~CTFBotEscort() {}
 
@@ -33,7 +33,7 @@ class CTFBotEscort : public Action< CTFBot >
         return "Escort";
     }
 
-   private:
+    private:
     CHandle< CBaseEntity > m_who;
     PathFollower m_pathToWho;
     CountdownTimer m_vocalizeTimer;

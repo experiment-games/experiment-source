@@ -16,7 +16,7 @@
 
 class CPrecacheRegister
 {
-   public:
+    public:
     typedef void ( *PrecacheFn )( void *pUser );  // Prototype for a custom precache function.
 
     CPrecacheRegister( PrecacheFn fn, const void *pUser );
@@ -28,7 +28,7 @@ class CPrecacheRegister
     static void Precache();  // Calls everything that has registered to precache.
 
     // Don't call these.
-   public:
+    public:
     static void PrecacheFn_Other( void *pUser );
 };
 

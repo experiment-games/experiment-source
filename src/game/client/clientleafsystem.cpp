@@ -60,7 +60,7 @@ static void CallComputeFXBlend( IClientRenderable *&pRenderable )
 //-----------------------------------------------------------------------------
 class CClientLeafSystem : public IClientLeafSystem, public ISpatialLeafEnumerator
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "CClientLeafSystem";
@@ -97,7 +97,7 @@ class CClientLeafSystem : public IClientLeafSystem, public ISpatialLeafEnumerato
     virtual void SafeRemoveIfDesired() {}
 
     // Methods of IClientLeafSystem
-   public:
+    public:
     virtual void AddRenderable( IClientRenderable *pRenderable, RenderGroup_t group );
     virtual bool IsRenderableInPVS( IClientRenderable *pRenderable );
     virtual void CreateRenderableHandle( IClientRenderable *pRenderable, bool bIsStaticProp );
@@ -136,7 +136,7 @@ class CClientLeafSystem : public IClientLeafSystem, public ISpatialLeafEnumerato
     virtual void EnumerateShadowsInLeaves( int leafCount, LeafIndex_t *pLeaves, IClientLeafShadowEnum *pEnum );
 
     // methods of ISpatialLeafEnumerator
-   public:
+    public:
     bool EnumerateLeaf( int leaf, intp context );
 
     // Adds a shadow to a leaf
@@ -152,7 +152,7 @@ class CClientLeafSystem : public IClientLeafSystem, public ISpatialLeafEnumerato
     // Singleton instance...
     static CClientLeafSystem s_ClientLeafSystem;
 
-   private:
+    private:
     // Creates a new renderable
     void NewRenderable( IClientRenderable *pRenderable, RenderGroup_t type, int flags = 0 );
 
@@ -177,9 +177,9 @@ class CClientLeafSystem : public IClientLeafSystem, public ISpatialLeafEnumerato
 
     // Insert translucent renderables into list of translucent objects
     void InsertTranslucentRenderable( IClientRenderable *pRenderable,
-                                      int &count,
-                                      IClientRenderable **pList,
-                                      float *pDist );
+                                    int &count,
+                                    IClientRenderable **pList,
+                                    float *pDist );
 
     // Used to change renderables from translucent to opaque
     // Only really used by the static prop fading...
@@ -236,7 +236,7 @@ class CClientLeafSystem : public IClientLeafSystem, public ISpatialLeafEnumerato
         mdlcache->EndLock();
     }
 
-   private:
+    private:
     enum
     {
         RENDER_FLAGS_TWOPASS = 0x01,
@@ -949,7 +949,7 @@ inline bool CClientLeafSystem::ShouldRenderableReceiveShadow( ClientRenderHandle
 // Adds a shadow to a leaf/removes shadow from renderable
 //-----------------------------------------------------------------------------
 void CClientLeafSystem::AddShadowToRenderable( ClientRenderHandle_t renderHandle,
-                                               ClientLeafShadowHandle_t shadowHandle )
+                                                ClientLeafShadowHandle_t shadowHandle )
 {
     // Check if this renderable receives the type of projected texture that shadowHandle refers to.
     int nShadowFlags = m_Shadows[shadowHandle].m_Flags;
@@ -965,22 +965,22 @@ void CClientLeafSystem::AddShadowToRenderable( ClientRenderHandle_t renderHandle
     {
         IClientRenderable *pRenderable = m_Renderables[renderHandle].m_pRenderable;
         g_pClientShadowMgr->AddShadowToReceiver( m_Shadows[shadowHandle].m_Shadow,
-                                                 pRenderable,
-                                                 SHADOW_RECEIVER_BRUSH_MODEL );
+                                                pRenderable,
+                                                SHADOW_RECEIVER_BRUSH_MODEL );
     }
     else if ( m_Renderables[renderHandle].m_Flags & RENDER_FLAGS_STATIC_PROP )
     {
         IClientRenderable *pRenderable = m_Renderables[renderHandle].m_pRenderable;
         g_pClientShadowMgr->AddShadowToReceiver( m_Shadows[shadowHandle].m_Shadow,
-                                                 pRenderable,
-                                                 SHADOW_RECEIVER_STATIC_PROP );
+                                                pRenderable,
+                                                SHADOW_RECEIVER_STATIC_PROP );
     }
     else if ( m_Renderables[renderHandle].m_Flags & RENDER_FLAGS_STUDIO_MODEL )
     {
         IClientRenderable *pRenderable = m_Renderables[renderHandle].m_pRenderable;
         g_pClientShadowMgr->AddShadowToReceiver( m_Shadows[shadowHandle].m_Shadow,
-                                                 pRenderable,
-                                                 SHADOW_RECEIVER_STUDIO_MODEL );
+                                                pRenderable,
+                                                SHADOW_RECEIVER_STUDIO_MODEL );
     }
 }
 
@@ -1358,7 +1358,7 @@ bool CClientLeafSystem::ShouldDrawDetailObjectsInLeaf( int leaf, int frameNumber
 {
     ClientLeaf_t &leafInfo = m_Leaf[leaf];
     return ( ( leafInfo.m_DetailPropRenderFrame == frameNumber ) &&
-             ( ( leafInfo.m_DetailPropCount != 0 ) || ( leafInfo.m_pSubSystemData[CLSUBSYSTEM_DETAILOBJECTS] ) ) );
+            ( ( leafInfo.m_DetailPropCount != 0 ) || ( leafInfo.m_pSubSystemData[CLSUBSYSTEM_DETAILOBJECTS] ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1519,10 +1519,10 @@ static RenderGroup_t DetectBucketedRenderGroup( RenderGroup_t group, float fDime
 
     int bucketedGroupIndex;
     if ( RENDER_GROUP_CFG_NUM_OPAQUE_ENT_BUCKETS <= 2 ||
-         fDimension >= arrThresholds[1] )
+        fDimension >= arrThresholds[1] )
     {
         if ( RENDER_GROUP_CFG_NUM_OPAQUE_ENT_BUCKETS <= 1 ||
-             fDimension >= arrThresholds[0] )
+            fDimension >= arrThresholds[0] )
             bucketedGroupIndex = 0;
         else
             bucketedGroupIndex = 1;
@@ -1530,7 +1530,7 @@ static RenderGroup_t DetectBucketedRenderGroup( RenderGroup_t group, float fDime
     else
     {
         if ( RENDER_GROUP_CFG_NUM_OPAQUE_ENT_BUCKETS <= 3 ||
-             fDimension >= arrThresholds[2] )
+            fDimension >= arrThresholds[2] )
             bucketedGroupIndex = 2;
         else
             bucketedGroupIndex = 3;
@@ -1566,10 +1566,10 @@ void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafInd
         /* that's why we don't check the z component).
         if (!m_DrawSmallObjects)
         {
-          CCachedRenderInfo& cachedInfo =  m_CachedRenderInfos[renderable.m_CachedRenderInfo];
-          float sizeX = cachedInfo.m_Maxs.x - cachedInfo.m_Mins.x;
-          float sizeY = cachedInfo.m_Maxs.y - cachedInfo.m_Mins.y;
-          if ((sizeX < 50.f) && (sizeY < 50.f))
+        CCachedRenderInfo& cachedInfo =  m_CachedRenderInfos[renderable.m_CachedRenderInfo];
+        float sizeX = cachedInfo.m_Maxs.x - cachedInfo.m_Mins.x;
+        float sizeY = cachedInfo.m_Maxs.y - cachedInfo.m_Mins.y;
+        if ((sizeX < 50.f) && (sizeY < 50.f))
             continue;
         }*/
 
@@ -1653,8 +1653,8 @@ void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafInd
 
             // Determine object group offset
             if ( RENDER_GROUP_CFG_NUM_OPAQUE_ENT_BUCKETS > 1 &&
-                 group >= RENDER_GROUP_OPAQUE_STATIC &&
-                 group <= RENDER_GROUP_OPAQUE_ENTITY )
+                group >= RENDER_GROUP_OPAQUE_STATIC &&
+                group <= RENDER_GROUP_OPAQUE_ENTITY )
             {
                 Vector dims;
                 VectorSubtract( absMaxs, absMins, dims );

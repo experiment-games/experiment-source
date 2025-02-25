@@ -26,10 +26,10 @@
 
 class CImageButton : public vgui::Button
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CImageButton, vgui::Button );
 
-   public:
+    public:
     CImageButton( vgui::Panel *parent, const char *panelName );
 
     virtual void ApplySettings( KeyValues *inResourceData );
@@ -41,10 +41,10 @@ class CImageButton : public vgui::Button
     void SetActiveImage( vgui::IImage *image );
     void SetInactiveImage( vgui::IImage *image );
 
-   public:
+    public:
     virtual void Paint();
 
-   private:
+    private:
     vgui::IImage *m_pActiveImage;
     char *m_pszActiveImageName;
 
@@ -83,7 +83,7 @@ class CCharInfoLoadoutSubPanel : public vgui::PropertyPage
 {
     DECLARE_CLASS_SIMPLE( CCharInfoLoadoutSubPanel, vgui::PropertyPage );
 
-   public:
+    public:
     CCharInfoLoadoutSubPanel( Panel *parent );
     virtual ~CCharInfoLoadoutSubPanel();
 
@@ -164,7 +164,7 @@ class CCharInfoLoadoutSubPanel : public vgui::PropertyPage
     MESSAGE_FUNC( OnArmoryClosed, "ArmoryClosed" );
     MESSAGE_FUNC( OnCharInfoClosing, "CharInfoClosing" );
 
-   private:
+    private:
     void RequestInventoryRefresh();
 
     CImageButton *m_pClassButtons[NUM_CLASSES_IN_LOADOUT_PANEL + 1];

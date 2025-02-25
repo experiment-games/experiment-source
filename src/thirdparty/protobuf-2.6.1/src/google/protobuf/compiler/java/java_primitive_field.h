@@ -62,7 +62,7 @@ namespace java
 
 class ImmutablePrimitiveFieldGenerator : public ImmutableFieldGenerator
 {
-   public:
+    public:
     explicit ImmutablePrimitiveFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -90,7 +90,7 @@ class ImmutablePrimitiveFieldGenerator : public ImmutableFieldGenerator
 
     string GetBoxedType() const;
 
-   protected:
+    protected:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
     const int messageBitIndex_;
@@ -98,14 +98,14 @@ class ImmutablePrimitiveFieldGenerator : public ImmutableFieldGenerator
     Context* context_;
     ClassNameResolver* name_resolver_;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutablePrimitiveFieldGenerator );
 };
 
 class ImmutablePrimitiveOneofFieldGenerator
     : public ImmutablePrimitiveFieldGenerator
 {
-   public:
+    public:
     ImmutablePrimitiveOneofFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -121,14 +121,14 @@ class ImmutablePrimitiveOneofFieldGenerator
     void GenerateSerializationCode( io::Printer* printer ) const;
     void GenerateSerializedSizeCode( io::Printer* printer ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ImmutablePrimitiveOneofFieldGenerator );
 };
 
 class RepeatedImmutablePrimitiveFieldGenerator
     : public ImmutableFieldGenerator
 {
-   public:
+    public:
     explicit RepeatedImmutablePrimitiveFieldGenerator(
         const FieldDescriptor* descriptor,
         int messageBitIndex,
@@ -157,7 +157,7 @@ class RepeatedImmutablePrimitiveFieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
     const int messageBitIndex_;

@@ -18,7 +18,7 @@
 
 class CVideoCaption
 {
-   public:
+    public:
     CVideoCaption()
     {
         m_pszString = NULL;
@@ -48,10 +48,10 @@ class CVideoCaption
 
 class CTFIntroMenu : public CIntroMenu
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTFIntroMenu, CIntroMenu );
 
-   public:
+    public:
     CTFIntroMenu( IViewPort *pViewPort );
     ~CTFIntroMenu();
 
@@ -75,7 +75,7 @@ class CTFIntroMenu : public CIntroMenu
 
     MESSAGE_FUNC( OnIntroFinished, "IntroFinished" );
 
-   private:
+    private:
     void SetNextThink( float flActionThink, int iAction );
     void Shutdown( void );
     bool LoadCaptions( void );

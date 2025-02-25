@@ -20,7 +20,7 @@ class KeyValues;
 //------------------------------------------------------------------------------
 abstract_class IScreenSpaceEffect
 {
-   public:
+    public:
     virtual void Init() = 0;
     virtual void Shutdown() = 0;
 
@@ -37,7 +37,7 @@ abstract_class IScreenSpaceEffect
 //------------------------------------------------------------------------------
 abstract_class IScreenSpaceEffectManager
 {
-   public:
+    public:
     virtual void InitScreenSpaceEffects() = 0;
     virtual void ShutdownScreenSpaceEffects() = 0;
 
@@ -64,7 +64,7 @@ extern IScreenSpaceEffectManager *g_pScreenSpaceEffects;
 //-------------------------------------------------------------------------------------
 class CScreenSpaceEffectRegistration
 {
-   public:
+    public:
     CScreenSpaceEffectRegistration( const char *pName, IScreenSpaceEffect *pEffect );
 
     const char *m_pEffectName;

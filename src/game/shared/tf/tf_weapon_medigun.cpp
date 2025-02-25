@@ -588,8 +588,8 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 
         // We can heal teammates and enemies that are disguised as teammates
         if ( !bStealthed &&
-             ( pTFPlayer->InSameTeam( pOwner ) ||
-               ( bDisguised && pTFPlayer->m_Shared.GetDisguiseTeam() == pOwner->GetTeamNumber() ) ) )
+            ( pTFPlayer->InSameTeam( pOwner ) ||
+                ( bDisguised && pTFPlayer->m_Shared.GetDisguiseTeam() == pOwner->GetTeamNumber() ) ) )
         {
             return true;
         }
@@ -616,7 +616,7 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 // Now make sure there isn't something other than team players in the way.
 class CMedigunFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     CMedigunFilter( CBaseEntity *pShooter )
         : CTraceFilterSimple( pShooter, COLLISION_GROUP_WEAPON )
     {
@@ -1421,7 +1421,7 @@ void CWeaponMedigun::DrainCharge( void )
         for ( int i = m_DetachedTargets.Count() - 1; i >= 0; i-- )
         {
             if ( m_DetachedTargets[i].hTarget == NULL || m_DetachedTargets[i].hTarget.Get() == m_hHealingTarget.Get() ||
-                 !m_DetachedTargets[i].hTarget->IsAlive() || m_DetachedTargets[i].flTime < ( gpGlobals->curtime - tf_invuln_time.GetFloat() ) )
+                !m_DetachedTargets[i].hTarget->IsAlive() || m_DetachedTargets[i].flTime < ( gpGlobals->curtime - tf_invuln_time.GetFloat() ) )
             {
                 m_DetachedTargets.Remove( i );
             }
@@ -1732,8 +1732,8 @@ void CWeaponMedigun::PrimaryAttack( void )
         // Start boosting ourself if we're not
         if ( m_bChargeRelease && !m_bHealingSelf )
         {
-          pOwner->m_Shared.Heal( pOwner, GetHealRate() * 2 );
-          m_bHealingSelf = true;
+        pOwner->m_Shared.Heal( pOwner, GetHealRate() * 2 );
+        m_bHealingSelf = true;
         }
         */
 #endif
@@ -1826,7 +1826,7 @@ void CWeaponMedigun::SecondaryAttack( void )
     {
         if ( pOwner->m_afButtonPressed & IN_ATTACK2
 #ifdef CLIENT_DLL
-             && prediction->IsFirstTimePredicted()
+            && prediction->IsFirstTimePredicted()
 #endif
         )
         {
@@ -2339,12 +2339,12 @@ void CWeaponMedigun::UpdateEffects( void )
         if ( m_hHealingTargetEffect.pEffect )
         {
             bImmediate ? m_hHealingTargetEffect.pOwner->ParticleProp()->StopEmissionAndDestroyImmediately( m_hHealingTargetEffect.pEffect )
-                       : m_hHealingTargetEffect.pOwner->ParticleProp()->StopEmission( m_hHealingTargetEffect.pEffect );
+                        : m_hHealingTargetEffect.pOwner->ParticleProp()->StopEmission( m_hHealingTargetEffect.pEffect );
         }
         if ( m_hHealingTargetEffect.pCustomEffect )
         {
             bImmediate ? m_hHealingTargetEffect.pOwner->ParticleProp()->StopEmissionAndDestroyImmediately( m_hHealingTargetEffect.pCustomEffect )
-                       : m_hHealingTargetEffect.pOwner->ParticleProp()->StopEmission( m_hHealingTargetEffect.pCustomEffect );
+                        : m_hHealingTargetEffect.pOwner->ParticleProp()->StopEmission( m_hHealingTargetEffect.pCustomEffect );
         }
     }
     else
@@ -2473,7 +2473,7 @@ void CWeaponMedigun::UpdateMedicAutoCallers( void )
                     continue;
 
                 if ( ( pPlayer->GetTeamNumber() == GetLocalPlayerTeam() ) ||
-                     ( pPlayer->GetPlayerClass() && ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( pPlayer->m_Shared.GetDisguiseTeam() == GetLocalPlayerTeam() ) ) )
+                    ( pPlayer->GetPlayerClass() && ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( pPlayer->m_Shared.GetDisguiseTeam() == GetLocalPlayerTeam() ) ) )
                 {
                     if ( m_hHealingTarget != NULL )
                     {
@@ -2891,8 +2891,8 @@ CTFMedigunShield *CTFMedigunShield::Create( CTFPlayer *pOwner )
 bool CTFMedigunShield::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
     if ( collisionGroup == COLLISION_GROUP_PROJECTILE ||
-         collisionGroup == TFCOLLISION_GROUP_ROCKETS ||
-         collisionGroup == TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS )
+        collisionGroup == TFCOLLISION_GROUP_ROCKETS ||
+        collisionGroup == TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS )
     {
         switch ( GetTeamNumber() )
         {

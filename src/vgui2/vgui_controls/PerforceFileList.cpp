@@ -41,7 +41,7 @@ static int ListFileNameSortFunc( ListPanel *pPanel, const ListPanelItem &item1, 
     int num2 = Q_atoi( string2 );
 
     if ( num1 != 0 &&
-         num2 != 0 )
+        num2 != 0 )
     {
         if ( num1 < num2 )
             return -1;
@@ -453,12 +453,12 @@ void PerforceFileList::Refresh()
     // Slow method.. does too many perforce operations
     for ( int i = FirstItem(); i != InvalidItemID(); i = NextItem( i ) )
     {
-      const char *pFile = GetFile( i );
+    const char *pFile = GetFile( i );
 
-      P4File_t fileInfo;
-      bool bIsFileInPerforce = p4->GetFileInfo( pFile, &fileInfo );
-      bool bFileExists = g_pFullFileSystem->FileExists( pFile );
-      RefreshPerforceState( i, bFileExists, bIsFileInPerforce ? &fileInfo : NULL );
+    P4File_t fileInfo;
+    bool bIsFileInPerforce = p4->GetFileInfo( pFile, &fileInfo );
+    bool bFileExists = g_pFullFileSystem->FileExists( pFile );
+    RefreshPerforceState( i, bFileExists, bIsFileInPerforce ? &fileInfo : NULL );
     }
     */
 

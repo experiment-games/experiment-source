@@ -126,7 +126,7 @@ void C_Experiment_Player::UpdateIDTarget()
 
     // don't show IDs in chase spec mode
     if ( GetObserverMode() == OBS_MODE_CHASE ||
-         GetObserverMode() == OBS_MODE_DEATHCAM )
+        GetObserverMode() == OBS_MODE_DEATHCAM )
         return;
 
     trace_t tr;
@@ -147,9 +147,9 @@ void C_Experiment_Player::UpdateIDTarget()
 }
 
 void C_Experiment_Player::TraceAttack( const CTakeDamageInfo &info,
-                                       const Vector &vecDir,
-                                       trace_t *ptr,
-                                       CDmgAccumulator *pAccumulator )
+                                        const Vector &vecDir,
+                                        trace_t *ptr,
+                                        CDmgAccumulator *pAccumulator )
 {
 #ifdef LUA_SDK
     // Andrew; push a copy of the damageinfo/vector, bring the changes back out
@@ -206,7 +206,7 @@ void C_Experiment_Player::TraceAttack( const CTakeDamageInfo &info,
         if ( pAttacker )
         {
             if ( ExperimentRules()->IsTeamplay() &&
-                 pAttacker->InSameTeam( this ) == true )
+                pAttacker->InSameTeam( this ) == true )
                 return;
         }
 
@@ -641,7 +641,7 @@ Vector C_Experiment_Player::GetAutoaimVector( float flDelta )
 bool C_Experiment_Player::CanSprint( void )
 {
     return ( ( !m_Local.m_bDucked && !m_Local.m_bDucking ) &&
-             ( GetWaterLevel() != 3 ) );
+            ( GetWaterLevel() != 3 ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -724,8 +724,8 @@ void C_Experiment_Player::HandleSpeedChanges( void )
                 StopWalking();
             }
             else if ( !IsWalking() && !IsSprinting() &&
-                      ( m_afButtonPressed & IN_WALK ) &&
-                      !( m_nButtons & IN_DUCK ) )
+                    ( m_afButtonPressed & IN_WALK ) &&
+                    !( m_nButtons & IN_DUCK ) )
             {
                 StartWalking();
             }
@@ -1054,7 +1054,7 @@ void C_Experiment_Player::UpdateClientSideAnimation()
 // --------------------------------------------------------------------------------
 class C_TEPlayerAnimEvent : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEPlayerAnimEvent, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -1066,11 +1066,11 @@ class C_TEPlayerAnimEvent : public C_BaseTempEntity
         if ( pPlayer && !pPlayer->IsDormant() )
         {
             pPlayer->DoAnimationEvent( ( PlayerAnimEvent_t )m_iEvent.Get(),
-                                       m_nData );
+                                        m_nData );
         }
     }
 
-   public:
+    public:
     CNetworkHandle( CBasePlayer, m_hPlayer );
     CNetworkVar( int, m_iEvent );
     CNetworkVar( int, m_nData );
@@ -1141,8 +1141,8 @@ void C_Experiment_Player::CalculateIKLocks( float currentTime )
                 // FIXME: make entity finding sticky!
                 // FIXME: what should the radius check be?
                 for ( CEntitySphereQuery sphere( pTarget->est.pos, 64 );
-                      ( pEntity = sphere.GetCurrentEntity() ) != NULL;
-                      sphere.NextEntity() )
+                    ( pEntity = sphere.GetCurrentEntity() ) != NULL;
+                    sphere.NextEntity() )
                 {
                     C_BaseAnimating *pAnim = pEntity->GetBaseAnimating();
                     if ( !pAnim )

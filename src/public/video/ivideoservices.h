@@ -328,7 +328,7 @@ typedef AudioEncodeOptions::EAudioEncodeOptions_t AudioEncodeOptions_t;
 //-----------------------------------------------------------------------------
 class VideoFrameRate_t
 {
-   public:
+    public:
     inline VideoFrameRate_t()
         : m_TimeUnitsPerSecond( 0 ), m_TimeUnitsPerFrame( 1000 ){};
 
@@ -406,7 +406,7 @@ class VideoFrameRate_t
         return ( m_TimeUnitsPerSecond != 0 );
     }
 
-   private:
+    private:
     uint32 m_TimeUnitsPerSecond;
     uint32 m_TimeUnitsPerFrame;
 };
@@ -421,7 +421,7 @@ class VideoFrameRate_t
 //-----------------------------------------------------------------------------
 class IVideoMaterial : public IBaseInterface
 {
-   public:
+    public:
     // Video information functions
     virtual const char *GetVideoFileName() = 0;  // Gets the file name of the video this material is playing
     virtual VideoResult_t GetLastResult() = 0;   // Gets detailed info on the last operation
@@ -479,7 +479,7 @@ class IVideoMaterial : public IBaseInterface
 //-----------------------------------------------------------------------------
 class IVideoRecorder : public IBaseInterface
 {
-   public:
+    public:
     virtual bool EstimateMovieFileSize( size_t *pEstSize, int movieWidth, int movieHeight, VideoFrameRate_t movieFps, float movieDuration, VideoEncodeCodec_t theCodec, int videoQuality, AudioEncodeSourceFormat_t srcAudioFormat = AudioEncodeSourceFormat::AUDIO_NONE, int audioSampleRate = 0 ) = 0;
 
     virtual bool CreateNewMovieFile( const char *pFilename, bool hasAudioTrack = false ) = 0;
@@ -515,7 +515,7 @@ class IVideoRecorder : public IBaseInterface
 
 class IVideoServices : public IAppSystem
 {
-   public:
+    public:
     // Query the available video systems
     virtual int GetAvailableVideoSystemCount() = 0;
     virtual VideoSystem_t GetAvailableVideoSystem( int n ) = 0;

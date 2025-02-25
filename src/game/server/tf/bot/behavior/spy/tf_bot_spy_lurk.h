@@ -10,7 +10,7 @@
 
 class CTFBotSpyLurk : public Action< CTFBot >
 {
-   public:
+    public:
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
     virtual ActionResult< CTFBot > Update( CTFBot *me, float interval );
 
@@ -21,7 +21,7 @@ class CTFBotSpyLurk : public Action< CTFBot >
         return "SpyLurk";
     };
 
-   private:
+    private:
     CountdownTimer m_lurkTimer;
 };
 

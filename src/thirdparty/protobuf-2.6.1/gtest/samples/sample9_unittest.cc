@@ -100,7 +100,7 @@ TEST(CustomOutputTest, Succeeds) {
 
 TEST(CustomOutputTest, Fails) {
   EXPECT_EQ(1, 2)
-      << "This test fails in order to demonstrate alternative failure messages";
+    << "This test fails in order to demonstrate alternative failure messages";
 }
 
 }  // namespace
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
     terse_output = true;
   else
     printf("%s\n", "Run this program with --terse_output to change the way "
-           "it prints its output.");
+            "it prints its output.");
 
   UnitTest& unit_test = *UnitTest::GetInstance();
 
@@ -142,13 +142,13 @@ int main(int argc, char **argv) {
   for (int i = 0; i < unit_test.total_test_case_count(); ++i) {
     const TestCase& test_case = *unit_test.GetTestCase(i);
     for (int j = 0; j < test_case.total_test_count(); ++j) {
-      const TestInfo& test_info = *test_case.GetTestInfo(j);
-      // Counts failed tests that were not meant to fail (those without
-      // 'Fails' in the name).
-      if (test_info.result()->Failed() &&
-          strcmp(test_info.name(), "Fails") != 0) {
+    const TestInfo& test_info = *test_case.GetTestInfo(j);
+    // Counts failed tests that were not meant to fail (those without
+    // 'Fails' in the name).
+    if (test_info.result()->Failed() &&
+        strcmp(test_info.name(), "Fails") != 0) {
         unexpectedly_failed_tests++;
-      }
+    }
     }
   }
 

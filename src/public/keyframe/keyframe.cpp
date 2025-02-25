@@ -146,7 +146,7 @@ bool Motion_CalculateModifiedTime( float time, int timeModifierFuncNum, float *o
 
 class CPositionInterpolator_Linear : public IPositionInterpolator
 {
-   public:
+    public:
     virtual void Release();
     virtual void GetDetails( char **outName, int *outMinKeyReq, int *outMaxKeyReq );
     virtual void SetKeyPosition( int keyNum, Vector const &vPos );
@@ -192,7 +192,7 @@ void CPositionInterpolator_Linear::InterpolatePosition( float time, Vector &vOut
 
 class CPositionInterpolator_CatmullRom : public IPositionInterpolator
 {
-   public:
+    public:
     virtual void Release();
     virtual void GetDetails( char **outName, int *outMinKeyReq, int *outMaxKeyReq );
     virtual void SetKeyPosition( int keyNum, Vector const &vPos );
@@ -245,11 +245,11 @@ void CPositionInterpolator_CatmullRom::InterpolatePosition( float time, Vector &
 
 class CRopeDelegate : public CSimplePhysics::IHelper
 {
-   public:
+    public:
     virtual void GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
     virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
 
-   public:
+    public:
     Vector m_CurEndPoints[2];
 };
 
@@ -270,7 +270,7 @@ void CRopeDelegate::ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes 
 
 class CPositionInterpolator_Rope final : public IPositionInterpolator
 {
-   public:
+    public:
     CPositionInterpolator_Rope();
 
     virtual void Release();
@@ -279,7 +279,7 @@ class CPositionInterpolator_Rope final : public IPositionInterpolator
     virtual void InterpolatePosition( float time, Vector &vOut );
     virtual bool ProcessKey( char const *pName, char const *pValue );
 
-   private:
+    private:
     CRopePhysics< 10 > m_RopePhysics;
     CRopeDelegate m_Delegate;
 

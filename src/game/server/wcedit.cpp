@@ -196,8 +196,8 @@ void NWCEdit::CreateAINode( CBasePlayer *pPlayer )
 
         // <<TEMP>> Round position till DS fixed WC bug
         testHull->SetLocalOrigin( Vector( floor( testHull->GetAbsOrigin().x ),
-                                          floor( testHull->GetAbsOrigin().y ),
-                                          floor( testHull->GetAbsOrigin().z ) ) );
+                                        floor( testHull->GetAbsOrigin().y ),
+                                        floor( testHull->GetAbsOrigin().z ) ) );
 
         // ---------------------------------------
         //  Send new node to WC
@@ -706,7 +706,7 @@ static ConCommand wc_link_edit( "wc_link_edit", CC_WC_LinkEdit, 0, FCVAR_CHEAT )
 /// placing more than one of these in a level.
 class CWC_UpdateIgnoreList : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CWC_UpdateIgnoreList, CBaseEntity );
 
     enum
@@ -719,11 +719,11 @@ class CWC_UpdateIgnoreList : public CBaseEntity
         return m_nIgnoredEntityNames[x];
     }
 
-   protected:
+    protected:
     // the list of names to ignore
     string_t m_nIgnoredEntityNames[MAX_IGNORELIST_NAMES];
 
-   public:
+    public:
     DECLARE_DATADESC();
 };
 

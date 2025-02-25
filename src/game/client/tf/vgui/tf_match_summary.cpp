@@ -682,9 +682,9 @@ void CTFMatchSummary::UpdatePlayerList()
             pKeyValues->SetInt( "healing", g_TF_PR->GetHealing( playerIndex ) );
 
             int nSupport = g_TF_PR->GetDamageAssist( playerIndex ) +
-                           g_TF_PR->GetHealingAssist( playerIndex ) +
-                           g_TF_PR->GetDamageBlocked( playerIndex ) +
-                           ( g_TF_PR->GetBonusPoints( playerIndex ) * 25 );
+                            g_TF_PR->GetHealingAssist( playerIndex ) +
+                            g_TF_PR->GetDamageBlocked( playerIndex ) +
+                            ( g_TF_PR->GetBonusPoints( playerIndex ) * 25 );
             pKeyValues->SetInt( "support", nSupport );
 
             matchsummary_columns_t eParticleColumn = MS_COLUMN_INVALID;
@@ -732,14 +732,14 @@ void CTFMatchSummary::UpdatePlayerList()
             {
                 int nMedal = pKey->GetInt();
                 pPlayerList->SetColorOverrideForCell( 0, itemID, MS_COLUMN_SCORE, ( nMedal == ( int )StatMedal_Bronze ) ? m_clrBronzeMedal : ( nMedal == ( int )StatMedal_Silver ) ? m_clrSilverMedal
-                                                                                                                                                                                   : m_clrGoldMedal );
+                                                                                                                                                                                    : m_clrGoldMedal );
             }
             pKey = pKeyValues->FindKey( "kills_medal" );
             if ( pKey && pKey->GetInt() )
             {
                 int nMedal = pKey->GetInt();
                 pPlayerList->SetColorOverrideForCell( 0, itemID, MS_COLUMN_KILLS, ( nMedal == ( int )StatMedal_Bronze ) ? m_clrBronzeMedal : ( nMedal == ( int )StatMedal_Silver ) ? m_clrSilverMedal
-                                                                                                                                                                                   : m_clrGoldMedal );
+                                                                                                                                                                                    : m_clrGoldMedal );
             }
             pKey = pKeyValues->FindKey( "damage_medal" );
             if ( pKey && pKey->GetInt() )
@@ -753,14 +753,14 @@ void CTFMatchSummary::UpdatePlayerList()
             {
                 int nMedal = pKey->GetInt();
                 pPlayerList->SetColorOverrideForCell( 0, itemID, MS_COLUMN_HEALING, ( nMedal == ( int )StatMedal_Bronze ) ? m_clrBronzeMedal : ( nMedal == ( int )StatMedal_Silver ) ? m_clrSilverMedal
-                                                                                                                                                                                     : m_clrGoldMedal );
+                                                                                                                                                                                    : m_clrGoldMedal );
             }
             pKey = pKeyValues->FindKey( "support_medal" );
             if ( pKey && pKey->GetInt() )
             {
                 int nMedal = pKey->GetInt();
                 pPlayerList->SetColorOverrideForCell( 0, itemID, MS_COLUMN_SUPPORT, ( nMedal == ( int )StatMedal_Bronze ) ? m_clrBronzeMedal : ( nMedal == ( int )StatMedal_Silver ) ? m_clrSilverMedal
-                                                                                                                                                                                     : m_clrGoldMedal );
+                                                                                                                                                                                    : m_clrGoldMedal );
             }
 
             pKeyValues->deleteThis();
@@ -1421,10 +1421,10 @@ void CTFMatchSummary::OnTick()
                     int iLocalPlayerIndex = GetLocalPlayerIndex();
 
                     if ( ( m_SkillRatings[iLocalPlayerIndex].nScoreRank != StatMedal_None ) ||
-                         ( m_SkillRatings[iLocalPlayerIndex].nKillsRank != StatMedal_None ) ||
-                         ( m_SkillRatings[iLocalPlayerIndex].nDamageRank != StatMedal_None ) ||
-                         ( m_SkillRatings[iLocalPlayerIndex].nHealingRank != StatMedal_None ) ||
-                         ( m_SkillRatings[iLocalPlayerIndex].nSupportRank != StatMedal_None ) )
+                        ( m_SkillRatings[iLocalPlayerIndex].nKillsRank != StatMedal_None ) ||
+                        ( m_SkillRatings[iLocalPlayerIndex].nDamageRank != StatMedal_None ) ||
+                        ( m_SkillRatings[iLocalPlayerIndex].nHealingRank != StatMedal_None ) ||
+                        ( m_SkillRatings[iLocalPlayerIndex].nSupportRank != StatMedal_None ) )
                     {
                         if ( pLocalPlayer )
                         {

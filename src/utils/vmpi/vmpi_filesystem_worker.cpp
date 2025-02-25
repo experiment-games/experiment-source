@@ -24,7 +24,7 @@ CVMPICriticalSection g_OpenCS;
 
 class CFileResponse
 {
-   public:
+    public:
     int m_RequestID;
     int m_Response;
     bool m_bZeroLength;
@@ -47,7 +47,7 @@ CTSQueue< FileChunkPacket_t > g_FileChunkPackets;
 
 class CWorkerFile
 {
-   public:
+    public:
     const char *GetFilename()
     {
         return m_Filename.Base();
@@ -61,7 +61,7 @@ class CWorkerFile
         return m_nChunksToReceive == 0;
     }
 
-   public:
+    public:
     CFastTimer m_Timer;  // To see how long it takes to download the file.
 
     // This has to be sent explicitly as part of the file info or else the protocol
@@ -91,14 +91,14 @@ class CWorkerFile
 
 class CNonExistentFile
 {
-   public:
+    public:
     bool Equals( const char *pFilename, const char *pPathID )
     {
         return V_stricmp( pFilename, m_Filename.Get() ) == 0 &&
-               V_stricmp( pPathID, m_PathID.Get() ) == 0;
+                V_stricmp( pPathID, m_PathID.Get() ) == 0;
     }
 
-   public:
+    public:
     CUtlString m_Filename;
     CUtlString m_PathID;
 };
@@ -171,7 +171,7 @@ static bool ZLibDecompress( const void *pInput, int inputLen, void *pOut, int ou
 
 class CWorkerMulticastListener
 {
-   public:
+    public:
     CWorkerMulticastListener()
     {
         m_nUnfinishedFiles = 0;
@@ -483,8 +483,8 @@ class CWorkerMulticastListener
             // Put the data into whatever file it belongs in.
             if ( !pTestFile )
             {
-              pTestFile = RequestFileFromServer( pTestFilename );
-              if ( !pTestFile )
+            pTestFile = RequestFileFromServer( pTestFilename );
+            if ( !pTestFile )
                 continue;
             }
             */
@@ -512,7 +512,7 @@ class CWorkerMulticastListener
             {
                 // Make sure the file is properly setup to receive the data into.
                 if ( ( int )pInfo->m_UncompressedSize != pTestFile->m_UncompressedData.Count() ||
-                     ( int )pInfo->m_CompressedSize != pTestFile->m_CompressedData.Count() )
+                    ( int )pInfo->m_CompressedSize != pTestFile->m_CompressedData.Count() )
                 {
                     Plat_FatalError(
                         "ListenFor(): invalid compressed or uncompressed size.\n"
@@ -573,10 +573,10 @@ class CWorkerMulticastListener
                     --m_nUnfinishedFiles;
 
                     if ( !ZLibDecompress(
-                             pTestFile->m_CompressedData.Base(),
-                             pTestFile->m_CompressedData.Count(),
-                             pTestFile->m_UncompressedData.Base(),
-                             pTestFile->m_UncompressedData.Count() ) )
+                            pTestFile->m_CompressedData.Base(),
+                            pTestFile->m_CompressedData.Count(),
+                            pTestFile->m_UncompressedData.Base(),
+                            pTestFile->m_UncompressedData.Count() ) )
                     {
                         if ( pSocket )
                             pSocket->Release();
@@ -638,7 +638,7 @@ class CWorkerMulticastListener
         return true;
     }
 
-   private:
+    private:
     CIPAddr m_MulticastAddr;
 
     CUtlLinkedList< CWorkerFile *, int > m_WorkerFiles;
@@ -657,7 +657,7 @@ class CWorkerMulticastListener
 
 class CWorkerVMPIFileSystem : public CBaseVMPIFileSystem
 {
-   public:
+    public:
     InitReturnVal_t Init();
     virtual void Term();
 
@@ -672,7 +672,7 @@ class CWorkerVMPIFileSystem : public CBaseVMPIFileSystem
     virtual CSysModule *LoadModule( const char *pFileName, const char *pPathID, bool bValidatedDllOnly );
     virtual void UnloadModule( CSysModule *pModule );
 
-   private:
+    private:
     CWorkerMulticastListener m_Listener;
 };
 

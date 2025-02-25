@@ -19,8 +19,8 @@ enum EP2PSessionError
     k_EP2PSessionErrorNone = 0,
     k_EP2PSessionErrorNoRightsToApp = 2,  // local user doesn't own the app that is running
     k_EP2PSessionErrorTimeout = 4,        // target isn't responding, perhaps not calling AcceptP2PSessionWithUser()
-                                          // corporate firewalls can also block this (NAT traversal is not firewall traversal)
-                                          // make sure that UDP ports 3478, 4379, and 4380 are open in an outbound direction
+                                        // corporate firewalls can also block this (NAT traversal is not firewall traversal)
+                                        // make sure that UDP ports 3478, 4379, and 4380 are open in an outbound direction
 
     // The following error codes were removed and will never be sent.
     // For privacy reasons, there is no reply if the user is offline or playing another game.
@@ -128,7 +128,7 @@ enum ESNetSocketConnectionType
 //-----------------------------------------------------------------------------
 class ISteamNetworking
 {
-   public:
+    public:
     ////////////////////////////////////////////////////////////////////////////////////////////
     //
     // UDP-style (connectionless) networking interface.  These functions send messages using

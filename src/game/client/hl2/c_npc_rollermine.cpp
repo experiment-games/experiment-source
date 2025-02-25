@@ -17,7 +17,7 @@ class C_RollerMine : public C_AI_BaseNPC
 {
     DECLARE_CLASS( C_RollerMine, C_AI_BaseNPC );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_RollerMine( void ) {}
@@ -32,7 +32,7 @@ class C_RollerMine : public C_AI_BaseNPC
             return RENDER_GROUP_OPAQUE_ENTITY;
     }
 
-   private:
+    private:
     C_RollerMine( const C_RollerMine & ) {}
 
     bool m_bIsOpen;

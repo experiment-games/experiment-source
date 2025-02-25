@@ -44,7 +44,7 @@ typedef uint32 HCursor;
 
 class IInput : public IBaseInterface
 {
-   public:
+    public:
     virtual void SetMouseFocus( VPANEL newMouseFocus ) = 0;
     virtual void SetMouseCapture( VPANEL panel ) = 0;
 
@@ -198,6 +198,6 @@ void ScreenToWorld(
     int nScreenHeight = -1 );
 
 Vector ScreenToWorld( int mousex,
-                      int mousey );
+                    int mousey );
 
 #endif  // VGUI_IINPUT_H

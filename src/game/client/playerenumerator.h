@@ -21,7 +21,7 @@ class CPlayerEnumerator : public IPartitionEnumerator
 {
     DECLARE_CLASS_NOBASE( CPlayerEnumerator );
 
-   public:
+    public:
     // Forced constructor
     CPlayerEnumerator( float radius, Vector vecOrigin )
     {
@@ -64,7 +64,7 @@ class CPlayerEnumerator : public IPartitionEnumerator
         return ITERATION_CONTINUE;
     }
 
-   public:
+    public:
     // Data members
     float m_flRadiusSquared;
     Vector m_vecOrigin;

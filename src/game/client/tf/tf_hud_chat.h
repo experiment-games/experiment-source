@@ -22,21 +22,21 @@ struct ChatMessage_t
 };
 
 void RenderPartyChatMessage( const ChatMessage_t &message,
-                             vgui::RichText *pRichText,
-                             const Color &colorSystemMessage,
-                             const Color &colorPlayerName,
-                             const Color &colorText );
+                            vgui::RichText *pRichText,
+                            const Color &colorSystemMessage,
+                            const Color &colorPlayerName,
+                            const Color &colorText );
 
 class CHudChatLine : public CBaseHudChatLine
 {
     DECLARE_CLASS_SIMPLE( CHudChatLine, CBaseHudChatLine );
 
-   public:
+    public:
     CHudChatLine( vgui::Panel *parent, const char *panelName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     CHudChatLine( const CHudChatLine & );  // not defined, not accessible
 };
 
@@ -47,7 +47,7 @@ class CHudChatInputLine : public CBaseHudChatInputLine
 {
     DECLARE_CLASS_SIMPLE( CHudChatInputLine, CBaseHudChatInputLine );
 
-   public:
+    public:
     CHudChatInputLine( CBaseHudChat *parent, char const *panelName )
         : CBaseHudChatInputLine( parent, panelName ) {}
 
@@ -58,7 +58,7 @@ class CHudChat : public CBaseHudChat
 {
     DECLARE_CLASS_SIMPLE( CHudChat, CBaseHudChat );
 
-   public:
+    public:
     CHudChat( const char *pElementName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;

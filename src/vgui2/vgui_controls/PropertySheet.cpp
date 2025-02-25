@@ -39,10 +39,10 @@ class ContextLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( ContextLabel, Label );
 
-   public:
+    public:
     ContextLabel( Button *parent, char const *panelName, char const *text )
         : BaseClass( ( Panel * )parent, panelName, text ),
-          m_pTabButton( parent )
+        m_pTabButton( parent )
     {
         SetBlockDragChaining( true );
     }
@@ -81,7 +81,7 @@ class ContextLabel : public Label
         }
     }
 
-   private:
+    private:
     Button *m_pTabButton;
 };
 
@@ -110,7 +110,7 @@ class PageTab : public Button
 {
     DECLARE_CLASS_SIMPLE( PageTab, Button );
 
-   private:
+    private:
     bool _active;
     Color _textColor;
     Color _dimTextColor;
@@ -127,17 +127,17 @@ class PageTab : public Button
     long m_hoverActivatePageTime;
     long m_dropHoverTime;
 
-   public:
+    public:
     PageTab( PropertySheet *parent, const char *panelName, const char *text, char const *imageName, int maxTabWidth, Panel *page, bool showContextButton, long hoverActivatePageTime = -1 )
         : Button( ( Panel * )parent, panelName, text ),
-          m_pParent( parent ),
-          m_pPage( page ),
-          m_pImage( 0 ),
-          m_pszImageName( 0 ),
-          m_bShowContextLabel( showContextButton ),
-          m_bAttemptingDrop( false ),
-          m_hoverActivatePageTime( hoverActivatePageTime ),
-          m_dropHoverTime( -1 )
+        m_pParent( parent ),
+        m_pPage( page ),
+        m_pImage( 0 ),
+        m_pszImageName( 0 ),
+        m_bShowContextLabel( showContextButton ),
+        m_bAttemptingDrop( false ),
+        m_hoverActivatePageTime( hoverActivatePageTime ),
+        m_dropHoverTime( -1 )
     {
         SetCommand( new KeyValues( "TabPressed" ) );
         _active = false;

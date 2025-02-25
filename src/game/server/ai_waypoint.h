@@ -39,7 +39,7 @@ enum WaypointFlags_t
 // ----------------------------------------------------------------------------
 struct AI_Waypoint_t
 {
-   public:
+    public:
     AI_Waypoint_t();
     AI_Waypoint_t( const Vector &vecPosition, float flYaw, Navigation_t navType, int fWaypointFlags, int nNodeID );
     AI_Waypoint_t( const AI_Waypoint_t &from )
@@ -160,7 +160,7 @@ struct AI_Waypoint_t
     // DOOR:		If moving to position to open a door, the handle of the door to open.
     EHANDLE m_hData;
 
-   private:
+    private:
     int m_fWaypointFlags;    // See WaypointFlags_t
     Navigation_t m_iWPType;  // The type of waypoint
 
@@ -169,7 +169,7 @@ struct AI_Waypoint_t
 
     DECLARE_FIXEDSIZE_ALLOCATOR( AI_Waypoint_t );
 
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 };
 
@@ -217,7 +217,7 @@ inline void AI_Waypoint_t::SetNext( AI_Waypoint_t *p )
 
 class CAI_WaypointList
 {
-   public:
+    public:
     CAI_WaypointList()
         : m_pFirstWaypoint( NULL )
     {
@@ -252,7 +252,7 @@ class CAI_WaypointList
 
     void RemoveAll();
 
-   private:
+    private:
     AI_Waypoint_t *m_pFirstWaypoint;  // Linked list of waypoints
 };
 

@@ -17,7 +17,7 @@
 
 class CDynamicLight : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CDynamicLight, CBaseEntity );
 
     void Spawn( void );
@@ -32,7 +32,7 @@ class CDynamicLight : public CBaseEntity
     void InputTurnOff( inputdata_t &inputdata );
     void InputToggle( inputdata_t &inputdata );
 
-   public:
+    public:
     unsigned char m_ActualFlags;
     CNetworkVar( unsigned char, m_Flags );
     CNetworkVar( unsigned char, m_LightStyle );
@@ -170,12 +170,12 @@ void CDynamicLight::Spawn( void )
     if ( m_Exponent != clampedExponent )
     {
         Warning( "light_dynamic at [%d %d %d] has invalid exponent value (%d must be between %d and %d).\n",
-                 ( int )GetAbsOrigin().x,
-                 ( int )GetAbsOrigin().x,
-                 ( int )GetAbsOrigin().x,
-                 m_Exponent.Get(),
-                 MIN_DL_EXPONENT_VALUE,
-                 MAX_DL_EXPONENT_VALUE );
+                ( int )GetAbsOrigin().x,
+                ( int )GetAbsOrigin().x,
+                ( int )GetAbsOrigin().x,
+                m_Exponent.Get(),
+                MIN_DL_EXPONENT_VALUE,
+                MAX_DL_EXPONENT_VALUE );
 
         m_Exponent = clampedExponent;
     }

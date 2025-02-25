@@ -46,10 +46,10 @@
 
 class CSimpleBitString
 {
-   public:
+    public:
     explicit CSimpleBitString( uint32 ReserveNumBits = 0 )
         : m_uNumBits( 0 ),
-          m_vecU8()
+        m_vecU8()
     {
         m_vecU8.EnsureCapacity( ( ReserveNumBits / 8 ) + 1 );
         m_vecU8[m_vecU8.AddToTail()] = 0x00;  // always need 1 byte
@@ -83,18 +83,18 @@ class CSimpleBitString
         return m_vecU8.Count();
     }
 
-   private:
+    private:
     uint32 m_uNumBits;
     CUtlVector< uint8 > m_vecU8;
 
-   public:
+    public:
     // Iterator class for retrieving bits
     class iterator
     {
-       public:
+        public:
         explicit iterator( const CSimpleBitString& bs )
             : m_rSimpleBitString( bs ),
-              m_uNextBitIdx( 0 )
+            m_uNextBitIdx( 0 )
         {
         }
 
@@ -134,7 +134,7 @@ class CSimpleBitString
 
         void DoAssertClassInvariant() const;
 
-       private:
+        private:
         const CSimpleBitString& m_rSimpleBitString;  // lint !e1725 reference
         uint32 m_uNextBitIdx;
     };

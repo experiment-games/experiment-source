@@ -9,7 +9,7 @@
 
 class CMyLogicalEntity : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMyLogicalEntity, CLogicalEntity );
     DECLARE_DATADESC();
 
@@ -20,7 +20,7 @@ class CMyLogicalEntity : public CLogicalEntity
     // Input function
     void InputTick( inputdata_t &inputData );
 
-   private:
+    private:
     int m_nThreshold;  // Count at which to fire our output
     int m_nCounter;    // Internal counter
 

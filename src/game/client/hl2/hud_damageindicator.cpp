@@ -34,7 +34,7 @@ class CHudDamageIndicator : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudDamageIndicator, vgui::Panel );
 
-   public:
+    public:
     CHudDamageIndicator( const char *pElementName );
     void Init( void );
     void Reset( void );
@@ -43,11 +43,11 @@ class CHudDamageIndicator : public CHudElement, public vgui::Panel
     // Handler for our message
     void MsgFunc_Damage( bf_read &msg );
 
-   private:
+    private:
     virtual void Paint();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     CPanelAnimationVarAliasType( float, m_flDmgX, "dmg_xpos", "10", "proportional_float" );
     CPanelAnimationVarAliasType( float, m_flDmgY, "dmg_ypos", "80", "proportional_float" );
     CPanelAnimationVarAliasType( float, m_flDmgWide, "dmg_wide", "30", "proportional_float" );
@@ -154,10 +154,10 @@ void CHudDamageIndicator::Init( void )
 bool CHudDamageIndicator::ShouldDraw( void )
 {
     bool bNeedsDraw = m_DmgColorLeft[3] ||
-                      m_DmgColorRight[3] ||
-                      m_DmgHighColorLeft[3] ||
-                      m_DmgHighColorRight[3] ||
-                      m_DmgFullscreenColor[3];
+                    m_DmgColorRight[3] ||
+                    m_DmgHighColorLeft[3] ||
+                    m_DmgHighColorRight[3] ||
+                    m_DmgFullscreenColor[3];
 
     return ( bNeedsDraw && CHudElement::ShouldDraw() );
 }

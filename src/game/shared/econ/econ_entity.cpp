@@ -601,19 +601,19 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
     // on the items carried by the person we're disguised as.
     /*if ( pOwner->m_Shared.InCond( TF_COND_DISGUISED ) )
     {
-      // This won't work. If our disguise target is a player we've never seen before,
-      //		 we won't have a client entity, and hence we don't have their inventory.
-      C_TFPlayer *pDisguiseTarget = pOwner->m_Shared.GetDisguiseTarget();
-      if ( pDisguiseTarget && pDisguiseTarget != pOwner )
-      {
+    // This won't work. If our disguise target is a player we've never seen before,
+    //		 we won't have a client entity, and hence we don't have their inventory.
+    C_TFPlayer *pDisguiseTarget = pOwner->m_Shared.GetDisguiseTarget();
+    if ( pDisguiseTarget && pDisguiseTarget != pOwner )
+    {
         pOwner = pDisguiseTarget;
         iClass = pOwner->GetPlayerClass()->GetClassIndex();
-      }
-      else
-      {
+    }
+    else
+    {
         // We're not disguised as a specific player. Make sure we lookup base weapons with the disguise class.
         iClass = pOwner->m_Shared.GetDisguiseClass();
-      }
+    }
     }
     */
 
@@ -1488,8 +1488,8 @@ void CEconEntity::GetEconParticleSystems( CUtlVector< const attachedparticlesyst
     for ( int i = out_pvecParticleSystems->Count() - 1; i >= 0; i-- )
     {
         if ( !( *out_pvecParticleSystems )[i] ||
-             !( *out_pvecParticleSystems )[i]->pszSystemName ||
-             !( *out_pvecParticleSystems )[i]->pszSystemName[0] )
+            !( *out_pvecParticleSystems )[i]->pszSystemName ||
+            !( *out_pvecParticleSystems )[i]->pszSystemName[0] )
         {
             out_pvecParticleSystems->FastRemove( i );
         }

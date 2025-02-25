@@ -50,7 +50,7 @@ inline int GetEnemyTeam( int team )
 //----------------------------------------------------------------------------
 class CHL2MPBot : public NextBotPlayer< CHL2MP_Player >, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CHL2MPBot, NextBotPlayer< CHL2MP_Player > );
 
     DECLARE_ENT_SCRIPTDESC();
@@ -468,7 +468,7 @@ class CHL2MPBot : public NextBotPlayer< CHL2MP_Player >, public CGameEventListen
     bool IsPropHater() const;
     CBaseEntity *Physcannon_GetHeldProp() const;
 
-   private:
+    private:
     CHL2MPBotLocomotion *m_locomotor;
     CHL2MPBotBody *m_body;
     CHL2MPBotVision *m_vision;
@@ -829,7 +829,7 @@ inline const CHL2MPBot *ToHL2MPBot( const CBaseEntity *pEntity )
  */
 class CHL2MPBotPathCost : public IPathCost
 {
-   public:
+    public:
     CHL2MPBotPathCost( CHL2MPBot *me, RouteType routeType )
     {
         m_me = me;
@@ -909,12 +909,12 @@ class CHL2MPBotPathCost : public IPathCost
             {
                 // misyl: combat areas.
 #if 0
-				// avoid combat areas
-				if ( area->IsInCombat() )
-				{
-					const float combatDangerCost = 4.0f;
-					dist *= combatDangerCost * area->GetCombatIntensity();
-				}
+                // avoid combat areas
+                if ( area->IsInCombat() )
+                {
+                    const float combatDangerCost = 4.0f;
+                    dist *= combatDangerCost * area->GetCombatIntensity();
+                }
 #endif
             }
 
@@ -940,7 +940,7 @@ class CHL2MPBotPathCost : public IPathCost
 //---------------------------------------------------------------------------------------------
 class CClosestHL2MPPlayer
 {
-   public:
+    public:
     CClosestHL2MPPlayer( const Vector &where, int team = TEAM_ANY )
     {
         m_where = where;
@@ -1040,7 +1040,7 @@ static const char *g_ppszRandomModels[] =
 
 class CTraceFilterIgnoreFriendlyCombatItems : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterIgnoreFriendlyCombatItems, CTraceFilterSimple );
 
     CTraceFilterIgnoreFriendlyCombatItems( const CHL2MPBot *player, int collisionGroup, int iIgnoreTeam, bool bIsProjectile = false )

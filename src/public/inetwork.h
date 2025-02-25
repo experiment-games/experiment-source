@@ -14,7 +14,7 @@ class IConnectionlessPacketHandler;
 
 abstract_class INetwork
 {
-   public:
+    public:
     virtual ~INetwork( void ){};
 
     virtual void Init( void ) = 0;

@@ -18,7 +18,7 @@ enum EConsumptionAttemptResult
 //---------------------------------------------------------------------------------------
 class CEconSharedToolSupport
 {
-   public:
+    public:
     // Can the given tool instance apply to a specific instance of an item. This should be used in the general
     // case whenever a CEconItem or a CEconItemView is available.
     static bool ToolCanApplyTo( const IEconItemInterface *pToolDef, const IEconItemInterface *pToolSubject );
@@ -37,7 +37,7 @@ class CEconSharedToolSupport
 //---------------------------------------------------------------------------------------
 class CEconTool_DuelingMinigame : public IEconTool
 {
-   public:
+    public:
     CEconTool_DuelingMinigame( const char *pszTypeName, const char *pszUseString )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ) {}
 
@@ -51,7 +51,7 @@ class CEconTool_DuelingMinigame : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_Noisemaker : public IEconTool
 {
-   public:
+    public:
     CEconTool_Noisemaker( const char *pszTypeName, const char *pszUseString )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ) {}
 
@@ -65,7 +65,7 @@ class CEconTool_Noisemaker : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_WrappedGift : public IEconTool
 {
-   public:
+    public:
     CEconTool_WrappedGift( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV );
 
     virtual bool BFinishInitialization() OVERRIDE;
@@ -93,7 +93,7 @@ class CEconTool_WrappedGift : public IEconTool
     virtual const char *GetUseCommand( const IEconItemInterface *pItem, int i = 0 ) const OVERRIDE;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     const char *m_pszDeliveredGiftItemDefName;  // points to memory inside our init KV -- only valid between the constructor call and the BFinishInitialization() call (this is messy but Fletcher and I agree it makes more sense than switching to a full two-pass schema parse just for this)
 
     const CEconItemDefinition *m_pDeliveredGiftItemDef;
@@ -106,7 +106,7 @@ class CEconTool_WrappedGift : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_WeddingRing : public IEconTool
 {
-   public:
+    public:
     CEconTool_WeddingRing( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) {}
 
@@ -126,7 +126,7 @@ class CEconTool_WeddingRing : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_TagsList
 {
-   public:
+    public:
     CEconTool_TagsList( KeyValues *pKVTags )
     {
         if ( pKVTags )
@@ -143,7 +143,7 @@ class CEconTool_TagsList
         return m_vecTags;
     }
 
-   private:
+    private:
     CUtlVector< econ_tag_handle_t > m_vecTags;
 };
 
@@ -152,7 +152,7 @@ class CEconTool_TagsList
 //---------------------------------------------------------------------------------------
 class CEconTool_StrangeCountTransfer : public IEconTool
 {
-   public:
+    public:
     CEconTool_StrangeCountTransfer( const char *pszTypeName, item_capabilities_t unCapabilities );
 
     static bool AreItemsEligibleForStrangeCountTransfer( const IEconItemInterface *pItem1, const IEconItemInterface *pItem2 );
@@ -173,7 +173,7 @@ class CEconTool_StrangeCountTransfer : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_StrangePart : public IEconTool
 {
-   public:
+    public:
     CEconTool_StrangePart( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ), m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL ), m_RequiredMissingTags( pUsageKV ? pUsageKV->FindKey( "required_missing_tags" ) : NULL )
     {
@@ -191,7 +191,7 @@ class CEconTool_StrangePart : public IEconTool
     virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     CEconTool_TagsList m_RequiredTags;
     CEconTool_TagsList m_RequiredMissingTags;
 };
@@ -201,7 +201,7 @@ class CEconTool_StrangePart : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_StrangePartRestriction : public IEconTool
 {
-   public:
+    public:
     CEconTool_StrangePartRestriction( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV );
 
     virtual bool CanApplyTo( const IEconItemInterface *pTool, const IEconItemInterface *pToolSubject ) const;
@@ -224,7 +224,7 @@ class CEconTool_StrangePartRestriction : public IEconTool
         return m_unRestrictionValue;
     }
 
-   private:
+    private:
     unsigned int /*strange_event_restriction_t*/ m_eRestrictionType;
 
     const char *m_pszRestrictionValue;  // points to memory inside our init KV -- only valid between the constructor call and the BFinishInitialization() call (this is messy but Fletcher and I agree it makes more sense than switching to a full two-pass schema parse just for this)
@@ -251,7 +251,7 @@ class CEconTool_StrangePartRestriction : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_ItemDynamicRecipe : public IEconTool
 {
-   public:
+    public:
     // This enum lets the CDynamicRecipeComponentLootList class specify
     // "uniqueness" of the item def that it will roll.  This allows us to
     // do things like ensure that the output item will never be one of the
@@ -281,7 +281,7 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
 
     class CBaseRecipeComponent
     {
-       public:
+        public:
         struct StringEncodedAttribute_t
         {
             attrib_definition_index_t m_AttrIndex;
@@ -324,7 +324,7 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
             return m_vecCountChances;
         }
 
-       protected:
+        protected:
         const CBaseRecipeComponent *m_pParent;
         CUtlVector< CBaseRecipeComponent * > m_vecAdditionalComponents;
         float m_flChanceOfApplying;
@@ -349,7 +349,7 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
         static const char *m_pszUseParentNameIdentifier;
     };
 
-   public:
+    public:
     class CDynamicRecipeComponentLootList;
     // Defined item type: Use this when you want to quickly define a specific item as
     //					  a component for a recipe.  A "defined item" is considered an
@@ -358,12 +358,12 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
     {
         typedef CBaseRecipeComponent BaseClass;
 
-       public:
+        public:
         CDynamicRecipeComponentDefinedItem( bool bIsOutput, const CBaseRecipeComponent *pParent );
         virtual ~CDynamicRecipeComponentDefinedItem();
         virtual bool BFinishInitialization_Internal( CUtlVector< CUtlString > *pVecErrors, ComponentAttribVector_t *attribVec ) OVERRIDE;
 
-       protected:
+        protected:
         virtual bool ParseKV( KeyValues *pKV, CUtlVector< CUtlString > *pVecErrors ) OVERRIDE;
 
         friend class CDynamicRecipeComponentLootList;
@@ -377,30 +377,30 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
     {
         typedef CBaseRecipeComponent BaseClass;
 
-       public:
+        public:
         CDynamicRecipeComponentLootList( bool bIsOutput, const CBaseRecipeComponent *pParent );
         virtual ~CDynamicRecipeComponentLootList();
         virtual bool BFinishInitialization_Internal( CUtlVector< CUtlString > *pVecErrors, ComponentAttribVector_t *attribVec ) OVERRIDE;
 
-       protected:
+        protected:
         virtual bool ParseKV( KeyValues *pKV, CUtlVector< CUtlString > *pVecErrors ) OVERRIDE;
 
-       private:
+        private:
     };
 
     class CRecipeComponentInputDefIndexIterator : public CEconItemSpecificAttributeIterator
     {
-       public:
+        public:
         CRecipeComponentInputDefIndexIterator( EItemDefUniqueness_t eUniqueness );
         virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef,
-                                              const CAttribute_DynamicRecipeComponent &value ) OVERRIDE;
+                                            const CAttribute_DynamicRecipeComponent &value ) OVERRIDE;
 
         const CUtlVector< item_definition_index_t > &GetMatchingComponentInputs() const
         {
             return m_vecInputItemDefs;
         }
 
-       private:
+        private:
         CUtlVector< item_definition_index_t > m_vecInputItemDefs;
         EItemDefUniqueness_t m_eUniqueness;
     };
@@ -410,7 +410,7 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
         return m_vecComponents;
     }
 
-   private:
+    private:
     // All the different components for this recipe
     CUtlVector< CBaseRecipeComponent * > m_vecComponents;
     // Errors we ecounter during initialization
@@ -419,7 +419,7 @@ class CEconTool_ItemDynamicRecipe : public IEconTool
 
 class CWorldItemPlacementAttributeIterator : public CEconItemSpecificAttributeIterator
 {
-   public:
+    public:
     CWorldItemPlacementAttributeIterator() {}
 
     virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement &value ) OVERRIDE
@@ -438,7 +438,7 @@ class CWorldItemPlacementAttributeIterator : public CEconItemSpecificAttributeIt
         return m_vecPlacementAttributes;
     }
 
-   private:
+    private:
     CUtlVector< const CEconItemAttributeDefinition * > m_vecPlacementAttributes;
 };
 
@@ -447,7 +447,7 @@ class CWorldItemPlacementAttributeIterator : public CEconItemSpecificAttributeIt
 //---------------------------------------------------------------------------------------
 class CEconTool_Xifier : public IEconTool
 {
-   public:
+    public:
     CEconTool_Xifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ), m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL ), m_ItemRarityRestriction( k_unItemRarity_Any )
     {
@@ -483,13 +483,13 @@ class CEconTool_Xifier : public IEconTool
     virtual void OnClientUseConsumable( CEconItemView *pItem, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   protected:
+    protected:
     uint8 GetRarityRestriction() const
     {
         return m_ItemRarityRestriction;
     }
 
-   private:
+    private:
     bool ItemDefMatch( const CEconItemDefinition *pTargetItemDef, const CEconItemDefinition *pSubjectItemDef ) const;
 
     CUtlString m_sItemDescLocToken;
@@ -500,7 +500,7 @@ class CEconTool_Xifier : public IEconTool
 
 class CEconTool_Strangifier : public CEconTool_Xifier
 {
-   public:
+    public:
     CEconTool_Strangifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : CEconTool_Xifier( pszTypeName, pszUseString, unCapabilities, pUsageKV ) {}
 
@@ -513,7 +513,7 @@ class CEconTool_Strangifier : public CEconTool_Xifier
 //---------------------------------------------------------------------------------------
 class CEconTool_KillStreakifier : public CEconTool_Xifier
 {
-   public:
+    public:
     CEconTool_KillStreakifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : CEconTool_Xifier( pszTypeName, pszUseString, unCapabilities, pUsageKV ) {}
 
@@ -526,7 +526,7 @@ class CEconTool_KillStreakifier : public CEconTool_Xifier
 //---------------------------------------------------------------------------------------
 class CEconTool_Festivizer : public CEconTool_Xifier
 {
-   public:
+    public:
     CEconTool_Festivizer( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : CEconTool_Xifier( pszTypeName, pszUseString, unCapabilities, pUsageKV )
     {
@@ -542,7 +542,7 @@ class CEconTool_Festivizer : public CEconTool_Xifier
 //---------------------------------------------------------------------------------------
 class CEconTool_Unusualifier : public CEconTool_Xifier
 {
-   public:
+    public:
     CEconTool_Unusualifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : CEconTool_Xifier( pszTypeName, pszUseString, unCapabilities, pUsageKV ) {}
 
@@ -558,7 +558,7 @@ class CEconTool_Unusualifier : public CEconTool_Xifier
 //---------------------------------------------------------------------------------------
 class CEconTool_ItemEaterRecharger : public IEconTool
 {
-   public:
+    public:
     CEconTool_ItemEaterRecharger( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ), m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL )
     {
@@ -590,7 +590,7 @@ class CEconTool_ItemEaterRecharger : public IEconTool
     virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     CEconTool_TagsList m_RequiredTags;
     CUtlVector< item_definition_index_t > m_ItemDefTargetRestrictions;
     CUtlVector< int > m_ItemDefTargetChargeValues;
@@ -600,7 +600,7 @@ class CEconTool_ItemEaterRecharger : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_UpgradeCard : public IEconTool
 {
-   public:
+    public:
     struct upgrade_card_attr_value_t
     {
         const CEconItemAttributeDefinition *m_pAttrDef;
@@ -678,7 +678,7 @@ class CEconTool_UpgradeCard : public IEconTool
     virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const OVERRIDE;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     CEconTool_TagsList m_RequiredTags;
     UpgradeCardAttributeVec_t m_vecAttributes;
 };
@@ -688,7 +688,7 @@ class CEconTool_UpgradeCard : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_ClassTransmogrifier : public IEconTool
 {
-   public:
+    public:
     CEconTool_ClassTransmogrifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ), m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL ), m_iClass( -1 )
     {
@@ -724,7 +724,7 @@ class CEconTool_ClassTransmogrifier : public IEconTool
     virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     CEconTool_TagsList m_RequiredTags;  // required for both the input item and the output item
     int m_iClass;
 };
@@ -734,7 +734,7 @@ class CEconTool_ClassTransmogrifier : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_BackpackExpander : public IEconTool
 {
-   public:
+    public:
     CEconTool_BackpackExpander( const char *pszTypeName, const char *pszUseString, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ), m_iBackpackSlots( 0 )
     {
@@ -758,7 +758,7 @@ class CEconTool_BackpackExpander : public IEconTool
     virtual void OnClientUseConsumable( CEconItemView *pItem, vgui::Panel *pParent ) const OVERRIDE;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     int m_iBackpackSlots;
 };
 
@@ -767,7 +767,7 @@ class CEconTool_BackpackExpander : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_AccountUpgradeToPremium : public IEconTool
 {
-   public:
+    public:
     CEconTool_AccountUpgradeToPremium( const char *pszTypeName, const char *pszUseString )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ) {}
 
@@ -779,7 +779,7 @@ class CEconTool_AccountUpgradeToPremium : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_DuckToken : public IEconTool
 {
-   public:
+    public:
     CEconTool_DuckToken( const char *pszTypeName, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, NULL, unCapabilities ) {}
 
@@ -794,7 +794,7 @@ class CEconTool_DuckToken : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_GrantOperationPass : public IEconTool
 {
-   public:
+    public:
     CEconTool_GrantOperationPass( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE )
     {
@@ -821,7 +821,7 @@ class CEconTool_GrantOperationPass : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_ClaimCode : public IEconTool
 {
-   public:
+    public:
     CEconTool_ClaimCode( const char *pszTypeName, const char *pszUseString, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ), m_pszClaimType( NULL )
     {
@@ -845,7 +845,7 @@ class CEconTool_ClaimCode : public IEconTool
     virtual void OnClientUseConsumable( CEconItemView *pItem, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     const char *m_pszClaimType;
 };
 
@@ -860,7 +860,7 @@ enum EGiftTargetRule
 
 class CEconTool_Gift : public IEconTool
 {
-   public:
+    public:
     CEconTool_Gift( const char *pszTypeName, const char *pszUseString, KeyValues *pUsageKV )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ), m_pszLootListName( NULL ), m_iMaxRecipients( 0 ), m_eTargetRule( kGiftTargetRule_OnlySelf )
     {
@@ -896,7 +896,7 @@ class CEconTool_Gift : public IEconTool
     virtual void OnClientUseConsumable( CEconItemView *pItem, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     const char *m_pszLootListName;
     int m_iMaxRecipients;
     EGiftTargetRule m_eTargetRule;
@@ -907,7 +907,7 @@ class CEconTool_Gift : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_PaintCan : public IEconTool
 {
-   public:
+    public:
     CEconTool_PaintCan( const char *pszTypeName, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, NULL, unCapabilities ) {}
 
@@ -922,7 +922,7 @@ class CEconTool_PaintCan : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_GiftWrap : public IEconTool
 {
-   public:
+    public:
     CEconTool_GiftWrap( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV );
 
     virtual bool BFinishInitialization() OVERRIDE;
@@ -942,7 +942,7 @@ class CEconTool_GiftWrap : public IEconTool
     virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const;
 #endif  // CLIENT_DLL
 
-   private:
+    private:
     const char *m_pszWrappedGiftItemDefName;  // points to memory inside our init KV -- only valid between the constructor call and the BFinishInitialization() call (this is messy but Fletcher and I agree it makes more sense than switching to a full two-pass schema parse just for this)
     const CEconItemDefinition *m_pWrappedGiftItemDef;
 };
@@ -952,7 +952,7 @@ class CEconTool_GiftWrap : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_NameTag : public IEconTool
 {
-   public:
+    public:
     CEconTool_NameTag( const char *pszTypeName, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, NULL, unCapabilities ) {}
 
@@ -966,7 +966,7 @@ class CEconTool_NameTag : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_DescTag : public IEconTool
 {
-   public:
+    public:
     CEconTool_DescTag( const char *pszTypeName, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, NULL, unCapabilities ) {}
 
@@ -980,7 +980,7 @@ class CEconTool_DescTag : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_CustomizeTexture : public IEconTool
 {
-   public:
+    public:
     CEconTool_CustomizeTexture( const char *pszTypeName, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, NULL, unCapabilities ) {}
 
@@ -994,7 +994,7 @@ class CEconTool_CustomizeTexture : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_CrateKey : public IEconTool
 {
-   public:
+    public:
     CEconTool_CrateKey( const char *pszTypeName, const char *pszUsageRestriction, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, NULL, pszUsageRestriction, unCapabilities ) {}
 
@@ -1008,7 +1008,7 @@ class CEconTool_CrateKey : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_KeylessCase : public IEconTool
 {
-   public:
+    public:
     CEconTool_KeylessCase( const char *pszTypeName, const char *pszUseString )
         : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE ) {}
 
@@ -1020,7 +1020,7 @@ class CEconTool_KeylessCase : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_PaintKit : public IEconTool
 {
-   public:
+    public:
     CEconTool_PaintKit( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) {}
 
@@ -1038,7 +1038,7 @@ class CEconTool_PaintKit : public IEconTool
 //---------------------------------------------------------------------------------------
 class CEconTool_Default : public IEconTool
 {
-   public:
+    public:
     CEconTool_Default( const char *pszTypeName, const char *pszUseString, const char *pszUsageRestriction, item_capabilities_t unCapabilities )
         : IEconTool( pszTypeName, pszUseString, pszUsageRestriction, unCapabilities )
     {
@@ -1056,7 +1056,7 @@ class CEconTool_Default : public IEconTool
 
 class CCountUserGeneratedAttributeIterator : public IEconItemUntypedAttributeIterator
 {
-   public:
+    public:
     CCountUserGeneratedAttributeIterator()
         : m_iCount( 0 ) {}
 
@@ -1075,7 +1075,7 @@ class CCountUserGeneratedAttributeIterator : public IEconItemUntypedAttributeIte
         return m_iCount;
     }
 
-   private:
+    private:
     int m_iCount;
 };
 

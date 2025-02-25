@@ -24,7 +24,7 @@ class C_TFWeaponBuilder : public C_TFWeaponBase
 {
     DECLARE_CLASS( C_TFWeaponBuilder, C_TFWeaponBase );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
 
@@ -102,7 +102,7 @@ class C_TFWeaponBuilder : public C_TFWeaponBase
     }
     virtual bool EffectMeterShouldFlash( void );
 
-   public:
+    public:
     // Builder Data
     int m_iBuildState;
     unsigned int m_iObjectType;
@@ -121,7 +121,7 @@ class C_TFWeaponBuilder : public C_TFWeaponBase
     // Wheatly Data
     float m_flWheatleyTalkingUntil;
 
-   private:
+    private:
     C_TFWeaponBuilder( const C_TFWeaponBuilder & );
     bool m_aBuildableObjectTypes[OBJ_LAST];
 };
@@ -133,7 +133,7 @@ class C_TFWeaponSapper : public C_TFWeaponBuilder, public ITFChargeUpWeapon
 {
     DECLARE_CLASS( C_TFWeaponSapper, C_TFWeaponBuilder );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     // DECLARE_PREDICTABLE();
 

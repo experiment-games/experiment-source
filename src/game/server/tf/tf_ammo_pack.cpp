@@ -296,7 +296,7 @@ void CTFAmmoPack::PackTouch( CBaseEntity *pOther )
     {
         // Since we drop our empty packs as fakeouts, we never pick up our own empties while stealthed.
         if ( GetOwnerEntity() == pOther && ( pPlayer->m_Shared.IsStealthed() ||
-                                             pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
+                                            pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
             return;
 
         // "Empty" packs can be picked up.

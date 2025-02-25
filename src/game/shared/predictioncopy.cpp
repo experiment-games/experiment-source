@@ -123,11 +123,11 @@ void CPredictionCopy::ReportFieldsDiffer( const char *fmt, ... )
     }
 
     Msg( "[Tick %d] %03i %s::%s - %s",
-         gpGlobals->tickcount,
-         m_nErrorCount,
-         m_pCurrentClassName,
-         fieldname,
-         data );
+        gpGlobals->tickcount,
+        m_nErrorCount,
+        m_pCurrentClassName,
+        fieldname,
+        data );
 
     m_bShouldReport = false;
 }
@@ -765,7 +765,7 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareFloat( float *outvalue, cons
             }
 
             if ( usetolerance &&
-                 ( fabs( outvalue[i] - invalue[i] ) <= tolerance ) )
+                ( fabs( outvalue[i] - invalue[i] ) <= tolerance ) )
             {
                 retval = WITHINTOLERANCE;
                 continue;
@@ -830,8 +830,8 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareVector( Vector &outValue, co
             Vector delta = outValue - inValue;
 
             if ( fabs( delta.x ) <= tolerance &&
-                 fabs( delta.y ) <= tolerance &&
-                 fabs( delta.z ) <= tolerance )
+                fabs( delta.y ) <= tolerance &&
+                fabs( delta.z ) <= tolerance )
             {
                 return WITHINTOLERANCE;
             }
@@ -874,9 +874,9 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareQuaternion( Quaternion &outV
             }
 
             if ( fabs( delta[0] ) <= tolerance &&
-                 fabs( delta[1] ) <= tolerance &&
-                 fabs( delta[2] ) <= tolerance &&
-                 fabs( delta[3] ) <= tolerance )
+                fabs( delta[1] ) <= tolerance &&
+                fabs( delta[2] ) <= tolerance &&
+                fabs( delta[3] ) <= tolerance )
             {
                 return WITHINTOLERANCE;
             }
@@ -932,8 +932,8 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareVector( Vector *outValue, co
             if ( tolerance > 0.0f )
             {
                 if ( fabs( delta.x ) <= tolerance &&
-                     fabs( delta.y ) <= tolerance &&
-                     fabs( delta.z ) <= tolerance )
+                    fabs( delta.y ) <= tolerance &&
+                    fabs( delta.z ) <= tolerance )
                 {
                     retval = WITHINTOLERANCE;
                     continue;
@@ -973,9 +973,9 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareQuaternion( Quaternion *outV
             if ( tolerance > 0.0f )
             {
                 if ( fabs( delta[0] ) <= tolerance &&
-                     fabs( delta[1] ) <= tolerance &&
-                     fabs( delta[2] ) <= tolerance &&
-                     fabs( delta[3] ) <= tolerance )
+                    fabs( delta[1] ) <= tolerance &&
+                    fabs( delta[2] ) <= tolerance &&
+                    fabs( delta[3] ) <= tolerance )
                 {
                     retval = WITHINTOLERANCE;
                     continue;
@@ -1537,17 +1537,17 @@ void CPredictionDescribeData::Describe( const char *fmt, ... )
         if ( suffix[0] )
         {
             Msg( "%s::%s(%s) - %s",
-                 m_pCurrentClassName,
-                 fieldname,
-                 suffix,
-                 data );
+                m_pCurrentClassName,
+                fieldname,
+                suffix,
+                data );
         }
         else
         {
             Msg( "%s::%s - %s",
-                 m_pCurrentClassName,
-                 fieldname,
-                 data );
+                m_pCurrentClassName,
+                fieldname,
+                data );
         }
     }
 
@@ -1599,35 +1599,35 @@ void CPredictionDescribeData::DescribeString( const char *instring )
 void CPredictionDescribeData::DescribeVector( const Vector &inValue )
 {
     Describe( "vector (%f %f %f)\n",
-              inValue.x,
-              inValue.y,
-              inValue.z );
+            inValue.x,
+            inValue.y,
+            inValue.z );
 }
 
 void CPredictionDescribeData::DescribeVector( const Vector *inValue, int count )
 {
     Describe( "vector (%f %f %f)\n",
-              inValue[0].x,
-              inValue[0].y,
-              inValue[0].z );
+            inValue[0].x,
+            inValue[0].y,
+            inValue[0].z );
 }
 
 void CPredictionDescribeData::DescribeQuaternion( const Quaternion &inValue )
 {
     Describe( "quaternion (%f %f %f %f)\n",
-              inValue[0],
-              inValue[1],
-              inValue[2],
-              inValue[3] );
+            inValue[0],
+            inValue[1],
+            inValue[2],
+            inValue[3] );
 }
 
 void CPredictionDescribeData::DescribeQuaternion( const Quaternion *inValue, int count )
 {
     Describe( "quaternion (%f %f %f %f)\n",
-              inValue[0][0],
-              inValue[0][1],
-              inValue[0][2],
-              inValue[0][3] );
+            inValue[0][0],
+            inValue[0][1],
+            inValue[0][2],
+            inValue[0][3] );
 }
 
 void CPredictionDescribeData::DescribeEHandle( EHANDLE const *invalue, int count )
@@ -1792,7 +1792,7 @@ void CPredictionDescribeData::DumpDescription( datamap_t *pMap )
 #if defined( CLIENT_DLL )
 CValueChangeTracker::CValueChangeTracker()
     : m_bActive( false ),
-      m_bTracking( false )
+    m_bTracking( false )
 {
     Q_memset( m_OrigValueBuf, 0, sizeof( m_OrigValueBuf ) );
 }
@@ -1821,7 +1821,7 @@ void CValueChangeTracker::GetValue( char *buf, size_t bufsize )
         int fieldOffsetSrc = td->fieldOffset[TD_OFFSET_NORMAL];
         const void *pSaveSrc = ( const void * )( ( char * )pInputData + fieldOffsetSrc );
         if ( ( td->flags & FTYPEDESC_PTR ) &&
-             ( td->fieldType & FIELD_EMBEDDED ) )
+            ( td->fieldType & FIELD_EMBEDDED ) )
         {
             pInputData = *( const void ** )pSaveSrc;
         }
@@ -2066,7 +2066,7 @@ CON_COMMAND_F( cl_pred_track, "<entindex> <fieldname>:  Track changes to entity 
 
 class CPredictionCopyTester : public IGameSystem
 {
-   public:
+    public:
     // Init, shutdown
     virtual void Init()
     {
@@ -2093,7 +2093,7 @@ class CPredictionCopyTester : public IGameSystem
     // Gets called each frame
     virtual void Update( float frametime ) {}
 
-   private:
+    private:
     void RunTests( void );
 };
 
@@ -2105,7 +2105,7 @@ IGameSystem *GetPredictionCopyTester( void )
 
 class CCopyTesterData
 {
-   public:
+    public:
     CCopyTesterData()
     {
         m_CharValue = 'a';
@@ -2167,7 +2167,7 @@ DEFINE_FIELD( CCopyTesterData, m_CharValue, FIELD_CHARACTER ),
 {
     DECLARE_CLASS( CCopyTesterData2, C_BaseEntity );
 
-   public:
+    public:
     CCopyTesterData2()
     {
         CONSTRUCT_PREDICTABLE( CCopyTesterData2 );

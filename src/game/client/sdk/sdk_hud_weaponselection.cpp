@@ -29,7 +29,7 @@ class CHudWeaponSelection : public CBaseHudWeaponSelection, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudWeaponSelection, vgui::Panel );
 
-   public:
+    public:
     CHudWeaponSelection( const char *pElementName );
 
     virtual bool ShouldDraw();
@@ -51,7 +51,7 @@ class CHudWeaponSelection : public CBaseHudWeaponSelection, public vgui::Panel
 
     virtual void LevelInit();
 
-   protected:
+    protected:
     virtual void OnThink();
     virtual void Paint();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -64,7 +64,7 @@ class CHudWeaponSelection : public CBaseHudWeaponSelection, public vgui::Panel
         return false;
     }
 
-   private:
+    private:
     C_BaseCombatWeapon *FindNextWeaponInWeaponSelection( int iCurrentSlot, int iCurrentPosition );
     C_BaseCombatWeapon *FindPrevWeaponInWeaponSelection( int iCurrentSlot, int iCurrentPosition );
 

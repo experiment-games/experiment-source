@@ -949,10 +949,10 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
     {
         const CTFNotification *pSONotification = ( const CTFNotification * )( pObject );
         Msg( "Notification %llu %s: \"%s\"\n",
-             ( unsigned long long )pSONotification->Obj().notification_id(),
-             changeType == SOChanged_Create ? "created" : changeType == SOChanged_Destroy ? "destroyed"
-                                                                                          : "updated",
-             pSONotification->Obj().notification_string().c_str() );
+            ( unsigned long long )pSONotification->Obj().notification_id(),
+            changeType == SOChanged_Create ? "created" : changeType == SOChanged_Destroy ? "destroyed"
+                                                                                        : "updated",
+            pSONotification->Obj().notification_string().c_str() );
 
         // Update existing notification if found
         bool bFound = false;
@@ -962,7 +962,7 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
             if ( pNotif && pNotif->NotificationID() == pSONotification->Obj().notification_id() )
             {
                 Msg( "Notification %llu already displayed, updating\n",
-                     ( unsigned long long )pSONotification->Obj().notification_id() );
+                    ( unsigned long long )pSONotification->Obj().notification_id() );
                 bFound = true;
                 if ( changeType == SOChanged_Destroy )
                 {
@@ -979,8 +979,8 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
         if ( !bFound && changeType != SOChanged_Destroy )
         {
             Msg( "New notification %llu arrived: \"%s\"\n",
-                 ( unsigned long long )pSONotification->Obj().notification_id(),
-                 pSONotification->Obj().notification_string().c_str() );
+                ( unsigned long long )pSONotification->Obj().notification_id(),
+                pSONotification->Obj().notification_string().c_str() );
             CClientNotification *pClientNotification = new CClientNotification();
             pClientNotification->Update( pSONotification );
             NotificationQueue_Add( pClientNotification );
@@ -1252,7 +1252,7 @@ void CTFGCClientSystem::AbandonCurrentMatch()
 bool CTFGCClientSystem::IsConnectStateDisconnected()
 {
     return ( m_eConnectState != eConnectState_ConnectingToMatchmade &&
-             m_eConnectState != eConnectState_ConnectedToMatchmade );
+            m_eConnectState != eConnectState_ConnectedToMatchmade );
 }
 
 //-----------------------------------------------------------------------------

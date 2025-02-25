@@ -11,7 +11,7 @@ class CZombieSpawner : public CPointEntity
     DECLARE_CLASS( CZombieSpawner, CPointEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CZombieSpawner();
 
     virtual void Spawn();
@@ -21,7 +21,7 @@ class CZombieSpawner : public CPointEntity
     void InputDisable( inputdata_t &inputdata );
     void InputSetMaxActiveZombies( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bEnabled;
     bool m_bInfiniteZombies;
     int m_nMaxActiveZombies;

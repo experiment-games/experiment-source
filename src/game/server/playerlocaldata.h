@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 class CPlayerLocalData
 {
-   public:
+    public:
     // Save/restore
     DECLARE_SIMPLE_DATADESC();
     // Prediction data copying
@@ -31,7 +31,7 @@ class CPlayerLocalData
 
     void UpdateAreaBits( CBasePlayer *pl, unsigned char chAreaPortalBits[MAX_AREA_PORTAL_STATE_BYTES] );
 
-   public:
+    public:
     CNetworkArray( unsigned char, m_chAreaBits, MAX_AREA_STATE_BYTES );               // Which areas are potentially visible to the client?
     CNetworkArray( unsigned char, m_chAreaPortalBits, MAX_AREA_PORTAL_STATE_BYTES );  // Which area portals are open?
 

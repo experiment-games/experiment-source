@@ -24,7 +24,7 @@ void DrawAmbientActiveCirlce( float flXPos, float flYPos, const Color& color );
 
 class CCircleDrawingHelper
 {
-   public:
+    public:
     struct CircleAnimData_t
     {
         double flStartTime;
@@ -43,7 +43,7 @@ class CCircleDrawingHelper
     void AddCircle( const CircleAnimData_t animData );
     void ClearAllCircles();
 
-   private:
+    private:
     CUtlVector< CircleAnimData_t > m_vecCircles;
 };
 
@@ -52,7 +52,7 @@ class CCircleDrawingHelper
 //-----------------------------------------------------------------------------
 class CQuestMapNodePanel : public vgui::EditablePanel
 {
-   public:
+    public:
     enum EMapState
     {
         NEUTRAL,
@@ -94,14 +94,14 @@ class CQuestMapNodePanel : public vgui::EditablePanel
     }
 
     void DrawNode( float flXPos,
-                   float flYPos,
-                   bool bPurchased,
-                   const Color& colorActive,
-                   const Color& colorBonus,
-                   const Color& colorInactive,
-                   float flScale ) const;
+                    float flYPos,
+                    bool bPurchased,
+                    const Color& colorActive,
+                    const Color& colorBonus,
+                    const Color& colorInactive,
+                    float flScale ) const;
 
-   private:
+    private:
     static uint32 m_nDraggingID;
 
     EMapState m_eMapState;
@@ -127,7 +127,7 @@ class CQuestNodeTooltip : public vgui::BaseTooltip, public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CQuestNodeTooltip, vgui::EditablePanel );
 
-   public:
+    public:
     CQuestNodeTooltip( vgui::Panel* pParent );
 
     virtual void ShowTooltip( Panel* pCurrentPanel ) OVERRIDE;
@@ -137,7 +137,7 @@ class CQuestNodeTooltip : public vgui::BaseTooltip, public vgui::EditablePanel
     virtual void PositionWindow( Panel* pTipPanel ) OVERRIDE;
     virtual void ApplySchemeSettings( IScheme* pScheme ) OVERRIDE;
 
-   private:
+    private:
     CQuestMapNodePanel* m_pFocusedNode;
     CSOQuestMapNode m_msgLocalState;
 };

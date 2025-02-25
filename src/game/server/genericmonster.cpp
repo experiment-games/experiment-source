@@ -30,7 +30,7 @@
 
 class CGenericNPC : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CGenericNPC, CAI_BaseNPC );
 
     void Spawn( void );
@@ -138,9 +138,9 @@ void CGenericNPC::Spawn()
     SetModel( STRING( GetModelName() ) );
 
     /*
-      if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) )
+    if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) )
         UTIL_SetSize(this, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
-      else
+    else
         UTIL_SetSize(this, VEC_HULL_MIN, VEC_HULL_MAX);
     */
 
@@ -202,7 +202,7 @@ class CNPC_Furniture : public CAI_BaseActor
     DECLARE_CLASS( CNPC_Furniture, CAI_BaseActor );
     DECLARE_DATADESC();
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void Die( void );
@@ -236,7 +236,7 @@ class CNPC_Furniture : public CAI_BaseActor
     void InputEnablePlayerCollision( inputdata_t &inputdata );
     void UpdateBoneFollowerState( void );
 
-   private:
+    private:
     // Contained Bone Follower manager
     CBoneFollowerManager m_BoneFollowerManager;
 };

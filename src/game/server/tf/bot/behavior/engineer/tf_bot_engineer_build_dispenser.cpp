@@ -28,7 +28,7 @@ ActionResult< CTFBot > CTFBotEngineerBuildDispenser::OnStart( CTFBot *me, Action
 //---------------------------------------------------------------------------------------------
 class PressFireButtonIfValidBuildPositionReply : public INextBotReply
 {
-   public:
+    public:
     PressFireButtonIfValidBuildPositionReply( void )
     {
         m_builder = NULL;
@@ -96,29 +96,29 @@ ActionResult< CTFBot > CTFBotEngineerBuildDispenser::Update( CTFBot *me, float i
         /*
             else
             {
-              // work on my sentry while I wait for ammo to show up
-              me->GetBodyInterface()->AimHeadTowards( mySentry->WorldSpaceCenter(), IBody::CRITICAL, 1.0f, NULL, "Work on sentry while I wait for ammo to show up" );
-              me->PressFireButton();
-              return Continue();
+            // work on my sentry while I wait for ammo to show up
+            me->GetBodyInterface()->AimHeadTowards( mySentry->WorldSpaceCenter(), IBody::CRITICAL, 1.0f, NULL, "Work on sentry while I wait for ammo to show up" );
+            me->PressFireButton();
+            return Continue();
             }
         */
     }
 
     /*
-      // if my sentry is under attack, forgo building a dispenser - focus on keeping the sentry alive
-      if ( mySentry->GetTimeSinceLastInjury() < 1.0f )
-      {
+    // if my sentry is under attack, forgo building a dispenser - focus on keeping the sentry alive
+    if ( mySentry->GetTimeSinceLastInjury() < 1.0f )
+    {
         CBaseCombatWeapon *wrench = me->Weapon_GetSlot( TF_WPN_TYPE_MELEE );
         if ( wrench )
         {
-          me->Weapon_Switch( wrench );
+        me->Weapon_Switch( wrench );
         }
 
         me->GetBodyInterface()->AimHeadTowards( mySentry->WorldSpaceCenter(), IBody::CRITICAL, 1.0f, NULL, "Focusing on keeping my besieged sentry alive" );
         me->PressFireButton();
 
         return Continue();
-      }
+    }
     */
 
     // move behind the Sentry (our chosen build location)

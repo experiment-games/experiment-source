@@ -25,7 +25,7 @@
 //
 class CTFGrenadeLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CTFGrenadeLauncher, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -80,7 +80,7 @@ class CTFGrenadeLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
     void AddDonkVictim( const CBaseEntity *pVictim );
     bool IsDoubleDonk( const CBaseEntity *pVictim ) const;
 
-   private:
+    private:
     CTFGrenadeLauncher( const CTFGrenadeLauncher & ) {}
     int m_nLauncherSlot;
 
@@ -132,7 +132,7 @@ class CTFGrenadeLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
 
 class CTFCannon : public CTFGrenadeLauncher
 {
-   public:
+    public:
     DECLARE_CLASS( CTFCannon, CTFGrenadeLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();

@@ -39,7 +39,7 @@ namespace google
 {
 class ScopedPyObjectPtr
 {
-   public:
+    public:
     // Constructor.  Defaults to intializing with NULL.
     // There is no way to create an uninitialized ScopedPyObjectPtr.
     explicit ScopedPyObjectPtr( PyObject* p = NULL )
@@ -111,7 +111,7 @@ class ScopedPyObjectPtr
         return ptr_ != p;
     }
 
-   private:
+    private:
     PyObject* ptr_;
 
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ScopedPyObjectPtr );

@@ -32,7 +32,7 @@ class CObjectTeleporter : public CBaseObject, public CGameEventListener
 {
     DECLARE_CLASS( CObjectTeleporter, CBaseObject );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CObjectTeleporter();
@@ -155,7 +155,7 @@ class CObjectTeleporter : public CBaseObject, public CGameEventListener
 
     virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
-   protected:
+    protected:
     CNetworkVar( int, m_iState );
     CNetworkVar( float, m_flRechargeTime );
     CNetworkVar( float, m_flCurrentRechargeDuration );
@@ -186,7 +186,7 @@ class CObjectTeleporter : public CBaseObject, public CGameEventListener
 
     string_t m_iszMatchingMapPlacedTeleporter;
 
-   private:
+    private:
     DECLARE_DATADESC();
 
     void UpdateMaxHealth( int nHealth, bool bForce = false );

@@ -14,7 +14,7 @@ class SelectionToolPanel : public CNavUIToolPanel
 {
     DECLARE_CLASS_SIMPLE( SelectionToolPanel, CNavUIToolPanel );
 
-   public:
+    public:
     SelectionToolPanel( vgui::Panel *parent, const char *toolName );
 
     virtual void Init( void );
@@ -29,7 +29,7 @@ class SelectionToolPanel : public CNavUIToolPanel
 
     virtual bool IsFloodSelectable( CNavArea *area );
 
-   protected:
+    protected:
     void FloodSelect( void );
     CNavArea *m_floodStartArea;
 

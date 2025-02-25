@@ -45,7 +45,7 @@ void CReliableMessageQueue::OnReliableMessageComplete( IJobReliableMessage *pRel
     if ( m_pCurrentConfirmJob != pReliable )
     {
         AssertMsg( m_pCurrentConfirmJob == pReliable,
-                   "OnReliableMessageComplete from a job that isn't head of queue, something very wrong" );
+                    "OnReliableMessageComplete from a job that isn't head of queue, something very wrong" );
         return;
     }
 

@@ -27,7 +27,7 @@ class CEnvHeadcrabCanisterShared
     DECLARE_EMBEDDED_NETWORKVAR();
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     CEnvHeadcrabCanisterShared();
 
     // Initialization.
@@ -49,7 +49,7 @@ class CEnvHeadcrabCanisterShared
     // Did we impact?
     bool DidImpact( float flTime ) const;
 
-   public:
+    public:
     // The objects initial parametric conditions.
     CNetworkVector( m_vecStartPosition );
     CNetworkVector( m_vecEnterWorldPosition );
@@ -76,7 +76,7 @@ class CEnvHeadcrabCanisterShared
     CNetworkVar( float, m_flSkyboxScale );
     CNetworkVar( bool, m_bInSkybox );
 
-   private:
+    private:
     float m_flLaunchHeight;
 
     // Calculate the enter time. (called from Init)
@@ -96,9 +96,9 @@ abstract_class IHeadcrabCanisterFactory
 public:
 
   virtual void CreateHeadcrabCanister( int nID, int iType,
-                           const Vector &vecPosition, const Vector &vecDirection,
-                           float flSpeed, float flStartTime, float flDamageRadius,
-                 const Vector &vecTriggerMins, const Vector &vecTriggerMaxs ) = 0;
+                            const Vector &vecPosition, const Vector &vecDirection,
+                            float flSpeed, float flStartTime, float flDamageRadius,
+                const Vector &vecTriggerMins, const Vector &vecTriggerMaxs ) = 0;
 };
 
 //=============================================================================
@@ -116,8 +116,8 @@ public:
   //-------------------------------------------------------------------------
   CEnvHeadcrabCanisterSpawnerShared();
   void	Init( IHeadcrabCanisterFactory *pFactory, int nRandomSeed, float flTime,
-          const Vector &vecMinBounds, const Vector &vecMaxBounds,
-          const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
+        const Vector &vecMinBounds, const Vector &vecMaxBounds,
+        const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 
   //-------------------------------------------------------------------------
   // Method to generate HeadcrabCanisters.

@@ -544,8 +544,8 @@ void PhysParseSurfaceData( IPhysicsSurfaceProps *pProps, IFileSystem *pFileSyste
             }
 
             Warning( "surfaceprops::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n",
-                     SURFACEPROP_MANIFEST_FILE,
-                     sub->GetName() );
+                    SURFACEPROP_MANIFEST_FILE,
+                    sub->GetName() );
         }
     }
     else
@@ -631,10 +631,10 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
             }
             // create this as part of the world
             IPhysicsObject *pObject = physenv->CreatePolyObjectStatic( pWorldCollide->solids[solid.index],
-                                                                       surfaceData,
-                                                                       vec3_origin,
-                                                                       vec3_angle,
-                                                                       &solid.params );
+                                                                        surfaceData,
+                                                                        vec3_origin,
+                                                                        vec3_angle,
+                                                                        &solid.params );
 
             // invalid collision model or can't create, ignore
             if ( !pObject )
@@ -664,10 +664,10 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
                 surfaceData = physprops->GetSurfaceIndex( fluid.surfaceprop );
                 // create this as part of the world
                 IPhysicsObject *pWater = physenv->CreatePolyObjectStatic( pWorldCollide->solids[fluid.index],
-                                                                          surfaceData,
-                                                                          vec3_origin,
-                                                                          vec3_angle,
-                                                                          &solid.params );
+                                                                        surfaceData,
+                                                                        vec3_origin,
+                                                                        vec3_angle,
+                                                                        &solid.params );
 
                 pWater->SetCallbackFlags( pWater->GetCallbackFlags() | CALLBACK_NEVER_DELETED );
                 physenv->CreateFluidController( pWater, &fluid.params );
@@ -707,7 +707,7 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
 //
 class CPhysicsGameTrace : public IPhysicsGameTrace
 {
-   public:
+    public:
     void VehicleTraceRay( const Ray_t &ray, void *pVehicle, trace_t *pTrace );
     void VehicleTraceRayWithWater( const Ray_t &ray, void *pVehicle, trace_t *pTrace );
     bool VehiclePointInWater( const Vector &vecPoint );
@@ -841,24 +841,24 @@ void PhysComputeSlideDirection( IPhysicsObject *pPhysics, const Vector &inputVel
             {
                 angVel = normal * DotProduct( angVel, normal );
 #if 0
-				pSnapshot->GetContactPoint( point );
-				Vector point, dummy;
-				AngularImpulse angularClip, clip2;
+                pSnapshot->GetContactPoint( point );
+                Vector point, dummy;
+                AngularImpulse angularClip, clip2;
 
-				pPhysics->CalculateVelocityOffset( normal, point, dummy, angularClip );
-				VectorNormalize( angularClip );
-				float proj = DotProduct( angVel, angularClip );
-				if ( proj > 0 )
-				{
-					angVel -= angularClip * proj;
-				}
-				CrossProduct( angularClip, normal, clip2 );
-				proj = DotProduct( angVel, clip2 );
-				if ( proj > 0 )
-				{
-					angVel -= clip2 * proj;
-				}
-				//NDebugOverlay::Line( point, point - normal * 20, 255, 0, 0, true, 0.1 );
+                pPhysics->CalculateVelocityOffset( normal, point, dummy, angularClip );
+                VectorNormalize( angularClip );
+                float proj = DotProduct( angVel, angularClip );
+                if ( proj > 0 )
+                {
+                    angVel -= angularClip * proj;
+                }
+                CrossProduct( angularClip, normal, clip2 );
+                proj = DotProduct( angVel, clip2 );
+                if ( proj > 0 )
+                {
+                    angVel -= clip2 * proj;
+                }
+                //NDebugOverlay::Line( point, point - normal * 20, 255, 0, 0, true, 0.1 );
 #endif
             }
 

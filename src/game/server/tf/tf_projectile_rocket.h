@@ -18,7 +18,7 @@
 //
 class CTFProjectile_Rocket : public CTFBaseRocket, public IScorer
 {
-   public:
+    public:
     DECLARE_CLASS( CTFProjectile_Rocket, CTFBaseRocket );
     DECLARE_NETWORKCLASS();
 
@@ -71,7 +71,7 @@ class CTFProjectile_Rocket : public CTFBaseRocket, public IScorer
         m_bSpell = bSpell;
     }
 
-   private:
+    private:
     CBaseHandle m_Scorer;
     CNetworkVar( bool, m_bCritical );
     bool m_bDirectHit;

@@ -114,7 +114,7 @@ GLenum GLMProgTypeToGLSLEnum( EGLMProgramType type );  // map vert/frag to ARB a
 
 class CGLMProgram
 {
-   public:
+    public:
     friend class CGLMShaderPairCache;
     friend class CGLMShaderPair;
     friend class GLMContext;  // only GLMContext can make CGLMProgram objects
@@ -157,7 +157,7 @@ class CGLMProgram
     uint m_nHashTag;  // serial number for hashing
 
     char *m_text;  // copy of text passed into constructor.  Can change if editable shaders is enabled.
-                   // note - it can contain multiple flavors, so use CGLMTextSectioner to scan it and locate them
+                    // note - it can contain multiple flavors, so use CGLMTextSectioner to scan it and locate them
 #if GLMDEBUG
     CGLMEditableTextItem *m_editable;  // editable text item for debugging
 #endif
@@ -204,7 +204,7 @@ struct GLMShaderPairInfo
 
 class CGLMShaderPair  // a container for a linked GLSL shader pair, and metadata obtained post-link
 {
-   public:
+    public:
     friend class CGLMProgram;
     friend class GLMContext;
     friend class CGLMShaderPairCache;
@@ -309,8 +309,8 @@ struct CGLMPairCacheEntry
 
 class CGLMShaderPairCache  // cache for linked GLSL shader pairs
 {
-   public:
-   protected:
+    public:
+    protected:
     friend class CGLMShaderPair;
     friend class CGLMProgram;
     friend class GLMContext;

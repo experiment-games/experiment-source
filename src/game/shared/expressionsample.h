@@ -22,8 +22,8 @@ struct EdgeInfo_t
 {
     EdgeInfo_t()
         : m_bActive( false ),
-          m_CurveType( CURVE_DEFAULT ),
-          m_flZeroPos( 0.0f )
+        m_CurveType( CURVE_DEFAULT ),
+        m_flZeroPos( 0.0f )
     {
     }
 
@@ -36,7 +36,7 @@ struct CExpressionSample
 {
     CExpressionSample()
         : value( 0.0f ),
-          time( 0.0f )
+        time( 0.0f )
     {
         selected = 0;
         m_curvetype = CURVE_DEFAULT;
@@ -59,7 +59,7 @@ struct CExpressionSample
 
     unsigned short selected : 1;
 
-   private:
+    private:
     unsigned short m_curvetype : 15;
 };
 #pragma pack()
@@ -69,7 +69,7 @@ struct CExpressionSample
 //-----------------------------------------------------------------------------
 class ICurveDataAccessor
 {
-   public:
+    public:
     virtual ~ICurveDataAccessor() {}
     virtual float GetDuration() = 0;
     virtual bool CurveHasEndTime() = 0;  // only matters for events
@@ -82,7 +82,7 @@ class ICurveDataAccessor
 
 class CCurveData
 {
-   public:
+    public:
     int GetCount( void );
     CExpressionSample *Get( int index );
     CExpressionSample *Add( float time, float value, bool selected );
@@ -126,14 +126,14 @@ class CCurveData
         return *this;
     };
 
-   private:
+    private:
     CUtlVector< CExpressionSample > m_Ramp;
     EdgeInfo_t m_RampEdgeInfo[2];
 
-   public:
+    public:
     float GetIntensityArea( ICurveDataAccessor *data, float time );
 
-   private:
+    private:
     void UpdateIntensityArea( ICurveDataAccessor *data );
     CUtlVector< float > m_RampAccumulator;
 };

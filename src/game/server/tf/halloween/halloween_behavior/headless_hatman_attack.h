@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CHeadlessHatmanAttack : public Action< CHeadlessHatman >
 {
-   public:
+    public:
     virtual ActionResult< CHeadlessHatman > OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction );
     virtual ActionResult< CHeadlessHatman > Update( CHeadlessHatman *me, float interval );
 
@@ -22,7 +22,7 @@ class CHeadlessHatmanAttack : public Action< CHeadlessHatman >
         return "Attack";
     }  // return name of this action
 
-   private:
+    private:
     PathFollower m_path;
 
     Vector m_homePos;

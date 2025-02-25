@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 class CTEEffectDispatch : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEEffectDispatch, CBaseTempEntity );
 
     CTEEffectDispatch( const char *name );
@@ -31,7 +31,7 @@ class CTEEffectDispatch : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CEffectData m_EffectData;
 };
 

@@ -38,7 +38,7 @@
 
 class CItem : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 {
-   public:
+    public:
     DECLARE_CLASS( CItem, CBaseAnimating );
 
     CItem();
@@ -104,11 +104,11 @@ class CItem : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     virtual void ComeToRest( void );
     bool m_bActivateWhenAtRest;
 
-   private:
+    private:
     COutputEvent m_OnPlayerTouch;
     COutputEvent m_OnCacheInteraction;
 

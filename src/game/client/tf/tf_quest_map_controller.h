@@ -40,7 +40,7 @@ class CQuestMapController : public CLocalSteamSharedObjectListener
 {
     friend CGCClientQuestProgressReport;
 
-   public:
+    public:
     CQuestMapController();
 
     void RedeemLootForNode( const CSOQuestMapNode& node );
@@ -57,7 +57,7 @@ class CQuestMapController : public CLocalSteamSharedObjectListener
         return m_msgMostRecentReport;
     }
 
-   private:
+    private:
     void SetMostRecentProgressReport( CMsgQuestProgressReport& report )
     {
         m_msgMostRecentReport.CopyFrom( report );

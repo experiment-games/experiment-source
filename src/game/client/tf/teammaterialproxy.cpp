@@ -19,14 +19,14 @@
 //
 class CTeamMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CTeamMaterialProxy();
     virtual ~CTeamMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pEnt );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_FrameVar;
 };
 

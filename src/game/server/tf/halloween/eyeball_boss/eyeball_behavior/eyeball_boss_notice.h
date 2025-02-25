@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------
 class CEyeballBossNotice : public Action< CEyeballBoss >
 {
-   public:
+    public:
     virtual ActionResult< CEyeballBoss > OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
     virtual ActionResult< CEyeballBoss > Update( CEyeballBoss *me, float interval );
 
@@ -19,7 +19,7 @@ class CEyeballBossNotice : public Action< CEyeballBoss >
         return "Notice";
     }  // return name of this action
 
-   private:
+    private:
     CountdownTimer m_timer;
 };
 

@@ -22,7 +22,7 @@ class CTFPlayer;
 //
 class CTFGameStats : public CBaseGameStats, public CGameEventListener, public CAutoGameSystem
 {
-   public:
+    public:
     // Constructor/Destructor.
     CTFGameStats( void );
     ~CTFGameStats( void );
@@ -134,13 +134,13 @@ class CTFGameStats : public CBaseGameStats, public CGameEventListener, public CA
     void ResetKillHistory( CTFPlayer *pPlayer );
     void ResetRoundStats();
 
-   protected:
+    protected:
     void IncrementStat( CTFPlayer *pPlayer, TFStatType_t statType, int iValue );
     void SendStatsToPlayer( CTFPlayer *pPlayer, bool bIsAlive );
     void AccumulateAndResetPerLifeStats( CTFPlayer *pPlayer );
     void TrackKillStats( CBasePlayer *pAttacker, CBasePlayer *pVictim );
 
-   public:
+    public:
     TFReportedStats_t m_reportedStats;                     // Stats which are uploaded from TF server to Steam
     PlayerStats_t m_aPlayerStats[MAX_PLAYERS_ARRAY_SAFE];  // List of stats for each player for current life - reset after each death or class change
 
@@ -167,7 +167,7 @@ class CTFGameStats : public CBaseGameStats, public CGameEventListener, public CA
     // Passtime
     PasstimeStats_t m_passtimeStats;
 
-   private:
+    private:
     CUtlMap< CUtlConstString, int > m_MapsPlaytime;
     char m_szNextMap[32];
 };

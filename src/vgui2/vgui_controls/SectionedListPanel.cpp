@@ -215,7 +215,7 @@ class CItemButton : public Label
 {
     DECLARE_CLASS_SIMPLE( CItemButton, Label );
 
-   public:
+    public:
     CItemButton( SectionedListPanel *parent, int itemID )
         : Label( parent, NULL, "< item >" )
     {
@@ -778,7 +778,7 @@ class CItemButton : public Label
         m_nHorizFillInset = nHorizFillInset;
     }
 
-   private:
+    private:
     SectionedListPanel *m_pListPanel;
     int m_iID;
     int m_iSectionID;
@@ -1769,10 +1769,10 @@ void SectionedListPanel::OnKeyCodePressed( KeyCode code )
     ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
     if ( nButtonCode == KEY_XBUTTON_DOWN ||
-         nButtonCode == KEY_XSTICK1_DOWN ||
-         nButtonCode == KEY_XSTICK2_DOWN ||
-         nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-         code == KEY_DOWN )
+        nButtonCode == KEY_XSTICK1_DOWN ||
+        nButtonCode == KEY_XSTICK2_DOWN ||
+        nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
+        code == KEY_DOWN )
     {
         int itemID = GetSelectedItem();
         MoveSelectionDown();
@@ -1783,10 +1783,10 @@ void SectionedListPanel::OnKeyCodePressed( KeyCode code )
         }
     }
     else if ( nButtonCode == KEY_XBUTTON_UP ||
-              nButtonCode == KEY_XSTICK1_UP ||
-              nButtonCode == KEY_XSTICK2_UP ||
-              nButtonCode == STEAMCONTROLLER_DPAD_UP ||
-              code == KEY_UP )
+            nButtonCode == KEY_XSTICK1_UP ||
+            nButtonCode == KEY_XSTICK2_UP ||
+            nButtonCode == STEAMCONTROLLER_DPAD_UP ||
+            code == KEY_UP )
     {
         int itemID = GetSelectedItem();
         MoveSelectionUp();
@@ -2277,8 +2277,8 @@ Color *SectionedListPanel::GetColorOverrideForCell( int sectionID, int itemID, i
     FOR_EACH_VEC( m_ColorOverrides, i )
     {
         if ( ( m_ColorOverrides[i].m_SectionID == sectionID ) &&
-             ( m_ColorOverrides[i].m_ItemID == itemID ) &&
-             ( m_ColorOverrides[i].m_ColumnID == columnID ) )
+            ( m_ColorOverrides[i].m_ItemID == itemID ) &&
+            ( m_ColorOverrides[i].m_ColumnID == columnID ) )
         {
             return &( m_ColorOverrides[i].m_clrOverride );
         }
@@ -2296,8 +2296,8 @@ void SectionedListPanel::SetColorOverrideForCell( int sectionID, int itemID, int
     FOR_EACH_VEC( m_ColorOverrides, i )
     {
         if ( ( m_ColorOverrides[i].m_SectionID == sectionID ) &&
-             ( m_ColorOverrides[i].m_ItemID == itemID ) &&
-             ( m_ColorOverrides[i].m_ColumnID == columnID ) )
+            ( m_ColorOverrides[i].m_ItemID == itemID ) &&
+            ( m_ColorOverrides[i].m_ColumnID == columnID ) )
         {
             m_ColorOverrides[i].m_clrOverride = clrOverride;
             return;

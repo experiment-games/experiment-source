@@ -19,7 +19,7 @@ using namespace vgui;
 
 class CommandMenu : public Menu
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CommandMenu, Menu );
 
     typedef struct
@@ -28,7 +28,7 @@ class CommandMenu : public Menu
         int itemnr;
     } CommandMenuItem;
 
-   public:
+    public:
     CommandMenu( Panel *parent, const char *panelName, IViewPort *viewport );
     ~CommandMenu();
 
@@ -37,7 +37,7 @@ class CommandMenu : public Menu
     void RebuildMenu();                         // rebuilds menu respecting changed game state (map, team etc)
     void ClearMenu();                           // destroy menu
 
-   public:
+    public:
     // overwrite these in your derived class
     // virtual CommandMenu * CommandMenu::Factory(Panel *parent, const char *panelName, IViewPort * viewport = NULL, IFileSystem * pFileSytem = NULL); // overwrite
     virtual int AddCustomItem( KeyValues *params, Menu *menu )
@@ -51,7 +51,7 @@ class CommandMenu : public Menu
 
     // DON'T touch anything below !
 
-   protected:
+    protected:
     void OnMessage( const KeyValues *params, VPANEL fromPanel );
     void StartNewSubMenu( KeyValues *params );
     void FinishSubMenu();

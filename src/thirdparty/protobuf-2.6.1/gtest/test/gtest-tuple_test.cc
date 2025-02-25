@@ -122,17 +122,17 @@ TEST(ReferenceFieldTest, IsAliasOfReferencedVariable) {
 
   n = 1;
   EXPECT_EQ(n, get<1>(t))
-      << "Changing a underlying variable should update the reference field.";
+    << "Changing a underlying variable should update the reference field.";
 
   // Makes sure that the implementation doesn't do anything funny with
   // the & operator for the return type of get<>().
   EXPECT_EQ(&n, &(get<1>(t)))
-      << "The address of a reference field should equal the address of "
-      << "the underlying variable.";
+    << "The address of a reference field should equal the address of "
+    << "the underlying variable.";
 
   get<1>(t) = 2;
   EXPECT_EQ(2, n)
-      << "Changing a reference field should update the underlying variable.";
+    << "Changing a reference field should update the underlying variable.";
 }
 
 // Tests that tuple's default constructor default initializes each field.
@@ -261,8 +261,8 @@ class BigTupleTest : public testing::Test {
   typedef tuple<int, int, int, int, int, int, int, int, int, int> BigTuple;
 
   BigTupleTest() :
-      a_(1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
-      b_(1, 0, 0, 0, 0, 0, 0, 0, 0, 3) {}
+    a_(1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+    b_(1, 0, 0, 0, 0, 0, 0, 0, 0, 3) {}
 
   BigTuple a_, b_;
 };

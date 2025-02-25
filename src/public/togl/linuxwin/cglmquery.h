@@ -56,7 +56,7 @@ struct GLMQueryParams
 class CGLMQuery
 {
     // leave everything public til it's running
-   public:
+    public:
     friend class GLMContext;  // only GLMContext can make CGLMTex objects
     friend struct IDirect3DDevice9;
     friend struct IDirect3DQuery9;
@@ -76,7 +76,7 @@ class CGLMQuery
     bool m_done;
 
     bool m_nullQuery;  // was gl_nullqueries true at Start time - if so, continue to act like a null query through Stop/IsDone/Complete time
-                       // restated - only Start should examine the convar.
+                        // restated - only Start should examine the convar.
     static uint s_nTotalOcclusionQueryCreatesOrDeletes;
 
     CGLMQuery( GLMContext *ctx, GLMQueryParams *params );

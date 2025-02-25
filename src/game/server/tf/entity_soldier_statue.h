@@ -16,15 +16,15 @@ class CEntitySoldierStatue : public CBaseAnimating, public ISoldierStatueAutoLis
 {
     DECLARE_CLASS( CEntitySoldierStatue, CBaseAnimating );
 
-   public:
+    public:
     virtual void Spawn( void ) OVERRIDE;
     virtual void Precache( void ) OVERRIDE;
 
-   private:
+    private:
     void StatueThink();
     void PlaySound( void );
 
-   private:
+    private:
     float m_flNextSpeakTime = -1.f;
 };
 

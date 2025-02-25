@@ -2338,14 +2338,14 @@ TestUtil::ReflectionTester::ReflectionTester(
 
   if (base_descriptor_->name() == "TestAllExtensions") {
     group_a_ =
-      pool->FindFieldByName("protobuf_unittest.OptionalGroup_extension.a");
+    pool->FindFieldByName("protobuf_unittest.OptionalGroup_extension.a");
     repeated_group_a_ =
-      pool->FindFieldByName("protobuf_unittest.RepeatedGroup_extension.a");
+    pool->FindFieldByName("protobuf_unittest.RepeatedGroup_extension.a");
   } else {
     group_a_ =
-      pool->FindFieldByName("protobuf_unittest.TestAllTypes.OptionalGroup.a");
+    pool->FindFieldByName("protobuf_unittest.TestAllTypes.OptionalGroup.a");
     repeated_group_a_ =
-      pool->FindFieldByName("protobuf_unittest.TestAllTypes.RepeatedGroup.a");
+    pool->FindFieldByName("protobuf_unittest.TestAllTypes.RepeatedGroup.a");
   }
 
   EXPECT_TRUE(group_a_          != NULL);
@@ -2369,7 +2369,7 @@ TestUtil::ReflectionTester::ReflectionTester(
 const FieldDescriptor* TestUtil::ReflectionTester::F(const string& name) {
   const FieldDescriptor* result = NULL;
   if (base_descriptor_->name() == "TestAllExtensions" ||
-      base_descriptor_->name() == "TestPackedExtensions") {
+    base_descriptor_->name() == "TestPackedExtensions") {
     result = base_descriptor_->file()->FindExtensionByName(name + "_extension");
   } else {
     result = base_descriptor_->FindFieldByName(name);
@@ -2529,19 +2529,19 @@ void TestUtil::ReflectionTester::SetOneofViaReflection(Message* message) {
   const Descriptor* descriptor = message->GetDescriptor();
   const Reflection* reflection = message->GetReflection();
   Message* sub_message = reflection->MutableMessage(
-      message, descriptor->FindFieldByName("foo_lazy_message"));
+    message, descriptor->FindFieldByName("foo_lazy_message"));
   sub_message->GetReflection()->SetInt64(
-      sub_message,
-      descriptor->file()->pool()->FindFieldByName(
-          "protobuf_unittest.TestOneof2.NestedMessage.qux_int"),
-      100);
+    sub_message,
+    descriptor->file()->pool()->FindFieldByName(
+        "protobuf_unittest.TestOneof2.NestedMessage.qux_int"),
+    100);
 
   reflection->SetString(message,
                         descriptor->FindFieldByName("bar_cord"),
                         "101");
   reflection->SetInt32(message,
                         descriptor->FindFieldByName("baz_int"),
-                       102);
+                        102);
   reflection->SetString(message,
                         descriptor->FindFieldByName("baz_string"),
                         "103");
@@ -2553,33 +2553,33 @@ void TestUtil::ReflectionTester::ExpectOneofSetViaReflection(
   const Reflection* reflection = message.GetReflection();
   string scratch;
   EXPECT_TRUE(reflection->HasField(
-      message, descriptor->FindFieldByName("foo_lazy_message")));
+    message, descriptor->FindFieldByName("foo_lazy_message")));
   EXPECT_TRUE(reflection->HasField(
-      message, descriptor->FindFieldByName("bar_cord")));
+    message, descriptor->FindFieldByName("bar_cord")));
   EXPECT_TRUE(reflection->HasField(
-      message, descriptor->FindFieldByName("baz_int")));
+    message, descriptor->FindFieldByName("baz_int")));
   EXPECT_TRUE(reflection->HasField(
-      message, descriptor->FindFieldByName("baz_string")));
+    message, descriptor->FindFieldByName("baz_string")));
 
   const Message* sub_message = &reflection->GetMessage(
-      message, descriptor->FindFieldByName("foo_lazy_message"));
+    message, descriptor->FindFieldByName("foo_lazy_message"));
   EXPECT_EQ(100, sub_message->GetReflection()->GetInt64(
-      *sub_message,
-      descriptor->file()->pool()->FindFieldByName(
-          "protobuf_unittest.TestOneof2.NestedMessage.qux_int")));
+    *sub_message,
+    descriptor->file()->pool()->FindFieldByName(
+        "protobuf_unittest.TestOneof2.NestedMessage.qux_int")));
 
   EXPECT_EQ("101", reflection->GetString(
-      message, descriptor->FindFieldByName("bar_cord")));
+    message, descriptor->FindFieldByName("bar_cord")));
   EXPECT_EQ("101", reflection->GetStringReference(
-      message, descriptor->FindFieldByName("bar_cord"), &scratch));
+    message, descriptor->FindFieldByName("bar_cord"), &scratch));
 
   EXPECT_EQ(102, reflection->GetInt32(
-      message, descriptor->FindFieldByName("baz_int")));
+    message, descriptor->FindFieldByName("baz_int")));
 
   EXPECT_EQ("103", reflection->GetString(
-      message, descriptor->FindFieldByName("baz_string")));
+    message, descriptor->FindFieldByName("baz_string")));
   EXPECT_EQ("103", reflection->GetStringReference(
-      message, descriptor->FindFieldByName("baz_string"), &scratch));
+    message, descriptor->FindFieldByName("baz_string"), &scratch));
 }
 
 void TestUtil::ReflectionTester::SetPackedFieldsViaReflection(
@@ -2829,9 +2829,9 @@ void TestUtil::ReflectionTester::ExpectAllFieldsSetViaReflection2(
   EXPECT_EQ("316", reflection->GetRepeatedString(message, F("repeated_bytes"   ), 1));
 
   EXPECT_EQ("315", reflection->GetRepeatedStringReference(message, F("repeated_string"),
-                                                          1, &scratch));
+                                                        1, &scratch));
   EXPECT_EQ("316", reflection->GetRepeatedStringReference(message, F("repeated_bytes"),
-                                                          1, &scratch));
+                                                        1, &scratch));
 
   sub_message = &reflection->GetRepeatedMessage(message, F("repeatedgroup"), 1);
   EXPECT_EQ(317, sub_message->GetReflection()->GetInt32(*sub_message, repeated_group_a_));
@@ -2912,7 +2912,7 @@ void TestUtil::ReflectionTester::ExpectAllFieldsSetViaReflection3(
 
   EXPECT_EQ("424", reflection->GetString(message, F("default_string_piece")));
   EXPECT_EQ("424", reflection->GetStringReference(message, F("default_string_piece"),
-                                                  &scratch));
+                                                &scratch));
 
   EXPECT_EQ("425", reflection->GetString(message, F("default_cord")));
   EXPECT_EQ("425", reflection->GetStringReference(message, F("default_cord"), &scratch));
@@ -3252,7 +3252,7 @@ void TestUtil::ReflectionTester::ReleaseLastRepeatedsViaReflection(
 
     Message* released = reflection->ReleaseLast(message, field);
     if (!field->is_extension() || expect_extensions_notnull) {
-      ASSERT_TRUE(released != NULL) << "ReleaseLast returned NULL for: "
+    ASSERT_TRUE(released != NULL) << "ReleaseLast returned NULL for: "
                                     << field->name();
     }
     delete released;
@@ -3326,14 +3326,14 @@ void TestUtil::ReflectionTester::ExpectMessagesReleasedViaReflection(
     const Message& sub_message = reflection->GetMessage(*message, F(fields[i]));
     Message* released = reflection->ReleaseMessage(message, F(fields[i]));
     switch (expected_release_state) {
-      case IS_NULL:
+    case IS_NULL:
         EXPECT_TRUE(released == NULL);
         break;
-      case NOT_NULL:
+    case NOT_NULL:
         EXPECT_TRUE(released != NULL);
         EXPECT_EQ(&sub_message, released);
         break;
-      case CAN_BE_NULL:
+    case CAN_BE_NULL:
         break;
     }
     delete released;

@@ -20,7 +20,7 @@ class CAchievementZone : public CBaseTrigger
 {
     DECLARE_CLASS( CAchievementZone, CBaseTrigger );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CAchievementZone();
@@ -44,7 +44,7 @@ class CAchievementZone : public CBaseTrigger
         return m_iZoneID;
     }
 
-   private:
+    private:
     bool m_bDisabled;
     int m_iZoneID;
 };

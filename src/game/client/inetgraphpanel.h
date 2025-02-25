@@ -22,7 +22,7 @@ class Panel;
 
 abstract_class INetGraphPanel
 {
-   public:
+    public:
     virtual void Create( vgui::VPANEL parent ) = 0;
     virtual void Destroy( void ) = 0;
 };

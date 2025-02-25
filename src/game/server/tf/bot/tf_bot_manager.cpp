@@ -247,17 +247,17 @@ void CTFBotManager::OnCreepKilled( CTFPlayer *killer )
     ++m_creepExperience[killer->GetTeamNumber()];
 
     /*
-      int xp = m_creepExperience[ killer->GetTeamNumber() ];
-      int level = xp / tf_creep_level_up.GetInt();
-      int left = xp % tf_creep_level_up.GetInt();
+    int xp = m_creepExperience[ killer->GetTeamNumber() ];
+    int level = xp / tf_creep_level_up.GetInt();
+    int left = xp % tf_creep_level_up.GetInt();
 
-      char text[256];
-      Q_snprintf( text, sizeof(text), "%s killed a creep. %s team LVL = %d+%d/%d\n",
+    char text[256];
+    Q_snprintf( text, sizeof(text), "%s killed a creep. %s team LVL = %d+%d/%d\n",
             killer->GetPlayerName(),
             killer->GetTeamNumber() == TF_TEAM_RED ? "Red" : "Blue",
             level+1, left, tf_creep_level_up.GetInt() );
 
-      UTIL_ClientPrintAll( HUD_PRINTTALK, text );
+    UTIL_ClientPrintAll( HUD_PRINTTALK, text );
     */
 
     UTIL_ClientPrintAll( HUD_PRINTTALK, "%s killed a creep" );
@@ -449,7 +449,7 @@ void CTFBotManager::MaintainBotQuota()
     {
         // don't try to add a bot if it would unbalance
         if ( !TFGameRules()->WouldChangeUnbalanceTeams( TF_TEAM_BLUE, TEAM_UNASSIGNED ) ||
-             !TFGameRules()->WouldChangeUnbalanceTeams( TF_TEAM_RED, TEAM_UNASSIGNED ) )
+            !TFGameRules()->WouldChangeUnbalanceTeams( TF_TEAM_RED, TEAM_UNASSIGNED ) )
         {
             CTFBot *pBot = GetAvailableBotFromPool();
             if ( pBot == NULL )
@@ -830,14 +830,14 @@ void CTFBotManager::DrawStuckBotData( float deltaT )
         for ( int j = 0; j < m_stuckBotVector[i]->m_stuckEventVector.Count() - 1; ++j )
         {
             NDebugOverlay::HorzArrow( m_stuckBotVector[i]->m_stuckEventVector[j]->m_stuckSpot,
-                                      m_stuckBotVector[i]->m_stuckEventVector[j + 1]->m_stuckSpot,
-                                      3,
-                                      100,
-                                      0,
-                                      255,
-                                      255,
-                                      true,
-                                      deltaT );
+                                    m_stuckBotVector[i]->m_stuckEventVector[j + 1]->m_stuckSpot,
+                                    3,
+                                    100,
+                                    0,
+                                    255,
+                                    255,
+                                    true,
+                                    deltaT );
         }
 
         NDebugOverlay::Text( m_stuckBotVector[i]->m_stuckEventVector[0]->m_stuckSpot, CFmtStr( "%s(#%d)", m_stuckBotVector[i]->m_name, m_stuckBotVector[i]->m_id ), false, deltaT );

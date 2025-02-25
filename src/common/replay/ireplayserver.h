@@ -32,7 +32,7 @@ class CServerReplay;
 
 class IReplayServer : public IBaseInterface
 {
-   public:
+    public:
     virtual ~IReplayServer() {}
 
     virtual IServer *GetBaseServer() = 0;                  // get Replay base server interface

@@ -15,7 +15,7 @@
 //=========================================================
 class CPlane
 {
-   public:
+    public:
     CPlane( void );
 
     //=========================================================
@@ -35,7 +35,7 @@ class CPlane
     //=========================================================
     float PointDist( const Vector &vecPoint );
 
-   private:
+    private:
     Vector m_vecNormal;
     float m_flDist;
     bool m_fInitialized;

@@ -39,7 +39,7 @@ struct DispNodeInfo_t
 // ------------------------------------------------------------------------ //
 class CTesselateVert
 {
-   public:
+    public:
     CTesselateVert( CVertIndex const &index, int iNode );
 
     CVertIndex m_Index;
@@ -48,21 +48,21 @@ class CTesselateVert
 
 class CTesselateWinding
 {
-   public:
+    public:
     CTesselateVert *m_Verts;
     short m_nVerts;  // (includes the last vert)
 };
 
 class CVertDependency
 {
-   public:
+    public:
     // Returns false if there is no dependency stored here.
     bool IsValid()
     {
         return m_iVert.x != -1;
     }
 
-   public:
+    public:
     // The vert index is in the same power as the source displacement.
     // It is also wrapped, so for example, on the middle of the right edge
     // of a 3x3, it will have a dependency on the 3x3's root node (1,1), and it
@@ -77,7 +77,7 @@ class CVertDependency
 // Precalculated data about displacement vertices.
 class CVertInfo
 {
-   public:
+    public:
     CVertInfo();
 
     // These are the vertices that this vertex depends on (vertices that must be
@@ -92,33 +92,33 @@ class CVertInfo
     CVertDependency m_ReverseDependencies[NUM_REVERSE_DEPENDENCIES];
 
     short m_iNodeLevel;    // -1 if this is not a node. Otherwise, the recursion level
-                           // of this node (root node = 1).
+                            // of this node (root node = 1).
     CVertIndex m_iParent;  // x=-1 if this is a not a node or if it's the root node.
 };
 
 class CTwoUShorts
 {
-   public:
+    public:
     unsigned short m_Values[2];
 };
 
 class CFourVerts
 {
-   public:
+    public:
     CVertIndex m_Verts[4];
 };
 
 // Used for referencing triangles in the fully-tesselated displacement by index.
 class CTriInfo
 {
-   public:
+    public:
     unsigned short m_Indices[3];
 };
 
 // Precalculated data for displacements of a certain power.
 class CPowerInfo
 {
-   public:
+    public:
     CPowerInfo(
         CVertInfo *pVertInfo,
         CFourVerts *pSideVerts,
@@ -163,14 +163,14 @@ class CPowerInfo
     // Return a corner point index. Indexed by the CORNER_ defines.
     const CVertIndex &GetCornerPointIndex( int iCorner ) const;
 
-   public:
+    public:
     CVertInfo *m_pVertInfo;
     CFourVerts *m_pSideVerts;   // The 4 side verts for each node.
     CFourVerts *m_pChildVerts;  // The 4 children for each node.
     CFourVerts *m_pSideVertCorners;
     CTwoUShorts *m_pErrorEdges;  // These are the edges
-                                 // that are used to measure the screenspace
-                                 // error with respect to each vert.
+                                // that are used to measure the screenspace
+                                // error with respect to each vert.
 
     CTriInfo *m_pTriInfos;
     int m_nTriInfos;
@@ -196,7 +196,7 @@ class CPowerInfo
     CVertIndex m_NeighborStartVerts[4][4];  // [side][orientation]
     CVertIndex m_NeighborIncrements[4][4];  // [side][orientation]
 
-   private:
+    private:
     friend void InitPowerInfo( CPowerInfo *pInfo, int iMaxPower );
 
     CVertIndex m_CornerPointIndices[4];

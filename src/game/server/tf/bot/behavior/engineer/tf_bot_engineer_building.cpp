@@ -251,7 +251,7 @@ bool CTFBotEngineerBuilding::CheckIfSentryIsOutOfPosition( CTFBot *me ) const
         {
             CTFBotPathCost cost( me, FASTEST_ROUTE );
             if ( NavAreaTravelDistance( sentryArea, pointArea, cost, tf_bot_engineer_max_sentry_travel_distance_to_point.GetFloat() ) < 0 &&
-                 NavAreaTravelDistance( pointArea, sentryArea, cost, tf_bot_engineer_max_sentry_travel_distance_to_point.GetFloat() ) < 0 )
+                NavAreaTravelDistance( pointArea, sentryArea, cost, tf_bot_engineer_max_sentry_travel_distance_to_point.GetFloat() ) < 0 )
             {
                 return true;
             }
@@ -385,15 +385,15 @@ ActionResult< CTFBot > CTFBotEngineerBuilding::Update( CTFBot *me, float interva
     }
 
     /*
-      if ( myTeleportExit )
-      {
+    if ( myTeleportExit )
+    {
         // if my teleporter exit is too far away from my sentry, destroy and rebuild it next update
         if ( ( mySentry->GetAbsOrigin() - myTeleportExit->GetAbsOrigin() ).IsLengthGreaterThan( maxSeparation ) )
         {
-          myTeleportExit->DestroyObject();
-          myTeleportExit = NULL;
+        myTeleportExit->DestroyObject();
+        myTeleportExit = NULL;
         }
-      }
+    }
     */
 
     // try to build a Dispenser (build after tele exit in training)

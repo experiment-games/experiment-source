@@ -23,9 +23,9 @@ void HeapSort(UInt32 *p, size_t size)
     size_t i = size / 2;
     do
     {
-      UInt32 temp = p[i];
-      size_t k = i;
-      HeapSortDown(p, k, size, temp)
+    UInt32 temp = p[i];
+    size_t k = i;
+    HeapSortDown(p, k, size, temp)
     }
     while (--i != 0);
   }
@@ -52,11 +52,11 @@ void HeapSort(UInt32 *p, size_t size)
     p[size] = p[1];
     if (size > 2 && p[2] < temp)
     {
-      p[1] = p[2];
-      p[2] = temp;
+    p[1] = p[2];
+    p[2] = temp;
     }
     else
-      p[1] = temp;
+    p[1] = temp;
   }
 }
 
@@ -69,9 +69,9 @@ void HeapSort64(UInt64 *p, size_t size)
     size_t i = size / 2;
     do
     {
-      UInt64 temp = p[i];
-      size_t k = i;
-      HeapSortDown(p, k, size, temp)
+    UInt64 temp = p[i];
+    size_t k = i;
+    HeapSortDown(p, k, size, temp)
     }
     while (--i != 0);
   }
@@ -98,11 +98,11 @@ void HeapSort64(UInt64 *p, size_t size)
     p[size] = p[1];
     if (size > 2 && p[2] < temp)
     {
-      p[1] = p[2];
-      p[2] = temp;
+    p[1] = p[2];
+    p[2] = temp;
     }
     else
-      p[1] = temp;
+    p[1] = temp;
   }
 }
 
@@ -125,8 +125,8 @@ void HeapSortRef(UInt32 *p, UInt32 *vals, size_t size)
     size_t i = size / 2;
     do
     {
-      UInt32 temp = p[i];
-      HeapSortRefDown(p, vals, i, size, temp);
+    UInt32 temp = p[i];
+    HeapSortRefDown(p, vals, i, size, temp);
     }
     while (--i != 0);
   }

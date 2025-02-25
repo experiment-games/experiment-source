@@ -66,7 +66,7 @@ class GeneratorContext;
 // be registered with CommandLineInterface to support various languages.
 class LIBPROTOC_EXPORT CodeGenerator
 {
-   public:
+    public:
     inline CodeGenerator() {}
     virtual ~CodeGenerator();
 
@@ -82,11 +82,11 @@ class LIBPROTOC_EXPORT CodeGenerator
     // Returns true if successful.  Otherwise, sets *error to a description of
     // the problem (e.g. "invalid parameter") and returns false.
     virtual bool Generate( const FileDescriptor* file,
-                           const string& parameter,
-                           GeneratorContext* generator_context,
-                           string* error ) const = 0;
+                            const string& parameter,
+                            GeneratorContext* generator_context,
+                            string* error ) const = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( CodeGenerator );
 };
 
@@ -96,7 +96,7 @@ class LIBPROTOC_EXPORT CodeGenerator
 // runs.
 class LIBPROTOC_EXPORT GeneratorContext
 {
-   public:
+    public:
     inline GeneratorContext() {}
     virtual ~GeneratorContext();
 
@@ -130,7 +130,7 @@ class LIBPROTOC_EXPORT GeneratorContext
     // differently when compiled as a set rather than individually.
     virtual void ListParsedFiles( vector< const FileDescriptor* >* output );
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( GeneratorContext );
 };
 
@@ -145,7 +145,7 @@ typedef GeneratorContext OutputDirectory;
 // parses to the pairs:
 //   ("foo", "bar"), ("baz", ""), ("qux", "corge")
 extern void ParseGeneratorParameter( const string&,
-                                     vector< pair< string, string > >* );
+                                    vector< pair< string, string > >* );
 
 }  // namespace compiler
 }  // namespace protobuf

@@ -10,7 +10,7 @@
 
 class CForceFeedback : public IForceFeedback, public CAutoGameSystem
 {
-   public:
+    public:
     virtual bool Init();
     virtual void Shutdown();
 

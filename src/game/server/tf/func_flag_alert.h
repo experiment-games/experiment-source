@@ -20,7 +20,7 @@ class CFuncFlagAlertZone : public CBaseTrigger
 {
     DECLARE_CLASS( CFuncFlagAlertZone, CBaseTrigger );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CFuncFlagAlertZone();
@@ -28,7 +28,7 @@ class CFuncFlagAlertZone : public CBaseTrigger
     void Spawn( void );
     void StartTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     float m_flNextAlertTime[TF_TEAM_COUNT];
     bool m_bPlaySound;
     int m_nAlertDelay;

@@ -17,7 +17,7 @@ class CPlayerResource : public CBaseEntity
 {
     DECLARE_CLASS( CPlayerResource, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -36,7 +36,7 @@ class CPlayerResource : public CBaseEntity
 
     virtual int GetPing( int index );
 
-   protected:
+    protected:
     virtual void UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer );
     virtual void UpdateDisconnectedPlayer( int iIndex );
 

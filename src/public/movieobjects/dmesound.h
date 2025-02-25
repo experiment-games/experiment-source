@@ -19,7 +19,7 @@ class CDmeSound : public CDmElement
 {
     DEFINE_ELEMENT( CDmeSound, CDmElement );
 
-   public:
+    public:
     CDmaString m_SoundName;
     CDmaString m_GameSoundName;  // Only used if it's a gamesound
 
@@ -31,7 +31,7 @@ class CDmeGameSound : public CDmeSound
 {
     DEFINE_ELEMENT( CDmeGameSound, CDmeSound );
 
-   public:
+    public:
     CDmElement *FindOrAddPhonemeExtractionSettings();
 
     CDmaVar< float > m_Volume;

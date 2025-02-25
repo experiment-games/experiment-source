@@ -50,7 +50,7 @@ class CPrisonerPodServerVehicle : public CBaseServerVehicle
     typedef CBaseServerVehicle BaseClass;
 
     // IServerVehicle
-   public:
+    public:
     void GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV = NULL );
     virtual void ItemPostFrame( CBasePlayer *pPlayer );
 
@@ -63,7 +63,7 @@ class CPrisonerPodServerVehicle : public CBaseServerVehicle
         return false;
     }
 
-   protected:
+    protected:
     CPropVehiclePrisonerPod *GetPod( void );
 };
 
@@ -74,7 +74,7 @@ class CPropVehiclePrisonerPod : public CPhysicsProp, public IDrivableVehicle
 {
     DECLARE_CLASS( CPropVehiclePrisonerPod, CPhysicsProp );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -137,7 +137,7 @@ class CPropVehiclePrisonerPod : public CPhysicsProp, public IDrivableVehicle
     CNetworkHandle( CBasePlayer, m_hPlayer );
 
     // IDrivableVehicle
-   public:
+    public:
     virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info )
     {
         if ( info.GetDamageType() & DMG_VEHICLE )
@@ -189,11 +189,11 @@ class CPropVehiclePrisonerPod : public CPhysicsProp, public IDrivableVehicle
         return &m_ServerVehicle;
     }
 
-   protected:
+    protected:
     // Contained IServerVehicle
     CPrisonerPodServerVehicle m_ServerVehicle;
 
-   private:
+    private:
     // Entering / Exiting
     bool m_bLocked;
     CNetworkVar( bool, m_bEnterAnimOn );

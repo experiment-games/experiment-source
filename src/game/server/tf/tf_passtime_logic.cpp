@@ -165,8 +165,8 @@ void CTFPasstimeLogic::Spawn()
     }
 
     const auto *pCountdownSounds = TFGameRules() && TFGameRules()->IsHolidayActive( kHoliday_Halloween )
-                                       ? &sCountdownSoundsRoundBeginMerasmus
-                                       : &sCountdownSoundsRoundBegin;
+                                        ? &sCountdownSoundsRoundBeginMerasmus
+                                        : &sCountdownSoundsRoundBegin;
     m_pRespawnCountdown = new CCountdownAnnouncer( pCountdownSounds );
 
     SetContextThink( &CTFPasstimeLogic::PostSpawn, gpGlobals->curtime, "postspawn" );
@@ -328,8 +328,8 @@ bool CTFPasstimeLogic::AddBallPower( int iPower )
 
         // reschedule think so that decay stops for a while
         SetContextThink( &CTFPasstimeLogic::BallPower_PowerThink,
-                         gpGlobals->curtime + tf_passtime_powerball_decay_delay.GetFloat(),
-                         "BallPower_PowerThink" );
+                        gpGlobals->curtime + tf_passtime_powerball_decay_delay.GetFloat(),
+                        "BallPower_PowerThink" );
 
         return true;
     }
@@ -350,18 +350,18 @@ void CTFPasstimeLogic::BallPower_PowerThink()
     if ( !IsGamestatePlayable() || !pBall )
     {
         SetContextThink( &CTFPasstimeLogic::BallPower_PowerThink,
-                         gpGlobals->curtime,
-                         "BallPower_PowerThink" );
+                        gpGlobals->curtime,
+                        "BallPower_PowerThink" );
         return;
     }
 
     float flTickTime = ( pBall->GetTeamNumber() == TEAM_UNASSIGNED )
-                           ? tf_passtime_powerball_decaysec_neutral.GetFloat()
-                           : tf_passtime_powerball_decaysec.GetFloat();
+                            ? tf_passtime_powerball_decaysec_neutral.GetFloat()
+                            : tf_passtime_powerball_decaysec.GetFloat();
 
     SetContextThink( &CTFPasstimeLogic::BallPower_PowerThink,
-                     gpGlobals->curtime + flTickTime,
-                     "BallPower_PowerThink" );
+                    gpGlobals->curtime + flTickTime,
+                    "BallPower_PowerThink" );
 
     if ( !pBall->GetHomingTarget() )
     {
@@ -443,8 +443,8 @@ void CTFPasstimeLogic::ReplicatePackMemberBits()
 void CTFPasstimeLogic::BallPower_PackThink()
 {
     SetContextThink( &CTFPasstimeLogic::BallPower_PackThink,
-                     gpGlobals->curtime,
-                     "BallPower_PackThink" );
+                    gpGlobals->curtime,
+                    "BallPower_PackThink" );
 
     m_flPackSpeed = 0.0f;
     m_nPrevPackMemberBits = m_nPackMemberBits;
@@ -869,7 +869,7 @@ bool CTFPasstimeLogic::BCanPlayerPickUpBall( CTFPlayer *pPlayer, HudNotification
     }
 
     if ( !pPlayer->IsAllowedToPickUpFlag() || !pPlayer->IsAlive()  // NOTE: it's possible to be !alive and !dead at the same time
-         || pPlayer->IsAwayFromKeyboard() || pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) || pPlayer->m_Shared.IsControlStunned() )
+        || pPlayer->IsAwayFromKeyboard() || pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) || pPlayer->m_Shared.IsControlStunned() )
     {
         return false;
     }
@@ -1390,8 +1390,8 @@ void CTFPasstimeLogic::Score( CTFPlayer *pPlayer, int iTeam, int iPoints, bool b
     if ( TFGameRules()->IsHolidayActive( kHoliday_Halloween ) )
     {
         const char *pszSound = ( iTeam == TF_TEAM_RED )
-                                   ? "sf14.Merasmus.Soccer.GoalRed"
-                                   : "sf14.Merasmus.Soccer.GoalBlue";
+                                    ? "sf14.Merasmus.Soccer.GoalRed"
+                                    : "sf14.Merasmus.Soccer.GoalBlue";
         TFGameRules()->BroadcastSound( 255, pszSound );
     }
 
@@ -1446,9 +1446,9 @@ void CTFPasstimeLogic::OnPlayerTouchBall( CTFPlayer *pCatcher, CPasstimeBall *pB
     //
     CTFPlayer *pThrower = pBall->GetThrower();
     if ( pThrower                                          // ball must must have been thrown...
-         && ( pBall->GetCollisionCount() == 0 )            // and not bounced...
-         && ( pBall->GetTeamNumber() != TEAM_UNASSIGNED )  // and not be neutral...
-         && ( pCatcher != pBall->GetPrevCarrier() ) )      // and not passed to yourself...
+        && ( pBall->GetCollisionCount() == 0 )            // and not bounced...
+        && ( pBall->GetTeamNumber() != TEAM_UNASSIGNED )  // and not be neutral...
+        && ( pCatcher != pBall->GetPrevCarrier() ) )      // and not passed to yourself...
     {
         PasstimeGameEvents::PassCaught( pThrower->entindex(), pCatcher->entindex(), flFeet, pBall->GetAirtimeSec() ).Fire();
 
@@ -1765,8 +1765,8 @@ bool CTFPasstimeLogic::ShouldEndOvertime() const
 
     // if the winning team has posession, they win
     int iWinningTeam = ( iRedScore > iBluScore )
-                           ? TF_TEAM_RED
-                           : TF_TEAM_BLUE;
+                            ? TF_TEAM_RED
+                            : TF_TEAM_BLUE;
     return pBallCarrier->GetTeamNumber() == iWinningTeam;
 }
 
@@ -2009,8 +2009,8 @@ void CTFPasstimeLogic::SecretRoom_UpdateTv( int iNumSlotsFilled )
         // sound
         float volume = ( float )( iNumSlotsFilled + 1 ) / 10.0f;
         const char *pSoundName = ( iNumSlotsFilled >= 4 )
-                                     ? "Passtime.Tv2"
-                                     : "Passtime.Tv1";
+                                    ? "Passtime.Tv2"
+                                    : "Passtime.Tv1";
 
         SECRETROOM_LOG( "  @@  SECRET ROOM: Update TV %i slots filled\n", iNumSlotsFilled );
 

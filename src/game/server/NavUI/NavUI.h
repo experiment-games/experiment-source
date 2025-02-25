@@ -27,7 +27,7 @@ class CNavUIButton : public vgui::Button
 {
     DECLARE_CLASS_SIMPLE( CNavUIButton, vgui::Button );
 
-   public:
+    public:
     CNavUIButton( Panel *parent, const char *name )
         : vgui::Button( parent, name, "" )
     {
@@ -37,7 +37,7 @@ class CNavUIButton : public vgui::Button
     virtual void OnKeyCodePressed( vgui::KeyCode code );
     virtual void OnKeyCodeReleased( vgui::KeyCode code );
 
-   private:
+    private:
     void LookupKey( void );
 
     ButtonCode_t m_hideKey;
@@ -49,7 +49,7 @@ class CNavUITextEntry : public vgui::TextEntry
 {
     DECLARE_CLASS_SIMPLE( CNavUIButton, vgui::TextEntry );
 
-   public:
+    public:
     CNavUITextEntry( Panel *parent, const char *name )
         : vgui::TextEntry( parent, name )
     {
@@ -59,7 +59,7 @@ class CNavUITextEntry : public vgui::TextEntry
     virtual void OnKeyCodePressed( vgui::KeyCode code );
     virtual void OnKeyCodeReleased( vgui::KeyCode code );
 
-   private:
+    private:
     void LookupKey( void );
 
     ButtonCode_t m_hideKey;
@@ -71,7 +71,7 @@ class CNavUIComboBox : public vgui::ComboBox
 {
     DECLARE_CLASS_SIMPLE( CNavUIComboBox, vgui::ComboBox );
 
-   public:
+    public:
     CNavUIComboBox( Panel *parent, const char *name, int numLines, bool editable )
         : vgui::ComboBox( parent, name, numLines, editable )
     {
@@ -81,7 +81,7 @@ class CNavUIComboBox : public vgui::ComboBox
     virtual void OnKeyCodePressed( vgui::KeyCode code );
     virtual void OnKeyCodeReleased( vgui::KeyCode code );
 
-   private:
+    private:
     void LookupKey( void );
 
     ButtonCode_t m_hideKey;
@@ -93,7 +93,7 @@ class CNavUICheckButton : public vgui::CheckButton
 {
     DECLARE_CLASS_SIMPLE( CNavUICheckButton, vgui::CheckButton );
 
-   public:
+    public:
     CNavUICheckButton( Panel *parent, const char *name, const char *text )
         : vgui::CheckButton( parent, name, text )
     {
@@ -103,7 +103,7 @@ class CNavUICheckButton : public vgui::CheckButton
     virtual void OnKeyCodePressed( vgui::KeyCode code );
     virtual void OnKeyCodeReleased( vgui::KeyCode code );
 
-   private:
+    private:
     void LookupKey( void );
 
     ButtonCode_t m_hideKey;
@@ -115,7 +115,7 @@ class CNavUIToolPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CNavUIToolPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CNavUIToolPanel( vgui::Panel *parent, const char *toolName )
         : vgui::EditablePanel( parent, toolName )
     {
@@ -143,7 +143,7 @@ class CNavUIToolPanel : public vgui::EditablePanel
     {
     }
 
-   protected:
+    protected:
     bool IsCheckButtonChecked( const char *name );
 };
 
@@ -152,7 +152,7 @@ class CNavUIBasePanel : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CNavUIBasePanel, vgui::Frame );
 
-   public:
+    public:
     CNavUIBasePanel();
     virtual ~CNavUIBasePanel();
 
@@ -184,12 +184,12 @@ class CNavUIBasePanel : public vgui::Frame
 
     void PlaySound( const char *sound );
 
-   protected:
+    protected:
     const char *ActiveToolName( void ) const;
     void ActivateTool( const char *toolName );
     virtual CNavUIToolPanel *CreateTool( const char *toolName, vgui::Panel *toolParent );
 
-   private:
+    private:
     bool m_hidden;
 
     bool m_dragSelecting;

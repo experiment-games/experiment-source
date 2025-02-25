@@ -57,7 +57,7 @@ class CDmeMesh : public CDmeShape
 {
     DEFINE_ELEMENT( CDmeMesh, CDmeShape );
 
-   public:
+    public:
     // resolve internal data from changed attributes
     virtual void OnAttributeChanged( CDmAttribute *pAttribute );
 
@@ -242,7 +242,7 @@ class CDmeMesh : public CDmeShape
     template < class T_t >
     static int GenerateCompleteDataForDelta( const CDmeVertexDeltaData *pDelta, T_t *pFullData, int nFullData, CDmeVertexData::StandardFields_t standardField );
 
-   private:
+    private:
     friend class CDmMeshComp;
 
     struct FaceSet_t
@@ -400,7 +400,7 @@ class CDmeMesh : public CDmeShape
     template < int T >
     class CFalloff
     {
-       public:
+        public:
         virtual inline float operator()( float x )
         {
             return 1 - x;
@@ -410,7 +410,7 @@ class CDmeMesh : public CDmeShape
     template <>
     class CFalloff< CDmeMesh::LINEAR >
     {
-       public:
+        public:
         virtual inline float operator()( float x )
         {
             return 1 - x;
@@ -420,7 +420,7 @@ class CDmeMesh : public CDmeShape
     template <>
     class CFalloff< CDmeMesh::SMOOTH >
     {
-       public:
+        public:
         virtual inline float operator()( float x )
         {
             return ( cosf( x * M_PI ) + 1.0f ) / 2.0f;
@@ -430,7 +430,7 @@ class CDmeMesh : public CDmeShape
     template <>
     class CFalloff< CDmeMesh::DOME >
     {
-       public:
+        public:
         virtual inline float operator()( float x )
         {
             return ( cosf( x * M_PI / 2.0 ) );
@@ -440,7 +440,7 @@ class CDmeMesh : public CDmeShape
     template <>
     class CFalloff< CDmeMesh::SPIKE >
     {
-       public:
+        public:
         virtual inline float operator()( float x )
         {
             return ( 1.0f - cosf( ( 1.0f - x ) * M_PI / 2.0 ) );

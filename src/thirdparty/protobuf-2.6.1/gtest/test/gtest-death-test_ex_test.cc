@@ -53,8 +53,8 @@ TEST(CxxExceptionDeathTest, ExceptionIsFailure) {
     EXPECT_NONFATAL_FAILURE(EXPECT_DEATH(throw 1, ""), "threw an exception");
   } catch (...) {  // NOLINT
     FAIL() << "An exception escaped a death test macro invocation "
-           << "with catch_exceptions "
-           << (testing::GTEST_FLAG(catch_exceptions) ? "enabled" : "disabled");
+            << "with catch_exceptions "
+            << (testing::GTEST_FLAG(catch_exceptions) ? "enabled" : "disabled");
   }
 }
 
@@ -66,10 +66,10 @@ class TestException : public std::exception {
 TEST(CxxExceptionDeathTest, PrintsMessageForStdExceptions) {
   // Verifies that the exception message is quoted in the failure text.
   EXPECT_NONFATAL_FAILURE(EXPECT_DEATH(throw TestException(), ""),
-                          "exceptional message");
+                        "exceptional message");
   // Verifies that the location is mentioned in the failure text.
   EXPECT_NONFATAL_FAILURE(EXPECT_DEATH(throw TestException(), ""),
-                          "gtest-death-test_ex_test.cc");
+                        "gtest-death-test_ex_test.cc");
 }
 # endif  // GTEST_HAS_EXCEPTIONS
 
@@ -79,8 +79,8 @@ TEST(CxxExceptionDeathTest, PrintsMessageForStdExceptions) {
 // treated as death by death tests.
 TEST(SehExceptionDeasTest, CatchExceptionsDoesNotInterfere) {
   EXPECT_DEATH(RaiseException(42, 0x0, 0, NULL), "")
-      << "with catch_exceptions "
-      << (testing::GTEST_FLAG(catch_exceptions) ? "enabled" : "disabled");
+    << "with catch_exceptions "
+    << (testing::GTEST_FLAG(catch_exceptions) ? "enabled" : "disabled");
 }
 # endif
 

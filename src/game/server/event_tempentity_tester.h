@@ -19,7 +19,7 @@ class CBaseTempEntity;
 //-----------------------------------------------------------------------------
 class CTempEntTester : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTempEntTester, CPointEntity );
 
     void Spawn( void );
@@ -27,7 +27,7 @@ class CTempEntTester : public CPointEntity
 
     static CBaseEntity *Create( const Vector &vecOrigin, const QAngle &vecAngles, const char *lifetime, const char *single_te );
 
-   private:
+    private:
     // Current temp entity to test
     CBaseTempEntity *m_pCurrent;
 

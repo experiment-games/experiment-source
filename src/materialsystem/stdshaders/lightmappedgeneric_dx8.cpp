@@ -20,7 +20,7 @@ static ConVar mat_fullbright( "mat_fullbright", "0", FCVAR_CHEAT );
 DEFINE_FALLBACK_SHADER( LightmappedGeneric, LightmappedGeneric_DX8 )
 
 BEGIN_VS_SHADER( LightmappedGeneric_DX8,
-                 "Help for LightmappedGeneric_DX8" )
+                "Help for LightmappedGeneric_DX8" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( ALBEDO, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "albedo (Base texture with no baked lighting)" )
@@ -61,8 +61,8 @@ SHADER_INIT_PARAMS()
 
     // Write over $basetexture with $albedo if we are going to be using diffuse normal mapping.
     if ( ShouldUseBumpmapping( params ) && params[ALBEDO]->IsDefined() &&
-         params[BASETEXTURE]->IsDefined() &&
-         !( params[NODIFFUSEBUMPLIGHTING]->IsDefined() && params[NODIFFUSEBUMPLIGHTING]->GetIntValue() ) )
+        params[BASETEXTURE]->IsDefined() &&
+        !( params[NODIFFUSEBUMPLIGHTING]->IsDefined() && params[NODIFFUSEBUMPLIGHTING]->GetIntValue() ) )
     {
         params[BASETEXTURE]->SetStringValue( params[ALBEDO]->GetStringValue() );
     }
@@ -418,7 +418,7 @@ void DrawUnbumpedUsingVertexShader( IMaterialVar** params, IShaderDynamicAPI* pS
                 }
 
                 if ( IS_FLAG_SET( MATERIAL_VAR_ENVMAPSPHERE ) ||
-                     IS_FLAG_SET( MATERIAL_VAR_ENVMAPCAMERASPACE ) )
+                    IS_FLAG_SET( MATERIAL_VAR_ENVMAPCAMERASPACE ) )
                 {
                     LoadViewMatrixIntoVertexShaderConstant( VERTEX_SHADER_VIEWMODEL );
                 }
@@ -529,8 +529,8 @@ void DrawDetailNoEnvmap( IMaterialVar** params, IShaderDynamicAPI* pShaderAPI, I
 }
 
 inline const char* GetAdditiveEnvmapPixelShaderName( bool usingMask,
-                                                     bool usingBaseTexture,
-                                                     bool usingBaseAlphaEnvmapMask )
+                                                    bool usingBaseTexture,
+                                                    bool usingBaseAlphaEnvmapMask )
 {
     static char const* s_pPixelShaders[] =
         {
@@ -730,7 +730,7 @@ SHADER_DRAW
 {
     bool hasFlashlight = UsingFlashlight( params );
     bool bBump = ShouldUseBumpmapping( params ) && params[BUMPMAP]->IsTexture() &&
-                 ( params[NODIFFUSEBUMPLIGHTING]->GetIntValue() == 0 );
+                ( params[NODIFFUSEBUMPLIGHTING]->GetIntValue() == 0 );
     bool bSSBump = bBump && ( params[SSBUMP]->GetIntValue() != 0 );
 
     if ( hasFlashlight )

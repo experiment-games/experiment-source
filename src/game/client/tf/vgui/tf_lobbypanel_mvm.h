@@ -21,7 +21,7 @@ class CLobbyPanel_MvM : public CBaseLobbyPanel
 {
     DECLARE_CLASS_SIMPLE( CLobbyPanel_MvM, CBaseLobbyPanel );
 
-   public:
+    public:
     CLobbyPanel_MvM( vgui::Panel* pParent, CBaseLobbyContainerFrame* pLobbyContainer );
     virtual ~CLobbyPanel_MvM() {}
 
@@ -36,7 +36,7 @@ class CLobbyPanel_MvM : public CBaseLobbyPanel
     void WriteGameSettingsControls() OVERRIDE;
     virtual bool ShouldShowLateJoin() const OVERRIDE;
 
-   private:
+    private:
     CPanelAnimationVarAliasType( int, m_iHasTicketWidth, "has_ticket_width", "12", "proportional_int" );
     CPanelAnimationVarAliasType( int, m_iSquadSurplusWidth, "squad_surplus_width", "12", "proportional_int" );
 

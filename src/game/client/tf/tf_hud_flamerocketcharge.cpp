@@ -30,14 +30,14 @@ class CHudFlameRocketChargeMeter : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CHudFlameRocketChargeMeter, EditablePanel );
 
-   public:
+    public:
     CHudFlameRocketChargeMeter( const char *pElementName );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
     virtual bool ShouldDraw( void );
     virtual void OnTick( void );
 
-   private:
+    private:
     vgui::ContinuousProgressBar *m_pChargeMeter;
 };
 

@@ -14,7 +14,7 @@ class C_TFTauntProp : public C_BaseCombatCharacter
 {
     DECLARE_CLASS( C_TFTauntProp, C_BaseCombatCharacter );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     virtual bool StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, C_BaseEntity *pTarget ) OVERRIDE;

@@ -22,7 +22,7 @@ struct clusterSoundscapeList_t
 
 class CSoundscapeSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CSoundscapeSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -47,7 +47,7 @@ class CSoundscapeSystem : public CAutoGameSystemPerFrame
     void AddSoundscapeSounds( KeyValues *pSoundscape, int soundscapeIndex );
     void PrecacheSounds( int soundscapeIndex );
 
-   private:
+    private:
     CStringRegistry m_soundscapes;
     int m_soundscapeCount;
     CUtlVector< CEnvSoundscape * > m_soundscapeEntities;

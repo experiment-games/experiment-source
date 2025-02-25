@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class C_TESparks : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TESparks, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 

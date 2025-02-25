@@ -16,7 +16,7 @@ class CCasualSidePanel : public CMatchMakingDashboardSidePanel, public CGameEven
 {
     DECLARE_CLASS_SIMPLE( CCasualSidePanel, CMatchMakingDashboardSidePanel );
 
-   public:
+    public:
     CCasualSidePanel()
         : CMatchMakingDashboardSidePanel( NULL, "CasualCriteria", "resource/ui/MatchMakingDashboardCasualCriteria.res", k_eSideRight )
     {

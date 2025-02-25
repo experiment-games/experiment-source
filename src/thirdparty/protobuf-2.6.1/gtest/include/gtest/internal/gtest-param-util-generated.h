@@ -78,7 +78,7 @@ namespace internal
 template < typename T1 >
 class ValueArray1
 {
-   public:
+    public:
     explicit ValueArray1( T1 v1 )
         : v1_( v1 ) {}
 
@@ -88,7 +88,7 @@ class ValueArray1
         return ValuesIn( &v1_, &v1_ + 1 );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray1& other );
 
@@ -98,7 +98,7 @@ class ValueArray1
 template < typename T1, typename T2 >
 class ValueArray2
 {
-   public:
+    public:
     ValueArray2( T1 v1, T2 v2 )
         : v1_( v1 ), v2_( v2 ) {}
 
@@ -109,7 +109,7 @@ class ValueArray2
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray2& other );
 
@@ -120,7 +120,7 @@ class ValueArray2
 template < typename T1, typename T2, typename T3 >
 class ValueArray3
 {
-   public:
+    public:
     ValueArray3( T1 v1, T2 v2, T3 v3 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ) {}
 
@@ -131,7 +131,7 @@ class ValueArray3
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray3& other );
 
@@ -143,7 +143,7 @@ class ValueArray3
 template < typename T1, typename T2, typename T3, typename T4 >
 class ValueArray4
 {
-   public:
+    public:
     ValueArray4( T1 v1, T2 v2, T3 v3, T4 v4 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ) {}
 
@@ -154,7 +154,7 @@ class ValueArray4
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray4& other );
 
@@ -167,7 +167,7 @@ class ValueArray4
 template < typename T1, typename T2, typename T3, typename T4, typename T5 >
 class ValueArray5
 {
-   public:
+    public:
     ValueArray5( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ) {}
 
@@ -178,7 +178,7 @@ class ValueArray5
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray5& other );
 
@@ -192,7 +192,7 @@ class ValueArray5
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6 >
 class ValueArray6
 {
-   public:
+    public:
     ValueArray6( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ) {}
 
@@ -203,7 +203,7 @@ class ValueArray6
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray6& other );
 
@@ -218,15 +218,15 @@ class ValueArray6
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7 >
 class ValueArray7
 {
-   public:
+    public:
     ValueArray7( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -235,7 +235,7 @@ class ValueArray7
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray7& other );
 
@@ -251,7 +251,7 @@ class ValueArray7
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8 >
 class ValueArray8
 {
-   public:
+    public:
     ValueArray8( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ) {}
 
@@ -262,7 +262,7 @@ class ValueArray8
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray8& other );
 
@@ -279,7 +279,7 @@ class ValueArray8
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9 >
 class ValueArray9
 {
-   public:
+    public:
     ValueArray9( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ) {}
 
@@ -290,7 +290,7 @@ class ValueArray9
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray9& other );
 
@@ -308,7 +308,7 @@ class ValueArray9
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10 >
 class ValueArray10
 {
-   public:
+    public:
     ValueArray10( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ) {}
 
@@ -319,7 +319,7 @@ class ValueArray10
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray10& other );
 
@@ -338,7 +338,7 @@ class ValueArray10
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11 >
 class ValueArray11
 {
-   public:
+    public:
     ValueArray11( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ) {}
 
@@ -349,7 +349,7 @@ class ValueArray11
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray11& other );
 
@@ -369,7 +369,7 @@ class ValueArray11
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12 >
 class ValueArray12
 {
-   public:
+    public:
     ValueArray12( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ) {}
 
@@ -380,7 +380,7 @@ class ValueArray12
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray12& other );
 
@@ -401,7 +401,7 @@ class ValueArray12
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13 >
 class ValueArray13
 {
-   public:
+    public:
     ValueArray13( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ) {}
 
@@ -412,7 +412,7 @@ class ValueArray13
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray13& other );
 
@@ -434,7 +434,7 @@ class ValueArray13
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14 >
 class ValueArray14
 {
-   public:
+    public:
     ValueArray14( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ) {}
 
@@ -445,7 +445,7 @@ class ValueArray14
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray14& other );
 
@@ -468,7 +468,7 @@ class ValueArray14
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15 >
 class ValueArray15
 {
-   public:
+    public:
     ValueArray15( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ) {}
 
@@ -479,7 +479,7 @@ class ValueArray15
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray15& other );
 
@@ -503,24 +503,24 @@ class ValueArray15
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16 >
 class ValueArray16
 {
-   public:
+    public:
     ValueArray16( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -529,7 +529,7 @@ class ValueArray16
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray16& other );
 
@@ -554,7 +554,7 @@ class ValueArray16
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17 >
 class ValueArray17
 {
-   public:
+    public:
     ValueArray17( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ) {}
 
@@ -565,7 +565,7 @@ class ValueArray17
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray17& other );
 
@@ -591,7 +591,7 @@ class ValueArray17
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18 >
 class ValueArray18
 {
-   public:
+    public:
     ValueArray18( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ) {}
 
@@ -602,7 +602,7 @@ class ValueArray18
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray18& other );
 
@@ -629,7 +629,7 @@ class ValueArray18
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19 >
 class ValueArray19
 {
-   public:
+    public:
     ValueArray19( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ) {}
 
@@ -640,7 +640,7 @@ class ValueArray19
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray19& other );
 
@@ -668,7 +668,7 @@ class ValueArray19
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20 >
 class ValueArray20
 {
-   public:
+    public:
     ValueArray20( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ) {}
 
@@ -679,7 +679,7 @@ class ValueArray20
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray20& other );
 
@@ -708,7 +708,7 @@ class ValueArray20
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21 >
 class ValueArray21
 {
-   public:
+    public:
     ValueArray21( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ) {}
 
@@ -719,7 +719,7 @@ class ValueArray21
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray21& other );
 
@@ -749,7 +749,7 @@ class ValueArray21
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22 >
 class ValueArray22
 {
-   public:
+    public:
     ValueArray22( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ) {}
 
@@ -760,7 +760,7 @@ class ValueArray22
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray22& other );
 
@@ -791,7 +791,7 @@ class ValueArray22
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23 >
 class ValueArray23
 {
-   public:
+    public:
     ValueArray23( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ) {}
 
@@ -802,7 +802,7 @@ class ValueArray23
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray23& other );
 
@@ -834,32 +834,32 @@ class ValueArray23
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24 >
 class ValueArray24
 {
-   public:
+    public:
     ValueArray24( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -868,7 +868,7 @@ class ValueArray24
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray24& other );
 
@@ -901,7 +901,7 @@ class ValueArray24
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25 >
 class ValueArray25
 {
-   public:
+    public:
     ValueArray25( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ) {}
 
@@ -912,7 +912,7 @@ class ValueArray25
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray25& other );
 
@@ -946,7 +946,7 @@ class ValueArray25
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26 >
 class ValueArray26
 {
-   public:
+    public:
     ValueArray26( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ) {}
 
@@ -957,7 +957,7 @@ class ValueArray26
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray26& other );
 
@@ -992,7 +992,7 @@ class ValueArray26
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27 >
 class ValueArray27
 {
-   public:
+    public:
     ValueArray27( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ) {}
 
@@ -1003,7 +1003,7 @@ class ValueArray27
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray27& other );
 
@@ -1039,7 +1039,7 @@ class ValueArray27
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28 >
 class ValueArray28
 {
-   public:
+    public:
     ValueArray28( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ) {}
 
@@ -1050,7 +1050,7 @@ class ValueArray28
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray28& other );
 
@@ -1087,7 +1087,7 @@ class ValueArray28
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29 >
 class ValueArray29
 {
-   public:
+    public:
     ValueArray29( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ) {}
 
@@ -1098,7 +1098,7 @@ class ValueArray29
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray29& other );
 
@@ -1136,7 +1136,7 @@ class ValueArray29
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30 >
 class ValueArray30
 {
-   public:
+    public:
     ValueArray30( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ) {}
 
@@ -1147,7 +1147,7 @@ class ValueArray30
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray30& other );
 
@@ -1186,7 +1186,7 @@ class ValueArray30
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31 >
 class ValueArray31
 {
-   public:
+    public:
     ValueArray31( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ) {}
 
@@ -1197,7 +1197,7 @@ class ValueArray31
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray31& other );
 
@@ -1237,40 +1237,40 @@ class ValueArray31
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32 >
 class ValueArray32
 {
-   public:
+    public:
     ValueArray32( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ),
-          v25_( v25 ),
-          v26_( v26 ),
-          v27_( v27 ),
-          v28_( v28 ),
-          v29_( v29 ),
-          v30_( v30 ),
-          v31_( v31 ),
-          v32_( v32 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ),
+        v25_( v25 ),
+        v26_( v26 ),
+        v27_( v27 ),
+        v28_( v28 ),
+        v29_( v29 ),
+        v30_( v30 ),
+        v31_( v31 ),
+        v32_( v32 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -1279,7 +1279,7 @@ class ValueArray32
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray32& other );
 
@@ -1320,7 +1320,7 @@ class ValueArray32
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33 >
 class ValueArray33
 {
-   public:
+    public:
     ValueArray33( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ) {}
 
@@ -1331,7 +1331,7 @@ class ValueArray33
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray33& other );
 
@@ -1373,7 +1373,7 @@ class ValueArray33
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34 >
 class ValueArray34
 {
-   public:
+    public:
     ValueArray34( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ) {}
 
@@ -1384,7 +1384,7 @@ class ValueArray34
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray34& other );
 
@@ -1427,7 +1427,7 @@ class ValueArray34
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35 >
 class ValueArray35
 {
-   public:
+    public:
     ValueArray35( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ) {}
 
@@ -1438,7 +1438,7 @@ class ValueArray35
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray35& other );
 
@@ -1482,7 +1482,7 @@ class ValueArray35
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36 >
 class ValueArray36
 {
-   public:
+    public:
     ValueArray36( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ) {}
 
@@ -1493,7 +1493,7 @@ class ValueArray36
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray36& other );
 
@@ -1538,7 +1538,7 @@ class ValueArray36
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37 >
 class ValueArray37
 {
-   public:
+    public:
     ValueArray37( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ) {}
 
@@ -1549,7 +1549,7 @@ class ValueArray37
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray37& other );
 
@@ -1595,7 +1595,7 @@ class ValueArray37
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38 >
 class ValueArray38
 {
-   public:
+    public:
     ValueArray38( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ) {}
 
@@ -1606,7 +1606,7 @@ class ValueArray38
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray38& other );
 
@@ -1653,7 +1653,7 @@ class ValueArray38
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39 >
 class ValueArray39
 {
-   public:
+    public:
     ValueArray39( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ) {}
 
@@ -1664,7 +1664,7 @@ class ValueArray39
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray39& other );
 
@@ -1712,48 +1712,48 @@ class ValueArray39
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40 >
 class ValueArray40
 {
-   public:
+    public:
     ValueArray40( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ),
-          v25_( v25 ),
-          v26_( v26 ),
-          v27_( v27 ),
-          v28_( v28 ),
-          v29_( v29 ),
-          v30_( v30 ),
-          v31_( v31 ),
-          v32_( v32 ),
-          v33_( v33 ),
-          v34_( v34 ),
-          v35_( v35 ),
-          v36_( v36 ),
-          v37_( v37 ),
-          v38_( v38 ),
-          v39_( v39 ),
-          v40_( v40 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ),
+        v25_( v25 ),
+        v26_( v26 ),
+        v27_( v27 ),
+        v28_( v28 ),
+        v29_( v29 ),
+        v30_( v30 ),
+        v31_( v31 ),
+        v32_( v32 ),
+        v33_( v33 ),
+        v34_( v34 ),
+        v35_( v35 ),
+        v36_( v36 ),
+        v37_( v37 ),
+        v38_( v38 ),
+        v39_( v39 ),
+        v40_( v40 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -1762,7 +1762,7 @@ class ValueArray40
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray40& other );
 
@@ -1811,7 +1811,7 @@ class ValueArray40
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41 >
 class ValueArray41
 {
-   public:
+    public:
     ValueArray41( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ) {}
 
@@ -1822,7 +1822,7 @@ class ValueArray41
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray41& other );
 
@@ -1872,7 +1872,7 @@ class ValueArray41
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42 >
 class ValueArray42
 {
-   public:
+    public:
     ValueArray42( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ) {}
 
@@ -1883,7 +1883,7 @@ class ValueArray42
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray42& other );
 
@@ -1934,7 +1934,7 @@ class ValueArray42
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43 >
 class ValueArray43
 {
-   public:
+    public:
     ValueArray43( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ) {}
 
@@ -1945,7 +1945,7 @@ class ValueArray43
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray43& other );
 
@@ -1997,7 +1997,7 @@ class ValueArray43
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44 >
 class ValueArray44
 {
-   public:
+    public:
     ValueArray44( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ) {}
 
@@ -2008,7 +2008,7 @@ class ValueArray44
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray44& other );
 
@@ -2061,7 +2061,7 @@ class ValueArray44
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45 >
 class ValueArray45
 {
-   public:
+    public:
     ValueArray45( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ) {}
 
@@ -2072,7 +2072,7 @@ class ValueArray45
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray45& other );
 
@@ -2126,7 +2126,7 @@ class ValueArray45
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46 >
 class ValueArray46
 {
-   public:
+    public:
     ValueArray46( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ) {}
 
@@ -2137,7 +2137,7 @@ class ValueArray46
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray46& other );
 
@@ -2192,7 +2192,7 @@ class ValueArray46
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47 >
 class ValueArray47
 {
-   public:
+    public:
     ValueArray47( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ), v47_( v47 ) {}
 
@@ -2203,7 +2203,7 @@ class ValueArray47
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray47& other );
 
@@ -2259,56 +2259,56 @@ class ValueArray47
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47, typename T48 >
 class ValueArray48
 {
-   public:
+    public:
     ValueArray48( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47, T48 v48 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ),
-          v25_( v25 ),
-          v26_( v26 ),
-          v27_( v27 ),
-          v28_( v28 ),
-          v29_( v29 ),
-          v30_( v30 ),
-          v31_( v31 ),
-          v32_( v32 ),
-          v33_( v33 ),
-          v34_( v34 ),
-          v35_( v35 ),
-          v36_( v36 ),
-          v37_( v37 ),
-          v38_( v38 ),
-          v39_( v39 ),
-          v40_( v40 ),
-          v41_( v41 ),
-          v42_( v42 ),
-          v43_( v43 ),
-          v44_( v44 ),
-          v45_( v45 ),
-          v46_( v46 ),
-          v47_( v47 ),
-          v48_( v48 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ),
+        v25_( v25 ),
+        v26_( v26 ),
+        v27_( v27 ),
+        v28_( v28 ),
+        v29_( v29 ),
+        v30_( v30 ),
+        v31_( v31 ),
+        v32_( v32 ),
+        v33_( v33 ),
+        v34_( v34 ),
+        v35_( v35 ),
+        v36_( v36 ),
+        v37_( v37 ),
+        v38_( v38 ),
+        v39_( v39 ),
+        v40_( v40 ),
+        v41_( v41 ),
+        v42_( v42 ),
+        v43_( v43 ),
+        v44_( v44 ),
+        v45_( v45 ),
+        v46_( v46 ),
+        v47_( v47 ),
+        v48_( v48 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -2317,7 +2317,7 @@ class ValueArray48
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray48& other );
 
@@ -2374,7 +2374,7 @@ class ValueArray48
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47, typename T48, typename T49 >
 class ValueArray49
 {
-   public:
+    public:
     ValueArray49( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47, T48 v48, T49 v49 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ), v47_( v47 ), v48_( v48 ), v49_( v49 ) {}
 
@@ -2385,7 +2385,7 @@ class ValueArray49
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray49& other );
 
@@ -2443,7 +2443,7 @@ class ValueArray49
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47, typename T48, typename T49, typename T50 >
 class ValueArray50
 {
-   public:
+    public:
     ValueArray50( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47, T48 v48, T49 v49, T50 v50 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ), v47_( v47 ), v48_( v48 ), v49_( v49 ), v50_( v50 ) {}
 
@@ -2454,7 +2454,7 @@ class ValueArray50
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray50& other );
 
@@ -2520,7 +2520,7 @@ template < typename T1, typename T2 >
 class CartesianProductGenerator2
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2 > ParamType;
 
     CartesianProductGenerator2( const ParamGenerator< T1 >& g1,
@@ -2537,22 +2537,22 @@ class CartesianProductGenerator2
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 )
         {
             ComputeCurrentValue();
         }
@@ -2596,19 +2596,19 @@ class CartesianProductGenerator2
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ )
         {
             ComputeCurrentValue();
         }
@@ -2623,7 +2623,7 @@ class CartesianProductGenerator2
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_;
+                    current2_ == end2_;
         }
 
         // No implementation - assignment is unsupported.
@@ -2652,7 +2652,7 @@ template < typename T1, typename T2, typename T3 >
 class CartesianProductGenerator3
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3 > ParamType;
 
     CartesianProductGenerator3( const ParamGenerator< T1 >& g1,
@@ -2670,27 +2670,27 @@ class CartesianProductGenerator3
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 )
         {
             ComputeCurrentValue();
         }
@@ -2739,23 +2739,23 @@ class CartesianProductGenerator3
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ )
         {
             ComputeCurrentValue();
         }
@@ -2770,8 +2770,8 @@ class CartesianProductGenerator3
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_;
+                    current2_ == end2_ ||
+                    current3_ == end3_;
         }
 
         // No implementation - assignment is unsupported.
@@ -2804,7 +2804,7 @@ template < typename T1, typename T2, typename T3, typename T4 >
 class CartesianProductGenerator4
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4 > ParamType;
 
     CartesianProductGenerator4( const ParamGenerator< T1 >& g1,
@@ -2823,32 +2823,32 @@ class CartesianProductGenerator4
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 )
         {
             ComputeCurrentValue();
         }
@@ -2902,27 +2902,27 @@ class CartesianProductGenerator4
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ )
         {
             ComputeCurrentValue();
         }
@@ -2937,9 +2937,9 @@ class CartesianProductGenerator4
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_;
         }
 
         // No implementation - assignment is unsupported.
@@ -2976,7 +2976,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5 >
 class CartesianProductGenerator5
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5 > ParamType;
 
     CartesianProductGenerator5( const ParamGenerator< T1 >& g1,
@@ -2996,37 +2996,37 @@ class CartesianProductGenerator5
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 )
         {
             ComputeCurrentValue();
         }
@@ -3085,31 +3085,31 @@ class CartesianProductGenerator5
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ )
         {
             ComputeCurrentValue();
         }
@@ -3124,10 +3124,10 @@ class CartesianProductGenerator5
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_;
         }
 
         // No implementation - assignment is unsupported.
@@ -3168,7 +3168,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator6
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6 > ParamType;
 
     CartesianProductGenerator6( const ParamGenerator< T1 >& g1,
@@ -3189,42 +3189,42 @@ class CartesianProductGenerator6
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 )
         {
             ComputeCurrentValue();
         }
@@ -3288,35 +3288,35 @@ class CartesianProductGenerator6
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ )
         {
             ComputeCurrentValue();
         }
@@ -3331,11 +3331,11 @@ class CartesianProductGenerator6
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_;
         }
 
         // No implementation - assignment is unsupported.
@@ -3380,7 +3380,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator7
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7 > ParamType;
 
     CartesianProductGenerator7( const ParamGenerator< T1 >& g1,
@@ -3402,47 +3402,47 @@ class CartesianProductGenerator7
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 )
         {
             ComputeCurrentValue();
         }
@@ -3511,39 +3511,39 @@ class CartesianProductGenerator7
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ )
         {
             ComputeCurrentValue();
         }
@@ -3558,12 +3558,12 @@ class CartesianProductGenerator7
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_;
         }
 
         // No implementation - assignment is unsupported.
@@ -3612,7 +3612,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator8
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8 > ParamType;
 
     CartesianProductGenerator8( const ParamGenerator< T1 >& g1,
@@ -3635,52 +3635,52 @@ class CartesianProductGenerator8
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end(), g8_, g8_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7,
-                  const ParamGenerator< T8 >& g8,
-                  const typename ParamGenerator< T8 >::iterator& current8 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7,
+                const ParamGenerator< T8 >& g8,
+                const typename ParamGenerator< T8 >::iterator& current8 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 ),
-              begin8_( g8.begin() ),
-              end8_( g8.end() ),
-              current8_( current8 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 ),
+            begin8_( g8.begin() ),
+            end8_( g8.end() ),
+            current8_( current8 )
         {
             ComputeCurrentValue();
         }
@@ -3754,43 +3754,43 @@ class CartesianProductGenerator8
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ &&
-                     current8_ == typed_other->current8_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ &&
+                    current8_ == typed_other->current8_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ ),
-              begin8_( other.begin8_ ),
-              end8_( other.end8_ ),
-              current8_( other.current8_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ ),
+            begin8_( other.begin8_ ),
+            end8_( other.end8_ ),
+            current8_( other.current8_ )
         {
             ComputeCurrentValue();
         }
@@ -3805,13 +3805,13 @@ class CartesianProductGenerator8
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_ ||
-                   current8_ == end8_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_ ||
+                    current8_ == end8_;
         }
 
         // No implementation - assignment is unsupported.
@@ -3864,7 +3864,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator9
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9 > ParamType;
 
     CartesianProductGenerator9( const ParamGenerator< T1 >& g1,
@@ -3888,57 +3888,57 @@ class CartesianProductGenerator9
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end(), g8_, g8_.end(), g9_, g9_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7,
-                  const ParamGenerator< T8 >& g8,
-                  const typename ParamGenerator< T8 >::iterator& current8,
-                  const ParamGenerator< T9 >& g9,
-                  const typename ParamGenerator< T9 >::iterator& current9 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7,
+                const ParamGenerator< T8 >& g8,
+                const typename ParamGenerator< T8 >::iterator& current8,
+                const ParamGenerator< T9 >& g9,
+                const typename ParamGenerator< T9 >::iterator& current9 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 ),
-              begin8_( g8.begin() ),
-              end8_( g8.end() ),
-              current8_( current8 ),
-              begin9_( g9.begin() ),
-              end9_( g9.end() ),
-              current9_( current9 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 ),
+            begin8_( g8.begin() ),
+            end8_( g8.end() ),
+            current8_( current8 ),
+            begin9_( g9.begin() ),
+            end9_( g9.end() ),
+            current9_( current9 )
         {
             ComputeCurrentValue();
         }
@@ -4017,47 +4017,47 @@ class CartesianProductGenerator9
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ &&
-                     current8_ == typed_other->current8_ &&
-                     current9_ == typed_other->current9_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ &&
+                    current8_ == typed_other->current8_ &&
+                    current9_ == typed_other->current9_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ ),
-              begin8_( other.begin8_ ),
-              end8_( other.end8_ ),
-              current8_( other.current8_ ),
-              begin9_( other.begin9_ ),
-              end9_( other.end9_ ),
-              current9_( other.current9_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ ),
+            begin8_( other.begin8_ ),
+            end8_( other.end8_ ),
+            current8_( other.current8_ ),
+            begin9_( other.begin9_ ),
+            end9_( other.end9_ ),
+            current9_( other.current9_ )
         {
             ComputeCurrentValue();
         }
@@ -4072,14 +4072,14 @@ class CartesianProductGenerator9
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_ ||
-                   current8_ == end8_ ||
-                   current9_ == end9_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_ ||
+                    current8_ == end8_ ||
+                    current9_ == end9_;
         }
 
         // No implementation - assignment is unsupported.
@@ -4136,19 +4136,19 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator10
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > ParamType;
 
     CartesianProductGenerator10( const ParamGenerator< T1 >& g1,
-                                 const ParamGenerator< T2 >& g2,
-                                 const ParamGenerator< T3 >& g3,
-                                 const ParamGenerator< T4 >& g4,
-                                 const ParamGenerator< T5 >& g5,
-                                 const ParamGenerator< T6 >& g6,
-                                 const ParamGenerator< T7 >& g7,
-                                 const ParamGenerator< T8 >& g8,
-                                 const ParamGenerator< T9 >& g9,
-                                 const ParamGenerator< T10 >& g10 )
+                                const ParamGenerator< T2 >& g2,
+                                const ParamGenerator< T3 >& g3,
+                                const ParamGenerator< T4 >& g4,
+                                const ParamGenerator< T5 >& g5,
+                                const ParamGenerator< T6 >& g6,
+                                const ParamGenerator< T7 >& g7,
+                                const ParamGenerator< T8 >& g8,
+                                const ParamGenerator< T9 >& g9,
+                                const ParamGenerator< T10 >& g10 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ), g9_( g9 ), g10_( g10 ) {}
     virtual ~CartesianProductGenerator10() {}
 
@@ -4161,62 +4161,62 @@ class CartesianProductGenerator10
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end(), g8_, g8_.end(), g9_, g9_.end(), g10_, g10_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7,
-                  const ParamGenerator< T8 >& g8,
-                  const typename ParamGenerator< T8 >::iterator& current8,
-                  const ParamGenerator< T9 >& g9,
-                  const typename ParamGenerator< T9 >::iterator& current9,
-                  const ParamGenerator< T10 >& g10,
-                  const typename ParamGenerator< T10 >::iterator& current10 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7,
+                const ParamGenerator< T8 >& g8,
+                const typename ParamGenerator< T8 >::iterator& current8,
+                const ParamGenerator< T9 >& g9,
+                const typename ParamGenerator< T9 >::iterator& current9,
+                const ParamGenerator< T10 >& g10,
+                const typename ParamGenerator< T10 >::iterator& current10 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 ),
-              begin8_( g8.begin() ),
-              end8_( g8.end() ),
-              current8_( current8 ),
-              begin9_( g9.begin() ),
-              end9_( g9.end() ),
-              current9_( current9 ),
-              begin10_( g10.begin() ),
-              end10_( g10.end() ),
-              current10_( current10 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 ),
+            begin8_( g8.begin() ),
+            end8_( g8.end() ),
+            current8_( current8 ),
+            begin9_( g9.begin() ),
+            end9_( g9.end() ),
+            current9_( current9 ),
+            begin10_( g10.begin() ),
+            end10_( g10.end() ),
+            current10_( current10 )
         {
             ComputeCurrentValue();
         }
@@ -4300,51 +4300,51 @@ class CartesianProductGenerator10
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ &&
-                     current8_ == typed_other->current8_ &&
-                     current9_ == typed_other->current9_ &&
-                     current10_ == typed_other->current10_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ &&
+                    current8_ == typed_other->current8_ &&
+                    current9_ == typed_other->current9_ &&
+                    current10_ == typed_other->current10_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ ),
-              begin8_( other.begin8_ ),
-              end8_( other.end8_ ),
-              current8_( other.current8_ ),
-              begin9_( other.begin9_ ),
-              end9_( other.end9_ ),
-              current9_( other.current9_ ),
-              begin10_( other.begin10_ ),
-              end10_( other.end10_ ),
-              current10_( other.current10_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ ),
+            begin8_( other.begin8_ ),
+            end8_( other.end8_ ),
+            current8_( other.current8_ ),
+            begin9_( other.begin9_ ),
+            end9_( other.end9_ ),
+            current9_( other.current9_ ),
+            begin10_( other.begin10_ ),
+            end10_( other.end10_ ),
+            current10_( other.current10_ )
         {
             ComputeCurrentValue();
         }
@@ -4359,15 +4359,15 @@ class CartesianProductGenerator10
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_ ||
-                   current8_ == end8_ ||
-                   current9_ == end9_ ||
-                   current10_ == end10_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_ ||
+                    current8_ == end8_ ||
+                    current9_ == end9_ ||
+                    current10_ == end10_;
         }
 
         // No implementation - assignment is unsupported.
@@ -4433,7 +4433,7 @@ class CartesianProductGenerator10
 template < class Generator1, class Generator2 >
 class CartesianProductHolder2
 {
-   public:
+    public:
     CartesianProductHolder2( const Generator1& g1, const Generator2& g2 )
         : g1_( g1 ), g2_( g2 ) {}
     template < typename T1, typename T2 >
@@ -4445,7 +4445,7 @@ class CartesianProductHolder2
                 static_cast< ParamGenerator< T2 > >( g2_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder2& other );
 
@@ -4456,7 +4456,7 @@ class CartesianProductHolder2
 template < class Generator1, class Generator2, class Generator3 >
 class CartesianProductHolder3
 {
-   public:
+    public:
     CartesianProductHolder3( const Generator1& g1, const Generator2& g2, const Generator3& g3 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ) {}
     template < typename T1, typename T2, typename T3 >
@@ -4469,7 +4469,7 @@ class CartesianProductHolder3
                 static_cast< ParamGenerator< T3 > >( g3_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder3& other );
 
@@ -4481,7 +4481,7 @@ class CartesianProductHolder3
 template < class Generator1, class Generator2, class Generator3, class Generator4 >
 class CartesianProductHolder4
 {
-   public:
+    public:
     CartesianProductHolder4( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ) {}
     template < typename T1, typename T2, typename T3, typename T4 >
@@ -4495,7 +4495,7 @@ class CartesianProductHolder4
                 static_cast< ParamGenerator< T4 > >( g4_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder4& other );
 
@@ -4508,7 +4508,7 @@ class CartesianProductHolder4
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5 >
 class CartesianProductHolder5
 {
-   public:
+    public:
     CartesianProductHolder5( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5 >
@@ -4523,7 +4523,7 @@ class CartesianProductHolder5
                 static_cast< ParamGenerator< T5 > >( g5_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder5& other );
 
@@ -4537,7 +4537,7 @@ class CartesianProductHolder5
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6 >
 class CartesianProductHolder6
 {
-   public:
+    public:
     CartesianProductHolder6( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6 >
@@ -4553,7 +4553,7 @@ class CartesianProductHolder6
                 static_cast< ParamGenerator< T6 > >( g6_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder6& other );
 
@@ -4568,7 +4568,7 @@ class CartesianProductHolder6
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7 >
 class CartesianProductHolder7
 {
-   public:
+    public:
     CartesianProductHolder7( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7 >
@@ -4585,7 +4585,7 @@ class CartesianProductHolder7
                 static_cast< ParamGenerator< T7 > >( g7_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder7& other );
 
@@ -4601,7 +4601,7 @@ class CartesianProductHolder7
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7, class Generator8 >
 class CartesianProductHolder8
 {
-   public:
+    public:
     CartesianProductHolder8( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7, const Generator8& g8 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8 >
@@ -4619,7 +4619,7 @@ class CartesianProductHolder8
                 static_cast< ParamGenerator< T8 > >( g8_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder8& other );
 
@@ -4636,7 +4636,7 @@ class CartesianProductHolder8
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7, class Generator8, class Generator9 >
 class CartesianProductHolder9
 {
-   public:
+    public:
     CartesianProductHolder9( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7, const Generator8& g8, const Generator9& g9 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ), g9_( g9 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9 >
@@ -4655,7 +4655,7 @@ class CartesianProductHolder9
                 static_cast< ParamGenerator< T9 > >( g9_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder9& other );
 
@@ -4673,7 +4673,7 @@ class CartesianProductHolder9
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7, class Generator8, class Generator9, class Generator10 >
 class CartesianProductHolder10
 {
-   public:
+    public:
     CartesianProductHolder10( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7, const Generator8& g8, const Generator9& g9, const Generator10& g10 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ), g9_( g9 ), g10_( g10 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10 >
@@ -4693,7 +4693,7 @@ class CartesianProductHolder10
                 static_cast< ParamGenerator< T10 > >( g10_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder10& other );
 

@@ -27,7 +27,7 @@ class CTFplayer;
 class CTFWarTracker : public CBaseSOTracker, public CGameEventListener
 {
     DECLARE_CLASS( CTFWarTracker, CBaseSOTracker )
-   public:
+    public:
     CTFWarTracker( const CSharedObject* pItem, CSteamID SteamIDOwner, CSOTrackerManager* pManager );
 
     virtual void FireGameEvent( IGameEvent* pEvent ) OVERRIDE;
@@ -36,7 +36,7 @@ class CTFWarTracker : public CBaseSOTracker, public CGameEventListener
     virtual void OnUpdate() OVERRIDE {}
     virtual void OnRemove() OVERRIDE {}
 
-   private:
+    private:
     static const int m_kPointsPerKill = 5;
     static const int m_kBonusPointsPerKill = 2;
     CGCMsgGC_War_IndividualUpdate m_ProtoData;
@@ -50,12 +50,12 @@ class CTFWarTracker : public CBaseSOTracker, public CGameEventListener
 class CTFWarTrackerManager : public CSOTrackerManager
 {
     DECLARE_CLASS( CTFWarTrackerManager, CSOTrackerManager )
-   public:
+    public:
     CTFWarTrackerManager();
 
     virtual SOTrackerMap_t::KeyType_t GetKeyForObjectTracker( const CSharedObject* pItem, CSteamID steamIDOwner ) OVERRIDE;
 
-   private:
+    private:
 #ifdef GAME_DLL
     void SendMessageForCommit( const ::google::protobuf::Message* pProtoMessage ) const;
 #endif

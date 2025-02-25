@@ -23,7 +23,7 @@ D3DXMATRIX *D3DXMatrixMultiply( D3DXMATRIX *pOut, CONST D3DXMATRIX *pM1, CONST D
 
 class D3DXMATRIX : public D3DMATRIX
 {
-   public:
+    public:
     D3DXMATRIX operator*( const D3DXMATRIX &o ) const
     {
         D3DXMATRIX result;
@@ -86,7 +86,7 @@ typedef struct D3DXPLANE
 
 class D3DXVECTOR2
 {
-   public:
+    public:
     operator FLOAT *()
     {
         return ( float * )this;
@@ -102,7 +102,7 @@ class D3DXVECTOR2
 
 class D3DXVECTOR3 : public D3DVECTOR
 {
-   public:
+    public:
     D3DXVECTOR3() {}
     D3DXVECTOR3( float a, float b, float c )
     {
@@ -133,7 +133,7 @@ typedef enum _D3DXINCLUDE_TYPE
 
 class D3DXVECTOR4
 {
-   public:
+    public:
     D3DXVECTOR4() {}
     D3DXVECTOR4( float a, float b, float c, float d )
     {

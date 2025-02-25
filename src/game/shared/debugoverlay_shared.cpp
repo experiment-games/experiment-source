@@ -106,7 +106,7 @@ void NDebugOverlay::Line( const Vector &origin, const Vector &target, int r, int
 
     // Clip line that is far away
     if ( ( ( player->GetAbsOrigin() - origin ).LengthSqr() > MAX_OVERLAY_DIST_SQR ) &&
-         ( ( player->GetAbsOrigin() - target ).LengthSqr() > MAX_OVERLAY_DIST_SQR ) )
+        ( ( player->GetAbsOrigin() - target ).LengthSqr() > MAX_OVERLAY_DIST_SQR ) )
         return;
 
     // Clip line that is behind the client
@@ -142,8 +142,8 @@ void NDebugOverlay::Triangle( const Vector &p1, const Vector &p2, const Vector &
     Vector to3 = p3 - player->GetAbsOrigin();
 
     if ( ( to1.LengthSqr() > MAX_OVERLAY_DIST_SQR ) &&
-         ( to2.LengthSqr() > MAX_OVERLAY_DIST_SQR ) &&
-         ( to3.LengthSqr() > MAX_OVERLAY_DIST_SQR ) )
+        ( to2.LengthSqr() > MAX_OVERLAY_DIST_SQR ) &&
+        ( to3.LengthSqr() > MAX_OVERLAY_DIST_SQR ) )
     {
         return;
     }

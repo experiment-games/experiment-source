@@ -26,7 +26,7 @@ class IMaterial;
 //-----------------------------------------------------------------------------
 abstract_class IVEfx
 {
-   public:
+    public:
     // Retrieve decal texture index from decal by name
     virtual int Draw_DecalIndexFromName( char *name ) = 0;
 

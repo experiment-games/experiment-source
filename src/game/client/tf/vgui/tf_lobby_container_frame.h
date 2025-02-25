@@ -23,7 +23,7 @@ class CBaseLobbyContainerFrame : public vgui::PropertyDialog, public CGameEventL
 {
     DECLARE_CLASS_SIMPLE( CBaseLobbyContainerFrame, PropertyDialog );
 
-   public:
+    public:
     CBaseLobbyContainerFrame( const char *pszPanelName );
     virtual ~CBaseLobbyContainerFrame();
 
@@ -63,7 +63,7 @@ class CBaseLobbyContainerFrame : public vgui::PropertyDialog, public CGameEventL
     // Helper that checks against the currently selected party matchgroup
     bool CanHandleCurrentMatchGroup() const;
 
-   protected:
+    protected:
     bool ShouldShowPartyButton() const;
     virtual void WriteControls();
     virtual void HandleBackPressed();
@@ -73,7 +73,7 @@ class CBaseLobbyContainerFrame : public vgui::PropertyDialog, public CGameEventL
     vgui::Button *m_pNextButton;
     vgui::Button *m_pBackButton;
 
-   private:
+    private:
     virtual const char *GetResFile() const = 0;
     virtual bool VerifyPartyAuthorization() const = 0;
 

@@ -135,7 +135,7 @@ const int kMaxVarint32Bytes = 5;
 
 class bf_write
 {
-   public:
+    public:
     bf_write();
 
     // nMaxBits can be used as the number of bits in the buffer.
@@ -166,11 +166,11 @@ class bf_write
     void SetDebugName( const char *pDebugName );
 
     // Seek to a specific position.
-   public:
+    public:
     void SeekToBit( int bitPos );
 
     // Bit functions.
-   public:
+    public:
     void WriteOneBit( int nValue );
     void WriteOneBitNoCheck( int nValue );
     void WriteOneBitAt( int iBit, int nValue );
@@ -213,7 +213,7 @@ class bf_write
     void WriteBitAngles( const QAngle &fa );
 
     // Byte functions.
-   public:
+    public:
     void WriteChar( int val );
     void WriteByte( int val );
     void WriteShort( int val );
@@ -227,7 +227,7 @@ class bf_write
     bool WriteString( const char *pStr );
 
     // Status.
-   public:
+    public:
     // How many bytes are filled in?
     int GetNumBytesWritten() const;
     int GetNumBitsWritten() const;
@@ -246,7 +246,7 @@ class bf_write
 
     void SetOverflowFlag();
 
-   public:
+    public:
     // The current buffer.
     uint32 *RESTRICT m_pData;
     int m_nDataBytes;
@@ -255,7 +255,7 @@ class bf_write
     // Where we are in the buffer.
     int m_iCurBit;
 
-   private:
+    private:
     // Errors?
     bool m_bOverflow;
 
@@ -434,13 +434,13 @@ BITBUF_INLINE void bf_write::WriteUBitVar( unsigned int data )
 {
     /* Reference:
     if ( data < 0x10u )
-      WriteUBitLong( 0, 2 ), WriteUBitLong( data, 4 );
+    WriteUBitLong( 0, 2 ), WriteUBitLong( data, 4 );
     else if ( data < 0x100u )
-      WriteUBitLong( 1, 2 ), WriteUBitLong( data, 8 );
+    WriteUBitLong( 1, 2 ), WriteUBitLong( data, 8 );
     else if ( data < 0x1000u )
-      WriteUBitLong( 2, 2 ), WriteUBitLong( data, 12 );
+    WriteUBitLong( 2, 2 ), WriteUBitLong( data, 12 );
     else
-      WriteUBitLong( 3, 2 ), WriteUBitLong( data, 32 );
+    WriteUBitLong( 3, 2 ), WriteUBitLong( data, 32 );
     */
     // a < b ? -1 : 0 translates into a CMP, SBB instruction pair
     // with no flow control. should also be branchless on consoles.
@@ -471,7 +471,7 @@ BITBUF_INLINE void bf_write::WriteBitFloat( float val )
 template < int SIZE >
 class old_bf_write_static : public bf_write
 {
-   public:
+    public:
     inline old_bf_write_static()
         : bf_write( m_StaticData, SIZE ) {}
 
@@ -484,7 +484,7 @@ class old_bf_write_static : public bf_write
 
 class bf_read
 {
-   public:
+    public:
     bf_read();
 
     // nMaxBits can be used as the number of bits in the buffer.
@@ -515,16 +515,16 @@ class bf_read
     void ExciseBits( int startbit, int bitstoremove );
 
     // Bit functions.
-   public:
+    public:
     // Returns 0 or 1.
     int ReadOneBit();
 
-   protected:
+    protected:
     unsigned int CheckReadUBitLong( int numbits );  // For debugging.
     int ReadOneBitNoCheck();                        // Faster version, doesn't check bounds and is inlined.
     bool CheckForOverflow( int nBits );
 
-   public:
+    public:
     // Get the base pointer.
     const unsigned char *GetBasePointer()
     {
@@ -586,7 +586,7 @@ class bf_read
     unsigned int ReadBitCoordMPBits( bool bIntegral, bool bLowPrecision );
 
     // Byte functions (these still read data in bit-by-bit).
-   public:
+    public:
     BITBUF_INLINE int ReadChar()
     {
         return ( char )ReadUBitLong( 8 );
@@ -635,7 +635,7 @@ class bf_read
     int CompareBitsAt( int offset, bf_read *RESTRICT other, int otherOffset, int bits ) RESTRICT;
 
     // Status.
-   public:
+    public:
     int GetNumBytesLeft();
     int GetNumBytesRead();
     int GetNumBitsLeft();
@@ -653,7 +653,7 @@ class bf_read
     // Called when the buffer is overflowed.
     void SetOverflowFlag();
 
-   public:
+    public:
     // The current buffer.
     const unsigned char *RESTRICT m_pData;
     int m_nDataBytes;
@@ -662,7 +662,7 @@ class bf_read
     // Where we are in the buffer.
     int m_iCurBit;
 
-   private:
+    private:
     // Errors?
     bool m_bOverflow;
 

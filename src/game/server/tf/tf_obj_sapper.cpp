@@ -100,7 +100,7 @@ void CObjectSapper::Spawn()
 
     // Don't allow repeat placement as a human spy in MvM
     if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() &&
-         GetBuilder() && !GetBuilder()->IsBot() )
+        GetBuilder() && !GetBuilder()->IsBot() )
     {
         nFlags &= ~( OF_ALLOW_REPEAT_PLACEMENT );
     }
@@ -634,9 +634,9 @@ void CObjectSapper::Killed( const CTakeDamageInfo &info )
         if ( pWeapon )
         {
             EconEntity_OnOwnerKillEaterEvent( dynamic_cast< CEconEntity * >( info.GetWeapon() ),  // econ entity
-                                              pWeapon->GetTFPlayerOwner(),                        // scorer
-                                              GetOwner(),                                         // victim
-                                              kKillEaterEvent_SapperDestroyed );
+                                            pWeapon->GetTFPlayerOwner(),                        // scorer
+                                            GetOwner(),                                         // victim
+                                            kKillEaterEvent_SapperDestroyed );
         }
     }
 

@@ -695,8 +695,8 @@
 #define GTEST_DECLARE_TUPLE_AS_FRIEND_    \
     template < GTEST_10_TYPENAMES_( U ) > \
     friend class tuple;                   \
-                                          \
-   private:
+                                        \
+    private:
 #endif
 
 // GTEST_n_TUPLE_(T) is the type of an n-tuple.
@@ -731,8 +731,8 @@
                                 typename T##3, typename T##4, typename T##5, typename T##6, \
                                 typename T##7, typename T##8
 #define GTEST_10_TYPENAMES_( T ) typename T##0, typename T##1, typename T##2,                \
-                                 typename T##3, typename T##4, typename T##5, typename T##6, \
-                                 typename T##7, typename T##8, typename T##9
+                                typename T##3, typename T##4, typename T##5, typename T##6, \
+                                typename T##7, typename T##8, typename T##9
 
 // In theory, defining stuff in the ::std namespace is undefined
 // behavior.  We can do this as we are playing the role of a standard
@@ -855,7 +855,7 @@ struct TupleElement< true, 9, GTEST_10_TUPLE_( T ) >
 template <>
 class tuple<>
 {
-   public:
+    public:
     tuple() {}
     tuple( const tuple& /* t */ ) {}
     tuple& operator=( const tuple& /* t */ )
@@ -867,7 +867,7 @@ class tuple<>
 template < GTEST_1_TYPENAMES_( T ) >
 class GTEST_1_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -912,7 +912,7 @@ class GTEST_1_TUPLE_( T )
 template < GTEST_2_TYPENAMES_( T ) >
 class GTEST_2_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -921,7 +921,7 @@ class GTEST_2_TUPLE_( T )
 
     explicit tuple( GTEST_BY_REF_( T0 ) f0, GTEST_BY_REF_( T1 ) f1 )
         : f0_( f0 ),
-          f1_( f1 ) {}
+        f1_( f1 ) {}
 
     tuple( const tuple& t )
         : f0_( t.f0_ ), f1_( t.f1_ ) {}
@@ -972,7 +972,7 @@ class GTEST_2_TUPLE_( T )
 template < GTEST_3_TYPENAMES_( T ) >
 class GTEST_3_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1021,7 +1021,7 @@ class GTEST_3_TUPLE_( T )
 template < GTEST_4_TYPENAMES_( T ) >
 class GTEST_4_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1072,7 +1072,7 @@ class GTEST_4_TUPLE_( T )
 template < GTEST_5_TYPENAMES_( T ) >
 class GTEST_5_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1125,7 +1125,7 @@ class GTEST_5_TUPLE_( T )
 template < GTEST_6_TYPENAMES_( T ) >
 class GTEST_6_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1180,7 +1180,7 @@ class GTEST_6_TUPLE_( T )
 template < GTEST_7_TYPENAMES_( T ) >
 class GTEST_7_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1237,7 +1237,7 @@ class GTEST_7_TUPLE_( T )
 template < GTEST_8_TYPENAMES_( T ) >
 class GTEST_8_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1296,7 +1296,7 @@ class GTEST_8_TUPLE_( T )
 template < GTEST_9_TYPENAMES_( T ) >
 class GTEST_9_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1357,7 +1357,7 @@ class GTEST_9_TUPLE_( T )
 template < GTEST_10_TYPENAMES_( T ) >
 class tuple
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -1576,7 +1576,7 @@ namespace gtest_internal
 template <>
 class Get< 0 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 0, Tuple ) )
         Field( Tuple& t )
@@ -1595,7 +1595,7 @@ class Get< 0 >
 template <>
 class Get< 1 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 1, Tuple ) )
         Field( Tuple& t )
@@ -1614,7 +1614,7 @@ class Get< 1 >
 template <>
 class Get< 2 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 2, Tuple ) )
         Field( Tuple& t )
@@ -1633,7 +1633,7 @@ class Get< 2 >
 template <>
 class Get< 3 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 3, Tuple ) )
         Field( Tuple& t )
@@ -1652,7 +1652,7 @@ class Get< 3 >
 template <>
 class Get< 4 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 4, Tuple ) )
         Field( Tuple& t )
@@ -1671,7 +1671,7 @@ class Get< 4 >
 template <>
 class Get< 5 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 5, Tuple ) )
         Field( Tuple& t )
@@ -1690,7 +1690,7 @@ class Get< 5 >
 template <>
 class Get< 6 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 6, Tuple ) )
         Field( Tuple& t )
@@ -1709,7 +1709,7 @@ class Get< 6 >
 template <>
 class Get< 7 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 7, Tuple ) )
         Field( Tuple& t )
@@ -1728,7 +1728,7 @@ class Get< 7 >
 template <>
 class Get< 8 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 8, Tuple ) )
         Field( Tuple& t )
@@ -1747,7 +1747,7 @@ class Get< 8 >
 template <>
 class Get< 9 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 9, Tuple ) )
         Field( Tuple& t )
@@ -1810,7 +1810,7 @@ struct SameSizeTuplePrefixComparator< k, k >
     static bool Eq( const Tuple1& t1, const Tuple2& t2 )
     {
         return SameSizeTuplePrefixComparator< k - 1, k - 1 >::Eq( t1, t2 ) &&
-               ::std::tr1::get< k - 1 >( t1 ) == ::std::tr1::get< k - 1 >( t2 );
+                ::std::tr1::get< k - 1 >( t1 ) == ::std::tr1::get< k - 1 >( t2 );
     }
 };
 
@@ -1969,10 +1969,10 @@ using ::std::tuple_size;
 // abort() in a VC 7.1 application compiled as GUI in debug config
 // pops up a dialog window that cannot be suppressed programmatically.
 #if ( GTEST_OS_LINUX || GTEST_OS_CYGWIN || GTEST_OS_SOLARIS ||       \
-      ( GTEST_OS_MAC && !GTEST_OS_IOS ) || GTEST_OS_IOS_SIMULATOR || \
-      ( GTEST_OS_WINDOWS_DESKTOP && _MSC_VER >= 1400 ) ||            \
-      GTEST_OS_WINDOWS_MINGW || GTEST_OS_AIX || GTEST_OS_HPUX ||     \
-      GTEST_OS_OPENBSD || GTEST_OS_QNX )
+    ( GTEST_OS_MAC && !GTEST_OS_IOS ) || GTEST_OS_IOS_SIMULATOR || \
+    ( GTEST_OS_WINDOWS_DESKTOP && _MSC_VER >= 1400 ) ||            \
+    GTEST_OS_WINDOWS_MINGW || GTEST_OS_AIX || GTEST_OS_HPUX ||     \
+    GTEST_OS_OPENBSD || GTEST_OS_QNX )
 #define GTEST_HAS_DEATH_TEST 1
 #include <vector>  // NOLINT
 #endif
@@ -2218,7 +2218,7 @@ GTEST_API_ bool IsTrue( bool condition );
 template < typename T >
 class scoped_ptr
 {
-   public:
+    public:
     typedef T element_type;
 
     explicit scoped_ptr( T* p = NULL )
@@ -2260,7 +2260,7 @@ class scoped_ptr
         }
     }
 
-   private:
+    private:
     T* ptr_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( scoped_ptr );
@@ -2272,7 +2272,7 @@ class scoped_ptr
 // Regular Expression syntax.
 class GTEST_API_ RE
 {
-   public:
+    public:
     // A copy constructor is required by the Standard to initialize object
     // references from r-values.
     RE( const RE& other )
@@ -2339,7 +2339,7 @@ class GTEST_API_ RE
     static bool FullMatch( const char* str, const RE& re );
     static bool PartialMatch( const char* str, const RE& re );
 
-   private:
+    private:
     void Init( const char* regex );
 
     // We use a const char* instead of an std::string, as Google Test used to be
@@ -2391,7 +2391,7 @@ enum GTestLogSeverity
 // scope.
 class GTEST_API_ GTestLog
 {
-   public:
+    public:
     GTestLog( GTestLogSeverity severity, const char* file, int line );
 
     // Flushes the buffers and, if severity is GTEST_FATAL, aborts the program.
@@ -2402,7 +2402,7 @@ class GTEST_API_ GTestLog
         return ::std::cerr;
     }
 
-   private:
+    private:
     const GTestLogSeverity severity_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( GTestLog );
@@ -2410,8 +2410,8 @@ class GTEST_API_ GTestLog
 
 #define GTEST_LOG_( severity )                                            \
     ::testing::internal::GTestLog( ::testing::internal::GTEST_##severity, \
-                                   __FILE__,                              \
-                                   __LINE__ )                             \
+                                    __FILE__,                              \
+                                    __LINE__ )                             \
         .GetStream()
 
 inline void LogToStderr() {}
@@ -2553,7 +2553,7 @@ GTEST_API_ std::string GetCapturedStderr();
 
 const ::std::vector< testing::internal::string >& GetInjectableArgvs();
 void SetInjectableArgvs( const ::std::vector< testing::internal::string >*
-                             new_argvs );
+                            new_argvs );
 
 // A copy of all command line arguments.  Set by InitGoogleTest().
 extern ::std::vector< testing::internal::string > g_argvs;
@@ -2584,7 +2584,7 @@ inline void SleepMilliseconds( int n )
 // use it in user tests, either directly or indirectly.
 class Notification
 {
-   public:
+    public:
     Notification()
         : notified_( false )
     {
@@ -2619,7 +2619,7 @@ class Notification
         }
     }
 
-   private:
+    private:
     pthread_mutex_t mutex_;
     bool notified_;
 
@@ -2633,7 +2633,7 @@ class Notification
 // problem.
 class ThreadWithParamBase
 {
-   public:
+    public:
     virtual ~ThreadWithParamBase() {}
     virtual void Run() = 0;
 };
@@ -2665,7 +2665,7 @@ extern "C" inline void* ThreadFuncWithCLinkage( void* thread )
 template < typename T >
 class ThreadWithParam : public ThreadWithParamBase
 {
-   public:
+    public:
     typedef void ( *UserThreadFunc )( T );
 
     ThreadWithParam(
@@ -2673,9 +2673,9 @@ class ThreadWithParam : public ThreadWithParamBase
         T param,
         Notification* thread_can_start )
         : func_( func ),
-          param_( param ),
-          thread_can_start_( thread_can_start ),
-          finished_( false )
+        param_( param ),
+        thread_can_start_( thread_can_start ),
+        finished_( false )
     {
         ThreadWithParamBase* const base = this;
         // The thread can be created only after all fields except thread_
@@ -2704,7 +2704,7 @@ class ThreadWithParam : public ThreadWithParamBase
         func_( param_ );
     }
 
-   private:
+    private:
     const UserThreadFunc func_;  // User-supplied thread function.
     const T param_;              // User-supplied parameter to the thread function.
     // When non-NULL, used to block execution until the controller thread
@@ -2737,7 +2737,7 @@ class ThreadWithParam : public ThreadWithParamBase
 // To create a dynamic mutex, just define an object of type Mutex.
 class MutexBase
 {
-   public:
+    public:
     // Acquires this mutex.
     void Lock()
     {
@@ -2770,7 +2770,7 @@ class MutexBase
     // must be able to initialize a static mutex object at link time.
     // This means MutexBase has to be a POD and its member variables
     // have to be public.
-   public:
+    public:
     pthread_mutex_t mutex_;  // The underlying pthread mutex.
     // has_owner_ indicates whether the owner_ field below contains a valid thread
     // ID and is therefore safe to inspect (e.g., to use in pthread_equal()). All
@@ -2799,7 +2799,7 @@ class MutexBase
 // shares its API with MutexBase otherwise.
 class Mutex : public MutexBase
 {
-   public:
+    public:
     Mutex()
     {
         GTEST_CHECK_POSIX_SUCCESS_( pthread_mutex_init( &mutex_, NULL ) );
@@ -2810,7 +2810,7 @@ class Mutex : public MutexBase
         GTEST_CHECK_POSIX_SUCCESS_( pthread_mutex_destroy( &mutex_ ) );
     }
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( Mutex );
 };
 
@@ -2819,7 +2819,7 @@ class Mutex : public MutexBase
 // platforms.  Hence the typedef trick below.
 class GTestMutexLock
 {
-   public:
+    public:
     explicit GTestMutexLock( MutexBase* mutex )
         : mutex_( mutex )
     {
@@ -2831,7 +2831,7 @@ class GTestMutexLock
         mutex_->Unlock();
     }
 
-   private:
+    private:
     MutexBase* const mutex_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( GTestMutexLock );
@@ -2847,7 +2847,7 @@ typedef GTestMutexLock MutexLock;
 // ThreadLocalValueHolderBase.
 class ThreadLocalValueHolderBase
 {
-   public:
+    public:
     virtual ~ThreadLocalValueHolderBase() {}
 };
 
@@ -2890,13 +2890,13 @@ extern "C" inline void DeleteThreadLocalValue( void* value_holder )
 template < typename T >
 class ThreadLocal
 {
-   public:
+    public:
     ThreadLocal()
         : key_( CreateKey() ),
-          default_() {}
+        default_() {}
     explicit ThreadLocal( const T& value )
         : key_( CreateKey() ),
-          default_( value ) {}
+        default_( value ) {}
 
     ~ThreadLocal()
     {
@@ -2925,11 +2925,11 @@ class ThreadLocal
         *pointer() = value;
     }
 
-   private:
+    private:
     // Holds a value of type T.
     class ValueHolder : public ThreadLocalValueHolderBase
     {
-       public:
+        public:
         explicit ValueHolder( const T& value )
             : value_( value ) {}
 
@@ -2938,7 +2938,7 @@ class ThreadLocal
             return &value_;
         }
 
-       private:
+        private:
         T value_;
         GTEST_DISALLOW_COPY_AND_ASSIGN_( ValueHolder );
     };
@@ -2986,7 +2986,7 @@ class ThreadLocal
 
 class Mutex
 {
-   public:
+    public:
     Mutex() {}
     void Lock() {}
     void Unlock() {}
@@ -3000,7 +3000,7 @@ class Mutex
 
 class GTestMutexLock
 {
-   public:
+    public:
     explicit GTestMutexLock( Mutex* ) {}  // NOLINT
 };
 
@@ -3009,7 +3009,7 @@ typedef GTestMutexLock MutexLock;
 template < typename T >
 class ThreadLocal
 {
-   public:
+    public:
     ThreadLocal()
         : value_() {}
     explicit ThreadLocal( const T& value )
@@ -3031,7 +3031,7 @@ class ThreadLocal
         value_ = value;
     }
 
-   private:
+    private:
     T value_;
 };
 
@@ -3419,7 +3419,7 @@ const BiggestInt kMaxBiggestInt =
 template < size_t size >
 class TypeWithSize
 {
-   public:
+    public:
     // This prevents the user from using TypeWithSize<N> with incorrect
     // values of N.
     typedef void UInt;
@@ -3429,7 +3429,7 @@ class TypeWithSize
 template <>
 class TypeWithSize< 4 >
 {
-   public:
+    public:
     // unsigned int has size 4 in both gcc and MSVC.
     //
     // As base/basictypes.h doesn't compile on Windows, we cannot use
@@ -3442,7 +3442,7 @@ class TypeWithSize< 4 >
 template <>
 class TypeWithSize< 8 >
 {
-   public:
+    public:
 #if GTEST_OS_WINDOWS
     typedef __int64 Int;
     typedef unsigned __int64 UInt;
@@ -3574,7 +3574,7 @@ namespace internal
 // String - an abstract class holding static string utilities.
 class GTEST_API_ String
 {
-   public:
+    public:
     // Static utility methods
 
     // Clones a 0-terminated C string, allocating memory using new.  The
@@ -3640,7 +3640,7 @@ class GTEST_API_ String
     // A NULL C string is considered different to any non-NULL C string,
     // including the empty string.
     static bool CaseInsensitiveCStringEquals( const char* lhs,
-                                              const char* rhs );
+                                            const char* rhs );
 
     // Compares two wide C strings, ignoring case.  Returns true iff they
     // have the same content.
@@ -3655,7 +3655,7 @@ class GTEST_API_ String
     // On MacOS X, it uses towlower, which also uses LC_CTYPE category of the
     // current locale.
     static bool CaseInsensitiveWideCStringEquals( const wchar_t* lhs,
-                                                  const wchar_t* rhs );
+                                                const wchar_t* rhs );
 
     // Returns true iff the given string ends with the given suffix, ignoring
     // case. Any string is considered to end with an empty suffix.
@@ -3674,7 +3674,7 @@ class GTEST_API_ String
     // "<buffer exceeded>" is returned.
     static std::string Format( const char* format, ... );
 
-   private:
+    private:
     String();  // Not meant to be instantiated.
 };             // class String
 
@@ -3757,7 +3757,7 @@ namespace internal
 
 class GTEST_API_ FilePath
 {
-   public:
+    public:
     FilePath()
         : pathname_( "" ) {}
     FilePath( const FilePath& rhs )
@@ -3797,15 +3797,15 @@ class GTEST_API_ FilePath
     // than zero (e.g., 12), returns "dir/test_12.xml".
     // On Windows platform, uses \ as the separator rather than /.
     static FilePath MakeFileName( const FilePath& directory,
-                                  const FilePath& base_name,
-                                  int number,
-                                  const char* extension );
+                                const FilePath& base_name,
+                                int number,
+                                const char* extension );
 
     // Given directory = "dir", relative_path = "test.xml",
     // returns "dir/test.xml".
     // On Windows, uses \ as the separator rather than /.
     static FilePath ConcatPaths( const FilePath& directory,
-                                 const FilePath& relative_path );
+                                const FilePath& relative_path );
 
     // Returns a pathname for a file that does not currently exist. The pathname
     // will be directory/base_name.extension or
@@ -3884,7 +3884,7 @@ class GTEST_API_ FilePath
     // Returns true if pathname describes an absolute path.
     bool IsAbsolutePath() const;
 
-   private:
+    private:
     // Replaces multiple consecutive separators with a single separator.
     // For example, "bar///foo" becomes "bar/foo". Does not eliminate other
     // redundancies that might be in a pathname involving "." or "..".
@@ -5479,7 +5479,7 @@ GTEST_API_ std::string AppendUserMessage(
 // A helper class for creating scoped traces in user programs.
 class GTEST_API_ ScopedTrace
 {
-   public:
+    public:
     // The c'tor pushes the given source file location and message onto
     // a trace stack maintained by Google Test.
     ScopedTrace( const char* file, int line, const Message& message );
@@ -5490,7 +5490,7 @@ class GTEST_API_ ScopedTrace
     // Don't inherit from ScopedTrace!
     ~ScopedTrace();
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( ScopedTrace );
 } GTEST_ATTRIBUTE_UNUSED_;  // A ScopedTrace object does its job in its
                             // c'tor and d'tor.  Therefore it doesn't
@@ -5522,10 +5522,10 @@ std::string StreamableToString( const T& streamable );
 // *_STRCASEEQ*.  When it's true, the string " (ignoring case)" will
 // be inserted into the message.
 GTEST_API_ AssertionResult EqFailure( const char* expected_expression,
-                                      const char* actual_expression,
-                                      const std::string& expected_value,
-                                      const std::string& actual_value,
-                                      bool ignoring_case );
+                                    const char* actual_expression,
+                                    const std::string& expected_value,
+                                    const std::string& actual_value,
+                                    bool ignoring_case );
 
 // Constructs a failure message for Boolean assertions such as EXPECT_TRUE.
 GTEST_API_ std::string GetBoolAssertionFailureMessage(
@@ -5566,7 +5566,7 @@ GTEST_API_ std::string GetBoolAssertionFailureMessage(
 template < typename RawType >
 class FloatingPoint
 {
-   public:
+    public:
     // Defines the unsigned integer type that has the same size as the
     // floating point number.
     typedef typename TypeWithSize< sizeof( RawType ) >::UInt Bits;
@@ -5685,7 +5685,7 @@ class FloatingPoint
         return DistanceBetweenSignAndMagnitudeNumbers( u_.bits_, rhs.u_.bits_ ) <= kMaxUlps;
     }
 
-   private:
+    private:
     // The data type used to store the actual floating-point number.
     union FloatingPointUnion
     {
@@ -5751,7 +5751,7 @@ typedef const void* TypeId;
 template < typename T >
 class TypeIdHelper
 {
-   public:
+    public:
     // dummy_ must not have a const type.  Otherwise an overly eager
     // compiler (e.g. MSVC 7.1 & 8.0) may try to merge
     // TypeIdHelper<T>::dummy_ for different Ts as an "optimization".
@@ -5785,17 +5785,17 @@ GTEST_API_ TypeId GetTestTypeId();
 // of a Test object.
 class TestFactoryBase
 {
-   public:
+    public:
     virtual ~TestFactoryBase() {}
 
     // Creates a test instance to run. The instance is both created and destroyed
     // within TestInfoImpl::Run()
     virtual Test* CreateTest() = 0;
 
-   protected:
+    protected:
     TestFactoryBase() {}
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( TestFactoryBase );
 };
 
@@ -5804,7 +5804,7 @@ class TestFactoryBase
 template < class TestClass >
 class TestFactoryImpl : public TestFactoryBase
 {
-   public:
+    public:
     virtual Test* CreateTest()
     {
         return new TestClass;
@@ -5818,9 +5818,9 @@ class TestFactoryImpl : public TestFactoryBase
 // We pass a long instead of HRESULT to avoid causing an
 // include dependency for the HRESULT type.
 GTEST_API_ AssertionResult IsHRESULTSuccess( const char* expr,
-                                             long hr );  // NOLINT
+                                            long hr );  // NOLINT
 GTEST_API_ AssertionResult IsHRESULTFailure( const char* expr,
-                                             long hr );  // NOLINT
+                                            long hr );  // NOLINT
 
 #endif  // GTEST_OS_WINDOWS
 
@@ -5865,7 +5865,7 @@ GTEST_API_ bool SkipPrefix( const char* prefix, const char** pstr );
 // State of the definition of a type-parameterized test case.
 class GTEST_API_ TypedTestCasePState
 {
-   public:
+    public:
     TypedTestCasePState()
         : registered_( false ) {}
 
@@ -5877,11 +5877,11 @@ class GTEST_API_ TypedTestCasePState
         if ( registered_ )
         {
             fprintf( stderr,
-                     "%s Test %s must be defined before "
-                     "REGISTER_TYPED_TEST_CASE_P(%s, ...).\n",
-                     FormatFileLocation( file, line ).c_str(),
-                     test_name,
-                     case_name );
+                    "%s Test %s must be defined before "
+                    "REGISTER_TYPED_TEST_CASE_P(%s, ...).\n",
+                    FormatFileLocation( file, line ).c_str(),
+                    test_name,
+                    case_name );
             fflush( stderr );
             posix::Abort();
         }
@@ -5897,7 +5897,7 @@ class GTEST_API_ TypedTestCasePState
         int line,
         const char* registered_tests );
 
-   private:
+    private:
     bool registered_;
     ::std::set< const char* > defined_test_names_;
 };
@@ -5935,7 +5935,7 @@ inline std::string GetPrefixUntilComma( const char* str )
 template < GTEST_TEMPLATE_ Fixture, class TestSel, typename Types >
 class TypeParameterizedTest
 {
-   public:
+    public:
     // 'index' is the index of the test in the type list 'Types'
     // specified in INSTANTIATE_TYPED_TEST_CASE_P(Prefix, TestCase,
     // Types).  Valid values for 'index' are [0, N - 1] where N is the
@@ -5967,7 +5967,7 @@ class TypeParameterizedTest
 template < GTEST_TEMPLATE_ Fixture, class TestSel >
 class TypeParameterizedTest< Fixture, TestSel, Types0 >
 {
-   public:
+    public:
     static bool Register( const char* /*prefix*/, const char* /*case_name*/, const char* /*test_names*/, int /*index*/ )
     {
         return true;
@@ -5981,7 +5981,7 @@ class TypeParameterizedTest< Fixture, TestSel, Types0 >
 template < GTEST_TEMPLATE_ Fixture, typename Tests, typename Types >
 class TypeParameterizedTestCase
 {
-   public:
+    public:
     static bool Register( const char* prefix, const char* case_name, const char* test_names )
     {
         typedef typename Tests::Head Head;
@@ -5999,7 +5999,7 @@ class TypeParameterizedTestCase
 template < GTEST_TEMPLATE_ Fixture, typename Types >
 class TypeParameterizedTestCase< Fixture, Templates0, Types >
 {
-   public:
+    public:
     static bool Register( const char* /*prefix*/, const char* /*case_name*/, const char* /*test_names*/ )
     {
         return true;
@@ -6055,7 +6055,7 @@ struct GTEST_API_ ConstCharPtr
 // but it's good enough for our purposes.
 class GTEST_API_ Random
 {
-   public:
+    public:
     static const UInt32 kMaxRange = 1u << 31;
 
     explicit Random( UInt32 seed )
@@ -6070,7 +6070,7 @@ class GTEST_API_ Random
     // 0 or greater than kMaxRange.
     UInt32 Generate( UInt32 range );
 
-   private:
+    private:
     UInt32 state_;
     GTEST_DISALLOW_COPY_AND_ASSIGN_( Random );
 };
@@ -6184,7 +6184,7 @@ struct AddReference< T& >
 template < typename From, typename To >
 class ImplicitlyConvertible
 {
-   private:
+    private:
     // We need the following helper functions only for their types.
     // They have no implementations.
 
@@ -6208,7 +6208,7 @@ class ImplicitlyConvertible
 
     // We have to put the 'public' section after the 'private' section,
     // or MSVC refuses to compile the code.
-   public:
+    public:
     // MSVC warns about implicitly converting from double to int for
     // possible loss of data, so we need to temporarily disable the
     // warning.
@@ -6238,8 +6238,8 @@ const bool ImplicitlyConvertible< From, To >::value;
 template < typename T >
 struct IsAProtocolMessage
     : public bool_constant<
-          ImplicitlyConvertible< const T*, const ::ProtocolMessage* >::value ||
-          ImplicitlyConvertible< const T*, const ::proto2::Message* >::value >
+        ImplicitlyConvertible< const T*, const ::ProtocolMessage* >::value ||
+        ImplicitlyConvertible< const T*, const ::proto2::Message* >::value >
 {
 };
 
@@ -6267,8 +6267,8 @@ struct IsAProtocolMessage
 typedef int IsContainer;
 template < class C >
 IsContainer IsContainerTest( int /* dummy */,
-                             typename C::iterator* /* it */ = NULL,
-                             typename C::const_iterator* /* const_it */ = NULL )
+                            typename C::iterator* /* it */ = NULL,
+                            typename C::const_iterator* /* const_it */ = NULL )
 {
     return 0;
 }
@@ -6381,7 +6381,7 @@ enum RelationToSource
 {
     kReference,  // The NativeArray references the native array.
     kCopy        // The NativeArray makes a copy of the native array and
-                 // owns the copy.
+                // owns the copy.
 };
 
 // Adapts a native array to a read-only STL-style container.  Instead
@@ -6395,7 +6395,7 @@ enum RelationToSource
 template < typename Element >
 class NativeArray
 {
-   public:
+    public:
     // STL-style container typedefs.
     typedef Element value_type;
     typedef Element* iterator;
@@ -6418,7 +6418,7 @@ class NativeArray
         // Ensures that the user doesn't instantiate NativeArray with a
         // const or reference type.
         static_cast< void >( StaticAssertTypeEqHelper< Element,
-                                                       GTEST_REMOVE_REFERENCE_AND_CONST_( Element ) >() );
+                                                        GTEST_REMOVE_REFERENCE_AND_CONST_( Element ) >() );
         if ( relation_to_source_ == kCopy )
             delete[] array_;
     }
@@ -6439,10 +6439,10 @@ class NativeArray
     bool operator==( const NativeArray& rhs ) const
     {
         return size() == rhs.size() &&
-               ArrayEq( begin(), size(), rhs.begin() );
+                ArrayEq( begin(), size(), rhs.begin() );
     }
 
-   private:
+    private:
     // Initializes this object; makes a copy of the input array if
     // 'relation' is kCopy.
     void Init( const Element* array, size_t a_size, RelationToSource relation )
@@ -6539,8 +6539,8 @@ class NativeArray
     }                                                                                                      \
     else                                                                                                   \
         GTEST_CONCAT_TOKEN_( gtest_label_testnothrow_, __LINE__ ) : fail( "Expected: " #statement          \
-                                                                          " doesn't throw an exception.\n" \
-                                                                          "  Actual: it throws." )
+                                                                        " doesn't throw an exception.\n" \
+                                                                        "  Actual: it throws." )
 
 #define GTEST_TEST_ANY_THROW_( statement, fail )                                                     \
     GTEST_AMBIGUOUS_ELSE_BLOCKER_                                                                    \
@@ -6562,8 +6562,8 @@ class NativeArray
     }                                                                                                \
     else                                                                                             \
         GTEST_CONCAT_TOKEN_( gtest_label_testanythrow_, __LINE__ ) : fail( "Expected: " #statement   \
-                                                                           " throws an exception.\n" \
-                                                                           "  Actual: it doesn't." )
+                                                                            " throws an exception.\n" \
+                                                                            "  Actual: it doesn't." )
 
 // Implements Boolean test assertions such as EXPECT_TRUE. expression can be
 // either a boolean expression or an AssertionResult. text is a textual
@@ -6571,12 +6571,12 @@ class NativeArray
 #define GTEST_TEST_BOOLEAN_( expression, text, actual, expected, fail ) \
     GTEST_AMBIGUOUS_ELSE_BLOCKER_                                       \
     if ( const ::testing::AssertionResult gtest_ar_ =                   \
-             ::testing::AssertionResult( expression ) )                 \
+            ::testing::AssertionResult( expression ) )                 \
         ;                                                               \
     else                                                                \
         fail( ::testing::internal::GetBoolAssertionFailureMessage(      \
-                  gtest_ar_, text, #actual, #expected )                 \
-                  .c_str() )
+                gtest_ar_, text, #actual, #expected )                 \
+                .c_str() )
 
 #define GTEST_TEST_NO_FATAL_FAILURE_( statement, fail )                                                       \
     GTEST_AMBIGUOUS_ELSE_BLOCKER_                                                                             \
@@ -6591,9 +6591,9 @@ class NativeArray
     }                                                                                                         \
     else                                                                                                      \
         GTEST_CONCAT_TOKEN_( gtest_label_testnofatal_, __LINE__ ) : fail( "Expected: " #statement             \
-                                                                          " doesn't generate new fatal "      \
-                                                                          "failures in the current thread.\n" \
-                                                                          "  Actual: it does." )
+                                                                        " doesn't generate new fatal "      \
+                                                                        "failures in the current thread.\n" \
+                                                                        "  Actual: it does." )
 
 // Expands to the name of the class that implements the given test.
 #define GTEST_TEST_CLASS_NAME_( test_case_name, test_name ) \
@@ -6603,11 +6603,11 @@ class NativeArray
 #define GTEST_TEST_( test_case_name, test_name, parent_class, parent_id )                                                                                                                                                           \
     class GTEST_TEST_CLASS_NAME_( test_case_name, test_name ) : public parent_class                                                                                                                                                 \
     {                                                                                                                                                                                                                               \
-       public:                                                                                                                                                                                                                      \
+        public:                                                                                                                                                                                                                      \
         GTEST_TEST_CLASS_NAME_( test_case_name, test_name )                                                                                                                                                                         \
         () {}                                                                                                                                                                                                                       \
                                                                                                                                                                                                                                     \
-       private:                                                                                                                                                                                                                     \
+        private:                                                                                                                                                                                                                     \
         virtual void TestBody();                                                                                                                                                                                                    \
         static ::testing::TestInfo* const test_info_ GTEST_ATTRIBUTE_UNUSED_;                                                                                                                                                       \
         GTEST_DISALLOW_COPY_AND_ASSIGN_(                                                                                                                                                                                            \
@@ -6730,7 +6730,7 @@ const char kInternalRunDeathTestFlag[] = "internal_run_death_test";
 //               returned from main()
 class GTEST_API_ DeathTest
 {
-   public:
+    public:
     // Create returns false if there was an error determining the
     // appropriate action to take for the current death test; for example,
     // if the gtest_death_test_style flag is set to an invalid value.
@@ -6746,7 +6746,7 @@ class GTEST_API_ DeathTest
     // A helper class that aborts a death test when it's deleted.
     class ReturnSentinel
     {
-       public:
+        public:
         explicit ReturnSentinel( DeathTest* test )
             : test_( test ) {}
         ~ReturnSentinel()
@@ -6754,7 +6754,7 @@ class GTEST_API_ DeathTest
             test_->Abort( TEST_ENCOUNTERED_RETURN_STATEMENT );
         }
 
-       private:
+        private:
         DeathTest* const test_;
         GTEST_DISALLOW_COPY_AND_ASSIGN_( ReturnSentinel );
     } GTEST_ATTRIBUTE_UNUSED_;
@@ -6802,7 +6802,7 @@ class GTEST_API_ DeathTest
 
     static void set_last_death_test_message( const std::string& message );
 
-   private:
+    private:
     // A string containing a description of the outcome of the last death test.
     static std::string last_death_test_message_;
 
@@ -6812,7 +6812,7 @@ class GTEST_API_ DeathTest
 // Factory interface for death tests.  May be mocked out for testing.
 class DeathTestFactory
 {
-   public:
+    public:
     virtual ~DeathTestFactory() {}
     virtual bool Create( const char* statement, const RE* regex, const char* file, int line, DeathTest** test ) = 0;
 };
@@ -6820,7 +6820,7 @@ class DeathTestFactory
 // A concrete DeathTestFactory implementation for normal use.
 class DefaultDeathTestFactory : public DeathTestFactory
 {
-   public:
+    public:
     virtual bool Create( const char* statement, const RE* regex, const char* file, int line, DeathTest** test );
 };
 
@@ -6918,11 +6918,11 @@ GTEST_API_ bool ExitedUnsuccessfully( int exit_status );
 // RUN_ALL_TESTS was called.
 class InternalRunDeathTestFlag
 {
-   public:
+    public:
     InternalRunDeathTestFlag( const std::string& a_file,
-                              int a_line,
-                              int an_index,
-                              int a_write_fd )
+                            int a_line,
+                            int an_index,
+                            int a_write_fd )
         : file_( a_file ), line_( a_line ), index_( an_index ), write_fd_( a_write_fd ) {}
 
     ~InternalRunDeathTestFlag()
@@ -6948,7 +6948,7 @@ class InternalRunDeathTestFlag
         return write_fd_;
     }
 
-   private:
+    private:
     std::string file_;
     int line_;
     int index_;
@@ -7171,11 +7171,11 @@ GTEST_API_ bool InDeathTestChild();
 // Tests that an exit code describes a normal exit with a given exit code.
 class GTEST_API_ ExitedWithCode
 {
-   public:
+    public:
     explicit ExitedWithCode( int exit_code );
     bool operator()( int exit_status ) const;
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ExitedWithCode& other );
 
@@ -7187,11 +7187,11 @@ class GTEST_API_ ExitedWithCode
 // given signal.
 class GTEST_API_ KilledBySignal
 {
-   public:
+    public:
     explicit KilledBySignal( int signum );
     bool operator()( int exit_status ) const;
 
-   private:
+    private:
     const int signum_;
 };
 #endif  // !GTEST_OS_WINDOWS
@@ -7359,12 +7359,12 @@ namespace testing
 // "(null)".
 class GTEST_API_ Message
 {
-   private:
+    private:
     // The type of basic IO manipulators (endl, ends, and flush) for
     // narrow streams.
     typedef std::ostream& ( *BasicNarrowIoManip )( std::ostream& );
 
-   public:
+    public:
     // Constructs an empty Message.
     // We allocate the stringstream separately because otherwise each use of
     // ASSERT/EXPECT in a procedure adds over 200 bytes to the procedure's
@@ -7487,7 +7487,7 @@ class GTEST_API_ Message
         return internal::StringStreamToString( ss_.get() );
     }
 
-   private:
+    private:
 #if GTEST_OS_SYMBIAN
     // These are needed as the Nokia Symbian Compiler cannot decide between
     // const T& and const T* in a function template. The Nokia compiler _can_
@@ -7849,7 +7849,7 @@ GTEST_API_ GTEST_DECLARE_STATIC_MUTEX_( g_linked_ptr_mutex );
 // DO NOT USE THIS CLASS DIRECTLY YOURSELF.  Use linked_ptr<T>.
 class linked_ptr_internal
 {
-   public:
+    public:
     // Create a new circle that includes only this instance.
     void join_new()
     {
@@ -7893,14 +7893,14 @@ class linked_ptr_internal
         return false;
     }
 
-   private:
+    private:
     mutable linked_ptr_internal const* next_;
 };
 
 template < typename T >
 class linked_ptr
 {
-   public:
+    public:
     typedef T element_type;
 
     // Take over ownership of a raw pointer.  This should happen as soon as
@@ -7983,7 +7983,7 @@ class linked_ptr
         return value_ != ptr.get();
     }
 
-   private:
+    private:
     template < typename U >
     friend class linked_ptr;
 
@@ -8151,8 +8151,8 @@ namespace internal2
 // Prints the given number of bytes in the given object to the given
 // ostream.
 GTEST_API_ void PrintBytesInObjectTo( const unsigned char* obj_bytes,
-                                      size_t count,
-                                      ::std::ostream* os );
+                                    size_t count,
+                                    ::std::ostream* os );
 
 // For selecting which printer to use when a given type has neither <<
 // nor PrintTo().
@@ -8171,13 +8171,13 @@ enum TypeKind
 template < typename T, TypeKind kTypeKind >
 class TypeWithoutFormatter
 {
-   public:
+    public:
     // This default version is called when kTypeKind is kOtherType.
     static void PrintValue( const T& value, ::std::ostream* os )
     {
         PrintBytesInObjectTo( reinterpret_cast< const unsigned char* >( &value ),
-                              sizeof( value ),
-                              os );
+                            sizeof( value ),
+                            os );
     }
 };
 
@@ -8189,7 +8189,7 @@ const size_t kProtobufOneLinerMaxLength = 50;
 template < typename T >
 class TypeWithoutFormatter< T, kProtobuf >
 {
-   public:
+    public:
     static void PrintValue( const T& value, ::std::ostream* os )
     {
         const ::testing::internal::string short_str = value.ShortDebugString();
@@ -8202,7 +8202,7 @@ class TypeWithoutFormatter< T, kProtobuf >
 template < typename T >
 class TypeWithoutFormatter< T, kConvertibleToInteger >
 {
-   public:
+    public:
     // Since T has no << operator or PrintTo() but can be implicitly
     // converted to BiggestInt, we print it as a BiggestInt.
     //
@@ -8247,7 +8247,7 @@ template < typename Char, typename CharTraits, typename T >
     const T& x )
 {
     TypeWithoutFormatter< T,
-                          ( internal::IsAProtocolMessage< T >::value ? kProtobuf : internal::ImplicitlyConvertible< const T&, internal::BiggestInt >::value ? kConvertibleToInteger
+                        ( internal::IsAProtocolMessage< T >::value ? kProtobuf : internal::ImplicitlyConvertible< const T&, internal::BiggestInt >::value ? kConvertibleToInteger
                                                                                                                                                             : kOtherType ) >::PrintValue( x, &os );
     return os;
 }
@@ -8318,16 +8318,16 @@ void UniversalPrint( const T& value, ::std::ostream* os );
 // a PrintTo() for it.
 template < typename C >
 void DefaultPrintTo( IsContainer /* dummy */,
-                     false_type /* is not a pointer */,
-                     const C& container,
-                     ::std::ostream* os )
+                    false_type /* is not a pointer */,
+                    const C& container,
+                    ::std::ostream* os )
 {
     const size_t kMaxCount = 32;  // The maximum number of elements to print.
     *os << '{';
     size_t count = 0;
     for ( typename C::const_iterator it = container.begin();
-          it != container.end();
-          ++it, ++count )
+        it != container.end();
+        ++it, ++count )
     {
         if ( count > 0 )
         {
@@ -8359,9 +8359,9 @@ void DefaultPrintTo( IsContainer /* dummy */,
 // bytes.)
 template < typename T >
 void DefaultPrintTo( IsNotContainer /* dummy */,
-                     true_type /* is a pointer */,
-                     T* p,
-                     ::std::ostream* os )
+                    true_type /* is a pointer */,
+                    T* p,
+                    ::std::ostream* os )
 {
     if ( p == NULL )
     {
@@ -8399,9 +8399,9 @@ void DefaultPrintTo( IsNotContainer /* dummy */,
 // doesn't define PrintTo() for it.
 template < typename T >
 void DefaultPrintTo( IsNotContainer /* dummy */,
-                     false_type /* is not a pointer */,
-                     const T& value,
-                     ::std::ostream* os )
+                    false_type /* is not a pointer */,
+                    const T& value,
+                    ::std::ostream* os )
 {
     ::testing_internal::DefaultPrintNonContainerTo( value, os );
 }
@@ -8608,35 +8608,35 @@ void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4 >& t, ::std::ostream* os )
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9 >
 void PrintTo( const ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9 >& t,
-              ::std::ostream* os )
+            ::std::ostream* os )
 {
     PrintTupleTo( t, os );
 }
@@ -8668,7 +8668,7 @@ void PrintTo( const ::std::pair< T1, T2 >& value, ::std::ostream* os )
 template < typename T >
 class UniversalPrinter
 {
-   public:
+    public:
     // MSVC warns about adding const to a function type, so we want to
     // disable the warning.
 #ifdef _MSC_VER
@@ -8744,7 +8744,7 @@ GTEST_API_ void UniversalPrintArray(
 template < typename T, size_t N >
 class UniversalPrinter< T[N] >
 {
-   public:
+    public:
     // Prints the given array, omitting some elements when there are too
     // many.
     static void Print( const T ( &a )[N], ::std::ostream* os )
@@ -8757,7 +8757,7 @@ class UniversalPrinter< T[N] >
 template < typename T >
 class UniversalPrinter< T& >
 {
-   public:
+    public:
     // MSVC warns about adding const to a function type, so we want to
     // disable the warning.
 #ifdef _MSC_VER
@@ -8787,7 +8787,7 @@ class UniversalPrinter< T& >
 template < typename T >
 class UniversalTersePrinter
 {
-   public:
+    public:
     static void Print( const T& value, ::std::ostream* os )
     {
         UniversalPrint( value, os );
@@ -8796,7 +8796,7 @@ class UniversalTersePrinter
 template < typename T >
 class UniversalTersePrinter< T& >
 {
-   public:
+    public:
     static void Print( const T& value, ::std::ostream* os )
     {
         UniversalPrint( value, os );
@@ -8805,7 +8805,7 @@ class UniversalTersePrinter< T& >
 template < typename T, size_t N >
 class UniversalTersePrinter< T[N] >
 {
-   public:
+    public:
     static void Print( const T ( &value )[N], ::std::ostream* os )
     {
         UniversalPrinter< T[N] >::Print( value, os );
@@ -8814,7 +8814,7 @@ class UniversalTersePrinter< T[N] >
 template <>
 class UniversalTersePrinter< const char* >
 {
-   public:
+    public:
     static void Print( const char* str, ::std::ostream* os )
     {
         if ( str == NULL )
@@ -8830,7 +8830,7 @@ class UniversalTersePrinter< const char* >
 template <>
 class UniversalTersePrinter< char* >
 {
-   public:
+    public:
     static void Print( char* str, ::std::ostream* os )
     {
         UniversalTersePrinter< const char* >::Print( str, os );
@@ -8841,7 +8841,7 @@ class UniversalTersePrinter< char* >
 template <>
 class UniversalTersePrinter< const wchar_t* >
 {
-   public:
+    public:
     static void Print( const wchar_t* str, ::std::ostream* os )
     {
         if ( str == NULL )
@@ -8859,7 +8859,7 @@ class UniversalTersePrinter< const wchar_t* >
 template <>
 class UniversalTersePrinter< wchar_t* >
 {
-   public:
+    public:
     static void Print( wchar_t* str, ::std::ostream* os )
     {
         UniversalTersePrinter< const wchar_t* >::Print( str, os );
@@ -9010,8 +9010,8 @@ namespace internal
 // TEST_P macro is used to define two tests with the same name
 // but in different namespaces.
 GTEST_API_ void ReportInvalidTestCaseType( const char* test_case_name,
-                                           const char* file,
-                                           int line );
+                                            const char* file,
+                                            int line );
 
 template < typename >
 class ParamGeneratorInterface;
@@ -9023,7 +9023,7 @@ class ParamGenerator;
 template < typename T >
 class ParamIteratorInterface
 {
-   public:
+    public:
     virtual ~ParamIteratorInterface() {}
     // A pointer to the base generator instance.
     // Used only for the purposes of iterator comparison
@@ -9054,7 +9054,7 @@ class ParamIteratorInterface
 template < typename T >
 class ParamIterator
 {
-   public:
+    public:
     typedef T value_type;
     typedef const T& reference;
     typedef ptrdiff_t difference_type;
@@ -9099,7 +9099,7 @@ class ParamIterator
         return !( *this == other );
     }
 
-   private:
+    private:
     friend class ParamGenerator< T >;
     explicit ParamIterator( ParamIteratorInterface< T >* impl )
         : impl_( impl ) {}
@@ -9111,7 +9111,7 @@ class ParamIterator
 template < typename T >
 class ParamGeneratorInterface
 {
-   public:
+    public:
     typedef T ParamType;
 
     virtual ~ParamGeneratorInterface() {}
@@ -9129,7 +9129,7 @@ class ParamGeneratorInterface
 template < typename T >
 class ParamGenerator
 {
-   public:
+    public:
     typedef ParamIterator< T > iterator;
 
     explicit ParamGenerator( ParamGeneratorInterface< T >* impl )
@@ -9152,7 +9152,7 @@ class ParamGenerator
         return iterator( impl_->End() );
     }
 
-   private:
+    private:
     linked_ptr< const ParamGeneratorInterface< T > > impl_;
 };
 
@@ -9163,7 +9163,7 @@ class ParamGenerator
 template < typename T, typename IncrementT >
 class RangeGenerator : public ParamGeneratorInterface< T >
 {
-   public:
+    public:
     RangeGenerator( T begin, T end, IncrementT step )
         : begin_( begin ), end_( end ), step_( step ), end_index_( CalculateEndIndex( begin, end, step ) ) {}
     virtual ~RangeGenerator() {}
@@ -9177,10 +9177,10 @@ class RangeGenerator : public ParamGeneratorInterface< T >
         return new Iterator( this, end_, end_index_, step_ );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< T >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< T >* base, T value, int index, IncrementT step )
             : base_( base ), value_( value ), index_( index ), step_( step ) {}
         virtual ~Iterator() {}
@@ -9214,13 +9214,13 @@ class RangeGenerator : public ParamGeneratorInterface< T >
             return index_ == other_index;
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : ParamIteratorInterface< T >(),
-              base_( other.base_ ),
-              value_( other.value_ ),
-              index_( other.index_ ),
-              step_( other.step_ ) {}
+            base_( other.base_ ),
+            value_( other.value_ ),
+            index_( other.index_ ),
+            step_( other.step_ ) {}
 
         // No implementation - assignment is unsupported.
         void operator=( const Iterator& other );
@@ -9232,8 +9232,8 @@ class RangeGenerator : public ParamGeneratorInterface< T >
     };  // class RangeGenerator::Iterator
 
     static int CalculateEndIndex( const T& begin,
-                                  const T& end,
-                                  const IncrementT& step )
+                                const T& end,
+                                const IncrementT& step )
     {
         int end_index = 0;
         for ( T i = begin; i < end; i = i + step )
@@ -9259,7 +9259,7 @@ class RangeGenerator : public ParamGeneratorInterface< T >
 template < typename T >
 class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
 {
-   public:
+    public:
     template < typename ForwardIterator >
     ValuesInIteratorRangeGenerator( ForwardIterator begin, ForwardIterator end )
         : container_( begin, end )
@@ -9276,14 +9276,14 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
         return new Iterator( this, container_.end() );
     }
 
-   private:
+    private:
     typedef typename ::std::vector< T > ContainerType;
 
     class Iterator : public ParamIteratorInterface< T >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< T >* base,
-                  typename ContainerType::const_iterator iterator )
+                typename ContainerType::const_iterator iterator )
             : base_( base ), iterator_( iterator ) {}
         virtual ~Iterator() {}
 
@@ -9321,16 +9321,16 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
                 << "The program attempted to compare iterators "
                 << "from different generators." << std::endl;
             return iterator_ ==
-                   CheckedDowncastToActualType< const Iterator >( &other )->iterator_;
+                    CheckedDowncastToActualType< const Iterator >( &other )->iterator_;
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             // The explicit constructor call suppresses a false warning
             // emitted by gcc when supplied with the -Wextra option.
             : ParamIteratorInterface< T >(),
-              base_( other.base_ ),
-              iterator_( other.iterator_ )
+            base_( other.base_ ),
+            iterator_( other.iterator_ )
         {
         }
 
@@ -9357,7 +9357,7 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface< T >
 template < class TestClass >
 class ParameterizedTestFactory : public TestFactoryBase
 {
-   public:
+    public:
     typedef typename TestClass::ParamType ParamType;
     explicit ParameterizedTestFactory( ParamType parameter )
         : parameter_( parameter ) {}
@@ -9367,7 +9367,7 @@ class ParameterizedTestFactory : public TestFactoryBase
         return new TestClass();
     }
 
-   private:
+    private:
     const ParamType parameter_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( ParameterizedTestFactory );
@@ -9380,7 +9380,7 @@ class ParameterizedTestFactory : public TestFactoryBase
 template < class ParamType >
 class TestMetaFactoryBase
 {
-   public:
+    public:
     virtual ~TestMetaFactoryBase() {}
 
     virtual TestFactoryBase* CreateTestFactory( ParamType parameter ) = 0;
@@ -9398,7 +9398,7 @@ template < class TestCase >
 class TestMetaFactory
     : public TestMetaFactoryBase< typename TestCase::ParamType >
 {
-   public:
+    public:
     typedef typename TestCase::ParamType ParamType;
 
     TestMetaFactory() {}
@@ -9408,7 +9408,7 @@ class TestMetaFactory
         return new ParameterizedTestFactory< TestCase >( parameter );
     }
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( TestMetaFactory );
 };
 
@@ -9424,7 +9424,7 @@ class TestMetaFactory
 // and calls RegisterTests() on each of them when asked.
 class ParameterizedTestCaseInfoBase
 {
-   public:
+    public:
     virtual ~ParameterizedTestCaseInfoBase() {}
 
     // Base part of test case name for display purposes.
@@ -9437,10 +9437,10 @@ class ParameterizedTestCaseInfoBase
     // instance of a ParameterizedTestCaseInfoBase derived class.
     virtual void RegisterTests() = 0;
 
-   protected:
+    protected:
     ParameterizedTestCaseInfoBase() {}
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( ParameterizedTestCaseInfoBase );
 };
 
@@ -9454,7 +9454,7 @@ class ParameterizedTestCaseInfoBase
 template < class TestCase >
 class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
 {
-   public:
+    public:
     // ParamType and GeneratorCreationFunc are private types but are required
     // for declarations of public methods AddTestPattern() and
     // AddTestCaseInstantiation().
@@ -9482,8 +9482,8 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
     // parameter index. For the test SequenceA/FooTest.DoBar/1 FooTest is
     // test case base name and DoBar is test base name.
     void AddTestPattern( const char* test_case_name,
-                         const char* test_base_name,
-                         TestMetaFactoryBase< ParamType >* meta_factory )
+                        const char* test_base_name,
+                        TestMetaFactoryBase< ParamType >* meta_factory )
     {
         tests_.push_back( linked_ptr< TestInfo >( new TestInfo( test_case_name,
                                                                 test_base_name,
@@ -9492,9 +9492,9 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
     // INSTANTIATE_TEST_CASE_P macro uses AddGenerator() to record information
     // about a generator.
     int AddTestCaseInstantiation( const string& instantiation_name,
-                                  GeneratorCreationFunc* func,
-                                  const char* /* file */,
-                                  int /* line */ )
+                                GeneratorCreationFunc* func,
+                                const char* /* file */,
+                                int /* line */ )
     {
         instantiations_.push_back( ::std::make_pair( instantiation_name, func ) );
         return 0;  // Return value used only to run this method in namespace scope.
@@ -9507,14 +9507,14 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
     virtual void RegisterTests()
     {
         for ( typename TestInfoContainer::iterator test_it = tests_.begin();
-              test_it != tests_.end();
-              ++test_it )
+            test_it != tests_.end();
+            ++test_it )
         {
             linked_ptr< TestInfo > test_info = *test_it;
             for ( typename InstantiationContainer::iterator gen_it =
-                      instantiations_.begin();
-                  gen_it != instantiations_.end();
-                  ++gen_it )
+                    instantiations_.begin();
+                gen_it != instantiations_.end();
+                ++gen_it )
             {
                 const string& instantiation_name = gen_it->first;
                 ParamGenerator< ParamType > generator( ( *gen_it->second )() );
@@ -9526,9 +9526,9 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
 
                 int i = 0;
                 for ( typename ParamGenerator< ParamType >::iterator param_it =
-                          generator.begin();
-                      param_it != generator.end();
-                      ++param_it, ++i )
+                        generator.begin();
+                    param_it != generator.end();
+                    ++param_it, ++i )
                 {
                     Message test_name_stream;
                     test_name_stream << test_info->test_base_name << "/" << i;
@@ -9546,17 +9546,17 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
         }          // for test_it
     }              // RegisterTests
 
-   private:
+    private:
     // LocalTestInfo structure keeps information about a single test registered
     // with TEST_P macro.
     struct TestInfo
     {
         TestInfo( const char* a_test_case_base_name,
-                  const char* a_test_base_name,
-                  TestMetaFactoryBase< ParamType >* a_test_meta_factory )
+                const char* a_test_base_name,
+                TestMetaFactoryBase< ParamType >* a_test_meta_factory )
             : test_case_base_name( a_test_case_base_name ),
-              test_base_name( a_test_base_name ),
-              test_meta_factory( a_test_meta_factory ) {}
+            test_base_name( a_test_base_name ),
+            test_meta_factory( a_test_meta_factory ) {}
 
         const string test_case_base_name;
         const string test_base_name;
@@ -9583,13 +9583,13 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase
 // descriptors.
 class ParameterizedTestCaseRegistry
 {
-   public:
+    public:
     ParameterizedTestCaseRegistry() {}
     ~ParameterizedTestCaseRegistry()
     {
         for ( TestCaseInfoContainer::iterator it = test_case_infos_.begin();
-              it != test_case_infos_.end();
-              ++it )
+            it != test_case_infos_.end();
+            ++it )
         {
             delete *it;
         }
@@ -9605,8 +9605,8 @@ class ParameterizedTestCaseRegistry
     {
         ParameterizedTestCaseInfo< TestCase >* typed_test_info = NULL;
         for ( TestCaseInfoContainer::iterator it = test_case_infos_.begin();
-              it != test_case_infos_.end();
-              ++it )
+            it != test_case_infos_.end();
+            ++it )
         {
             if ( ( *it )->GetTestCaseName() == test_case_name )
             {
@@ -9639,14 +9639,14 @@ class ParameterizedTestCaseRegistry
     void RegisterTests()
     {
         for ( TestCaseInfoContainer::iterator it = test_case_infos_.begin();
-              it != test_case_infos_.end();
-              ++it )
+            it != test_case_infos_.end();
+            ++it )
         {
             ( *it )->RegisterTests();
         }
     }
 
-   private:
+    private:
     typedef ::std::vector< ParameterizedTestCaseInfoBase* > TestCaseInfoContainer;
 
     TestCaseInfoContainer test_case_infos_;
@@ -9738,7 +9738,7 @@ namespace internal
 template < typename T1 >
 class ValueArray1
 {
-   public:
+    public:
     explicit ValueArray1( T1 v1 )
         : v1_( v1 ) {}
 
@@ -9748,7 +9748,7 @@ class ValueArray1
         return ValuesIn( &v1_, &v1_ + 1 );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray1& other );
 
@@ -9758,7 +9758,7 @@ class ValueArray1
 template < typename T1, typename T2 >
 class ValueArray2
 {
-   public:
+    public:
     ValueArray2( T1 v1, T2 v2 )
         : v1_( v1 ), v2_( v2 ) {}
 
@@ -9769,7 +9769,7 @@ class ValueArray2
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray2& other );
 
@@ -9780,7 +9780,7 @@ class ValueArray2
 template < typename T1, typename T2, typename T3 >
 class ValueArray3
 {
-   public:
+    public:
     ValueArray3( T1 v1, T2 v2, T3 v3 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ) {}
 
@@ -9791,7 +9791,7 @@ class ValueArray3
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray3& other );
 
@@ -9803,7 +9803,7 @@ class ValueArray3
 template < typename T1, typename T2, typename T3, typename T4 >
 class ValueArray4
 {
-   public:
+    public:
     ValueArray4( T1 v1, T2 v2, T3 v3, T4 v4 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ) {}
 
@@ -9814,7 +9814,7 @@ class ValueArray4
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray4& other );
 
@@ -9827,7 +9827,7 @@ class ValueArray4
 template < typename T1, typename T2, typename T3, typename T4, typename T5 >
 class ValueArray5
 {
-   public:
+    public:
     ValueArray5( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ) {}
 
@@ -9838,7 +9838,7 @@ class ValueArray5
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray5& other );
 
@@ -9852,7 +9852,7 @@ class ValueArray5
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6 >
 class ValueArray6
 {
-   public:
+    public:
     ValueArray6( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ) {}
 
@@ -9863,7 +9863,7 @@ class ValueArray6
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray6& other );
 
@@ -9878,15 +9878,15 @@ class ValueArray6
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7 >
 class ValueArray7
 {
-   public:
+    public:
     ValueArray7( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -9895,7 +9895,7 @@ class ValueArray7
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray7& other );
 
@@ -9911,7 +9911,7 @@ class ValueArray7
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8 >
 class ValueArray8
 {
-   public:
+    public:
     ValueArray8( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ) {}
 
@@ -9922,7 +9922,7 @@ class ValueArray8
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray8& other );
 
@@ -9939,7 +9939,7 @@ class ValueArray8
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9 >
 class ValueArray9
 {
-   public:
+    public:
     ValueArray9( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ) {}
 
@@ -9950,7 +9950,7 @@ class ValueArray9
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray9& other );
 
@@ -9968,7 +9968,7 @@ class ValueArray9
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10 >
 class ValueArray10
 {
-   public:
+    public:
     ValueArray10( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ) {}
 
@@ -9979,7 +9979,7 @@ class ValueArray10
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray10& other );
 
@@ -9998,7 +9998,7 @@ class ValueArray10
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11 >
 class ValueArray11
 {
-   public:
+    public:
     ValueArray11( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ) {}
 
@@ -10009,7 +10009,7 @@ class ValueArray11
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray11& other );
 
@@ -10029,7 +10029,7 @@ class ValueArray11
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12 >
 class ValueArray12
 {
-   public:
+    public:
     ValueArray12( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ) {}
 
@@ -10040,7 +10040,7 @@ class ValueArray12
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray12& other );
 
@@ -10061,7 +10061,7 @@ class ValueArray12
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13 >
 class ValueArray13
 {
-   public:
+    public:
     ValueArray13( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ) {}
 
@@ -10072,7 +10072,7 @@ class ValueArray13
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray13& other );
 
@@ -10094,7 +10094,7 @@ class ValueArray13
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14 >
 class ValueArray14
 {
-   public:
+    public:
     ValueArray14( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ) {}
 
@@ -10105,7 +10105,7 @@ class ValueArray14
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray14& other );
 
@@ -10128,7 +10128,7 @@ class ValueArray14
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15 >
 class ValueArray15
 {
-   public:
+    public:
     ValueArray15( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ) {}
 
@@ -10139,7 +10139,7 @@ class ValueArray15
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray15& other );
 
@@ -10163,24 +10163,24 @@ class ValueArray15
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16 >
 class ValueArray16
 {
-   public:
+    public:
     ValueArray16( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -10189,7 +10189,7 @@ class ValueArray16
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray16& other );
 
@@ -10214,7 +10214,7 @@ class ValueArray16
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17 >
 class ValueArray17
 {
-   public:
+    public:
     ValueArray17( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ) {}
 
@@ -10225,7 +10225,7 @@ class ValueArray17
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray17& other );
 
@@ -10251,7 +10251,7 @@ class ValueArray17
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18 >
 class ValueArray18
 {
-   public:
+    public:
     ValueArray18( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ) {}
 
@@ -10262,7 +10262,7 @@ class ValueArray18
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray18& other );
 
@@ -10289,7 +10289,7 @@ class ValueArray18
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19 >
 class ValueArray19
 {
-   public:
+    public:
     ValueArray19( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ) {}
 
@@ -10300,7 +10300,7 @@ class ValueArray19
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray19& other );
 
@@ -10328,7 +10328,7 @@ class ValueArray19
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20 >
 class ValueArray20
 {
-   public:
+    public:
     ValueArray20( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ) {}
 
@@ -10339,7 +10339,7 @@ class ValueArray20
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray20& other );
 
@@ -10368,7 +10368,7 @@ class ValueArray20
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21 >
 class ValueArray21
 {
-   public:
+    public:
     ValueArray21( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ) {}
 
@@ -10379,7 +10379,7 @@ class ValueArray21
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray21& other );
 
@@ -10409,7 +10409,7 @@ class ValueArray21
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22 >
 class ValueArray22
 {
-   public:
+    public:
     ValueArray22( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ) {}
 
@@ -10420,7 +10420,7 @@ class ValueArray22
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray22& other );
 
@@ -10451,7 +10451,7 @@ class ValueArray22
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23 >
 class ValueArray23
 {
-   public:
+    public:
     ValueArray23( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ) {}
 
@@ -10462,7 +10462,7 @@ class ValueArray23
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray23& other );
 
@@ -10494,32 +10494,32 @@ class ValueArray23
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24 >
 class ValueArray24
 {
-   public:
+    public:
     ValueArray24( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -10528,7 +10528,7 @@ class ValueArray24
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray24& other );
 
@@ -10561,7 +10561,7 @@ class ValueArray24
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25 >
 class ValueArray25
 {
-   public:
+    public:
     ValueArray25( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ) {}
 
@@ -10572,7 +10572,7 @@ class ValueArray25
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray25& other );
 
@@ -10606,7 +10606,7 @@ class ValueArray25
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26 >
 class ValueArray26
 {
-   public:
+    public:
     ValueArray26( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ) {}
 
@@ -10617,7 +10617,7 @@ class ValueArray26
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray26& other );
 
@@ -10652,7 +10652,7 @@ class ValueArray26
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27 >
 class ValueArray27
 {
-   public:
+    public:
     ValueArray27( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ) {}
 
@@ -10663,7 +10663,7 @@ class ValueArray27
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray27& other );
 
@@ -10699,7 +10699,7 @@ class ValueArray27
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28 >
 class ValueArray28
 {
-   public:
+    public:
     ValueArray28( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ) {}
 
@@ -10710,7 +10710,7 @@ class ValueArray28
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray28& other );
 
@@ -10747,7 +10747,7 @@ class ValueArray28
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29 >
 class ValueArray29
 {
-   public:
+    public:
     ValueArray29( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ) {}
 
@@ -10758,7 +10758,7 @@ class ValueArray29
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray29& other );
 
@@ -10796,7 +10796,7 @@ class ValueArray29
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30 >
 class ValueArray30
 {
-   public:
+    public:
     ValueArray30( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ) {}
 
@@ -10807,7 +10807,7 @@ class ValueArray30
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray30& other );
 
@@ -10846,7 +10846,7 @@ class ValueArray30
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31 >
 class ValueArray31
 {
-   public:
+    public:
     ValueArray31( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ) {}
 
@@ -10857,7 +10857,7 @@ class ValueArray31
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray31& other );
 
@@ -10897,40 +10897,40 @@ class ValueArray31
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32 >
 class ValueArray32
 {
-   public:
+    public:
     ValueArray32( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ),
-          v25_( v25 ),
-          v26_( v26 ),
-          v27_( v27 ),
-          v28_( v28 ),
-          v29_( v29 ),
-          v30_( v30 ),
-          v31_( v31 ),
-          v32_( v32 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ),
+        v25_( v25 ),
+        v26_( v26 ),
+        v27_( v27 ),
+        v28_( v28 ),
+        v29_( v29 ),
+        v30_( v30 ),
+        v31_( v31 ),
+        v32_( v32 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -10939,7 +10939,7 @@ class ValueArray32
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray32& other );
 
@@ -10980,7 +10980,7 @@ class ValueArray32
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33 >
 class ValueArray33
 {
-   public:
+    public:
     ValueArray33( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ) {}
 
@@ -10991,7 +10991,7 @@ class ValueArray33
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray33& other );
 
@@ -11033,7 +11033,7 @@ class ValueArray33
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34 >
 class ValueArray34
 {
-   public:
+    public:
     ValueArray34( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ) {}
 
@@ -11044,7 +11044,7 @@ class ValueArray34
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray34& other );
 
@@ -11087,7 +11087,7 @@ class ValueArray34
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35 >
 class ValueArray35
 {
-   public:
+    public:
     ValueArray35( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ) {}
 
@@ -11098,7 +11098,7 @@ class ValueArray35
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray35& other );
 
@@ -11142,7 +11142,7 @@ class ValueArray35
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36 >
 class ValueArray36
 {
-   public:
+    public:
     ValueArray36( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ) {}
 
@@ -11153,7 +11153,7 @@ class ValueArray36
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray36& other );
 
@@ -11198,7 +11198,7 @@ class ValueArray36
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37 >
 class ValueArray37
 {
-   public:
+    public:
     ValueArray37( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ) {}
 
@@ -11209,7 +11209,7 @@ class ValueArray37
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray37& other );
 
@@ -11255,7 +11255,7 @@ class ValueArray37
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38 >
 class ValueArray38
 {
-   public:
+    public:
     ValueArray38( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ) {}
 
@@ -11266,7 +11266,7 @@ class ValueArray38
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray38& other );
 
@@ -11313,7 +11313,7 @@ class ValueArray38
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39 >
 class ValueArray39
 {
-   public:
+    public:
     ValueArray39( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ) {}
 
@@ -11324,7 +11324,7 @@ class ValueArray39
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray39& other );
 
@@ -11372,48 +11372,48 @@ class ValueArray39
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40 >
 class ValueArray40
 {
-   public:
+    public:
     ValueArray40( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ),
-          v25_( v25 ),
-          v26_( v26 ),
-          v27_( v27 ),
-          v28_( v28 ),
-          v29_( v29 ),
-          v30_( v30 ),
-          v31_( v31 ),
-          v32_( v32 ),
-          v33_( v33 ),
-          v34_( v34 ),
-          v35_( v35 ),
-          v36_( v36 ),
-          v37_( v37 ),
-          v38_( v38 ),
-          v39_( v39 ),
-          v40_( v40 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ),
+        v25_( v25 ),
+        v26_( v26 ),
+        v27_( v27 ),
+        v28_( v28 ),
+        v29_( v29 ),
+        v30_( v30 ),
+        v31_( v31 ),
+        v32_( v32 ),
+        v33_( v33 ),
+        v34_( v34 ),
+        v35_( v35 ),
+        v36_( v36 ),
+        v37_( v37 ),
+        v38_( v38 ),
+        v39_( v39 ),
+        v40_( v40 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -11422,7 +11422,7 @@ class ValueArray40
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray40& other );
 
@@ -11471,7 +11471,7 @@ class ValueArray40
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41 >
 class ValueArray41
 {
-   public:
+    public:
     ValueArray41( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ) {}
 
@@ -11482,7 +11482,7 @@ class ValueArray41
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray41& other );
 
@@ -11532,7 +11532,7 @@ class ValueArray41
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42 >
 class ValueArray42
 {
-   public:
+    public:
     ValueArray42( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ) {}
 
@@ -11543,7 +11543,7 @@ class ValueArray42
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray42& other );
 
@@ -11594,7 +11594,7 @@ class ValueArray42
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43 >
 class ValueArray43
 {
-   public:
+    public:
     ValueArray43( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ) {}
 
@@ -11605,7 +11605,7 @@ class ValueArray43
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray43& other );
 
@@ -11657,7 +11657,7 @@ class ValueArray43
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44 >
 class ValueArray44
 {
-   public:
+    public:
     ValueArray44( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ) {}
 
@@ -11668,7 +11668,7 @@ class ValueArray44
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray44& other );
 
@@ -11721,7 +11721,7 @@ class ValueArray44
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45 >
 class ValueArray45
 {
-   public:
+    public:
     ValueArray45( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ) {}
 
@@ -11732,7 +11732,7 @@ class ValueArray45
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray45& other );
 
@@ -11786,7 +11786,7 @@ class ValueArray45
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46 >
 class ValueArray46
 {
-   public:
+    public:
     ValueArray46( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ) {}
 
@@ -11797,7 +11797,7 @@ class ValueArray46
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray46& other );
 
@@ -11852,7 +11852,7 @@ class ValueArray46
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47 >
 class ValueArray47
 {
-   public:
+    public:
     ValueArray47( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ), v47_( v47 ) {}
 
@@ -11863,7 +11863,7 @@ class ValueArray47
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray47& other );
 
@@ -11919,56 +11919,56 @@ class ValueArray47
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47, typename T48 >
 class ValueArray48
 {
-   public:
+    public:
     ValueArray48( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47, T48 v48 )
         : v1_( v1 ),
-          v2_( v2 ),
-          v3_( v3 ),
-          v4_( v4 ),
-          v5_( v5 ),
-          v6_( v6 ),
-          v7_( v7 ),
-          v8_( v8 ),
-          v9_( v9 ),
-          v10_( v10 ),
-          v11_( v11 ),
-          v12_( v12 ),
-          v13_( v13 ),
-          v14_( v14 ),
-          v15_( v15 ),
-          v16_( v16 ),
-          v17_( v17 ),
-          v18_( v18 ),
-          v19_( v19 ),
-          v20_( v20 ),
-          v21_( v21 ),
-          v22_( v22 ),
-          v23_( v23 ),
-          v24_( v24 ),
-          v25_( v25 ),
-          v26_( v26 ),
-          v27_( v27 ),
-          v28_( v28 ),
-          v29_( v29 ),
-          v30_( v30 ),
-          v31_( v31 ),
-          v32_( v32 ),
-          v33_( v33 ),
-          v34_( v34 ),
-          v35_( v35 ),
-          v36_( v36 ),
-          v37_( v37 ),
-          v38_( v38 ),
-          v39_( v39 ),
-          v40_( v40 ),
-          v41_( v41 ),
-          v42_( v42 ),
-          v43_( v43 ),
-          v44_( v44 ),
-          v45_( v45 ),
-          v46_( v46 ),
-          v47_( v47 ),
-          v48_( v48 ) {}
+        v2_( v2 ),
+        v3_( v3 ),
+        v4_( v4 ),
+        v5_( v5 ),
+        v6_( v6 ),
+        v7_( v7 ),
+        v8_( v8 ),
+        v9_( v9 ),
+        v10_( v10 ),
+        v11_( v11 ),
+        v12_( v12 ),
+        v13_( v13 ),
+        v14_( v14 ),
+        v15_( v15 ),
+        v16_( v16 ),
+        v17_( v17 ),
+        v18_( v18 ),
+        v19_( v19 ),
+        v20_( v20 ),
+        v21_( v21 ),
+        v22_( v22 ),
+        v23_( v23 ),
+        v24_( v24 ),
+        v25_( v25 ),
+        v26_( v26 ),
+        v27_( v27 ),
+        v28_( v28 ),
+        v29_( v29 ),
+        v30_( v30 ),
+        v31_( v31 ),
+        v32_( v32 ),
+        v33_( v33 ),
+        v34_( v34 ),
+        v35_( v35 ),
+        v36_( v36 ),
+        v37_( v37 ),
+        v38_( v38 ),
+        v39_( v39 ),
+        v40_( v40 ),
+        v41_( v41 ),
+        v42_( v42 ),
+        v43_( v43 ),
+        v44_( v44 ),
+        v45_( v45 ),
+        v46_( v46 ),
+        v47_( v47 ),
+        v48_( v48 ) {}
 
     template < typename T >
     operator ParamGenerator< T >() const
@@ -11977,7 +11977,7 @@ class ValueArray48
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray48& other );
 
@@ -12034,7 +12034,7 @@ class ValueArray48
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47, typename T48, typename T49 >
 class ValueArray49
 {
-   public:
+    public:
     ValueArray49( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47, T48 v48, T49 v49 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ), v47_( v47 ), v48_( v48 ), v49_( v49 ) {}
 
@@ -12045,7 +12045,7 @@ class ValueArray49
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray49& other );
 
@@ -12103,7 +12103,7 @@ class ValueArray49
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40, typename T41, typename T42, typename T43, typename T44, typename T45, typename T46, typename T47, typename T48, typename T49, typename T50 >
 class ValueArray50
 {
-   public:
+    public:
     ValueArray50( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39, T40 v40, T41 v41, T42 v42, T43 v43, T44 v44, T45 v45, T46 v46, T47 v47, T48 v48, T49 v49, T50 v50 )
         : v1_( v1 ), v2_( v2 ), v3_( v3 ), v4_( v4 ), v5_( v5 ), v6_( v6 ), v7_( v7 ), v8_( v8 ), v9_( v9 ), v10_( v10 ), v11_( v11 ), v12_( v12 ), v13_( v13 ), v14_( v14 ), v15_( v15 ), v16_( v16 ), v17_( v17 ), v18_( v18 ), v19_( v19 ), v20_( v20 ), v21_( v21 ), v22_( v22 ), v23_( v23 ), v24_( v24 ), v25_( v25 ), v26_( v26 ), v27_( v27 ), v28_( v28 ), v29_( v29 ), v30_( v30 ), v31_( v31 ), v32_( v32 ), v33_( v33 ), v34_( v34 ), v35_( v35 ), v36_( v36 ), v37_( v37 ), v38_( v38 ), v39_( v39 ), v40_( v40 ), v41_( v41 ), v42_( v42 ), v43_( v43 ), v44_( v44 ), v45_( v45 ), v46_( v46 ), v47_( v47 ), v48_( v48 ), v49_( v49 ), v50_( v50 ) {}
 
@@ -12114,7 +12114,7 @@ class ValueArray50
         return ValuesIn( array );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ValueArray50& other );
 
@@ -12180,7 +12180,7 @@ template < typename T1, typename T2 >
 class CartesianProductGenerator2
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2 > ParamType;
 
     CartesianProductGenerator2( const ParamGenerator< T1 >& g1,
@@ -12197,22 +12197,22 @@ class CartesianProductGenerator2
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 )
         {
             ComputeCurrentValue();
         }
@@ -12256,19 +12256,19 @@ class CartesianProductGenerator2
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ )
         {
             ComputeCurrentValue();
         }
@@ -12283,7 +12283,7 @@ class CartesianProductGenerator2
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_;
+                    current2_ == end2_;
         }
 
         // No implementation - assignment is unsupported.
@@ -12312,7 +12312,7 @@ template < typename T1, typename T2, typename T3 >
 class CartesianProductGenerator3
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3 > ParamType;
 
     CartesianProductGenerator3( const ParamGenerator< T1 >& g1,
@@ -12330,27 +12330,27 @@ class CartesianProductGenerator3
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 )
         {
             ComputeCurrentValue();
         }
@@ -12399,23 +12399,23 @@ class CartesianProductGenerator3
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ )
         {
             ComputeCurrentValue();
         }
@@ -12430,8 +12430,8 @@ class CartesianProductGenerator3
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_;
+                    current2_ == end2_ ||
+                    current3_ == end3_;
         }
 
         // No implementation - assignment is unsupported.
@@ -12464,7 +12464,7 @@ template < typename T1, typename T2, typename T3, typename T4 >
 class CartesianProductGenerator4
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4 > ParamType;
 
     CartesianProductGenerator4( const ParamGenerator< T1 >& g1,
@@ -12483,32 +12483,32 @@ class CartesianProductGenerator4
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 )
         {
             ComputeCurrentValue();
         }
@@ -12562,27 +12562,27 @@ class CartesianProductGenerator4
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ )
         {
             ComputeCurrentValue();
         }
@@ -12597,9 +12597,9 @@ class CartesianProductGenerator4
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_;
         }
 
         // No implementation - assignment is unsupported.
@@ -12636,7 +12636,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5 >
 class CartesianProductGenerator5
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5 > ParamType;
 
     CartesianProductGenerator5( const ParamGenerator< T1 >& g1,
@@ -12656,37 +12656,37 @@ class CartesianProductGenerator5
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 )
         {
             ComputeCurrentValue();
         }
@@ -12745,31 +12745,31 @@ class CartesianProductGenerator5
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ )
         {
             ComputeCurrentValue();
         }
@@ -12784,10 +12784,10 @@ class CartesianProductGenerator5
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_;
         }
 
         // No implementation - assignment is unsupported.
@@ -12828,7 +12828,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator6
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6 > ParamType;
 
     CartesianProductGenerator6( const ParamGenerator< T1 >& g1,
@@ -12849,42 +12849,42 @@ class CartesianProductGenerator6
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 )
         {
             ComputeCurrentValue();
         }
@@ -12948,35 +12948,35 @@ class CartesianProductGenerator6
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ )
         {
             ComputeCurrentValue();
         }
@@ -12991,11 +12991,11 @@ class CartesianProductGenerator6
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_;
         }
 
         // No implementation - assignment is unsupported.
@@ -13040,7 +13040,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator7
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7 > ParamType;
 
     CartesianProductGenerator7( const ParamGenerator< T1 >& g1,
@@ -13062,47 +13062,47 @@ class CartesianProductGenerator7
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 )
         {
             ComputeCurrentValue();
         }
@@ -13171,39 +13171,39 @@ class CartesianProductGenerator7
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ )
         {
             ComputeCurrentValue();
         }
@@ -13218,12 +13218,12 @@ class CartesianProductGenerator7
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_;
         }
 
         // No implementation - assignment is unsupported.
@@ -13272,7 +13272,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator8
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8 > ParamType;
 
     CartesianProductGenerator8( const ParamGenerator< T1 >& g1,
@@ -13295,52 +13295,52 @@ class CartesianProductGenerator8
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end(), g8_, g8_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7,
-                  const ParamGenerator< T8 >& g8,
-                  const typename ParamGenerator< T8 >::iterator& current8 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7,
+                const ParamGenerator< T8 >& g8,
+                const typename ParamGenerator< T8 >::iterator& current8 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 ),
-              begin8_( g8.begin() ),
-              end8_( g8.end() ),
-              current8_( current8 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 ),
+            begin8_( g8.begin() ),
+            end8_( g8.end() ),
+            current8_( current8 )
         {
             ComputeCurrentValue();
         }
@@ -13414,43 +13414,43 @@ class CartesianProductGenerator8
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ &&
-                     current8_ == typed_other->current8_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ &&
+                    current8_ == typed_other->current8_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ ),
-              begin8_( other.begin8_ ),
-              end8_( other.end8_ ),
-              current8_( other.current8_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ ),
+            begin8_( other.begin8_ ),
+            end8_( other.end8_ ),
+            current8_( other.current8_ )
         {
             ComputeCurrentValue();
         }
@@ -13465,13 +13465,13 @@ class CartesianProductGenerator8
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_ ||
-                   current8_ == end8_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_ ||
+                    current8_ == end8_;
         }
 
         // No implementation - assignment is unsupported.
@@ -13524,7 +13524,7 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator9
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9 > ParamType;
 
     CartesianProductGenerator9( const ParamGenerator< T1 >& g1,
@@ -13548,57 +13548,57 @@ class CartesianProductGenerator9
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end(), g8_, g8_.end(), g9_, g9_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7,
-                  const ParamGenerator< T8 >& g8,
-                  const typename ParamGenerator< T8 >::iterator& current8,
-                  const ParamGenerator< T9 >& g9,
-                  const typename ParamGenerator< T9 >::iterator& current9 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7,
+                const ParamGenerator< T8 >& g8,
+                const typename ParamGenerator< T8 >::iterator& current8,
+                const ParamGenerator< T9 >& g9,
+                const typename ParamGenerator< T9 >::iterator& current9 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 ),
-              begin8_( g8.begin() ),
-              end8_( g8.end() ),
-              current8_( current8 ),
-              begin9_( g9.begin() ),
-              end9_( g9.end() ),
-              current9_( current9 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 ),
+            begin8_( g8.begin() ),
+            end8_( g8.end() ),
+            current8_( current8 ),
+            begin9_( g9.begin() ),
+            end9_( g9.end() ),
+            current9_( current9 )
         {
             ComputeCurrentValue();
         }
@@ -13677,47 +13677,47 @@ class CartesianProductGenerator9
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ &&
-                     current8_ == typed_other->current8_ &&
-                     current9_ == typed_other->current9_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ &&
+                    current8_ == typed_other->current8_ &&
+                    current9_ == typed_other->current9_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ ),
-              begin8_( other.begin8_ ),
-              end8_( other.end8_ ),
-              current8_( other.current8_ ),
-              begin9_( other.begin9_ ),
-              end9_( other.end9_ ),
-              current9_( other.current9_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ ),
+            begin8_( other.begin8_ ),
+            end8_( other.end8_ ),
+            current8_( other.current8_ ),
+            begin9_( other.begin9_ ),
+            end9_( other.end9_ ),
+            current9_( other.current9_ )
         {
             ComputeCurrentValue();
         }
@@ -13732,14 +13732,14 @@ class CartesianProductGenerator9
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_ ||
-                   current8_ == end8_ ||
-                   current9_ == end9_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_ ||
+                    current8_ == end8_ ||
+                    current9_ == end9_;
         }
 
         // No implementation - assignment is unsupported.
@@ -13796,19 +13796,19 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 class CartesianProductGenerator10
     : public ParamGeneratorInterface< ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > >
 {
-   public:
+    public:
     typedef ::std::tr1::tuple< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > ParamType;
 
     CartesianProductGenerator10( const ParamGenerator< T1 >& g1,
-                                 const ParamGenerator< T2 >& g2,
-                                 const ParamGenerator< T3 >& g3,
-                                 const ParamGenerator< T4 >& g4,
-                                 const ParamGenerator< T5 >& g5,
-                                 const ParamGenerator< T6 >& g6,
-                                 const ParamGenerator< T7 >& g7,
-                                 const ParamGenerator< T8 >& g8,
-                                 const ParamGenerator< T9 >& g9,
-                                 const ParamGenerator< T10 >& g10 )
+                                const ParamGenerator< T2 >& g2,
+                                const ParamGenerator< T3 >& g3,
+                                const ParamGenerator< T4 >& g4,
+                                const ParamGenerator< T5 >& g5,
+                                const ParamGenerator< T6 >& g6,
+                                const ParamGenerator< T7 >& g7,
+                                const ParamGenerator< T8 >& g8,
+                                const ParamGenerator< T9 >& g9,
+                                const ParamGenerator< T10 >& g10 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ), g9_( g9 ), g10_( g10 ) {}
     virtual ~CartesianProductGenerator10() {}
 
@@ -13821,62 +13821,62 @@ class CartesianProductGenerator10
         return new Iterator( this, g1_, g1_.end(), g2_, g2_.end(), g3_, g3_.end(), g4_, g4_.end(), g5_, g5_.end(), g6_, g6_.end(), g7_, g7_.end(), g8_, g8_.end(), g9_, g9_.end(), g10_, g10_.end() );
     }
 
-   private:
+    private:
     class Iterator : public ParamIteratorInterface< ParamType >
     {
-       public:
+        public:
         Iterator( const ParamGeneratorInterface< ParamType >* base,
-                  const ParamGenerator< T1 >& g1,
-                  const typename ParamGenerator< T1 >::iterator& current1,
-                  const ParamGenerator< T2 >& g2,
-                  const typename ParamGenerator< T2 >::iterator& current2,
-                  const ParamGenerator< T3 >& g3,
-                  const typename ParamGenerator< T3 >::iterator& current3,
-                  const ParamGenerator< T4 >& g4,
-                  const typename ParamGenerator< T4 >::iterator& current4,
-                  const ParamGenerator< T5 >& g5,
-                  const typename ParamGenerator< T5 >::iterator& current5,
-                  const ParamGenerator< T6 >& g6,
-                  const typename ParamGenerator< T6 >::iterator& current6,
-                  const ParamGenerator< T7 >& g7,
-                  const typename ParamGenerator< T7 >::iterator& current7,
-                  const ParamGenerator< T8 >& g8,
-                  const typename ParamGenerator< T8 >::iterator& current8,
-                  const ParamGenerator< T9 >& g9,
-                  const typename ParamGenerator< T9 >::iterator& current9,
-                  const ParamGenerator< T10 >& g10,
-                  const typename ParamGenerator< T10 >::iterator& current10 )
+                const ParamGenerator< T1 >& g1,
+                const typename ParamGenerator< T1 >::iterator& current1,
+                const ParamGenerator< T2 >& g2,
+                const typename ParamGenerator< T2 >::iterator& current2,
+                const ParamGenerator< T3 >& g3,
+                const typename ParamGenerator< T3 >::iterator& current3,
+                const ParamGenerator< T4 >& g4,
+                const typename ParamGenerator< T4 >::iterator& current4,
+                const ParamGenerator< T5 >& g5,
+                const typename ParamGenerator< T5 >::iterator& current5,
+                const ParamGenerator< T6 >& g6,
+                const typename ParamGenerator< T6 >::iterator& current6,
+                const ParamGenerator< T7 >& g7,
+                const typename ParamGenerator< T7 >::iterator& current7,
+                const ParamGenerator< T8 >& g8,
+                const typename ParamGenerator< T8 >::iterator& current8,
+                const ParamGenerator< T9 >& g9,
+                const typename ParamGenerator< T9 >::iterator& current9,
+                const ParamGenerator< T10 >& g10,
+                const typename ParamGenerator< T10 >::iterator& current10 )
             : base_( base ),
-              begin1_( g1.begin() ),
-              end1_( g1.end() ),
-              current1_( current1 ),
-              begin2_( g2.begin() ),
-              end2_( g2.end() ),
-              current2_( current2 ),
-              begin3_( g3.begin() ),
-              end3_( g3.end() ),
-              current3_( current3 ),
-              begin4_( g4.begin() ),
-              end4_( g4.end() ),
-              current4_( current4 ),
-              begin5_( g5.begin() ),
-              end5_( g5.end() ),
-              current5_( current5 ),
-              begin6_( g6.begin() ),
-              end6_( g6.end() ),
-              current6_( current6 ),
-              begin7_( g7.begin() ),
-              end7_( g7.end() ),
-              current7_( current7 ),
-              begin8_( g8.begin() ),
-              end8_( g8.end() ),
-              current8_( current8 ),
-              begin9_( g9.begin() ),
-              end9_( g9.end() ),
-              current9_( current9 ),
-              begin10_( g10.begin() ),
-              end10_( g10.end() ),
-              current10_( current10 )
+            begin1_( g1.begin() ),
+            end1_( g1.end() ),
+            current1_( current1 ),
+            begin2_( g2.begin() ),
+            end2_( g2.end() ),
+            current2_( current2 ),
+            begin3_( g3.begin() ),
+            end3_( g3.end() ),
+            current3_( current3 ),
+            begin4_( g4.begin() ),
+            end4_( g4.end() ),
+            current4_( current4 ),
+            begin5_( g5.begin() ),
+            end5_( g5.end() ),
+            current5_( current5 ),
+            begin6_( g6.begin() ),
+            end6_( g6.end() ),
+            current6_( current6 ),
+            begin7_( g7.begin() ),
+            end7_( g7.end() ),
+            current7_( current7 ),
+            begin8_( g8.begin() ),
+            end8_( g8.end() ),
+            current8_( current8 ),
+            begin9_( g9.begin() ),
+            end9_( g9.end() ),
+            current9_( current9 ),
+            begin10_( g10.begin() ),
+            end10_( g10.end() ),
+            current10_( current10 )
         {
             ComputeCurrentValue();
         }
@@ -13960,51 +13960,51 @@ class CartesianProductGenerator10
             // respective ranges. That can happen in a variety of fashions,
             // so we have to consult AtEnd().
             return ( AtEnd() && typed_other->AtEnd() ) ||
-                   ( current1_ == typed_other->current1_ &&
-                     current2_ == typed_other->current2_ &&
-                     current3_ == typed_other->current3_ &&
-                     current4_ == typed_other->current4_ &&
-                     current5_ == typed_other->current5_ &&
-                     current6_ == typed_other->current6_ &&
-                     current7_ == typed_other->current7_ &&
-                     current8_ == typed_other->current8_ &&
-                     current9_ == typed_other->current9_ &&
-                     current10_ == typed_other->current10_ );
+                    ( current1_ == typed_other->current1_ &&
+                    current2_ == typed_other->current2_ &&
+                    current3_ == typed_other->current3_ &&
+                    current4_ == typed_other->current4_ &&
+                    current5_ == typed_other->current5_ &&
+                    current6_ == typed_other->current6_ &&
+                    current7_ == typed_other->current7_ &&
+                    current8_ == typed_other->current8_ &&
+                    current9_ == typed_other->current9_ &&
+                    current10_ == typed_other->current10_ );
         }
 
-       private:
+        private:
         Iterator( const Iterator& other )
             : base_( other.base_ ),
-              begin1_( other.begin1_ ),
-              end1_( other.end1_ ),
-              current1_( other.current1_ ),
-              begin2_( other.begin2_ ),
-              end2_( other.end2_ ),
-              current2_( other.current2_ ),
-              begin3_( other.begin3_ ),
-              end3_( other.end3_ ),
-              current3_( other.current3_ ),
-              begin4_( other.begin4_ ),
-              end4_( other.end4_ ),
-              current4_( other.current4_ ),
-              begin5_( other.begin5_ ),
-              end5_( other.end5_ ),
-              current5_( other.current5_ ),
-              begin6_( other.begin6_ ),
-              end6_( other.end6_ ),
-              current6_( other.current6_ ),
-              begin7_( other.begin7_ ),
-              end7_( other.end7_ ),
-              current7_( other.current7_ ),
-              begin8_( other.begin8_ ),
-              end8_( other.end8_ ),
-              current8_( other.current8_ ),
-              begin9_( other.begin9_ ),
-              end9_( other.end9_ ),
-              current9_( other.current9_ ),
-              begin10_( other.begin10_ ),
-              end10_( other.end10_ ),
-              current10_( other.current10_ )
+            begin1_( other.begin1_ ),
+            end1_( other.end1_ ),
+            current1_( other.current1_ ),
+            begin2_( other.begin2_ ),
+            end2_( other.end2_ ),
+            current2_( other.current2_ ),
+            begin3_( other.begin3_ ),
+            end3_( other.end3_ ),
+            current3_( other.current3_ ),
+            begin4_( other.begin4_ ),
+            end4_( other.end4_ ),
+            current4_( other.current4_ ),
+            begin5_( other.begin5_ ),
+            end5_( other.end5_ ),
+            current5_( other.current5_ ),
+            begin6_( other.begin6_ ),
+            end6_( other.end6_ ),
+            current6_( other.current6_ ),
+            begin7_( other.begin7_ ),
+            end7_( other.end7_ ),
+            current7_( other.current7_ ),
+            begin8_( other.begin8_ ),
+            end8_( other.end8_ ),
+            current8_( other.current8_ ),
+            begin9_( other.begin9_ ),
+            end9_( other.end9_ ),
+            current9_( other.current9_ ),
+            begin10_( other.begin10_ ),
+            end10_( other.end10_ ),
+            current10_( other.current10_ )
         {
             ComputeCurrentValue();
         }
@@ -14019,15 +14019,15 @@ class CartesianProductGenerator10
             // We must report iterator past the end of the range when either of the
             // component iterators has reached the end of its range.
             return current1_ == end1_ ||
-                   current2_ == end2_ ||
-                   current3_ == end3_ ||
-                   current4_ == end4_ ||
-                   current5_ == end5_ ||
-                   current6_ == end6_ ||
-                   current7_ == end7_ ||
-                   current8_ == end8_ ||
-                   current9_ == end9_ ||
-                   current10_ == end10_;
+                    current2_ == end2_ ||
+                    current3_ == end3_ ||
+                    current4_ == end4_ ||
+                    current5_ == end5_ ||
+                    current6_ == end6_ ||
+                    current7_ == end7_ ||
+                    current8_ == end8_ ||
+                    current9_ == end9_ ||
+                    current10_ == end10_;
         }
 
         // No implementation - assignment is unsupported.
@@ -14093,7 +14093,7 @@ class CartesianProductGenerator10
 template < class Generator1, class Generator2 >
 class CartesianProductHolder2
 {
-   public:
+    public:
     CartesianProductHolder2( const Generator1& g1, const Generator2& g2 )
         : g1_( g1 ), g2_( g2 ) {}
     template < typename T1, typename T2 >
@@ -14105,7 +14105,7 @@ class CartesianProductHolder2
                 static_cast< ParamGenerator< T2 > >( g2_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder2& other );
 
@@ -14116,7 +14116,7 @@ class CartesianProductHolder2
 template < class Generator1, class Generator2, class Generator3 >
 class CartesianProductHolder3
 {
-   public:
+    public:
     CartesianProductHolder3( const Generator1& g1, const Generator2& g2, const Generator3& g3 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ) {}
     template < typename T1, typename T2, typename T3 >
@@ -14129,7 +14129,7 @@ class CartesianProductHolder3
                 static_cast< ParamGenerator< T3 > >( g3_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder3& other );
 
@@ -14141,7 +14141,7 @@ class CartesianProductHolder3
 template < class Generator1, class Generator2, class Generator3, class Generator4 >
 class CartesianProductHolder4
 {
-   public:
+    public:
     CartesianProductHolder4( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ) {}
     template < typename T1, typename T2, typename T3, typename T4 >
@@ -14155,7 +14155,7 @@ class CartesianProductHolder4
                 static_cast< ParamGenerator< T4 > >( g4_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder4& other );
 
@@ -14168,7 +14168,7 @@ class CartesianProductHolder4
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5 >
 class CartesianProductHolder5
 {
-   public:
+    public:
     CartesianProductHolder5( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5 >
@@ -14183,7 +14183,7 @@ class CartesianProductHolder5
                 static_cast< ParamGenerator< T5 > >( g5_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder5& other );
 
@@ -14197,7 +14197,7 @@ class CartesianProductHolder5
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6 >
 class CartesianProductHolder6
 {
-   public:
+    public:
     CartesianProductHolder6( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6 >
@@ -14213,7 +14213,7 @@ class CartesianProductHolder6
                 static_cast< ParamGenerator< T6 > >( g6_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder6& other );
 
@@ -14228,7 +14228,7 @@ class CartesianProductHolder6
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7 >
 class CartesianProductHolder7
 {
-   public:
+    public:
     CartesianProductHolder7( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7 >
@@ -14245,7 +14245,7 @@ class CartesianProductHolder7
                 static_cast< ParamGenerator< T7 > >( g7_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder7& other );
 
@@ -14261,7 +14261,7 @@ class CartesianProductHolder7
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7, class Generator8 >
 class CartesianProductHolder8
 {
-   public:
+    public:
     CartesianProductHolder8( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7, const Generator8& g8 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8 >
@@ -14279,7 +14279,7 @@ class CartesianProductHolder8
                 static_cast< ParamGenerator< T8 > >( g8_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder8& other );
 
@@ -14296,7 +14296,7 @@ class CartesianProductHolder8
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7, class Generator8, class Generator9 >
 class CartesianProductHolder9
 {
-   public:
+    public:
     CartesianProductHolder9( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7, const Generator8& g8, const Generator9& g9 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ), g9_( g9 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9 >
@@ -14315,7 +14315,7 @@ class CartesianProductHolder9
                 static_cast< ParamGenerator< T9 > >( g9_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder9& other );
 
@@ -14333,7 +14333,7 @@ class CartesianProductHolder9
 template < class Generator1, class Generator2, class Generator3, class Generator4, class Generator5, class Generator6, class Generator7, class Generator8, class Generator9, class Generator10 >
 class CartesianProductHolder10
 {
-   public:
+    public:
     CartesianProductHolder10( const Generator1& g1, const Generator2& g2, const Generator3& g3, const Generator4& g4, const Generator5& g5, const Generator6& g6, const Generator7& g7, const Generator8& g8, const Generator9& g9, const Generator10& g10 )
         : g1_( g1 ), g2_( g2 ), g3_( g3 ), g4_( g4 ), g5_( g5 ), g6_( g6 ), g7_( g7 ), g8_( g8 ), g9_( g9 ), g10_( g10 ) {}
     template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10 >
@@ -14353,7 +14353,7 @@ class CartesianProductHolder10
                 static_cast< ParamGenerator< T10 > >( g10_ ) ) );
     }
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const CartesianProductHolder10& other );
 
@@ -14591,26 +14591,26 @@ internal::ValueArray9< T1, T2, T3, T4, T5, T6, T7, T8, T9 > Values( T1 v1, T2 v2
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10 >
 internal::ValueArray10< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > Values( T1 v1,
-                                                                          T2 v2,
-                                                                          T3 v3,
-                                                                          T4 v4,
-                                                                          T5 v5,
-                                                                          T6 v6,
-                                                                          T7 v7,
-                                                                          T8 v8,
-                                                                          T9 v9,
-                                                                          T10 v10 )
+                                                                        T2 v2,
+                                                                        T3 v3,
+                                                                        T4 v4,
+                                                                        T5 v5,
+                                                                        T6 v6,
+                                                                        T7 v7,
+                                                                        T8 v8,
+                                                                        T9 v9,
+                                                                        T10 v10 )
 {
     return internal::ValueArray10< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 >( v1,
-                                                                              v2,
-                                                                              v3,
-                                                                              v4,
-                                                                              v5,
-                                                                              v6,
-                                                                              v7,
-                                                                              v8,
-                                                                              v9,
-                                                                              v10 );
+                                                                            v2,
+                                                                            v3,
+                                                                            v4,
+                                                                            v5,
+                                                                            v6,
+                                                                            v7,
+                                                                            v8,
+                                                                            v9,
+                                                                            v10 );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11 >
@@ -14699,56 +14699,56 @@ internal::ValueArray24< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25 >
 internal::ValueArray25< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25 > Values( T1 v1,
-                                                                                                                                                     T2 v2,
-                                                                                                                                                     T3 v3,
-                                                                                                                                                     T4 v4,
-                                                                                                                                                     T5 v5,
-                                                                                                                                                     T6 v6,
-                                                                                                                                                     T7 v7,
-                                                                                                                                                     T8 v8,
-                                                                                                                                                     T9 v9,
-                                                                                                                                                     T10 v10,
-                                                                                                                                                     T11 v11,
-                                                                                                                                                     T12 v12,
-                                                                                                                                                     T13 v13,
-                                                                                                                                                     T14 v14,
-                                                                                                                                                     T15 v15,
-                                                                                                                                                     T16 v16,
-                                                                                                                                                     T17 v17,
-                                                                                                                                                     T18 v18,
-                                                                                                                                                     T19 v19,
-                                                                                                                                                     T20 v20,
-                                                                                                                                                     T21 v21,
-                                                                                                                                                     T22 v22,
-                                                                                                                                                     T23 v23,
-                                                                                                                                                     T24 v24,
-                                                                                                                                                     T25 v25 )
+                                                                                                                                                    T2 v2,
+                                                                                                                                                    T3 v3,
+                                                                                                                                                    T4 v4,
+                                                                                                                                                    T5 v5,
+                                                                                                                                                    T6 v6,
+                                                                                                                                                    T7 v7,
+                                                                                                                                                    T8 v8,
+                                                                                                                                                    T9 v9,
+                                                                                                                                                    T10 v10,
+                                                                                                                                                    T11 v11,
+                                                                                                                                                    T12 v12,
+                                                                                                                                                    T13 v13,
+                                                                                                                                                    T14 v14,
+                                                                                                                                                    T15 v15,
+                                                                                                                                                    T16 v16,
+                                                                                                                                                    T17 v17,
+                                                                                                                                                    T18 v18,
+                                                                                                                                                    T19 v19,
+                                                                                                                                                    T20 v20,
+                                                                                                                                                    T21 v21,
+                                                                                                                                                    T22 v22,
+                                                                                                                                                    T23 v23,
+                                                                                                                                                    T24 v24,
+                                                                                                                                                    T25 v25 )
 {
     return internal::ValueArray25< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25 >( v1,
-                                                                                                                                                         v2,
-                                                                                                                                                         v3,
-                                                                                                                                                         v4,
-                                                                                                                                                         v5,
-                                                                                                                                                         v6,
-                                                                                                                                                         v7,
-                                                                                                                                                         v8,
-                                                                                                                                                         v9,
-                                                                                                                                                         v10,
-                                                                                                                                                         v11,
-                                                                                                                                                         v12,
-                                                                                                                                                         v13,
-                                                                                                                                                         v14,
-                                                                                                                                                         v15,
-                                                                                                                                                         v16,
-                                                                                                                                                         v17,
-                                                                                                                                                         v18,
-                                                                                                                                                         v19,
-                                                                                                                                                         v20,
-                                                                                                                                                         v21,
-                                                                                                                                                         v22,
-                                                                                                                                                         v23,
-                                                                                                                                                         v24,
-                                                                                                                                                         v25 );
+                                                                                                                                                        v2,
+                                                                                                                                                        v3,
+                                                                                                                                                        v4,
+                                                                                                                                                        v5,
+                                                                                                                                                        v6,
+                                                                                                                                                        v7,
+                                                                                                                                                        v8,
+                                                                                                                                                        v9,
+                                                                                                                                                        v10,
+                                                                                                                                                        v11,
+                                                                                                                                                        v12,
+                                                                                                                                                        v13,
+                                                                                                                                                        v14,
+                                                                                                                                                        v15,
+                                                                                                                                                        v16,
+                                                                                                                                                        v17,
+                                                                                                                                                        v18,
+                                                                                                                                                        v19,
+                                                                                                                                                        v20,
+                                                                                                                                                        v21,
+                                                                                                                                                        v22,
+                                                                                                                                                        v23,
+                                                                                                                                                        v24,
+                                                                                                                                                        v25 );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26 >
@@ -14833,44 +14833,44 @@ template < typename T1, typename T2, typename T3, typename T4, typename T5, type
 internal::ValueArray39< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39 > Values( T1 v1, T2 v2, T3 v3, T4 v4, T5 v5, T6 v6, T7 v7, T8 v8, T9 v9, T10 v10, T11 v11, T12 v12, T13 v13, T14 v14, T15 v15, T16 v16, T17 v17, T18 v18, T19 v19, T20 v20, T21 v21, T22 v22, T23 v23, T24 v24, T25 v25, T26 v26, T27 v27, T28 v28, T29 v29, T30 v30, T31 v31, T32 v32, T33 v33, T34 v34, T35 v35, T36 v36, T37 v37, T38 v38, T39 v39 )
 {
     return internal::ValueArray39< T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39 >( v1,
-                                                                                                                                                                                                                               v2,
-                                                                                                                                                                                                                               v3,
-                                                                                                                                                                                                                               v4,
-                                                                                                                                                                                                                               v5,
-                                                                                                                                                                                                                               v6,
-                                                                                                                                                                                                                               v7,
-                                                                                                                                                                                                                               v8,
-                                                                                                                                                                                                                               v9,
-                                                                                                                                                                                                                               v10,
-                                                                                                                                                                                                                               v11,
-                                                                                                                                                                                                                               v12,
-                                                                                                                                                                                                                               v13,
-                                                                                                                                                                                                                               v14,
-                                                                                                                                                                                                                               v15,
-                                                                                                                                                                                                                               v16,
-                                                                                                                                                                                                                               v17,
-                                                                                                                                                                                                                               v18,
-                                                                                                                                                                                                                               v19,
-                                                                                                                                                                                                                               v20,
-                                                                                                                                                                                                                               v21,
-                                                                                                                                                                                                                               v22,
-                                                                                                                                                                                                                               v23,
-                                                                                                                                                                                                                               v24,
-                                                                                                                                                                                                                               v25,
-                                                                                                                                                                                                                               v26,
-                                                                                                                                                                                                                               v27,
-                                                                                                                                                                                                                               v28,
-                                                                                                                                                                                                                               v29,
-                                                                                                                                                                                                                               v30,
-                                                                                                                                                                                                                               v31,
-                                                                                                                                                                                                                               v32,
-                                                                                                                                                                                                                               v33,
-                                                                                                                                                                                                                               v34,
-                                                                                                                                                                                                                               v35,
-                                                                                                                                                                                                                               v36,
-                                                                                                                                                                                                                               v37,
-                                                                                                                                                                                                                               v38,
-                                                                                                                                                                                                                               v39 );
+                                                                                                                                                                                                                                v2,
+                                                                                                                                                                                                                                v3,
+                                                                                                                                                                                                                                v4,
+                                                                                                                                                                                                                                v5,
+                                                                                                                                                                                                                                v6,
+                                                                                                                                                                                                                                v7,
+                                                                                                                                                                                                                                v8,
+                                                                                                                                                                                                                                v9,
+                                                                                                                                                                                                                                v10,
+                                                                                                                                                                                                                                v11,
+                                                                                                                                                                                                                                v12,
+                                                                                                                                                                                                                                v13,
+                                                                                                                                                                                                                                v14,
+                                                                                                                                                                                                                                v15,
+                                                                                                                                                                                                                                v16,
+                                                                                                                                                                                                                                v17,
+                                                                                                                                                                                                                                v18,
+                                                                                                                                                                                                                                v19,
+                                                                                                                                                                                                                                v20,
+                                                                                                                                                                                                                                v21,
+                                                                                                                                                                                                                                v22,
+                                                                                                                                                                                                                                v23,
+                                                                                                                                                                                                                                v24,
+                                                                                                                                                                                                                                v25,
+                                                                                                                                                                                                                                v26,
+                                                                                                                                                                                                                                v27,
+                                                                                                                                                                                                                                v28,
+                                                                                                                                                                                                                                v29,
+                                                                                                                                                                                                                                v30,
+                                                                                                                                                                                                                                v31,
+                                                                                                                                                                                                                                v32,
+                                                                                                                                                                                                                                v33,
+                                                                                                                                                                                                                                v34,
+                                                                                                                                                                                                                                v35,
+                                                                                                                                                                                                                                v36,
+                                                                                                                                                                                                                                v37,
+                                                                                                                                                                                                                                v38,
+                                                                                                                                                                                                                                v39 );
 }
 
 template < typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, typename T19, typename T20, typename T21, typename T22, typename T23, typename T24, typename T25, typename T26, typename T27, typename T28, typename T29, typename T30, typename T31, typename T32, typename T33, typename T34, typename T35, typename T36, typename T37, typename T38, typename T39, typename T40 >
@@ -15174,16 +15174,16 @@ internal::CartesianProductHolder10< Generator1, Generator2, Generator3, Generato
     class GTEST_TEST_CLASS_NAME_( test_case_name, test_name )                                                             \
         : public test_case_name                                                                                           \
     {                                                                                                                     \
-       public:                                                                                                            \
+        public:                                                                                                            \
         GTEST_TEST_CLASS_NAME_( test_case_name, test_name )                                                               \
         () {}                                                                                                             \
         virtual void TestBody();                                                                                          \
-                                                                                                                          \
-       private:                                                                                                           \
+                                                                                                                        \
+        private:                                                                                                           \
         static int AddToRegistry()                                                                                        \
         {                                                                                                                 \
             ::testing::UnitTest::GetInstance()->parameterized_test_registry().GetTestCasePatternHolder< test_case_name >( \
-                                                                                 #test_case_name, __FILE__, __LINE__ )    \
+                                                                                #test_case_name, __FILE__, __LINE__ )    \
                 ->AddTestPattern(                                                                                         \
                     #test_case_name,                                                                                      \
                     #test_name,                                                                                           \
@@ -15208,7 +15208,7 @@ internal::CartesianProductHolder10< Generator1, Generator2, Generator3, Generato
     }                                                                                                                 \
     int gtest_##prefix##test_case_name##_dummy_ =                                                                     \
         ::testing::UnitTest::GetInstance()->parameterized_test_registry().GetTestCasePatternHolder< test_case_name >( \
-                                                                             #test_case_name, __FILE__, __LINE__ )    \
+                                                                            #test_case_name, __FILE__, __LINE__ )    \
             ->AddTestCaseInstantiation(                                                                               \
                 #prefix,                                                                                              \
                 &gtest_##prefix##test_case_name##_EvalGenerator_,                                                     \
@@ -15325,7 +15325,7 @@ namespace testing
 // Don't inherit from TestPartResult as its destructor is not virtual.
 class GTEST_API_ TestPartResult
 {
-   public:
+    public:
     // The possible outcomes of a test part (i.e. an assertion or an
     // explicit SUCCEED(), FAIL(), or ADD_FAILURE()).
     enum Type
@@ -15343,10 +15343,10 @@ class GTEST_API_ TestPartResult
                     int a_line_number,
                     const char* a_message )
         : type_( a_type ),
-          file_name_( a_file_name == NULL ? "" : a_file_name ),
-          line_number_( a_line_number ),
-          summary_( ExtractSummary( a_message ) ),
-          message_( a_message )
+        file_name_( a_file_name == NULL ? "" : a_file_name ),
+        line_number_( a_line_number ),
+        summary_( ExtractSummary( a_message ) ),
+        message_( a_message )
     {
     }
 
@@ -15406,7 +15406,7 @@ class GTEST_API_ TestPartResult
         return type_ == kFatalFailure;
     }
 
-   private:
+    private:
     Type type_;
 
     // Gets the summary of the failure message by omitting the stack
@@ -15432,7 +15432,7 @@ std::ostream& operator<<( std::ostream& os, const TestPartResult& result );
 // virtual.
 class GTEST_API_ TestPartResultArray
 {
-   public:
+    public:
     TestPartResultArray() {}
 
     // Appends the given TestPartResult to the array.
@@ -15444,7 +15444,7 @@ class GTEST_API_ TestPartResultArray
     // Returns the number of TestPartResult objects in the array.
     int size() const;
 
-   private:
+    private:
     std::vector< TestPartResult > array_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( TestPartResultArray );
@@ -15453,7 +15453,7 @@ class GTEST_API_ TestPartResultArray
 // This interface knows how to report a test part result.
 class TestPartResultReporterInterface
 {
-   public:
+    public:
     virtual ~TestPartResultReporterInterface() {}
 
     virtual void ReportTestPartResult( const TestPartResult& result ) = 0;
@@ -15471,7 +15471,7 @@ namespace internal
 class GTEST_API_ HasNewFatalFailureHelper
     : public TestPartResultReporterInterface
 {
-   public:
+    public:
     HasNewFatalFailureHelper();
     virtual ~HasNewFatalFailureHelper();
     virtual void ReportTestPartResult( const TestPartResult& result );
@@ -15480,7 +15480,7 @@ class GTEST_API_ HasNewFatalFailureHelper
         return has_new_fatal_failure_;
     }
 
-   private:
+    private:
     bool has_new_fatal_failure_;
     TestPartResultReporterInterface* original_reporter_;
 
@@ -15621,7 +15621,7 @@ TYPED_TEST_P(FooTest, HasPropertyA) { ... }
 // test case name; the rest are the names of the tests in this test
 // case.
 REGISTER_TYPED_TEST_CASE_P(FooTest,
-                           DoesBlah, HasPropertyA);
+                            DoesBlah, HasPropertyA);
 
 // Finally, you are free to instantiate the pattern with the types you
 // want.  If you put the above code in a header file, you can #include
@@ -15662,7 +15662,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
     class GTEST_TEST_CLASS_NAME_( CaseName, TestName )                                 \
         : public CaseName< gtest_TypeParam_ >                                          \
     {                                                                                  \
-       private:                                                                        \
+        private:                                                                        \
         typedef CaseName< gtest_TypeParam_ > TestFixture;                              \
         typedef gtest_TypeParam_ TypeParam;                                            \
         virtual void TestBody();                                                       \
@@ -15717,7 +15717,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
     template < typename gtest_TypeParam_ >                                                                  \
     class TestName : public CaseName< gtest_TypeParam_ >                                                    \
     {                                                                                                       \
-       private:                                                                                             \
+        private:                                                                                             \
         typedef CaseName< gtest_TypeParam_ > TestFixture;                                                   \
         typedef gtest_TypeParam_ TypeParam;                                                                 \
         virtual void TestBody();                                                                            \
@@ -15846,7 +15846,7 @@ class TestEventRepeater;
 class WindowsDeathTest;
 class UnitTestImpl* GetUnitTestImpl();
 void ReportFailureInUnknownLocation( TestPartResult::Type result_type,
-                                     const std::string& message );
+                                    const std::string& message );
 
 // Converts a streamable value to an std::string.  A NULL pointer is
 // converted to "(null)".  When the input value is a ::string,
@@ -15952,7 +15952,7 @@ class UnitTest;
 //
 class GTEST_API_ AssertionResult
 {
-   public:
+    public:
     // Copy constructor.
     // Used in EXPECT_TRUE/FALSE(assertion_result).
     AssertionResult( const AssertionResult& other );
@@ -16001,7 +16001,7 @@ class GTEST_API_ AssertionResult
         return *this;
     }
 
-   private:
+    private:
     // Appends the contents of message to message_.
     void AppendMessage( const Message& a_message )
     {
@@ -16056,7 +16056,7 @@ GTEST_API_ AssertionResult AssertionFailure( const Message& msg );
 // Test is not copyable.
 class GTEST_API_ Test
 {
-   public:
+    public:
     friend class TestInfo;
 
     // Defines types for pointers to functions that set up and tear down
@@ -16111,7 +16111,7 @@ class GTEST_API_ Test
     static void RecordProperty( const char* key, const char* value );
     static void RecordProperty( const char* key, int value );
 
-   protected:
+    protected:
     // Creates a Test object.
     Test();
 
@@ -16121,7 +16121,7 @@ class GTEST_API_ Test
     // Tears down the test fixture.
     virtual void TearDown();
 
-   private:
+    private:
     // Returns true iff the current test has the same fixture class as
     // the first test in the current test case.
     static bool HasSameFixtureClass();
@@ -16183,7 +16183,7 @@ typedef internal::TimeInMillis TimeInMillis;
 // Don't inherit from TestProperty as its destructor is not virtual.
 class TestProperty
 {
-   public:
+    public:
     // C'tor.  TestProperty does NOT have a default constructor.
     // Always use this constructor (with parameters) to create a
     // TestProperty object.
@@ -16210,7 +16210,7 @@ class TestProperty
         value_ = new_value;
     }
 
-   private:
+    private:
     // The key supplied by the user.
     std::string key_;
     // The value supplied by the user.
@@ -16225,7 +16225,7 @@ class TestProperty
 // TestResult is not copyable.
 class GTEST_API_ TestResult
 {
-   public:
+    public:
     // Creates an empty TestResult.
     TestResult();
 
@@ -16270,7 +16270,7 @@ class GTEST_API_ TestResult
     // program.
     const TestProperty& GetTestProperty( int i ) const;
 
-   private:
+    private:
     friend class TestInfo;
     friend class UnitTest;
     friend class internal::DefaultGlobalTestPartResultReporter;
@@ -16360,7 +16360,7 @@ class GTEST_API_ TestResult
 // run.
 class GTEST_API_ TestInfo
 {
-   public:
+    public:
     // Destructs a TestInfo object.  This function is not virtual, so
     // don't inherit from TestInfo.
     ~TestInfo();
@@ -16422,7 +16422,7 @@ class GTEST_API_ TestInfo
         return &result_;
     }
 
-   private:
+    private:
 #if GTEST_HAS_DEATH_TEST
     friend class internal::DefaultDeathTestFactory;
 #endif  // GTEST_HAS_DEATH_TEST
@@ -16488,7 +16488,7 @@ class GTEST_API_ TestInfo
 // TestCase is not copyable.
 class GTEST_API_ TestCase
 {
-   public:
+    public:
     // Creates a TestCase with the given name.
     //
     // TestCase does NOT have a default constructor.  Always use this
@@ -16564,7 +16564,7 @@ class GTEST_API_ TestCase
     // total_test_count() - 1. If i is not in that range, returns NULL.
     const TestInfo* GetTestInfo( int i ) const;
 
-   private:
+    private:
     friend class Test;
     friend class internal::UnitTestImpl;
 
@@ -16691,7 +16691,7 @@ class GTEST_API_ TestCase
 //      destructor.
 class Environment
 {
-   public:
+    public:
     // The d'tor is virtual as we need to subclass Environment.
     virtual ~Environment() {}
 
@@ -16701,7 +16701,7 @@ class Environment
     // Override this to define how to tear down the environment.
     virtual void TearDown() {}
 
-   private:
+    private:
     // If you see an error about overriding the following function or
     // about it being private, you have mis-spelled SetUp() as Setup().
     struct Setup_should_be_spelled_SetUp
@@ -16717,7 +16717,7 @@ class Environment
 // the order the corresponding events are fired.
 class TestEventListener
 {
-   public:
+    public:
     virtual ~TestEventListener() {}
 
     // Fired before any test activity starts.
@@ -16727,7 +16727,7 @@ class TestEventListener
     // one iteration if GTEST_FLAG(repeat) is set. iteration is the iteration
     // index, starting from 0.
     virtual void OnTestIterationStart( const UnitTest& unit_test,
-                                       int iteration ) = 0;
+                                        int iteration ) = 0;
 
     // Fired before environment set-up for each iteration of tests starts.
     virtual void OnEnvironmentsSetUpStart( const UnitTest& unit_test ) = 0;
@@ -16758,7 +16758,7 @@ class TestEventListener
 
     // Fired after each iteration of tests finishes.
     virtual void OnTestIterationEnd( const UnitTest& unit_test,
-                                     int iteration ) = 0;
+                                    int iteration ) = 0;
 
     // Fired after all test activities have ended.
     virtual void OnTestProgramEnd( const UnitTest& unit_test ) = 0;
@@ -16771,10 +16771,10 @@ class TestEventListener
 // above.
 class EmptyTestEventListener : public TestEventListener
 {
-   public:
+    public:
     virtual void OnTestProgramStart( const UnitTest& /*unit_test*/ ) {}
     virtual void OnTestIterationStart( const UnitTest& /*unit_test*/,
-                                       int /*iteration*/ ) {}
+                                        int /*iteration*/ ) {}
     virtual void OnEnvironmentsSetUpStart( const UnitTest& /*unit_test*/ ) {}
     virtual void OnEnvironmentsSetUpEnd( const UnitTest& /*unit_test*/ ) {}
     virtual void OnTestCaseStart( const TestCase& /*test_case*/ ) {}
@@ -16785,14 +16785,14 @@ class EmptyTestEventListener : public TestEventListener
     virtual void OnEnvironmentsTearDownStart( const UnitTest& /*unit_test*/ ) {}
     virtual void OnEnvironmentsTearDownEnd( const UnitTest& /*unit_test*/ ) {}
     virtual void OnTestIterationEnd( const UnitTest& /*unit_test*/,
-                                     int /*iteration*/ ) {}
+                                    int /*iteration*/ ) {}
     virtual void OnTestProgramEnd( const UnitTest& /*unit_test*/ ) {}
 };
 
 // TestEventListeners lets users add listeners to track events in Google Test.
 class GTEST_API_ TestEventListeners
 {
-   public:
+    public:
     TestEventListeners();
     ~TestEventListeners();
 
@@ -16828,7 +16828,7 @@ class GTEST_API_ TestEventListeners
         return default_xml_generator_;
     }
 
-   private:
+    private:
     friend class TestCase;
     friend class TestInfo;
     friend class internal::DefaultGlobalTestPartResultReporter;
@@ -16882,7 +16882,7 @@ class GTEST_API_ TestEventListeners
 // according to their specification.
 class GTEST_API_ UnitTest
 {
-   public:
+    public:
     // Gets the singleton UnitTest object.  The first time this method
     // is called, a UnitTest object is constructed and returned.
     // Consecutive calls will return the same object.
@@ -16972,7 +16972,7 @@ class GTEST_API_ UnitTest
     // inside Google Test.
     TestEventListeners& listeners();
 
-   private:
+    private:
     // Registers and returns a global test environment.  When a test
     // program is run, all global test environments will be set-up in
     // the order they were registered.  After all tests in the program
@@ -17112,7 +17112,7 @@ namespace internal
 template < typename ToPrint, typename OtherOperand >
 class FormatForComparison
 {
-   public:
+    public:
     static ::std::string Format( const ToPrint& value )
     {
         return ::testing::PrintToString( value );
@@ -17123,7 +17123,7 @@ class FormatForComparison
 template < typename ToPrint, size_t N, typename OtherOperand >
 class FormatForComparison< ToPrint[N], OtherOperand >
 {
-   public:
+    public:
     static ::std::string Format( const ToPrint* value )
     {
         return FormatForComparison< const ToPrint*, OtherOperand >::Format( value );
@@ -17137,7 +17137,7 @@ class FormatForComparison< ToPrint[N], OtherOperand >
     template < typename OtherOperand >                                              \
     class FormatForComparison< CharType*, OtherOperand >                            \
     {                                                                               \
-       public:                                                                      \
+        public:                                                                      \
         static ::std::string Format( CharType* value )                              \
         {                                                                           \
             return ::testing::PrintToString( static_cast< const void* >( value ) ); \
@@ -17158,7 +17158,7 @@ GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_( const wchar_t );
     template <>                                                            \
     class FormatForComparison< CharType*, OtherStringType >                \
     {                                                                      \
-       public:                                                             \
+        public:                                                             \
         static ::std::string Format( CharType* value )                     \
         {                                                                  \
             return ::testing::PrintToString( value );                      \
@@ -17204,14 +17204,14 @@ std::string FormatForComparisonFailureMessage(
 // The helper function for {ASSERT|EXPECT}_EQ.
 template < typename T1, typename T2 >
 AssertionResult CmpHelperEQ( const char* expected_expression,
-                             const char* actual_expression,
-                             const T1& expected,
-                             const T2& actual )
+                            const char* actual_expression,
+                            const T1& expected,
+                            const T2& actual )
 {
 #ifdef _MSC_VER
 #pragma warning( push )            // Saves the current warning state.
 #pragma warning( disable : 4389 )  // Temporarily disables warning on
-                                   // signed/unsigned mismatch.
+                                    // signed/unsigned mismatch.
 #endif
 
     if ( expected == actual )
@@ -17224,10 +17224,10 @@ AssertionResult CmpHelperEQ( const char* expected_expression,
 #endif
 
     return EqFailure( expected_expression,
-                      actual_expression,
-                      FormatForComparisonFailureMessage( expected, actual ),
-                      FormatForComparisonFailureMessage( actual, expected ),
-                      false );
+                    actual_expression,
+                    FormatForComparisonFailureMessage( expected, actual ),
+                    FormatForComparisonFailureMessage( actual, expected ),
+                    false );
 }
 
 // With this overloaded version, we allow anonymous enums to be used
@@ -17245,7 +17245,7 @@ GTEST_API_ AssertionResult CmpHelperEQ( const char* expected_expression,
 template < bool lhs_is_null_literal >
 class EqHelper
 {
-   public:
+    public:
     // This templatized version is for the general case.
     template < typename T1, typename T2 >
     static AssertionResult Compare( const char* expected_expression,
@@ -17276,7 +17276,7 @@ class EqHelper
 template <>
 class EqHelper< true >
 {
-   public:
+    public:
     // We define two overloaded versions of Compare().  The first
     // version will be picked when the second argument to ASSERT_EQ() is
     // NOT a pointer, e.g. ASSERT_EQ(0, AnIntFunction()) or
@@ -17338,9 +17338,9 @@ class EqHelper< true >
         else                                                                                                   \
         {                                                                                                      \
             return AssertionFailure()                                                                          \
-                   << "Expected: (" << expr1 << ") " #op " (" << expr2                                         \
-                   << "), actual: " << FormatForComparisonFailureMessage( val1, val2 )                         \
-                   << " vs " << FormatForComparisonFailureMessage( val2, val1 );                               \
+                    << "Expected: (" << expr1 << ") " #op " (" << expr2                                         \
+                    << "), actual: " << FormatForComparisonFailureMessage( val1, val2 )                         \
+                    << " vs " << FormatForComparisonFailureMessage( val2, val1 );                               \
         }                                                                                                      \
     }                                                                                                          \
     GTEST_API_ AssertionResult CmpHelper##op_name(                                                             \
@@ -17365,49 +17365,49 @@ GTEST_IMPL_CMP_HELPER_( GT, > );
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult CmpHelperSTREQ( const char* expected_expression,
-                                           const char* actual_expression,
-                                           const char* expected,
-                                           const char* actual );
+                                            const char* actual_expression,
+                                            const char* expected,
+                                            const char* actual );
 
 // The helper function for {ASSERT|EXPECT}_STRCASEEQ.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult CmpHelperSTRCASEEQ( const char* expected_expression,
-                                               const char* actual_expression,
-                                               const char* expected,
-                                               const char* actual );
+                                                const char* actual_expression,
+                                                const char* expected,
+                                                const char* actual );
 
 // The helper function for {ASSERT|EXPECT}_STRNE.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult CmpHelperSTRNE( const char* s1_expression,
-                                           const char* s2_expression,
-                                           const char* s1,
-                                           const char* s2 );
+                                            const char* s2_expression,
+                                            const char* s1,
+                                            const char* s2 );
 
 // The helper function for {ASSERT|EXPECT}_STRCASENE.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult CmpHelperSTRCASENE( const char* s1_expression,
-                                               const char* s2_expression,
-                                               const char* s1,
-                                               const char* s2 );
+                                                const char* s2_expression,
+                                                const char* s1,
+                                                const char* s2 );
 
 // Helper function for *_STREQ on wide strings.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult CmpHelperSTREQ( const char* expected_expression,
-                                           const char* actual_expression,
-                                           const wchar_t* expected,
-                                           const wchar_t* actual );
+                                            const char* actual_expression,
+                                            const wchar_t* expected,
+                                            const wchar_t* actual );
 
 // Helper function for *_STRNE on wide strings.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult CmpHelperSTRNE( const char* s1_expression,
-                                           const char* s2_expression,
-                                           const wchar_t* s1,
-                                           const wchar_t* s2 );
+                                            const char* s2_expression,
+                                            const wchar_t* s1,
+                                            const wchar_t* s2 );
 
 }  // namespace internal
 
@@ -17475,9 +17475,9 @@ namespace internal
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 template < typename RawType >
 AssertionResult CmpHelperFloatingPointEQ( const char* expected_expression,
-                                          const char* actual_expression,
-                                          RawType expected,
-                                          RawType actual )
+                                        const char* actual_expression,
+                                        RawType expected,
+                                        RawType actual )
 {
     const FloatingPoint< RawType > lhs( expected ), rhs( actual );
 
@@ -17492,42 +17492,42 @@ AssertionResult CmpHelperFloatingPointEQ( const char* expected_expression,
 
     ::std::stringstream actual_ss;
     actual_ss << std::setprecision( std::numeric_limits< RawType >::digits10 + 2 )
-              << actual;
+            << actual;
 
     return EqFailure( expected_expression,
-                      actual_expression,
-                      StringStreamToString( &expected_ss ),
-                      StringStreamToString( &actual_ss ),
-                      false );
+                    actual_expression,
+                    StringStreamToString( &expected_ss ),
+                    StringStreamToString( &actual_ss ),
+                    false );
 }
 
 // Helper function for implementing ASSERT_NEAR.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 GTEST_API_ AssertionResult DoubleNearPredFormat( const char* expr1,
-                                                 const char* expr2,
-                                                 const char* abs_error_expr,
-                                                 double val1,
-                                                 double val2,
-                                                 double abs_error );
+                                                const char* expr2,
+                                                const char* abs_error_expr,
+                                                double val1,
+                                                double val2,
+                                                double abs_error );
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 // A class that enables one to stream messages to assertion macros
 class GTEST_API_ AssertHelper
 {
-   public:
+    public:
     // Constructor.
     AssertHelper( TestPartResult::Type type,
-                  const char* file,
-                  int line,
-                  const char* message );
+                const char* file,
+                int line,
+                const char* message );
     ~AssertHelper();
 
     // Message assignment is a semantic trick to enable assertion
     // streaming; see the GTEST_MESSAGE_ macro below.
     void operator=( const Message& message ) const;
 
-   private:
+    private:
     // We put our data in a struct so that the size of the AssertHelper class can
     // be as small as possible.  This is important because gcc is incapable of
     // re-using stack space even for temporary variables, so every EXPECT_EQ
@@ -17535,9 +17535,9 @@ class GTEST_API_ AssertHelper
     struct AssertHelperData
     {
         AssertHelperData( TestPartResult::Type t,
-                          const char* srcfile,
-                          int line_num,
-                          const char* msg )
+                        const char* srcfile,
+                        int line_num,
+                        const char* msg )
             : type( t ), file( srcfile ), line( line_num ), message( msg ) {}
 
         TestPartResult::Type const type;
@@ -17545,7 +17545,7 @@ class GTEST_API_ AssertHelper
         int const line;
         std::string const message;
 
-       private:
+        private:
         GTEST_DISALLOW_COPY_AND_ASSIGN_( AssertHelperData );
     };
 
@@ -17594,7 +17594,7 @@ class GTEST_API_ AssertHelper
 template < typename T >
 class WithParamInterface
 {
-   public:
+    public:
     typedef T ParamType;
     virtual ~WithParamInterface() {}
 
@@ -17608,7 +17608,7 @@ class WithParamInterface
         return *parameter_;
     }
 
-   private:
+    private:
     // Sets parameter value. The caller is responsible for making sure the value
     // remains alive and unchanged throughout the current test.
     static void SetParam( const ParamType* parameter )
@@ -17802,34 +17802,34 @@ class TestWithParam : public Test, public WithParamInterface< T >
 // Helper function for implementing {EXPECT|ASSERT}_PRED1.  Don't use
 // this in your code.
 template < typename Pred,
-           typename T1 >
+            typename T1 >
 AssertionResult AssertPred1Helper( const char* pred_text,
-                                   const char* e1,
-                                   Pred pred,
-                                   const T1& v1 )
+                                    const char* e1,
+                                    Pred pred,
+                                    const T1& v1 )
 {
     if ( pred( v1 ) ) return AssertionSuccess();
 
     return AssertionFailure() << pred_text << "("
-                              << e1 << ") evaluates to false, where"
-                              << "\n"
-                              << e1 << " evaluates to " << v1;
+                            << e1 << ") evaluates to false, where"
+                            << "\n"
+                            << e1 << " evaluates to " << v1;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT1.
 // Don't use this in your code.
 #define GTEST_PRED_FORMAT1_( pred_format, v1, on_failure ) \
     GTEST_ASSERT_( pred_format( #v1, v1 ),                 \
-                   on_failure )
+                    on_failure )
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED1.  Don't use
 // this in your code.
 #define GTEST_PRED1_( pred, v1, on_failure )            \
     GTEST_ASSERT_( ::testing::AssertPred1Helper( #pred, \
-                                                 #v1,   \
-                                                 pred,  \
-                                                 v1 ),  \
-                   on_failure )
+                                                #v1,   \
+                                                pred,  \
+                                                v1 ),  \
+                    on_failure )
 
 // Unary predicate assertion macros.
 #define EXPECT_PRED_FORMAT1( pred_format, v1 ) \
@@ -17844,42 +17844,42 @@ AssertionResult AssertPred1Helper( const char* pred_text,
 // Helper function for implementing {EXPECT|ASSERT}_PRED2.  Don't use
 // this in your code.
 template < typename Pred,
-           typename T1,
-           typename T2 >
+            typename T1,
+            typename T2 >
 AssertionResult AssertPred2Helper( const char* pred_text,
-                                   const char* e1,
-                                   const char* e2,
-                                   Pred pred,
-                                   const T1& v1,
-                                   const T2& v2 )
+                                    const char* e1,
+                                    const char* e2,
+                                    Pred pred,
+                                    const T1& v1,
+                                    const T2& v2 )
 {
     if ( pred( v1, v2 ) ) return AssertionSuccess();
 
     return AssertionFailure() << pred_text << "("
-                              << e1 << ", "
-                              << e2 << ") evaluates to false, where"
-                              << "\n"
-                              << e1 << " evaluates to " << v1
-                              << "\n"
-                              << e2 << " evaluates to " << v2;
+                            << e1 << ", "
+                            << e2 << ") evaluates to false, where"
+                            << "\n"
+                            << e1 << " evaluates to " << v1
+                            << "\n"
+                            << e2 << " evaluates to " << v2;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT2.
 // Don't use this in your code.
 #define GTEST_PRED_FORMAT2_( pred_format, v1, v2, on_failure ) \
     GTEST_ASSERT_( pred_format( #v1, #v2, v1, v2 ),            \
-                   on_failure )
+                    on_failure )
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED2.  Don't use
 // this in your code.
 #define GTEST_PRED2_( pred, v1, v2, on_failure )        \
     GTEST_ASSERT_( ::testing::AssertPred2Helper( #pred, \
-                                                 #v1,   \
-                                                 #v2,   \
-                                                 pred,  \
-                                                 v1,    \
-                                                 v2 ),  \
-                   on_failure )
+                                                #v1,   \
+                                                #v2,   \
+                                                pred,  \
+                                                v1,    \
+                                                v2 ),  \
+                    on_failure )
 
 // Binary predicate assertion macros.
 #define EXPECT_PRED_FORMAT2( pred_format, v1, v2 ) \
@@ -17894,50 +17894,50 @@ AssertionResult AssertPred2Helper( const char* pred_text,
 // Helper function for implementing {EXPECT|ASSERT}_PRED3.  Don't use
 // this in your code.
 template < typename Pred,
-           typename T1,
-           typename T2,
-           typename T3 >
+            typename T1,
+            typename T2,
+            typename T3 >
 AssertionResult AssertPred3Helper( const char* pred_text,
-                                   const char* e1,
-                                   const char* e2,
-                                   const char* e3,
-                                   Pred pred,
-                                   const T1& v1,
-                                   const T2& v2,
-                                   const T3& v3 )
+                                    const char* e1,
+                                    const char* e2,
+                                    const char* e3,
+                                    Pred pred,
+                                    const T1& v1,
+                                    const T2& v2,
+                                    const T3& v3 )
 {
     if ( pred( v1, v2, v3 ) ) return AssertionSuccess();
 
     return AssertionFailure() << pred_text << "("
-                              << e1 << ", "
-                              << e2 << ", "
-                              << e3 << ") evaluates to false, where"
-                              << "\n"
-                              << e1 << " evaluates to " << v1
-                              << "\n"
-                              << e2 << " evaluates to " << v2
-                              << "\n"
-                              << e3 << " evaluates to " << v3;
+                            << e1 << ", "
+                            << e2 << ", "
+                            << e3 << ") evaluates to false, where"
+                            << "\n"
+                            << e1 << " evaluates to " << v1
+                            << "\n"
+                            << e2 << " evaluates to " << v2
+                            << "\n"
+                            << e3 << " evaluates to " << v3;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT3.
 // Don't use this in your code.
 #define GTEST_PRED_FORMAT3_( pred_format, v1, v2, v3, on_failure ) \
     GTEST_ASSERT_( pred_format( #v1, #v2, #v3, v1, v2, v3 ),       \
-                   on_failure )
+                    on_failure )
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED3.  Don't use
 // this in your code.
 #define GTEST_PRED3_( pred, v1, v2, v3, on_failure )    \
     GTEST_ASSERT_( ::testing::AssertPred3Helper( #pred, \
-                                                 #v1,   \
-                                                 #v2,   \
-                                                 #v3,   \
-                                                 pred,  \
-                                                 v1,    \
-                                                 v2,    \
-                                                 v3 ),  \
-                   on_failure )
+                                                #v1,   \
+                                                #v2,   \
+                                                #v3,   \
+                                                pred,  \
+                                                v1,    \
+                                                v2,    \
+                                                v3 ),  \
+                    on_failure )
 
 // Ternary predicate assertion macros.
 #define EXPECT_PRED_FORMAT3( pred_format, v1, v2, v3 ) \
@@ -17952,58 +17952,58 @@ AssertionResult AssertPred3Helper( const char* pred_text,
 // Helper function for implementing {EXPECT|ASSERT}_PRED4.  Don't use
 // this in your code.
 template < typename Pred,
-           typename T1,
-           typename T2,
-           typename T3,
-           typename T4 >
+            typename T1,
+            typename T2,
+            typename T3,
+            typename T4 >
 AssertionResult AssertPred4Helper( const char* pred_text,
-                                   const char* e1,
-                                   const char* e2,
-                                   const char* e3,
-                                   const char* e4,
-                                   Pred pred,
-                                   const T1& v1,
-                                   const T2& v2,
-                                   const T3& v3,
-                                   const T4& v4 )
+                                    const char* e1,
+                                    const char* e2,
+                                    const char* e3,
+                                    const char* e4,
+                                    Pred pred,
+                                    const T1& v1,
+                                    const T2& v2,
+                                    const T3& v3,
+                                    const T4& v4 )
 {
     if ( pred( v1, v2, v3, v4 ) ) return AssertionSuccess();
 
     return AssertionFailure() << pred_text << "("
-                              << e1 << ", "
-                              << e2 << ", "
-                              << e3 << ", "
-                              << e4 << ") evaluates to false, where"
-                              << "\n"
-                              << e1 << " evaluates to " << v1
-                              << "\n"
-                              << e2 << " evaluates to " << v2
-                              << "\n"
-                              << e3 << " evaluates to " << v3
-                              << "\n"
-                              << e4 << " evaluates to " << v4;
+                            << e1 << ", "
+                            << e2 << ", "
+                            << e3 << ", "
+                            << e4 << ") evaluates to false, where"
+                            << "\n"
+                            << e1 << " evaluates to " << v1
+                            << "\n"
+                            << e2 << " evaluates to " << v2
+                            << "\n"
+                            << e3 << " evaluates to " << v3
+                            << "\n"
+                            << e4 << " evaluates to " << v4;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT4.
 // Don't use this in your code.
 #define GTEST_PRED_FORMAT4_( pred_format, v1, v2, v3, v4, on_failure ) \
     GTEST_ASSERT_( pred_format( #v1, #v2, #v3, #v4, v1, v2, v3, v4 ),  \
-                   on_failure )
+                    on_failure )
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED4.  Don't use
 // this in your code.
 #define GTEST_PRED4_( pred, v1, v2, v3, v4, on_failure ) \
     GTEST_ASSERT_( ::testing::AssertPred4Helper( #pred,  \
-                                                 #v1,    \
-                                                 #v2,    \
-                                                 #v3,    \
-                                                 #v4,    \
-                                                 pred,   \
-                                                 v1,     \
-                                                 v2,     \
-                                                 v3,     \
-                                                 v4 ),   \
-                   on_failure )
+                                                #v1,    \
+                                                #v2,    \
+                                                #v3,    \
+                                                #v4,    \
+                                                pred,   \
+                                                v1,     \
+                                                v2,     \
+                                                v3,     \
+                                                v4 ),   \
+                    on_failure )
 
 // 4-ary predicate assertion macros.
 #define EXPECT_PRED_FORMAT4( pred_format, v1, v2, v3, v4 ) \
@@ -18018,66 +18018,66 @@ AssertionResult AssertPred4Helper( const char* pred_text,
 // Helper function for implementing {EXPECT|ASSERT}_PRED5.  Don't use
 // this in your code.
 template < typename Pred,
-           typename T1,
-           typename T2,
-           typename T3,
-           typename T4,
-           typename T5 >
+            typename T1,
+            typename T2,
+            typename T3,
+            typename T4,
+            typename T5 >
 AssertionResult AssertPred5Helper( const char* pred_text,
-                                   const char* e1,
-                                   const char* e2,
-                                   const char* e3,
-                                   const char* e4,
-                                   const char* e5,
-                                   Pred pred,
-                                   const T1& v1,
-                                   const T2& v2,
-                                   const T3& v3,
-                                   const T4& v4,
-                                   const T5& v5 )
+                                    const char* e1,
+                                    const char* e2,
+                                    const char* e3,
+                                    const char* e4,
+                                    const char* e5,
+                                    Pred pred,
+                                    const T1& v1,
+                                    const T2& v2,
+                                    const T3& v3,
+                                    const T4& v4,
+                                    const T5& v5 )
 {
     if ( pred( v1, v2, v3, v4, v5 ) ) return AssertionSuccess();
 
     return AssertionFailure() << pred_text << "("
-                              << e1 << ", "
-                              << e2 << ", "
-                              << e3 << ", "
-                              << e4 << ", "
-                              << e5 << ") evaluates to false, where"
-                              << "\n"
-                              << e1 << " evaluates to " << v1
-                              << "\n"
-                              << e2 << " evaluates to " << v2
-                              << "\n"
-                              << e3 << " evaluates to " << v3
-                              << "\n"
-                              << e4 << " evaluates to " << v4
-                              << "\n"
-                              << e5 << " evaluates to " << v5;
+                            << e1 << ", "
+                            << e2 << ", "
+                            << e3 << ", "
+                            << e4 << ", "
+                            << e5 << ") evaluates to false, where"
+                            << "\n"
+                            << e1 << " evaluates to " << v1
+                            << "\n"
+                            << e2 << " evaluates to " << v2
+                            << "\n"
+                            << e3 << " evaluates to " << v3
+                            << "\n"
+                            << e4 << " evaluates to " << v4
+                            << "\n"
+                            << e5 << " evaluates to " << v5;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT5.
 // Don't use this in your code.
 #define GTEST_PRED_FORMAT5_( pred_format, v1, v2, v3, v4, v5, on_failure )     \
     GTEST_ASSERT_( pred_format( #v1, #v2, #v3, #v4, #v5, v1, v2, v3, v4, v5 ), \
-                   on_failure )
+                    on_failure )
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED5.  Don't use
 // this in your code.
 #define GTEST_PRED5_( pred, v1, v2, v3, v4, v5, on_failure ) \
     GTEST_ASSERT_( ::testing::AssertPred5Helper( #pred,      \
-                                                 #v1,        \
-                                                 #v2,        \
-                                                 #v3,        \
-                                                 #v4,        \
-                                                 #v5,        \
-                                                 pred,       \
-                                                 v1,         \
-                                                 v2,         \
-                                                 v3,         \
-                                                 v4,         \
-                                                 v5 ),       \
-                   on_failure )
+                                                #v1,        \
+                                                #v2,        \
+                                                #v3,        \
+                                                #v4,        \
+                                                #v5,        \
+                                                pred,       \
+                                                v1,         \
+                                                v2,         \
+                                                v3,         \
+                                                v4,         \
+                                                v5 ),       \
+                    on_failure )
 
 // 5-ary predicate assertion macros.
 #define EXPECT_PRED_FORMAT5( pred_format, v1, v2, v3, v4, v5 ) \
@@ -18139,9 +18139,9 @@ AssertionResult AssertPred5Helper( const char* pred_text,
 
 #define EXPECT_EQ( expected, actual )                                                 \
     EXPECT_PRED_FORMAT2( ::testing::internal::                                        \
-                             EqHelper< GTEST_IS_NULL_LITERAL_( expected ) >::Compare, \
-                         expected,                                                    \
-                         actual )
+                            EqHelper< GTEST_IS_NULL_LITERAL_( expected ) >::Compare, \
+                        expected,                                                    \
+                        actual )
 #define EXPECT_NE( expected, actual ) \
     EXPECT_PRED_FORMAT2( ::testing::internal::CmpHelperNE, expected, actual )
 #define EXPECT_LE( val1, val2 ) \
@@ -18155,9 +18155,9 @@ AssertionResult AssertPred5Helper( const char* pred_text,
 
 #define GTEST_ASSERT_EQ( expected, actual )                                           \
     ASSERT_PRED_FORMAT2( ::testing::internal::                                        \
-                             EqHelper< GTEST_IS_NULL_LITERAL_( expected ) >::Compare, \
-                         expected,                                                    \
-                         actual )
+                            EqHelper< GTEST_IS_NULL_LITERAL_( expected ) >::Compare, \
+                        expected,                                                    \
+                        actual )
 #define GTEST_ASSERT_NE( val1, val2 ) \
     ASSERT_PRED_FORMAT2( ::testing::internal::CmpHelperNE, val1, val2 )
 #define GTEST_ASSERT_LE( val1, val2 ) \
@@ -18246,35 +18246,35 @@ AssertionResult AssertPred5Helper( const char* pred_text,
 
 #define EXPECT_FLOAT_EQ( expected, actual )                                      \
     EXPECT_PRED_FORMAT2( ::testing::internal::CmpHelperFloatingPointEQ< float >, \
-                         expected,                                               \
-                         actual )
+                        expected,                                               \
+                        actual )
 
 #define EXPECT_DOUBLE_EQ( expected, actual )                                      \
     EXPECT_PRED_FORMAT2( ::testing::internal::CmpHelperFloatingPointEQ< double >, \
-                         expected,                                                \
-                         actual )
+                        expected,                                                \
+                        actual )
 
 #define ASSERT_FLOAT_EQ( expected, actual )                                      \
     ASSERT_PRED_FORMAT2( ::testing::internal::CmpHelperFloatingPointEQ< float >, \
-                         expected,                                               \
-                         actual )
+                        expected,                                               \
+                        actual )
 
 #define ASSERT_DOUBLE_EQ( expected, actual )                                      \
     ASSERT_PRED_FORMAT2( ::testing::internal::CmpHelperFloatingPointEQ< double >, \
-                         expected,                                                \
-                         actual )
+                        expected,                                                \
+                        actual )
 
 #define EXPECT_NEAR( val1, val2, abs_error )                        \
     EXPECT_PRED_FORMAT3( ::testing::internal::DoubleNearPredFormat, \
-                         val1,                                      \
-                         val2,                                      \
-                         abs_error )
+                        val1,                                      \
+                        val2,                                      \
+                        abs_error )
 
 #define ASSERT_NEAR( val1, val2, abs_error )                        \
     ASSERT_PRED_FORMAT3( ::testing::internal::DoubleNearPredFormat, \
-                         val1,                                      \
-                         val2,                                      \
-                         abs_error )
+                        val1,                                      \
+                        val2,                                      \
+                        abs_error )
 
 // These predicate format functions work on floating-point values, and
 // can be used in {ASSERT|EXPECT}_PRED_FORMAT2*(), e.g.

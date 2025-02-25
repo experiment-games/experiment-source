@@ -37,7 +37,7 @@ class C_TFWeaponBuilderReplayHack : public C_TFWeaponBuilder
 {
     DECLARE_CLASS( C_TFWeaponBuilderReplayHack, C_TFWeaponBuilder );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
 };

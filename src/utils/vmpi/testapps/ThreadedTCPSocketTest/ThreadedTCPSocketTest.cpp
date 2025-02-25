@@ -41,7 +41,7 @@ SpewRetval_t MySpewFunc( SpewType_t type, char const *pMsg )
 
 class CHandler_Server : public ITCPSocketHandler
 {
-   public:
+    public:
     virtual void Init( IThreadedTCPSocket *pSocket )
     {
     }
@@ -61,7 +61,7 @@ class CHandler_Server : public ITCPSocketHandler
 
 class CHandler_Client : public ITCPSocketHandler
 {
-   public:
+    public:
     virtual void Init( IThreadedTCPSocket *pSocket )
     {
     }
@@ -84,7 +84,7 @@ class CHandler_Client : public ITCPSocketHandler
 
 class CHandlerCreator_Server : public IHandlerCreator
 {
-   public:
+    public:
     virtual ITCPSocketHandler *CreateNewHandler()
     {
         return new CHandler_Server;
@@ -93,7 +93,7 @@ class CHandlerCreator_Server : public IHandlerCreator
 
 class CHandlerCreator_Client : public IHandlerCreator
 {
-   public:
+    public:
     virtual ITCPSocketHandler *CreateNewHandler()
     {
         return new CHandler_Client;

@@ -35,7 +35,7 @@ class CCasualCategory : public CExpandablePanel
 {
     DECLARE_CLASS_SIMPLE( CCasualCategory, CExpandablePanel );
 
-   public:
+    public:
     CCasualCategory( Panel* parent, const char* panelName, EGameCategory eCategory, Panel* pSignalHandler )
         : BaseClass( parent, panelName ), m_eCategory( eCategory ), pToggleButton( NULL ), m_mapMapPanels( DefLessFunc( uint32 ) ), m_pSignalHandler( pSignalHandler )
     {
@@ -85,19 +85,19 @@ class CCasualCategory : public CExpandablePanel
             CUtlVector< const MapDef_t* > vecSortedMaps;
             vecSortedMaps.AddVectorToTail( pCategory->m_vecEnabledMaps );
             vecSortedMaps.SortPredicate( []( const MapDef_t* pLeft, const MapDef_t* pRight ) -> bool
-                                         {
-				// Localized map name first
-				int nLocaleCmp = wcscoll( g_pVGuiLocalize->Find( pLeft->pszMapNameLocKey ), g_pVGuiLocalize->Find( pRight->pszMapNameLocKey ) );
-				if ( nLocaleCmp != 0 )
-					return nLocaleCmp < 0;
+                                        {
+                // Localized map name first
+                int nLocaleCmp = wcscoll( g_pVGuiLocalize->Find( pLeft->pszMapNameLocKey ), g_pVGuiLocalize->Find( pRight->pszMapNameLocKey ) );
+                if ( nLocaleCmp != 0 )
+                    return nLocaleCmp < 0;
 
-				// Map file name second
-				int nStrCmp = V_strcasecmp( pLeft->pszMapName, pRight->pszMapName );
-				if ( nStrCmp != 0 )
-					return nStrCmp < 0;
+                // Map file name second
+                int nStrCmp = V_strcasecmp( pLeft->pszMapName, pRight->pszMapName );
+                if ( nStrCmp != 0 )
+                    return nStrCmp < 0;
 
-				// Defindex third
-				return pLeft->m_nDefIndex < pRight->m_nDefIndex; } );
+                // Defindex third
+                return pLeft->m_nDefIndex < pRight->m_nDefIndex; } );
 
             FOR_EACH_VEC( vecSortedMaps, i )
             {
@@ -214,7 +214,7 @@ class CCasualCategory : public CExpandablePanel
         }
     }
 
-   private:
+    private:
     void ClearMapEntries()
     {
         // Clear out the old map entries

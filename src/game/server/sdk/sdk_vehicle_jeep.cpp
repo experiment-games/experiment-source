@@ -85,7 +85,7 @@ DEFINE_ARRAY( m_bWheelInWater, FIELD_BOOLEAN, JEEP_WHEEL_COUNT ),
 {
     typedef CFourWheelServerVehicle BaseClass;
     // IServerVehicle
-   public:
+    public:
     bool NPC_HasPrimaryWeapon( void )
     {
         return true;
@@ -101,7 +101,7 @@ class CPropJeep : public CPropVehicleDriveable
 {
     DECLARE_CLASS( CPropJeep, CPropVehicleDriveable );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -168,7 +168,7 @@ class CPropJeep : public CPropVehicleDriveable
         m_bHeadlightIsOn = false;
     }
 
-   private:
+    private:
     void FireCannon( void );
     void ChargeCannon( void );
     void FireChargedCannon( void );
@@ -194,7 +194,7 @@ class CPropJeep : public CPropVehicleDriveable
     void InputStartRemoveTauCannon( inputdata_t &inputdata );
     void InputFinishRemoveTauCannon( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bGunHasBeenCutOff;
     float m_flDangerSoundTime;
     int m_nBulletType;
@@ -777,27 +777,27 @@ void CPropJeep::Think( void )
     BaseClass::Think();
 
     /*
-      CBasePlayer	*pPlayer = UTIL_GetLocalPlayer();
+    CBasePlayer	*pPlayer = UTIL_GetLocalPlayer();
 
-      if ( m_bEngineLocked )
-      {
+    if ( m_bEngineLocked )
+    {
         m_bUnableToFire = true;
 
         if ( pPlayer != NULL )
         {
-          pPlayer->m_Local.m_iHideHUD |= HIDEHUD_VEHICLE_CROSSHAIR;
+        pPlayer->m_Local.m_iHideHUD |= HIDEHUD_VEHICLE_CROSSHAIR;
         }
-      }
-      else
-      {
+    }
+    else
+    {
         // Start this as false and update it again each frame
         m_bUnableToFire = false;
 
         if ( pPlayer != NULL )
         {
-          pPlayer->m_Local.m_iHideHUD &= ~HIDEHUD_VEHICLE_CROSSHAIR;
+        pPlayer->m_Local.m_iHideHUD &= ~HIDEHUD_VEHICLE_CROSSHAIR;
         }
-      }
+    }
     */
 
     // Water!?
@@ -994,44 +994,44 @@ void CPropJeep::FireChargedCannon( void )
 {
     /*	bool penetrated = false;
 
-      m_bCannonCharging	= false;
-      m_flCannonTime		= gpGlobals->curtime + 0.5f;
+    m_bCannonCharging	= false;
+    m_flCannonTime		= gpGlobals->curtime + 0.5f;
 
-      StopChargeSound();
+    StopChargeSound();
 
-      CPASAttenuationFilter sndFilter( this, "PropJeep.FireChargedCannon" );
-      EmitSound( sndFilter, entindex(), "PropJeep.FireChargedCannon" );
+    CPASAttenuationFilter sndFilter( this, "PropJeep.FireChargedCannon" );
+    EmitSound( sndFilter, entindex(), "PropJeep.FireChargedCannon" );
 
-      //Find the direction the gun is pointing in
-      Vector aimDir;
-      GetCannonAim( &aimDir );
+    //Find the direction the gun is pointing in
+    Vector aimDir;
+    GetCannonAim( &aimDir );
 
-      Vector endPos = m_vecGunOrigin + ( aimDir * MAX_TRACE_LENGTH );
+    Vector endPos = m_vecGunOrigin + ( aimDir * MAX_TRACE_LENGTH );
 
-      //Shoot a shot straight out
-      trace_t	tr;
-      UTIL_TraceLine( m_vecGunOrigin, endPos, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+    //Shoot a shot straight out
+    trace_t	tr;
+    UTIL_TraceLine( m_vecGunOrigin, endPos, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 
-      ClearMultiDamage();
+    ClearMultiDamage();
 
-      //Find how much damage to do
-      float flChargeAmount = ( gpGlobals->curtime - m_flCannonChargeStartTime ) / MAX_GAUSS_CHARGE_TIME;
+    //Find how much damage to do
+    float flChargeAmount = ( gpGlobals->curtime - m_flCannonChargeStartTime ) / MAX_GAUSS_CHARGE_TIME;
 
-      //Clamp this
-      if ( flChargeAmount > 1.0f )
-      {
+    //Clamp this
+    if ( flChargeAmount > 1.0f )
+    {
         flChargeAmount = 1.0f;
-      }
+    }
 
-      //Determine the damage amount
-      //FIXME: Use ConVars!
-      float flDamage = 15 + ( ( 250 - 15 ) * flChargeAmount );
+    //Determine the damage amount
+    //FIXME: Use ConVars!
+    float flDamage = 15 + ( ( 250 - 15 ) * flChargeAmount );
 
-      CBaseEntity *pHit = tr.m_pEnt;
+    CBaseEntity *pHit = tr.m_pEnt;
 
-      //Look for wall penetration
-      if ( tr.DidHitWorld() && !(tr.surface.flags & SURF_SKY) )
-      {
+    //Look for wall penetration
+    if ( tr.DidHitWorld() && !(tr.surface.flags & SURF_SKY) )
+    {
         //Try wall penetration
         UTIL_ImpactTrace( &tr, m_nBulletType, "ImpactJeep" );
         UTIL_DecalTrace( &tr, "RedGlowFade" );
@@ -1045,56 +1045,56 @@ void CPropJeep::FireChargedCannon( void )
 
         if ( tr.allsolid == false )
         {
-          UTIL_DecalTrace( &tr, "RedGlowFade" );
+        UTIL_DecalTrace( &tr, "RedGlowFade" );
 
-          penetrated = true;
+        penetrated = true;
         }
-      }
-      else if ( pHit != NULL )
-      {
+    }
+    else if ( pHit != NULL )
+    {
         CTakeDamageInfo dmgInfo( this, GetDriver(), flDamage, DMG_SHOCK );
         CalculateBulletDamageForce( &dmgInfo, GetAmmoDef()->Index("GaussEnergy"), aimDir, tr.endpos, 1.0f + flChargeAmount * 4.0f );
 
         //Do direct damage to anything in our path
         pHit->DispatchTraceAttack( dmgInfo, aimDir, &tr );
-      }
+    }
 
-      ApplyMultiDamage();
+    ApplyMultiDamage();
 
-      //Kick up an effect
-      if ( !(tr.surface.flags & SURF_SKY) )
-      {
-          UTIL_ImpactTrace( &tr, m_nBulletType, "ImpactJeep" );
+    //Kick up an effect
+    if ( !(tr.surface.flags & SURF_SKY) )
+    {
+        UTIL_ImpactTrace( &tr, m_nBulletType, "ImpactJeep" );
 
         //Do a gauss explosion
         CPVSFilter filter( tr.endpos );
         te->GaussExplosion( filter, 0.0f, tr.endpos, tr.plane.normal, 0 );
-      }
+    }
 
-      //Show the effect
-      DrawBeam( m_vecGunOrigin, tr.endpos, 9.6 );
+    //Show the effect
+    DrawBeam( m_vecGunOrigin, tr.endpos, 9.6 );
 
-      // Register a muzzleflash for the AI
-      if ( m_hPlayer )
-      {
+    // Register a muzzleflash for the AI
+    if ( m_hPlayer )
+    {
         m_hPlayer->SetMuzzleFlashTime( gpGlobals->curtime + 0.5f );
-      }
+    }
 
-      //Rock the car
-      IPhysicsObject *pObj = VPhysicsGetObject();
+    //Rock the car
+    IPhysicsObject *pObj = VPhysicsGetObject();
 
-      if ( pObj != NULL )
-      {
+    if ( pObj != NULL )
+    {
         Vector	shoveDir = aimDir * -( flDamage * 500.0f );
 
         pObj->ApplyForceOffset( shoveDir, m_vecGunOrigin );
-      }
+    }
 
-      //Do radius damage if we didn't penetrate the wall
-      if ( penetrated == true )
-      {
+    //Do radius damage if we didn't penetrate the wall
+    if ( penetrated == true )
+    {
         RadiusDamage( CTakeDamageInfo( this, this, flDamage, DMG_SHOCK ), tr.endpos, 200.0f, CLASS_NONE, NULL );
-      } */
+    } */
 }
 
 //-----------------------------------------------------------------------------
@@ -1237,9 +1237,9 @@ void CPropJeep::DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleE
 // speed += ( pCoefficientsOut[0] * ( targetPos - currentPos ) + pCoefficientsOut[1] * ( targetSpeed - currentSpeed ) ) * flDeltaTime;
 //-----------------------------------------------------------------------------
 void CPropJeep::ComputePDControllerCoefficients( float *pCoefficientsOut,
-                                                 float flFrequency,
-                                                 float flDampening,
-                                                 float flDeltaTime )
+                                                float flFrequency,
+                                                float flDampening,
+                                                float flDeltaTime )
 {
     float flKs = 9.0f * flFrequency * flFrequency;
     float flKd = 4.5f * flFrequency * flDampening;
@@ -1353,16 +1353,16 @@ void CPropJeep::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDow
 
     // Adrian: No headlights on Superfly.
     /*	if ( ucmd->impulse == 100 )
-      {
+    {
         if (HeadlightIsOn())
         {
-          HeadlightTurnOff();
+        HeadlightTurnOff();
         }
             else
         {
-          HeadlightTurnOn();
+        HeadlightTurnOn();
         }
-      }*/
+    }*/
 
     // If we're holding down an attack button, update our state
     if ( IsOverturned() == false )
@@ -1468,16 +1468,16 @@ void CPropJeep::CreateDangerSounds( void )
         // NDebugOverlay::Box(vecSpot, Vector(-radius,-radius,-radius),Vector(radius,radius,radius), 255, 0, 255, 0, soundDuration);
 
 #if 0
-		trace_t	tr;
-		// put sounds a bit to left and right but slightly closer to Jeep to make a "cone" of sound 
-		// in front of it
-		vecSpot = vecStart + vecDir * (speed * 0.5f) - vecRight * speed * 0.5;
-		UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 1 );
+        trace_t	tr;
+        // put sounds a bit to left and right but slightly closer to Jeep to make a "cone" of sound
+        // in front of it
+        vecSpot = vecStart + vecDir * (speed * 0.5f) - vecRight * speed * 0.5;
+        UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+        CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 1 );
 
-		vecSpot = vecStart + vecDir * (speed * 0.5f) + vecRight * speed * 0.5;
-		UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 2);
+        vecSpot = vecStart + vecDir * (speed * 0.5f) + vecRight * speed * 0.5;
+        UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+        CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 2);
 #endif
     }
 

@@ -35,7 +35,7 @@ import java.util.Iterator;
 
 /**
  * This class tests {@link RopeByteString#substring(int, int)} by inheriting the tests from
- * {@link LiteralByteStringTest}.  Only a couple of methods are overridden.  
+ * {@link LiteralByteStringTest}.  Only a couple of methods are overridden.
  *
  * @author carlanton@google.com (Carl Haverl)
  */
@@ -48,7 +48,7 @@ public class RopeByteStringSubstringTest extends LiteralByteStringTest {
     Iterator<ByteString> iter = ByteStringTest.makeConcretePieces(sourceBytes).iterator();
     ByteString sourceString = iter.next();
     while (iter.hasNext()) {
-      sourceString = sourceString.concat(iter.next());
+    sourceString = sourceString.concat(iter.next());
     }
 
     int from = 1130;
@@ -75,8 +75,8 @@ public class RopeByteStringSubstringTest extends LiteralByteStringTest {
     StringBuilder builder = new StringBuilder(copies * sourceString.length());
     ByteString unicode = ByteString.EMPTY;
     for (int i = 0; i < copies; ++i) {
-      builder.append(sourceString);
-      unicode = RopeByteString.concatenate(unicode, sourceByteString);
+    builder.append(sourceString);
+    unicode = RopeByteString.concatenate(unicode, sourceByteString);
     }
     String testString = builder.toString();
 

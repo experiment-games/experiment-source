@@ -81,12 +81,12 @@ DEFINE_FIELD( vecPosition, FIELD_VECTOR ),
 
 CAI_PassengerBehaviorCompanion::CAI_PassengerBehaviorCompanion( void )
     : m_flUnseenDuration( 0.0f ),
-      m_flNextOverturnWarning( 0.0f ),
-      m_flOverturnedDuration( 0.0f ),
-      m_nExitAttempts( 0 ),
-      m_flNextEnterAttempt( 0.0f ),
-      m_flLastLateralLean( 0.0f ),
-      m_flNextJostleTime( 0.0f )
+    m_flNextOverturnWarning( 0.0f ),
+    m_flOverturnedDuration( 0.0f ),
+    m_nExitAttempts( 0 ),
+    m_flNextEnterAttempt( 0.0f ),
+    m_flLastLateralLean( 0.0f ),
+    m_flNextJostleTime( 0.0f )
 {
     memset( &m_vehicleState, 0, sizeof( m_vehicleState ) );
     m_VehicleMonitor.ClearMark();
@@ -346,7 +346,7 @@ bool CAI_PassengerBehaviorCompanion::CanPlayJostle( bool bLargeJostle )
     {
         // Don't bother under certain circumstances
         if ( IsCurSchedule( SCHED_PASSENGER_COWER ) ||
-             IsCurSchedule( SCHED_PASSENGER_FIDGET ) )
+            IsCurSchedule( SCHED_PASSENGER_FIDGET ) )
             return false;
     }
     else
@@ -1140,7 +1140,7 @@ bool CAI_PassengerBehaviorCompanion::CanExitAtPosition( const Vector &vecTestPos
     /*
     Vector vecGroundPos;
     if ( FindGroundAtPosition( vecTestPos, GetOuter()->StepHeight(), 64.0f, &vecGroundPos ) == false )
-      return false;
+    return false;
     */
 
     // Try and sweep a box through space and make sure it's clear of obstructions
@@ -1157,11 +1157,11 @@ bool CAI_PassengerBehaviorCompanion::CanExitAtPosition( const Vector &vecTestPos
     // If we're blocked, we can't get out there
     if ( tr.fraction < 1.0f || tr.allsolid || tr.startsolid )
     {
-      if ( passenger_debug_transition.GetBool() )
-      {
+    if ( passenger_debug_transition.GetBool() )
+    {
         NDebugOverlay::SweptBox( GetOuter()->GetAbsOrigin(), vecGroundPos, vecMins, GetOuter()->GetHullMaxs(), vec3_angle, 255, 0, 0, 64, 2.0f );
-      }
-      return false;
+    }
+    return false;
     }
     */
 
@@ -1258,15 +1258,15 @@ void CAI_PassengerBehaviorCompanion::StartTask( const Task_t *pTask )
     if ( GetPassengerState() == PASSENGER_STATE_INSIDE )
     {
         if ( pTask->iTask == TASK_FACE_TARGET ||
-             pTask->iTask == TASK_FACE_ENEMY ||
-             pTask->iTask == TASK_FACE_IDEAL ||
-             pTask->iTask == TASK_FACE_HINTNODE ||
-             pTask->iTask == TASK_FACE_LASTPOSITION ||
-             pTask->iTask == TASK_FACE_PATH ||
-             pTask->iTask == TASK_FACE_PLAYER ||
-             pTask->iTask == TASK_FACE_REASONABLE ||
-             pTask->iTask == TASK_FACE_SAVEPOSITION ||
-             pTask->iTask == TASK_FACE_SCRIPT )
+            pTask->iTask == TASK_FACE_ENEMY ||
+            pTask->iTask == TASK_FACE_IDEAL ||
+            pTask->iTask == TASK_FACE_HINTNODE ||
+            pTask->iTask == TASK_FACE_LASTPOSITION ||
+            pTask->iTask == TASK_FACE_PATH ||
+            pTask->iTask == TASK_FACE_PLAYER ||
+            pTask->iTask == TASK_FACE_REASONABLE ||
+            pTask->iTask == TASK_FACE_SAVEPOSITION ||
+            pTask->iTask == TASK_FACE_SCRIPT )
         {
             return TaskComplete();
         }

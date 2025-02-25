@@ -11,34 +11,34 @@ rather build without Maven, see below.
 
 1) Install Apache Maven if you don't have it:
 
-     http://maven.apache.org/
+		http://maven.apache.org/
 
 2) Build the C++ code, or obtain a binary distribution of protoc.  If
-   you install a binary distribution, make sure that it is the same
-   version as this package.  If in doubt, run:
+	you install a binary distribution, make sure that it is the same
+	version as this package.  If in doubt, run:
 
-     $ protoc --version
+		$ protoc --version
 
-   You will need to place the protoc executable in ../src.  (If you
-   built it yourself, it should already be there.)
+	You will need to place the protoc executable in ../src.  (If you
+	built it yourself, it should already be there.)
 
 3) Run the tests:
 
-     $ mvn test
+		$ mvn test
 
-   If some tests fail, this library may not work correctly on your
-   system.  Continue at your own risk.
+	If some tests fail, this library may not work correctly on your
+	system.  Continue at your own risk.
 
 4) Install the library into your Maven repository:
 
-     $ mvn install
+		$ mvn install
 
 5) If you do not use Maven to manage your own build, you can build a
-   .jar file to use:
+	.jar file to use:
 
-     $ mvn package
+		$ mvn package
 
-   The .jar will be placed in the "target" directory.
+	The .jar will be placed in the "target" directory.
 
 Installation - 'Lite' Version - With Maven
 ==========================================
@@ -50,17 +50,17 @@ http://maven.apache.org/guides/introduction/introduction-to-profiles.html)
 
 E.g. to install the lite version of the jar, you would run:
 
-  $ mvn install -P lite
+	$ mvn install -P lite
 
 The resulting artifact has the 'lite' classifier.  To reference it
 for dependency resolution, you would specify it as:
 
-  <dependency>
-    <groupId>com.google.protobuf</groupId>
-    <artifactId>protobuf-java</artifactId>
-    <version>${version}</version>
-    <classifier>lite</classifier>
-  </dependency>
+	<dependency>
+		<groupId>com.google.protobuf</groupId>
+		<artifactId>protobuf-java</artifactId>
+		<version>${version}</version>
+		<classifier>lite</classifier>
+	</dependency>
 
 Installation - Without Maven
 ============================
@@ -70,18 +70,18 @@ follow these instructions instead.  Note that these instructions skip
 running unit tests.
 
 1) Build the C++ code, or obtain a binary distribution of protoc.  If
-   you install a binary distribution, make sure that it is the same
-   version as this package.  If in doubt, run:
+	you install a binary distribution, make sure that it is the same
+	version as this package.  If in doubt, run:
 
-     $ protoc --version
+		$ protoc --version
 
-   If you built the C++ code without installing, the compiler binary
-   should be located in ../src.
+	If you built the C++ code without installing, the compiler binary
+	should be located in ../src.
 
 2) Invoke protoc to build DescriptorProtos.java:
 
-     $ protoc --java_out=src/main/java -I../src \
-         ../src/google/protobuf/descriptor.proto
+		$ protoc --java_out=src/main/java -I../src \
+				../src/google/protobuf/descriptor.proto
 
 3) Compile the code in src/main/java using whatever means you prefer.
 
@@ -93,4 +93,4 @@ Usage
 The complete documentation for Protocol Buffers is available via the
 web at:
 
-  https://developers.google.com/protocol-buffers/
+	https://developers.google.com/protocol-buffers/

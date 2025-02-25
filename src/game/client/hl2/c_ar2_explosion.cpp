@@ -38,17 +38,17 @@ static Vector g_AR2DustColor2( 0.75, 0.75, 0.7 );
 
 class C_AR2Explosion : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_AR2Explosion, C_BaseParticleEntity );
     DECLARE_CLIENTCLASS();
 
     C_AR2Explosion();
     ~C_AR2Explosion();
 
-   private:
+    private:
     class AR2ExplosionParticle : public StandardParticle_t
     {
-       public:
+        public:
         float m_Dist;
         Vector m_Start;
         float m_Roll;
@@ -57,25 +57,25 @@ class C_AR2Explosion : public C_BaseParticleEntity, public IPrototypeAppEffect
     };
 
     // C_BaseEntity.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     // IPrototypeAppEffect.
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
 
     // IParticleEffect.
-   public:
+    public:
     virtual void Update( float fTimeDelta );
 
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   public:
+    public:
     CParticleMgr *m_pParticleMgr;
     PMaterialHandle m_MaterialHandle;
 
-   private:
+    private:
     char m_szMaterialName[255];
 
     C_AR2Explosion( const C_AR2Explosion & );

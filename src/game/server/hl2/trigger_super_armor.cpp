@@ -23,11 +23,11 @@ class CTriggerSuperArmor : public CTriggerMultiple
     DECLARE_CLASS( CTriggerSuperArmor, CTriggerMultiple );
     DECLARE_DATADESC();
 
-   public:
+    public:
     virtual void StartTouch( CBaseEntity *pOther );
     virtual void EndTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     virtual void Precache();
     virtual void Spawn( void );
     void StartLoopingSounds( CBaseEntity *pEntity );

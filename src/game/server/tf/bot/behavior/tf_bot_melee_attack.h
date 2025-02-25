@@ -10,7 +10,7 @@
 
 class CTFBotMeleeAttack : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotMeleeAttack( float giveUpRange = -1.0f );
 
     virtual ActionResult< CTFBot > OnStart( CTFBot *me, Action< CTFBot > *priorAction );
@@ -21,7 +21,7 @@ class CTFBotMeleeAttack : public Action< CTFBot >
         return "MeleeAttack";
     };
 
-   private:
+    private:
     float m_giveUpRange;  // if non-negative and if threat is farther than this, give up our melee attack
     ChasePath m_path;
 };

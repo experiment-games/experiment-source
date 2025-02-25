@@ -22,7 +22,7 @@ class CTFTeamStatusPlayerPanel : public CTFPlayerPanel
 {
     DECLARE_CLASS_SIMPLE( CTFTeamStatusPlayerPanel, CTFPlayerPanel );
 
-   public:
+    public:
     CTFTeamStatusPlayerPanel( vgui::Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
@@ -33,7 +33,7 @@ class CTFTeamStatusPlayerPanel : public CTFPlayerPanel
         return m_iTeam;
     }
 
-   private:
+    private:
     vgui::ContinuousProgressBar *m_pHealthBar;
     vgui::ContinuousProgressBar *m_pOverhealBar;
     vgui::Panel *m_pClassImageBG;
@@ -63,7 +63,7 @@ class CTFTeamStatus : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTFTeamStatus, vgui::EditablePanel );
 
-   public:
+    public:
     CTFTeamStatus( Panel *parent, const char *panelName );
     ~CTFTeamStatus();
 
@@ -81,12 +81,12 @@ class CTFTeamStatus : public vgui::EditablePanel
         GROW_WEST
     };
 
-   protected:
+    protected:
     CTFTeamStatusPlayerPanel *GetOrAddPanel( int iPanelIndex );
     void RecalculatePlayerPanels( void );
     void UpdatePlayerPanels( void );
 
-   protected:
+    protected:
     CUtlVector< CTFTeamStatusPlayerPanel * > m_PlayerPanels;
     KeyValues *m_pPlayerPanelKVs;
     bool m_bReapplyPlayerPanelKVs;

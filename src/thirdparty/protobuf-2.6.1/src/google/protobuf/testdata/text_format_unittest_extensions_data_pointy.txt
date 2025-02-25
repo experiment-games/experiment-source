@@ -14,16 +14,16 @@
 [protobuf_unittest.optional_string_extension]: "115"
 [protobuf_unittest.optional_bytes_extension]: "116"
 [protobuf_unittest.optionalgroup_extension] <
-  a: 117
+	a: 117
 >
 [protobuf_unittest.optional_nested_message_extension] <
-  bb: 118
+	bb: 118
 >
 [protobuf_unittest.optional_foreign_message_extension] <
-  c: 119
+	c: 119
 >
 [protobuf_unittest.optional_import_message_extension] <
-  d: 120
+	d: 120
 >
 [protobuf_unittest.optional_nested_enum_extension]: BAZ
 [protobuf_unittest.optional_foreign_enum_extension]: FOREIGN_BAZ
@@ -31,10 +31,10 @@
 [protobuf_unittest.optional_string_piece_extension]: "124"
 [protobuf_unittest.optional_cord_extension]: "125"
 [protobuf_unittest.optional_public_import_message_extension] <
-  e: 126
+	e: 126
 >
 [protobuf_unittest.optional_lazy_message_extension] <
-  bb: 127
+	bb: 127
 >
 [protobuf_unittest.repeated_int32_extension]: 201
 [protobuf_unittest.repeated_int32_extension]: 301
@@ -67,28 +67,28 @@
 [protobuf_unittest.repeated_bytes_extension]: "216"
 [protobuf_unittest.repeated_bytes_extension]: "316"
 [protobuf_unittest.repeatedgroup_extension] <
-  a: 217
+	a: 217
 >
 [protobuf_unittest.repeatedgroup_extension] <
-  a: 317
+	a: 317
 >
 [protobuf_unittest.repeated_nested_message_extension] <
-  bb: 218
+	bb: 218
 >
 [protobuf_unittest.repeated_nested_message_extension] <
-  bb: 318
+	bb: 318
 >
 [protobuf_unittest.repeated_foreign_message_extension] <
-  c: 219
+	c: 219
 >
 [protobuf_unittest.repeated_foreign_message_extension] <
-  c: 319
+	c: 319
 >
 [protobuf_unittest.repeated_import_message_extension] <
-  d: 220
+	d: 220
 >
 [protobuf_unittest.repeated_import_message_extension] <
-  d: 320
+	d: 320
 >
 [protobuf_unittest.repeated_nested_enum_extension]: BAR
 [protobuf_unittest.repeated_nested_enum_extension]: BAZ
@@ -101,10 +101,10 @@
 [protobuf_unittest.repeated_cord_extension]: "225"
 [protobuf_unittest.repeated_cord_extension]: "325"
 [protobuf_unittest.repeated_lazy_message_extension] <
-  bb: 227
+	bb: 227
 >
 [protobuf_unittest.repeated_lazy_message_extension] <
-  bb: 327
+	bb: 327
 >
 [protobuf_unittest.default_int32_extension]: 401
 [protobuf_unittest.default_int64_extension]: 402
@@ -128,7 +128,7 @@
 [protobuf_unittest.default_cord_extension]: "425"
 [protobuf_unittest.oneof_uint32_extension]: 601
 [protobuf_unittest.oneof_nested_message_extension] <
-  bb: 602
+	bb: 602
 >
 [protobuf_unittest.oneof_string_extension]: "603"
 [protobuf_unittest.oneof_bytes_extension]: "604"

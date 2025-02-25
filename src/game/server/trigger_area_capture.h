@@ -37,7 +37,7 @@ class CTriggerAreaCaptureShim : public CBaseTrigger
 {
     virtual void AreaTouch( CBaseEntity *pOther ) = 0;
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther )
     {
         return AreaTouch( pOther );
@@ -50,11 +50,11 @@ class CTriggerAreaCapture : public CTriggerAreaCaptureShim, public ITriggerAreaC
 {
     DECLARE_CLASS( CTriggerAreaCapture, CTriggerAreaCaptureShim );
 
-   public:
+    public:
     CTriggerAreaCapture();
 
     // Derived, game-specific area triggers must override these functions
-   public:
+    public:
     // Display a hint about capturing zones to the player
     virtual void DisplayCapHintTo( CBaseMultiplayerPlayer *pPlayer )
     {
@@ -71,7 +71,7 @@ class CTriggerAreaCapture : public CTriggerAreaCaptureShim, public ITriggerAreaC
         return;
     }
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void Precache( void );
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
@@ -123,10 +123,10 @@ class CTriggerAreaCapture : public CTriggerAreaCaptureShim, public ITriggerAreaC
         return m_flCapTime;
     }
 
-   protected:
+    protected:
     virtual bool CaptureModeScalesWithPlayers() const;
 
-   private:
+    private:
     virtual void AreaTouch( CBaseEntity *pOther ) OVERRIDE;
     void CaptureThink( void );
 
@@ -151,7 +151,7 @@ class CTriggerAreaCapture : public CTriggerAreaCaptureShim, public ITriggerAreaC
 
     void SetNumCappers( int nNumCappers, bool bBlocked = false );
 
-   private:
+    private:
     int m_iCapMode;  // which capture mode we're in
     bool m_bCapturing;
     int m_nCapturingTeam;    // the team that is capturing this point

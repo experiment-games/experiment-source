@@ -34,7 +34,7 @@ class variant_t
 
     fieldtype_t fieldType;
 
-   public:
+    public:
     // constructor
     variant_t()
         : fieldType( FIELD_VOID ), iVal( 0 ) {}
@@ -132,7 +132,7 @@ class variant_t
     static typedescription_t m_SaveVMatrixWorldspace[];
     static typedescription_t m_SaveMatrix3x4Worldspace[];
 
-   protected:
+    protected:
     //
     // Returns a string representation of the value without modifying the variant.
     //

@@ -17,7 +17,7 @@ extern IViewRender *view;
 
 class CToolFrameworkClient : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     // Methods of IGameSystem
     virtual bool Init();
     virtual void LevelInitPreEntity();
@@ -27,7 +27,7 @@ class CToolFrameworkClient : public CBaseGameSystemPerFrame
     virtual void PreRender();
     virtual void PostRender();
 
-   public:
+    public:
     // Other public methods
     void PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg );
     void AdjustEngineViewport( int &x, int &y, int &width, int &height );

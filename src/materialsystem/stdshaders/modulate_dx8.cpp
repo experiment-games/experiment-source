@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( Modulate, Modulate_DX8 )
 
 BEGIN_VS_SHADER( Modulate_DX8,
-                 "Help for Modulate" )
+                "Help for Modulate" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( WRITEZ, SHADER_PARAM_TYPE_BOOL, "0", "Forces z to be written if set" )

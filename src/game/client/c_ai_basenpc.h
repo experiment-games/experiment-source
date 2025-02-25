@@ -18,7 +18,7 @@ class C_AI_BaseNPC : public C_BaseCombatCharacter
 {
     DECLARE_CLASS( C_AI_BaseNPC, C_BaseCombatCharacter );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_AI_BaseNPC();
@@ -67,7 +67,7 @@ class C_AI_BaseNPC : public C_BaseCombatCharacter
         return m_bImportanRagdoll;
     }
 
-   private:
+    private:
     C_AI_BaseNPC( const C_AI_BaseNPC & );  // not defined, not accessible
     float m_flTimePingEffect;
     int m_iDeathPose;

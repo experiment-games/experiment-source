@@ -8,7 +8,7 @@
 
 class CTFBotEngineerBuildTeleportExit : public Action< CTFBot >
 {
-   public:
+    public:
     CTFBotEngineerBuildTeleportExit( void );
     CTFBotEngineerBuildTeleportExit( const Vector &buildLocation, float buildAngle );
 
@@ -23,7 +23,7 @@ class CTFBotEngineerBuildTeleportExit : public Action< CTFBot >
         return "EngineerBuildTeleportExit";
     };
 
-   private:
+    private:
     PathFollower m_path;
 
     bool m_hasPreciseBuildLocation;

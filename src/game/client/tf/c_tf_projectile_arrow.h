@@ -21,7 +21,7 @@ class C_TFProjectile_Arrow : public C_TFBaseRocket
 {
     DECLARE_CLASS( C_TFProjectile_Arrow, C_TFBaseRocket );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     C_TFProjectile_Arrow();
@@ -40,7 +40,7 @@ class C_TFProjectile_Arrow : public C_TFBaseRocket
         m_flLifeTime = flLifetime;
     }
 
-   private:
+    private:
     float m_fAttachTime;
     float m_nextNearMissCheck;
     bool m_bNearMiss;
@@ -63,7 +63,7 @@ class C_TFProjectile_HealingBolt : public C_TFProjectile_Arrow
 
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 };
 
@@ -74,14 +74,14 @@ class C_TFProjectile_GrapplingHook : public C_TFProjectile_Arrow
 {
     DECLARE_CLASS( C_TFProjectile_GrapplingHook, C_TFProjectile_Arrow );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void UpdateOnRemove();
     virtual void ClientThink();
 
-   private:
+    private:
     void UpdateRope();
     void RemoveRope();
 

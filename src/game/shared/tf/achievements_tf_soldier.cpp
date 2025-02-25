@@ -60,7 +60,7 @@ class CAchievementTFSoldier_BuffTeammates : public CBaseTFAchievement
         const char *pszEvent = event->GetName();
 
         if ( FStrEq( pszEvent, "teamplay_round_active" ) ||
-             FStrEq( pszEvent, "localplayer_respawn" ) )
+            FStrEq( pszEvent, "localplayer_respawn" ) )
         {
             m_nBuffCount = 0;
             m_BuffedPlayers.RemoveAll();
@@ -102,7 +102,7 @@ class CAchievementTFSoldier_BuffTeammates : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_nBuffCount;
     CUtlVector< int > m_BuffedPlayers;
 };
@@ -176,7 +176,7 @@ class CAchievementTFSoldier_KillPyro : public CBaseTFAchievement
         const char *pszEvent = event->GetName();
 
         if ( FStrEq( pszEvent, "teamplay_round_active" ) ||
-             FStrEq( pszEvent, "localplayer_respawn" ) )
+            FStrEq( pszEvent, "localplayer_respawn" ) )
         {
             m_Pyros.RemoveAll();
         }
@@ -229,7 +229,7 @@ class CAchievementTFSoldier_KillPyro : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     CUtlMap< int, float > m_Pyros;  // userID and most recent time they deflected one of our rockets
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_KillPyro, ACHIEVEMENT_TF_SOLDIER_KILL_PYRO, "TF_SOLDIER_KILL_PYRO", 5 );
@@ -285,7 +285,7 @@ class CAchievementTFSoldier_DestroyStickies : public CBaseTFAchievement
         const char *pszEvent = event->GetName();
 
         if ( FStrEq( pszEvent, "teamplay_round_active" ) ||
-             FStrEq( pszEvent, "localplayer_respawn" ) )
+            FStrEq( pszEvent, "localplayer_respawn" ) )
         {
             m_nPipesDestroyed = 0;
         }
@@ -312,7 +312,7 @@ class CAchievementTFSoldier_DestroyStickies : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_nPipesDestroyed;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_DestroyStickies, ACHIEVEMENT_TF_SOLDIER_DESTROY_STICKIES, "TF_SOLDIER_DESTROY_STICKIES", 5 );
@@ -369,7 +369,7 @@ class CAchievementTFSoldier_CrouchRocketJump : public CBaseTFAchievement
         const char *pszEvent = event->GetName();
 
         if ( FStrEq( pszEvent, "teamplay_round_active" ) ||
-             FStrEq( pszEvent, "localplayer_respawn" ) )
+            FStrEq( pszEvent, "localplayer_respawn" ) )
         {
             ResetTracking();
         }
@@ -414,7 +414,7 @@ class CAchievementTFSoldier_CrouchRocketJump : public CBaseTFAchievement
         SetNextThink( 0.1 );
     }
 
-   private:
+    private:
     float m_flStartingZ;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_CrouchRocketJump, ACHIEVEMENT_TF_SOLDIER_CROUCH_ROCKET_JUMP, "TF_SOLDIER_CROUCH_ROCKET_JUMP", 5 );
@@ -466,14 +466,14 @@ class CAchievementTFSoldier_EqualizerStreak : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) ||
-             FStrEq( event->GetName(), "localplayer_healed" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) ||
+            FStrEq( event->GetName(), "localplayer_healed" ) )
         {
             m_nStreak = 0;
         }
     }
 
-   private:
+    private:
     int m_nStreak;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_EqualizerStreak, ACHIEVEMENT_TF_SOLDIER_EQUALIZER_STREAK, "TF_SOLDIER_EQUALIZER_STREAK", 5 );
@@ -511,7 +511,7 @@ class CAchievementTFSoldier_KillGroupWithCrocket : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_iKilledBySameRocket = 0;
             m_fDamageTime = 0;
@@ -525,7 +525,7 @@ class CAchievementTFSoldier_KillGroupWithCrocket : public CBaseTFAchievement
 
         int iWeaponID = event->GetInt( "weaponid" );
         if ( pAttacker == C_BasePlayer::GetLocalPlayer() &&
-             ( iWeaponID == TF_WEAPON_ROCKETLAUNCHER || iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
+            ( iWeaponID == TF_WEAPON_ROCKETLAUNCHER || iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
         {
             if ( event->GetInt( "damagebits" ) & DMG_CRITICAL )
             {
@@ -570,7 +570,7 @@ class CAchievementTFSoldier_KillTwoDuringRocketJump : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_iKilledDuringRJ = 0;
             m_bRocketJumping = false;
@@ -675,7 +675,7 @@ class CAchievementTFSoldier_DefendMedic : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_iMedicDefended = 0;
         }
@@ -772,7 +772,7 @@ class CAchievementTFSoldier_BounceThenShotgun : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_BouncedPlayers.RemoveAll();
         }
@@ -883,7 +883,7 @@ class CAchievementTFSoldier_KillSniperWhileDead : public CBaseTFAchievement
         int iWeaponID = event->GetInt( "weaponid" );
         bool bRocketLauncherUsed = ( iWeaponID == TF_WEAPON_ROCKETLAUNCHER ) || ( iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT );
         if ( pTFVictim && ( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) && ( pAttacker->IsAlive() == false ) &&
-             bRocketLauncherUsed && pTFVictim->IsPlayerClass( TF_CLASS_SNIPER ) )
+            bRocketLauncherUsed && pTFVictim->IsPlayerClass( TF_CLASS_SNIPER ) )
         {
             IncrementCount();
         }
@@ -940,7 +940,7 @@ class CAchievementTFSoldier_AssistMedicUbercharge : public CBaseTFAchievement
             if ( event->GetInt( "death_flags" ) & TF_DEATH_GIBBED )
             {
                 if ( pLocalPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) || pLocalPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED ) ||
-                     pLocalPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+                    pLocalPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
                 {
                     m_iPlayersGibbed++;
                     if ( m_iPlayersGibbed >= 5 )
@@ -952,7 +952,7 @@ class CAchievementTFSoldier_AssistMedicUbercharge : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iPlayersGibbed;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_AssistMedicUbercharge, ACHIEVEMENT_TF_SOLDIER_ASSIST_MEDIC_UBER, "TF_SOLDIER_ASSIST_MEDIC_UBER", 5 );
@@ -1023,7 +1023,7 @@ class CAchievementTFSoldier_KillDefenseless : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iPlayersKilled;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_KillDefenseless, ACHIEVEMENT_TF_SOLDIER_KILL_DEFENSELESS, "TF_SOLDIER_KILL_DEFENSELESS", 5 );
@@ -1162,7 +1162,7 @@ class CAchievementTFSoldier_KillSpyKiller : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct backstabber_t
     {
         EHANDLE hSpy;
@@ -1337,7 +1337,7 @@ class CAchievementTFSoldier_ThreeDominations : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int nDominations;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_ThreeDominations, ACHIEVEMENT_TF_SOLDIER_THREE_DOMINATIONS, "TF_SOLDIER_THREE_DOMINATIONS", 5 );
@@ -1442,7 +1442,7 @@ class CAchievementTFSoldier_RideTheCart : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_nRideTime;
     float m_fRideStartTime;
     bool m_bIsThinking;
@@ -1552,7 +1552,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_DefendCapThirtyTimes, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSoldier_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1565,7 +1565,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_AchieveProgress1, ACHIEVEMENT_TF_SOLD
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSoldier_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1578,7 +1578,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_AchieveProgress2, ACHIEVEMENT_TF_SOLD
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFSoldier_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {
@@ -1591,7 +1591,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_AchieveProgress3, ACHIEVEMENT_TF_SOLD
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_ParachuteKillGroup : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
@@ -1655,7 +1655,7 @@ class CAchievementTFSoldier_ParachuteKillGroup : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_nKills;
     bool m_bParachuteDeployed;
 };
@@ -1664,7 +1664,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_ParachuteKillGroup, ACHIEVEMENT_TF_SO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_ParachuteDistance : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
@@ -1743,7 +1743,7 @@ class CAchievementTFSoldier_ParachuteDistance : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     float m_flLastZ;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFSoldier_ParachuteDistance, ACHIEVEMENT_TF_SOLDIER_PARACHUTE_DISTANCE, "TF_SOLDIER_PARACHUTE_DISTANCE", 5 );
@@ -1751,7 +1751,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_ParachuteDistance, ACHIEVEMENT_TF_SOL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_ParachuteKillParachute : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1776,7 +1776,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_ParachuteKillParachute, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_AirstrikeMaxClip : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -1790,7 +1790,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSoldier_AirstrikeMaxClip, ACHIEVEMENT_TF_SOLD
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_AirstrikeGroupKill : public CBaseTFAchievement
 {
-   public:
+    public:
     void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -1817,7 +1817,7 @@ class CAchievementTFSoldier_AirstrikeGroupKill : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "teamplay_round_active" ) ||
-             FStrEq( pszEventName, "localplayer_respawn" ) )
+            FStrEq( pszEventName, "localplayer_respawn" ) )
         {
             ResetTracking();
         }
@@ -1872,7 +1872,7 @@ class CAchievementTFSoldier_AirstrikeGroupKill : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     bool m_bRocketJumping;
     int m_iKilledDuringRJ;
 };

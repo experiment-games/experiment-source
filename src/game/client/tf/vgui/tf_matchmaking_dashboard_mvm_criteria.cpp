@@ -18,9 +18,9 @@ using namespace GCSDK;
 Panel* GetMvMModeSelectPanel()
 {
     class CTFDashboardMvMModePanel : public CMatchMakingDashboardSidePanel,
-                                     public CGameEventListener
+                                    public CGameEventListener
     {
-       public:
+        public:
         DECLARE_CLASS_SIMPLE( CTFDashboardMvMModePanel, CMatchMakingDashboardSidePanel );
         CTFDashboardMvMModePanel()
             : CMatchMakingDashboardSidePanel( NULL, "MVMModeSelect", "resource/ui/MatchMakingDashboardMvMModeSelect.res", k_eSideRight )
@@ -71,7 +71,7 @@ Panel* GetMvMModeSelectPanel()
             BaseClass::OnCommand( pszCommand );
         }
 
-       private:
+        private:
         CExButton* m_pPlayMannUpButton;
         CExButton* m_pPlayBootCampButton;
     };
@@ -114,9 +114,9 @@ CTFDashboardMvMPanel::~CTFDashboardMvMPanel()
 void CTFDashboardMvMPanel::FireGameEvent( IGameEvent* event )
 {
     if ( FStrEq( event->GetName(), "party_updated" ) ||
-         FStrEq( event->GetName(), "party_criteria_changed" ) ||
-         FStrEq( event->GetName(), "party_queue_state_changed" ) ||
-         FStrEq( event->GetName(), "world_status_changed" ) )
+        FStrEq( event->GetName(), "party_criteria_changed" ) ||
+        FStrEq( event->GetName(), "party_queue_state_changed" ) ||
+        FStrEq( event->GetName(), "world_status_changed" ) )
     {
         InvalidateLayout();
     }

@@ -17,7 +17,7 @@ const uint32_t kGlickoRanks = 13;
 
 class CDrilloProgressionDesc : public IProgressionDesc
 {
-   public:
+    public:
     CDrilloProgressionDesc();
 
     const LevelInfo_t& GetLevelForRating( uint32 nExperience ) const OVERRIDE;
@@ -34,7 +34,7 @@ class CDrilloProgressionDesc : public IProgressionDesc
 
 class CGlickoProgressionDesc : public IProgressionDesc
 {
-   public:
+    public:
     CGlickoProgressionDesc();
 
 #ifdef CLIENT_DLL

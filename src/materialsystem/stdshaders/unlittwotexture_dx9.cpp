@@ -130,7 +130,7 @@ SHADER_DRAW
     // Skip flashlight pass for unlit stuff
     bool bNewFlashlightPath = IsX360() || ( r_flashlight_version2.GetInt() != 0 );
     if ( bDrawStandardPass && ( pShaderShadow == NULL ) && ( pShaderAPI != NULL ) &&
-         !bNewFlashlightPath && ( pShaderAPI->InFlashlightMode() ) )  // not snapshotting && flashlight pass)
+        !bNewFlashlightPath && ( pShaderAPI->InFlashlightMode() ) )  // not snapshotting && flashlight pass)
     {
         bDrawStandardPass = false;
     }

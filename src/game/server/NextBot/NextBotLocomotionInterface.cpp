@@ -198,15 +198,15 @@ bool ILocomotion::IsPotentiallyTraversable( const Vector &from, const Vector &to
     TraceHull( from, to, hullMin, hullMax, GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
 
     /*
-      if ( result.DidHit() )
-      {
+    if ( result.DidHit() )
+    {
         NDebugOverlay::SweptBox( from, result.endpos, hullMin, hullMax, vec3_angle, 255, 0, 0, 255, 9999.9f );
         NDebugOverlay::SweptBox( result.endpos, to, hullMin, hullMax, vec3_angle, 255, 255, 0, 255, 9999.9f );
-      }
-      else
-      {
+    }
+    else
+    {
         NDebugOverlay::SweptBox( from, to, hullMin, hullMax, vec3_angle, 255, 255, 0, 255, 0.1f );
-      }
+    }
     */
 
     if ( fraction )
@@ -293,12 +293,12 @@ bool ILocomotion::IsGap( const Vector &pos, const Vector &forward ) const
     NextBotTraceFilterIgnoreActors filter( GetBot()->GetEntity(), COLLISION_GROUP_NONE );
 
     TraceHull( pos + Vector( 0, 0, GetStepHeight() ),  // start up a bit to handle rough terrain
-               pos + Vector( 0, 0, -GetMaxJumpHeight() ),
-               Vector( -halfWidth, -halfWidth, 0 ),
-               Vector( halfWidth, halfWidth, hullHeight ),
-               mask,
-               &filter,
-               &ground );
+                pos + Vector( 0, 0, -GetMaxJumpHeight() ),
+                Vector( -halfWidth, -halfWidth, 0 ),
+                Vector( halfWidth, halfWidth, hullHeight ),
+                mask,
+                &filter,
+                &ground );
 
     // 	int r,g,b;
     //

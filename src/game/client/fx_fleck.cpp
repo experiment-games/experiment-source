@@ -30,7 +30,7 @@
 template < class PARTICLE_EFFECT, class PARTICLE_MERGE >
 class CParticleMergeList
 {
-   public:
+    public:
     CParticleMergeList()
         : m_pHead( NULL ) {}
     void AddParticleSystem( PARTICLE_EFFECT *pSystem );
@@ -38,7 +38,7 @@ class CParticleMergeList
     PARTICLE_EFFECT *FindAndMergeParticleSystem( const char *pEffectName, const Vector &center, const Vector &extents );
     bool MergeParticleSystems( PARTICLE_EFFECT *pSystem, const char *pEffectName, const Vector &center, const Vector &extents );
 
-   private:
+    private:
     PARTICLE_EFFECT *m_pHead;
     PARTICLE_MERGE m_merge;
 };
@@ -102,7 +102,7 @@ const float MAX_RADIUS_BBOX_MERGE = 120.0f;
 template < class PARTICLE_EFFECT >
 class CMergeSameNameBbox
 {
-   public:
+    public:
     bool MergeParticleSystems( PARTICLE_EFFECT *pSystem, const char *pEffectName, const Vector &center, const Vector &extents )
     {
         // by default, match names

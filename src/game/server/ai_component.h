@@ -28,7 +28,7 @@ class CAI_Component
 {
     DECLARE_CLASS_NOBASE( CAI_Component );
 
-   protected:
+    protected:
     CAI_Component( CAI_BaseNPC *pOuter = NULL )
         : m_pOuter( pOuter )
     {
@@ -36,7 +36,7 @@ class CAI_Component
 
     virtual ~CAI_Component() {}
 
-   public:
+    public:
     virtual void SetOuter( CAI_BaseNPC *pOuter )
     {
         m_pOuter = pOuter;
@@ -57,7 +57,7 @@ class CAI_Component
     const Vector &GetHullMins() const;
     const Vector &GetHullMaxs() const;
 
-   protected:
+    protected:
     //
     // Common services provided by CAI_BaseNPC, Convenience methods to simplify derived code
     //
@@ -126,7 +126,7 @@ class CAI_Component
 
     float GetLastThink( const char *szContext = NULL );
 
-   public:
+    public:
 #if defined( new )
 #error
 #endif
@@ -147,7 +147,7 @@ class CAI_Component
         return pResult;
     }
 
-   private:
+    private:
     CAI_BaseNPC *m_pOuter;
 };
 
@@ -156,13 +156,13 @@ class CAI_Component
 template < class NPC_CLASS, class BASE_COMPONENT = CAI_Component >
 class CAI_ComponentWithOuter : public BASE_COMPONENT
 {
-   protected:
+    protected:
     CAI_ComponentWithOuter( NPC_CLASS *pOuter = NULL )
         : BASE_COMPONENT( pOuter )
     {
     }
 
-   public:
+    public:
     // Hides base version
     void SetOuter( NPC_CLASS *pOuter )
     {

@@ -107,16 +107,16 @@ void ConnectHaptics( CreateInterfaceFn appFactory )
         {
             haptics = reinterpret_cast< IHaptics* >( factory( HAPTICS_INTERFACE_VERSION, NULL ) );
             if ( haptics &&
-                 haptics->Initialize( engine,
-                                      view,
-                                      g_InputInternal,
-                                      gpGlobals,
-                                      appFactory,
-                                      g_pVGuiInput->GetIMEWindow(),
-                                      filesystem,
-                                      enginevgui,
-                                      ActivityList_IndexForName,
-                                      ActivityList_NameForIndex ) )
+                haptics->Initialize( engine,
+                                    view,
+                                    g_InputInternal,
+                                    gpGlobals,
+                                    appFactory,
+                                    g_pVGuiInput->GetIMEWindow(),
+                                    filesystem,
+                                    enginevgui,
+                                    ActivityList_IndexForName,
+                                    ActivityList_NameForIndex ) )
             {
                 success = true;
                 hap_HasDevice.SetValue( 1 );

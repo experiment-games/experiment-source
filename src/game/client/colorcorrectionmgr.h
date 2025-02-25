@@ -23,14 +23,14 @@ DECLARE_POINTER_HANDLE( ClientCCHandle_t );
 class CColorCorrectionMgr : public CBaseGameSystem
 {
     // Inherited from IGameSystemPerFrame
-   public:
+    public:
     virtual char const *Name()
     {
         return "Color Correction Mgr";
     }
 
     // Other public methods
-   public:
+    public:
     CColorCorrectionMgr();
 
     // Create, destroy color correction
@@ -45,7 +45,7 @@ class CColorCorrectionMgr : public CBaseGameSystem
     // Is color correction active?
     bool HasNonZeroColorCorrectionWeights() const;
 
-   private:
+    private:
     int m_nActiveWeightCount;
 };
 

@@ -17,7 +17,7 @@ class CModelImagePanel : public CBaseModelPanel
 {
     DECLARE_CLASS_SIMPLE( CModelImagePanel, CBaseModelPanel );
 
-   public:
+    public:
     // Constructor, Destructor.
     CModelImagePanel( vgui::Panel *pParent, const char *pName );
     virtual ~CModelImagePanel();
@@ -33,7 +33,7 @@ class CModelImagePanel : public CBaseModelPanel
 
     void InvalidateImage();
 
-   private:
+    private:
     CIconRenderReceiver *m_pCachedIcon;
     IMaterial *m_pCachedMaterial;
     int m_iCachedTextureID;

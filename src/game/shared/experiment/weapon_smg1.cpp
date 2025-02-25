@@ -31,7 +31,7 @@
 
 class CWeaponSMG1 : public CExperimentMachineGun
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponSMG1, CExperimentMachineGun );
 
     CWeaponSMG1();
@@ -71,11 +71,11 @@ class CWeaponSMG1 : public CExperimentMachineGun
 
     DECLARE_ACTTABLE();
 
-   protected:
+    protected:
     Vector m_vecTossVelocity;
     float m_flNextGrenadeCheck;
 
-   private:
+    private:
     CWeaponSMG1( const CWeaponSMG1 & );
 };
 
@@ -208,7 +208,7 @@ void CWeaponSMG1::SecondaryAttack( void )
 
     // Must have ammo
     if ( ( pPlayer->GetAmmoCount( m_iSecondaryAmmoType ) <= 0 ) ||
-         ( pPlayer->GetWaterLevel() == 3 ) )
+        ( pPlayer->GetWaterLevel() == 3 ) )
     {
         SendWeaponAnim( ACT_VM_DRYFIRE );
         BaseClass::WeaponSound( EMPTY );
@@ -268,7 +268,7 @@ const WeaponProficiencyInfo_t *CWeaponSMG1::GetProficiencyValues()
     };
 
     COMPILE_TIME_ASSERT( ARRAYSIZE( proficiencyTable ) ==
-                         WEAPON_PROFICIENCY_PERFECT + 1 );
+                        WEAPON_PROFICIENCY_PERFECT + 1 );
 
     return proficiencyTable;
 }

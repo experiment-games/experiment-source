@@ -44,14 +44,14 @@ struct fluid_t
 //-----------------------------------------------------------------------------
 class IVPhysicsKeyHandler
 {
-   public:
+    public:
     virtual void ParseKeyValue( void *pData, const char *pKey, const char *pValue ) = 0;
     virtual void SetDefaults( void *pData ) = 0;
 };
 
 class IVPhysicsKeyParser
 {
-   public:
+    public:
     virtual ~IVPhysicsKeyParser() {}
 
     virtual const char *GetCurrentBlockName( void ) = 0;

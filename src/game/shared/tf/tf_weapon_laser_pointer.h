@@ -24,7 +24,7 @@
 //
 class CLaserDot : public CSniperDot
 {
-   public:
+    public:
     DECLARE_CLASS( CLaserDot, CSniperDot );
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
@@ -49,7 +49,7 @@ class CLaserDot : public CSniperDot
 //
 class CTFLaserPointer : public CTFWeaponBaseGun
 {
-   public:
+    public:
     DECLARE_CLASS( CTFLaserPointer, CTFWeaponBaseGun );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -91,12 +91,12 @@ class CTFLaserPointer : public CTFWeaponBaseGun
     }
 #endif
 
-   private:
+    private:
     void CreateLaserDot( void );
     void DestroyLaserDot( void );
     void UpdateLaserDot( void );
 
-   private:
+    private:
 #ifdef GAME_DLL
     CHandle< CLaserDot > m_hLaserDot;
 #endif

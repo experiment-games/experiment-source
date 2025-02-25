@@ -118,17 +118,17 @@ static void dumpConstants (DumpState *D, const Proto *f) {
     int tt = ttypetag(o);
     dumpByte(D, tt);
     switch (tt) {
-      case LUA_VNUMFLT:
+    case LUA_VNUMFLT:
         dumpNumber(D, fltvalue(o));
         break;
-      case LUA_VNUMINT:
+    case LUA_VNUMINT:
         dumpInteger(D, ivalue(o));
         break;
-      case LUA_VSHRSTR:
-      case LUA_VLNGSTR:
+    case LUA_VSHRSTR:
+    case LUA_VLNGSTR:
         dumpString(D, tsvalue(o));
         break;
-      default:
+    default:
         lua_assert(tt == LUA_VNIL || tt == LUA_VFALSE || tt == LUA_VTRUE);
     }
   }
@@ -215,7 +215,7 @@ static void dumpHeader (DumpState *D) {
 ** dump Lua function as precompiled chunk
 */
 int luaU_dump(lua_State *L, const Proto *f, lua_Writer w, void *data,
-              int strip) {
+            int strip) {
   DumpState D;
   D.L = L;
   D.writer = w;
@@ -227,4 +227,3 @@ int luaU_dump(lua_State *L, const Proto *f, lua_Writer w, void *data,
   dumpFunction(&D, f, NULL);
   return D.status;
 }
-

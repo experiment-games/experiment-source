@@ -74,8 +74,8 @@ int CPasstimeBallController::DisableOn( const CPasstimeBall *pBall )
 //-----------------------------------------------------------------------------
 // static
 void CPasstimeBallController::BallCollision( CPasstimeBall *pBall,
-                                             int iCollisionIndex,
-                                             gamevcollisionevent_t *pEvent )
+                                            int iCollisionIndex,
+                                            gamevcollisionevent_t *pEvent )
 {
     auto &controllers = GetAutoList();
     for ( auto pController : controllers )

@@ -151,4 +151,3 @@ get = socket.protect(function(gett)
     if base.type(gett) == "string" then return sget(gett)
     else return tget(gett) end
 end)
-

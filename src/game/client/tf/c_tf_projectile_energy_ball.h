@@ -21,7 +21,7 @@ class C_TFProjectile_EnergyBall : public C_TFBaseRocket
 {
     DECLARE_CLASS( C_TFProjectile_EnergyBall, C_TFBaseRocket );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     C_TFProjectile_EnergyBall();
@@ -30,7 +30,7 @@ class C_TFProjectile_EnergyBall : public C_TFBaseRocket
     virtual void CreateTrails( void );
     virtual const char *GetTrailParticleName( void );
 
-   private:
+    private:
     CNewParticleEffect *pEffect;
     bool m_bChargedShot;
 

@@ -52,7 +52,7 @@ void FixupAngles( QAngle &v )
 //-----------------------------------------------------------------------------
 class CPathKeyFrame : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPathKeyFrame, CLogicalEntity );
 
     void Spawn( void );
@@ -78,7 +78,7 @@ class CPathKeyFrame : public CLogicalEntity
     CPathKeyFrame *InsertNewKey( Vector newPos, QAngle newAngles );
     void CalculateFrameDuration( void );
 
-   protected:
+    protected:
     CPathKeyFrame *m_pNextKey;
     CPathKeyFrame *m_pPrevKey;
 
@@ -260,7 +260,7 @@ CPathKeyFrame *CPathKeyFrame::InsertNewKey( Vector newPos, QAngle newAngles )
 //-----------------------------------------------------------------------------
 class CBaseMoveBehavior : public CPathKeyFrame
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseMoveBehavior, CPathKeyFrame );
 
     void Spawn( void );

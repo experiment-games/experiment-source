@@ -16,11 +16,11 @@
 
 class C_PointCamera : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_PointCamera, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_PointCamera();
     ~C_PointCamera();
 
@@ -44,7 +44,7 @@ class C_PointCamera : public C_BaseEntity
 
     virtual void GetToolRecordingState( KeyValues *msg );
 
-   private:
+    private:
     float m_FOV;
     float m_Resolution;
     bool m_bFogEnable;
@@ -56,7 +56,7 @@ class C_PointCamera : public C_BaseEntity
     bool m_bActive;
     bool m_bUseScreenAspectRatio;
 
-   public:
+    public:
     C_PointCamera *m_pNext;
 };
 

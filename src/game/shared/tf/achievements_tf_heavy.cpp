@@ -56,7 +56,7 @@ class CAchievementTFHeavy_DamageTaken : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iDamageTotal;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFHeavy_DamageTaken, ACHIEVEMENT_TF_HEAVY_DAMAGE_TAKEN, "TF_HEAVY_DAMAGE_TAKEN", 5 );
@@ -93,7 +93,7 @@ class CAchievementTFHeavy_DamageTypesTaken : public CBaseTFAchievement
 
             // Get the achievement once we've been shot, burned, clubbed, and exploded.
             if ( ( m_iDamageTypesTaken & ( DMG_BULLET | DMG_BUCKSHOT ) ) && ( m_iDamageTypesTaken & DMG_BLAST ) &&
-                 ( m_iDamageTypesTaken & ( DMG_BURN | DMG_IGNITE ) ) && ( m_iDamageTypesTaken & ( DMG_CLUB | DMG_SLASH ) ) )
+                ( m_iDamageTypesTaken & ( DMG_BURN | DMG_IGNITE ) ) && ( m_iDamageTypesTaken & ( DMG_CLUB | DMG_SLASH ) ) )
             {
                 IncrementCount();
             }
@@ -108,7 +108,7 @@ class CAchievementTFHeavy_DamageTypesTaken : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     int m_iDamageTypesTaken;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFHeavy_DamageTypesTaken, ACHIEVEMENT_TF_HEAVY_TAKE_MULTI_DAMAGE, "TF_HEAVY_TAKE_MULTI_DAMAGE", 5 );
@@ -388,13 +388,13 @@ class CAchievementTFHeavy_HealMedikits : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_iHealTotal = 0;
         }
     }
 
-   private:
+    private:
     int m_iHealTotal;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFHeavy_HealMedikits, ACHIEVEMENT_TF_HEAVY_HEAL_MEDIKITS, "TF_HEAVY_HEAL_MEDIKITS", 5 );
@@ -449,14 +449,14 @@ class CAchievementTFHeavy_KillWhileSpunup : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "localplayer_winddown" ) ||
-             FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "teamplay_round_active" ) ||
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_nNumKilled = 0;
         }
     }
 
-   private:
+    private:
     int m_nNumKilled;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillWhileSpunup, ACHIEVEMENT_TF_HEAVY_KILL_WHILE_SPUNUP, "TF_HEAVY_KILL_WHILE_SPUNUP", 5 );
@@ -545,7 +545,7 @@ class CAchievementTFHeavy_KillWithShotgun : public CBaseTFAchievement
         CTFPlayer *pAttackingPlayer = ToTFPlayer( pAttacker );
 
         if ( pAttacker == C_BasePlayer::GetLocalPlayer() && pAttackingPlayer->GetAmmoCount( TF_AMMO_PRIMARY ) <= 0 &&
-             event->GetInt( "weaponid" ) == TF_WEAPON_SHOTGUN_HWG )
+            event->GetInt( "weaponid" ) == TF_WEAPON_SHOTGUN_HWG )
         {
             IncrementCount();
         }
@@ -631,7 +631,7 @@ class CAchievementTFHeavy_FirstToCap : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     bool m_bTeamCappedThisRound;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFHeavy_FirstToCap, ACHIEVEMENT_TF_HEAVY_FIRST_TO_CAP, "TF_HEAVY_FIRST_TO_CAP", 5 );
@@ -900,7 +900,7 @@ class CAchievementTFHeavy_AssistMedicLarge : public CBaseTFAchievement
     void FireGameEvent_Internal( IGameEvent *event )
     {
         if ( FStrEq( event->GetName(), "teamplay_round_active" ) ||
-             FStrEq( event->GetName(), "localplayer_respawn" ) )
+            FStrEq( event->GetName(), "localplayer_respawn" ) )
         {
             m_Partners.Purge();
         }
@@ -1009,20 +1009,20 @@ class CAchievementTFHeavy_AssistMedicLarge : public CBaseTFAchievement
             Msg("State:\n");
             for ( int i = 0; i < m_Partners.Count(); i++ )
             {
-              if ( m_Partners[i].hPartner )
-              {
+            if ( m_Partners[i].hPartner )
+            {
                 Msg("   %d: %s with %d\n", i, g_PR->GetPlayerName(m_Partners[i].hPartner->entindex()), m_Partners[i].iAssists );
-              }
-              else
-              {
+            }
+            else
+            {
                 Msg("   %d: EMPTY\n", i );
-              }
+            }
             }
             */
         }
     }
 
-   private:
+    private:
     struct partners_t
     {
         EHANDLE hPartner;
@@ -1055,7 +1055,7 @@ class CAchievementTFHeavy_KillMedicPair : public CBaseTFAchievement
         const char *pszEventName = event->GetName();
 
         if ( FStrEq( pszEventName, "localplayer_respawn" ) ||
-             FStrEq( pszEventName, "teamplay_round_active" ) )
+            FStrEq( pszEventName, "teamplay_round_active" ) )
         {
             m_hTargets.Purge();
         }
@@ -1104,7 +1104,7 @@ class CAchievementTFHeavy_KillMedicPair : public CBaseTFAchievement
                 C_TFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
 
                 if ( ( pTFAttacker == pLocalPlayer && ( pTFAssister && pTFAssister->IsPlayerClass( TF_CLASS_MEDIC ) ) ) ||
-                     ( pTFAssister == pLocalPlayer && ( pTFAttacker && pTFAttacker->IsPlayerClass( TF_CLASS_MEDIC ) ) ) )
+                    ( pTFAssister == pLocalPlayer && ( pTFAttacker && pTFAttacker->IsPlayerClass( TF_CLASS_MEDIC ) ) ) )
                 {
                     C_TFPlayer *pPartner = ( pTFAttacker == pLocalPlayer ) ? pTFAssister : pTFAttacker;
 
@@ -1159,7 +1159,7 @@ class CAchievementTFHeavy_KillMedicPair : public CBaseTFAchievement
         }
     }
 
-   private:
+    private:
     struct targets_t
     {
         EHANDLE hPartner;
@@ -1174,7 +1174,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillMedicPair, ACHIEVEMENT_TF_HEAVY_KIL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_AchieveProgress1 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFHeavy_AchieveProgress1, CAchievement_AchievedCount );
     void Init()
     {
@@ -1187,7 +1187,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_AchieveProgress1, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_AchieveProgress2 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFHeavy_AchieveProgress2, CAchievement_AchievedCount );
     void Init()
     {
@@ -1200,7 +1200,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_AchieveProgress2, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_AchieveProgress3 : public CAchievement_AchievedCount
 {
-   public:
+    public:
     DECLARE_CLASS( CAchievementTFHeavy_AchieveProgress3, CAchievement_AchievedCount );
     void Init()
     {

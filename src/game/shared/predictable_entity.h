@@ -65,7 +65,7 @@ class SendTable;
 
 #ifndef NO_ENTITY_PREDICTION
 #define DECLARE_PREDICTABLE_IMPL( MAYBE_OVERRIDE )            \
-   public:                                                    \
+    public:                                                    \
     static typedescription_t m_PredDesc[];                    \
     static datamap_t m_PredMap;                               \
     virtual datamap_t *GetPredDescMap( void ) MAYBE_OVERRIDE; \
@@ -119,7 +119,7 @@ friend datamap_t *PredMapInit( T * )
 #define END_PREDICTION_DATA()                                                  \
     }                                                                          \
     ;                                                                          \
-                                                                               \
+                                                                                \
     if ( sizeof( predDesc ) > sizeof( predDesc[0] ) )                          \
     {                                                                          \
         classNameTypedef::m_PredMap.dataNumFields = ARRAYSIZE( predDesc ) - 1; \
@@ -176,7 +176,7 @@ friend datamap_t *PredMapInit( T * )
     };                                                                                                \
     class C##localName##Foo                                                                           \
     {                                                                                                 \
-       public:                                                                                        \
+        public:                                                                                        \
         C##localName##Foo( void )                                                                     \
         {                                                                                             \
             GetClassMap().Add( #localName, #className, sizeof( className ), &C##className##Factory ); \
@@ -215,7 +215,7 @@ friend datamap_t *PredMapInit( T * )
 // Interface used by client and server to track predictable entities
 abstract_class IPredictableList
 {
-   public:
+    public:
     // Get predictables by index
     virtual CBaseEntity *GetPredictable( int slot ) = 0;
     // Get count of predictables

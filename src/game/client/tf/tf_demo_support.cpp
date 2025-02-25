@@ -156,7 +156,7 @@ void CTFDemoSupport::Update( float frametime )
                 {
                     // if the local player is on team spectator or is on a game team and has picked a player class
                     if ( ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ||
-                         ( ( pLocalPlayer->GetTeamNumber() >= FIRST_GAME_TEAM ) && pLocalPlayer->GetPlayerClass() && ( pLocalPlayer->GetPlayerClass()->GetClassIndex() >= TF_FIRST_NORMAL_CLASS ) && ( pLocalPlayer->GetPlayerClass()->GetClassIndex() < TF_LAST_NORMAL_CLASS ) ) )
+                        ( ( pLocalPlayer->GetTeamNumber() >= FIRST_GAME_TEAM ) && pLocalPlayer->GetPlayerClass() && ( pLocalPlayer->GetPlayerClass()->GetClassIndex() >= TF_FIRST_NORMAL_CLASS ) && ( pLocalPlayer->GetPlayerClass()->GetClassIndex() < TF_LAST_NORMAL_CLASS ) ) )
                     {
                         if ( !StartRecording() )
                         {
@@ -428,11 +428,11 @@ bool CTFDemoSupport::IsValidPath( const char *pszFolder )
         return false;
 
     if ( Q_strlen( pszFolder ) <= 0 ||
-         Q_strstr( pszFolder, "\\\\" ) ||  // to protect network paths
-         Q_strstr( pszFolder, ":" ) ||     // to protect absolute paths
-         Q_strstr( pszFolder, ".." ) ||    // to protect relative paths
-         Q_strstr( pszFolder, "\n" ) ||    // CFileSystem_Stdio::FS_fopen doesn't allow this
-         Q_strstr( pszFolder, "\r" ) )     // CFileSystem_Stdio::FS_fopen doesn't allow this
+        Q_strstr( pszFolder, "\\\\" ) ||  // to protect network paths
+        Q_strstr( pszFolder, ":" ) ||     // to protect absolute paths
+        Q_strstr( pszFolder, ".." ) ||    // to protect relative paths
+        Q_strstr( pszFolder, "\n" ) ||    // CFileSystem_Stdio::FS_fopen doesn't allow this
+        Q_strstr( pszFolder, "\r" ) )     // CFileSystem_Stdio::FS_fopen doesn't allow this
     {
         return false;
     }

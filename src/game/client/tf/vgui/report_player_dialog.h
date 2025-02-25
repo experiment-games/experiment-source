@@ -20,14 +20,14 @@ class CReportPlayerDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CReportPlayerDialog, vgui::Frame );
 
-   public:
+    public:
     CReportPlayerDialog( vgui::Panel *parent );
     ~CReportPlayerDialog();
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
     virtual void Activate() OVERRIDE;
 
-   private:
+    private:
     MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
     virtual void OnCommand( const char *command ) OVERRIDE;

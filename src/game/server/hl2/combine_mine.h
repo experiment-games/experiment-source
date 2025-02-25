@@ -29,7 +29,7 @@ class CBounceBomb : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 {
     DECLARE_CLASS( CBounceBomb, CBaseAnimating );
 
-   public:
+    public:
     CBounceBomb()
     {
         m_pWarnSound = NULL;
@@ -109,7 +109,7 @@ class CBounceBomb : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
     static string_t gm_iszFloorTurretClassname;
     static string_t gm_iszGroundTurretClassname;
 
-   private:
+    private:
     float m_flExplosionDelay;
 
     bool m_bAwake;

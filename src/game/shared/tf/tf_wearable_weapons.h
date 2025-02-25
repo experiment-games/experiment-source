@@ -35,7 +35,7 @@ class CTFWearableDemoShield : public CTFWearable
 {
     DECLARE_CLASS( CTFWearableDemoShield, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
@@ -57,7 +57,7 @@ class CTFWearableDemoShield : public CTFWearable
     float CalculateChargeDamage( float flCurrentChargeMeter );
     Vector GetShieldDamageForce( float flCurrentChargeMeter );
 
-   private:
+    private:
 #ifdef GAME_DLL
     bool m_bImpactedSomething;
 #endif
@@ -67,7 +67,7 @@ class CTFWearableRazorback : public CTFWearable
 {
     DECLARE_CLASS( CTFWearableRazorback, CTFWearable );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 

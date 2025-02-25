@@ -72,7 +72,7 @@ concept Allocator {
 */
 class CrtAllocator
 {
-   public:
+    public:
     static const bool kNeedFree = true;
     void* Malloc( size_t size )
     {
@@ -119,7 +119,7 @@ class CrtAllocator
 template < typename BaseAllocator = CrtAllocator >
 class MemoryPoolAllocator
 {
-   public:
+    public:
     static const bool kNeedFree = false;  //!< Tell users that no need to call Free() with this allocator. (concept Allocator)
 
     //! Constructor with chunkSize.
@@ -154,7 +154,7 @@ class MemoryPoolAllocator
 
     //! Destructor.
     /*! This deallocates all memory chunks, excluding the user-supplied buffer.
-     */
+    */
     ~MemoryPoolAllocator()
     {
         Clear();
@@ -176,7 +176,7 @@ class MemoryPoolAllocator
 
     //! Computes the total capacity of allocated memory chunks.
     /*! \return total capacity in bytes.
-     */
+    */
     size_t Capacity() const
     {
         size_t capacity = 0;
@@ -187,7 +187,7 @@ class MemoryPoolAllocator
 
     //! Computes the memory blocks allocated.
     /*! \return total used bytes.
-     */
+    */
     size_t Size() const
     {
         size_t size = 0;
@@ -256,7 +256,7 @@ class MemoryPoolAllocator
         ( void )ptr;
     }  // Do nothing
 
-   private:
+    private:
     //! Copy constructor is not permitted.
     MemoryPoolAllocator( const MemoryPoolAllocator& rhs ) /* = delete */;
     //! Copy assignment operator is not permitted.
@@ -286,7 +286,7 @@ class MemoryPoolAllocator
 
     //! Chunk header for perpending to each chunk.
     /*! Chunks are stored as a singly linked list.
-     */
+    */
     struct ChunkHeader
     {
         size_t capacity;    //!< Capacity of the chunk in bytes (excluding the header itself).

@@ -37,7 +37,7 @@ CClientEffectRegistration::CClientEffectRegistration( const char *pEffectName, C
 //-----------------------------------------------------------------------------
 class C_TEEffectDispatch : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEEffectDispatch, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -46,7 +46,7 @@ class C_TEEffectDispatch : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     CEffectData m_EffectData;
 };
 

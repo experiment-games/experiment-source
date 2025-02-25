@@ -105,8 +105,8 @@ void CMatchMakingDashboardSidePanel::SetupQueueButton( ETFMatchGroup eGroup )
     wchar_t* pwszDisabledReason = vecReasons.IsEmpty() ? nullptr : vecReasons.Head().wszCantReason;
 
     SetupButtonAndTooltip( FindControl< Button >( "QueueButton" ),
-                           FindControl< EditablePanel >( "ToolTipButtonHack" ),
-                           pwszDisabledReason );
+                            FindControl< EditablePanel >( "ToolTipButtonHack" ),
+                            pwszDisabledReason );
 }
 
 void CMatchMakingDashboardSidePanel::OnUpdateVisiblity()

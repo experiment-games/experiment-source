@@ -277,7 +277,7 @@ bool CAI_BaseNPC::CanStandOn( CBaseEntity *pSurface ) const
     CAI_Navigator *pNavigator = const_cast< CAI_Navigator * >( GetNavigator() );
 
     if ( pNavigator->IsGoalActive() &&
-         pSurface == pNavigator->GetGoalTarget() )
+        pSurface == pNavigator->GetGoalTarget() )
         return false;
 
     return BaseClass::CanStandOn( pSurface );

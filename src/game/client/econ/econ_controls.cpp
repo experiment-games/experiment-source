@@ -968,9 +968,9 @@ void CExRichText::OnTick()
 //-----------------------------------------------------------------------------
 CEconItemDetailsRichText::CEconItemDetailsRichText( vgui::Panel *parent, const char *panelName )
     : BaseClass( parent, panelName ),
-      m_bAllowItemSetLinks( false ),
-      m_bLimitedItem( false ),
-      m_hLinkFont( INVALID_FONT )
+    m_bAllowItemSetLinks( false ),
+    m_bLimitedItem( false ),
+    m_hLinkFont( INVALID_FONT )
 {
 }
 
@@ -1923,17 +1923,17 @@ void CExplanationPopup::OnKeyCodePressed( vgui::KeyCode code )
             return;
         }
         else if ( nButtonCode == KEY_XBUTTON_LEFT ||
-                  nButtonCode == KEY_XSTICK1_LEFT ||
-                  nButtonCode == KEY_XSTICK2_LEFT ||
-                  code == KEY_LEFT )
+                nButtonCode == KEY_XSTICK1_LEFT ||
+                nButtonCode == KEY_XSTICK2_LEFT ||
+                code == KEY_LEFT )
         {
             OnCommand( "prevexplanation" );
             return;
         }
         else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-                  nButtonCode == KEY_XSTICK1_RIGHT ||
-                  nButtonCode == KEY_XSTICK2_RIGHT ||
-                  code == KEY_RIGHT )
+                nButtonCode == KEY_XSTICK1_RIGHT ||
+                nButtonCode == KEY_XSTICK2_RIGHT ||
+                code == KEY_RIGHT )
         {
             OnCommand( "nextexplanation" );
             return;

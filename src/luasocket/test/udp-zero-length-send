@@ -22,4 +22,3 @@ assert(s:setpeername("127.0.0.1", 5432))
 ssz, emsg = s:send("")
 
 print(ssz == 0 and "OK" or "FAIL",[[send:("")]], ssz, emsg)
-

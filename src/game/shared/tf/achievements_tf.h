@@ -19,7 +19,7 @@ class CBaseTFAchievementSimple : public CBaseAchievement
 {
     DECLARE_CLASS( CBaseTFAchievementSimple, CBaseAchievement );
 
-   public:
+    public:
     virtual bool LocalPlayerCanEarn( void );
 
     virtual void FireGameEvent( IGameEvent *event );
@@ -32,7 +32,7 @@ class CBaseTFAchievement : public CBaseTFAchievementSimple
 {
     DECLARE_CLASS( CBaseTFAchievement, CBaseTFAchievementSimple );
 
-   public:
+    public:
     virtual bool LocalPlayerCanEarn( void );
 };
 
@@ -42,7 +42,7 @@ class CTFAchievementFullRound : public CBaseTFAchievement
 {
     DECLARE_CLASS( CTFAchievementFullRound, CBaseTFAchievement );
 
-   public:
+    public:
     void Init();
     virtual void ListenForEvents();
     void FireGameEvent_Internal( IGameEvent *event );
@@ -55,7 +55,7 @@ class CAchievementTopScoreboard : public CTFAchievementFullRound
 {
     DECLARE_CLASS( CAchievementTopScoreboard, CTFAchievementFullRound );
 
-   public:
+    public:
     void Init();
     virtual void ListenForEvents();
     virtual void Event_OnRoundComplete( float flRoundTime, IGameEvent *event );

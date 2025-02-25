@@ -23,7 +23,7 @@ class CNPC_APCDriver : public CNPC_VehicleDriver
 {
     DECLARE_CLASS( CNPC_APCDriver, CNPC_VehicleDriver );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DEFINE_CUSTOM_AI;
 
@@ -43,7 +43,7 @@ class CNPC_APCDriver : public CNPC_VehicleDriver
     virtual int RangeAttack1Conditions( float flDot, float flDist );
     virtual int RangeAttack2Conditions( float flDot, float flDist );
 
-   private:
+    private:
     // Are we being carried by a dropship?
     bool IsBeingCarried();
 

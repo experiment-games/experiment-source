@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CNPCEventResponseSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CNPCEventResponseSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -28,7 +28,7 @@ class CNPCEventResponseSystem : public CAutoGameSystemPerFrame
     void FrameUpdatePreEntityThink();
     void TriggerEvent( const char *pResponse, bool bForce, bool bCancelScript );
 
-   private:
+    private:
     float m_flNextEventPoll;
 
     struct storedevent_t

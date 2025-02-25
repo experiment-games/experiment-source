@@ -33,10 +33,10 @@ DECLARE_HUD_MESSAGE( CHudChat, VoiceSubtitle );
 extern ConVar hud_saytext_time;
 
 void RenderPartyChatMessage( const ChatMessage_t &message,
-                             RichText *pRichText,
-                             const Color &colorSystemMessage,
-                             const Color &colorPlayerName,
-                             const Color &colorText )
+                            RichText *pRichText,
+                            const Color &colorSystemMessage,
+                            const Color &colorPlayerName,
+                            const Color &colorText )
 {
     CSteamID localSteamID;
     if ( SteamUser() )
@@ -324,7 +324,7 @@ Color CHudChat::GetClientColor( int clientIndex )
         {
             // if this player is on the other team, disguised as my team, show disguised color
             if ( pPlayer && pLocalPlayer && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) &&
-                 pPlayer->m_Shared.GetDisguiseTeam() == pLocalPlayer->GetTeamNumber() )
+                pPlayer->m_Shared.GetDisguiseTeam() == pLocalPlayer->GetTeamNumber() )
             {
                 iTeam = pPlayer->m_Shared.GetDisguiseTeam();
             }
@@ -364,8 +364,8 @@ const char *CHudChat::GetDisplayedSubtitlePlayerName( int clientIndex )
 
     // If they are disguised as the enemy, and not on our team
     if ( pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) &&
-         pPlayer->m_Shared.GetDisguiseTeam() != pPlayer->GetTeamNumber() &&
-         !pLocalPlayer->InSameTeam( pPlayer ) )
+        pPlayer->m_Shared.GetDisguiseTeam() != pPlayer->GetTeamNumber() &&
+        !pLocalPlayer->InSameTeam( pPlayer ) )
     {
         C_TFPlayer *pDisguiseTarget = pPlayer->m_Shared.GetDisguiseTarget();
 

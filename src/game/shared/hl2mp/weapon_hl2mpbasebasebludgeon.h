@@ -28,7 +28,7 @@ class CBaseHL2MPBludgeonWeapon : public CBaseHL2MPCombatWeapon
 {
     DECLARE_CLASS( CBaseHL2MPBludgeonWeapon, CBaseHL2MPCombatWeapon );
 
-   public:
+    public:
     CBaseHL2MPBludgeonWeapon();
 
     DECLARE_NETWORKCLASS();
@@ -73,10 +73,10 @@ class CBaseHL2MPBludgeonWeapon : public CBaseHL2MPCombatWeapon
         return false;
     }
 
-   protected:
+    protected:
     virtual void ImpactEffect( trace_t &trace );
 
-   private:
+    private:
     bool ImpactWater( const Vector &start, const Vector &end );
     void Swing( int bIsSecondary );
     void Hit( trace_t &traceHit, Activity nHitActivity );

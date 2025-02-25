@@ -19,7 +19,7 @@ class CCoreDispInfo;
 //
 class CDispCollTri
 {
-   public:
+    public:
     void Init( void );
     inline void SetPoint( int index, Vector const &vert );
     inline void SetPointNormal( int index, Vector const &normal );
@@ -42,7 +42,7 @@ class CDispCollTri
 //
 class CDispCollNode
 {
-   public:
+    public:
     CDispCollNode();
     inline bool IsLeaf( void );
     inline void SetBounds( Vector const &bMin, Vector const &bMax );
@@ -60,7 +60,7 @@ class CDispCollNode
 //
 class CDispCollData
 {
-   public:
+    public:
     Vector m_StartPos;
     Vector m_EndPos;
     Vector m_Extents;
@@ -79,7 +79,7 @@ enum
 
 class CDispCollTreeTempData
 {
-   public:
+    public:
     //
     // temps
     //
@@ -96,7 +96,7 @@ class CDispCollTreeTempData
 //
 class CDispCollTree
 {
-   public:
+    public:
     static const float COLLISION_EPSILON;
     static const float ONE_MINUS_COLLISION_EPSILON;
 
@@ -131,7 +131,7 @@ class CDispCollTree
 
     inline void GetBounds( Vector &boundMin, Vector &boundMax );
 
-   protected:
+    protected:
     int m_Power;
 
     int m_NodeCount;

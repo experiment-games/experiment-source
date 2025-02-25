@@ -27,7 +27,7 @@ class CDmeFaceSet : public CDmElement
 {
     DEFINE_ELEMENT( CDmeFaceSet, CDmElement );
 
-   public:
+    public:
     // material accessors
     CDmeMaterial *GetMaterial();
     void SetMaterial( CDmeMaterial *pMaterial );
@@ -57,7 +57,7 @@ class CDmeFaceSet : public CDmElement
     // empty faces (which aren't counted as faces) and a missing -1 terminator at the end
     int GetFaceCount() const;
 
-   private:
+    private:
     CDmaArray< int > m_indices;
     CDmaElement< CDmeMaterial > m_material;
 };

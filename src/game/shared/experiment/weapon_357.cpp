@@ -29,7 +29,7 @@ class CWeapon357 : public CBaseExperimentCombatWeapon
 {
     DECLARE_CLASS( CWeapon357, CBaseExperimentCombatWeapon );
 
-   public:
+    public:
     CWeapon357( void );
 
     void PrimaryAttack( void );
@@ -37,7 +37,7 @@ class CWeapon357 : public CBaseExperimentCombatWeapon
     DECLARE_PREDICTABLE();
     DECLARE_ACTTABLE();
 
-   private:
+    private:
     CWeapon357( const CWeapon357 & );
 };
 

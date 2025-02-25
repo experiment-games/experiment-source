@@ -31,7 +31,7 @@ enum knife_weapontypes_t
 //
 class CTFKnife : public CTFWeaponBaseMelee
 {
-   public:
+    public:
     DECLARE_CLASS( CTFKnife, CTFWeaponBaseMelee );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -96,10 +96,10 @@ class CTFKnife : public CTFWeaponBaseMelee
     }
     virtual void SecondaryAttack( void ) OVERRIDE;
 
-   private:
+    private:
     void ResetVars( void );
 
-   private:
+    private:
     float m_flBlockedTime;
     bool m_bAllowHolsterBecauseForced;
     CHandle< CTFPlayer > m_hBackstabVictim;

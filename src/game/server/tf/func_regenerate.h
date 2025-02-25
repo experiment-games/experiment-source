@@ -19,7 +19,7 @@
 //
 class CRegenerateZone : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CRegenerateZone, CBaseTrigger );
 
     CRegenerateZone();
@@ -39,7 +39,7 @@ class CRegenerateZone : public CBaseTrigger
     void InputDisable( inputdata_t &inputdata );
     void InputToggle( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bDisabled;
     CHandle< CDynamicProp > m_hAssociatedModel;
     string_t m_iszAssociatedModel;

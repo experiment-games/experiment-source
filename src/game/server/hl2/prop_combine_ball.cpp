@@ -130,7 +130,7 @@ bool UTIL_IsCombineBall( CBaseEntity *pEntity )
     CPropCombineBall *pBall = dynamic_cast<CPropCombineBall *>(pEntity);
 
     if ( pBall && pBall->WasWeaponLaunched() )
-      return false;
+    return false;
     */
 
     return true;
@@ -1028,62 +1028,62 @@ void CPropCombineBall::DoExplosion()
         DispatchEffect( "cball_explode", data );
 
         te->BeamRingPoint( filter2, 0, GetAbsOrigin(),  // origin
-                           m_flRadius,                  // start radius
-                           1024,                        // end radius
-                           s_nExplosionTexture,         // texture
-                           0,                           // halo index
-                           0,                           // start frame
-                           2,                           // framerate
-                           0.2f,                        // life
-                           64,                          // width
-                           0,                           // spread
-                           0,                           // amplitude
-                           255,                         // r
-                           255,                         // g
-                           225,                         // b
-                           32,                          // a
-                           0,                           // speed
-                           FBEAM_FADEOUT );
+                            m_flRadius,                  // start radius
+                            1024,                        // end radius
+                            s_nExplosionTexture,         // texture
+                            0,                           // halo index
+                            0,                           // start frame
+                            2,                           // framerate
+                            0.2f,                        // life
+                            64,                          // width
+                            0,                           // spread
+                            0,                           // amplitude
+                            255,                         // r
+                            255,                         // g
+                            225,                         // b
+                            32,                          // a
+                            0,                           // speed
+                            FBEAM_FADEOUT );
 
         // Shockring
         te->BeamRingPoint( filter2, 0, GetAbsOrigin(),  // origin
-                           m_flRadius,                  // start radius
-                           1024,                        // end radius
-                           s_nExplosionTexture,         // texture
-                           0,                           // halo index
-                           0,                           // start frame
-                           2,                           // framerate
-                           0.5f,                        // life
-                           64,                          // width
-                           0,                           // spread
-                           0,                           // amplitude
-                           255,                         // r
-                           255,                         // g
-                           225,                         // b
-                           64,                          // a
-                           0,                           // speed
-                           FBEAM_FADEOUT );
+                            m_flRadius,                  // start radius
+                            1024,                        // end radius
+                            s_nExplosionTexture,         // texture
+                            0,                           // halo index
+                            0,                           // start frame
+                            2,                           // framerate
+                            0.5f,                        // life
+                            64,                          // width
+                            0,                           // spread
+                            0,                           // amplitude
+                            255,                         // r
+                            255,                         // g
+                            225,                         // b
+                            64,                          // a
+                            0,                           // speed
+                            FBEAM_FADEOUT );
     }
     else
     {
         // Shockring
         te->BeamRingPoint( filter2, 0, GetAbsOrigin(),  // origin
-                           128,                         // start radius
-                           384,                         // end radius
-                           s_nExplosionTexture,         // texture
-                           0,                           // halo index
-                           0,                           // start frame
-                           2,                           // framerate
-                           0.25f,                       // life
-                           48,                          // width
-                           0,                           // spread
-                           0,                           // amplitude
-                           255,                         // r
-                           255,                         // g
-                           225,                         // b
-                           64,                          // a
-                           0,                           // speed
-                           FBEAM_FADEOUT );
+                            128,                         // start radius
+                            384,                         // end radius
+                            s_nExplosionTexture,         // texture
+                            0,                           // halo index
+                            0,                           // start frame
+                            2,                           // framerate
+                            0.25f,                       // life
+                            48,                          // width
+                            0,                           // spread
+                            0,                           // amplitude
+                            255,                         // r
+                            255,                         // g
+                            225,                         // b
+                            64,                          // a
+                            0,                           // speed
+                            FBEAM_FADEOUT );
     }
 
     if ( hl2_episodic.GetBool() )
@@ -1182,7 +1182,7 @@ void CPropCombineBall::OnHitEntity( CBaseEntity *pHitEntity, float flSpeed, int 
 {
     // Detonate on the strider + the bone followers in the strider
     if ( FClassnameIs( pHitEntity, "npc_strider" ) ||
-         ( pHitEntity->GetOwnerEntity() && FClassnameIs( pHitEntity->GetOwnerEntity(), "npc_strider" ) ) )
+        ( pHitEntity->GetOwnerEntity() && FClassnameIs( pHitEntity->GetOwnerEntity(), "npc_strider" ) ) )
     {
         DoExplosion();
         return;
@@ -1348,8 +1348,8 @@ bool CPropCombineBall::IsAttractiveTarget( CBaseEntity *pEntity )
             if ( GetOwnerEntity()->IsPlayer() )
             {
                 if ( pEntity->Classify() == CLASS_PLAYER ||
-                     pEntity->Classify() == CLASS_PLAYER_ALLY ||
-                     pEntity->Classify() == CLASS_PLAYER_ALLY_VITAL )
+                    pEntity->Classify() == CLASS_PLAYER_ALLY ||
+                    pEntity->Classify() == CLASS_PLAYER_ALLY_VITAL )
                 {
                     // Not attracted to other players or allies.
                     return false;
@@ -2135,7 +2135,7 @@ class CFilterCombineBall : public CBaseFilter
     DECLARE_CLASS( CFilterCombineBall, CBaseFilter );
     DECLARE_DATADESC();
 
-   public:
+    public:
     int m_iBallType;
 
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )

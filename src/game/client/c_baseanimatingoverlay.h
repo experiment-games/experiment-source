@@ -17,7 +17,7 @@
 
 class C_BaseAnimatingOverlay : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( C_BaseAnimatingOverlay, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
@@ -50,7 +50,7 @@ class C_BaseAnimatingOverlay : public C_BaseAnimating
 
     float m_flOverlayPrevEventCycle[MAX_OVERLAYS];
 
-   private:
+    private:
     C_BaseAnimatingOverlay( const C_BaseAnimatingOverlay & );  // not defined, not accessible
 };
 

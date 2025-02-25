@@ -16,7 +16,7 @@
 // -------------------------------------------------------------------------------- //
 class C_InfoOverlayAccessor : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_InfoOverlayAccessor, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -24,7 +24,7 @@ class C_InfoOverlayAccessor : public C_BaseEntity
 
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   private:
+    private:
     int m_iOverlayID;
 };
 

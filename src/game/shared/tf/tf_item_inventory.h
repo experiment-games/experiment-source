@@ -38,7 +38,7 @@ class CTFPlayerInventory : public CPlayerInventory
 {
     DECLARE_CLASS( CTFPlayerInventory, CPlayerInventory );
 
-   public:
+    public:
     CTFPlayerInventory();
     virtual ~CTFPlayerInventory();
 
@@ -96,7 +96,7 @@ class CTFPlayerInventory : public CPlayerInventory
 
     static CEconItemView *GetFirstItemOfItemDef( item_definition_index_t nDefIndex, CPlayerInventory *pInventory = NULL );
 
-   protected:
+    protected:
     virtual void SOCreated( const CSteamID &steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
 #ifdef CLIENT_DLL
     // Converts an old format inventory to the new format.
@@ -127,13 +127,13 @@ class CTFPlayerInventory : public CPlayerInventory
     virtual void SOUpdated( const CSteamID &steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
 
 #ifdef CLIENT_DLL
-   private:
+    private:
     void CheckSaxtonMaskAchievement( const CEconItem *pEconItem );
     void UpdateCachedServerLoadoutItems();
     void UpdateRealTFLoadoutItems();
 #endif  // CLIENT_DLL
 
-   protected:
+    protected:
     // Global indices of the items in our inventory in the loadout slots
 #ifdef CLIENT_DLL
     struct SkinRequest_t
@@ -169,7 +169,7 @@ class CTFInventoryManager : public CInventoryManager
 {
     DECLARE_CLASS( CTFInventoryManager, CInventoryManager );
 
-   public:
+    public:
     CTFInventoryManager();
     ~CTFInventoryManager();
 
@@ -235,7 +235,7 @@ class CTFInventoryManager : public CInventoryManager
         return m_pBaseLoadoutItems[iIndex];
     }
 
-   private:
+    private:
     // Base items, returned for slots that the player doesn't have anything in
     CEconItemView *m_pDefaultItem;
     CUtlVector< CEconItemView * > m_pBaseLoadoutItems;
@@ -243,7 +243,7 @@ class CTFInventoryManager : public CInventoryManager
 #ifdef CLIENT_DLL
     // On the client, we have a single inventory for the local player. Stored here, instead of in the
     // local player entity, because players need to access it while not being connected to a server.
-   public:
+    public:
     CPlayerInventory *GetLocalInventory( void )
     {
         return &m_LocalInventory;
@@ -263,7 +263,7 @@ class CTFInventoryManager : public CInventoryManager
 
     virtual void UpdateInventoryEquippedState( CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot );
 
-   private:
+    private:
     CTFPlayerInventory m_LocalInventory;
 #endif  // CLIENT_DLL
 };
@@ -276,7 +276,7 @@ CTFInventoryManager *TFInventoryManager( void );
 //-----------------------------------------------------------------------------
 class CEconNotification_HasNewItems : public CEconNotification
 {
-   public:
+    public:
     CEconNotification_HasNewItems();
     ~CEconNotification_HasNewItems();
 
@@ -324,7 +324,7 @@ class CEconNotification_HasNewItems : public CEconNotification
         return dynamic_cast< CEconNotification_HasNewItems * >( pNotification ) != NULL;
     }
 
-   protected:
+    protected:
     bool m_bHasTriggered;
     bool m_bShowInGame;
 };
@@ -332,7 +332,7 @@ class CEconNotification_HasNewItems : public CEconNotification
 //-----------------------------------------------------------------------------
 class CEconNotification_HasNewItemsOnKill : public CEconNotification_HasNewItems
 {
-   public:
+    public:
     CEconNotification_HasNewItemsOnKill( int iVictimID );
 
     virtual EType NotificationType()

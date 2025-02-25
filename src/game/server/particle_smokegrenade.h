@@ -17,7 +17,7 @@ class ParticleSmokeGrenade : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( ParticleSmokeGrenade, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -25,7 +25,7 @@ class ParticleSmokeGrenade : public CBaseParticleEntity
 
     virtual int UpdateTransmitState( void );
 
-   public:
+    public:
     // Tell the client entity to start filling the volume.
     void FillVolume();
 
@@ -35,7 +35,7 @@ class ParticleSmokeGrenade : public CBaseParticleEntity
     // Set time to fade out relative to current time
     void SetRelativeFadeTime( float startTime, float endTime );
 
-   public:
+    public:
     // Stage 0 (default): make a smoke trail that follows the entity it's following.
     // Stage 1          : fill a volume with smoke.
     CNetworkVar( unsigned char, m_CurrentStage );

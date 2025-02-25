@@ -279,7 +279,7 @@ void CQuestNotificationPanel::CheckForAvailableNodeNotification()
     // we should remind them to go unlock a node, so long as there isn't already
     // a quest active.
     if ( GetQuestMapHelper().GetActiveQuest() == NULL &&
-         GetQuestMapHelper().GetNumCurrentlyUnlockableNodes() > 0 )
+        GetQuestMapHelper().GetNumCurrentlyUnlockableNodes() > 0 )
     {
         AddNotification( new CQuestNotification_NewQuest( GetProtoScriptObjDefManager()->GetTypedDefinition< CQuestThemeDefinition >( 1 ) ) );  // Super hack for now
     }

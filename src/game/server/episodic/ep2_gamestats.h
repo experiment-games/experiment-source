@@ -37,7 +37,7 @@ enum Ep2GameStatsLumpIds_t
 // EP2 Game Level Stats Data
 struct Ep2LevelStats_t
 {
-   public:
+    public:
     enum FloatCounterTypes_t
     {
         COUNTER_DAMAGETAKEN = 0,
@@ -66,7 +66,7 @@ struct Ep2LevelStats_t
 
     Ep2LevelStats_t()
         : m_bInitialized( false ),
-          m_flLevelStartTime( 0.0f )
+        m_flLevelStartTime( 0.0f )
     {
         Q_memset( m_IntCounters, 0, sizeof( m_IntCounters ) );
         Q_memset( m_FloatCounters, 0, sizeof( m_FloatCounters ) );
@@ -292,7 +292,7 @@ struct Ep2LevelStats_t
         }
     }
 
-   public:
+    public:
     // Level header data.
     struct LevelHeader_t
     {
@@ -322,9 +322,9 @@ struct Ep2LevelStats_t
     {
         static const unsigned short LumpId = EP2STATS_LUMP_DEATH;  // Lump ids.
         short nPosition[3];                                        // Position of death.
-                                                                   //		short	iWeapon;											// Weapon that killed the player.
-                                                                   //		byte	iAttackClass;										// Class that killed the player.
-                                                                   //		byte	iTargetClass;										// Class of the player killed.
+                                                                    //		short	iWeapon;											// Weapon that killed the player.
+                                                                    //		byte	iAttackClass;										// Class that killed the player.
+                                                                    //		byte	iTargetClass;										// Class of the player killed.
     };
 
     struct EntityDeathsLump_t
@@ -333,7 +333,7 @@ struct Ep2LevelStats_t
 
         EntityDeathsLump_t()
             : m_nBodyCount( 0u ),
-              m_nKilledPlayer( 0u )
+            m_nKilledPlayer( 0u )
         {
         }
 
@@ -353,8 +353,8 @@ struct Ep2LevelStats_t
 
         WeaponLump_t()
             : m_nShots( 0 ),
-              m_nHits( 0 ),
-              m_flDamageInflicted( 0.0 )
+            m_nHits( 0 ),
+            m_flDamageInflicted( 0.0 )
         {
         }
 
@@ -374,8 +374,8 @@ struct Ep2LevelStats_t
     {
         SaveGameInfoRecord_t()
             : m_nFirstDeathIndex( -1 ),
-              m_nNumDeaths( 0 ),
-              m_nSaveHealth( -1 )
+            m_nNumDeaths( 0 ),
+            m_nSaveHealth( -1 )
         {
             Q_memset( m_nSavePos, 0, sizeof( m_nSavePos ) );
         }
@@ -413,7 +413,7 @@ struct Ep2LevelStats_t
 
         SaveGameInfo_t()
             : m_nCurrentSaveFileTime( 0 ),
-              m_pCurrentRecord( NULL )
+            m_pCurrentRecord( NULL )
         {
         }
 
@@ -437,7 +437,7 @@ struct Ep2LevelStats_t
 
         GenericStatsLump_t()
             : m_unCount( 0u ),
-              m_flCurrentValue( 0.0 )
+            m_flCurrentValue( 0.0 )
         {
             m_Pos[0] = m_Pos[1] = m_Pos[2] = 0;
         }
@@ -469,7 +469,7 @@ class CEP2GameStats : public CEP1GameStats
 {
     typedef CEP1GameStats BaseClass;
 
-   public:
+    public:
     CEP2GameStats();
     virtual ~CEP2GameStats();
 
@@ -507,10 +507,10 @@ class CEP2GameStats : public CEP1GameStats
     // Generic statistics lump
     virtual void Event_IncrementCountedStatistic( const Vector &vecAbsOrigin, char const *pchStatisticName, float flIncrementAmount );
 
-   public:  // FIXME: temporary used for CC_ListDeaths command
+    public:  // FIXME: temporary used for CC_ListDeaths command
     Ep2LevelStats_t *FindOrAddMapStats( const char *szMapName );
 
-   public:
+    public:
     Ep2LevelStats_t::EntityDeathsLump_t *FindDeathsLump( char const *npcName );
     Ep2LevelStats_t::WeaponLump_t *FindWeaponsLump( char const *pchWeaponName, bool bPrimary );
     Ep2LevelStats_t::GenericStatsLump_t *FindGenericLump( char const *pchStatName );

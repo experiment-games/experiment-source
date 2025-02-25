@@ -146,8 +146,8 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
     /** This needs more thought - it is preventing bots from using dropdowns
     if ( mover->HasPotentialGap( subjectPos, pathTarget, &fraction ) )
     {
-      // tried to lead over a cliff - clip to safe region
-      pathTarget = subjectPos + fraction * ( pathTarget - subjectPos );
+    // tried to lead over a cliff - clip to safe region
+    pathTarget = subjectPos + fraction * ( pathTarget - subjectPos );
     }
     */
 

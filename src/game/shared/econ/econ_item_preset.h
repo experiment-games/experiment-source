@@ -34,7 +34,7 @@ struct PresetSlotItem_t
 // --------------------------------------------------------------------------
 class CEconItemPerClassPresetData : public GCSDK::CSharedObject
 {
-   public:
+    public:
     typedef GCSDK::CSharedObject BaseClass;
 
     const static int k_nTypeID = k_EEconTypeItemPresetInstance;
@@ -68,11 +68,11 @@ class CEconItemPerClassPresetData : public GCSDK::CSharedObject
         return m_unActivePreset;
     }
 
-   private:
+    private:
     CEconItemPerClassPresetData( const CEconItemPerClassPresetData& ) = delete;
     void operator=( const CEconItemPerClassPresetData& ) = delete;
 
-   private:
+    private:
     uint32 m_unAccountID;
     equipped_class_t m_unClassID;
     equipped_preset_t m_unActivePreset;

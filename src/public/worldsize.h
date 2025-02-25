@@ -34,7 +34,7 @@
 #define MAX_COORD_RANGE ( MAX_COORD_INTEGER )
 
 #define ASSERT_COORD( v ) Assert( ( v.x >= MIN_COORD_INTEGER * 2 ) && ( v.x <= MAX_COORD_INTEGER * 2 ) && \
-                                  ( v.y >= MIN_COORD_INTEGER * 2 ) && ( v.y <= MAX_COORD_INTEGER * 2 ) && \
-                                  ( v.z >= MIN_COORD_INTEGER * 2 ) && ( v.z <= MAX_COORD_INTEGER * 2 ) );
+                                ( v.y >= MIN_COORD_INTEGER * 2 ) && ( v.y <= MAX_COORD_INTEGER * 2 ) && \
+                                ( v.z >= MIN_COORD_INTEGER * 2 ) && ( v.z <= MAX_COORD_INTEGER * 2 ) );
 
 #endif  // WORLDSIZE_H
