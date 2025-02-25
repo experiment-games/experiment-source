@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,45 +14,44 @@
 #include "ai_basenpc.h"
 #include "ai_condition.h"
 
-
-enum BaseNPCFlyerConditions_t 
+enum BaseNPCFlyerConditions_t
 {
-	COND_FLYER_MOVE_BLOCKED = LAST_SHARED_CONDITION,
-	COND_FLYER_MOVE_IMPOSSIBLE,
+    COND_FLYER_MOVE_BLOCKED = LAST_SHARED_CONDITION,
+    COND_FLYER_MOVE_IMPOSSIBLE,
 
-	// ======================================
-	// IMPORTANT: This must be the last enum
-	// ======================================
-	LAST_FLYER_SHARED_CONDITION
+    // ======================================
+    // IMPORTANT: This must be the last enum
+    // ======================================
+    LAST_FLYER_SHARED_CONDITION
 };
-
 
 //-----------------------------------------------------------------------------
 // The combot.
 //-----------------------------------------------------------------------------
 class CAI_BaseNPCFlyerNew : public CAI_BaseNPC
 {
-	DECLARE_CLASS( CAI_BaseNPCFlyerNew, CAI_BaseNPC );
-public:
-//	DEFINE_CUSTOM_AI;
+    DECLARE_CLASS( CAI_BaseNPCFlyerNew, CAI_BaseNPC );
 
-	virtual void	StartTask( const Task_t *pTask );
-	virtual void	RunTask( const Task_t *pTask );
+   public:
+    //	DEFINE_CUSTOM_AI;
 
-	virtual float	GetIdealSpeed( ) const;
-	virtual float	MinGroundDist(void);
+    virtual void StartTask( const Task_t *pTask );
+    virtual void RunTask( const Task_t *pTask );
 
-	CAI_BaseNPCFlyerNew();
+    virtual float GetIdealSpeed() const;
+    virtual float MinGroundDist( void );
 
-protected:
-	// Call this to set up a flyer
-	void SpawnFlyer();
+    CAI_BaseNPCFlyerNew();
 
-	// Yarg! Must be chained down from leaf classes...
-	void ClearFlyerConditions(void);
+   protected:
+    // Call this to set up a flyer
+    void SpawnFlyer();
 
-	// Override this when we had to abort movement
-	virtual void AbortedMovement( void ) {}
+    // Yarg! Must be chained down from leaf classes...
+    void ClearFlyerConditions( void );
+
+    // Override this when we had to abort movement
+    virtual void AbortedMovement( void ) {}
 };
 
-#endif // AI_BASENPC_FLYER_NEW_H
+#endif  // AI_BASENPC_FLYER_NEW_H

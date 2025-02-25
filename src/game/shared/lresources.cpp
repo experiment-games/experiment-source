@@ -70,20 +70,20 @@ LUA_BINDING_BEGIN( Resources, AddFile, "library", "Add a file to the list of res
     const char *pFile = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "filePath" );
     const char *extension = V_GetFileExtension( pFile );
 
-    if (Q_stricmp(extension, "vmt") == 0)
+    if ( Q_stricmp( extension, "vmt" ) == 0 )
     {
         AddRelatedFileOrWarn( pFile, ".vtf" );
         AddRelatedFileOrWarn( pFile, ".png" );
         AddRelatedFileOrWarn( pFile, ".jpg" );
     }
-    else if (Q_stricmp(extension, "mdl") == 0)
+    else if ( Q_stricmp( extension, "mdl" ) == 0 )
     {
-        AddRelatedFileOrWarn(pFile, ".vvd");
-        AddRelatedFileOrWarn(pFile, ".ani");
-        AddRelatedFileOrWarn(pFile, ".dx80.vtx");
-        AddRelatedFileOrWarn(pFile, ".dx90.vtx");
-        AddRelatedFileOrWarn(pFile, ".sw.vtx");
-        AddRelatedFileOrWarn(pFile, ".phy");
+        AddRelatedFileOrWarn( pFile, ".vvd" );
+        AddRelatedFileOrWarn( pFile, ".ani" );
+        AddRelatedFileOrWarn( pFile, ".dx80.vtx" );
+        AddRelatedFileOrWarn( pFile, ".dx90.vtx" );
+        AddRelatedFileOrWarn( pFile, ".sw.vtx" );
+        AddRelatedFileOrWarn( pFile, ".phy" );
     }
     else
     {

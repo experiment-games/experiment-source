@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -19,12 +18,10 @@ class CChoreoScene;
 class CChoreoEvent;
 class CStudioHdr;
 
-
 //-----------------------------------------------------------------------------
 // Finds sound files associated with events
 //-----------------------------------------------------------------------------
 const char *GetSoundForEvent( CChoreoEvent *pEvent, CStudioHdr *pStudioHdr );
-
 
 //-----------------------------------------------------------------------------
 // Fixes up the duration of a choreo scene based on wav files + animations
@@ -34,6 +31,4 @@ bool AutoAddGestureKeys( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPosePa
 bool UpdateGestureLength( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPoseParameters, bool bCheckOnly );
 bool UpdateSequenceLength( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPoseParameters, bool bCheckOnly, bool bVerbose );
 
-
-#endif // CHOREOUTILS_H
-
+#endif  // CHOREOUTILS_H

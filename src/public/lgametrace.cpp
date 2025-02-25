@@ -305,11 +305,12 @@ bool CTraceLuaFilter::ShouldHitEntity( IHandleEntity *pHandleEntity, int content
                 lua_CBaseEntity *pEntity = lua_toentity( m_pLuaState, -1 );
 
                 // Disabled for now, since NULL may cause this error
-               /* if ( !pEntity )
-                {
-                    luaL_typeerror( m_pLuaState, -1, "Entity or string" );
-                }
-                else*/ if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
+                /* if ( !pEntity )
+                 {
+                     luaL_typeerror( m_pLuaState, -1, "Entity or string" );
+                 }
+                 else*/
+                if ( pEntity == EntityFromEntityHandle( pHandleEntity ) )
                 {
                     lua_pop( m_pLuaState, 2 );  // Pop the value and the key
                     return m_bFilterTableInverted;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,29 +11,24 @@
 #pragma once
 #endif
 
-
 class IMaterialSystem;
 
-
 // To stub out the material system in a block of code (if mat_stub is 1),
-// make an instance of this class. You can unstub it by calling End() or 
+// make an instance of this class. You can unstub it by calling End() or
 // it will automatically unstub in its destructor.
 class CMatStubHandler
 {
-public:
-						CMatStubHandler();
-						~CMatStubHandler();
+   public:
+    CMatStubHandler();
+    ~CMatStubHandler();
 
-	void				End();
+    void End();
 
-public:
-
-	IMaterialSystem		*m_pOldMaterialSystem;
+   public:
+    IMaterialSystem *m_pOldMaterialSystem;
 };
-
 
 // Returns true if mat_stub is 1.
 bool IsMatStubEnabled();
 
-
-#endif // MAT_STUB_H
+#endif  // MAT_STUB_H

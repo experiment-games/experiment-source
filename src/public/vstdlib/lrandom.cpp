@@ -112,7 +112,7 @@ LUA_BINDING_BEGIN( Randoms, RandomBloodVector, "library", "Generate a random blo
 }
 LUA_BINDING_END( "Vector", "The generated random blood vector." )
 
-#endif // GAME_DLL
+#endif  // GAME_DLL
 
 /*
 ** Open random library

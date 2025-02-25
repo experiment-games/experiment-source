@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,9 +13,8 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
-// Are tools enabled? 
+// Are tools enabled?
 //-----------------------------------------------------------------------------
 #ifndef NO_TOOLFRAMEWORK
 bool ToolsEnabled();
@@ -23,5 +22,4 @@ bool ToolsEnabled();
 #define ToolsEnabled() 0
 #endif
 
-
-#endif // TOOLFRAMEWORK_SERVER_H 
+#endif  // TOOLFRAMEWORK_SERVER_H

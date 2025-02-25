@@ -139,7 +139,7 @@ LUA_BINDING_END( "integer", "The player model type" )
 #endif
 
 // Experiment; We only let CBasePlayer determine equality, which should be fine since they're pointers to the same entity. Disabled:
-//LUA_BINDING_BEGIN( CExperimentPlayer, __eq, "class", "Metamethod for comparing two entities." )
+// LUA_BINDING_BEGIN( CExperimentPlayer, __eq, "class", "Metamethod for comparing two entities." )
 //{
 //    CExperiment_Player *playerA = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entity" );
 //    CExperiment_Player *playerB = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 2, "other" );
@@ -147,9 +147,9 @@ LUA_BINDING_END( "integer", "The player model type" )
 //    lua_pushboolean( L, playerA == playerB );
 //    return 1;
 //}
-//LUA_BINDING_END( "boolean", "Whether the entities are equal" )
+// LUA_BINDING_END( "boolean", "Whether the entities are equal" )
 //
-//LUA_BINDING_BEGIN( CExperimentPlayer, __tostring, "class", "Metamethod for converting the entity to a string." )
+// LUA_BINDING_BEGIN( CExperimentPlayer, __tostring, "class", "Metamethod for converting the entity to a string." )
 //{
 //    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_toexperimentplayer, 1, "entity" );
 //
@@ -164,7 +164,7 @@ LUA_BINDING_END( "integer", "The player model type" )
 //
 //    return 1;
 //}
-//LUA_BINDING_END( "string", "The string representation of the entity" )
+// LUA_BINDING_END( "string", "The string representation of the entity" )
 
 // Experiment; Is this at all useful to Lua?
 // static int luasrc_ToExperimentPlayer( lua_State *L )

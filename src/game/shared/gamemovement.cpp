@@ -2441,13 +2441,13 @@ bool CGameMovement::CheckJumpButton( void )
     {
         flMul = player->GetJumpPower();
         // Experiment; Commented these old hard-coded values in favor of the GetJumpPower configuration:
-//#if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
-//        Assert( GetCurrentGravity() == 600.0f );
-//        flMul = 160.0f;  // approx. 21 units.
-//#else
-//        Assert( GetCurrentGravity() == 800.0f );
-//        flMul = 268.3281572999747f;
-//#endif
+        // #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
+        //         Assert( GetCurrentGravity() == 600.0f );
+        //         flMul = 160.0f;  // approx. 21 units.
+        // #else
+        //         Assert( GetCurrentGravity() == 800.0f );
+        //         flMul = 268.3281572999747f;
+        // #endif
     }
     else
     {

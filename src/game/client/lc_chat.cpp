@@ -34,7 +34,7 @@ LUA_BINDING_BEGIN( Chats, StartMessageMode, "library", "Open the chat with the s
     }
     else
     {
-        Assert( 0 ); // does this happen?
+        Assert( 0 );  // does this happen?
     }
 
     return 0;

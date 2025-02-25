@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,26 +16,26 @@
 
 namespace vgui
 {
-	class IScheme;
+class IScheme;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudVehicle : public CHudElement, public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CHudVehicle, vgui::Panel );
-public:
-	CHudVehicle( const char *pElementName );
+    DECLARE_CLASS_SIMPLE( CHudVehicle, vgui::Panel );
 
-	virtual bool	ShouldDraw();
+   public:
+    CHudVehicle( const char *pElementName );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	Paint( void );
+    virtual bool ShouldDraw();
 
-private:
+    virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+    virtual void Paint( void );
 
-	IClientVehicle	*GetLocalPlayerVehicle();
+   private:
+    IClientVehicle *GetLocalPlayerVehicle();
 };
 
-#endif // HUD_CROSSHAIR_H
+#endif  // HUD_CROSSHAIR_H

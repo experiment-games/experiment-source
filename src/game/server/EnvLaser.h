@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,37 +15,36 @@
 #include "beam_shared.h"
 #include "entityoutput.h"
 
-
 class CSprite;
-
 
 class CEnvLaser : public CBeam
 {
-	DECLARE_CLASS( CEnvLaser, CBeam );
-public:
-	void	Spawn( void );
-	void	Precache( void );
-	bool	KeyValue( const char *szKeyName, const char *szValue );
+    DECLARE_CLASS( CEnvLaser, CBeam );
 
-	void	TurnOn( void );
-	void	TurnOff( void );
-	int		IsOn( void );
+   public:
+    void Spawn( void );
+    void Precache( void );
+    bool KeyValue( const char *szKeyName, const char *szValue );
 
-	void	FireAtPoint( trace_t &point );
-	void	StrikeThink( void );
+    void TurnOn( void );
+    void TurnOff( void );
+    int IsOn( void );
 
-	void InputTurnOn( inputdata_t &inputdata );
-	void InputTurnOff( inputdata_t &inputdata );
-	void InputToggle( inputdata_t &inputdata );
+    void FireAtPoint( trace_t &point );
+    void StrikeThink( void );
 
-	DECLARE_DATADESC();
+    void InputTurnOn( inputdata_t &inputdata );
+    void InputTurnOff( inputdata_t &inputdata );
+    void InputToggle( inputdata_t &inputdata );
 
-	string_t m_iszLaserTarget;	// Name of entity or entities to strike at, randomly picked if more than one match.
-	CSprite	*m_pSprite;
-	string_t m_iszSpriteName;
-	Vector  m_firePosition;
+    DECLARE_DATADESC();
 
-	float	m_flStartFrame;
+    string_t m_iszLaserTarget;  // Name of entity or entities to strike at, randomly picked if more than one match.
+    CSprite *m_pSprite;
+    string_t m_iszSpriteName;
+    Vector m_firePosition;
+
+    float m_flStartFrame;
 };
 
-#endif // ENVLASER_H
+#endif  // ENVLASER_H

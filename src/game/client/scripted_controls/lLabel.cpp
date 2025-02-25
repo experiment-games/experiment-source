@@ -51,19 +51,19 @@ LUALIB_API lua_Label *luaL_checklabel( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( Label )
 
-//LUA_BINDING_BEGIN( Label, ChainToAnimationMap, "class|static", "Chains the panel to an animation map" )
+// LUA_BINDING_BEGIN( Label, ChainToAnimationMap, "class|static", "Chains the panel to an animation map" )
 //{
-//    lua_Label::ChainToAnimationMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_Label::ChainToAnimationMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Label, ChainToMap, "class|static", "Chains the panel to a map" )
+// LUA_BINDING_BEGIN( Label, ChainToMap, "class|static", "Chains the panel to a map" )
 //{
-//    lua_Label::ChainToMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_Label::ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Label, GetContentSize, "class", "Gets the size of the content" )
 {
@@ -86,22 +86,22 @@ LUA_BINDING_BEGIN( Label, GetValue, "class", "Gets the value of the label" )
 }
 LUA_BINDING_END( "string", "The value of the label" )
 
-//LUA_BINDING_BEGIN( Label, AddBoundKey, "class|static", "Adds a bound key to the label" )
+// LUA_BINDING_BEGIN( Label, AddBoundKey, "class|static", "Adds a bound key to the label" )
 //{
-//    const char *bindingName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "bindingName" );
-//    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
-//    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
-//    lua_Label::KB_AddBoundKey( bindingName, keyCode, modifiers );
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     const char *bindingName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "bindingName" );
+//     KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 2, "keyCode" );
+//     int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+//     lua_Label::KB_AddBoundKey( bindingName, keyCode, modifiers );
+//     return 0;
+// }
+// LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Label, ChainToKeyBindingMap, "class|static", "Chains the label to a map" )
+// LUA_BINDING_BEGIN( Label, ChainToKeyBindingMap, "class|static", "Chains the label to a map" )
 //{
-//    lua_Label::KB_ChainToMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_Label::KB_ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Label, SizeToContents, "class", "Sizes the label to its contents" )
 {
@@ -184,13 +184,13 @@ LUA_BINDING_BEGIN( Label, GetHotKey, "class", "Gets the hotkey of the label" )
 LUA_BINDING_END( "integer", "The hotkey of the label" )
 
 // Experiment; Disabled since this might return a non-Lua panel
-//LUA_BINDING_BEGIN( Label, HasHotkey, "class", "Checks if the label has a hotkey" )
+// LUA_BINDING_BEGIN( Label, HasHotkey, "class", "Checks if the label has a hotkey" )
 //{
 //    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
 //    label->HasHotkey( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) )->PushLuaInstance( L );
 //    return 1;
 //}
-//LUA_BINDING_END( "label", "The label with the hotkey" )
+// LUA_BINDING_END( "label", "The label with the hotkey" )
 
 LUA_BINDING_BEGIN( Label, SetHotkey, "class", "Sets the hotkey of the label" )
 {

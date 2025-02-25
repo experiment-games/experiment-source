@@ -243,7 +243,7 @@ class CBaseCombatCharacter : public CBaseFlex
     virtual void Weapon_HandleAnimEvent( animevent_t *pEvent );
     CBaseCombatWeapon *Weapon_OwnsThisType( const char *pszWeapon, int iSubType = 0 ) const;  // True if already owns a weapon of this class
     virtual bool Weapon_CanUse( CBaseCombatWeapon *pWeapon );                                 // True is allowed to use this class of weapon
-    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );                  // Adds weapon to player
+    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );           // Adds weapon to player
     virtual bool Weapon_EquipAmmoOnly( CBaseCombatWeapon *pWeapon );                          // Adds weapon ammo to player, leaves weapon
     bool Weapon_Detach( CBaseCombatWeapon *pWeapon );                                         // Clear any pointers to the weapon.
     virtual void Weapon_Drop( CBaseCombatWeapon *pWeapon, const Vector *pvecTarget = NULL, const Vector *pVelocity = NULL );

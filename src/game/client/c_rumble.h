@@ -14,5 +14,4 @@ extern void UpdateRumbleEffects();
 extern void UpdateScreenShakeRumble( float shake, float balance = 0 );
 extern void EnableRumbleOutput( bool bEnable );
 
-#endif//C_RUMBLE_H
-
+#endif  // C_RUMBLE_H

@@ -1383,16 +1383,16 @@ LUA_BINDING_END( "string", "Animation prefix." )
 // }
 
 // Experiment; We only let CBaseEntity determine equality, which should be fine since they're pointers to the same entity. Disabled:
-//LUA_BINDING_BEGIN( Weapon, __eq, "class", "Equality comparison." )
+// LUA_BINDING_BEGIN( Weapon, __eq, "class", "Equality comparison." )
 //{
 //    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
 //    lua_CBaseCombatWeapon *pOtherWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 2, "other" );
 //    lua_pushboolean( L, pWeapon == pOtherWeapon );
 //    return 1;
 //}
-//LUA_BINDING_END( "boolean", "Whether the two entities are equal." )
+// LUA_BINDING_END( "boolean", "Whether the two entities are equal." )
 //
-//LUA_BINDING_BEGIN( Weapon, __tostring, "class", "String representation." )
+// LUA_BINDING_BEGIN( Weapon, __tostring, "class", "String representation." )
 //{
 //    lua_CBaseCombatWeapon *pWeapon = LUA_BINDING_ARGUMENT( lua_toweapon, 1, "entity" );
 //    if ( pWeapon == NULL )
@@ -1401,7 +1401,7 @@ LUA_BINDING_END( "string", "Animation prefix." )
 //        lua_pushfstring( L, "Weapon: %d %s", pWeapon->entindex(), pWeapon->GetClassname() );
 //    return 1;
 //}
-//LUA_BINDING_END( "string", "String representation." )
+// LUA_BINDING_END( "string", "String representation." )
 
 /*
 ** Open CBaseCombatWeapon object

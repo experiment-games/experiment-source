@@ -16,7 +16,7 @@ void NotifyDetoursOnLevelShutdown();
 ** Specific detours
 */
 
-#ifdef GAME_DLL // Server detours
+#ifdef GAME_DLL  // Server detours
 
 void HandleCheckPasswordDetour( void *serverObject, const char *steamIdAsString );
 void UpdateCheckPasswordDetourOnLevelShutdown();
@@ -25,10 +25,10 @@ void ApplyClientConnectDetour();
 
 #endif
 
-#ifdef CLIENT_DLL // Client detours
+#ifdef CLIENT_DLL  // Client detours
 
 // ...
 
 #endif
 
-#endif // ENGINE_PATCHES_H
+#endif  // ENGINE_PATCHES_H

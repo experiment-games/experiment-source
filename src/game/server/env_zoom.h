@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,4 +10,4 @@
 bool CanOverrideEnvZoomOwner( CBaseEntity *pZoomOwner );
 float GetZoomOwnerDesiredFOV( CBaseEntity *pZoomOwner );
 
-#endif //ENV_ZOOM_H
+#endif  // ENV_ZOOM_H

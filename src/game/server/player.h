@@ -1447,7 +1447,7 @@ class CBasePlayer : public CBaseCombatCharacter
 
    private:
     // Replicated to all clients
-    CNetworkVar( float, m_flMaxspeed ); // Current maximum speed
+    CNetworkVar( float, m_flMaxspeed );  // Current maximum speed
 
     // Values to set m_flMaxspeed to when walking slowly, normally, and running.
     CNetworkVar( float, m_flWalkSpeed );

@@ -14,4 +14,4 @@
 
 #include "baseviewmodel_shared.h"
 
-#endif // BASEVIEWMODEL_H
+#endif  // BASEVIEWMODEL_H

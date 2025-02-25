@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,63 +27,67 @@ class CExButton;
 //-----------------------------------------------------------------------------
 
 class CReplayBrowserPanel : public vgui::PropertyDialog,
-							public CGameEventListener
+                            public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CReplayBrowserPanel, vgui::PropertyDialog );
-public:
-	CReplayBrowserPanel( Panel *parent );
-	virtual ~CReplayBrowserPanel();
+    DECLARE_CLASS_SIMPLE( CReplayBrowserPanel, vgui::PropertyDialog );
 
-	void			OnSaveReplay( ReplayHandle_t hNewReplay );
-	void			OnDeleteReplay( ReplayHandle_t hDeletedReplay );
-	
-	void			DeleteReplay( ReplayHandle_t hReplay );
+   public:
+    CReplayBrowserPanel( Panel *parent );
+    virtual ~CReplayBrowserPanel();
 
-	virtual void	CleanupUIForReplayItem( ReplayItemHandle_t hReplay );	// After a replay has been deleted - deletes all UI (thumbnail, but maybe also row and/or collection as well)
+    void OnSaveReplay( ReplayHandle_t hNewReplay );
+    void OnDeleteReplay( ReplayHandle_t hDeletedReplay );
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	PerformLayout( void );
-	virtual void	OnCommand( const char *command );
-	virtual void	ShowPanel( bool bShow, ReplayHandle_t hReplayDetails = REPLAY_HANDLE_INVALID, int iPerformance = -1 );
-	virtual void	OnKeyCodeTyped(vgui::KeyCode code);
-	virtual void	OnKeyCodePressed(vgui::KeyCode code);
+    void DeleteReplay( ReplayHandle_t hReplay );
 
-	virtual void	FireGameEvent( IGameEvent *event );
+    virtual void CleanupUIForReplayItem( ReplayItemHandle_t hReplay );  // After a replay has been deleted - deletes all UI (thumbnail, but maybe also row and/or collection as well)
 
-	MESSAGE_FUNC_PARAMS( OnConfirmDelete, "ConfirmDlgResult", data );
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+    virtual void PerformLayout( void );
+    virtual void OnCommand( const char *command );
+    virtual void ShowPanel( bool bShow, ReplayHandle_t hReplayDetails = REPLAY_HANDLE_INVALID, int iPerformance = -1 );
+    virtual void OnKeyCodeTyped( vgui::KeyCode code );
+    virtual void OnKeyCodePressed( vgui::KeyCode code );
 
-	void			AttemptToDeleteReplayItem( Panel *pHandler, ReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager, int iPerformance );
+    virtual void FireGameEvent( IGameEvent *event );
 
-	CReplayBrowserBasePage		*m_pReplaysPage;
-	CConfirmDeleteDialog		*m_pConfirmDeleteDialog;
+    MESSAGE_FUNC_PARAMS( OnConfirmDelete, "ConfirmDlgResult", data );
 
-	struct DeleteInfo_t
-	{
-		ReplayItemHandle_t	m_hReplayItem;
-		IReplayItemManager	*m_pItemManager;
-		vgui::VPANEL		m_hHandler;
-		int					m_iPerformance;
-	};
+    void AttemptToDeleteReplayItem( Panel *pHandler, ReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager, int iPerformance );
 
-	DeleteInfo_t			m_DeleteInfo;
+    CReplayBrowserBasePage *m_pReplaysPage;
+    CConfirmDeleteDialog *m_pConfirmDeleteDialog;
 
-	float GetTimeOpened( void ){ return m_flTimeOpened; }
+    struct DeleteInfo_t
+    {
+        ReplayItemHandle_t m_hReplayItem;
+        IReplayItemManager *m_pItemManager;
+        vgui::VPANEL m_hHandler;
+        int m_iPerformance;
+    };
 
-private:
-	void ShowDeleteReplayDenialDlg();
-	void ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager, int iPerformance );
+    DeleteInfo_t m_DeleteInfo;
 
-	float					m_flTimeOpened;
+    float GetTimeOpened( void )
+    {
+        return m_flTimeOpened;
+    }
+
+   private:
+    void ShowDeleteReplayDenialDlg();
+    void ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager, int iPerformance );
+
+    float m_flTimeOpened;
 };
 
 //-----------------------------------------------------------------------------
 
-CReplayBrowserPanel		*ReplayUI_GetBrowserPanel();
-void					ReplayUI_ReloadBrowser( ReplayHandle_t hReplay = REPLAY_HANDLE_INVALID, int iPerformance = -1 );
-void					ReplayUI_CloseReplayBrowser();
+CReplayBrowserPanel *ReplayUI_GetBrowserPanel();
+void ReplayUI_ReloadBrowser( ReplayHandle_t hReplay = REPLAY_HANDLE_INVALID, int iPerformance = -1 );
+void ReplayUI_CloseReplayBrowser();
 
 //-----------------------------------------------------------------------------
 
-#endif // REPLAYBROWSER_MAIN_PANEL_H
+#endif  // REPLAYBROWSER_MAIN_PANEL_H
 
 #endif

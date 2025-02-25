@@ -10,8 +10,7 @@
 
 #include "utlstring.h"
 
-void Replay_GetFirstAvailableFilename( char *pDst, int nDstLen, const char *pIdealFilename, const char *pExt,
-									   const char *pFilePath, int nStartIndex );
+void Replay_GetFirstAvailableFilename( char *pDst, int nDstLen, const char *pIdealFilename, const char *pExt, const char *pFilePath, int nStartIndex );
 
 void Replay_ConstructReplayFilenameString( CUtlString &strOut, const char *pReplaySubDir, const char *pFilename, const char *pGameDir );
 
@@ -38,6 +37,6 @@ const char *Replay_GetGameDir();
 //----------------------------------------------------------------------------------------
 // Get a name of the format "<map>: <current date & time>" - used for replays and takes.
 //----------------------------------------------------------------------------------------
-void Replay_GetAutoName( OUT_Z_BYTECAP(nDestSizeInBytes) wchar_t *pDest, int nDestSizeInBytes, const char *pMapName );
+void Replay_GetAutoName( OUT_Z_BYTECAP( nDestSizeInBytes ) wchar_t *pDest, int nDestSizeInBytes, const char *pMapName );
 
-#endif // REPLAY_H
+#endif  // REPLAY_H

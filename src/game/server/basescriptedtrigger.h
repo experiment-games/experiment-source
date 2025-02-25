@@ -1,6 +1,6 @@
 //========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,35 +15,35 @@
 #include "entityoutput.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseScriptedTrigger : public CBaseTrigger
 {
-	DECLARE_CLASS( CBaseScriptedTrigger, CBaseTrigger );
-public:
-	CBaseScriptedTrigger();
-	~CBaseScriptedTrigger();
-	
-	void LoadScriptedTrigger( void );
-	void InitScriptedTrigger( void );
-	void Think();	
+    DECLARE_CLASS( CBaseScriptedTrigger, CBaseTrigger );
 
-	void Spawn( void );
+   public:
+    CBaseScriptedTrigger();
+    ~CBaseScriptedTrigger();
 
-	virtual bool PassesTriggerFilters(CBaseEntity *pOther);
-	virtual void StartTouch(CBaseEntity *pOther);
-	virtual void Touch(CBaseEntity *pOther);
-	virtual void EndTouch(CBaseEntity *pOther);
+    void LoadScriptedTrigger( void );
+    void InitScriptedTrigger( void );
+    void Think();
 
-	// by default, triggers don't deal with TraceAttack
-	void TraceAttack(CBaseEntity *pAttacker, float flDamage, const Vector &vecDir, trace_t *ptr, int bitsDamageType) {}
+    void Spawn( void );
 
-protected:
+    virtual bool PassesTriggerFilters( CBaseEntity *pOther );
+    virtual void StartTouch( CBaseEntity *pOther );
+    virtual void Touch( CBaseEntity *pOther );
+    virtual void EndTouch( CBaseEntity *pOther );
 
-	DECLARE_DATADESC();
+    // by default, triggers don't deal with TraceAttack
+    void TraceAttack( CBaseEntity *pAttacker, float flDamage, const Vector &vecDir, trace_t *ptr, int bitsDamageType ) {}
+
+   protected:
+    DECLARE_DATADESC();
 };
 
-//void RegisterScriptedTrigger( const char *szClassname );
+// void RegisterScriptedTrigger( const char *szClassname );
 void ResetTriggerFactoryDatabase( void );
 
-#endif // BASESCRIPTEDTRIGGER_H
+#endif  // BASESCRIPTEDTRIGGER_H

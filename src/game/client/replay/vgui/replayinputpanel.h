@@ -22,4 +22,4 @@ void ShowReplayInputPanel( ReplayHandle_t hReplay );
 //-----------------------------------------------------------------------------
 bool IsReplayInputPanelVisible();
 
-#endif // REPLAY_INPUT_PANEL_H
+#endif  // REPLAY_INPUT_PANEL_H

@@ -65,36 +65,36 @@ LUALIB_API lua_CheckButton *luaL_checkcheckbutton( lua_State *L, int narg )
 
 LUA_REGISTRATION_INIT( CheckButton )
 
-//LUA_BINDING_BEGIN( CheckButton, ChainToAnimationMap, "class|static", "Chains the button to an animation map" )
+// LUA_BINDING_BEGIN( CheckButton, ChainToAnimationMap, "class|static", "Chains the button to an animation map" )
 //{
-//    lua_CheckButton::ChainToAnimationMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_CheckButton::ChainToAnimationMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 //
-//LUA_BINDING_BEGIN( CheckButton, ChainToMap, "class|static", "Chains the button to a map" )
+// LUA_BINDING_BEGIN( CheckButton, ChainToMap, "class|static", "Chains the button to a map" )
 //{
-//    lua_CheckButton::ChainToMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_CheckButton::ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 //
-//LUA_BINDING_BEGIN( CheckButton, KB_AddBoundKey, "class|static", "Adds a bound key to the button" )
+// LUA_BINDING_BEGIN( CheckButton, KB_AddBoundKey, "class|static", "Adds a bound key to the button" )
 //{
-//    const char *key = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "key" );
-//    int unknownA = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "unknownA" );
-//    int unknownB = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "unknownB" );
-//    lua_CheckButton::KB_AddBoundKey( key, unknownA, unknownB );
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     const char *key = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "key" );
+//     int unknownA = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "unknownA" );
+//     int unknownB = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "unknownB" );
+//     lua_CheckButton::KB_AddBoundKey( key, unknownA, unknownB );
+//     return 0;
+// }
+// LUA_BINDING_END()
 //
-//LUA_BINDING_BEGIN( CheckButton, KB_ChainToMap, "class|static", "Chains the button to a keyboard map" )
+// LUA_BINDING_BEGIN( CheckButton, KB_ChainToMap, "class|static", "Chains the button to a keyboard map" )
 //{
-//    lua_CheckButton::KB_ChainToMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_CheckButton::KB_ChainToMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( CheckButton, GetDisabledBackgroundColor, "class", "Gets the disabled background color" )
 {

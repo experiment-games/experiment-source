@@ -101,7 +101,7 @@ FORCEINLINE float clamp( float val, float minVal, float maxVal )
     else if ( val > maxVal )
         return maxVal;
     // Experiment; Let's handle NaN and Inf so we never get that as a result
-    else if ( isnan( (float)val ) )
+    else if ( isnan( ( float )val ) )
         return minVal;
     else if ( isinf( ( float )val ) )
         return maxVal;

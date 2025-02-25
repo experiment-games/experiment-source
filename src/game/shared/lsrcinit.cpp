@@ -26,7 +26,7 @@ static const luaL_RegForState luasrclibs[] = {
     //
     { LUA_SHAREDENUMNAME, luaopen_SharedEnumerations, REALM_SHARED },
     { LUA_MESSAGEREADERMETANAME, luaopen_bf_read, REALM_SHARED },
-    { LUA_MESSAGEWRITERMETANAME, luaopen_bf_write , REALM_SHARED },
+    { LUA_MESSAGEWRITERMETANAME, luaopen_bf_write, REALM_SHARED },
     { LUA_BUTTONENUMNAME, luaopen_BUTTON, REALM_SHARED },
     { LUA_ACTIVITYENUMNAME, luaopen_ACTIVITY, REALM_SHARED },
     { LUA_BASEANIMATINGLIBNAME, luaopen_CBaseAnimating_shared, REALM_SHARED },

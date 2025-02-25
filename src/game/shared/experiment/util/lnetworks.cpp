@@ -93,7 +93,6 @@ LUA_BINDING_BEGIN( Networks, InternalSendToServer, "library", "Send a message to
 LUA_BINDING_END()
 #endif
 
-
 /*
 ** Open Networks library
 */

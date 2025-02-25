@@ -61,21 +61,21 @@ static CUtlDict< CEntityFactory< CExperimentScriptedWeapon > *, unsigned short >
 #endif
 
 // Experiment; Commented to instead go ask Lua when we encounter a non-C-registered weapon
-//void RegisterScriptedWeapon( const char *className )
+// void RegisterScriptedWeapon( const char *className )
 //{
 //    if (Q_strcmp(className, "exp_keys") == 0)
 //    {
 //        Warning("breakpoint!\n");
 //    }
 //
-//#ifdef CLIENT_DLL
+// #ifdef CLIENT_DLL
 //    if ( GetClassMap().FindFactory( className ) )
 //    {
 //        return;
 //    }
 //
 //    GetClassMap().Add( className, "CExperimentScriptedWeapon", sizeof( CExperimentScriptedWeapon ), &CCExperimentScriptedWeaponFactory, true );
-//#else
+// #else
 //    if ( EntityFactoryDictionary()->FindFactory( className ) )
 //    {
 //        return;
@@ -93,7 +93,7 @@ static CUtlDict< CEntityFactory< CExperimentScriptedWeapon > *, unsigned short >
 //
 //    lookup = m_WeaponFactoryDatabase.Insert( className, pFactory );
 //    Assert( lookup != m_WeaponFactoryDatabase.InvalidIndex() );
-//#endif
+// #endif
 //    // BUGBUG: When attempting to precache weapons registered during runtime,
 //    // they don't appear as valid registered entities.
 //    // static CPrecacheRegister
@@ -262,9 +262,9 @@ void CExperimentScriptedWeapon::SetupRefTable( lua_State *L )
 // Override the base class, so we call OnRemove on the Lua scripted weapon.
 void CExperimentScriptedWeapon::Remove()
 {
-    bool fullUpdate = false; // TODO: implement this argument https://wiki.facepunch.com/gmod/Entity:OnRemove
+    bool fullUpdate = false;  // TODO: implement this argument https://wiki.facepunch.com/gmod/Entity:OnRemove
     LUA_CALL_WEAPON_METHOD_BEGIN( "OnRemove" );
-    lua_pushboolean( L, fullUpdate ); // doc: fullUpdate (always false, unimplemented currently)
+    lua_pushboolean( L, fullUpdate );  // doc: fullUpdate (always false, unimplemented currently)
     LUA_CALL_WEAPON_METHOD_END( 1, 0 );
 
     BaseClass::Remove();
@@ -744,7 +744,7 @@ const char *CExperimentScriptedWeapon::GetViewModel( int ) const
     {
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "ViewModel" );
-        lua_remove( L, -2 ); // Remove the reference table
+        lua_remove( L, -2 );  // Remove the reference table
 
         LUA_RETURN_STRING();
     }

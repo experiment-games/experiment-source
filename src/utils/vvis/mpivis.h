@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,12 +10,9 @@
 #pragma once
 #endif
 
-
 void VVIS_SetupMPI( int &argc, char **&argv );
-
 
 void RunMPIBasePortalVis();
 void RunMPIPortalFlow();
 
-
-#endif // MPIVIS_H
+#endif  // MPIVIS_H

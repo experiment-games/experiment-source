@@ -29,16 +29,17 @@ static int num_teams = 0;
 
 extern bool g_fGameOver;
 
-REGISTER_GAMERULES_CLASS(CTeamplayRules);
+REGISTER_GAMERULES_CLASS( CTeamplayRules );
 
-CTeamplayRules::CTeamplayRules() {
+CTeamplayRules::CTeamplayRules()
+{
     m_DisableDeathMessages = false;
     m_DisableDeathPenalty = false;
     m_bSwitchTeams = false;
     m_bScrambleTeams = false;
 
-    memset(team_names, 0, sizeof(team_names));
-    memset(team_scores, 0, sizeof(team_scores));
+    memset( team_names, 0, sizeof( team_names ) );
+    memset( team_scores, 0, sizeof( team_scores ) );
     num_teams = 0;
 
     // Copy over the team from the server config
@@ -50,26 +51,29 @@ CTeamplayRules::CTeamplayRules() {
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTeamplayRules::Precache(void) {
+void CTeamplayRules::Precache( void )
+{
     // Call the Team Manager's precaches
-    for (int i = 0; i < GetNumberOfTeams(); i++) {
-        CTeam *pTeam = GetGlobalTeam(i);
+    for ( int i = 0; i < GetNumberOfTeams(); i++ )
+    {
+        CTeam *pTeam = GetGlobalTeam( i );
         pTeam->Precache();
     }
 }
 #endif
 
-#if defined(LUA_SDK) || !defined(CLIENT_DLL)
+#if defined( LUA_SDK ) || !defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTeamplayRules::Think(void) {
+void CTeamplayRules::Think( void )
+{
 #ifndef CLIENT_DLL
     BaseClass::Think();
 
     ///// Check game rules /////
 
-    if (g_fGameOver)  // someone else quit the game already
+    if ( g_fGameOver )  // someone else quit the game already
     {
         BaseClass::Think();
         return;
@@ -77,16 +81,20 @@ void CTeamplayRules::Think(void) {
 
     float flTimeLimit = mp_timelimit.GetFloat() * 60;
 
-    if (flTimeLimit != 0 && gpGlobals->curtime >= flTimeLimit) {
+    if ( flTimeLimit != 0 && gpGlobals->curtime >= flTimeLimit )
+    {
         ChangeLevel();
         return;
     }
 
     float flFragLimit = fraglimit.GetFloat();
-    if (flFragLimit) {
+    if ( flFragLimit )
+    {
         // check if any team is over the frag limit
-        for (int i = 0; i < num_teams; i++) {
-            if (team_scores[i] >= flFragLimit) {
+        for ( int i = 0; i < num_teams; i++ )
+        {
+            if ( team_scores[i] >= flFragLimit )
+            {
                 ChangeLevel();
                 return;
             }
@@ -102,12 +110,14 @@ void CTeamplayRules::Think(void) {
 // the user has typed a command which is unrecognized by everything else;
 // this check to see if the gamerules knows anything about the command
 //=========================================================
-bool CTeamplayRules::ClientCommand(CBaseEntity *pEdict, const CCommand &args) {
-    if (BaseClass::ClientCommand(pEdict, args))
+bool CTeamplayRules::ClientCommand( CBaseEntity *pEdict, const CCommand &args )
+{
+    if ( BaseClass::ClientCommand( pEdict, args ) )
         return true;
 
-    if (FStrEq(args[0], "menuselect")) {
-        if (args.ArgC() < 2)
+    if ( FStrEq( args[0], "menuselect" ) )
+    {
+        if ( args.ArgC() < 2 )
             return true;
 
         // int slot = atoi( args[1] );
@@ -120,12 +130,13 @@ bool CTeamplayRules::ClientCommand(CBaseEntity *pEdict, const CCommand &args) {
     return false;
 }
 
-const char *CTeamplayRules::SetDefaultPlayerTeam(CBasePlayer *pPlayer) {
+const char *CTeamplayRules::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
+{
     // copy out the team name from the model
     int clientIndex = pPlayer->entindex();
-    const char *team = (!pPlayer->IsNetClient()) ? "default"
-                                                 : engine->GetClientConVarValue(
-                                                       clientIndex, "cl_team");
+    const char *team = ( !pPlayer->IsNetClient() ) ? "default"
+                                                   : engine->GetClientConVarValue(
+                                                         clientIndex, "cl_team" );
 
     /* TODO
 
@@ -156,9 +167,10 @@ const char *CTeamplayRules::SetDefaultPlayerTeam(CBasePlayer *pPlayer) {
 //=========================================================
 // InitHUD
 //=========================================================
-void CTeamplayRules::InitHUD(CBasePlayer *pPlayer) {
-    SetDefaultPlayerTeam(pPlayer);
-    BaseClass::InitHUD(pPlayer);
+void CTeamplayRules::InitHUD( CBasePlayer *pPlayer )
+{
+    SetDefaultPlayerTeam( pPlayer );
+    BaseClass::InitHUD( pPlayer );
 
     RecountTeams();
 
@@ -187,15 +199,20 @@ void CTeamplayRules::InitHUD(CBasePlayer *pPlayer) {
     RecountTeams(); */
 }
 
-void CTeamplayRules::ChangePlayerTeam(CBasePlayer *pPlayer,
-                                      const char *pTeamName, bool bKill,
-                                      bool bGib) {
+void CTeamplayRules::ChangePlayerTeam( CBasePlayer *pPlayer,
+                                       const char *pTeamName,
+                                       bool bKill,
+                                       bool bGib )
+{
     int damageFlags = DMG_GENERIC;
     // int clientIndex = pPlayer->entindex();
 
-    if (!bGib) {
+    if ( !bGib )
+    {
         damageFlags |= DMG_NEVERGIB;
-    } else {
+    }
+    else
+    {
         damageFlags |= DMG_ALWAYSGIB;
     }
 
@@ -206,26 +223,30 @@ void CTeamplayRules::ChangePlayerTeam(CBasePlayer *pPlayer,
 //-----------------------------------------------------------------------------
 // Purpose: Player has just left the game
 //-----------------------------------------------------------------------------
-void CTeamplayRules::ClientDisconnected(edict_t *pClient) {
+void CTeamplayRules::ClientDisconnected( edict_t *pClient )
+{
     // Msg( "CLIENT DISCONNECTED, REMOVING FROM TEAM.\n" );
 
-    CBasePlayer *pPlayer = (CBasePlayer *)CBaseEntity::Instance(pClient);
-    if (pPlayer) {
-        pPlayer->SetConnected(PlayerDisconnecting);
+    CBasePlayer *pPlayer = ( CBasePlayer * )CBaseEntity::Instance( pClient );
+    if ( pPlayer )
+    {
+        pPlayer->SetConnected( PlayerDisconnecting );
 
         // Remove the player from his team
-        if (pPlayer->GetTeam()) {
-            pPlayer->ChangeTeam(0);
+        if ( pPlayer->GetTeam() )
+        {
+            pPlayer->ChangeTeam( 0 );
         }
     }
 
-    BaseClass::ClientDisconnected(pClient);
+    BaseClass::ClientDisconnected( pClient );
 }
 
 //=========================================================
 // ClientUserInfoChanged
 //=========================================================
-void CTeamplayRules::ClientSettingsChanged(CBasePlayer *pPlayer) {
+void CTeamplayRules::ClientSettingsChanged( CBasePlayer *pPlayer )
+{
     /* TODO: handle skin, model & team changes
 
     char text[1024];
@@ -263,73 +284,83 @@ void CTeamplayRules::ClientSettingsChanged(CBasePlayer *pPlayer) {
     RecountTeams(); */
 
     const char *pszName =
-        engine->GetClientConVarValue(pPlayer->entindex(), "name");
+        engine->GetClientConVarValue( pPlayer->entindex(), "name" );
 
     const char *pszOldName = pPlayer->GetPlayerName();
 
     // msg everyone if someone changes their name,  and it isn't the first time
     // (changing no name to current name) Note, not using FStrEq so that this is
     // case sensitive
-    if (pszOldName[0] != 0 && Q_strcmp(pszOldName, pszName)) {
-        IGameEvent *event = gameeventmanager->CreateEvent("player_changename");
-        if (event) {
-            event->SetInt("userid", pPlayer->GetUserID());
-            event->SetString("oldname", pszOldName);
-            event->SetString("newname", pszName);
-            gameeventmanager->FireEvent(event);
+    if ( pszOldName[0] != 0 && Q_strcmp( pszOldName, pszName ) )
+    {
+        IGameEvent *event = gameeventmanager->CreateEvent( "player_changename" );
+        if ( event )
+        {
+            event->SetInt( "userid", pPlayer->GetUserID() );
+            event->SetString( "oldname", pszOldName );
+            event->SetString( "newname", pszName );
+            gameeventmanager->FireEvent( event );
         }
 
-        pPlayer->SetPlayerName(pszName);
+        pPlayer->SetPlayerName( pszName );
     }
 
     // NVNT see if this user is still or has began using a haptic device
     const char *pszHH =
-        engine->GetClientConVarValue(pPlayer->entindex(), "hap_HasDevice");
-    if (pszHH) {
-        int iHH = atoi(pszHH);
-        pPlayer->SetHaptics(iHH != 0);
+        engine->GetClientConVarValue( pPlayer->entindex(), "hap_HasDevice" );
+    if ( pszHH )
+    {
+        int iHH = atoi( pszHH );
+        pPlayer->SetHaptics( iHH != 0 );
     }
 }
 
 //=========================================================
 // Deathnotice.
 //=========================================================
-void CTeamplayRules::DeathNotice(CBasePlayer *pVictim,
-                                 const CTakeDamageInfo &info) {
-    if (m_DisableDeathMessages)
+void CTeamplayRules::DeathNotice( CBasePlayer *pVictim,
+                                  const CTakeDamageInfo &info )
+{
+    if ( m_DisableDeathMessages )
         return;
 
     CBaseEntity *pKiller = info.GetAttacker();
-    if (pVictim && pKiller && pKiller->IsPlayer()) {
-        CBasePlayer *pk = (CBasePlayer *)pKiller;
+    if ( pVictim && pKiller && pKiller->IsPlayer() )
+    {
+        CBasePlayer *pk = ( CBasePlayer * )pKiller;
 
-        if (pk) {
-            if ((pk != pVictim) &&
-                (PlayerRelationship(pVictim, pk) == GR_TEAMMATE)) {
+        if ( pk )
+        {
+            if ( ( pk != pVictim ) &&
+                 ( PlayerRelationship( pVictim, pk ) == GR_TEAMMATE ) )
+            {
                 IGameEvent *event =
-                    gameeventmanager->CreateEvent("player_death");
-                if (event) {
-                    event->SetInt("killer", pk->GetUserID());
-                    event->SetInt("victim", pVictim->GetUserID());
-                    event->SetInt("priority",
-                                  7);  // HLTV event priority, not transmitted
+                    gameeventmanager->CreateEvent( "player_death" );
+                if ( event )
+                {
+                    event->SetInt( "killer", pk->GetUserID() );
+                    event->SetInt( "victim", pVictim->GetUserID() );
+                    event->SetInt( "priority",
+                                   7 );  // HLTV event priority, not transmitted
 
-                    gameeventmanager->FireEvent(event);
+                    gameeventmanager->FireEvent( event );
                 }
                 return;
             }
         }
     }
 
-    BaseClass::DeathNotice(pVictim, info);
+    BaseClass::DeathNotice( pVictim, info );
 }
 
 //=========================================================
 //=========================================================
-void CTeamplayRules::PlayerKilled(CBasePlayer *pVictim,
-                                  const CTakeDamageInfo &info) {
-    if (!m_DisableDeathPenalty) {
-        BaseClass::PlayerKilled(pVictim, info);
+void CTeamplayRules::PlayerKilled( CBasePlayer *pVictim,
+                                   const CTakeDamageInfo &info )
+{
+    if ( !m_DisableDeathPenalty )
+    {
+        BaseClass::PlayerKilled( pVictim, info );
         RecountTeams();
     }
 }
@@ -337,37 +368,43 @@ void CTeamplayRules::PlayerKilled(CBasePlayer *pVictim,
 //=========================================================
 // IsTeamplay
 //=========================================================
-bool CTeamplayRules::IsTeamplay(void) {
+bool CTeamplayRules::IsTeamplay( void )
+{
     return true;
 }
 
-bool CTeamplayRules::FPlayerCanTakeDamage(CBasePlayer *pPlayer,
-                                          CBaseEntity *pAttacker,
-                                          const CTakeDamageInfo &info) {
-    if (pAttacker && PlayerRelationship(pPlayer, pAttacker) == GR_TEAMMATE &&
-        !info.IsForceFriendlyFire()) {
+bool CTeamplayRules::FPlayerCanTakeDamage( CBasePlayer *pPlayer,
+                                           CBaseEntity *pAttacker,
+                                           const CTakeDamageInfo &info )
+{
+    if ( pAttacker && PlayerRelationship( pPlayer, pAttacker ) == GR_TEAMMATE &&
+         !info.IsForceFriendlyFire() )
+    {
         // my teammate hit me.
-        if ((friendlyfire.GetInt() == 0) && (pAttacker != pPlayer)) {
+        if ( ( friendlyfire.GetInt() == 0 ) && ( pAttacker != pPlayer ) )
+        {
             // friendly fire is off, and this hit came from someone other than
             // myself,  then don't get hurt
             return false;
         }
     }
 
-    return BaseClass::FPlayerCanTakeDamage(pPlayer, pAttacker, info);
+    return BaseClass::FPlayerCanTakeDamage( pPlayer, pAttacker, info );
 }
 
 //=========================================================
 //=========================================================
-int CTeamplayRules::PlayerRelationship(CBaseEntity *pPlayer,
-                                       CBaseEntity *pTarget) {
+int CTeamplayRules::PlayerRelationship( CBaseEntity *pPlayer,
+                                        CBaseEntity *pTarget )
+{
     // half life multiplay has a simple concept of Player Relationships.
     // you are either on another player's team, or you are not.
-    if (!pPlayer || !pTarget || !pTarget->IsPlayer())
+    if ( !pPlayer || !pTarget || !pTarget->IsPlayer() )
         return GR_NOTTEAMMATE;
 
-    if ((*GetTeamID(pPlayer) != '\0') && (*GetTeamID(pTarget) != '\0') &&
-        !stricmp(GetTeamID(pPlayer), GetTeamID(pTarget))) {
+    if ( ( *GetTeamID( pPlayer ) != '\0' ) && ( *GetTeamID( pTarget ) != '\0' ) &&
+         !stricmp( GetTeamID( pPlayer ), GetTeamID( pTarget ) ) )
+    {
         return GR_TEAMMATE;
     }
 
@@ -380,36 +417,40 @@ int CTeamplayRules::PlayerRelationship(CBaseEntity *pPlayer,
 //			*pSpeaker -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CTeamplayRules::PlayerCanHearChat(CBasePlayer *pListener,
-                                       CBasePlayer *pSpeaker) {
-    return (PlayerRelationship(pListener, pSpeaker) == GR_TEAMMATE);
+bool CTeamplayRules::PlayerCanHearChat( CBasePlayer *pListener,
+                                        CBasePlayer *pSpeaker )
+{
+    return ( PlayerRelationship( pListener, pSpeaker ) == GR_TEAMMATE );
 }
 
 //=========================================================
 //=========================================================
-bool CTeamplayRules::ShouldAutoAim(CBasePlayer *pPlayer, edict_t *target) {
+bool CTeamplayRules::ShouldAutoAim( CBasePlayer *pPlayer, edict_t *target )
+{
     // always autoaim, unless target is a teammate
-    CBaseEntity *pTgt = CBaseEntity::Instance(target);
-    if (pTgt && pTgt->IsPlayer()) {
-        if (PlayerRelationship(pPlayer, pTgt) == GR_TEAMMATE)
+    CBaseEntity *pTgt = CBaseEntity::Instance( target );
+    if ( pTgt && pTgt->IsPlayer() )
+    {
+        if ( PlayerRelationship( pPlayer, pTgt ) == GR_TEAMMATE )
             return false;  // don't autoaim at teammates
     }
 
-    return BaseClass::ShouldAutoAim(pPlayer, target);
+    return BaseClass::ShouldAutoAim( pPlayer, target );
 }
 
 //=========================================================
 //=========================================================
-int CTeamplayRules::IPointsForKill(CBasePlayer *pAttacker,
-                                   CBasePlayer *pKilled) {
-    if (!pKilled)
+int CTeamplayRules::IPointsForKill( CBasePlayer *pAttacker,
+                                    CBasePlayer *pKilled )
+{
+    if ( !pKilled )
         return 0;
 
-    if (!pAttacker)
+    if ( !pAttacker )
         return 1;
 
-    if (pAttacker != pKilled &&
-        PlayerRelationship(pAttacker, pKilled) == GR_TEAMMATE)
+    if ( pAttacker != pKilled &&
+         PlayerRelationship( pAttacker, pKilled ) == GR_TEAMMATE )
         return -1;
 
     return 1;
@@ -417,19 +458,23 @@ int CTeamplayRules::IPointsForKill(CBasePlayer *pAttacker,
 
 //=========================================================
 //=========================================================
-const char *CTeamplayRules::GetTeamID(CBaseEntity *pEntity) {
-    if (pEntity == NULL || pEntity->edict() == NULL)
+const char *CTeamplayRules::GetTeamID( CBaseEntity *pEntity )
+{
+    if ( pEntity == NULL || pEntity->edict() == NULL )
         return "";
 
     // return their team name
     return pEntity->TeamID();
 }
 
-int CTeamplayRules::GetTeamIndex(const char *pTeamName) {
-    if (pTeamName && *pTeamName != 0) {
+int CTeamplayRules::GetTeamIndex( const char *pTeamName )
+{
+    if ( pTeamName && *pTeamName != 0 )
+    {
         // try to find existing team
-        for (int tm = 0; tm < num_teams; tm++) {
-            if (!stricmp(team_names[tm], pTeamName))
+        for ( int tm = 0; tm < num_teams; tm++ )
+        {
+            if ( !stricmp( team_names[tm], pTeamName ) )
                 return tm;
         }
     }
@@ -437,42 +482,49 @@ int CTeamplayRules::GetTeamIndex(const char *pTeamName) {
     return -1;  // No match
 }
 
-const char *CTeamplayRules::GetIndexedTeamName(int teamIndex) {
-    if (teamIndex < 0 || teamIndex >= num_teams)
+const char *CTeamplayRules::GetIndexedTeamName( int teamIndex )
+{
+    if ( teamIndex < 0 || teamIndex >= num_teams )
         return "";
 
     return team_names[teamIndex];
 }
 
-bool CTeamplayRules::IsValidTeam(const char *pTeamName) {
-    if (!m_teamLimit)  // Any team is valid if the teamlist isn't set
+bool CTeamplayRules::IsValidTeam( const char *pTeamName )
+{
+    if ( !m_teamLimit )  // Any team is valid if the teamlist isn't set
         return true;
 
-    return (GetTeamIndex(pTeamName) != -1) ? true : false;
+    return ( GetTeamIndex( pTeamName ) != -1 ) ? true : false;
 }
 
-const char *CTeamplayRules::TeamWithFewestPlayers(void) {
+const char *CTeamplayRules::TeamWithFewestPlayers( void )
+{
     int i;
     int minPlayers = MAX_TEAMS;
     int teamCount[MAX_TEAMS];
     char *pTeamName = NULL;
 
-    memset(teamCount, 0, MAX_TEAMS * sizeof(int));
+    memset( teamCount, 0, MAX_TEAMS * sizeof( int ) );
 
     // loop through all clients, count number of players on each team
-    for (i = 1; i <= gpGlobals->maxClients; i++) {
-        CBaseEntity *plr = UTIL_PlayerByIndex(i);
+    for ( i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CBaseEntity *plr = UTIL_PlayerByIndex( i );
 
-        if (plr) {
-            int team = GetTeamIndex(plr->TeamID());
-            if (team >= 0)
+        if ( plr )
+        {
+            int team = GetTeamIndex( plr->TeamID() );
+            if ( team >= 0 )
                 teamCount[team]++;
         }
     }
 
     // Find team with least players
-    for (i = 0; i < num_teams; i++) {
-        if (teamCount[i] < minPlayers) {
+    for ( i = 0; i < num_teams; i++ )
+    {
+        if ( teamCount[i] < minPlayers )
+        {
             minPlayers = teamCount[i];
             pTeamName = team_names[i];
         }
@@ -483,7 +535,8 @@ const char *CTeamplayRules::TeamWithFewestPlayers(void) {
 
 //=========================================================
 //=========================================================
-void CTeamplayRules::RecountTeams(void) {
+void CTeamplayRules::RecountTeams( void )
+{
     char *pName;
     char teamlist[TEAMPLAY_TEAMLISTLENGTH];
 
@@ -492,47 +545,53 @@ void CTeamplayRules::RecountTeams(void) {
 
     // Copy all of the teams from the teamlist
     // make a copy because strtok is destructive
-    Q_strncpy(teamlist, m_szTeamList, sizeof(teamlist));
+    Q_strncpy( teamlist, m_szTeamList, sizeof( teamlist ) );
     pName = teamlist;
-    pName = strtok(pName, ";");
-    while (pName != NULL && *pName) {
-        if (GetTeamIndex(pName) < 0) {
-            Q_strncpy(team_names[num_teams], pName,
-                      sizeof(team_names[num_teams]));
+    pName = strtok( pName, ";" );
+    while ( pName != NULL && *pName )
+    {
+        if ( GetTeamIndex( pName ) < 0 )
+        {
+            Q_strncpy( team_names[num_teams], pName, sizeof( team_names[num_teams] ) );
             num_teams++;
         }
-        pName = strtok(NULL, ";");
+        pName = strtok( NULL, ";" );
     }
 
-    if (num_teams < 2) {
+    if ( num_teams < 2 )
+    {
         num_teams = 0;
         m_teamLimit = false;
     }
 
     // Sanity check
-    memset(team_scores, 0, sizeof(team_scores));
+    memset( team_scores, 0, sizeof( team_scores ) );
 
     // loop through all clients
-    for (int i = 1; i <= gpGlobals->maxClients; i++) {
-        CBasePlayer *plr = UTIL_PlayerByIndex(i);
+    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+    {
+        CBasePlayer *plr = UTIL_PlayerByIndex( i );
 
-        if (plr) {
+        if ( plr )
+        {
             const char *pTeamName = plr->TeamID();
             // try add to existing team
-            int tm = GetTeamIndex(pTeamName);
+            int tm = GetTeamIndex( pTeamName );
 
-            if (tm < 0)  // no team match found
+            if ( tm < 0 )  // no team match found
             {
-                if (!m_teamLimit) {
+                if ( !m_teamLimit )
+                {
                     // add to new team
                     tm = num_teams;
                     num_teams++;
                     team_scores[tm] = 0;
-                    Q_strncpy(team_names[tm], pTeamName, MAX_TEAMNAME_LENGTH);
+                    Q_strncpy( team_names[tm], pTeamName, MAX_TEAMNAME_LENGTH );
                 }
             }
 
-            if (tm >= 0) {
+            if ( tm >= 0 )
+            {
                 team_scores[tm] += plr->FragCount();
             }
         }

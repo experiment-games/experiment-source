@@ -4,7 +4,6 @@
 //
 //===========================================================================//
 
-
 #ifndef TIER2_H
 #define TIER2_H
 
@@ -13,7 +12,6 @@
 #endif
 
 #include "tier1/tier1.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -29,7 +27,6 @@ class INetworkSystem;
 class IP4;
 class IMdlLib;
 class IQueuedLoader;
-
 
 //-----------------------------------------------------------------------------
 // These tier2 libraries must be set by any users of this library.
@@ -50,7 +47,6 @@ extern IP4 *p4;
 extern IMdlLib *mdllib;
 extern IQueuedLoader *g_pQueuedLoader;
 
-
 //-----------------------------------------------------------------------------
 // Call this to connect to/disconnect from all tier 2 libraries.
 // It's up to the caller to check the globals it cares about to see if ones are missing
@@ -58,13 +54,11 @@ extern IQueuedLoader *g_pQueuedLoader;
 void ConnectTier2Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount );
 void DisconnectTier2Libraries();
 
-
 //-----------------------------------------------------------------------------
 // Call this to get the file system set up to stdio for utilities, etc:
 //-----------------------------------------------------------------------------
-void InitDefaultFileSystem(void);
-void ShutdownDefaultFileSystem(void);
-
+void InitDefaultFileSystem( void );
+void ShutdownDefaultFileSystem( void );
 
 //-----------------------------------------------------------------------------
 // for simple utilities using valve libraries, call the entry point below in main(). It will
@@ -72,57 +66,55 @@ void ShutdownDefaultFileSystem(void);
 //-----------------------------------------------------------------------------
 void InitCommandLineProgram( int argc, char **argv );
 
-
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
+template < class IInterface, int ConVarFlag = 0 >
 class CTier2AppSystem : public CTier1AppSystem< IInterface, ConVarFlag >
 {
-	typedef CTier1AppSystem< IInterface, ConVarFlag > BaseClass;
+    typedef CTier1AppSystem< IInterface, ConVarFlag > BaseClass;
 
-public:
-	CTier2AppSystem( bool bIsPrimaryAppSystem = true ) : BaseClass( bIsPrimaryAppSystem )
-	{
-	}
+   public:
+    CTier2AppSystem( bool bIsPrimaryAppSystem = true )
+        : BaseClass( bIsPrimaryAppSystem )
+    {
+    }
 
-	virtual bool Connect( CreateInterfaceFn factory ) 
-	{
-		if ( !BaseClass::Connect( factory ) )
-			return false;
+    virtual bool Connect( CreateInterfaceFn factory )
+    {
+        if ( !BaseClass::Connect( factory ) )
+            return false;
 
-		if ( BaseClass::IsPrimaryAppSystem() )
-		{
-			ConnectTier2Libraries( &factory, 1 );
-		}
+        if ( BaseClass::IsPrimaryAppSystem() )
+        {
+            ConnectTier2Libraries( &factory, 1 );
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	virtual InitReturnVal_t Init()
-	{
-		InitReturnVal_t nRetVal = BaseClass::Init();
-		if ( nRetVal != INIT_OK )
-			return nRetVal;
+    virtual InitReturnVal_t Init()
+    {
+        InitReturnVal_t nRetVal = BaseClass::Init();
+        if ( nRetVal != INIT_OK )
+            return nRetVal;
 
-		return INIT_OK;
-	}
+        return INIT_OK;
+    }
 
-	virtual void Shutdown()
-	{
-		BaseClass::Shutdown();
-	}
+    virtual void Shutdown()
+    {
+        BaseClass::Shutdown();
+    }
 
-	virtual void Disconnect() 
-	{
-		if ( BaseClass::IsPrimaryAppSystem() )
-		{
-			DisconnectTier2Libraries();
-		}
-		BaseClass::Disconnect();
-	}
+    virtual void Disconnect()
+    {
+        if ( BaseClass::IsPrimaryAppSystem() )
+        {
+            DisconnectTier2Libraries();
+        }
+        BaseClass::Disconnect();
+    }
 };
 
-
-#endif // TIER2_H
-
+#endif  // TIER2_H

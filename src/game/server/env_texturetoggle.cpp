@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,53 +11,51 @@
 
 class CTextureToggle : public CPointEntity
 {
-public:
-	DECLARE_CLASS( CTextureToggle, CPointEntity );
+   public:
+    DECLARE_CLASS( CTextureToggle, CPointEntity );
 
-	void	InputIncrementBrushTexIndex( inputdata_t &inputdata );
-	void	InputSetBrushTexIndex( inputdata_t &inputdata );
+    void InputIncrementBrushTexIndex( inputdata_t &inputdata );
+    void InputSetBrushTexIndex( inputdata_t &inputdata );
 
-private:
-	
-	DECLARE_DATADESC();
+   private:
+    DECLARE_DATADESC();
 };
 
 LINK_ENTITY_TO_CLASS( env_texturetoggle, CTextureToggle );
 
 BEGIN_DATADESC( CTextureToggle )
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "IncrementTextureIndex", InputIncrementBrushTexIndex ),
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetTextureIndex", InputSetBrushTexIndex ),
+DEFINE_INPUTFUNC( FIELD_VOID, "IncrementTextureIndex", InputIncrementBrushTexIndex ),
+    DEFINE_INPUTFUNC( FIELD_INTEGER, "SetTextureIndex", InputSetBrushTexIndex ),
 
-END_DATADESC()
+    END_DATADESC()
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
-//-----------------------------------------------------------------------------
-void CTextureToggle::InputIncrementBrushTexIndex( inputdata_t& inputdata )
+    //-----------------------------------------------------------------------------
+    // Purpose:
+    // Input  : &inputdata -
+    //-----------------------------------------------------------------------------
+    void CTextureToggle::InputIncrementBrushTexIndex( inputdata_t &inputdata )
 {
-	CBaseEntity *pEntity = gEntList.FindEntityByName( NULL, m_target );
-		
-	while( pEntity ) 
-	{
-		int iCurrentIndex =  pEntity->GetTextureFrameIndex() + 1;
-		pEntity->SetTextureFrameIndex( iCurrentIndex );
+    CBaseEntity *pEntity = gEntList.FindEntityByName( NULL, m_target );
 
-		pEntity = gEntList.FindEntityByName( pEntity, m_target ); 
-	}
+    while ( pEntity )
+    {
+        int iCurrentIndex = pEntity->GetTextureFrameIndex() + 1;
+        pEntity->SetTextureFrameIndex( iCurrentIndex );
+
+        pEntity = gEntList.FindEntityByName( pEntity, m_target );
+    }
 }
 
-void CTextureToggle::InputSetBrushTexIndex( inputdata_t& inputdata )
+void CTextureToggle::InputSetBrushTexIndex( inputdata_t &inputdata )
 {
-	CBaseEntity *pEntity = gEntList.FindEntityByName( NULL, m_target );
-		
-	while( pEntity ) 
-	{
-		int iData = inputdata.value.Int();
+    CBaseEntity *pEntity = gEntList.FindEntityByName( NULL, m_target );
 
-		pEntity->SetTextureFrameIndex( iData );
-		pEntity = gEntList.FindEntityByName( pEntity, m_target ); 
-	}
+    while ( pEntity )
+    {
+        int iData = inputdata.value.Int();
+
+        pEntity->SetTextureFrameIndex( iData );
+        pEntity = gEntList.FindEntityByName( pEntity, m_target );
+    }
 }
-

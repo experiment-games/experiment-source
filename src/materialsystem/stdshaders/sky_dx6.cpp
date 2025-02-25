@@ -12,4 +12,3 @@
 
 DEFINE_FALLBACK_SHADER( Sky, UnlitGeneric )
 DEFINE_FALLBACK_SHADER( Sky_dx6, UnlitGeneric )
-

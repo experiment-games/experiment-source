@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -12,4 +12,4 @@
 
 void WorldVertexTransitionFixup( void );
 
-#endif // WORLDVERTEXTRANSITIONFIXUP_H
+#endif  // WORLDVERTEXTRANSITIONFIXUP_H

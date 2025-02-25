@@ -611,7 +611,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetRagdollOwner, "class", "Returns the player
     // [CLIENT] ...periment\addons\pac3\lua\pac3\core\client\parts\bone.lua:308: calling 'GetRagdollOwner' on bad self (CBaseAnimating expected, got NULL entity)
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( lua_toanimating, 1, "entity" );
 
-    if (!pAnimating)
+    if ( !pAnimating )
     {
         CBasePlayer::PushLuaInstanceSafe( L, NULL );
         return 1;
@@ -908,7 +908,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBodyGroups, "class", "Get the bodygroup va
         // zero indexed table of names in the smd mesh file indicating what valid subgroup values are
         lua_newtable( L );
 
-		mstudiobodyparts_t *pbodypart = pstudiohdr->pBodypart( iGroup );
+        mstudiobodyparts_t *pbodypart = pstudiohdr->pBodypart( iGroup );
 
         for ( int iSubGroup = 0; iSubGroup < subGroupCount; ++iSubGroup )
         {
@@ -1073,7 +1073,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetMaterials, "class", "Get the materials" )
         if ( !pMaterial )
             continue;
 
-        lua_pushnumber( L, i + 1 ); // 1 indexed
+        lua_pushnumber( L, i + 1 );  // 1 indexed
         lua_pushmaterial( L, pMaterial );
         lua_settable( L, -3 );
     }
@@ -1110,7 +1110,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetSubModels, "class", "Get the submodels" )
         lua_pushinteger( L, pBodyPart->modelindex );
         lua_setfield( L, -2, "id" );
 
-        lua_rawseti( L, -2, i + 1 ); // 1 indexed
+        lua_rawseti( L, -2, i + 1 );  // 1 indexed
     }
 
     return 1;

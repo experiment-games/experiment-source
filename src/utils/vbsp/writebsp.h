@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,8 +18,7 @@ struct node_t;
 //-----------------------------------------------------------------------------
 // Emits occluder faces
 //-----------------------------------------------------------------------------
-void EmitOccluderFaces (node_t *node);
-
+void EmitOccluderFaces( node_t *node );
 
 //-----------------------------------------------------------------------------
 // Purpose: Free the list of faces stored at the leaves
@@ -31,4 +30,4 @@ void FreeLeafFaces( face_t *pLeafFaceList );
 //-----------------------------------------------------------------------------
 void EnsurePresenceOfWaterLODControlEntity( void );
 
-#endif // WRITEBSP_H
+#endif  // WRITEBSP_H

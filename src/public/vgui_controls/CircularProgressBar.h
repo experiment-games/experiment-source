@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,10 +18,10 @@
 
 enum progress_textures_t
 {
-	PROGRESS_TEXTURE_FG,
-	PROGRESS_TEXTURE_BG,
+    PROGRESS_TEXTURE_FG,
+    PROGRESS_TEXTURE_BG,
 
-	NUM_PROGRESS_TEXTURES,
+    NUM_PROGRESS_TEXTURES,
 };
 
 namespace vgui
@@ -32,43 +32,58 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class CircularProgressBar : public ProgressBar
 {
-	DECLARE_CLASS_SIMPLE( CircularProgressBar, ProgressBar );
+    DECLARE_CLASS_SIMPLE( CircularProgressBar, ProgressBar );
 
-public:
-	CircularProgressBar(Panel *parent, const char *panelName);
-	~CircularProgressBar();
+   public:
+    CircularProgressBar( Panel *parent, const char *panelName );
+    ~CircularProgressBar();
 
-	virtual void ApplySettings(KeyValues *inResourceData);
-	virtual void ApplySchemeSettings(IScheme *pScheme);
+    virtual void ApplySettings( KeyValues *inResourceData );
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 
-	void SetFgImage(const char *imageName) { SetImage( imageName, PROGRESS_TEXTURE_FG ); }
-	void SetBgImage(const char *imageName) { SetImage( imageName, PROGRESS_TEXTURE_BG ); }
+    void SetFgImage( const char *imageName )
+    {
+        SetImage( imageName, PROGRESS_TEXTURE_FG );
+    }
+    void SetBgImage( const char *imageName )
+    {
+        SetImage( imageName, PROGRESS_TEXTURE_BG );
+    }
 
-	enum CircularProgressDir_e
-	{
-		PROGRESS_CW,
-		PROGRESS_CCW
-	};
-	int GetProgressDirection() const { return m_iProgressDirection; }
-	void SetProgressDirection( int val ) { m_iProgressDirection = val; }
-	void SetStartSegment( int val ) { m_iStartSegment = val; }
+    enum CircularProgressDir_e
+    {
+        PROGRESS_CW,
+        PROGRESS_CCW
+    };
+    int GetProgressDirection() const
+    {
+        return m_iProgressDirection;
+    }
+    void SetProgressDirection( int val )
+    {
+        m_iProgressDirection = val;
+    }
+    void SetStartSegment( int val )
+    {
+        m_iStartSegment = val;
+    }
 
-protected:
-	virtual void Paint();
-	virtual void PaintBackground();
-	
-	void DrawCircleSegment( Color c, float flEndDegrees, bool clockwise /* = true */ );
-	void SetImage(const char *imageName, progress_textures_t iPos);
+   protected:
+    virtual void Paint();
+    virtual void PaintBackground();
 
-private:
-	int m_iProgressDirection;
-	int m_iStartSegment;
+    void DrawCircleSegment( Color c, float flEndDegrees, bool clockwise /* = true */ );
+    void SetImage( const char *imageName, progress_textures_t iPos );
 
-	int m_nTextureId[NUM_PROGRESS_TEXTURES];
-	char *m_pszImageName[NUM_PROGRESS_TEXTURES];
-	int   m_lenImageName[NUM_PROGRESS_TEXTURES];
+   private:
+    int m_iProgressDirection;
+    int m_iStartSegment;
+
+    int m_nTextureId[NUM_PROGRESS_TEXTURES];
+    char *m_pszImageName[NUM_PROGRESS_TEXTURES];
+    int m_lenImageName[NUM_PROGRESS_TEXTURES];
 };
 
-} // namespace vgui
+}  // namespace vgui
 
-#endif // CIRCULARPROGRESSBAR_H
+#endif  // CIRCULARPROGRESSBAR_H

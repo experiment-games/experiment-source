@@ -30,23 +30,24 @@ class CExButton;
 
 class CReplayMessageDlg : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayMessageDlg, EditablePanel );
-public:
-	CReplayMessageDlg( const char *pText );
-	~CReplayMessageDlg();
+    DECLARE_CLASS_SIMPLE( CReplayMessageDlg, EditablePanel );
 
-	virtual void	ApplySchemeSettings( IScheme *pScheme );
-	virtual void	PerformLayout();
+   public:
+    CReplayMessageDlg( const char *pText );
+    ~CReplayMessageDlg();
 
-	virtual void	OnKeyCodeTyped( KeyCode nCode );
-	virtual void	OnCommand( const char *pCommand );
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+    virtual void PerformLayout();
 
-private:
-	void			Close();
+    virtual void OnKeyCodeTyped( KeyCode nCode );
+    virtual void OnCommand( const char *pCommand );
 
-	Panel			*m_pDlg;
-	CExLabel		*m_pMsgLabel;
-	CExButton		*m_pOKButton;
+   private:
+    void Close();
+
+    Panel *m_pDlg;
+    CExLabel *m_pMsgLabel;
+    CExButton *m_pOKButton;
 };
 
 //----------------------------------------------------------------------------------------
@@ -54,32 +55,32 @@ private:
 //----------------------------------------------------------------------------------------
 class CReplayMessagePanel : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayMessagePanel, EditablePanel );
-public:
-	CReplayMessagePanel( const char *pLocalizeName, float flDuration, bool bUrgent );
-	virtual ~CReplayMessagePanel();
+    DECLARE_CLASS_SIMPLE( CReplayMessagePanel, EditablePanel );
 
-	void Show();
-	virtual void OnTick();
+   public:
+    CReplayMessagePanel( const char *pLocalizeName, float flDuration, bool bUrgent );
+    virtual ~CReplayMessagePanel();
 
-	static int	InstanceCount();
-	static void	RemoveAll();
+    void Show();
+    virtual void OnTick();
 
-private:
-	virtual void ApplySchemeSettings( IScheme *pScheme );
-	virtual void PerformLayout();
+    static int InstanceCount();
+    static void RemoveAll();
 
+   private:
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+    virtual void PerformLayout();
 
-	CExLabel	*m_pMessageLabel;
-	CExLabel	*m_pReplayLabel;
-	ImagePanel	*m_pIcon;
-	float		m_flShowStartTime;
-	float		m_flShowDuration;
-	bool		m_bUrgent;
+    CExLabel *m_pMessageLabel;
+    CExLabel *m_pReplayLabel;
+    ImagePanel *m_pIcon;
+    float m_flShowStartTime;
+    float m_flShowDuration;
+    bool m_bUrgent;
 
 #if defined( TF_CLIENT_DLL )
-	char		m_szBorderName[ 64 ];
+    char m_szBorderName[64];
 #endif
 };
 
-#endif // REPLAYMESSAGEPANEL_H
+#endif  // REPLAYMESSAGEPANEL_H

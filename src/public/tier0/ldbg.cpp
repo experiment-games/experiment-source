@@ -89,14 +89,14 @@ LUA_BINDING_BEGIN( debug, PrintDebugLog, "library", "Print a debug log message t
 }
 LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( debug, CrashError, "library", "Crashes the game with an error message." )
+// LUA_BINDING_BEGIN( debug, CrashError, "library", "Crashes the game with an error message." )
 //{
-//    const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
+//     const char *pMessage = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "message" );
 //
-//    Error( "%s", pMessage );
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     Error( "%s", pMessage );
+//     return 0;
+// }
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( debug, PrintDevMessage, "library", "Print a developer message to the console." )
 {

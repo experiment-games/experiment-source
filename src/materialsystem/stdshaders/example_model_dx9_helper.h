@@ -22,25 +22,23 @@ class IShaderShadow;
 //-----------------------------------------------------------------------------
 struct ExampleModel_DX9_Vars_t
 {
-	ExampleModel_DX9_Vars_t() { memset( this, 0xFF, sizeof(*this) ); }
+    ExampleModel_DX9_Vars_t()
+    {
+        memset( this, 0xFF, sizeof( *this ) );
+    }
 
-	int m_nBaseTexture;
-	int m_nBaseTextureFrame;
-	int m_nBaseTextureTransform;
-	int m_nAlphaTestReference;
-	int m_nFlashlightTexture;
-	int m_nFlashlightTextureFrame;
+    int m_nBaseTexture;
+    int m_nBaseTextureFrame;
+    int m_nBaseTextureTransform;
+    int m_nAlphaTestReference;
+    int m_nFlashlightTexture;
+    int m_nFlashlightTextureFrame;
 };
 
-void InitParamsExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar** params,
-						 const char *pMaterialName, ExampleModel_DX9_Vars_t &info );
+void InitParamsExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName, ExampleModel_DX9_Vars_t &info );
 
-void InitExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar** params, 
-				   ExampleModel_DX9_Vars_t &info );
+void InitExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar **params, ExampleModel_DX9_Vars_t &info );
 
-void DrawExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-				   IShaderShadow* pShaderShadow,
-				   ExampleModel_DX9_Vars_t &info, VertexCompressionType_t vertexCompression,
-				   CBasePerMaterialContextData **pContextDataPtr );
+void DrawExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI, IShaderShadow *pShaderShadow, ExampleModel_DX9_Vars_t &info, VertexCompressionType_t vertexCompression, CBasePerMaterialContextData **pContextDataPtr );
 
-#endif // EXAMPLE_MODEL_DX9_HELPER_H
+#endif  // EXAMPLE_MODEL_DX9_HELPER_H

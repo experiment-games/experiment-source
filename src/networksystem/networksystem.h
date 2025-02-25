@@ -67,7 +67,6 @@ class CNetworkSystem : public CTier2AppSystem< INetworkSystem >
     static bool StringToSockaddr( const char *s, struct sockaddr *sadr );
 
    private:
-
     bool m_bWinSockInitialized : 1;
 
     CNetworkServer *m_pServer;

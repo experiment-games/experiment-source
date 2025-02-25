@@ -43,8 +43,8 @@ class CBaseMenuPanel : public EditablePanel
     }
 
     // Never called if we don't use SetMainMenuOverride (which causes crash on closing console)
-    //MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
-    //MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
+    // MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
+    // MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
 
    protected:
     void OnThink() OVERRIDE;

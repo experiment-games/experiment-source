@@ -18,4 +18,4 @@ bool ReplayLib_Init( const char *pGameDir, IClientReplayContext *pClientReplayCo
 
 //----------------------------------------------------------------------------------------
 
-#endif // REPLAYLIB_H
+#endif  // REPLAYLIB_H

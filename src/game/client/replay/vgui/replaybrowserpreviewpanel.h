@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,45 +34,49 @@ class CReplayScreenshotSlideshowPanel;
 //-----------------------------------------------------------------------------
 class CGenericClassBasedReplay;
 class CCrossfadableImagePanel;
-class CSlideshowPanel;	
+class CSlideshowPanel;
 
 class CReplayPreviewPanelBase : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayPreviewPanelBase, EditablePanel );
-public:
-	CReplayPreviewPanelBase( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
-	~CReplayPreviewPanelBase();
-	
-	virtual void ApplySchemeSettings( IScheme *pScheme );
-	virtual void PerformLayout();
+    DECLARE_CLASS_SIMPLE( CReplayPreviewPanelBase, EditablePanel );
 
-	ReplayHandle_t GetReplayHandle();
+   public:
+    CReplayPreviewPanelBase( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
+    ~CReplayPreviewPanelBase();
 
-protected:
-	CGenericClassBasedReplay *GetReplay();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
+    virtual void PerformLayout();
 
-	virtual bool ShoudlUseLargeClassImage() { return false; }
-	virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+    ReplayHandle_t GetReplayHandle();
 
-protected:
-	IReplayItemManager	*m_pItemManager;
-	QueryableReplayItemHandle_t	m_hItem;
+   protected:
+    CGenericClassBasedReplay *GetReplay();
 
-private:
-	ImagePanel			*m_pClassImage;
-	vgui::EditablePanel	*m_pInfoPanel;
+    virtual bool ShoudlUseLargeClassImage()
+    {
+        return false;
+    }
+    virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
 
-	CExLabel			*m_pMapLabel;
-	CExLabel			*m_pDateTimeLabel;
+   protected:
+    IReplayItemManager *m_pItemManager;
+    QueryableReplayItemHandle_t m_hItem;
 
-	enum ELabels
-	{
-		LABEL_PLAYED_AS,
-		LABEL_KILLED_BY,
-		LABEL_LIFE_LENGTH,
-		NUM_INFO_LABELS
-	};
-	CExLabel			*m_pReplayInfoLabels[NUM_INFO_LABELS][2];
+   private:
+    ImagePanel *m_pClassImage;
+    vgui::EditablePanel *m_pInfoPanel;
+
+    CExLabel *m_pMapLabel;
+    CExLabel *m_pDateTimeLabel;
+
+    enum ELabels
+    {
+        LABEL_PLAYED_AS,
+        LABEL_KILLED_BY,
+        LABEL_LIFE_LENGTH,
+        NUM_INFO_LABELS
+    };
+    CExLabel *m_pReplayInfoLabels[NUM_INFO_LABELS][2];
 };
 
 //-----------------------------------------------------------------------------
@@ -80,16 +84,17 @@ private:
 //-----------------------------------------------------------------------------
 class CReplayPreviewPanelSlideshow : public CReplayPreviewPanelBase
 {
-	DECLARE_CLASS_SIMPLE( CReplayPreviewPanelSlideshow, CReplayPreviewPanelBase );
-public:
-	CReplayPreviewPanelSlideshow( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
+    DECLARE_CLASS_SIMPLE( CReplayPreviewPanelSlideshow, CReplayPreviewPanelBase );
 
-private:
-	virtual void PerformLayout();
-	virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+   public:
+    CReplayPreviewPanelSlideshow( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
 
-	CReplayScreenshotSlideshowPanel		*m_pScreenshotPanel;
-	CExLabel							*m_pNoScreenshotLabel;
+   private:
+    virtual void PerformLayout();
+    virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+
+    CReplayScreenshotSlideshowPanel *m_pScreenshotPanel;
+    CExLabel *m_pNoScreenshotLabel;
 };
 
 //-----------------------------------------------------------------------------
@@ -100,21 +105,20 @@ class IReplayMovie;
 
 class CReplayPreviewPanelMovie : public CReplayPreviewPanelBase
 {
-	DECLARE_CLASS_SIMPLE( CReplayPreviewPanelMovie, CReplayPreviewPanelBase );
-public:
-	CReplayPreviewPanelMovie( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
-	~CReplayPreviewPanelMovie();
+    DECLARE_CLASS_SIMPLE( CReplayPreviewPanelMovie, CReplayPreviewPanelBase );
 
-private:
-	virtual void OnTick();
-	virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+   public:
+    CReplayPreviewPanelMovie( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
+    ~CReplayPreviewPanelMovie();
 
-	virtual IReplayMovie *GetReplayMovie();
+   private:
+    virtual void OnTick();
+    virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
 
-	CMoviePlayerPanel	*m_pMoviePlayerPanel;
-	float				m_flCreateTime;
+    virtual IReplayMovie *GetReplayMovie();
+
+    CMoviePlayerPanel *m_pMoviePlayerPanel;
+    float m_flCreateTime;
 };
 
-
-
-#endif // REPLAYBROWSER_PREVIEWPANEL_H
+#endif  // REPLAYBROWSER_PREVIEWPANEL_H

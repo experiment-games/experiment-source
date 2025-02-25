@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,5 +12,3 @@
 // FIXME: This is a placeholder. . need to do something for real here.
 DEFINE_FALLBACK_SHADER( Refract, Refract_DX60 )
 DEFINE_FALLBACK_SHADER( Refract_DX60, UnlitGeneric )
-
-

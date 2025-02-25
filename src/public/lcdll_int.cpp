@@ -513,13 +513,13 @@ LUA_BINDING_BEGIN( Engines, OnStorageDeviceDetached, "library", "Handle a storag
 }
 LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Engines, REMOVED_SteamProcessCall, "library", "Process a Steam call." )
+// LUA_BINDING_BEGIN( Engines, REMOVED_SteamProcessCall, "library", "Process a Steam call." )
 //{
-//    bool finished = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "finished" );
-//    lua_pushboolean( L, engine->REMOVED_SteamProcessCall( finished ) );
-//    return 1;
-//}
-//LUA_BINDING_END( "boolean", "True if the Steam call was processed, false otherwise." )
+//     bool finished = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "finished" );
+//     lua_pushboolean( L, engine->REMOVED_SteamProcessCall( finished ) );
+//     return 1;
+// }
+// LUA_BINDING_END( "boolean", "True if the Steam call was processed, false otherwise." )
 
 LUA_BINDING_BEGIN( Engines, ResetDemoInterpolation, "library", "Reset demo interpolation." )
 {
@@ -564,12 +564,12 @@ LUA_BINDING_BEGIN( Engines, SoundExtraUpdate, "library", "Update sound." )
 }
 LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Engines, StartXboxExitingProcess, "library", "Start the Xbox exiting process." )
+// LUA_BINDING_BEGIN( Engines, StartXboxExitingProcess, "library", "Start the Xbox exiting process." )
 //{
-//    engine->StartXboxExitingProcess();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     engine->StartXboxExitingProcess();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Engines, SupportsHdr, "library", "Check if HDR is supported." )
 {

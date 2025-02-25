@@ -1,12 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-
-
 
 // Client-side CBasePlayer
 
@@ -14,26 +12,20 @@
 #define C_PHYSBOX_H
 #pragma once
 
-
 #include "c_baseentity.h"
-
 
 class C_PhysBox : public C_BaseEntity
 {
-public:
-	DECLARE_CLASS( C_PhysBox, C_BaseEntity );
-	DECLARE_CLIENTCLASS();
+   public:
+    DECLARE_CLASS( C_PhysBox, C_BaseEntity );
+    DECLARE_CLIENTCLASS();
 
-					C_PhysBox();
-	virtual			~C_PhysBox();
-	virtual ShadowType_t ShadowCastType();
-	
-public:
-	float			m_mass;	// TEST..
+    C_PhysBox();
+    virtual ~C_PhysBox();
+    virtual ShadowType_t ShadowCastType();
+
+   public:
+    float m_mass;  // TEST..
 };
 
-
 #endif
-
-
-

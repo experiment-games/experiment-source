@@ -6,7 +6,6 @@
 //
 //=============================================================================//
 
-
 //-----------------------------------------------------------------------------
 // Generic NPC - purely for scripted sequence work.
 //-----------------------------------------------------------------------------
@@ -25,25 +24,25 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_GMan : public CAI_PlayerAlly
 {
-public:
-	DECLARE_CLASS( CNPC_GMan, CAI_PlayerAlly );
-	DECLARE_DATADESC();
+   public:
+    DECLARE_CLASS( CNPC_GMan, CAI_PlayerAlly );
+    DECLARE_DATADESC();
 
-	void	Spawn( void );
-	void	Precache( void );
-	Class_T Classify ( void );
-	void	HandleAnimEvent( animevent_t *pEvent );
-	virtual Disposition_t IRelationType(CBaseEntity *pTarget);
-	int		GetSoundInterests ( void );
-	bool	CreateBehaviors( void );
-	int		SelectSchedule( void );
+    void Spawn( void );
+    void Precache( void );
+    Class_T Classify( void );
+    void HandleAnimEvent( animevent_t *pEvent );
+    virtual Disposition_t IRelationType( CBaseEntity *pTarget );
+    int GetSoundInterests( void );
+    bool CreateBehaviors( void );
+    int SelectSchedule( void );
 
-private:
-	CAI_FollowBehavior	m_FollowBehavior;
+   private:
+    CAI_FollowBehavior m_FollowBehavior;
 };
 
 LINK_ENTITY_TO_CLASS( npc_gman, CNPC_GMan );
@@ -54,15 +53,13 @@ BEGIN_DATADESC( CNPC_GMan )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
-Class_T	CNPC_GMan::Classify ( void )
+Class_T CNPC_GMan::Classify( void )
 {
-	return CLASS_PLAYER_ALLY_VITAL;
+    return CLASS_PLAYER_ALLY_VITAL;
 }
-
-
 
 //-----------------------------------------------------------------------------
 // HandleAnimEvent - catches the NPC-specific messages
@@ -70,52 +67,51 @@ Class_T	CNPC_GMan::Classify ( void )
 //-----------------------------------------------------------------------------
 void CNPC_GMan::HandleAnimEvent( animevent_t *pEvent )
 {
-	switch( pEvent->event )
-	{
-	case 1:
-	default:
-		BaseClass::HandleAnimEvent( pEvent );
-		break;
-	}
+    switch ( pEvent->event )
+    {
+        case 1:
+        default:
+            BaseClass::HandleAnimEvent( pEvent );
+            break;
+    }
 }
 
 //-----------------------------------------------------------------------------
 // GetSoundInterests - generic NPC can't hear.
 //-----------------------------------------------------------------------------
-int CNPC_GMan::GetSoundInterests ( void )
+int CNPC_GMan::GetSoundInterests( void )
 {
-	return NULL;
+    return NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // Spawn
 //-----------------------------------------------------------------------------
 void CNPC_GMan::Spawn()
 {
-	Precache();
+    Precache();
 
-	BaseClass::Spawn();
+    BaseClass::Spawn();
 
-	SetModel( "models/gman.mdl" );
+    SetModel( "models/gman.mdl" );
 
-	SetHullType(HULL_HUMAN);
-	SetHullSizeNormal();
+    SetHullType( HULL_HUMAN );
+    SetHullSizeNormal();
 
-	SetSolid( SOLID_BBOX );
-	AddSolidFlags( FSOLID_NOT_STANDABLE );
-	SetMoveType( MOVETYPE_STEP );
-	SetBloodColor( BLOOD_COLOR_RED );
-	m_iHealth			= 8;
-	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
-	m_NPCState			= NPC_STATE_NONE;
-	SetImpactEnergyScale( 0.0f ); // no physics damage on the gman
-	
-	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD );
-	CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
-	AddEFlags( EFL_NO_DISSOLVE | EFL_NO_MEGAPHYSCANNON_RAGDOLL );
+    SetSolid( SOLID_BBOX );
+    AddSolidFlags( FSOLID_NOT_STANDABLE );
+    SetMoveType( MOVETYPE_STEP );
+    SetBloodColor( BLOOD_COLOR_RED );
+    m_iHealth = 8;
+    m_flFieldOfView = 0.5;  // indicates the width of this NPC's forward view cone ( as a dotproduct result )
+    m_NPCState = NPC_STATE_NONE;
+    SetImpactEnergyScale( 0.0f );  // no physics damage on the gman
 
-	NPCInit();
+    CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD );
+    CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
+    AddEFlags( EFL_NO_DISSOLVE | EFL_NO_MEGAPHYSCANNON_RAGDOLL );
+
+    NPCInit();
 }
 
 //-----------------------------------------------------------------------------
@@ -123,40 +119,39 @@ void CNPC_GMan::Spawn()
 //-----------------------------------------------------------------------------
 void CNPC_GMan::Precache()
 {
-	PrecacheModel( "models/gman.mdl" );
-	
-	BaseClass::Precache();
-}	
+    PrecacheModel( "models/gman.mdl" );
+
+    BaseClass::Precache();
+}
 
 //-----------------------------------------------------------------------------
 // The G-Man isn't scared of anything.
 //-----------------------------------------------------------------------------
-Disposition_t CNPC_GMan::IRelationType(CBaseEntity *pTarget)
+Disposition_t CNPC_GMan::IRelationType( CBaseEntity *pTarget )
 {
-	return D_NU;
+    return D_NU;
 }
-
 
 //=========================================================
 // Purpose:
 //=========================================================
 bool CNPC_GMan::CreateBehaviors()
 {
-	AddBehavior( &m_FollowBehavior );
-	
-	return BaseClass::CreateBehaviors();
+    AddBehavior( &m_FollowBehavior );
+
+    return BaseClass::CreateBehaviors();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_GMan::SelectSchedule( void )
 {
-	if ( !BehaviorSelectSchedule() )
-	{
-	}
+    if ( !BehaviorSelectSchedule() )
+    {
+    }
 
-	return BaseClass::SelectSchedule();
+    return BaseClass::SelectSchedule();
 }
 
 //-----------------------------------------------------------------------------

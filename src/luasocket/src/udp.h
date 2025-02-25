@@ -19,7 +19,8 @@
 
 #define UDP_DATAGRAMSIZE 8192
 
-typedef struct t_udp_ {
+typedef struct t_udp_
+{
     t_socket sock;
     t_timeout tm;
     int family;
@@ -27,10 +28,10 @@ typedef struct t_udp_ {
 typedef t_udp *p_udp;
 
 #ifndef _WIN32
-#pragma GCC visibility push(hidden)
+#pragma GCC visibility push( hidden )
 #endif
 
-int udp_open(lua_State *L);
+int udp_open( lua_State *L );
 
 #ifndef _WIN32
 #pragma GCC visibility pop

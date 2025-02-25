@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,62 +18,65 @@
 
 class C_World : public C_BaseEntity
 {
-public:
-	DECLARE_CLASS( C_World, C_BaseEntity );
-	DECLARE_CLIENTCLASS();
+   public:
+    DECLARE_CLASS( C_World, C_BaseEntity );
+    DECLARE_CLIENTCLASS();
 
-	C_World( void );
-	~C_World( void );
-	
-	// Override the factory create/delete functions since the world is a singleton.
-	virtual bool Init( int entnum, int iSerialNum );
-	virtual void Release();
+    C_World( void );
+    ~C_World( void );
 
-	virtual void Precache();
-	virtual void Spawn();
+    // Override the factory create/delete functions since the world is a singleton.
+    virtual bool Init( int entnum, int iSerialNum );
+    virtual void Release();
 
-	// Don't worry about adding the world to the collision list; it's already there
-	virtual CollideType_t	GetCollideType( void )	{ return ENTITY_SHOULD_NOT_COLLIDE; }
+    virtual void Precache();
+    virtual void Spawn();
 
-	virtual void OnDataChanged( DataUpdateType_t updateType );
-	virtual void PreDataUpdate( DataUpdateType_t updateType );
+    // Don't worry about adding the world to the collision list; it's already there
+    virtual CollideType_t GetCollideType( void )
+    {
+        return ENTITY_SHOULD_NOT_COLLIDE;
+    }
 
-	float GetWaveHeight() const;
-	const char *GetDetailSpriteMaterial() const;
+    virtual void OnDataChanged( DataUpdateType_t updateType );
+    virtual void PreDataUpdate( DataUpdateType_t updateType );
 
-public:
-	enum
-	{
-		MAX_DETAIL_SPRITE_MATERIAL_NAME_LENGTH = 256,
-	};
+    float GetWaveHeight() const;
+    const char *GetDetailSpriteMaterial() const;
 
-	float	m_flWaveHeight;
-	Vector	m_WorldMins;
-	Vector	m_WorldMaxs;
-	bool	m_bStartDark;
-	float	m_flMaxOccludeeArea;
-	float	m_flMinOccluderArea;
-	float	m_flMinPropScreenSpaceWidth;
-	float	m_flMaxPropScreenSpaceWidth;
-	bool	m_bColdWorld;
+   public:
+    enum
+    {
+        MAX_DETAIL_SPRITE_MATERIAL_NAME_LENGTH = 256,
+    };
 
-private:
-	void	RegisterSharedActivities( void );
-	char	m_iszDetailSpriteMaterial[MAX_DETAIL_SPRITE_MATERIAL_NAME_LENGTH];
+    float m_flWaveHeight;
+    Vector m_WorldMins;
+    Vector m_WorldMaxs;
+    bool m_bStartDark;
+    float m_flMaxOccludeeArea;
+    float m_flMinOccluderArea;
+    float m_flMinPropScreenSpaceWidth;
+    float m_flMaxPropScreenSpaceWidth;
+    bool m_bColdWorld;
+
+   private:
+    void RegisterSharedActivities( void );
+    char m_iszDetailSpriteMaterial[MAX_DETAIL_SPRITE_MATERIAL_NAME_LENGTH];
 };
 
 inline float C_World::GetWaveHeight() const
 {
-	return m_flWaveHeight;
+    return m_flWaveHeight;
 }
 
 inline const char *C_World::GetDetailSpriteMaterial() const
 {
-	return m_iszDetailSpriteMaterial;
+    return m_iszDetailSpriteMaterial;
 }
 
 void ClientWorldFactoryInit();
 void ClientWorldFactoryShutdown();
-C_World* GetClientWorldEntity();
+C_World *GetClientWorldEntity();
 
-#endif // C_WORLD_H
+#endif  // C_WORLD_H

@@ -23,183 +23,207 @@ struct AI_Waypoint_t;
 
 class CAI_BlendedMotor : public CAI_Motor
 {
-	typedef CAI_Motor BaseClass;
-public:
-	CAI_BlendedMotor( CAI_BaseNPC *pOuter )
-	 :	BaseClass( pOuter )
-	{
-		m_iPrimaryLayer = -1;
-		m_nPrimarySequence = ACT_INVALID;
+    typedef CAI_Motor BaseClass;
 
-		m_iSecondaryLayer = -1;
-		m_nSecondarySequence =  ACT_INVALID;
-		m_flSecondaryWeight = 0.0f;
+   public:
+    CAI_BlendedMotor( CAI_BaseNPC *pOuter )
+        : BaseClass( pOuter )
+    {
+        m_iPrimaryLayer = -1;
+        m_nPrimarySequence = ACT_INVALID;
 
-		m_nSavedGoalActivity = ACT_INVALID;
-		m_nSavedTranslatedGoalActivity = ACT_INVALID;
-		m_nGoalSequence = ACT_INVALID;
+        m_iSecondaryLayer = -1;
+        m_nSecondarySequence = ACT_INVALID;
+        m_flSecondaryWeight = 0.0f;
 
-		m_nPrevMovementSequence = ACT_INVALID;
-		m_nInteriorSequence = ACT_INVALID;
+        m_nSavedGoalActivity = ACT_INVALID;
+        m_nSavedTranslatedGoalActivity = ACT_INVALID;
+        m_nGoalSequence = ACT_INVALID;
 
-		m_bDeceleratingToGoal = false;
+        m_nPrevMovementSequence = ACT_INVALID;
+        m_nInteriorSequence = ACT_INVALID;
 
-		m_flStartCycle = 0.0f;
+        m_bDeceleratingToGoal = false;
 
-		m_flPredictiveSpeedAdjust = 1.0f;
-		m_flReactiveSpeedAdjust = 1.0f;
-		m_vecPrevOrigin1.Init();
-		m_vecPrevOrigin2.Init();
+        m_flStartCycle = 0.0f;
 
-		m_prevYaw = 0.0f;
-		m_doTurn = 0.0f;
-		m_doLeft = 0.0f;
-		m_doRight = 0.0f;
-		m_flNextTurnAct = 0.0f;
-	}
+        m_flPredictiveSpeedAdjust = 1.0f;
+        m_flReactiveSpeedAdjust = 1.0f;
+        m_vecPrevOrigin1.Init();
+        m_vecPrevOrigin2.Init();
 
-	void 	MoveClimbStart( const Vector &climbDest, const Vector &climbDir, float climbDist, float yaw );
-	void 	MoveJumpStart( const Vector &velocity );
+        m_prevYaw = 0.0f;
+        m_doTurn = 0.0f;
+        m_doLeft = 0.0f;
+        m_doRight = 0.0f;
+        m_flNextTurnAct = 0.0f;
+    }
 
-	void	ResetMoveCalculations();
-	void	MoveStart();
-	void	ResetGoalSequence();
-	void	MoveStop();
-	void	MovePaused();
-	void	MoveContinue();
+    void MoveClimbStart( const Vector &climbDest, const Vector &climbDir, float climbDist, float yaw );
+    void MoveJumpStart( const Vector &velocity );
 
-	float	OverrideMaxYawSpeed( Activity activity );
-	void	UpdateYaw( int speed );
-	void	RecalculateYawSpeed(); 
+    void ResetMoveCalculations();
+    void MoveStart();
+    void ResetGoalSequence();
+    void MoveStop();
+    void MovePaused();
+    void MoveContinue();
 
-	bool	IsDeceleratingToGoal() const	{ return m_bDeceleratingToGoal; }
-	float	GetMoveScriptTotalTime();
+    float OverrideMaxYawSpeed( Activity activity );
+    void UpdateYaw( int speed );
+    void RecalculateYawSpeed();
 
-	void	MaintainTurnActivity( void );
-	bool	AddTurnGesture( float flYD );
+    bool IsDeceleratingToGoal() const
+    {
+        return m_bDeceleratingToGoal;
+    }
+    float GetMoveScriptTotalTime();
 
+    void MaintainTurnActivity( void );
+    bool AddTurnGesture( float flYD );
 
-private:
-	AIMotorMoveResult_t MoveGroundExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
-	AIMotorMoveResult_t MoveFlyExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
+   private:
+    AIMotorMoveResult_t MoveGroundExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
+    AIMotorMoveResult_t MoveFlyExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
 
+    // --------------------------------
 
-	// --------------------------------
+    void BuildMoveScript( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
 
-	void	BuildMoveScript(  const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
+    void BuildVelocityScript( const AILocalMoveGoal_t &move );
+    void InsertSlowdown( float distToObstruction, float idealAccel, bool bAlwaysSlowdown );
 
-	void	BuildVelocityScript( const AILocalMoveGoal_t &move );
-	void	InsertSlowdown( float distToObstruction, float idealAccel, bool bAlwaysSlowdown );
+    int BuildTurnScript( int i, int j );
+    void BuildTurnScript( const AILocalMoveGoal_t &move );
+    int BuildInsertNode( int i, float flTime );
 
-	int		BuildTurnScript( int i, int j );
-	void	BuildTurnScript( const AILocalMoveGoal_t &move );
-	int 	BuildInsertNode( int i, float flTime );
+    Activity GetTransitionActivity( void );
 
-	Activity GetTransitionActivity( void );
-	
-	// --------------------------------
+    // --------------------------------
 
-	// helpers to simplify code
-	float	GetCycle()														{ return GetOuter()->GetCycle();								}
-	int		AddLayeredSequence( int sequence, int iPriority )				{ return GetOuter()->AddLayeredSequence( sequence, iPriority ); }
-	void	SetLayerWeight( int iLayer, float flWeight )					{ GetOuter()->SetLayerWeight( iLayer, flWeight );				}
-	void	SetLayerPlaybackRate( int iLayer, float flPlaybackRate )		{ GetOuter()->SetLayerPlaybackRate( iLayer, flPlaybackRate );	}
-	void	SetLayerNoRestore( int iLayer, bool bNoRestore )				{ GetOuter()->SetLayerNoRestore( iLayer, bNoRestore );			}
-	void	SetLayerCycle( int iLayer, float flCycle )						{ GetOuter()->SetLayerCycle( iLayer, flCycle );					}
-	void	SetLayerCycle( int iLayer, float flCycle, float flPrevCycle )	{ GetOuter()->SetLayerCycle( iLayer, flCycle, flPrevCycle );	}
-	void	RemoveLayer( int iLayer, float flKillRate, float flKillDelay )	{ GetOuter()->RemoveLayer( iLayer, flKillRate, flKillDelay );	}
+    // helpers to simplify code
+    float GetCycle()
+    {
+        return GetOuter()->GetCycle();
+    }
+    int AddLayeredSequence( int sequence, int iPriority )
+    {
+        return GetOuter()->AddLayeredSequence( sequence, iPriority );
+    }
+    void SetLayerWeight( int iLayer, float flWeight )
+    {
+        GetOuter()->SetLayerWeight( iLayer, flWeight );
+    }
+    void SetLayerPlaybackRate( int iLayer, float flPlaybackRate )
+    {
+        GetOuter()->SetLayerPlaybackRate( iLayer, flPlaybackRate );
+    }
+    void SetLayerNoRestore( int iLayer, bool bNoRestore )
+    {
+        GetOuter()->SetLayerNoRestore( iLayer, bNoRestore );
+    }
+    void SetLayerCycle( int iLayer, float flCycle )
+    {
+        GetOuter()->SetLayerCycle( iLayer, flCycle );
+    }
+    void SetLayerCycle( int iLayer, float flCycle, float flPrevCycle )
+    {
+        GetOuter()->SetLayerCycle( iLayer, flCycle, flPrevCycle );
+    }
+    void RemoveLayer( int iLayer, float flKillRate, float flKillDelay )
+    {
+        GetOuter()->RemoveLayer( iLayer, flKillRate, flKillDelay );
+    }
 
-	// --------------------------------
+    // --------------------------------
 
-	struct AI_Movementscript_t
-	{
-	public:
-		AI_Movementscript_t( )
-		{
-			Init( );
-		};
+    struct AI_Movementscript_t
+    {
+       public:
+        AI_Movementscript_t()
+        {
+            Init();
+        };
 
-		void Init( void )
-		{
-			memset( this, 0, sizeof(*this) );
-		};
+        void Init( void )
+        {
+            memset( this, 0, sizeof( *this ) );
+        };
 
-		float	flTime;			// time till next entry
-		float	flElapsedTime;	// time since first entry
+        float flTime;         // time till next entry
+        float flElapsedTime;  // time since first entry
 
-		float	flDist;			// distance to next entry
+        float flDist;  // distance to next entry
 
-		float	flMaxVelocity;
+        float flMaxVelocity;
 
-		// float	flVelocity;
+        // float	flVelocity;
 
-		float	flYaw;
-		float	flAngularVelocity;
+        float flYaw;
+        float flAngularVelocity;
 
-		bool	bLooping;
-		int		nFlags;
+        bool bLooping;
+        int nFlags;
 
-		AI_Waypoint_t *pWaypoint;
+        AI_Waypoint_t *pWaypoint;
 
-	public:
-		AI_Movementscript_t *pNext;
-		AI_Movementscript_t *pPrev;
+       public:
+        AI_Movementscript_t *pNext;
+        AI_Movementscript_t *pPrev;
 
-		Vector	vecLocation;
+        Vector vecLocation;
+    };
 
-	};
-	
-	//---------------------------------
+    //---------------------------------
 
-	CUtlVector<AI_Movementscript_t>	m_scriptMove;
-	CUtlVector<AI_Movementscript_t>	m_scriptTurn;
+    CUtlVector< AI_Movementscript_t > m_scriptMove;
+    CUtlVector< AI_Movementscript_t > m_scriptTurn;
 
-	//---------------------------------
+    //---------------------------------
 
-	bool			m_bDeceleratingToGoal;
+    bool m_bDeceleratingToGoal;
 
-	int				m_iPrimaryLayer;
-	int				m_iSecondaryLayer;
+    int m_iPrimaryLayer;
+    int m_iSecondaryLayer;
 
-	int				m_nPrimarySequence;
-	int				m_nSecondarySequence;
-	float			m_flSecondaryWeight;
+    int m_nPrimarySequence;
+    int m_nSecondarySequence;
+    float m_flSecondaryWeight;
 
-	Activity		m_nSavedGoalActivity;
-	Activity		m_nSavedTranslatedGoalActivity;
-	int				m_nGoalSequence;
+    Activity m_nSavedGoalActivity;
+    Activity m_nSavedTranslatedGoalActivity;
+    int m_nGoalSequence;
 
-	int				m_nPrevMovementSequence;
-	int				m_nInteriorSequence;
+    int m_nPrevMovementSequence;
+    int m_nInteriorSequence;
 
-	float			m_flStartCycle;
+    float m_flStartCycle;
 
-	float			m_flCurrRate;
+    float m_flCurrRate;
 
-	float			m_flPredictiveSpeedAdjust;		// predictive speed adjust from probing slope 
-	float			m_flReactiveSpeedAdjust;		// reactive speed adjust when slope movement detected
-	Vector			m_vecPrevOrigin1;
-	Vector			m_vecPrevOrigin2;
+    float m_flPredictiveSpeedAdjust;  // predictive speed adjust from probing slope
+    float m_flReactiveSpeedAdjust;    // reactive speed adjust when slope movement detected
+    Vector m_vecPrevOrigin1;
+    Vector m_vecPrevOrigin2;
 
-	//---------------------------------
+    //---------------------------------
 
-	float			m_flNextTurnGesture;	// next time for large turn gesture
+    float m_flNextTurnGesture;  // next time for large turn gesture
 
-	//---------------------------------
-	float			m_prevYaw;
-	float			m_doTurn;
-	float			m_doLeft;
-	float			m_doRight;
-	float			m_flNextTurnAct;		// next time for small turn gesture
+    //---------------------------------
+    float m_prevYaw;
+    float m_doTurn;
+    float m_doLeft;
+    float m_doRight;
+    float m_flNextTurnAct;  // next time for small turn gesture
 
-	
-	float	GetMoveScriptDist( float &flNewSpeed );
-	float	GetMoveScriptYaw( void );
-	void	SetMoveScriptAnim( float flNewSpeed );
+    float GetMoveScriptDist( float &flNewSpeed );
+    float GetMoveScriptYaw( void );
+    void SetMoveScriptAnim( float flNewSpeed );
 
-	int		GetInteriorSequence( int fromSequence );
+    int GetInteriorSequence( int fromSequence );
 
-	DECLARE_SIMPLE_DATADESC();
+    DECLARE_SIMPLE_DATADESC();
 };
 
 //-----------------------------------------------------------------------------
@@ -209,52 +233,58 @@ private:
 //
 //-----------------------------------------------------------------------------
 
-template <class BASE_NPC>
+template < class BASE_NPC >
 class CAI_BlendingHost : public BASE_NPC
 {
-	DECLARE_CLASS_NOFRIEND( CAI_BlendingHost, BASE_NPC );
-public:
-	const CAI_BlendedMotor *GetBlendedMotor() const { return assert_cast<const CAI_BlendedMotor *>(this->GetMotor()); }
-	CAI_BlendedMotor *		GetBlendedMotor()		{ return assert_cast<CAI_BlendedMotor *>(this->GetMotor()); }
+    DECLARE_CLASS_NOFRIEND( CAI_BlendingHost, BASE_NPC );
 
-	CAI_Motor *CreateMotor()
-	{
-		MEM_ALLOC_CREDIT();
-		return new CAI_BlendedMotor( this );
-	}
+   public:
+    const CAI_BlendedMotor *GetBlendedMotor() const
+    {
+        return assert_cast< const CAI_BlendedMotor * >( this->GetMotor() );
+    }
+    CAI_BlendedMotor *GetBlendedMotor()
+    {
+        return assert_cast< CAI_BlendedMotor * >( this->GetMotor() );
+    }
 
-	CAI_Navigator *CreateNavigator()
-	{
-		CAI_Navigator *pNavigator = BaseClass::CreateNavigator();
-		pNavigator->SetValidateActivitySpeed( false );
-		return pNavigator;
-	}
+    CAI_Motor *CreateMotor()
+    {
+        MEM_ALLOC_CREDIT();
+        return new CAI_BlendedMotor( this );
+    }
 
-	float MaxYawSpeed( void )
-	{
-		float override = GetBlendedMotor()->OverrideMaxYawSpeed( this->GetActivity() );
-		if ( override != -1 )
-			return override;
-		return BaseClass::MaxYawSpeed();
-	}
+    CAI_Navigator *CreateNavigator()
+    {
+        CAI_Navigator *pNavigator = BaseClass::CreateNavigator();
+        pNavigator->SetValidateActivitySpeed( false );
+        return pNavigator;
+    }
 
-	float GetTimeToNavGoal()
-	{
-		float result = GetBlendedMotor()->GetMoveScriptTotalTime();
-		if ( result != -1 )
-			return result;
-		return BaseClass::GetTimeToNavGoal();
-	}
+    float MaxYawSpeed( void )
+    {
+        float override = GetBlendedMotor()->OverrideMaxYawSpeed( this->GetActivity() );
+        if ( override != -1 )
+            return override;
+        return BaseClass::MaxYawSpeed();
+    }
 
+    float GetTimeToNavGoal()
+    {
+        float result = GetBlendedMotor()->GetMoveScriptTotalTime();
+        if ( result != -1 )
+            return result;
+        return BaseClass::GetTimeToNavGoal();
+    }
 };
 
 //-------------------------------------
 // to simplify basic usage:
-class CAI_BlendedNPC : public CAI_BlendingHost<CAI_BaseNPC>
+class CAI_BlendedNPC : public CAI_BlendingHost< CAI_BaseNPC >
 {
-	DECLARE_CLASS( CAI_BlendedNPC, CAI_BlendingHost<CAI_BaseNPC> );
+    DECLARE_CLASS( CAI_BlendedNPC, CAI_BlendingHost< CAI_BaseNPC > );
 };
 
-//-----------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------
 
 #endif

@@ -29,7 +29,7 @@ class CNetworkManager : public CBaseGameSystemPerFrame, public CGameEventListene
     {
         return "CNetworkManager";
     }
-    
+
     // IGameEventListener interface:
     virtual void FireGameEvent( IGameEvent *event );
 

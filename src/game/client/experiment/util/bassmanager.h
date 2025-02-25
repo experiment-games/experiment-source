@@ -16,7 +16,7 @@ typedef void( CALLBACK CBassManagerBlockDownloadedCallback )( const void *buffer
 
 typedef void( CALLBACK CBassManagerReadyCallback )( HSYNC handle, DWORD channel, DWORD data, void *user );
 
-class IAudioChannel; // forward declaration
+class IAudioChannel;  // forward declaration
 
 namespace BassManagerFlags
 {
@@ -61,13 +61,13 @@ class CBassManager : public CBaseGameSystemPerFrame
         const char *filename,
         int flags );
 
-    //void PlayUrlWithBlockCallback(
-    //    const char *url,
-    //    int flags,
-    //    CBassManagerBlockDownloadedCallback blockDownloadedCallback,
-    //    IBassManagerCallbackData *callbackData );
+    // void PlayUrlWithBlockCallback(
+    //     const char *url,
+    //     int flags,
+    //     CBassManagerBlockDownloadedCallback blockDownloadedCallback,
+    //     IBassManagerCallbackData *callbackData );
 
-    //void EnqueueCallbackTask( std::function< void() > task );
+    // void EnqueueCallbackTask( std::function< void() > task );
 
    protected:
     int ToBassFlags( int flags );
@@ -76,8 +76,8 @@ class CBassManager : public CBaseGameSystemPerFrame
     CUtlVector< HSTREAM > m_Streams;
 
     //// Task queue for processing callbacks on the main thread
-    //std::queue< std::function< void() > > m_TaskQueue;
-    //CThreadFastMutex m_TaskQueueMutex;
+    // std::queue< std::function< void() > > m_TaskQueue;
+    // CThreadFastMutex m_TaskQueueMutex;
 };
 
 extern CBassManager *g_pBassManager;

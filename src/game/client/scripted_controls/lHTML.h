@@ -25,7 +25,10 @@ class LHTML : public HTML
     virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers );
     virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE;
 
-    bool IsLoading() { return m_bIsLoading; }
+    bool IsLoading()
+    {
+        return m_bIsLoading;
+    }
 
    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )

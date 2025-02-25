@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 class IGameSystem;
 struct audioparams_t;
@@ -24,4 +23,4 @@ extern void Soundscape_Update( audioparams_t &audio );
 // sounds are still playing when they're not.
 void Soundscape_OnStopAllSounds();
 
-#endif // C_SOUNDSCAPE_H
+#endif  // C_SOUNDSCAPE_H

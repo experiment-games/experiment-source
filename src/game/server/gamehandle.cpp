@@ -4,11 +4,10 @@
 //			this is in its own file to protect it from tier0 PROTECTED_THINGS
 //=============================================================================//
 
-
-#if defined(_WIN32)
+#if defined( _WIN32 )
 #include "winlite.h"
 extern HMODULE win32DLLHandle;
-#elif defined(POSIX)
+#elif defined( POSIX )
 #include <stdio.h>
 #include "tier0/dbg.h"
 #endif
@@ -18,13 +17,12 @@ extern HMODULE win32DLLHandle;
 
 void *GetGameModuleHandle()
 {
-#if defined(_WIN32)
-	return (void *)win32DLLHandle;
-#elif defined(POSIX)
-	Assert(0);
-	return NULL; // NOT implemented
+#if defined( _WIN32 )
+    return ( void * )win32DLLHandle;
+#elif defined( POSIX )
+    Assert( 0 );
+    return NULL;  // NOT implemented
 #else
 #error "GetGameModuleHandle() needs to be implemented"
 #endif
 }
-

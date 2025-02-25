@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,13 +12,11 @@
 #pragma once
 #endif
 
-
 #include <vgui_controls/EditablePanel.h>
 #include "c_baseentity.h"
 #include "panelmetaclassmgr.h"
 
 class KeyValues;
-
 
 //-----------------------------------------------------------------------------
 // Helper macro to make overlay factories one line of code. Use like this:
@@ -26,145 +24,148 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 struct VGuiScreenInitData_t
 {
-	C_BaseEntity *m_pEntity;
+    C_BaseEntity *m_pEntity;
 
-	VGuiScreenInitData_t() : m_pEntity(NULL) {}
-	VGuiScreenInitData_t( C_BaseEntity *pEntity ) : m_pEntity(pEntity) {}
+    VGuiScreenInitData_t()
+        : m_pEntity( NULL ) {}
+    VGuiScreenInitData_t( C_BaseEntity *pEntity )
+        : m_pEntity( pEntity ) {}
 };
 
-#define DECLARE_VGUI_SCREEN_FACTORY( _PanelClass, _nameString )	\
-	DECLARE_PANEL_FACTORY( _PanelClass, VGuiScreenInitData_t, _nameString )
-
+#define DECLARE_VGUI_SCREEN_FACTORY( _PanelClass, _nameString ) \
+    DECLARE_PANEL_FACTORY( _PanelClass, VGuiScreenInitData_t, _nameString )
 
 //-----------------------------------------------------------------------------
 // Base class for vgui screen panels
 //-----------------------------------------------------------------------------
 class CVGuiScreenPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_GAMEROOT( CVGuiScreenPanel, vgui::EditablePanel );
+    DECLARE_CLASS_GAMEROOT( CVGuiScreenPanel, vgui::EditablePanel );
 
-public:
-	CVGuiScreenPanel( vgui::Panel *parent, const char *panelName );
-	CVGuiScreenPanel( vgui::Panel *parent, const char *panelName, vgui::HScheme hScheme );
-	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
-	vgui::Panel *CreateControlByName(const char *controlName);
-	virtual void OnCommand( const char *command );
+   public:
+    CVGuiScreenPanel( vgui::Panel *parent, const char *panelName );
+    CVGuiScreenPanel( vgui::Panel *parent, const char *panelName, vgui::HScheme hScheme );
+    virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
+    vgui::Panel *CreateControlByName( const char *controlName );
+    virtual void OnCommand( const char *command );
 
-protected:
-	C_BaseEntity *GetEntity() const { return m_hEntity.Get(); }
+   protected:
+    C_BaseEntity *GetEntity() const
+    {
+        return m_hEntity.Get();
+    }
 
-private:
-	EHANDLE	m_hEntity;
+   private:
+    EHANDLE m_hEntity;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VGuiScreen : public C_BaseEntity
 {
-	DECLARE_CLASS( C_VGuiScreen, C_BaseEntity );
-public:
-	DECLARE_CLIENTCLASS();
+    DECLARE_CLASS( C_VGuiScreen, C_BaseEntity );
 
-	C_VGuiScreen();
-	~C_VGuiScreen();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	virtual void PreDataUpdate( DataUpdateType_t updateType );
-	virtual void OnDataChanged( DataUpdateType_t type );
-	virtual int DrawModel( int flags );
-	virtual bool ShouldDraw( void );
-	virtual void ClientThink( );
-	virtual void GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pOrigin, QAngle *pAngles );
-	virtual bool IsVisibleToPlayer( C_BasePlayer *pViewingPlayer );
-	virtual bool IsTransparent( void );
+    C_VGuiScreen();
+    ~C_VGuiScreen();
 
-	const char *PanelName() const;
+    virtual void PreDataUpdate( DataUpdateType_t updateType );
+    virtual void OnDataChanged( DataUpdateType_t type );
+    virtual int DrawModel( int flags );
+    virtual bool ShouldDraw( void );
+    virtual void ClientThink();
+    virtual void GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pOrigin, QAngle *pAngles );
+    virtual bool IsVisibleToPlayer( C_BasePlayer *pViewingPlayer );
+    virtual bool IsTransparent( void );
 
-	// The view screen has the cursor pointing at it
-	void GainFocus( );
-	void LoseFocus();
+    const char *PanelName() const;
 
-	// Button state...
-	void SetButtonState( int nButtonState );
+    // The view screen has the cursor pointing at it
+    void GainFocus();
+    void LoseFocus();
 
-	// Is the screen backfaced given a view position?
-	bool IsBackfacing( const Vector &viewOrigin );
+    // Button state...
+    void SetButtonState( int nButtonState );
 
-	// Return intersection point of ray with screen in barycentric coords
-	bool IntersectWithRay( const Ray_t &ray, float *u, float *v, float *t );
+    // Is the screen backfaced given a view position?
+    bool IsBackfacing( const Vector &viewOrigin );
 
-	// Is the screen turned on?
-	bool IsActive() const;
+    // Return intersection point of ray with screen in barycentric coords
+    bool IntersectWithRay( const Ray_t &ray, float *u, float *v, float *t );
 
-	// Are we only visible to teammates?
-	bool IsVisibleOnlyToTeammates() const;
+    // Is the screen turned on?
+    bool IsActive() const;
 
-	// Are we visible to someone on this team?
-	bool IsVisibleToTeam( int nTeam );
+    // Are we only visible to teammates?
+    bool IsVisibleOnlyToTeammates() const;
 
-	bool IsAttachedToViewModel() const;
+    // Are we visible to someone on this team?
+    bool IsVisibleToTeam( int nTeam );
 
-	virtual RenderGroup_t GetRenderGroup();
+    bool IsAttachedToViewModel() const;
 
-	bool AcceptsInput() const;
-	void SetAcceptsInput( bool acceptsinput );
+    virtual RenderGroup_t GetRenderGroup();
 
-	C_BasePlayer *GetPlayerOwner( void );
-	bool IsInputOnlyToOwner( void );
+    bool AcceptsInput() const;
+    void SetAcceptsInput( bool acceptsinput );
 
-private:
-	// Vgui screen management
-	void CreateVguiScreen( const char *pTypeName );
-	void DestroyVguiScreen( );
+    C_BasePlayer *GetPlayerOwner( void );
+    bool IsInputOnlyToOwner( void );
 
-	//  Computes the panel to world transform
-	void ComputePanelToWorld();
+   private:
+    // Vgui screen management
+    void CreateVguiScreen( const char *pTypeName );
+    void DestroyVguiScreen();
 
-	// Computes control points of the quad describing the screen
-	void ComputeEdges( Vector *pUpperLeft, Vector *pUpperRight, Vector *pLowerLeft );
+    //  Computes the panel to world transform
+    void ComputePanelToWorld();
 
-	// Writes the z buffer
-	void DrawScreenOverlay();
+    // Computes control points of the quad describing the screen
+    void ComputeEdges( Vector *pUpperLeft, Vector *pUpperRight, Vector *pLowerLeft );
 
-private:
-	int m_nPixelWidth; 
-	int m_nPixelHeight;
-	float m_flWidth; 
-	float m_flHeight;
-	int m_nPanelName;	// The name of the panel 
-	int	m_nButtonState;
-	int m_nButtonPressed;
-	int m_nButtonReleased;
-	int m_nOldPx;
-	int m_nOldPy;
-	int m_nOldButtonState;
-	int m_nAttachmentIndex;
-	int m_nOverlayMaterial;
-	int m_fScreenFlags;
+    // Writes the z buffer
+    void DrawScreenOverlay();
 
-	int	m_nOldPanelName;
-	int m_nOldOverlayMaterial;
+   private:
+    int m_nPixelWidth;
+    int m_nPixelHeight;
+    float m_flWidth;
+    float m_flHeight;
+    int m_nPanelName;  // The name of the panel
+    int m_nButtonState;
+    int m_nButtonPressed;
+    int m_nButtonReleased;
+    int m_nOldPx;
+    int m_nOldPy;
+    int m_nOldButtonState;
+    int m_nAttachmentIndex;
+    int m_nOverlayMaterial;
+    int m_fScreenFlags;
 
-	bool m_bLoseThinkNextFrame;
+    int m_nOldPanelName;
+    int m_nOldOverlayMaterial;
 
-	bool	m_bAcceptsInput;
+    bool m_bLoseThinkNextFrame;
 
-	CMaterialReference	m_WriteZMaterial;
-	CMaterialReference	m_OverlayMaterial;
+    bool m_bAcceptsInput;
 
-	VMatrix	m_PanelToWorld;
+    CMaterialReference m_WriteZMaterial;
+    CMaterialReference m_OverlayMaterial;
 
-	CPanelWrapper m_PanelWrapper;
+    VMatrix m_PanelToWorld;
 
-	CHandle<C_BasePlayer> m_hPlayerOwner;
+    CPanelWrapper m_PanelWrapper;
+
+    CHandle< C_BasePlayer > m_hPlayerOwner;
 };
-
 
 //-----------------------------------------------------------------------------
 // Returns an entity that is the nearby vgui screen; NULL if there isn't one
 //-----------------------------------------------------------------------------
 C_BaseEntity *FindNearbyVguiScreen( const Vector &viewPosition, const QAngle &viewAngle, int nTeam = -1 );
-
 
 //-----------------------------------------------------------------------------
 // Activates/Deactivates vgui screen
@@ -172,16 +173,12 @@ C_BaseEntity *FindNearbyVguiScreen( const Vector &viewPosition, const QAngle &vi
 void ActivateVguiScreen( C_BaseEntity *pVguiScreen );
 void DeactivateVguiScreen( C_BaseEntity *pVguiScreen );
 
-
 //-----------------------------------------------------------------------------
 // Updates vgui screen button state
 //-----------------------------------------------------------------------------
 void SetVGuiScreenButtonState( C_BaseEntity *pVguiScreen, int nButtonState );
 
-
 // Called at shutdown.
 void ClearKeyValuesCache();
 
-
-#endif // C_VGUISCREEN_H
-  
+#endif  // C_VGUISCREEN_H

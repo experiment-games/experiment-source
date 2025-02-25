@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,47 +20,48 @@ class CBaseHLCombatWeapon : public CBaseCombatWeapon
 {
 #if !defined( CLIENT_DLL )
 #ifndef _XBOX
-	DECLARE_DATADESC();
+    DECLARE_DATADESC();
 #else
-protected:
-	DECLARE_DATADESC();
-private:
+   protected:
+    DECLARE_DATADESC();
+
+   private:
 #endif
 #endif
 
-	DECLARE_CLASS( CBaseHLCombatWeapon, CBaseCombatWeapon );
-public:
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
+    DECLARE_CLASS( CBaseHLCombatWeapon, CBaseCombatWeapon );
 
-	virtual bool	WeaponShouldBeLowered( void );
+   public:
+    DECLARE_NETWORKCLASS();
+    DECLARE_PREDICTABLE();
 
-			bool	CanLower();
-	virtual bool	Ready( void );
-	virtual bool	Lower( void );
-	virtual bool	Deploy( void );
-	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo );
-	virtual void	WeaponIdle( void );
+    virtual bool WeaponShouldBeLowered( void );
 
-	virtual void	AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles );
-	virtual	float	CalcViewmodelBob( void );
+    bool CanLower();
+    virtual bool Ready( void );
+    virtual bool Lower( void );
+    virtual bool Deploy( void );
+    virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
+    virtual void WeaponIdle( void );
 
-	virtual Vector	GetBulletSpread( WeaponProficiency_t proficiency );
-	virtual float	GetSpreadBias( WeaponProficiency_t proficiency );
+    virtual void AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles );
+    virtual float CalcViewmodelBob( void );
 
-	virtual const	WeaponProficiencyInfo_t *GetProficiencyValues();
-	static const	WeaponProficiencyInfo_t *GetDefaultProficiencyValues();
+    virtual Vector GetBulletSpread( WeaponProficiency_t proficiency );
+    virtual float GetSpreadBias( WeaponProficiency_t proficiency );
 
-	virtual void	ItemHolsterFrame( void );
+    virtual const WeaponProficiencyInfo_t *GetProficiencyValues();
+    static const WeaponProficiencyInfo_t *GetDefaultProficiencyValues();
 
-	int				m_iPrimaryAttacks;		// # of primary attacks performed with this weapon
-	int				m_iSecondaryAttacks;	// # of secondary attacks performed with this weapon
+    virtual void ItemHolsterFrame( void );
 
-protected:
+    int m_iPrimaryAttacks;    // # of primary attacks performed with this weapon
+    int m_iSecondaryAttacks;  // # of secondary attacks performed with this weapon
 
-	bool			m_bLowered;			// Whether the viewmodel is raised or lowered
-	float			m_flRaiseTime;		// If lowered, the time we should raise the viewmodel
-	float			m_flHolsterTime;	// When the weapon was holstered
+   protected:
+    bool m_bLowered;        // Whether the viewmodel is raised or lowered
+    float m_flRaiseTime;    // If lowered, the time we should raise the viewmodel
+    float m_flHolsterTime;  // When the weapon was holstered
 };
 
-#endif // BASEHLCOMBATWEAPON_SHARED_H
+#endif  // BASEHLCOMBATWEAPON_SHARED_H

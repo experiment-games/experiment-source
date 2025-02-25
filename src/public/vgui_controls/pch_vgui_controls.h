@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -112,4 +112,4 @@
 #include "vgui_controls/InputDialog.h"
 #endif
 
-#endif // PCH_VGUI_CONTROLS_H
+#endif  // PCH_VGUI_CONTROLS_H

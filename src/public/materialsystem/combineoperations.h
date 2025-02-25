@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,17 +13,17 @@
 // Keep these in sync with cCombineMaterialName in ctexturecompositor.cpp
 enum ECombineOperation
 {
-	ECO_Multiply = 0,
-	ECO_Add,
-	ECO_Lerp,
+    ECO_Multiply = 0,
+    ECO_Add,
+    ECO_Lerp,
 
-	ECO_Select,
+    ECO_Select,
 
-	ECO_Legacy_Lerp_FirstPass,
-	ECO_Legacy_Lerp_SecondPass,
+    ECO_Legacy_Lerp_FirstPass,
+    ECO_Legacy_Lerp_SecondPass,
 
-	ECO_Error,
-	ECO_COUNT
+    ECO_Error,
+    ECO_COUNT
 };
 
 #endif /* COMBINEOPERATIONS_H */

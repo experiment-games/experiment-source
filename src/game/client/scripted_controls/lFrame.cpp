@@ -79,18 +79,18 @@ LUA_BINDING_BEGIN( Frame, CanChainKeysToParent, "class", "Returns whether keys c
 }
 LUA_BINDING_END( "boolean", "Whether keys can be chained to the parent" )
 
-//LUA_BINDING_BEGIN( Frame, ChainToAnimationMap, "class|static", "Chains the frame to an animation map" )
+// LUA_BINDING_BEGIN( Frame, ChainToAnimationMap, "class|static", "Chains the frame to an animation map" )
 //{
-//    lua_Frame::ChainToAnimationMap();
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     lua_Frame::ChainToAnimationMap();
+//     return 0;
+// }
+// LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Frame, ChainToMap, "class|static", "Chains the frame to a keyboard map" )
+// LUA_BINDING_BEGIN( Frame, ChainToMap, "class|static", "Chains the frame to a keyboard map" )
 //{
-//    lua_Frame::ChainToMap();
-//    return 0;
-//}
+//     lua_Frame::ChainToMap();
+//     return 0;
+// }
 
 LUA_BINDING_BEGIN( Frame, Close, "class", "Closes the frame" )
 {
@@ -212,21 +212,21 @@ LUA_BINDING_BEGIN( Frame, IsSmallCaption, "class", "Returns whether the frame ha
 }
 LUA_BINDING_END( "boolean", "Whether the frame has a small caption" )
 
-//LUA_BINDING_BEGIN( Frame, KB_AddBoundKey, "class|static", "Adds a bound key" )
+// LUA_BINDING_BEGIN( Frame, KB_AddBoundKey, "class|static", "Adds a bound key" )
 //{
-//    const char *keyName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "keyName" );
-//    int keyCode = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keyCode" );
-//    int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
-//    lua_Frame::KB_AddBoundKey( keyName, keyCode, modifiers );
-//    return 0;
-//}
-//LUA_BINDING_END()
+//     const char *keyName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "keyName" );
+//     int keyCode = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "keyCode" );
+//     int modifiers = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "modifiers" );
+//     lua_Frame::KB_AddBoundKey( keyName, keyCode, modifiers );
+//     return 0;
+// }
+// LUA_BINDING_END()
 
-//LUA_BINDING_BEGIN( Frame, KB_ChainToMap, "class|static", "Chains the frame to a keyboard map" )
+// LUA_BINDING_BEGIN( Frame, KB_ChainToMap, "class|static", "Chains the frame to a keyboard map" )
 //{
-//    lua_Frame::KB_ChainToMap();
-//    return 0;
-//}
+//     lua_Frame::KB_ChainToMap();
+//     return 0;
+// }
 
 LUA_BINDING_BEGIN( Frame, MoveToCenterOfScreen, "class", "Moves the frame to the center of the screen" )
 {

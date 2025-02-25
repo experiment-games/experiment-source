@@ -14,4 +14,4 @@
 
 ISaveRestoreBlockHandler *GetAchievementSaveRestoreBlockHandler();
 
-#endif // ACHIEVEMENT_SAVERESTORE_H
+#endif  // ACHIEVEMENT_SAVERESTORE_H

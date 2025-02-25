@@ -66,8 +66,8 @@ void CMapLoadBG::OnMessage( const KeyValues* params, vgui::VPANEL fromPanel )
 {
     if ( V_strcmp( params->GetName(), "Activate" ) == 0 )
     {
-        //vgui::VPANEL rootPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
-        //SetVisibilityRecursive( rootPanel, "LoadingDialog" );
+        // vgui::VPANEL rootPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
+        // SetVisibilityRecursive( rootPanel, "LoadingDialog" );
     }
 
     // Call the base class OnMessage to handle messages we didn't process

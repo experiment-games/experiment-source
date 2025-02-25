@@ -36,7 +36,8 @@
 // It is not compiled into anything, but it may be read by an automated
 // documentation generator.
 
-namespace google {
+namespace google
+{
 
 // Core components of the Protocol Buffers runtime library.
 //
@@ -60,5 +61,7 @@ namespace google {
 // The implementation does contain some "const" methods which actually modify
 // the object behind the scenes -- e.g., to cache results -- but in these cases
 // mutex locking is used to make the access thread-safe.
-namespace protobuf {}
+namespace protobuf
+{
+}
 }  // namespace google

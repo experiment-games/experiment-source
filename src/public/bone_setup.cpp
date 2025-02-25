@@ -792,7 +792,7 @@ static void CalcZeroframeData( const CStudioHdr *pStudioHdr, const studiohdr_t *
                 }
                 pData += sizeof( Quaternion64 );
             }
-            if (pAnimbone[j].flags & BONE_HAS_SAVEFRAME_ROT32)
+            if ( pAnimbone[j].flags & BONE_HAS_SAVEFRAME_ROT32 )
             {
                 AssertMsg( false, "Not yet implemented BONE_HAS_SAVEFRAME_ROT32!" );
             }
@@ -2642,7 +2642,7 @@ class CIKSolver
 // Purpose: visual debugging code
 //-----------------------------------------------------------------------------
 #if 1
-inline void debugLine( const Vector &origin, const Vector &dest, int r, int g, int b, bool noDepthTest, float duration ) {};
+inline void debugLine( const Vector &origin, const Vector &dest, int r, int g, int b, bool noDepthTest, float duration ){};
 #else
 extern void drawLine( const Vector &p1, const Vector &p2, int r = 0, int g = 0, int b = 1, bool noDepthTest = true, float duration = 0.1 );
 void debugLine( const Vector &origin, const Vector &dest, int r, int g, int b, bool noDepthTest, float duration )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,130 +16,148 @@ class CSteamJet;
 
 class CThrustController : public IMotionEvent
 {
-	DECLARE_SIMPLE_DATADESC();
+    DECLARE_SIMPLE_DATADESC();
 
-public:
-	IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
-	{
-		angular = m_torqueVector;
-		linear = m_thrustVector;
-		return SIM_LOCAL_ACCELERATION;
-	}
+   public:
+    IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
+    {
+        angular = m_torqueVector;
+        linear = m_thrustVector;
+        return SIM_LOCAL_ACCELERATION;
+    }
 
-	void CalcThrust( const Vector &position, const Vector &direction, IPhysicsObject *pPhys )
-	{
-		Vector force = direction * m_thrust * pPhys->GetMass();
-		
-		// Adjust for the position of the thruster -- apply proper torque)
-		pPhys->CalculateVelocityOffset( force, position, &m_thrustVector, &m_torqueVector );
-		pPhys->WorldToLocalVector( &m_thrustVector, m_thrustVector );
-	}
+    void CalcThrust( const Vector &position, const Vector &direction, IPhysicsObject *pPhys )
+    {
+        Vector force = direction * m_thrust * pPhys->GetMass();
 
-	Vector			m_thrustVector;
-	AngularImpulse	m_torqueVector;
-	float			m_thrust;
+        // Adjust for the position of the thruster -- apply proper torque)
+        pPhys->CalculateVelocityOffset( force, position, &m_thrustVector, &m_torqueVector );
+        pPhys->WorldToLocalVector( &m_thrustVector, m_thrustVector );
+    }
+
+    Vector m_thrustVector;
+    AngularImpulse m_torqueVector;
+    float m_thrust;
 };
 
 class CPhysicsCannister : public CBaseCombatCharacter, public CDefaultPlayerPickupVPhysics
 {
-	DECLARE_CLASS( CPhysicsCannister, CBaseCombatCharacter );
-public:
-	~CPhysicsCannister( void );
+    DECLARE_CLASS( CPhysicsCannister, CBaseCombatCharacter );
 
-	void Spawn( void );
-	void Precache( void );
-	virtual void OnRestore();
-	bool CreateVPhysics();
+   public:
+    ~CPhysicsCannister( void );
 
-	DECLARE_DATADESC();
-	virtual void VPhysicsUpdate( IPhysicsObject *pPhysics );
+    void Spawn( void );
+    void Precache( void );
+    virtual void OnRestore();
+    bool CreateVPhysics();
 
-	virtual QAngle PreferredCarryAngles( void ) { return QAngle( -90, 0, 0 ); }
-	virtual bool HasPreferredCarryAnglesForPlayer( CBasePlayer *pPlayer ) { return true; }
+    DECLARE_DATADESC();
+    virtual void VPhysicsUpdate( IPhysicsObject *pPhysics );
 
-	//
-	// Input handlers.
-	//
-	void InputActivate(inputdata_t &data);
-	void InputDeactivate(inputdata_t &data);
-	void InputExplode(inputdata_t &data);
-	void InputWake( inputdata_t &data );
+    virtual QAngle PreferredCarryAngles( void )
+    {
+        return QAngle( -90, 0, 0 );
+    }
+    virtual bool HasPreferredCarryAnglesForPlayer( CBasePlayer *pPlayer )
+    {
+        return true;
+    }
 
-	bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t& trace );
+    //
+    // Input handlers.
+    //
+    void InputActivate( inputdata_t &data );
+    void InputDeactivate( inputdata_t &data );
+    void InputExplode( inputdata_t &data );
+    void InputWake( inputdata_t &data );
 
-	virtual int OnTakeDamage( const CTakeDamageInfo &info );
+    bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t &trace );
 
-	int ObjectCaps() 
-	{ 
-		return (BaseClass::ObjectCaps() | FCAP_IMPULSE_USE);
-	}
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-	{
-		CBasePlayer *pPlayer = ToBasePlayer( pActivator );
-		if ( pPlayer )
-		{
-			pPlayer->PickupObject( this );
-		}
-	}
+    virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
-	void CannisterActivate( CBaseEntity *pActivator, const Vector &thrustOffset );
-	void CannisterFire( CBaseEntity *pActivator );
-	void Deactivate( void );
-	void Explode( CBaseEntity *pAttacker );
-	void ExplodeTouch( CBaseEntity *pOther );
-	void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
+    int ObjectCaps()
+    {
+        return ( BaseClass::ObjectCaps() | FCAP_IMPULSE_USE );
+    }
+    void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+    {
+        CBasePlayer *pPlayer = ToBasePlayer( pActivator );
+        if ( pPlayer )
+        {
+            pPlayer->PickupObject( this );
+        }
+    }
 
-	// Don't treat as a live target
-	virtual bool IsAlive( void ) { return false; }
+    void CannisterActivate( CBaseEntity *pActivator, const Vector &thrustOffset );
+    void CannisterFire( CBaseEntity *pActivator );
+    void Deactivate( void );
+    void Explode( CBaseEntity *pAttacker );
+    void ExplodeTouch( CBaseEntity *pOther );
+    void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
 
-	virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &dir, trace_t *ptr, CDmgAccumulator *pAccumulator );
+    // Don't treat as a live target
+    virtual bool IsAlive( void )
+    {
+        return false;
+    }
 
-	void	ShutdownJet( void );
-	void	BeginShutdownThink( void );
+    virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &dir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 
-public:
-	virtual bool OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason ) { return true; }
-	virtual void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
-	virtual void OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t reason );
-	virtual	CBasePlayer *HasPhysicsAttacker( float dt );
-	virtual bool ShouldPuntUseLaunchForces( PhysGunForce_t reason ) 
-	{ 
-		if ( reason == PHYSGUN_FORCE_LAUNCHED ) 
-			return (m_thrustTime!=0);
-			
-		return false; 
-	}
-	virtual AngularImpulse PhysGunLaunchAngularImpulse( void ) { return vec3_origin; }
-	virtual Vector PhysGunLaunchVelocity( const Vector &forward, float flMass ) { return vec3_origin; }
+    void ShutdownJet( void );
+    void BeginShutdownThink( void );
 
-protected:
-	void SetPhysicsAttacker( CBasePlayer *pEntity, float flTime );
+   public:
+    virtual bool OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
+    {
+        return true;
+    }
+    virtual void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
+    virtual void OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t reason );
+    virtual CBasePlayer *HasPhysicsAttacker( float dt );
+    virtual bool ShouldPuntUseLaunchForces( PhysGunForce_t reason )
+    {
+        if ( reason == PHYSGUN_FORCE_LAUNCHED )
+            return ( m_thrustTime != 0 );
 
+        return false;
+    }
+    virtual AngularImpulse PhysGunLaunchAngularImpulse( void )
+    {
+        return vec3_origin;
+    }
+    virtual Vector PhysGunLaunchVelocity( const Vector &forward, float flMass )
+    {
+        return vec3_origin;
+    }
 
-public:
-	Vector				m_thrustOrigin;
-	CThrustController	m_thruster;
-	IPhysicsMotionController *m_pController;
-	CSteamJet			*m_pJet;
-	bool				m_active;
-	float				m_thrustTime;
-	float				m_damage;
-	float				m_damageRadius;
+   protected:
+    void SetPhysicsAttacker( CBasePlayer *pEntity, float flTime );
 
-	float				m_activateTime;
-	string_t			m_gasSound;
+   public:
+    Vector m_thrustOrigin;
+    CThrustController m_thruster;
+    IPhysicsMotionController *m_pController;
+    CSteamJet *m_pJet;
+    bool m_active;
+    float m_thrustTime;
+    float m_damage;
+    float m_damageRadius;
 
-	bool				m_bFired;		// True if this cannister was fire by a weapon
+    float m_activateTime;
+    string_t m_gasSound;
 
-	COutputEvent		m_onActivate;
-	COutputEvent		m_OnAwakened;
+    bool m_bFired;  // True if this cannister was fire by a weapon
 
-	CHandle<CBasePlayer>	m_hPhysicsAttacker;
-	float					m_flLastPhysicsInfluenceTime;
-	EHANDLE					m_hLauncher;	// Entity that caused this cannister to launch
+    COutputEvent m_onActivate;
+    COutputEvent m_OnAwakened;
 
-private:
-	Vector CalcLocalThrust( const Vector &offset );
+    CHandle< CBasePlayer > m_hPhysicsAttacker;
+    float m_flLastPhysicsInfluenceTime;
+    EHANDLE m_hLauncher;  // Entity that caused this cannister to launch
+
+   private:
+    Vector CalcLocalThrust( const Vector &offset );
 };
 
-#endif // PHYSICS_CANNISTER_H
+#endif  // PHYSICS_CANNISTER_H

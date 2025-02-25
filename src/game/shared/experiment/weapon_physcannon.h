@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,8 +9,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
-
 
 //-----------------------------------------------------------------------------
 // Do we have the super-phys gun?
@@ -27,4 +25,4 @@ float PhysCannonGetHeldObjectMass( CBaseCombatWeapon *pActiveWeapon, IPhysicsObj
 
 CBaseEntity *PhysCannonGetHeldEntity( CBaseCombatWeapon *pActiveWeapon );
 
-#endif // WEAPON_PHYSCANNON_H
+#endif  // WEAPON_PHYSCANNON_H

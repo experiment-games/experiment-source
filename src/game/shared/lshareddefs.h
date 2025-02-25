@@ -17,6 +17,6 @@ typedef EmitSound_t lua_EmitSound_t;
 */
 
 LUA_API lua_FireBulletsInfo_t( lua_tofirebulletsinfo )( lua_State *L, int argIndex, lua_CBaseEntity *self );
-LUA_API void                       (lua_toemitsound) (lua_State *L, int argIndex, EmitSound_t &ep);
+LUA_API void( lua_toemitsound )( lua_State *L, int argIndex, EmitSound_t &ep );
 
-#endif // LSHAREDDEFS_H
+#endif  // LSHAREDDEFS_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,24 +14,23 @@
 #include "basecombatweapon.h"
 #include "energy_wave.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Shield
 //-----------------------------------------------------------------------------
 class CEnergyWave : public CBaseEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( CEnergyWave, CBaseEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-public:
-	void Spawn( void );
-	void Precache( void );
+   public:
+    DECLARE_CLASS( CEnergyWave, CBaseEntity );
+    DECLARE_SERVERCLASS();
 
-public:
-	static CEnergyWave* Create( CBaseEntity *pentOwner );
+   public:
+    void Spawn( void );
+    void Precache( void );
+
+   public:
+    static CEnergyWave* Create( CBaseEntity* pentOwner );
 };
 
-
-#endif //ENERGYWAVE_H
+#endif  // ENERGYWAVE_H

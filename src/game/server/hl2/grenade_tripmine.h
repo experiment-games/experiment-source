@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,41 +15,40 @@
 
 class CBeam;
 
-
 class CTripmineGrenade : public CBaseGrenade
 {
-public:
-	DECLARE_CLASS( CTripmineGrenade, CBaseGrenade );
+   public:
+    DECLARE_CLASS( CTripmineGrenade, CBaseGrenade );
 
-	CTripmineGrenade();
-	void Spawn( void );
-	void Precache( void );
+    CTripmineGrenade();
+    void Spawn( void );
+    void Precache( void );
 
-	int OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	
-	void WarningThink( void );
-	void PowerupThink( void );
-	void BeamBreakThink( void );
-	void DelayDeathThink( void );
-	void Event_Killed( const CTakeDamageInfo &info );
+    int OnTakeDamage_Alive( const CTakeDamageInfo &info );
 
-	void MakeBeam( void );
-	void KillBeam( void );
+    void WarningThink( void );
+    void PowerupThink( void );
+    void BeamBreakThink( void );
+    void DelayDeathThink( void );
+    void Event_Killed( const CTakeDamageInfo &info );
 
-public:
-	EHANDLE		m_hOwner;
+    void MakeBeam( void );
+    void KillBeam( void );
 
-private:
-	float		m_flPowerUp;
-	Vector		m_vecDir;
-	Vector		m_vecEnd;
-	float		m_flBeamLength;
+   public:
+    EHANDLE m_hOwner;
 
-	CBeam		*m_pBeam;
-	Vector		m_posOwner;
-	Vector		m_angleOwner;
+   private:
+    float m_flPowerUp;
+    Vector m_vecDir;
+    Vector m_vecEnd;
+    float m_flBeamLength;
 
-	DECLARE_DATADESC();
+    CBeam *m_pBeam;
+    Vector m_posOwner;
+    Vector m_angleOwner;
+
+    DECLARE_DATADESC();
 };
 
-#endif // GRENADE_TRIPMINE_H
+#endif  // GRENADE_TRIPMINE_H

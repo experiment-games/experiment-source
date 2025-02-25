@@ -1,115 +1,115 @@
 #include <cbase.h>
-//#include "vgui/KeyCode.h"
-//#include <vgui_int.h>
-//#include "luamanager.h"
-//#include "luasrclib.h"
+// #include "vgui/KeyCode.h"
+// #include <vgui_int.h>
+// #include "luamanager.h"
+// #include "luasrclib.h"
 //
-//#include "scripted_controls/lPanel.h"
-//#include "scripted_controls/LPropertyPage.h"
+// #include "scripted_controls/lPanel.h"
+// #include "scripted_controls/LPropertyPage.h"
 //
 //// memdbgon must be the last include file in a .cpp file!!!
-//#include "tier0/memdbgon.h"
+// #include "tier0/memdbgon.h"
 //
-//using namespace vgui;
+// using namespace vgui;
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Constructor
 ////-----------------------------------------------------------------------------
-//LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
-//    : PropertyPage( parent, panelName, L )
+// LPropertyPage::LPropertyPage( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+//     : PropertyPage( parent, panelName, L )
 //{
-//    m_lua_State = L;
-//}
+//     m_lua_State = L;
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Destructor
 ////-----------------------------------------------------------------------------
-//LPropertyPage::~LPropertyPage()
+// LPropertyPage::~LPropertyPage()
 //{
-//}
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Called when page is loaded.  Data should be reloaded from document
 //// into controls.
 ////-----------------------------------------------------------------------------
-//void LPropertyPage::OnResetData()
+// void LPropertyPage::OnResetData()
 //{
-//#ifdef LUA_SDK
-//    BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnResetData" );
-//    LUA_CALL_PANEL_METHOD_END( 0, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnResetData" );
+//     LUA_CALL_PANEL_METHOD_END( 0, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Called when the OK / Apply button is pressed.  Changed data should
 //// be written into document.
 ////-----------------------------------------------------------------------------
-//void LPropertyPage::OnApplyChanges()
+// void LPropertyPage::OnApplyChanges()
 //{
-//#ifdef LUA_SDK
-//    BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnApplyChanges" );
-//    LUA_CALL_PANEL_METHOD_END( 0, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnApplyChanges" );
+//     LUA_CALL_PANEL_METHOD_END( 0, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Designed to be overriden
 ////-----------------------------------------------------------------------------
-//void LPropertyPage::OnPageShow()
+// void LPropertyPage::OnPageShow()
 //{
-//#ifdef LUA_SDK
-//    BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageShow" );
-//    LUA_CALL_PANEL_METHOD_END( 0, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageShow" );
+//     LUA_CALL_PANEL_METHOD_END( 0, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Designed to be overriden
 ////-----------------------------------------------------------------------------
-//void LPropertyPage::OnPageHide()
+// void LPropertyPage::OnPageHide()
 //{
-//#ifdef LUA_SDK
-//    BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageHide" );
-//    LUA_CALL_PANEL_METHOD_END( 0, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageHide" );
+//     LUA_CALL_PANEL_METHOD_END( 0, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose:
 //// Input  : *pageTab -
 ////-----------------------------------------------------------------------------
-//void LPropertyPage::OnPageTabActivated( Panel *pageTab )
+// void LPropertyPage::OnPageTabActivated( Panel *pageTab )
 //{
-//    _pageTab = pageTab;
+//     _pageTab = pageTab;
 //
-//#ifdef LUA_SDK
-//    BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageTabActivated" );
-//    pageTab->PushLuaInstance( m_lua_State );
-//    LUA_CALL_PANEL_METHOD_END( 1, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnPageTabActivated" );
+//     pageTab->PushLuaInstance( m_lua_State );
+//     LUA_CALL_PANEL_METHOD_END( 1, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose:
 ////-----------------------------------------------------------------------------
-//void LPropertyPage::OnKeyCodeTyped( KeyCode code )
+// void LPropertyPage::OnKeyCodeTyped( KeyCode code )
 //{
-//#ifdef LUA_SDK
-//    BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnKeyCodeTyped" );
-//    lua_pushinteger( m_lua_State, code );
-//    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+// #ifdef LUA_SDK
+//     BEGIN_LUA_CALL_PROPERTYPAGE_METHOD( "OnKeyCodeTyped" );
+//     lua_pushinteger( m_lua_State, code );
+//     LUA_CALL_PANEL_METHOD_END( 1, 1 );
 //
-//    LUA_RETURN_PANEL_NONE();
-//#endif
+//     LUA_RETURN_PANEL_NONE();
+// #endif
 //
-//    BaseClass::OnKeyCodeTyped( code );
-//}
+//     BaseClass::OnKeyCodeTyped( code );
+// }
 //
 ///*
 //** access functions (stack -> C)
 //*/
 //
-//LUA_API lua_PropertyPage *lua_topropertypage( lua_State *L, int idx )
+// LUA_API lua_PropertyPage *lua_topropertypage( lua_State *L, int idx )
 //{
 //    PHandle *phPanel =
 //        dynamic_cast< PHandle * >( ( PHandle * )lua_touserdata( L, idx ) );
@@ -121,7 +121,7 @@
 ///*
 //** push functions (C -> stack)
 //*/
-//LUALIB_API lua_PropertyPage *luaL_checkpropertypage( lua_State *L, int narg )
+// LUALIB_API lua_PropertyPage *luaL_checkpropertypage( lua_State *L, int narg )
 //{
 //    lua_PropertyPage *d = lua_topropertypage( L, narg );
 //    if ( d == NULL ) /* avoid extra test when d is not 0 */
@@ -129,80 +129,80 @@
 //    return d;
 //}
 //
-//static int PropertyPage_ChainToAnimationMap( lua_State *L )
+// static int PropertyPage_ChainToAnimationMap( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->ChainToAnimationMap();
 //    return 0;
 //}
 //
-//static int PropertyPage_ChainToMap( lua_State *L )
+// static int PropertyPage_ChainToMap( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->ChainToMap();
 //    return 0;
 //}
 //
-//static int PropertyPage_GetPanelBaseClassName( lua_State *L )
+// static int PropertyPage_GetPanelBaseClassName( lua_State *L )
 //{
 //    lua_pushstring( L, luaL_checkpropertypage( L, 1 )->GetPanelBaseClassName() );
 //    return 1;
 //}
 //
-//static int PropertyPage_GetPanelClassName( lua_State *L )
+// static int PropertyPage_GetPanelClassName( lua_State *L )
 //{
 //    lua_pushstring( L, luaL_checkpropertypage( L, 1 )->GetPanelClassName() );
 //    return 1;
 //}
 //
-//static int PropertyPage_HasUserConfigSettings( lua_State *L )
+// static int PropertyPage_HasUserConfigSettings( lua_State *L )
 //{
 //    lua_pushboolean( L, luaL_checkpropertypage( L, 1 )->HasUserConfigSettings() );
 //    return 1;
 //}
 //
-//static int PropertyPage_KB_AddBoundKey( lua_State *L )
+// static int PropertyPage_KB_AddBoundKey( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->KB_AddBoundKey(
 //        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
 //    return 0;
 //}
 //
-//static int PropertyPage_KB_ChainToMap( lua_State *L )
+// static int PropertyPage_KB_ChainToMap( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->KB_ChainToMap();
 //    return 0;
 //}
 //
-//static int PropertyPage_OnApplyChanges( lua_State *L )
+// static int PropertyPage_OnApplyChanges( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->OnApplyChanges();
 //    return 0;
 //}
 //
-//static int PropertyPage_OnKeyCodeTyped( lua_State *L )
+// static int PropertyPage_OnKeyCodeTyped( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->OnKeyCodeTyped( ( KeyCode )( int )luaL_checknumber( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyPage_OnPageHide( lua_State *L )
+// static int PropertyPage_OnPageHide( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->OnPageHide();
 //    return 0;
 //}
 //
-//static int PropertyPage_OnPageShow( lua_State *L )
+// static int PropertyPage_OnPageShow( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->OnPageShow();
 //    return 0;
 //}
 //
-//static int PropertyPage_OnResetData( lua_State *L )
+// static int PropertyPage_OnResetData( lua_State *L )
 //{
 //    luaL_checkpropertypage( L, 1 )->OnResetData();
 //    return 0;
 //}
 //
-//static int PropertyPage___index( lua_State *L )
+// static int PropertyPage___index( lua_State *L )
 //{
 //    PropertyPage *pPage = lua_topropertypage( L, 1 );
 //    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
@@ -225,7 +225,7 @@
 //    return 1;
 //}
 //
-//static int PropertyPage___newindex( lua_State *L )
+// static int PropertyPage___newindex( lua_State *L )
 //{
 //    PropertyPage *pPage = lua_topropertypage( L, 1 );
 //
@@ -249,13 +249,13 @@
 //    return 0;
 //}
 //
-//static int PropertyPage___eq( lua_State *L )
+// static int PropertyPage___eq( lua_State *L )
 //{
 //    lua_pushboolean( L, lua_topropertypage( L, 1 ) == lua_topropertypage( L, 2 ) );
 //    return 1;
 //}
 //
-//static int PropertyPage___tostring( lua_State *L )
+// static int PropertyPage___tostring( lua_State *L )
 //{
 //    PropertyPage *pPage = lua_topropertypage( L, 1 );
 //    if ( pPage == NULL )
@@ -270,7 +270,7 @@
 //    return 1;
 //}
 //
-//static const luaL_Reg PropertyPagemeta[] = {
+// static const luaL_Reg PropertyPagemeta[] = {
 //    { "ChainToAnimationMap", PropertyPage_ChainToAnimationMap },
 //    { "ChainToMap", PropertyPage_ChainToMap },
 //    { "GetPanelBaseClassName", PropertyPage_GetPanelBaseClassName },
@@ -290,7 +290,7 @@
 //    { "__gc", PanelCollectGarbage },
 //    { NULL, NULL } };
 //
-//static int luasrc_PropertyPage( lua_State *L )
+// static int luasrc_PropertyPage( lua_State *L )
 //{
 //    lua_PropertyPage *pPanel =
 //        new lua_PropertyPage( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
@@ -300,14 +300,14 @@
 //    return 1;
 //}
 //
-//static const luaL_Reg PropertyPage_funcs[] = {
+// static const luaL_Reg PropertyPage_funcs[] = {
 //    { "PropertyPage", luasrc_PropertyPage },
 //    { NULL, NULL } };
 //
 ///*
 //** Open PropertyPage object
 //*/
-//LUALIB_API int luaopen_vgui_PropertyPage( lua_State *L )
+// LUALIB_API int luaopen_vgui_PropertyPage( lua_State *L )
 //{
 //    LUA_PUSH_NEW_METATABLE( L, "PropertyPage" );
 //    luaL_register( L, NULL, PropertyPagemeta );

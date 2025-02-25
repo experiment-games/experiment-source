@@ -35,10 +35,10 @@ CScriptedClientLuaPanel::CScriptedClientLuaPanel( lua_State *L )
     // removed by the garbage collector.
     m_nRefCount = 1;
 
-	SetKeyBoardInputEnabled( false );
-	SetMouseInputEnabled( false );
+    SetKeyBoardInputEnabled( false );
+    SetMouseInputEnabled( false );
 
-	SetProportional( true );
+    SetProportional( true );
 }
 
 CScriptedClientLuaPanel::~CScriptedClientLuaPanel()
@@ -47,31 +47,30 @@ CScriptedClientLuaPanel::~CScriptedClientLuaPanel()
 
 void CScriptedClientLuaPanel::CreateDefaultPanels( void )
 {
-	// Was a nice idea, but is called on game init and not level init
+    // Was a nice idea, but is called on game init and not level init
 #if 0
 	LUA_CALL_HOOK_BEGIN( "CreateDefaultPanels" );
 	LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: called when the VGUI subsystem starts up
 //			Creates the sub panels and initialises them
 //-----------------------------------------------------------------------------
-void CScriptedClientLuaPanel::Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 * pGameEventManager )
+void CScriptedClientLuaPanel::Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 *pGameEventManager )
 {
-	CreateDefaultPanels();
+    CreateDefaultPanels();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the parent for each panel to use
 //-----------------------------------------------------------------------------
-void CScriptedClientLuaPanel::SetParent(vgui::VPANEL parent)
+void CScriptedClientLuaPanel::SetParent( vgui::VPANEL parent )
 {
-	EditablePanel::SetParent( parent );
-	// force ourselves to be proportional - when we set our parent above, if our new
-	// parent happened to be non-proportional (such as the vgui root panel), we got
-	// slammed to be nonproportional
-	EditablePanel::SetProportional( true );
+    EditablePanel::SetParent( parent );
+    // force ourselves to be proportional - when we set our parent above, if our new
+    // parent happened to be non-proportional (such as the vgui root panel), we got
+    // slammed to be nonproportional
+    EditablePanel::SetProportional( true );
 }

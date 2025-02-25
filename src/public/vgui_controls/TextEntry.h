@@ -239,7 +239,7 @@ class TextEntry : public Panel
     {
         return _cursorPos;
     }
-    virtual void SetCursorPos(int position)
+    virtual void SetCursorPos( int position )
     {
         _cursorPos = position;
     }

@@ -20,4 +20,4 @@ void WeaponManager_AmmoMod( CBaseCombatWeapon *pWeapon );
 void WeaponManager_AddManaged( CBaseEntity *pWeapon );
 void WeaponManager_RemoveManaged( CBaseEntity *pWeapon );
 
-#endif // GAMEWEAPONMANAGER_H
+#endif  // GAMEWEAPONMANAGER_H

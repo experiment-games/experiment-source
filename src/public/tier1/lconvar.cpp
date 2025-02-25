@@ -252,7 +252,7 @@ void ResetConVarDatabase( void )
 LUALIB_API int luaopen_ConsoleVariableMeta( lua_State *L )
 {
     LUA_PUSH_NEW_METATABLE( L, LUA_CONVARMETANAME );
-    
+
     LUA_REGISTRATION_COMMIT( ConsoleVariable );
 
     lua_pushvalue( L, -1 );           /* push metatable */

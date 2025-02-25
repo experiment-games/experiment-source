@@ -697,7 +697,7 @@ void *Panel::CreateLuaInstance( lua_State *L, Panel *pInstance )
 }
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <param name="L"></param>
 /// <param name="panel"></param>
@@ -1063,7 +1063,7 @@ int Panel::GetYPos()
 void Panel::SetSize( int wide, int tall )
 {
     // Experiment; Commented out this assert, because scrollable panels may be way larger than 32768
-    //Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
+    // Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
     ipanel()->SetSize( GetVPanel(), wide, tall );
 }
 
@@ -1704,7 +1704,7 @@ void Panel::OnChildAdded( VPANEL child )
     // metatable is set up by the most specific subclass of Panel that it is.
     // Otherwise we might push it as Panel, meaning less specific methods will be
     // available.
-    if ( pPanel && pPanel->m_lua_State != NULL && pPanel->m_pLuaInstance != nullptr)
+    if ( pPanel && pPanel->m_lua_State != NULL && pPanel->m_pLuaInstance != nullptr )
     {
         LUA_CALL_PANEL_METHOD_BEGIN( "OnChildAdded" );
         pPanel->PushLuaInstance( m_lua_State );
@@ -3870,7 +3870,7 @@ void Panel::GetChildrenSize( int &wide, int &tall )
         // If the child needs laying out, do it now
         if ( child->_flags.IsFlagSet( NEEDS_LAYOUT ) && !child->_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
         {
-            //child->InternalPerformLayout();
+            // child->InternalPerformLayout();
         }
 
         int x, y, childWide, childTall;

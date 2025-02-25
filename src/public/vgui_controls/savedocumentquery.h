@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -20,7 +19,6 @@ namespace vgui
 {
 class Panel;
 }
-
 
 //-----------------------------------------------------------------------------
 // Show the save document query dialog
@@ -33,5 +31,4 @@ class Panel;
 //-----------------------------------------------------------------------------
 void ShowSaveDocumentQuery( vgui::Panel *pParent, const char *pFileName, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand );
 
-
-#endif // SAVEDOCUMENTQUERY_H
+#endif  // SAVEDOCUMENTQUERY_H

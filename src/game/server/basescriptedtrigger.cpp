@@ -49,7 +49,7 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
                          unsigned short > m_TriggerFactoryDatabase;
 
 // Experiment; Commented to instead go ask Lua when we encounter a non-C-registered entities.
-//void RegisterScriptedTrigger( const char *className )
+// void RegisterScriptedTrigger( const char *className )
 //{
 //    if ( EntityFactoryDictionary()->FindFactory( className ) )
 //    {

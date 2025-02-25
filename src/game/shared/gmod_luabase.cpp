@@ -50,7 +50,7 @@ int CompatFunctionWrapper( lua_State *L )
 
     int result = originalFunc( compatState );
 
-    free(compatState);
+    free( compatState );
 
     return result;
 }

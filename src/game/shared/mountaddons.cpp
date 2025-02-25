@@ -23,7 +23,7 @@ void MountAddon( const char *addonDirectoryName, const char *addonPath )
     // Check if the addon is already mounted by their name
     FOR_EACH_MAP( g_MountedAddons, i )
     {
-        const char *mountedAddonName = g_MountedAddons.Key(i).Get();
+        const char *mountedAddonName = g_MountedAddons.Key( i ).Get();
 
         if ( Q_strcmp( mountedAddonName, addonDirectoryName ) == 0 )
         {
@@ -35,7 +35,7 @@ void MountAddon( const char *addonDirectoryName, const char *addonPath )
     filesystem->AddSearchPath( addonFullPath, CONTENT_SEARCH_PATH, PATH_ADD_TO_TAIL );
     filesystem->AddSearchPath( addonFullPath, "thirdparty", PATH_ADD_TO_TAIL );
 
-#ifdef GAME_DLL // Prevent the message from printing twice in clients
+#ifdef GAME_DLL  // Prevent the message from printing twice in clients
     ConColorMsg( Color( 200, 255, 0, 255 ), "Mounting addon \"%s\"...\n", addonDirectoryName );
 #endif
 
@@ -50,7 +50,7 @@ void MountAddons()
     // and find their gamemodes, lua paths, etc get added to the search paths
     // We'll split the search at each ; and loop through each path, adding LUA_PATH_ADDONS "\\*"
     // and finding the addons in each path
-    char mountPaths[MAX_PATH * 50]; // TODO: Make this dynamic
+    char mountPaths[MAX_PATH * 50];  // TODO: Make this dynamic
     filesystem->GetSearchPath( "GAME", false, mountPaths, sizeof( mountPaths ) );
 
     char *pPath = mountPaths;

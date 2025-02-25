@@ -27,7 +27,7 @@
 //===============================================================================
 
 #ifndef GLBASE_H
-#define	GLBASE_H
+#define GLBASE_H
 
 #ifdef DX_TO_GL_ABSTRACTION
 
@@ -47,34 +47,36 @@
 #endif
 
 #ifdef DX_TO_GL_ABSTRACTION
-	#ifndef WIN32
-	#define Debugger DebuggerBreak
-	#endif
-	#undef CurrentTime
+#ifndef WIN32
+#define Debugger DebuggerBreak
+#endif
+#undef CurrentTime
 
-	#if defined( USE_SDL )
-		#include "SDL.h"
-	#endif
+#if defined( USE_SDL )
+#include "SDL.h"
+#endif
 #endif
 
 //===============================================================================
 // glue to call out to Obj-C land (these are in glmgrcocoa.mm)
 #ifdef OSX
-	typedef void _PseudoNSGLContext;					// aka NSOpenGLContext
-	typedef _PseudoNSGLContext	*PseudoNSGLContextPtr;
-	
-	CGLContextObj	GetCGLContextFromNSGL( PseudoNSGLContextPtr nsglCtx );
+typedef void _PseudoNSGLContext;  // aka NSOpenGLContext
+typedef _PseudoNSGLContext *PseudoNSGLContextPtr;
+
+CGLContextObj GetCGLContextFromNSGL( PseudoNSGLContextPtr nsglCtx );
 #endif
 
 // Set TOGL_SUPPORT_NULL_DEVICE to 1 to support the NULL ref device
 #define TOGL_SUPPORT_NULL_DEVICE 0
 
 #if TOGL_SUPPORT_NULL_DEVICE
-	#define TOGL_NULL_DEVICE_CHECK if( m_params.m_deviceType == D3DDEVTYPE_NULLREF ) return S_OK;
-	#define TOGL_NULL_DEVICE_CHECK_RET_VOID if( m_params.m_deviceType == D3DDEVTYPE_NULLREF ) return;
+#define TOGL_NULL_DEVICE_CHECK \
+    if ( m_params.m_deviceType == D3DDEVTYPE_NULLREF ) return S_OK;
+#define TOGL_NULL_DEVICE_CHECK_RET_VOID \
+    if ( m_params.m_deviceType == D3DDEVTYPE_NULLREF ) return;
 #else
-	#define TOGL_NULL_DEVICE_CHECK
-	#define TOGL_NULL_DEVICE_CHECK_RET_VOID
+#define TOGL_NULL_DEVICE_CHECK
+#define TOGL_NULL_DEVICE_CHECK_RET_VOID
 #endif
 
 // GL_ENABLE_INDEX_VERIFICATION enables index range verification on all dynamic IB/VB's (obviously slow)
@@ -85,7 +87,7 @@
 
 #define GL_BATCH_TELEMETRY_ZONES 0
 
-// GL_BATCH_PERF_ANALYSIS - Enables gl_batch_vis, and various per-batch telemetry statistics messages. 
+// GL_BATCH_PERF_ANALYSIS - Enables gl_batch_vis, and various per-batch telemetry statistics messages.
 #define GL_BATCH_PERF_ANALYSIS 0
 #define GL_BATCH_PERF_ANALYSIS_WRITE_PNGS 0
 
@@ -104,14 +106,14 @@
 #define GL_USE_EXECUTE_HELPER_FOR_ALL_API_CALLS ( GL_TELEMETRY_ZONES || GL_TRACK_API_TIME || GL_DUMP_ALL_API_CALLS )
 
 #if GL_BATCH_PERF_ANALYSIS
-	#define GL_BATCH_PERF(...) __VA_ARGS__
+#define GL_BATCH_PERF( ... ) __VA_ARGS__
 #else
-	#define GL_BATCH_PERF(...)
+#define GL_BATCH_PERF( ... )
 #endif
 
-#define	kGLMUserClipPlanes			2
-#define kGLMScratchFBOCount			4
+#define kGLMUserClipPlanes 2
+#define kGLMScratchFBOCount 4
 
-#endif // DX_TO_GL_ABSTRACTION
+#endif  // DX_TO_GL_ABSTRACTION
 
-#endif // GLBASE_H
+#endif  // GLBASE_H

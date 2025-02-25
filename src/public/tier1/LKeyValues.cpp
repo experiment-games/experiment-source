@@ -84,7 +84,6 @@ LUA_API void lua_pushkeyvalues_as_table( lua_State *L, lua_KeyValues *pKV )
     }
 }
 
-
 LUA_REGISTRATION_INIT( KeyValuesHandle )
 
 LUA_BINDING_BEGIN( KeyValuesHandle, AddSubKey, "class", "Add a subkey to the keyvalues." )

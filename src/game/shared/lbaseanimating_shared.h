@@ -4,4 +4,4 @@
 #pragma once
 #endif
 
-#endif // LBASEANIMATING_SHARED_H
+#endif  // LBASEANIMATING_SHARED_H

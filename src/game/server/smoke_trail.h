@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,36 +16,37 @@
 
 class SmokeTrail : public CBaseParticleEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( SmokeTrail, CBaseParticleEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	SmokeTrail();
-	virtual bool KeyValue( const char *szKeyName, const char *szValue ); 
-	void					SetEmit(bool bVal);
-	void					FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL);
-	static	SmokeTrail*		CreateSmokeTrail();
+   public:
+    DECLARE_CLASS( SmokeTrail, CBaseParticleEntity );
+    DECLARE_SERVERCLASS();
 
-public:
-	// Effect parameters. These will assume default values but you can change them.
-	CNetworkVector( m_StartColor );			// Fade between these colors.
-	CNetworkVector( m_EndColor );
-	CNetworkVar( float, m_Opacity );
+    SmokeTrail();
+    virtual bool KeyValue( const char *szKeyName, const char *szValue );
+    void SetEmit( bool bVal );
+    void FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL );
+    static SmokeTrail *CreateSmokeTrail();
 
-	CNetworkVar( float, m_SpawnRate );			// How many particles per second.
-	CNetworkVar( float, m_ParticleLifetime );		// How long do the particles live?
-	CNetworkVar( float, m_StopEmitTime );			// When do I stop emitting particles?
-	CNetworkVar( float, m_MinSpeed );				// Speed range.
-	CNetworkVar( float, m_MaxSpeed );
-	CNetworkVar( float, m_StartSize );			// Size ramp.
-	CNetworkVar( float, m_EndSize );	
-	CNetworkVar( float, m_SpawnRadius );
-	CNetworkVar( float, m_MinDirectedSpeed );				// Speed range.
-	CNetworkVar( float, m_MaxDirectedSpeed );
-	CNetworkVar( bool, m_bEmit );
+   public:
+    // Effect parameters. These will assume default values but you can change them.
+    CNetworkVector( m_StartColor );  // Fade between these colors.
+    CNetworkVector( m_EndColor );
+    CNetworkVar( float, m_Opacity );
 
-	CNetworkVar( int, m_nAttachment );
+    CNetworkVar( float, m_SpawnRate );         // How many particles per second.
+    CNetworkVar( float, m_ParticleLifetime );  // How long do the particles live?
+    CNetworkVar( float, m_StopEmitTime );      // When do I stop emitting particles?
+    CNetworkVar( float, m_MinSpeed );          // Speed range.
+    CNetworkVar( float, m_MaxSpeed );
+    CNetworkVar( float, m_StartSize );  // Size ramp.
+    CNetworkVar( float, m_EndSize );
+    CNetworkVar( float, m_SpawnRadius );
+    CNetworkVar( float, m_MinDirectedSpeed );  // Speed range.
+    CNetworkVar( float, m_MaxDirectedSpeed );
+    CNetworkVar( bool, m_bEmit );
+
+    CNetworkVar( int, m_nAttachment );
 };
 
 //==================================================
@@ -54,38 +55,39 @@ public:
 
 class RocketTrail : public CBaseParticleEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( RocketTrail, CBaseParticleEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	RocketTrail();
-	void					SetEmit(bool bVal);
-	void					FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL);
-	static RocketTrail		*CreateRocketTrail();
+   public:
+    DECLARE_CLASS( RocketTrail, CBaseParticleEntity );
+    DECLARE_SERVERCLASS();
 
-public:
-	// Effect parameters. These will assume default values but you can change them.
-	CNetworkVector( m_StartColor );			// Fade between these colors.
-	CNetworkVector( m_EndColor );
-	CNetworkVar( float, m_Opacity );
+    RocketTrail();
+    void SetEmit( bool bVal );
+    void FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL );
+    static RocketTrail *CreateRocketTrail();
 
-	CNetworkVar( float, m_SpawnRate );			// How many particles per second.
-	CNetworkVar( float, m_ParticleLifetime );		// How long do the particles live?
-	CNetworkVar( float, m_StopEmitTime );			// When do I stop emitting particles?
-	CNetworkVar( float, m_MinSpeed );				// Speed range.
-	CNetworkVar( float, m_MaxSpeed );
-	CNetworkVar( float, m_StartSize );			// Size ramp.
-	CNetworkVar( float, m_EndSize );	
-	CNetworkVar( float, m_SpawnRadius );
-	
-	CNetworkVar( bool, m_bEmit );
+   public:
+    // Effect parameters. These will assume default values but you can change them.
+    CNetworkVector( m_StartColor );  // Fade between these colors.
+    CNetworkVector( m_EndColor );
+    CNetworkVar( float, m_Opacity );
 
-	CNetworkVar( int, m_nAttachment );
-	
-	CNetworkVar( bool, m_bDamaged );
+    CNetworkVar( float, m_SpawnRate );         // How many particles per second.
+    CNetworkVar( float, m_ParticleLifetime );  // How long do the particles live?
+    CNetworkVar( float, m_StopEmitTime );      // When do I stop emitting particles?
+    CNetworkVar( float, m_MinSpeed );          // Speed range.
+    CNetworkVar( float, m_MaxSpeed );
+    CNetworkVar( float, m_StartSize );  // Size ramp.
+    CNetworkVar( float, m_EndSize );
+    CNetworkVar( float, m_SpawnRadius );
 
-	CNetworkVar( float, m_flFlareScale );			// Size of the flare
+    CNetworkVar( bool, m_bEmit );
+
+    CNetworkVar( int, m_nAttachment );
+
+    CNetworkVar( bool, m_bDamaged );
+
+    CNetworkVar( float, m_flFlareScale );  // Size of the flare
 };
 
 //==================================================
@@ -94,27 +96,27 @@ public:
 
 class SporeTrail : public CBaseParticleEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( SporeTrail, CBaseParticleEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	SporeTrail( void );
+   public:
+    DECLARE_CLASS( SporeTrail, CBaseParticleEntity );
+    DECLARE_SERVERCLASS();
 
-	static SporeTrail*		CreateSporeTrail();
+    SporeTrail( void );
 
-//Data members
-public:
+    static SporeTrail *CreateSporeTrail();
 
-	CNetworkVector( m_vecEndColor );
+    // Data members
+   public:
+    CNetworkVector( m_vecEndColor );
 
-	CNetworkVar( float, m_flSpawnRate );
-	CNetworkVar( float, m_flParticleLifetime );
-	CNetworkVar( float, m_flStartSize );
-	CNetworkVar( float, m_flEndSize );
-	CNetworkVar( float, m_flSpawnRadius );
+    CNetworkVar( float, m_flSpawnRate );
+    CNetworkVar( float, m_flParticleLifetime );
+    CNetworkVar( float, m_flStartSize );
+    CNetworkVar( float, m_flEndSize );
+    CNetworkVar( float, m_flSpawnRadius );
 
-	CNetworkVar( bool, m_bEmit );
+    CNetworkVar( bool, m_bEmit );
 };
 
 //==================================================
@@ -123,32 +125,32 @@ public:
 
 class SporeExplosion : public CBaseParticleEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( SporeExplosion, CBaseParticleEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	SporeExplosion( void );
-	void Spawn( void );
+   public:
+    DECLARE_CLASS( SporeExplosion, CBaseParticleEntity );
+    DECLARE_SERVERCLASS();
 
-	static SporeExplosion*		CreateSporeExplosion();
+    SporeExplosion( void );
+    void Spawn( void );
 
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+    static SporeExplosion *CreateSporeExplosion();
 
-//Data members
-public:
+    void InputEnable( inputdata_t &inputdata );
+    void InputDisable( inputdata_t &inputdata );
 
-	bool m_bDisabled;
+    // Data members
+   public:
+    bool m_bDisabled;
 
-	CNetworkVar( float, m_flSpawnRate );
-	CNetworkVar( float, m_flParticleLifetime );
-	CNetworkVar( float, m_flStartSize );
-	CNetworkVar( float, m_flEndSize );
-	CNetworkVar( float, m_flSpawnRadius );
+    CNetworkVar( float, m_flSpawnRate );
+    CNetworkVar( float, m_flParticleLifetime );
+    CNetworkVar( float, m_flStartSize );
+    CNetworkVar( float, m_flEndSize );
+    CNetworkVar( float, m_flSpawnRadius );
 
-	CNetworkVar( bool, m_bEmit );
-	CNetworkVar( bool, m_bDontRemove );
+    CNetworkVar( bool, m_bEmit );
+    CNetworkVar( bool, m_bDontRemove );
 };
 
 //==================================================
@@ -157,17 +159,18 @@ public:
 
 class CFireTrail : public CBaseParticleEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( CFireTrail, CBaseParticleEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	static CFireTrail	*CreateFireTrail( void );
-	void				FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName );
-	void				Precache( void );
+   public:
+    DECLARE_CLASS( CFireTrail, CBaseParticleEntity );
+    DECLARE_SERVERCLASS();
 
-	CNetworkVar( int, m_nAttachment );
-	CNetworkVar( float, m_flLifetime );
+    static CFireTrail *CreateFireTrail( void );
+    void FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName );
+    void Precache( void );
+
+    CNetworkVar( int, m_nAttachment );
+    CNetworkVar( float, m_flLifetime );
 };
 
 //==================================================
@@ -176,35 +179,35 @@ public:
 
 class DustTrail : public CBaseParticleEntity
 {
-	DECLARE_DATADESC();
-public:
-	DECLARE_CLASS( DustTrail, CBaseParticleEntity );
-	DECLARE_SERVERCLASS();
+    DECLARE_DATADESC();
 
-	DustTrail();
-	virtual bool KeyValue( const char *szKeyName, const char *szValue ); 
-	void					SetEmit(bool bVal);
-	static	DustTrail*		CreateDustTrail();
+   public:
+    DECLARE_CLASS( DustTrail, CBaseParticleEntity );
+    DECLARE_SERVERCLASS();
 
-public:
-	// Effect parameters. These will assume default values but you can change them.
-	CNetworkVector( m_Color );
-	CNetworkVar( float, m_Opacity );
+    DustTrail();
+    virtual bool KeyValue( const char *szKeyName, const char *szValue );
+    void SetEmit( bool bVal );
+    static DustTrail *CreateDustTrail();
 
-	CNetworkVar( float, m_SpawnRate );			// How many particles per second.
-	CNetworkVar( float, m_ParticleLifetime );		// How long do the particles live?
-	CNetworkVar( float, m_StopEmitTime );			// When do I stop emitting particles?
-	CNetworkVar( float, m_MinSpeed );				// Speed range.
-	CNetworkVar( float, m_MaxSpeed );
-	CNetworkVar( float, m_StartSize );			// Size ramp.
-	CNetworkVar( float, m_EndSize );	
-	CNetworkVar( float, m_SpawnRadius );
-	CNetworkVar( float, m_MinDirectedSpeed );				// Speed range.
-	CNetworkVar( float, m_MaxDirectedSpeed );
-	CNetworkVar( bool, m_bEmit );
+   public:
+    // Effect parameters. These will assume default values but you can change them.
+    CNetworkVector( m_Color );
+    CNetworkVar( float, m_Opacity );
 
-	CNetworkVar( int, m_nAttachment );
+    CNetworkVar( float, m_SpawnRate );         // How many particles per second.
+    CNetworkVar( float, m_ParticleLifetime );  // How long do the particles live?
+    CNetworkVar( float, m_StopEmitTime );      // When do I stop emitting particles?
+    CNetworkVar( float, m_MinSpeed );          // Speed range.
+    CNetworkVar( float, m_MaxSpeed );
+    CNetworkVar( float, m_StartSize );  // Size ramp.
+    CNetworkVar( float, m_EndSize );
+    CNetworkVar( float, m_SpawnRadius );
+    CNetworkVar( float, m_MinDirectedSpeed );  // Speed range.
+    CNetworkVar( float, m_MaxDirectedSpeed );
+    CNetworkVar( bool, m_bEmit );
+
+    CNetworkVar( int, m_nAttachment );
 };
-
 
 #endif

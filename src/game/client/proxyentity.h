@@ -10,7 +10,6 @@
 
 #include "materialsystem/imaterialproxy.h"
 
-
 class IMaterialVar;
 
 //-----------------------------------------------------------------------------
@@ -18,15 +17,13 @@ class IMaterialVar;
 //-----------------------------------------------------------------------------
 abstract_class CEntityMaterialProxy : public IMaterialProxy
 {
-public:
-	virtual void Release( void );
-	virtual void OnBind( void *pC_BaseEntity );
+   public:
+    virtual void Release( void );
+    virtual void OnBind( void *pC_BaseEntity );
 
-protected:
-	// base classes should implement these
-	virtual void OnBind( C_BaseEntity *pBaseEntity ) = 0;
+   protected:
+    // base classes should implement these
+    virtual void OnBind( C_BaseEntity * pBaseEntity ) = 0;
 };
 
-
-#endif // PROXY_ENTITY_H
-
+#endif  // PROXY_ENTITY_H

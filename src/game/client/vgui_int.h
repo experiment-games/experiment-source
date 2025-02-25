@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 namespace vgui
 {
-	class Panel;
+class Panel;
 }
 
 bool VGui_Startup( CreateInterfaceFn appSystemFactory );
@@ -26,11 +26,11 @@ void VGui_CreateGlobalPanels( void );
 vgui::VPANEL VGui_GetClientDLLRootPanel( void );
 
 #ifdef LUA_SDK
-vgui::Panel *VGui_GetGameUIPanel(void);
+vgui::Panel *VGui_GetGameUIPanel( void );
 CScriptedClientLuaPanel *VGui_GetClientLuaRootPanel( void );
 CScriptedClientLuaPanel *VGui_GetClientLuaRootPanelHUD( void );
-void VGUI_CreateGameUIRootPanel(void);
-void VGUI_DestroyGameUIRootPanel(void);
+void VGUI_CreateGameUIRootPanel( void );
+void VGUI_DestroyGameUIRootPanel( void );
 #endif
 
 void VGUI_CreateClientDLLRootPanel( void );
@@ -38,4 +38,4 @@ void VGUI_DestroyClientDLLRootPanel( void );
 void VGui_PreRender();
 void VGui_PostRender();
 
-#endif // VGUI_INT_H
+#endif  // VGUI_INT_H

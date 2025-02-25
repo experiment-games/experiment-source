@@ -390,19 +390,19 @@ LUA_BINDING_BEGIN( Vector, ToScreen, "class", "Converts the vector to screen coo
     lua_newtable( L );
 
     lua_pushnumber( L, x );
-    lua_setfield( L, -2, "x" ); // GMod compatibility
+    lua_setfield( L, -2, "x" );  // GMod compatibility
 
     lua_pushnumber( L, x );
     lua_setfield( L, -2, "X" );
 
     lua_pushnumber( L, y );
-    lua_setfield( L, -2, "y" ); // GMod compatibility
+    lua_setfield( L, -2, "y" );  // GMod compatibility
 
     lua_pushnumber( L, y );
     lua_setfield( L, -2, "Y" );
 
     lua_pushboolean( L, isVisible );
-    lua_setfield( L, -2, "visible" ); // GMod compatibility
+    lua_setfield( L, -2, "visible" );  // GMod compatibility
 
     lua_pushboolean( L, isVisible );
     lua_setfield( L, -2, "IsVisible" );

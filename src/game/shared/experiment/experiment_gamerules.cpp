@@ -1296,9 +1296,9 @@ bool CExperimentRules::ClientConnected( edict_t *pEntity, const char *pszName, c
 {
     LUA_CALL_HOOK_BEGIN( "ClientConnected", "Called every time a client connects to the server. Return false to reject the connection (with an optional reject message)." );
     CBasePlayer::PushLuaInstanceSafe( L, ( CBasePlayer * )CBaseEntity::Instance( pEntity ) );  // doc: entity
-    lua_pushstring( L, pszName ); // doc: name
-    lua_pushstring( L, pszAddress ); // doc: ipAddress
-    LUA_CALL_HOOK_END( 3, 2 ); // doc: boolean (should accept connection), string (reject message)
+    lua_pushstring( L, pszName );                                                              // doc: name
+    lua_pushstring( L, pszAddress );                                                           // doc: ipAddress
+    LUA_CALL_HOOK_END( 3, 2 );                                                                 // doc: boolean (should accept connection), string (reject message)
 
     if ( !lua_isnil( L, -2 ) )
     {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,96 +20,96 @@ class CBeam;
 class CSprite;
 class CScriptedTarget;
 
-typedef CAI_BehaviorHost<CAI_BaseNPC> CAI_BaseStalker;
+typedef CAI_BehaviorHost< CAI_BaseNPC > CAI_BaseStalker;
 
 class CNPC_Stalker : public CAI_BaseStalker
 {
-	DECLARE_CLASS( CNPC_Stalker, CAI_BaseStalker );
+    DECLARE_CLASS( CNPC_Stalker, CAI_BaseStalker );
 
-public:
-	float			m_flNextAttackSoundTime;
-	float			m_flNextBreatheSoundTime;
-	float			m_flNextScrambleSoundTime;
-	float			m_flNextNPCThink;
+   public:
+    float m_flNextAttackSoundTime;
+    float m_flNextBreatheSoundTime;
+    float m_flNextScrambleSoundTime;
+    float m_flNextNPCThink;
 
-	// ------------------------------
-	//	Laser Beam
-	// ------------------------------
-	int					m_eBeamPower;
-	Vector				m_vLaserDir;
-	Vector				m_vLaserTargetPos;
-	float				m_fBeamEndTime;
-	float				m_fBeamRechargeTime;
-	float				m_fNextDamageTime;
-	float				m_nextSmokeTime;
-	float				m_bPlayingHitWall;
-	float				m_bPlayingHitFlesh;
-	CBeam*				m_pBeam;
-	CSprite*			m_pLightGlow;
-	int					m_iPlayerAggression;
-	float				m_flNextScreamTime;
+    // ------------------------------
+    //	Laser Beam
+    // ------------------------------
+    int m_eBeamPower;
+    Vector m_vLaserDir;
+    Vector m_vLaserTargetPos;
+    float m_fBeamEndTime;
+    float m_fBeamRechargeTime;
+    float m_fNextDamageTime;
+    float m_nextSmokeTime;
+    float m_bPlayingHitWall;
+    float m_bPlayingHitFlesh;
+    CBeam *m_pBeam;
+    CSprite *m_pLightGlow;
+    int m_iPlayerAggression;
+    float m_flNextScreamTime;
 
-	void				KillAttackBeam(void);
-	void				DrawAttackBeam(void);
-	void				CalcBeamPosition(void);
-	Vector				LaserStartPosition(Vector vStalkerPos);
+    void KillAttackBeam( void );
+    void DrawAttackBeam( void );
+    void CalcBeamPosition( void );
+    Vector LaserStartPosition( Vector vStalkerPos );
 
-	Vector				m_vLaserCurPos;			// Last position successfully burned
-	bool				InnateWeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
-	
-	// ------------------------------
-	//	Dormancy
-	// ------------------------------
-	CAI_Schedule*	WakeUp(void);
-	void			GoDormant(void);
+    Vector m_vLaserCurPos;  // Last position successfully burned
+    bool InnateWeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
 
-public:
-	void			Spawn( void );
-	void			Precache( void );
-	bool			CreateBehaviors();
-	float			MaxYawSpeed( void );
-	Class_T			Classify ( void );
+    // ------------------------------
+    //	Dormancy
+    // ------------------------------
+    CAI_Schedule *WakeUp( void );
+    void GoDormant( void );
 
-	void			PrescheduleThink();
+   public:
+    void Spawn( void );
+    void Precache( void );
+    bool CreateBehaviors();
+    float MaxYawSpeed( void );
+    Class_T Classify( void );
 
-	bool			IsValidEnemy( CBaseEntity *pEnemy );
-	
-	void			StartTask( const Task_t *pTask );
-	void			RunTask( const Task_t *pTask );
-	virtual int		SelectSchedule ( void );
-	virtual int		TranslateSchedule( int scheduleType );
-	int				OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	void			OnScheduleChange();
+    void PrescheduleThink();
 
-	void			StalkerThink(void);
-	void			NotifyDeadFriend( CBaseEntity *pFriend );
+    bool IsValidEnemy( CBaseEntity *pEnemy );
 
-	int				MeleeAttack1Conditions ( float flDot, float flDist );
-	int				RangeAttack1Conditions ( float flDot, float flDist );
-	void			HandleAnimEvent( animevent_t *pEvent );
+    void StartTask( const Task_t *pTask );
+    void RunTask( const Task_t *pTask );
+    virtual int SelectSchedule( void );
+    virtual int TranslateSchedule( int scheduleType );
+    int OnTakeDamage_Alive( const CTakeDamageInfo &info );
+    void OnScheduleChange();
 
-	bool			FValidateHintType(CAI_Hint *pHint);
-	Activity		GetHintActivity( short sHintType, Activity HintsActivity );
-	float			GetHintDelay( short sHintType );
+    void StalkerThink( void );
+    void NotifyDeadFriend( CBaseEntity *pFriend );
 
-	void			IdleSound( void );
-	void			DeathSound( const CTakeDamageInfo &info );
-	void			PainSound( const CTakeDamageInfo &info );
+    int MeleeAttack1Conditions( float flDot, float flDist );
+    int RangeAttack1Conditions( float flDot, float flDist );
+    void HandleAnimEvent( animevent_t *pEvent );
 
-	void			Event_Killed( const CTakeDamageInfo &info );
-	void			DoSmokeEffect( const Vector &position );
+    bool FValidateHintType( CAI_Hint *pHint );
+    Activity GetHintActivity( short sHintType, Activity HintsActivity );
+    float GetHintDelay( short sHintType );
 
-	void			AddZigZagToPath(void);
-	void			StartAttackBeam();
-	void			UpdateAttackBeam();
+    void IdleSound( void );
+    void DeathSound( const CTakeDamageInfo &info );
+    void PainSound( const CTakeDamageInfo &info );
 
-	CNPC_Stalker(void);
+    void Event_Killed( const CTakeDamageInfo &info );
+    void DoSmokeEffect( const Vector &position );
 
-	DECLARE_DATADESC();
-	DEFINE_CUSTOM_AI;
+    void AddZigZagToPath( void );
+    void StartAttackBeam();
+    void UpdateAttackBeam();
 
-private:
-	CAI_ActBusyBehavior		m_ActBusyBehavior;
+    CNPC_Stalker( void );
+
+    DECLARE_DATADESC();
+    DEFINE_CUSTOM_AI;
+
+   private:
+    CAI_ActBusyBehavior m_ActBusyBehavior;
 };
 
-#endif // NPC_STALKER_H
+#endif  // NPC_STALKER_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,6 @@
 // Device type           -- in the "User Defined" range."
 #define DEVICE_FILE_TYPE 40000
 
-
 // The IOCTL function codes from 0x800 to 0xFFF are for customer use.
 
 #define IOCTL_WRITE_MSR \
@@ -24,6 +23,5 @@
 
 #define IOCTL_READ_MSR \
     CTL_CODE( DEVICE_FILE_TYPE, 0x901, METHOD_BUFFERED, FILE_READ_ACCESS )
-
 
 #endif IOCTLCODES_H

@@ -716,7 +716,7 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flRunSpeed;
     float m_flLadderClimbSpeed;
     float m_flCrouchWalkFraction;
-    float m_flJumpPower; // In units
+    float m_flJumpPower;  // In units
     // Time in milliseconds to go from standing to fully ducked
     float m_flDuckSpeed;
     // Fraction of the duck speed to use when unducking

@@ -7,7 +7,7 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#ifndef	NPC_ANTLIONGRUB_H
-#define	NPC_ANTLIONGRUB_H
+#ifndef NPC_ANTLIONGRUB_H
+#define NPC_ANTLIONGRUB_H
 
-#endif	//NPC_ANTLIONGRUB_H
+#endif  // NPC_ANTLIONGRUB_H

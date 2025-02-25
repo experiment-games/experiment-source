@@ -25,23 +25,25 @@
 #include "vgui/ISystem.h"
 #include "vgui/IVGui.h"
 
-
-#if defined(CSTRIKE_DLL) && defined(CLIENT_DLL)
+#if defined( CSTRIKE_DLL ) && defined( CLIENT_DLL )
 
 class CSAchievementsAndStatsInterface : public AchievementsAndStatsInterface
 {
-public:
+   public:
     CSAchievementsAndStatsInterface();
 
     virtual void CreatePanel( vgui::Panel* pParent );
     virtual void DisplayPanel();
     virtual void ReleasePanel();
-	virtual int GetAchievementsPanelMinWidth( void ) const { return cAchievementsDialogMinWidth; }
+    virtual int GetAchievementsPanelMinWidth( void ) const
+    {
+        return cAchievementsDialogMinWidth;
+    }
 
-protected:
-    vgui::DHANDLE<vgui::Frame>  m_pAchievementAndStatsSummary;
+   protected:
+    vgui::DHANDLE< vgui::Frame > m_pAchievementAndStatsSummary;
 };
 
 #endif
 
-#endif // CSACHIEVEMENTSANDSTATSINTERFACE_H
+#endif  // CSACHIEVEMENTSANDSTATSINTERFACE_H

@@ -34,7 +34,7 @@
 // maintain some level of persistence in the face of your entire local player getting
 // nuked.
 //
-// Just add any data members you'd like to access to the CPlayerSpawnCache::Data_t 
+// Just add any data members you'd like to access to the CPlayerSpawnCache::Data_t
 // struct and it will be cleared automatically (via a memset) whenever a new map is
 // loaded.
 //
@@ -43,24 +43,24 @@
 //
 class CPlayerSpawnCache : public CGameEventListener
 {
-public:
-	static CPlayerSpawnCache &Instance();
+   public:
+    static CPlayerSpawnCache &Instance();
 
-	// Counters
-	struct Data_t
-	{
-		int m_nDisplayedConnectedRecording;
-		int	m_nDisplaySaveReplay;	// Don't display the "Press [f6] to save this life" the first time the spectator GUI is shown
-	} m_Data;
+    // Counters
+    struct Data_t
+    {
+        int m_nDisplayedConnectedRecording;
+        int m_nDisplaySaveReplay;  // Don't display the "Press [f6] to save this life" the first time the spectator GUI is shown
+    } m_Data;
 
-private:
-	CPlayerSpawnCache();
+   private:
+    CPlayerSpawnCache();
 
-	virtual void FireGameEvent( IGameEvent *pEvent );
+    virtual void FireGameEvent( IGameEvent *pEvent );
 
-	void Reset();
+    void Reset();
 };
 
 //--------------------------------------------------------------------------------
 
-#endif // PLAYERSPAWNCACHE_H
+#endif  // PLAYERSPAWNCACHE_H

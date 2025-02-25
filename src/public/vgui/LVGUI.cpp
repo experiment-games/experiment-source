@@ -38,20 +38,20 @@ LUALIB_API lua_HFont luaL_checkfont( lua_State *L, int narg )
 
 // Experiment;  Disabled so we can focus on pushing Scheme (IScheme) objects
 //              which are more useful.
-//LUA_REGISTRATION_INIT( SchemeHandle );
+// LUA_REGISTRATION_INIT( SchemeHandle );
 //
-//LUA_BINDING_BEGIN( SchemeHandle, __tostring, "class", "Metamethod to get the string representation of the scheme handle." )
+// LUA_BINDING_BEGIN( SchemeHandle, __tostring, "class", "Metamethod to get the string representation of the scheme handle." )
 //{
 //    HScheme hScheme = LUA_BINDING_ARGUMENT( luaL_checkscheme, 1, "scheme" );
 //    lua_pushfstring( L, "SchemeHandle: %d", hScheme );
 //    return 1;
 //}
-//LUA_BINDING_END( "string", "The string representation of the scheme handle." )
+// LUA_BINDING_END( "string", "The string representation of the scheme handle." )
 //
 ///*
 //** Open HScheme object
 //*/
-//LUALIB_API int luaopen_HScheme( lua_State *L )
+// LUALIB_API int luaopen_HScheme( lua_State *L )
 //{
 //    LUA_PUSH_NEW_METATABLE( L, LUA_HSCHEMELIBNAME );
 //

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,41 +14,37 @@
 
 class CBoneList
 {
-public:
+   public:
+    CBoneList();
 
-	CBoneList();
+    void Release();
 
-	void Release();
+    static CBoneList *Alloc();
 
-	static CBoneList *Alloc();
+   public:
+    int m_nBones;
+    Vector m_vecPos[MAXSTUDIOBONES];
+    Quaternion m_quatRot[MAXSTUDIOBONES];
 
-public:
-
-	int			m_nBones;
-	Vector		m_vecPos[ MAXSTUDIOBONES ];
-	Quaternion	m_quatRot[ MAXSTUDIOBONES ];
-
-private:
-	bool		m_bShouldDelete;
+   private:
+    bool m_bShouldDelete;
 };
 
 class CFlexList
 {
-public:
+   public:
+    CFlexList();
 
-	CFlexList();
+    void Release();
 
-	void Release();
+    static CFlexList *Alloc();
 
-	static CFlexList *Alloc();
+   public:
+    int m_nNumFlexes;
+    float m_flexWeights[MAXSTUDIOFLEXCTRL];
 
-public:
-
-	int			m_nNumFlexes;
-	float		m_flexWeights[ MAXSTUDIOFLEXCTRL ];
-
-private:
-	bool		m_bShouldDelete;
+   private:
+    bool m_bShouldDelete;
 };
 
-#endif // BONELIST_H
+#endif  // BONELIST_H

@@ -8,10 +8,10 @@ in order to detect thermal throttling. For details see the associated source fil
 
 struct CPUFrequencyResults
 {
-	double m_timeStamp; // Time (from Plat_FloatTime) when the measurements were made.
-	float m_GHz;
-	float m_percentage;
-	float m_lowestPercentage;
+    double m_timeStamp;  // Time (from Plat_FloatTime) when the measurements were made.
+    float m_GHz;
+    float m_percentage;
+    float m_lowestPercentage;
 };
 
 // Call this to get results.

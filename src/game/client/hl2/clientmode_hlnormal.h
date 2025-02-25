@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -20,26 +20,25 @@ class CHudViewport;
 
 namespace vgui
 {
-	typedef unsigned long HScheme;
+typedef unsigned long HScheme;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class ClientModeHLNormal : public ClientModeShared
 {
-public:
-	DECLARE_CLASS( ClientModeHLNormal, ClientModeShared );
+   public:
+    DECLARE_CLASS( ClientModeHLNormal, ClientModeShared );
 
-	ClientModeHLNormal();
-	~ClientModeHLNormal();
+    ClientModeHLNormal();
+    ~ClientModeHLNormal();
 
-	virtual void	Init();
-	virtual bool	ShouldDrawCrosshair( void );
+    virtual void Init();
+    virtual bool ShouldDrawCrosshair( void );
 };
 
 extern IClientMode *GetClientModeNormal();
 extern vgui::HScheme g_hVGuiCombineScheme;
 
-#endif // CLIENTMODE_HLNORMAL_H
+#endif  // CLIENTMODE_HLNORMAL_H

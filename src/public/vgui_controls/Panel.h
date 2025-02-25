@@ -344,7 +344,7 @@ class Panel : public IClientPanel, virtual IForceVirtualInheritancePanel
 
     bool IsFunctionPrepared( const char *functionName )
     {
-        // This whole mess is really only for OnChildAdded. 
+        // This whole mess is really only for OnChildAdded.
         // Init may not have been finished calling yet, so we need to check if
         // the Init of this panel has completed (signalled by PANEL:Prepare),
         // Otherwise some derma panels which hook to OnChildAdded will expect

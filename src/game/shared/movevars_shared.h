@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -50,4 +50,4 @@ extern ConVar r_AirboatViewDampenFreq;
 extern ConVar r_AirboatViewDampenDamp;
 extern ConVar r_AirboatViewZHeight;
 
-#endif // MOVEVARS_SHARED_H
+#endif  // MOVEVARS_SHARED_H

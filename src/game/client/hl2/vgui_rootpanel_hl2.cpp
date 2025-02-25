@@ -23,15 +23,17 @@ C_ScriptedBaseGameUIPanel *g_pScriptedBaseGameUIPanel = NULL;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_CreateGameUIRootPanel(void) {
+void VGUI_CreateGameUIRootPanel( void )
+{
     g_pScriptedBaseGameUIPanel =
-        new C_ScriptedBaseGameUIPanel(enginevgui->GetPanel(PANEL_GAMEUIDLL));
+        new C_ScriptedBaseGameUIPanel( enginevgui->GetPanel( PANEL_GAMEUIDLL ) );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_DestroyGameUIRootPanel(void) {
+void VGUI_DestroyGameUIRootPanel( void )
+{
     delete g_pScriptedBaseGameUIPanel;
     g_pScriptedBaseGameUIPanel = NULL;
 }
@@ -42,7 +44,7 @@ void VGUI_DestroyGameUIRootPanel(void) {
 //-----------------------------------------------------------------------------
 void VGUI_CreateClientDLLRootPanel( void )
 {
-	// Just using PANEL_ROOT in HL2 right now
+    // Just using PANEL_ROOT in HL2 right now
 }
 
 //-----------------------------------------------------------------------------
@@ -58,12 +60,13 @@ void VGUI_DestroyClientDLLRootPanel( void )
 //-----------------------------------------------------------------------------
 vgui::VPANEL VGui_GetClientDLLRootPanel( void )
 {
-	vgui::VPANEL root = enginevgui->GetPanel( PANEL_CLIENTDLL );
-	return root;
+    vgui::VPANEL root = enginevgui->GetPanel( PANEL_CLIENTDLL );
+    return root;
 }
 
 #ifdef LUA_SDK
-vgui::Panel *VGui_GetGameUIPanel(void) {
+vgui::Panel *VGui_GetGameUIPanel( void )
+{
     return g_pScriptedBaseGameUIPanel;
 }
 
@@ -85,38 +88,40 @@ CScriptedClientLuaPanel *VGui_GetClientLuaRootPanelHUD( void )
 //-----------------------------------------------------------------------------
 // C_ScriptedBaseGameUIPanel implementation.
 //-----------------------------------------------------------------------------
-C_ScriptedBaseGameUIPanel::C_ScriptedBaseGameUIPanel(vgui::VPANEL parent)
+C_ScriptedBaseGameUIPanel::C_ScriptedBaseGameUIPanel( vgui::VPANEL parent )
     : BaseClass( NULL, "ScriptedBaseGameUIPanel" )
 {
     // Experiment; We always want a reference to the panel, so it isn't
     // removed by the garbage collector.
     m_nRefCount = 1;
 
-    SetParent(parent);
-    SetPaintEnabled(false);
-    SetPaintBorderEnabled(false);
-    SetPaintBackgroundEnabled(false);
+    SetParent( parent );
+    SetPaintEnabled( false );
+    SetPaintBorderEnabled( false );
+    SetPaintBackgroundEnabled( false );
 
     // This panel does post child painting
-    SetPostChildPaintEnabled(true);
+    SetPostChildPaintEnabled( true );
 
     // Make it screen sized
-    SetBounds(0, 0, ScreenWidth(), ScreenHeight());
+    SetBounds( 0, 0, ScreenWidth(), ScreenHeight() );
 
     // Ask for OnTick messages
-    vgui::ivgui()->AddTickSignal(GetVPanel());
+    vgui::ivgui()->AddTickSignal( GetVPanel() );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_ScriptedBaseGameUIPanel::~C_ScriptedBaseGameUIPanel(void) {
+C_ScriptedBaseGameUIPanel::~C_ScriptedBaseGameUIPanel( void )
+{
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ScriptedBaseGameUIPanel::PostChildPaint() {
+void C_ScriptedBaseGameUIPanel::PostChildPaint()
+{
     BaseClass::PostChildPaint();
 
     // Draw all panel effects
@@ -127,23 +132,27 @@ void C_ScriptedBaseGameUIPanel::PostChildPaint() {
 // Purpose: For each panel effect, check if it wants to draw and draw it on
 //  this panel/surface if so
 //-----------------------------------------------------------------------------
-void C_ScriptedBaseGameUIPanel::RenderPanelEffects(void) {
+void C_ScriptedBaseGameUIPanel::RenderPanelEffects( void )
+{
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ScriptedBaseGameUIPanel::OnTick(void) {
+void C_ScriptedBaseGameUIPanel::OnTick( void )
+{
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset effects on level load/shutdown
 //-----------------------------------------------------------------------------
-void C_ScriptedBaseGameUIPanel::LevelInit(void) {
+void C_ScriptedBaseGameUIPanel::LevelInit( void )
+{
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ScriptedBaseGameUIPanel::LevelShutdown(void) {
+void C_ScriptedBaseGameUIPanel::LevelShutdown( void )
+{
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 void ComputePerLeafAmbientLighting();
 
-
-#endif // LEAF_AMBIENT_LIGHTING_H
+#endif  // LEAF_AMBIENT_LIGHTING_H

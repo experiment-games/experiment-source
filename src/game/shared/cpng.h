@@ -31,7 +31,8 @@ class CPngTextureRegen : public ITextureRegenerator
 
     virtual void RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect );
     virtual void Release()
-    { }
+    {
+    }
 
    private:
     CPngMaterialProxy *m_pProxy;

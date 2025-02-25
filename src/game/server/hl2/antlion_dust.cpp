@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,12 +12,13 @@
 #include "tier0/memdbgon.h"
 
 IMPLEMENT_SERVERCLASS_ST( CTEAntlionDust, DT_TEAntlionDust )
-	SendPropVector( SENDINFO( m_vecOrigin ) ),
-	SendPropVector( SENDINFO( m_vecAngles ) ),	
-	SendPropBool( SENDINFO( m_bBlockedSpawner ) ),
-END_SEND_TABLE()
+SendPropVector( SENDINFO( m_vecOrigin ) ),
+    SendPropVector( SENDINFO( m_vecAngles ) ),
+    SendPropBool( SENDINFO( m_bBlockedSpawner ) ),
+    END_SEND_TABLE()
 
-CTEAntlionDust::CTEAntlionDust( const char *name ) : BaseClass( name )
+        CTEAntlionDust::CTEAntlionDust( const char *name )
+    : BaseClass( name )
 {
 }
 
@@ -34,11 +35,11 @@ static CTEAntlionDust g_TEAntlionDust( "AntlionDust" );
 //-----------------------------------------------------------------------------
 void UTIL_CreateAntlionDust( const Vector &origin, const QAngle &angles, bool bBlockedSpawner )
 {
-	g_TEAntlionDust.m_vecOrigin = origin;
-	g_TEAntlionDust.m_vecAngles = angles;
-	g_TEAntlionDust.m_bBlockedSpawner = bBlockedSpawner;
+    g_TEAntlionDust.m_vecOrigin = origin;
+    g_TEAntlionDust.m_vecAngles = angles;
+    g_TEAntlionDust.m_bBlockedSpawner = bBlockedSpawner;
 
-	//Send it
-	CPVSFilter filter( origin );
-	g_TEAntlionDust.Create( filter, 0.0f );
+    // Send it
+    CPVSFilter filter( origin );
+    g_TEAntlionDust.Create( filter, 0.0f );
 }

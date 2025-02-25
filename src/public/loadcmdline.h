@@ -24,4 +24,4 @@ void LoadCmdLineFromFile( int &argc, char **&argv, const char *keyname, const ch
 //-----------------------------------------------------------------------------
 void DeleteCmdLine( int argc, char **argv );
 
-#endif // LOADCMDLINE_H
+#endif  // LOADCMDLINE_H

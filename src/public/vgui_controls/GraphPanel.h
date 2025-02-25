@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,60 +22,60 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class GraphPanel : public Panel
 {
-	DECLARE_CLASS_SIMPLE( GraphPanel, Panel );
+    DECLARE_CLASS_SIMPLE( GraphPanel, Panel );
 
-public:
-	GraphPanel(Panel *parent, const char *name);
-	
-	// domain settings (x-axis settings)
-	// sets the window of samples to display
-	void SetDisplayDomainSize(float size);
-	// sets the range of samples the graph should keep
-	// should be set to the max you would set the display domain size
-	void SetMaxDomainSize(float size);
-	// sets the minimum domain that will be displayed; used to collapse samples
-	void SetMinDomainSize(float size);
+   public:
+    GraphPanel( Panel *parent, const char *name );
 
-	// range settings (y-axis settings)
-	void SetUseFixedRange(float lowRange, float highRange);
-	void SetUseDynamicRange(float *rangeList, int numRanges);
-	void GetDisplayedRange(float &lowRange, float &highRange);
+    // domain settings (x-axis settings)
+    // sets the window of samples to display
+    void SetDisplayDomainSize( float size );
+    // sets the range of samples the graph should keep
+    // should be set to the max you would set the display domain size
+    void SetMaxDomainSize( float size );
+    // sets the minimum domain that will be displayed; used to collapse samples
+    void SetMinDomainSize( float size );
 
-	// adds an item to the end of the list
-	// sampleEnd is assumed to be the trailing edge of the sample
-	// assumes that the samples are fairly evenly spaced (not much more work to do to fix this though)
-	void AddItem(float sampleEnd, float sampleValue);
+    // range settings (y-axis settings)
+    void SetUseFixedRange( float lowRange, float highRange );
+    void SetUseDynamicRange( float *rangeList, int numRanges );
+    void GetDisplayedRange( float &lowRange, float &highRange );
 
-protected:
-	virtual void Paint();
-	virtual void PerformLayout();
-	virtual void ApplySchemeSettings(IScheme *pScheme);
+    // adds an item to the end of the list
+    // sampleEnd is assumed to be the trailing edge of the sample
+    // assumes that the samples are fairly evenly spaced (not much more work to do to fix this though)
+    void AddItem( float sampleEnd, float sampleValue );
 
-private:
-	int GetVisibleItemCount();
+   protected:
+    virtual void Paint();
+    virtual void PerformLayout();
+    virtual void ApplySchemeSettings( IScheme *pScheme );
 
-	struct Sample_t
-	{
-		float sampleEnd;
-		float value;
-	};
-	CUtlLinkedList<Sample_t, int> m_Samples;
+   private:
+    int GetVisibleItemCount();
 
-	// the window to show
-	float m_flDomainSize;
-	float m_flMaxDomainSize, m_flMinDomainSize;
-	bool m_bMaxDomainSizeSet;
+    struct Sample_t
+    {
+        float sampleEnd;
+        float value;
+    };
+    CUtlLinkedList< Sample_t, int > m_Samples;
 
-	// range
-	float m_flLowRange, m_flHighRange;
-	bool m_bUseDynamicRange;
-	CUtlVector<float> m_RangeList;
+    // the window to show
+    float m_flDomainSize;
+    float m_flMaxDomainSize, m_flMinDomainSize;
+    bool m_bMaxDomainSizeSet;
 
-	// rendering
-	int m_iGraphBarWidth;
-	int m_iGraphBarGapWidth;
+    // range
+    float m_flLowRange, m_flHighRange;
+    bool m_bUseDynamicRange;
+    CUtlVector< float > m_RangeList;
+
+    // rendering
+    int m_iGraphBarWidth;
+    int m_iGraphBarGapWidth;
 };
 
-} // namespace vgui
+}  // namespace vgui
 
-#endif // GRAPHPANEL_H
+#endif  // GRAPHPANEL_H

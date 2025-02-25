@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,9 +17,9 @@ class IMaterialProxy;
 
 abstract_class IMaterialProxyFactory
 {
-public:
-	virtual IMaterialProxy *CreateProxy( const char *proxyName ) = 0;
-	virtual void DeleteProxy( IMaterialProxy *pProxy ) = 0;
+   public:
+    virtual IMaterialProxy *CreateProxy( const char *proxyName ) = 0;
+    virtual void DeleteProxy( IMaterialProxy * pProxy ) = 0;
 };
 
-#endif // IMATERIALPROXYFACTORY_H
+#endif  // IMATERIALPROXYFACTORY_H

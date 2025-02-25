@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,4 +15,4 @@
 #include "GDClass.h"
 #include "InputOutput.h"
 
-#endif // FGDLIB_H
+#endif  // FGDLIB_H

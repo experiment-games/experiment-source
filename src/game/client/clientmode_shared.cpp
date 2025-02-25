@@ -454,11 +454,11 @@ void ClientModeShared::VGui_Shutdown()
 
     delete m_pViewport;
     m_pViewport = NULL;
-// Experiment; This is redundant since its unset in luasrc_shutdown
-//#ifdef LUA_SDK
-//    delete g_pClientLuaPanel;
-//    g_pClientLuaPanel = NULL;
-//#endif
+    // Experiment; This is redundant since its unset in luasrc_shutdown
+    // #ifdef LUA_SDK
+    //    delete g_pClientLuaPanel;
+    //    g_pClientLuaPanel = NULL;
+    // #endif
 }
 
 //-----------------------------------------------------------------------------
@@ -547,7 +547,7 @@ bool ClientModeShared::ShouldDrawEntity( C_BaseEntity *pEnt )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "ShouldDrawEntity", "Whether the given entity should be drawn" );
-    CBaseEntity::PushLuaInstanceSafe( L, pEnt ); // doc: entity
+    CBaseEntity::PushLuaInstanceSafe( L, pEnt );  // doc: entity
     LUA_CALL_HOOK_END( 1, 1 );
 
     LUA_RETURN_BOOLEAN();
@@ -563,7 +563,7 @@ bool ClientModeShared::ShouldDrawParticles()
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "ShouldDrawParticles", "Whether particles should be drawn" );
-    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent particles from being drawn)
+    LUA_CALL_HOOK_END( 0, 1 );  // doc: boolean (return false to prevent particles from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -616,7 +616,7 @@ bool ClientModeShared::ShouldDrawViewModel()
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "ShouldDrawViewModels", "Whether viewmodels should be drawn" );
-    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent viewmodels from being drawn)
+    LUA_CALL_HOOK_END( 0, 1 );  // doc: boolean (return false to prevent viewmodels from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -628,7 +628,7 @@ bool ClientModeShared::ShouldDrawDetailObjects()
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "ShouldDrawDetailObjects", "Whether detail objects should be drawn" );
-    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent detail objects from being drawn)
+    LUA_CALL_HOOK_END( 0, 1 );  // doc: boolean (return false to prevent detail objects from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -691,7 +691,7 @@ bool ClientModeShared::ShouldDrawFog( void )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "ShouldDrawFog", "Whether fog should be drawn" );
-    LUA_CALL_HOOK_END( 0, 1 ); // doc: boolean (return false to prevent fog from being drawn)
+    LUA_CALL_HOOK_END( 0, 1 );  // doc: boolean (return false to prevent fog from being drawn)
 
     LUA_RETURN_BOOLEAN();
 #endif
@@ -710,7 +710,7 @@ void ClientModeShared::AdjustEngineViewport( int &x, int &y, int &width, int &he
     lua_pushinteger( L, y );
     lua_pushinteger( L, width );
     lua_pushinteger( L, height );
-    LUA_CALL_HOOK_END( 4, 4 ); // doc: number (x override), number (y override), number (width override), number (height override)
+    LUA_CALL_HOOK_END( 4, 4 );  // doc: number (x override), number (y override), number (width override), number (height override)
 
     if ( lua_isnumber( L, -4 ) )
         x = luaL_checknumber( L, -4 );
@@ -832,10 +832,10 @@ int ClientModeShared::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
     if ( g_bLuaInitialized )
     {
         LUA_CALL_HOOK_BEGIN( "KeyInput", "Called when a key is pressed" );
-        lua_pushinteger( L, down ); // doc: isDown
-        lua_pushinteger( L, keynum ); // doc: keyCode
-        lua_pushstring( L, pszCurrentBinding ); // doc: binding (the binding related to the key)
-        LUA_CALL_HOOK_END( 3, 1 ); // doc: boolean (return false to prevent the engine from handling the key, true to allow and override default behavior)
+        lua_pushinteger( L, down );              // doc: isDown
+        lua_pushinteger( L, keynum );            // doc: keyCode
+        lua_pushstring( L, pszCurrentBinding );  // doc: binding (the binding related to the key)
+        LUA_CALL_HOOK_END( 3, 1 );               // doc: boolean (return false to prevent the engine from handling the key, true to allow and override default behavior)
 
         LUA_RETURN_VALUE_IF_BOOLEAN( 1, 0 );
     }

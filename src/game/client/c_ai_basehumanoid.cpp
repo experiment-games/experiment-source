@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -164,6 +164,5 @@ void C_AI_BaseHumanoid::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector po
 	CalcBoneAdj( hdr, pos, q, controllers );
 #endif
 }
-
 
 #endif

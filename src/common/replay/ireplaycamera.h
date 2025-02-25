@@ -16,10 +16,10 @@
 
 abstract_class IReplayCamera : public IBaseInterface
 {
-public:
-	virtual void		ClearOverrideView() = 0;
+   public:
+    virtual void ClearOverrideView() = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif // IREPLAYCAMERA_H
+#endif  // IREPLAYCAMERA_H

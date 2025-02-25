@@ -3040,21 +3040,21 @@ void DoImageSpaceMotionBlur( const CViewSetup &view, int x, int y, int w, int h 
 
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "GetMotionBlurValues" );
-    lua_pushnumber( L, g_vMotionBlurValues[0] ); // horizontal blur
-    lua_pushnumber( L, g_vMotionBlurValues[1] ); // vertical blur
-    lua_pushnumber( L, g_vMotionBlurValues[2] ); // forward blur
-    lua_pushnumber( L, g_vMotionBlurValues[3] ); // rotational blur
+    lua_pushnumber( L, g_vMotionBlurValues[0] );  // horizontal blur
+    lua_pushnumber( L, g_vMotionBlurValues[1] );  // vertical blur
+    lua_pushnumber( L, g_vMotionBlurValues[2] );  // forward blur
+    lua_pushnumber( L, g_vMotionBlurValues[3] );  // rotational blur
     LUA_CALL_HOOK_END( 4, 4 );
 
-    if ( lua_isnumber(L, -4) )
+    if ( lua_isnumber( L, -4 ) )
         g_vMotionBlurValues[0] = lua_tonumber( L, -4 );
-    if ( lua_isnumber(L, -3) )
+    if ( lua_isnumber( L, -3 ) )
         g_vMotionBlurValues[1] = lua_tonumber( L, -3 );
-    if ( lua_isnumber(L, -2) )
+    if ( lua_isnumber( L, -2 ) )
         g_vMotionBlurValues[2] = lua_tonumber( L, -2 );
-    if ( lua_isnumber(L, -1) )
+    if ( lua_isnumber( L, -1 ) )
         g_vMotionBlurValues[3] = lua_tonumber( L, -1 );
 
-    lua_pop( L, 4 ); // Pop the return values
+    lua_pop( L, 4 );  // Pop the return values
 #endif
 }

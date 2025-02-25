@@ -42,24 +42,24 @@ LUALIB_API lua_IScheme *luaL_checkischeme( lua_State *L, int narg )
 }
 
 // Experiment; Disabled so we don't have to deal with SchemeHandle (HScheme) objects from lua, but only IScheme objects.
-//LUA_REGISTRATION_INIT( SchemeHandle );
+// LUA_REGISTRATION_INIT( SchemeHandle );
 //
-//LUA_BINDING_BEGIN( SchemeHandle, __tostring, "class", "Metamethod to get the string representation of the scheme handle." )
+// LUA_BINDING_BEGIN( SchemeHandle, __tostring, "class", "Metamethod to get the string representation of the scheme handle." )
 //{
 //    HScheme hScheme = LUA_BINDING_ARGUMENT( luaL_checkscheme, 1, "scheme" );
 //    lua_pushfstring( L, "SchemeHandle: %d", hScheme );
 //    return 1;
 //}
-//LUA_BINDING_END( "string", "The string representation of the scheme handle." )
+// LUA_BINDING_END( "string", "The string representation of the scheme handle." )
 //
-//LUALIB_API int luaopen_HScheme( lua_State *L )
+// LUALIB_API int luaopen_HScheme( lua_State *L )
 //{
 //    LUA_PUSH_NEW_METATABLE( L, LUA_HSCHEMELIBNAME );
 //
 //    LUA_REGISTRATION_COMMIT( SchemeHandle );
 //
-//    lua_pushvalue( L, -1 ); 
-//    lua_setfield( L, -2, "__index" ); 
+//    lua_pushvalue( L, -1 );
+//    lua_setfield( L, -2, "__index" );
 //    lua_pushstring( L, LUA_HSCHEMELIBNAME );
 //    lua_setfield( L, -2, "__type" );
 //    return 1;

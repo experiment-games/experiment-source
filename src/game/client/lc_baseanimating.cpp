@@ -274,7 +274,7 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetBoneControllers, "class", "Get all bone co
     for ( int i = 0; i < MAXSTUDIOBONECTRLS; i++ )
     {
         lua_pushnumber( L, controllers[i] );
-        lua_rawseti( L, -2, i + 1 ); // 1-based index
+        lua_rawseti( L, -2, i + 1 );  // 1-based index
     }
 
     return MAXSTUDIOBONECTRLS;
@@ -742,9 +742,9 @@ LUA_BINDING_END()
 LUALIB_API int luaopen_CBaseAnimating( lua_State *L )
 {
     LUA_PUSH_METATABLE_TO_EXTEND( L, LUA_BASEANIMATINGLIBNAME );
-    
-    //lua_pushstring( L, "Entity" );
-    //lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */ // moved to lbaseanimating_shared
+
+    // lua_pushstring( L, "Entity" );
+    // lua_setfield( L, -2, "__type" ); /* metatable.__type = "Entity" */ // moved to lbaseanimating_shared
     LUA_REGISTRATION_COMMIT( CBaseAnimating );
 
     return 1;

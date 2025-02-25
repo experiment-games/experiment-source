@@ -45,7 +45,7 @@ void __fastcall DetourClientConnect( void *thisClient, DWORD edx, const char *sz
     if ( !bFakePlayer )
     {
         int version = pNetChannel->GetProtocolVersion();
-        const char* address = pNetChannel->GetAddress();
+        const char *address = pNetChannel->GetAddress();
         netadr_t remote = pNetChannel->GetRemoteAddress();
         DevWarning( "Detour: Client connecting with name %s (#%i) (protocol version: %i, address: %s, port: %i)\n", szName, nUserID, version, address, remote.GetPort() );
     }
@@ -62,7 +62,7 @@ void __fastcall DetourClientConnect( void *thisClient, DWORD edx, const char *sz
     // Offset of m_SteamID from CBaseClient
     // CSteamID *steamId = ( CSteamID * )( ( uintptr_t )thisClient + 0x5C ); // wont be set yet
     int entityIndex = *( int * )( ( uintptr_t )thisClient + 0x0C );
-    const CSteamID *steamId = engine->GetClientSteamID( engine->PEntityOfEntIndex( entityIndex ) ); // will be valid
+    const CSteamID *steamId = engine->GetClientSteamID( engine->PEntityOfEntIndex( entityIndex ) );  // will be valid
 
     // Offset of m_ConVars from CBaseClient
     // KeyValues *conVars = ( KeyValues * )( ( uintptr_t )thisClient + 0x84 );

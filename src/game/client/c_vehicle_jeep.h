@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef C_VEHICLE_JEEP_H
@@ -9,14 +9,14 @@
 
 #include "cbase.h"
 #include "c_prop_vehicle.h"
-//#include "movevars_shared.h"
-//#include "view.h"
+// #include "movevars_shared.h"
+// #include "view.h"
 #include "flashlighteffect.h"
-//#include "c_baseplayer.h"
-//#include "c_te_effect_dispatch.h"
+// #include "c_baseplayer.h"
+// #include "c_te_effect_dispatch.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
-//#include "tier0/memdbgon.h"
+// #include "tier0/memdbgon.h"
 
 //=============================================================================
 //
@@ -24,43 +24,38 @@
 //
 class C_PropJeep : public C_PropVehicleDriveable
 {
+    DECLARE_CLASS( C_PropJeep, C_PropVehicleDriveable );
 
-	DECLARE_CLASS( C_PropJeep, C_PropVehicleDriveable );
+   public:
+    DECLARE_CLIENTCLASS();
+    DECLARE_INTERPOLATION();
 
-public:
+    C_PropJeep();
+    ~C_PropJeep();
 
-	DECLARE_CLIENTCLASS();
-	DECLARE_INTERPOLATION();
+   public:
+    void UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd );
+    void DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles );
 
-	C_PropJeep();
-	~C_PropJeep();
+    void OnEnteredVehicle( C_BasePlayer *pPlayer );
+    void Simulate( void );
 
-public:
+   private:
+    void DampenForwardMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles, float flFrameTime );
+    void DampenUpMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles, float flFrameTime );
+    void ComputePDControllerCoefficients( float *pCoefficientsOut, float flFrequency, float flDampening, float flDeltaTime );
 
-	void UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd );
-	void DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles );
+   private:
+    Vector m_vecLastEyePos;
+    Vector m_vecLastEyeTarget;
+    Vector m_vecEyeSpeed;
+    Vector m_vecTargetSpeed;
 
-	void OnEnteredVehicle( C_BasePlayer *pPlayer );
-	void Simulate( void );
+    float m_flViewAngleDeltaTime;
 
-private:
-
-	void DampenForwardMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles, float flFrameTime );
-	void DampenUpMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles, float flFrameTime );
-	void ComputePDControllerCoefficients( float *pCoefficientsOut, float flFrequency, float flDampening, float flDeltaTime );
-
-private:
-
-	Vector		m_vecLastEyePos;
-	Vector		m_vecLastEyeTarget;
-	Vector		m_vecEyeSpeed;
-	Vector		m_vecTargetSpeed;
-
-	float		m_flViewAngleDeltaTime;
-
-	float		m_flJeepFOV;
-	CHeadlightEffect *m_pHeadlight;
-	bool		m_bHeadlightIsOn;
+    float m_flJeepFOV;
+    CHeadlightEffect *m_pHeadlight;
+    bool m_bHeadlightIsOn;
 };
 
-#endif // C_VEHICLE_JEEP_H
+#endif  // C_VEHICLE_JEEP_H

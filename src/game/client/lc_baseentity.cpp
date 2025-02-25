@@ -27,7 +27,7 @@ LUA_BINDING_BEGIN( Entity, Interp_HierarchyUpdateInterpolationAmounts, "class", 
 LUA_BINDING_END()
 
 // Experiment; not binding this, since I feel it'll conflict with gmod Init on scripted ents
-//LUA_BINDING_BEGIN( Entity, Init, "class", "Initialize." )
+// LUA_BINDING_BEGIN( Entity, Init, "class", "Initialize." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //    int entnum = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "entityNumber" );
@@ -35,7 +35,7 @@ LUA_BINDING_END()
 //    lua_pushboolean( L, pEntity->Init( entnum, iSerialNum ) );
 //    return 1;
 //}
-//LUA_BINDING_END( "boolean", "true if successful, false otherwise." )
+// LUA_BINDING_END( "boolean", "true if successful, false otherwise." )
 
 LUA_BINDING_BEGIN( Entity, Terminate, "class", "Called in the destructor to shutdown everything." )
 {
@@ -208,13 +208,13 @@ LUA_BINDING_BEGIN( Entity, GetRenderEffectsBlend, "class", "Get RenderFX blend."
 LUA_BINDING_END( "integer", "RenderFX blend." )
 
 // Experiment; not binding this, since it's commented as being there for backwards compatibility
-//LUA_BINDING_BEGIN( Entity, LODTest, "class", "Level of detail test." )
+// LUA_BINDING_BEGIN( Entity, LODTest, "class", "Level of detail test." )
 //{
 //    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 //    lua_pushboolean( L, pEntity->LODTest() );
 //    return 1;
 //}
-//LUA_BINDING_END( "boolean", "true if LOD test passed, false otherwise." )
+// LUA_BINDING_END( "boolean", "true if LOD test passed, false otherwise." )
 
 LUA_BINDING_BEGIN( Entity, SetNextClientThink, "class", "Set next client think." )
 {

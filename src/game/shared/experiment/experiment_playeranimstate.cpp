@@ -36,7 +36,7 @@ CExperimentPlayerAnimState *CreateExperimentPlayerAnimState( CExperiment_Player 
     movementData.m_flBodyYawRate = 720.0f;
     movementData.m_flRunSpeed = pPlayer ? pPlayer->GetRunSpeed() : EXPERIMENT_RUN_SPEED;
     movementData.m_flWalkSpeed = pPlayer ? pPlayer->GetWalkSpeed() : EXPERIMENT_WALK_SPEED;
-    movementData.m_flSprintSpeed = -1.0f; // TODO: ? This is running and m_flRunSpeed above is normal speed? Where is this struct used?
+    movementData.m_flSprintSpeed = -1.0f;  // TODO: ? This is running and m_flRunSpeed above is normal speed? Where is this struct used?
 
     // Create animation state for this player.
     CExperimentPlayerAnimState *pRet =

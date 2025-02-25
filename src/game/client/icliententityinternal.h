@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,6 @@
 
 class ClientClass;
 
-
 //-----------------------------------------------------------------------------
 // represents a handle used only by the client DLL
 //-----------------------------------------------------------------------------
@@ -27,6 +26,4 @@ class ClientClass;
 typedef CBaseHandle ClientEntityHandle_t;
 typedef unsigned short SpatialPartitionHandle_t;
 
-
-
-#endif // ICLIENTENTITYINTERNAL_H
+#endif  // ICLIENTENTITYINTERNAL_H

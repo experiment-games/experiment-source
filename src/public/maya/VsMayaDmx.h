@@ -21,10 +21,9 @@
 
 class VsMayaDmx
 {
-	static CDmeMesh *MayaMeshToDmeMesh(
-		const MDagPath &i_mDagPath,
-		DmFileId_t fileId );
-
+    static CDmeMesh *MayaMeshToDmeMesh(
+        const MDagPath &i_mDagPath,
+        DmFileId_t fileId );
 };
 
-#endif // VSMAYADMX_H
+#endif  // VSMAYADMX_H

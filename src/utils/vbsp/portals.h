@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 // Sets up the g_ClipPortalIndices array.
 void TranslateClipPortalIndices();
 
-
-#endif // PORTALS_H
+#endif  // PORTALS_H

@@ -2,20 +2,17 @@
 //
 // Purpose: utilities to decode/decrypt a ticket from the
 // ISteamUser::RequestEncryptedAppTicket, ISteamUser::GetEncryptedAppTicket API
-// 
+//
 // To use: declare CSteamEncryptedAppTicket, then call BDecryptTicket
 // if BDecryptTicket returns true, other accessors are valid
-// 
+//
 //=============================================================================
 
 #include "steam_api.h"
 
-static const int k_nSteamEncryptedAppTicketSymmetricKeyLen = 32;				
+static const int k_nSteamEncryptedAppTicketSymmetricKeyLen = 32;
 
-
-S_API bool SteamEncryptedAppTicket_BDecryptTicket( const uint8 *rgubTicketEncrypted, uint32 cubTicketEncrypted,
-						  uint8 *rgubTicketDecrypted, uint32 *pcubTicketDecrypted,
-						  const uint8 rgubKey[k_nSteamEncryptedAppTicketSymmetricKeyLen], int cubKey );
+S_API bool SteamEncryptedAppTicket_BDecryptTicket( const uint8 *rgubTicketEncrypted, uint32 cubTicketEncrypted, uint8 *rgubTicketDecrypted, uint32 *pcubTicketDecrypted, const uint8 rgubKey[k_nSteamEncryptedAppTicketSymmetricKeyLen], int cubKey );
 
 S_API bool SteamEncryptedAppTicket_BIsTicketForApp( uint8 *rgubTicketDecrypted, uint32 cubTicketDecrypted, AppId_t nAppID );
 

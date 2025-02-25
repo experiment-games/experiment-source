@@ -120,7 +120,7 @@ bool CJsonToKeyValues::ConvertJsonToKeyValues( const char *pInput, KeyValues *pO
 
 inline void WriteAny( KeyValues *kv, PrettyWriter< StringBuffer > &writer );
 
-inline void WriteObject(KeyValues* kv, PrettyWriter< StringBuffer >& writer)
+inline void WriteObject( KeyValues *kv, PrettyWriter< StringBuffer > &writer )
 {
     writer.StartObject();
     for ( KeyValues *pCur = kv->GetFirstSubKey(); pCur; pCur = pCur->GetNextKey() )

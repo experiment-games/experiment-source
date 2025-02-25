@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,22 +16,19 @@
 
 #include "tier1/utlvector.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 struct UniqueId_t;
 class CUtlBuffer;
 
-
 //-----------------------------------------------------------------------------
 // Defines a globally unique ID
 //-----------------------------------------------------------------------------
 struct UniqueId_t
 {
-	unsigned char m_Value[16];
+    unsigned char m_Value[16];
 };
-
 
 //-----------------------------------------------------------------------------
 // Methods related to unique ids
@@ -46,11 +43,9 @@ void CopyUniqueId( const UniqueId_t &src, UniqueId_t *pDest );
 bool Serialize( CUtlBuffer &buf, const UniqueId_t &src );
 bool Unserialize( CUtlBuffer &buf, UniqueId_t &dest );
 
-inline bool operator ==( const UniqueId_t& lhs, const UniqueId_t& rhs )
+inline bool operator==( const UniqueId_t &lhs, const UniqueId_t &rhs )
 {
-	return !Q_memcmp( (void *)&lhs.m_Value[ 0 ], (void *)&rhs.m_Value[ 0 ], sizeof( lhs.m_Value ) );
+    return !Q_memcmp( ( void * )&lhs.m_Value[0], ( void * )&rhs.m_Value[0], sizeof( lhs.m_Value ) );
 }
 
-
-#endif // UNIQUEID_H
-
+#endif  // UNIQUEID_H

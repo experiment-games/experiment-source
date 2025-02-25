@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,19 +14,14 @@
 //-----------------------------------------------------------------------------
 class CPointCamera;
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CreateInfoCameraLink( CBaseEntity *pTarget, CPointCamera *pCamera );
 
-
 //-----------------------------------------------------------------------------
-// Sets up visibility 
+// Sets up visibility
 //-----------------------------------------------------------------------------
 void PointCameraSetupVisibility( CBaseEntity *pPlayer, int area, unsigned char *pvs, int pvssize );
 
-
-
-#endif // INFO_CAMERA_LINK_H
-
+#endif  // INFO_CAMERA_LINK_H

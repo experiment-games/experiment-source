@@ -1,129 +1,129 @@
 #include <cbase.h>
-//#include <vgui/KeyCode.h>
-//#include <vgui_int.h>
-//#include <luamanager.h>
-//#include "luasrclib.h"
+// #include <vgui/KeyCode.h>
+// #include <vgui_int.h>
+// #include <luamanager.h>
+// #include "luasrclib.h"
 //
-//#include <vgui_controls/PropertySheet.h>
-//#include <vgui_controls/Button.h>
+// #include <vgui_controls/PropertySheet.h>
+// #include <vgui_controls/Button.h>
 //
-//#include <scripted_controls/lPanel.h>
-//#include <scripted_controls/lPropertyDialog.h>
+// #include <scripted_controls/lPanel.h>
+// #include <scripted_controls/lPropertyDialog.h>
 //
 //// memdbgon must be the last include file in a .cpp file!!!
-//#include <tier0/memdbgon.h>
+// #include <tier0/memdbgon.h>
 //
-//using namespace vgui;
+// using namespace vgui;
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Constructor
 ////-----------------------------------------------------------------------------
-//LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
-//    : PropertyDialog( parent, panelName, L )
+// LPropertyDialog::LPropertyDialog( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+//     : PropertyDialog( parent, panelName, L )
 //{
-//}
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Destructor
 ////-----------------------------------------------------------------------------
-//LPropertyDialog::~LPropertyDialog()
+// LPropertyDialog::~LPropertyDialog()
 //{
-//}
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Sets up the sheet
 ////-----------------------------------------------------------------------------
-//void LPropertyDialog::PerformLayout()
+// void LPropertyDialog::PerformLayout()
 //{
-//    BaseClass::PerformLayout();
+//     BaseClass::PerformLayout();
 //
-//#ifdef LUA_SDK
-//    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "PerformLayout" );
-//    LUA_CALL_PANEL_METHOD_END( 0, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "PerformLayout" );
+//     LUA_CALL_PANEL_METHOD_END( 0, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Handles command text from the buttons
 ////-----------------------------------------------------------------------------
-//void LPropertyDialog::OnCommand( const char *command )
+// void LPropertyDialog::OnCommand( const char *command )
 //{
-//#ifdef LUA_SDK
-//    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnCommand" );
-//    lua_pushstring( m_lua_State, command );
-//    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+// #ifdef LUA_SDK
+//     LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnCommand" );
+//     lua_pushstring( m_lua_State, command );
+//     LUA_CALL_PANEL_METHOD_END( 1, 1 );
 //
-//    LUA_RETURN_PANEL_NONE();
-//#endif
+//     LUA_RETURN_PANEL_NONE();
+// #endif
 //
-//    BaseClass::OnCommand( command );
-//}
+//     BaseClass::OnCommand( command );
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: called when the Cancel button is pressed
 ////-----------------------------------------------------------------------------
-//void LPropertyDialog::OnCancel()
+// void LPropertyDialog::OnCancel()
 //{
-//#ifdef LUA_SDK
-//    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnCancel" );
-//    LUA_CALL_PANEL_METHOD_END( 0, 0 );
-//#endif
-//}
+// #ifdef LUA_SDK
+//     LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnCancel" );
+//     LUA_CALL_PANEL_METHOD_END( 0, 0 );
+// #endif
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose:
 //// Input  : code -
 ////-----------------------------------------------------------------------------
-//void LPropertyDialog::OnKeyCodeTyped( KeyCode code )
+// void LPropertyDialog::OnKeyCodeTyped( KeyCode code )
 //{
-//#ifdef LUA_SDK
-//    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnKeyCodeTyped" );
-//    lua_pushinteger( m_lua_State, code );
-//    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+// #ifdef LUA_SDK
+//     LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnKeyCodeTyped" );
+//     lua_pushinteger( m_lua_State, code );
+//     LUA_CALL_PANEL_METHOD_END( 1, 1 );
 //
-//    LUA_RETURN_PANEL_NONE();
-//#endif
+//     LUA_RETURN_PANEL_NONE();
+// #endif
 //
-//    BaseClass::OnKeyCodeTyped( code );
-//}
+//     BaseClass::OnKeyCodeTyped( code );
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: Command handler
 ////-----------------------------------------------------------------------------
-//bool LPropertyDialog::OnOK( bool applyOnly )
+// bool LPropertyDialog::OnOK( bool applyOnly )
 //{
-//#ifdef LUA_SDK
-//    LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnOK" );
-//    lua_pushboolean( m_lua_State, applyOnly );
-//    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+// #ifdef LUA_SDK
+//     LUA_CALL_PROPERTYDIALOG_METHOD_BEGIN( "OnOK" );
+//     lua_pushboolean( m_lua_State, applyOnly );
+//     LUA_CALL_PANEL_METHOD_END( 1, 1 );
 //
-//    LUA_RETURN_PANEL_BOOLEAN();
-//#endif
+//     LUA_RETURN_PANEL_BOOLEAN();
+// #endif
 //
-//    // the sheet should have the pages apply changes before we tell the world
-//    _propertySheet->ApplyChanges();
+//     // the sheet should have the pages apply changes before we tell the world
+//     _propertySheet->ApplyChanges();
 //
-//    // this should tell anybody who's watching us that we're done
-//    PostActionSignal( new KeyValues( "ApplyChanges" ) );
+//     // this should tell anybody who's watching us that we're done
+//     PostActionSignal( new KeyValues( "ApplyChanges" ) );
 //
-//    // default to closing
-//    return true;
-//}
+//     // default to closing
+//     return true;
+// }
 //
 ////-----------------------------------------------------------------------------
 //// Purpose: enable/disable the apply button
 ////-----------------------------------------------------------------------------
-//void LPropertyDialog::EnableApplyButton( bool bEnable )
+// void LPropertyDialog::EnableApplyButton( bool bEnable )
 //{
-//    _applyButton->SetEnabled( bEnable );
-//    InvalidateLayout();
-//}
+//     _applyButton->SetEnabled( bEnable );
+//     InvalidateLayout();
+// }
 //
 ///*
 //** access functions (stack -> C)
 //*/
 //
-//LUA_API lua_PropertyDialog *lua_topropertydialog( lua_State *L, int idx )
+// LUA_API lua_PropertyDialog *lua_topropertydialog( lua_State *L, int idx )
 //{
 //    PHandle *phPanel =
 //        dynamic_cast< PHandle * >( ( PHandle * )lua_touserdata( L, idx ) );
@@ -135,7 +135,7 @@
 ///*
 //** push functions (C -> stack)
 //*/
-//LUALIB_API lua_PropertyDialog *luaL_checkpropertydialog( lua_State *L,
+// LUALIB_API lua_PropertyDialog *luaL_checkpropertydialog( lua_State *L,
 //                                                         int narg )
 //{
 //    lua_PropertyDialog *d = lua_topropertydialog( L, narg );
@@ -144,32 +144,32 @@
 //    return d;
 //}
 //
-//static int PropertyDialog_AddPage( lua_State *L )
+// static int PropertyDialog_AddPage( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->AddPage( luaL_checkpanel( L, 2 ),
 //                                               luaL_checkstring( L, 3 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_ApplyChanges( lua_State *L )
+// static int PropertyDialog_ApplyChanges( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->ApplyChanges();
 //    return 0;
 //}
 //
-//static int PropertyDialog_ChainToAnimationMap( lua_State *L )
+// static int PropertyDialog_ChainToAnimationMap( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->ChainToAnimationMap();
 //    return 0;
 //}
 //
-//static int PropertyDialog_ChainToMap( lua_State *L )
+// static int PropertyDialog_ChainToMap( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->ChainToMap();
 //    return 0;
 //}
 //
-//static int PropertyDialog_EnableApplyButton( lua_State *L )
+// static int PropertyDialog_EnableApplyButton( lua_State *L )
 //{
 //    LPropertyDialog *plDialog =
 //        dynamic_cast< LPropertyDialog * >( luaL_checkpropertydialog( L, 1 ) );
@@ -178,82 +178,82 @@
 //    return 0;
 //}
 //
-//static int PropertyDialog_GetActivePage( lua_State *L )
+// static int PropertyDialog_GetActivePage( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->GetActivePage()->PushLuaInstance( L );
 //    return 1;
 //}
 //
-//static int PropertyDialog_GetPanelBaseClassName( lua_State *L )
+// static int PropertyDialog_GetPanelBaseClassName( lua_State *L )
 //{
 //    lua_pushstring( L, luaL_checkpropertydialog( L, 1 )->GetPanelBaseClassName() );
 //    return 1;
 //}
 //
-//static int PropertyDialog_GetPanelClassName( lua_State *L )
+// static int PropertyDialog_GetPanelClassName( lua_State *L )
 //{
 //    lua_pushstring( L, luaL_checkpropertydialog( L, 1 )->GetPanelClassName() );
 //    return 1;
 //}
 //
-//static int PropertyDialog_KB_AddBoundKey( lua_State *L )
+// static int PropertyDialog_KB_AddBoundKey( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->KB_AddBoundKey(
 //        luaL_checkstring( L, 2 ), luaL_checknumber( L, 3 ), luaL_checknumber( L, 4 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_KB_ChainToMap( lua_State *L )
+// static int PropertyDialog_KB_ChainToMap( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->KB_ChainToMap();
 //    return 0;
 //}
 //
-//static int PropertyDialog_ResetAllData( lua_State *L )
+// static int PropertyDialog_ResetAllData( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->ResetAllData();
 //    return 0;
 //}
 //
-//static int PropertyDialog_SetApplyButtonText( lua_State *L )
+// static int PropertyDialog_SetApplyButtonText( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->SetApplyButtonText( luaL_checkstring( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_SetApplyButtonVisible( lua_State *L )
+// static int PropertyDialog_SetApplyButtonVisible( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->SetApplyButtonVisible(
 //        luaL_checkboolean( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_SetCancelButtonText( lua_State *L )
+// static int PropertyDialog_SetCancelButtonText( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->SetCancelButtonText( luaL_checkstring( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_SetCancelButtonVisible( lua_State *L )
+// static int PropertyDialog_SetCancelButtonVisible( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->SetCancelButtonVisible(
 //        luaL_checkboolean( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_SetOKButtonText( lua_State *L )
+// static int PropertyDialog_SetOKButtonText( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->SetOKButtonText( luaL_checkstring( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog_SetOKButtonVisible( lua_State *L )
+// static int PropertyDialog_SetOKButtonVisible( lua_State *L )
 //{
 //    luaL_checkpropertydialog( L, 1 )->SetOKButtonVisible( luaL_checkboolean( L, 2 ) );
 //    return 0;
 //}
 //
-//static int PropertyDialog___index( lua_State *L )
+// static int PropertyDialog___index( lua_State *L )
 //{
 //    PropertyDialog *pDialog = lua_topropertydialog( L, 1 );
 //    LUA_METATABLE_INDEX_CHECK_VALID( L, PanelIsValid );
@@ -276,7 +276,7 @@
 //    return 1;
 //}
 //
-//static int PropertyDialog___newindex( lua_State *L )
+// static int PropertyDialog___newindex( lua_State *L )
 //{
 //    PropertyDialog *pDialog = lua_topropertydialog( L, 1 );
 //
@@ -300,14 +300,14 @@
 //    return 0;
 //}
 //
-//static int PropertyDialog___eq( lua_State *L )
+// static int PropertyDialog___eq( lua_State *L )
 //{
 //    lua_pushboolean( L,
 //                     lua_topropertydialog( L, 1 ) == lua_topropertydialog( L, 2 ) );
 //    return 1;
 //}
 //
-//static int PropertyDialog___tostring( lua_State *L )
+// static int PropertyDialog___tostring( lua_State *L )
 //{
 //    PropertyDialog *pDialog = lua_topropertydialog( L, 1 );
 //    if ( pDialog == NULL )
@@ -322,7 +322,7 @@
 //    return 1;
 //}
 //
-//static const luaL_Reg PropertyDialogmeta[] = {
+// static const luaL_Reg PropertyDialogmeta[] = {
 //    { "AddPage", PropertyDialog_AddPage },
 //    { "ApplyChanges", PropertyDialog_ApplyChanges },
 //    { "ChainToAnimationMap", PropertyDialog_ChainToAnimationMap },
@@ -347,7 +347,7 @@
 //    { "__gc", PanelCollectGarbage },
 //    { NULL, NULL } };
 //
-//static int luasrc_PropertyDialog( lua_State *L )
+// static int luasrc_PropertyDialog( lua_State *L )
 //{
 //    lua_PropertyDialog *pPanel =
 //        new lua_PropertyDialog( luaL_optpanel( L, 1, VGui_GetClientLuaRootPanel() ),
@@ -357,14 +357,14 @@
 //    return 1;
 //}
 //
-//static const luaL_Reg PropertyDialog_funcs[] = {
+// static const luaL_Reg PropertyDialog_funcs[] = {
 //    { "PropertyDialog", luasrc_PropertyDialog },
 //    { NULL, NULL } };
 //
 ///*
 //** Open PropertyDialog object
 //*/
-//LUALIB_API int luaopen_vgui_PropertyDialog( lua_State *L )
+// LUALIB_API int luaopen_vgui_PropertyDialog( lua_State *L )
 //{
 //    LUA_PUSH_NEW_METATABLE( L, "PropertyDialog" );
 //    luaL_register( L, NULL, PropertyDialogmeta );

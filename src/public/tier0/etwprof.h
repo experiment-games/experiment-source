@@ -24,13 +24,13 @@
 
 #include "tier0/platform.h"
 
-#ifdef	IS_WINDOWS_PC
+#ifdef IS_WINDOWS_PC
 // ETW support should be compiled in for all Windows PC platforms. It isn't
 // supported on Windows XP but that is determined at run-time.
-#define	ETW_MARKS_ENABLED
+#define ETW_MARKS_ENABLED
 #endif
 
-#ifdef	ETW_MARKS_ENABLED
+#ifdef ETW_MARKS_ENABLED
 
 // Insert a single event to mark a point in an ETW trace. The return value is a 64-bit
 // time stamp.
@@ -52,8 +52,8 @@ PLATFORM_INTERFACE void ETWMark3I( const char *pMessage, int data1, int data2, i
 PLATFORM_INTERFACE void ETWMark4I( const char *pMessage, int data1, int data2, int data3, int data4 );
 // Optionally specify one to two strings. They will show up in separate columns in
 // summary tables to allow sorting and easier transfer to spreadsheets.
-PLATFORM_INTERFACE void ETWMark1S( const char *pMessage, const char* data1 );
-PLATFORM_INTERFACE void ETWMark2S( const char *pMessage, const char* data1, const char* data2 );
+PLATFORM_INTERFACE void ETWMark1S( const char *pMessage, const char *data1 );
+PLATFORM_INTERFACE void ETWMark2S( const char *pMessage, const char *data1, const char *data2 );
 
 // Insert a begin event to mark the start of some work. The return value is a 64-bit
 // time stamp which should be passed to the corresponding ETWEnd function.
@@ -86,47 +86,63 @@ PLATFORM_INTERFACE void ETWReadPacket( const char *pFrom, int nWireSize, int nIn
 // pair of events to bracket some work.
 class CETWScope
 {
-public:
-	CETWScope( const char *pMessage )
-		: m_pMessage( pMessage )
-	{
-		m_nStartTime = ETWBegin( pMessage );
-	}
-	~CETWScope()
-	{
-		ETWEnd( m_pMessage, m_nStartTime );
-	}
-private:
-	// Private and unimplemented to disable copying.
-	CETWScope( const CETWScope& rhs );
-	CETWScope& operator=( const CETWScope& rhs );
+   public:
+    CETWScope( const char *pMessage )
+        : m_pMessage( pMessage )
+    {
+        m_nStartTime = ETWBegin( pMessage );
+    }
+    ~CETWScope()
+    {
+        ETWEnd( m_pMessage, m_nStartTime );
+    }
 
-	const char* m_pMessage;
-	int64 m_nStartTime;
+   private:
+    // Private and unimplemented to disable copying.
+    CETWScope( const CETWScope &rhs );
+    CETWScope &operator=( const CETWScope &rhs );
+
+    const char *m_pMessage;
+    int64 m_nStartTime;
 };
 
 #else
 
-inline int64 ETWMark( const char* ) { return 0; }
-inline void ETWMarkPrintf( const char *, ... ) { return; }
-inline void ETWMark1F( const char *, float ) { }
-inline void ETWMark2F( const char *, float , float ) { }
-inline void ETWMark3F( const char *, float , float , float ) { }
-inline void ETWMark4F( const char *, float , float , float , float ) { }
-inline void ETWMark1I( const char *, int ) { }
-inline void ETWMark2I( const char *, int , int ) { }
-inline void ETWMark3I( const char *, int , int , int ) { }
-inline void ETWMark4I( const char *, int , int , int , int ) { }
+inline int64 ETWMark( const char * )
+{
+    return 0;
+}
+inline void ETWMarkPrintf( const char *, ... )
+{
+    return;
+}
+inline void ETWMark1F( const char *, float ) {}
+inline void ETWMark2F( const char *, float, float ) {}
+inline void ETWMark3F( const char *, float, float, float ) {}
+inline void ETWMark4F( const char *, float, float, float, float ) {}
+inline void ETWMark1I( const char *, int ) {}
+inline void ETWMark2I( const char *, int, int ) {}
+inline void ETWMark3I( const char *, int, int, int ) {}
+inline void ETWMark4I( const char *, int, int, int, int ) {}
 // Optionally specify one to two strings. They will show up in separate columns in
 // summary tables to allow sorting and easier transfer to spreadsheets.
-inline void ETWMark1S( const char *, const char* ) { }
-inline void ETWMark2S( const char *, const char* , const char* ) { }
+inline void ETWMark1S( const char *, const char * ) {}
+inline void ETWMark2S( const char *, const char *, const char * ) {}
 
-inline int64 ETWBegin( const char* ) { return 0; }
-inline int64 ETWEnd( const char*, int64 ) { return 0; }
-inline void ETWRenderFrameMark( bool  ) {}
-inline void ETWSimFrameMark( bool  ) {}
-inline int ETWGetRenderFrameNumber() { return 0; }
+inline int64 ETWBegin( const char * )
+{
+    return 0;
+}
+inline int64 ETWEnd( const char *, int64 )
+{
+    return 0;
+}
+inline void ETWRenderFrameMark( bool ) {}
+inline void ETWSimFrameMark( bool ) {}
+inline int ETWGetRenderFrameNumber()
+{
+    return 0;
+}
 
 inline void ETWMouseDown( int nWhichButton, int nX, int nY ) {}
 inline void ETWMouseUp( int nWhichButton, int nX, int nY ) {}
@@ -142,16 +158,17 @@ inline void ETWReadPacket( const char *pFrom, int nWireSize, int nInSequenceNR, 
 // pair of events to bracket some work.
 class CETWScope
 {
-public:
-	CETWScope( const char* )
-	{
-	}
-private:
-	// Private and unimplemented to disable copying.
-	CETWScope( const CETWScope& rhs );
-	CETWScope& operator=( const CETWScope& rhs );
+   public:
+    CETWScope( const char * )
+    {
+    }
+
+   private:
+    // Private and unimplemented to disable copying.
+    CETWScope( const CETWScope &rhs );
+    CETWScope &operator=( const CETWScope &rhs );
 };
 
 #endif
 
-#endif // ETWPROF_H
+#endif  // ETWPROF_H

@@ -2077,9 +2077,9 @@ void CBasePlayer::SharedSpawn()
 #endif
     SetLadderClimbSpeed( MAX_CLIMB_SPEED );
 
-    SetJumpPower( 160.0f ); // approx. 21 units
+    SetJumpPower( 160.0f );  // approx. 21 units
     SetDuckSpeedInMilliseconds( 300 );
-    SetUnDuckFraction( 0.3f ); // It takes 1/3rd the time to unduck as it does to duck
+    SetUnDuckFraction( 0.3f );  // It takes 1/3rd the time to unduck as it does to duck
 
     MDLCACHE_CRITICAL_SECTION();
     SetSequence( SelectWeightedSequence( ACT_IDLE ) );

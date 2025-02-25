@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "vgui/IVGui.h"
@@ -15,7 +15,6 @@
 // NOTE: This has to be the last file included!
 #include "tier0/memdbgon.h"
 
-
 using namespace vgui;
 
 USING_BUILD_FACTORY( Button );
@@ -28,12 +27,12 @@ USING_BUILD_FACTORY( AnimatingImagePanel );
 USING_BUILD_FACTORY( CBitmapImagePanel );
 USING_BUILD_FACTORY( CheckButton );
 USING_BUILD_FACTORY( ComboBox );
-USING_BUILD_FACTORY_ALIAS( CvarToggleCheckButton<ConVarRef>, CvarToggleCheckButton );
+USING_BUILD_FACTORY_ALIAS( CvarToggleCheckButton< ConVarRef >, CvarToggleCheckButton );
 USING_BUILD_FACTORY( Divider );
 USING_BUILD_FACTORY( ExpandButton );
 USING_BUILD_FACTORY( GraphPanel );
-//USING_BUILD_FACTORY_ALIAS( HTML, HTML_NoJavascript );
-//USING_BUILD_FACTORY_ALIAS( HTML, HTML_Javascript );
+// USING_BUILD_FACTORY_ALIAS( HTML, HTML_NoJavascript );
+// USING_BUILD_FACTORY_ALIAS( HTML, HTML_Javascript );
 USING_BUILD_FACTORY( ListPanel );
 USING_BUILD_FACTORY( ListViewPanel );
 USING_BUILD_FACTORY( Menu );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,18 +24,17 @@
 //-----------------------------------------------------------------------------
 void CharacterSetBuild( characterset_t *pSetBuffer, const char *pszSetString )
 {
-	int i = 0;
+    int i = 0;
 
-	// Test our pointers
-	if ( !pSetBuffer || !pszSetString )
-		return;
+    // Test our pointers
+    if ( !pSetBuffer || !pszSetString )
+        return;
 
-	memset( pSetBuffer->set, 0, sizeof(pSetBuffer->set) );
+    memset( pSetBuffer->set, 0, sizeof( pSetBuffer->set ) );
 
-	while ( pszSetString[i] )
-	{
-		pSetBuffer->set[ (unsigned)pszSetString[i] ] = 1;
-		i++;
-	}
-
+    while ( pszSetString[i] )
+    {
+        pSetBuffer->set[( unsigned )pszSetString[i]] = 1;
+        i++;
+    }
 }

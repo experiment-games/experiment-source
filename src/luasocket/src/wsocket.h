@@ -20,14 +20,14 @@ typedef t_socket *p_socket;
 #define IPV6_V6ONLY 27
 #endif
 
-#define SOCKET_INVALID (INVALID_SOCKET)
+#define SOCKET_INVALID ( INVALID_SOCKET )
 
 #ifndef SO_REUSEPORT
 #define SO_REUSEPORT SO_REUSEADDR
 #endif
 
 #ifndef AI_NUMERICSERV
-#define AI_NUMERICSERV (0)
+#define AI_NUMERICSERV ( 0 )
 #endif
 
 #endif /* WSOCKET_H */

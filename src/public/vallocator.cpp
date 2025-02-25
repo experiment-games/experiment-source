@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 
-#if !defined(_STATIC_LINKED) || defined(_SHARED_LIB)
+#if !defined( _STATIC_LINKED ) || defined( _SHARED_LIB )
 
 #include <malloc.h>
 #include "vallocator.h"
@@ -17,20 +17,20 @@
 
 VStdAllocator g_StdAllocator;
 
-void* VStdAllocator::Alloc(unsigned long size)
+void *VStdAllocator::Alloc( unsigned long size )
 {
-	if(size)
-	{
-		void *ret = malloc(size);
-		return ret;
-	}
-	else
-		return 0;
+    if ( size )
+    {
+        void *ret = malloc( size );
+        return ret;
+    }
+    else
+        return 0;
 }
 
-void VStdAllocator::Free(void *ptr)
+void VStdAllocator::Free( void *ptr )
 {
-	free(ptr);
+    free( ptr );
 }
 
-#endif // !_STATIC_LINKED || _SHARED_LIB
+#endif  // !_STATIC_LINKED || _SHARED_LIB

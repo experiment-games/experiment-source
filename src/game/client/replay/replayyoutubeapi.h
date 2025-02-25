@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,10 @@
 #endif
 
 class IReplayMovie;
-namespace vgui { class Panel; };
+namespace vgui
+{
+class Panel;
+};
 
 /**
  * Show the YouTube login dialog and attempt to upload the movie if login was successful
@@ -29,4 +32,4 @@ void YouTube_ShowLoginDialog( IReplayMovie *pMovie, vgui::Panel *pParent );
  */
 void YouTube_ShowUploadDialog( IReplayMovie *pMovie, vgui::Panel *pParent );
 
-#endif // REPLAYYOUTUBEAPI_H
+#endif  // REPLAYYOUTUBEAPI_H

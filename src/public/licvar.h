@@ -6,4 +6,4 @@
 
 void RemoveGlobalChangeCallbacks( void );
 
-#endif // LICVAR_H
+#endif  // LICVAR_H

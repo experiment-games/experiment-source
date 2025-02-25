@@ -15,11 +15,12 @@
 //-----------------------------------------------------------------------------
 class CReplayBasePanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayBasePanel, vgui::EditablePanel );
-public:
-	CReplayBasePanel( Panel *pParent, const char *pName );
+    DECLARE_CLASS_SIMPLE( CReplayBasePanel, vgui::EditablePanel );
 
-	void GetPosRelativeToAncestor( Panel *pAncestor, int &nXOut, int &nYOut );
+   public:
+    CReplayBasePanel( Panel *pParent, const char *pName );
+
+    void GetPosRelativeToAncestor( Panel *pAncestor, int &nXOut, int &nYOut );
 };
 
-#endif // REPLAYBASEPANEL_H
+#endif  // REPLAYBASEPANEL_H

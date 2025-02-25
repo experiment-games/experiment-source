@@ -101,7 +101,7 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_PUSHAWAY, "PUSHAWAY" );
     lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_NPC_ACTOR, "NPC_ACTOR" );
     lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_NPC_SCRIPTED, "NPC_SCRIPTED" );
-    lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_DEBRIS, "WORLD" ); // TODO: How different of debris is this really?
+    lua_pushenum( L, Collision_Group_t::COLLISION_GROUP_DEBRIS, "WORLD" );  // TODO: How different of debris is this really?
     lua_pushenum( L, Collision_Group_t::LAST_SHARED_COLLISION_GROUP, "LAST" );
     LUA_SET_ENUM_LIB_END( L );
 
@@ -150,18 +150,18 @@ LUALIB_API int luaopen_SharedEnumerations( lua_State *L )
     lua_pushenum( L, VGuiPanel_t::PANEL_GAMEDLL, "GAME_DLL" );
     lua_pushenum( L, VGuiPanel_t::PANEL_CLIENTDLL_TOOLS, "CLIENT_DLL_TOOLS" );
     LUA_SET_ENUM_LIB_END( L );
-    
+
     LUA_SET_ENUM_LIB_BEGIN( L, "BLOOD_COLOR" );
     lua_pushenum( L, BLOOD_COLOR::DONT_BLEED, "DONT_BLEED" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_RED, "RED" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_YELLOW, "YELLOW" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_GREEN, "GREEN" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_MECH, "MECH" );
-    #if defined( HL2_EPISODIC )
+#if defined( HL2_EPISODIC )
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_ANTLION, "ANTLION" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_ZOMBIE, "ZOMBIE" );
     lua_pushenum( L, BLOOD_COLOR::BLOOD_COLOR_ANTLION_WORKER, "ANTLION_WORKER" );
-    #endif
+#endif
     LUA_SET_ENUM_LIB_END( L );
 
     LUA_SET_ENUM_LIB_BEGIN( L, "SOUND_LEVEL" );

@@ -352,16 +352,16 @@ struct LuaRegEntry
 
 // For enumerations that are really just #defines
 #define LUA_BINDING_ARGUMENT_ENUM_DEFINE( EnumType, ArgIndex, DocumentationName ) \
-    ( int ) luaL_checknumber( L, ArgIndex )
+    ( int )luaL_checknumber( L, ArgIndex )
 
 // TODO
-//#define LUA_BINDING_ENUM_CHECK( LuaState, ArgIndex, EnumType ) \
+// #define LUA_BINDING_ENUM_CHECK( LuaState, ArgIndex, EnumType ) \
 //    ( EnumType )( int ) luaL_checknumber( LuaState, ArgIndex )
 //
-//#define LUA_BINDING_ENUM_WITH_DEFAULT( LuaState, ArgIndex, EnumType, Default ) \
+// #define LUA_BINDING_ENUM_WITH_DEFAULT( LuaState, ArgIndex, EnumType, Default ) \
 //    ( EnumType )( int ) luaL_optnumber( LuaState, ArgIndex, Default )
 //
-//#define LUA_BINDING_ENUM_PUSH( LuaState, EnumValue, EnumType ) \
+// #define LUA_BINDING_ENUM_PUSH( LuaState, EnumValue, EnumType ) \
 //    ( EnumType ) lua_pushinteger( LuaState, EnumValue );
 
 void luaL_register( lua_State *L, const char *libname, CUtlVector< LuaRegEntry > &luaRegistry );

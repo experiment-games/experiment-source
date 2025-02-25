@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 // Draw rain effects.
 void DrawPrecipitation();
 
-
-#endif // C_EFFECTS_H
+#endif  // C_EFFECTS_H

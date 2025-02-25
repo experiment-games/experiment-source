@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,71 +14,64 @@
 //
 // Note: allocating and freeing arrays of objects will not work using VAllocators.
 
-
-
 #ifndef VALLOCATOR_H
 #define VALLOCATOR_H
 
-
 class VAllocator
 {
-public:
-	virtual void*	Alloc(unsigned long size)=0;
-	virtual void	Free(void *ptr)=0;
+   public:
+    virtual void *Alloc( unsigned long size ) = 0;
+    virtual void Free( void *ptr ) = 0;
 };
-
 
 // This allocator just uses malloc and free.
 class VStdAllocator : public VAllocator
 {
-public:
-	virtual void*	Alloc(unsigned long size);
-	virtual void	Free(void *ptr);
+   public:
+    virtual void *Alloc( unsigned long size );
+    virtual void Free( void *ptr );
 };
 extern VStdAllocator g_StdAllocator;
 
-
-
 // Use these to allocate classes through VAllocator.
 // Allocating arrays of classes is not supported.
-#define VNew(pAlloc)				new 
-#define VDelete(pAlloc, ptr)		delete ptr
+#define VNew( pAlloc ) new
+#define VDelete( pAlloc, ptr ) delete ptr
 
 // Used internally.. just makes sure we call the right operator new.
 class DummyAllocatorHelper
 {
-public:
-	int x;
+   public:
+    int x;
 };
 
-inline void* operator new(size_t size, void *ptr, DummyAllocatorHelper *asdf)
+inline void *operator new( size_t size, void *ptr, DummyAllocatorHelper *asdf )
 {
-	(void)asdf;	// Suppress unused-variable compiler warnings.
-	(void)size;
-	return ptr;
+    ( void )asdf;  // Suppress unused-variable compiler warnings.
+    ( void )size;
+    return ptr;
 }
 
-inline void operator delete(void *ptrToDelete, void *ptr, DummyAllocatorHelper *asdf)
+inline void operator delete( void *ptrToDelete, void *ptr, DummyAllocatorHelper *asdf )
 {
-	(void)asdf;	// Suppress unused-variable compiler warnings.
-	(void)ptr;
-	(void)ptrToDelete;
+    ( void )asdf;  // Suppress unused-variable compiler warnings.
+    ( void )ptr;
+    ( void )ptrToDelete;
 }
 
 // Use these to manually construct and destruct lists of objects.
-template<class T>
-inline void VAllocator_CallConstructors(T *pObjects, int count=1)
+template < class T >
+inline void VAllocator_CallConstructors( T *pObjects, int count = 1 )
 {
-	for(int i=0; i < count; i++)
-		new(&pObjects[i], (DummyAllocatorHelper*)0) T;
+    for ( int i = 0; i < count; i++ )
+        new ( &pObjects[i], ( DummyAllocatorHelper * )0 ) T;
 }
 
-template<class T>
-inline void VAllocator_CallDestructors(T *pObjects, int count)
+template < class T >
+inline void VAllocator_CallDestructors( T *pObjects, int count )
 {
-	for(int i=0; i < count; i++)
-		pObjects[i].~T();
+    for ( int i = 0; i < count; i++ )
+        pObjects[i].~T();
 }
 
 #endif
-

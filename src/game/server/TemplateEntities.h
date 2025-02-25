@@ -18,19 +18,19 @@
 class CBaseEntity;
 class CPointTemplate;
 
-int			Templates_Add(CBaseEntity *pEntity, const char *pszMapData, int nLen);
-string_t	Templates_FindByIndex( int iIndex );
-int			Templates_GetStringSize( int iIndex );
-string_t	Templates_FindByTargetName(const char *pszName);
-void		Templates_ReconnectIOForGroup( CPointTemplate *pGroup );
+int Templates_Add( CBaseEntity *pEntity, const char *pszMapData, int nLen );
+string_t Templates_FindByIndex( int iIndex );
+int Templates_GetStringSize( int iIndex );
+string_t Templates_FindByTargetName( const char *pszName );
+void Templates_ReconnectIOForGroup( CPointTemplate *pGroup );
 
 // Some templates have Entity I/O connecting the entities within the template.
 // Unique versions of these templates need to be created whenever they're instanced.
-void		Templates_StartUniqueInstance( void );
-bool		Templates_IndexRequiresEntityIOFixup( int iIndex );
-char		*Templates_GetEntityIOFixedMapData( int iIndex );
+void Templates_StartUniqueInstance( void );
+bool Templates_IndexRequiresEntityIOFixup( int iIndex );
+char *Templates_GetEntityIOFixedMapData( int iIndex );
 
 // Save / Restore
 ISaveRestoreBlockHandler *GetTemplateSaveRestoreBlockHandler( void );
 
-#endif // TEMPLATEENTITIES_H
+#endif  // TEMPLATEENTITIES_H

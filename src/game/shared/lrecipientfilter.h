@@ -24,6 +24,6 @@ LUA_API void( lua_pushrecipientfilter )( lua_State *L, lua_CRecipientFilter &fil
 
 LUALIB_API lua_CRecipientFilter &( luaL_checkrecipientfilter )( lua_State *L, int narg );
 LUALIB_API lua_CRecipientFilter &( luaL_optrecipientfilter )( lua_State *L, int narg, lua_CRecipientFilter &def );
-LUA_API bool ( lua_isrecipientfilter )( lua_State *L, int idx );
+LUA_API bool( lua_isrecipientfilter )( lua_State *L, int idx );
 
 #endif  // LRECIPIENTFILTER_H

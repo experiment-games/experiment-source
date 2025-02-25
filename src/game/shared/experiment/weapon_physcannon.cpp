@@ -626,7 +626,7 @@ void CGrabController::DetachEntity( bool bClearVelocity )
             else
             {
 #ifndef CLIENT_DLL
-#if defined( EXPERIMENT_SOURCE)
+#if defined( EXPERIMENT_SOURCE )
                 ClampPhysicsVelocity( pPhys, EXPERIMENT_NORMAL_SPEED * 1.5f, 2.0f * 360.0f );
 #elif defined( HL2MP )
                 ClampPhysicsVelocity( pPhys, HL2_NORM_SPEED * 1.5f, 2.0f * 360.0f );

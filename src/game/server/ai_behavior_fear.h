@@ -11,7 +11,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #ifndef AI_BEHAVIOR_FEAR_H
 #define AI_BEHAVIOR_FEAR_H
 #ifdef _WIN32
@@ -22,77 +21,76 @@
 
 class CAI_FearBehavior : public CAI_SimpleBehavior
 {
-	DECLARE_CLASS( CAI_FearBehavior, CAI_SimpleBehavior );
+    DECLARE_CLASS( CAI_FearBehavior, CAI_SimpleBehavior );
 
-public:
-	CAI_FearBehavior();
-	
-	void Precache( void );
-	virtual const char *GetName() {	return "Fear"; }
+   public:
+    CAI_FearBehavior();
 
-	virtual bool 	CanSelectSchedule();
-	void GatherConditions();
-	
-	virtual void BeginScheduleSelection();
-	virtual void EndScheduleSelection();
+    void Precache( void );
+    virtual const char *GetName()
+    {
+        return "Fear";
+    }
 
-	void StartTask( const Task_t *pTask );
-	void RunTask( const Task_t *pTask );
+    virtual bool CanSelectSchedule();
+    void GatherConditions();
 
-	//void BuildScheduleTestBits();
-	//int TranslateSchedule( int scheduleType );
-	//void OnStartSchedule( int scheduleType );
+    virtual void BeginScheduleSelection();
+    virtual void EndScheduleSelection();
 
-	//void InitializeBehavior();
+    void StartTask( const Task_t *pTask );
+    void RunTask( const Task_t *pTask );
 
-	bool EnemyDislikesMe();
-	
-	void MarkAsUnsafe();
-	bool IsInASafePlace();
-	void SpoilSafePlace();
-	void ReleaseAllHints();
+    // void BuildScheduleTestBits();
+    // int TranslateSchedule( int scheduleType );
+    // void OnStartSchedule( int scheduleType );
 
-	CAI_Hint *FindFearWithdrawalDest();
-	void BuildScheduleTestBits();
-	int TranslateSchedule( int scheduleType );
+    // void InitializeBehavior();
 
-	
-	enum
-	{
-		SCHED_FEAR_MOVE_TO_SAFE_PLACE = BaseClass::NEXT_SCHEDULE,		
-		SCHED_FEAR_MOVE_TO_SAFE_PLACE_RETRY,
-		SCHED_FEAR_STAY_IN_SAFE_PLACE,
-		NEXT_SCHEDULE,
+    bool EnemyDislikesMe();
 
-		TASK_FEAR_GET_PATH_TO_SAFETY_HINT = BaseClass::NEXT_TASK,
-		TASK_FEAR_WAIT_FOR_SAFETY,
-		TASK_FEAR_IN_SAFE_PLACE,
-		NEXT_TASK,
+    void MarkAsUnsafe();
+    bool IsInASafePlace();
+    void SpoilSafePlace();
+    void ReleaseAllHints();
 
-		COND_FEAR_ENEMY_CLOSE = BaseClass::NEXT_CONDITION,	// within 30 feet
-		COND_FEAR_ENEMY_TOO_CLOSE,							// within 5 feet
-		COND_FEAR_SEPARATED_FROM_PLAYER,
-		NEXT_CONDITION,
-	};
+    CAI_Hint *FindFearWithdrawalDest();
+    void BuildScheduleTestBits();
+    int TranslateSchedule( int scheduleType );
 
-	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
+    enum
+    {
+        SCHED_FEAR_MOVE_TO_SAFE_PLACE = BaseClass::NEXT_SCHEDULE,
+        SCHED_FEAR_MOVE_TO_SAFE_PLACE_RETRY,
+        SCHED_FEAR_STAY_IN_SAFE_PLACE,
+        NEXT_SCHEDULE,
 
-public:
+        TASK_FEAR_GET_PATH_TO_SAFETY_HINT = BaseClass::NEXT_TASK,
+        TASK_FEAR_WAIT_FOR_SAFETY,
+        TASK_FEAR_IN_SAFE_PLACE,
+        NEXT_TASK,
 
-private:
-	virtual int		SelectSchedule();
+        COND_FEAR_ENEMY_CLOSE = BaseClass::NEXT_CONDITION,  // within 30 feet
+        COND_FEAR_ENEMY_TOO_CLOSE,                          // within 5 feet
+        COND_FEAR_SEPARATED_FROM_PLAYER,
+        NEXT_CONDITION,
+    };
 
-	float			m_flTimeToSafety;
-	float			m_flTimePlayerLastVisible;
-	float			m_flDeferUntil;
+    DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-	CAI_MoveMonitor		m_SafePlaceMoveMonitor;
-	CHandle<CAI_Hint>	m_hSafePlaceHint;
-	CHandle<CAI_Hint>	m_hMovingToHint;
+   public:
+   private:
+    virtual int SelectSchedule();
 
-	DECLARE_DATADESC();
+    float m_flTimeToSafety;
+    float m_flTimePlayerLastVisible;
+    float m_flDeferUntil;
+
+    CAI_MoveMonitor m_SafePlaceMoveMonitor;
+    CHandle< CAI_Hint > m_hSafePlaceHint;
+    CHandle< CAI_Hint > m_hMovingToHint;
+
+    DECLARE_DATADESC();
 };
 
-#endif // AI_BEHAVIOR_FEAR_H
-
-
+#endif  // AI_BEHAVIOR_FEAR_H

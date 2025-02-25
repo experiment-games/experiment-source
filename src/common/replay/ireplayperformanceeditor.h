@@ -23,11 +23,11 @@ class CReplay;
 //
 class IReplayPerformanceEditor : public IBaseInterface
 {
-public:
-	virtual CReplay *GetReplay() = 0;
-	virtual void	OnRewindComplete() = 0;
+   public:
+    virtual CReplay *GetReplay() = 0;
+    virtual void OnRewindComplete() = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif // IREPLAYPERFORMANCEEDITOR_H
+#endif  // IREPLAYPERFORMANCEEDITOR_H

@@ -842,33 +842,33 @@ bool CExperiment_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 void CExperiment_Player::ChangeTeam( int iTeam )
 {
     // Experiment: Disabled since we just want this to change the team number
-    //bool bKill = false;
+    // bool bKill = false;
 
-    //if ( ExperimentRules()->IsTeamplay() != true && iTeam != TEAM_SPECTATOR )
+    // if ( ExperimentRules()->IsTeamplay() != true && iTeam != TEAM_SPECTATOR )
     //{
-    //    // don't let them try to join combine or rebels during deathmatch.
-    //    iTeam = TEAM_UNASSIGNED;
-    //}
+    //     // don't let them try to join combine or rebels during deathmatch.
+    //     iTeam = TEAM_UNASSIGNED;
+    // }
 
-    //if ( ExperimentRules()->IsTeamplay() == true )
+    // if ( ExperimentRules()->IsTeamplay() == true )
     //{
-    //    if ( iTeam != GetTeamNumber() && GetTeamNumber() != TEAM_UNASSIGNED )
-    //    {
-    //        bKill = true;
-    //    }
-    //}
+    //     if ( iTeam != GetTeamNumber() && GetTeamNumber() != TEAM_UNASSIGNED )
+    //     {
+    //         bKill = true;
+    //     }
+    // }
 
     BaseClass::ChangeTeam( iTeam );
 
-    //m_flNextTeamChangeTime = gpGlobals->curtime + TEAM_CHANGE_INTERVAL;
+    // m_flNextTeamChangeTime = gpGlobals->curtime + TEAM_CHANGE_INTERVAL;
 
-    //if ( ExperimentRules()->IsTeamplay() == true )
+    // if ( ExperimentRules()->IsTeamplay() == true )
     //{
-    //    SetPlayerTeamModel();
-    //}
-    //else
+    //     SetPlayerTeamModel();
+    // }
+    // else
     //{
-        SetPlayerModel();
+    SetPlayerModel();
     //}
 
     if ( iTeam == TEAM_SPECTATOR )
@@ -878,10 +878,10 @@ void CExperiment_Player::ChangeTeam( int iTeam )
         State_Transition( STATE_OBSERVER_MODE );
     }
 
-    //if ( bKill == true )
+    // if ( bKill == true )
     //{
-    //    CommitSuicide();
-    //}
+    //     CommitSuicide();
+    // }
 }
 
 bool CExperiment_Player::HandleCommand_JoinTeam( int team )

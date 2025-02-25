@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -15,7 +15,6 @@
 #include "utllinkedlist.h"
 #include "cdll_int.h"
 #include "eiface.h"
-
 
 class IVModelRender;
 class IVEngineClient;
@@ -49,7 +48,7 @@ class C_BaseAnimating;
 class IColorCorrectionSystem;
 class IInputSystem;
 class ISceneFileCache;
-class IXboxSystem;	// Xbox 360 only
+class IXboxSystem;  // Xbox 360 only
 class IMatchmaking;
 class IVideoServices;
 class CSteamAPIContext;
@@ -73,7 +72,7 @@ class AchievementsAndStatsInterface;
 //=============================================================================
 
 extern IVModelRender *modelrender;
-extern IVEngineClient	*engine;
+extern IVEngineClient *engine;
 extern IVModelRender *modelrender;
 extern IVEfx *effects;
 extern IVRenderView *render;
@@ -85,7 +84,7 @@ extern IDataCache *datacache;
 extern IMDLCache *mdlcache;
 extern IVModelInfoClient *modelinfo;
 extern IEngineVGui *enginevgui;
-extern ISpatialPartition* partition;
+extern ISpatialPartition *partition;
 extern IBaseClientDLL *clientdll;
 extern IFileSystem *filesystem;
 extern IStaticPropMgrClient *staticpropmgr;
@@ -100,7 +99,7 @@ extern CGlobalVarsBase *gpGlobals;
 extern IClientTools *clienttools;
 extern IInputSystem *inputsystem;
 extern ISceneFileCache *scenefilecache;
-extern IXboxSystem *xboxsystem;	// Xbox 360 only
+extern IXboxSystem *xboxsystem;  // Xbox 360 only
 extern IMatchmaking *matchmaking;
 extern IVideoServices *g_pVideo;
 extern IUploadGameStats *gamestatsuploader;
@@ -118,14 +117,14 @@ extern IEngineClientReplay *g_pEngineClientReplay;
 // [dwenger] Necessary for stats display
 //=============================================================================
 
-extern AchievementsAndStatsInterface* g_pAchievementsAndStatsInterface;
+extern AchievementsAndStatsInterface *g_pAchievementsAndStatsInterface;
 
 //=============================================================================
 // HPE_END
 //=============================================================================
 
 // Set to true between LevelInit and LevelShutdown.
-extern bool	g_bLevelInitialized;
+extern bool g_bLevelInitialized;
 extern bool g_bTextMode;
 
 // Kyle says: this is here to obsfucate our accessing of the g_bTextMode variable and for no other purpose.
@@ -134,7 +133,6 @@ extern bool g_bTextMode;
 //
 //			  On a suggestion from Joe, we also point it to an incomplete type.
 extern class IClientPurchaseInterfaceV2 *g_pClientPurchaseInterface;
-
 
 // Returns true if a new OnDataChanged event is registered for this frame.
 bool AddDataChangeEvent( IClientNetworkable *ent, DataUpdateType_t updateType, int *pStoredEvent );
@@ -163,7 +161,6 @@ void PrecacheParticleSystem( const char *pParticleSystemName );
 int GetParticleSystemIndex( const char *pParticleSystemName );
 const char *GetParticleSystemNameFromIndex( int nIndex );
 
-
 //-----------------------------------------------------------------------------
 // Called during bone setup to test perf
 //-----------------------------------------------------------------------------
@@ -179,4 +176,4 @@ extern CSteamID GetSteamIDForPlayerIndex( int iPlayerIndex );
 
 #endif
 
-#endif // CDLL_CLIENT_INT_H
+#endif  // CDLL_CLIENT_INT_H

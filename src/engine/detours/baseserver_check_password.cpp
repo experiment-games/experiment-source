@@ -85,7 +85,7 @@ void HandleCheckPasswordDetour( void *serverObject, const char *steamIdAsString 
     if ( MH_CreateHook( ( LPVOID )functionAddress, &DetourCheckPassword, reinterpret_cast< LPVOID * >( &OriginalServerCheckPassword ) ) != MH_OK )
     {
         DevWarning( "Failed to hook CheckPassword.\n" );
-        Assert( 0 ); // fails when rejoining the server
+        Assert( 0 );  // fails when rejoining the server
     }
     else
     {

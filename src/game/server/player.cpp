@@ -5398,9 +5398,9 @@ void CBasePlayer::KillSilent()
         Hints()->ResetHintTimers();
     }
 
-    //g_pGameRules->PlayerKilled( this, info );
+    // g_pGameRules->PlayerKilled( this, info );
 
-    //gamestats->Event_PlayerKilled( this, info );
+    // gamestats->Event_PlayerKilled( this, info );
 
     RumbleEffect( RUMBLE_STOP_ALL, 0, RUMBLE_FLAGS_NONE );
 
@@ -5469,7 +5469,7 @@ void CBasePlayer::KillSilent()
 
     // This next section is copied from Event_Dying
 
-    //DeathSound( info );
+    // DeathSound( info );
 
     // The dead body rolls out of the vehicle.
     if ( IsInAVehicle() )
@@ -5486,7 +5486,7 @@ void CBasePlayer::KillSilent()
 
     SetThink( &CBasePlayer::PlayerDeathThink );
     SetNextThink( gpGlobals->curtime + 0.1f );
-    //BaseClass::Event_Dying( info );
+    // BaseClass::Event_Dying( info );
 
     m_iSuicideCustomKillFlags = 0;
 }

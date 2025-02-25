@@ -18,68 +18,64 @@
 #pragma once
 #endif
 
-
 #include "appframework/AppFramework.h"
 #include "tier2/tier2dm.h"
 #include "tier1/convar.h"
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use tier2
 //-----------------------------------------------------------------------------
 class CTier2SteamApp : public CSteamAppSystemGroup
 {
-	typedef CSteamAppSystemGroup BaseClass;
+    typedef CSteamAppSystemGroup BaseClass;
 
-public:
-	// Methods of IApplication
-	virtual bool PreInit()
-	{
-		CreateInterfaceFn factory = GetFactory();
-		ConnectTier1Libraries( &factory, 1 );
-		ConVar_Register( 0 );
-		ConnectTier2Libraries( &factory, 1 );
-		return true;			
-	}
+   public:
+    // Methods of IApplication
+    virtual bool PreInit()
+    {
+        CreateInterfaceFn factory = GetFactory();
+        ConnectTier1Libraries( &factory, 1 );
+        ConVar_Register( 0 );
+        ConnectTier2Libraries( &factory, 1 );
+        return true;
+    }
 
-	virtual void PostShutdown()
-	{
-		DisconnectTier2Libraries();
-		ConVar_Unregister();
-		DisconnectTier1Libraries();
-	}
+    virtual void PostShutdown()
+    {
+        DisconnectTier2Libraries();
+        ConVar_Unregister();
+        DisconnectTier1Libraries();
+    }
 };
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use tier2 and datamodel
 //-----------------------------------------------------------------------------
 class CTier2DmSteamApp : public CTier2SteamApp
 {
-	typedef CTier2SteamApp BaseClass;
+    typedef CTier2SteamApp BaseClass;
 
-public:
-	// Methods of IApplication
-	virtual bool PreInit()
-	{
-		if ( !BaseClass::PreInit() )
-			return false;
+   public:
+    // Methods of IApplication
+    virtual bool PreInit()
+    {
+        if ( !BaseClass::PreInit() )
+            return false;
 
-		CreateInterfaceFn factory = GetFactory();
-		if ( !ConnectDataModel( factory ) )
-			return false;
+        CreateInterfaceFn factory = GetFactory();
+        if ( !ConnectDataModel( factory ) )
+            return false;
 
-		InitReturnVal_t nRetVal = InitDataModel();
-		return ( nRetVal == INIT_OK );
-	}
+        InitReturnVal_t nRetVal = InitDataModel();
+        return ( nRetVal == INIT_OK );
+    }
 
-	virtual void PostShutdown()
-	{
-		ShutdownDataModel();
-		DisconnectDataModel();
-		BaseClass::PostShutdown();
-	}
+    virtual void PostShutdown()
+    {
+        ShutdownDataModel();
+        DisconnectDataModel();
+        BaseClass::PostShutdown();
+    }
 };
 
-
-#endif // TIER2APP_H
+#endif  // TIER2APP_H

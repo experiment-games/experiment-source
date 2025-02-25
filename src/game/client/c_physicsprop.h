@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,23 +12,24 @@
 
 #include "c_breakableprop.h"
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PhysicsProp : public C_BreakableProp
 {
-	typedef C_BreakableProp BaseClass;
-public:
-	DECLARE_CLIENTCLASS();
+    typedef C_BreakableProp BaseClass;
 
-	C_PhysicsProp();
-	~C_PhysicsProp();
+   public:
+    DECLARE_CLIENTCLASS();
 
-	virtual bool OnInternalDrawModel( ClientModelRenderInfo_t *pInfo );
+    C_PhysicsProp();
+    ~C_PhysicsProp();
 
-protected:
-	// Networked vars.
-	bool m_bAwake;
-	bool m_bAwakeLastTime;
+    virtual bool OnInternalDrawModel( ClientModelRenderInfo_t *pInfo );
+
+   protected:
+    // Networked vars.
+    bool m_bAwake;
+    bool m_bAwakeLastTime;
 };
 
-#endif // C_PHYSICSPROP_H 
+#endif  // C_PHYSICSPROP_H

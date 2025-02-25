@@ -5,7 +5,6 @@
 #pragma once
 #endif
 
-
 /* type for C_BaseFlex functions */
 #ifdef CLIENT_DLL
 #include <c_baseflex.h>

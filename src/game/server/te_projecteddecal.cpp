@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -21,102 +21,100 @@
 //-----------------------------------------------------------------------------
 class CTEProjectedDecal : public CBaseTempEntity
 {
-public:
-	DECLARE_CLASS( CTEProjectedDecal, CBaseTempEntity );
+   public:
+    DECLARE_CLASS( CTEProjectedDecal, CBaseTempEntity );
 
-					CTEProjectedDecal( const char *name );
-	virtual			~CTEProjectedDecal( void );
+    CTEProjectedDecal( const char* name );
+    virtual ~CTEProjectedDecal( void );
 
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
-	DECLARE_SERVERCLASS();
+    virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-public:
-	CNetworkVector( m_vecOrigin );
-	CNetworkVar( int, m_nIndex );
-	CNetworkVar( float, m_flDistance );
-	CNetworkQAngle( m_angRotation );
+    DECLARE_SERVERCLASS();
+
+   public:
+    CNetworkVector( m_vecOrigin );
+    CNetworkVar( int, m_nIndex );
+    CNetworkVar( float, m_flDistance );
+    CNetworkQAngle( m_angRotation );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CTEProjectedDecal::CTEProjectedDecal( const char *name ) :
-	CBaseTempEntity( name )
+CTEProjectedDecal::CTEProjectedDecal( const char* name )
+    : CBaseTempEntity( name )
 {
-	m_vecOrigin.Init();
-	m_angRotation.Init();
-	m_flDistance = 64.0f;
-	m_nIndex = 0;
+    m_vecOrigin.Init();
+    m_angRotation.Init();
+    m_flDistance = 64.0f;
+    m_nIndex = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEProjectedDecal::~CTEProjectedDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEProjectedDecal::Test( const Vector& current_origin, const QAngle& current_angles )
 {
-	// Fill in data
-	m_flDistance = 1024.0f;
-	m_nIndex = 0;
-	m_vecOrigin = current_origin;
-	m_angRotation = current_angles;
+    // Fill in data
+    m_flDistance = 1024.0f;
+    m_nIndex = 0;
+    m_vecOrigin = current_origin;
+    m_angRotation = current_angles;
 
-	Vector vecEnd;
-	
-	Vector forward;
+    Vector vecEnd;
 
-	m_vecOrigin.GetForModify()[2] += 24;
+    Vector forward;
 
-	AngleVectors( current_angles, &forward );
-	forward[2] = 0.0;
-	VectorNormalize( forward );
+    m_vecOrigin.GetForModify()[2] += 24;
 
-	VectorMA( m_vecOrigin, 24.0, forward, m_vecOrigin.GetForModify() );
+    AngleVectors( current_angles, &forward );
+    forward[2] = 0.0;
+    VectorNormalize( forward );
 
-	CBroadcastRecipientFilter filter;
-	Create( filter, 0.0 );
+    VectorMA( m_vecOrigin, 24.0, forward, m_vecOrigin.GetForModify() );
+
+    CBroadcastRecipientFilter filter;
+    Create( filter, 0.0 );
 }
 
-IMPLEMENT_SERVERCLASS_ST(CTEProjectedDecal, DT_TEProjectedDecal)
-	SendPropVector( SENDINFO(m_vecOrigin), -1, SPROP_COORD),
-	SendPropQAngles( SENDINFO(m_angRotation), 10 ),
-	SendPropFloat( SENDINFO(m_flDistance), 10, SPROP_ROUNDUP, 0, 1024 ),
-	SendPropInt( SENDINFO(m_nIndex), 9, SPROP_UNSIGNED ),
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST( CTEProjectedDecal, DT_TEProjectedDecal )
+SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_COORD ),
+    SendPropQAngles( SENDINFO( m_angRotation ), 10 ),
+    SendPropFloat( SENDINFO( m_flDistance ), 10, SPROP_ROUNDUP, 0, 1024 ),
+    SendPropInt( SENDINFO( m_nIndex ), 9, SPROP_UNSIGNED ),
+    END_SEND_TABLE()
 
-
-// Singleton to fire TEBSPDecal objects
-static CTEProjectedDecal g_TEProjectedDecal( "Projected Decal" );
+    // Singleton to fire TEBSPDecal objects
+    static CTEProjectedDecal g_TEProjectedDecal( "Projected Decal" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			entity - 
-//			index - 
-//			modelindex - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			entity -
+//			index -
+//			modelindex -
 //-----------------------------------------------------------------------------
-void TE_ProjectDecal( IRecipientFilter& filter, float delay,
-	const Vector* pos, const QAngle *angles, float distance, int index )
+void TE_ProjectDecal( IRecipientFilter& filter, float delay, const Vector* pos, const QAngle* angles, float distance, int index )
 {
-	g_TEProjectedDecal.m_vecOrigin		= *pos;
-	g_TEProjectedDecal.m_angRotation	= *angles;
-	g_TEProjectedDecal.m_flDistance		= distance;	
-	g_TEProjectedDecal.m_nIndex			= index;
+    g_TEProjectedDecal.m_vecOrigin = *pos;
+    g_TEProjectedDecal.m_angRotation = *angles;
+    g_TEProjectedDecal.m_flDistance = distance;
+    g_TEProjectedDecal.m_nIndex = index;
 
-	// Send it over the wire
-	g_TEProjectedDecal.Create( filter, delay );
+    // Send it over the wire
+    g_TEProjectedDecal.Create( filter, delay );
 }

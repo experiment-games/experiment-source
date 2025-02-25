@@ -15,63 +15,64 @@
 #include "utlvector.h"
 #include "client_thinklist.h"
 
-
 class C_BasePlayer;
 
 class C_Team : public C_BaseEntity
 {
-	DECLARE_CLASS( C_Team, C_BaseEntity );
-public:
-	DECLARE_CLIENTCLASS();
-	DECLARE_PREDICTABLE();
+    DECLARE_CLASS( C_Team, C_BaseEntity );
 
-					C_Team();
-	virtual			~C_Team();
+   public:
+    DECLARE_CLIENTCLASS();
+    DECLARE_PREDICTABLE();
 
-	virtual void	PreDataUpdate( DataUpdateType_t updateType );
+    C_Team();
+    virtual ~C_Team();
 
-	// Data Handling
-	virtual char	*Get_Name( void );
-	virtual int		Get_Score( void );
-	virtual int		Get_Deaths( void );
-	virtual int		Get_Ping( void );
+    virtual void PreDataUpdate( DataUpdateType_t updateType );
 
-	// Player Handling
-	virtual int		Get_Number_Players( void );
-	virtual bool	ContainsPlayer( int iPlayerIndex );
-	C_BasePlayer*	GetPlayer( int idx );
+    // Data Handling
+    virtual char *Get_Name( void );
+    virtual int Get_Score( void );
+    virtual int Get_Deaths( void );
+    virtual int Get_Ping( void );
 
-	// for shared code, use the same function name
-	virtual int		GetNumPlayers( void ) { return Get_Number_Players(); }
+    // Player Handling
+    virtual int Get_Number_Players( void );
+    virtual bool ContainsPlayer( int iPlayerIndex );
+    C_BasePlayer *GetPlayer( int idx );
 
-	int		GetTeamNumber() const;
+    // for shared code, use the same function name
+    virtual int GetNumPlayers( void )
+    {
+        return Get_Number_Players();
+    }
 
-	int		GetRoundsWon(void) { return m_iRoundsWon; }
+    int GetTeamNumber() const;
 
-	void	RemoveAllPlayers();
+    int GetRoundsWon( void )
+    {
+        return m_iRoundsWon;
+    }
 
+    void RemoveAllPlayers();
 
-// IClientThinkable overrides.
-public:
+    // IClientThinkable overrides.
+   public:
+    virtual void ClientThink();
 
-	virtual	void				ClientThink();
+   public:
+    // Data received from the server
+    CUtlVector< int > m_aPlayers;
+    char m_szTeamname[MAX_TEAM_NAME_LENGTH];
+    int m_iScore;
+    int m_iRoundsWon;
 
-
-public:
-
-	// Data received from the server
-	CUtlVector< int > m_aPlayers;
-	char	m_szTeamname[ MAX_TEAM_NAME_LENGTH ];
-	int		m_iScore;
-	int		m_iRoundsWon;
-
-	// Data for the scoreboard
-	int		m_iDeaths;
-	int		m_iPing;
-	int		m_iPacketloss;
-	int		m_iTeamNum;
+    // Data for the scoreboard
+    int m_iDeaths;
+    int m_iPing;
+    int m_iPacketloss;
+    int m_iTeamNum;
 };
-
 
 // Global list of client side team entities
 extern CUtlVector< C_Team * > g_Teams;
@@ -84,4 +85,4 @@ C_Team *GetPlayersTeam( C_BasePlayer *pPlayer );
 bool ArePlayersOnSameTeam( int iPlayerIndex1, int iPlayerIndex2 );
 extern int GetNumberOfTeams( void );
 
-#endif // C_TEAM_H
+#endif  // C_TEAM_H

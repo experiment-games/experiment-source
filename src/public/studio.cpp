@@ -172,7 +172,7 @@ mstudio_rle_anim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) con
         Msg( "[%8.3f] stall on %s:%s:%d:%d\n", Plat_FloatTime(), pStudiohdr()->pszName(), pszName(), section, block );
     }
 
-    return (mstudioanim_t*)panim;
+    return ( mstudioanim_t * )panim;
 }
 
 mstudioikrule_t *mstudioanimdesc_t::pIKRule( int i ) const

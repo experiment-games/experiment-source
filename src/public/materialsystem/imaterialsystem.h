@@ -1305,11 +1305,11 @@ abstract_class IMatRenderContext : public IRefCounted
     virtual void SetFlexWeights( int nFirstWeight, int nCount, const MorphWeight_t *pWeights ) = 0;
 
     // FIXME: Remove
-    virtual void Unused4() {};
-    virtual void Unused5() {};
-    virtual void Unused6() {};
-    virtual void Unused7() {};
-    virtual void Unused8() {};
+    virtual void Unused4(){};
+    virtual void Unused5(){};
+    virtual void Unused6(){};
+    virtual void Unused7(){};
+    virtual void Unused8(){};
 
     // Read w/ stretch to a host-memory buffer
     virtual void ReadPixelsAndStretch( Rect_t * pSrcRect, Rect_t * pDstRect, unsigned char *pBuffer, ImageFormat dstFormat, int nDstStride ) = 0;

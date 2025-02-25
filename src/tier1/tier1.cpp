@@ -22,9 +22,8 @@ static bool s_bConnected = false;
 
 // for utlsortvector.h
 #ifndef _WIN32
-	void *g_pUtlSortVectorQSortContext = NULL;
+void *g_pUtlSortVectorQSortContext = NULL;
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Call this to connect to all tier 1 libraries.
@@ -32,31 +31,31 @@ static bool s_bConnected = false;
 //-----------------------------------------------------------------------------
 void ConnectTier1Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount )
 {
-	// Don't connect twice..
-	if ( s_bConnected )
-		return;
+    // Don't connect twice..
+    if ( s_bConnected )
+        return;
 
-	s_bConnected = true;
+    s_bConnected = true;
 
-	for ( int i = 0; i < nFactoryCount; ++i )
-	{
-		if ( !g_pCVar )
-		{
-			cvar = g_pCVar = ( ICvar * )pFactoryList[i]( CVAR_INTERFACE_VERSION, NULL );
-		}
-		if ( !g_pProcessUtils )
-		{
-			g_pProcessUtils = ( IProcessUtils * )pFactoryList[i]( PROCESS_UTILS_INTERFACE_VERSION, NULL );
-		}
-	}
+    for ( int i = 0; i < nFactoryCount; ++i )
+    {
+        if ( !g_pCVar )
+        {
+            cvar = g_pCVar = ( ICvar * )pFactoryList[i]( CVAR_INTERFACE_VERSION, NULL );
+        }
+        if ( !g_pProcessUtils )
+        {
+            g_pProcessUtils = ( IProcessUtils * )pFactoryList[i]( PROCESS_UTILS_INTERFACE_VERSION, NULL );
+        }
+    }
 }
 
 void DisconnectTier1Libraries()
 {
-	if ( !s_bConnected )
-		return;
+    if ( !s_bConnected )
+        return;
 
-	g_pCVar = cvar = 0;
-	g_pProcessUtils = NULL;
-	s_bConnected = false;
+    g_pCVar = cvar = 0;
+    g_pProcessUtils = NULL;
+    s_bConnected = false;
 }

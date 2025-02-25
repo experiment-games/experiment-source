@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-
 #include "interface.h"
 #include "physics_shared.h"
 
@@ -24,4 +23,4 @@ extern void PhysicsReset();
 extern void PhysicsSimulate();
 extern float PhysGetSyncCreateTime();
 
-#endif // PHYSICS_H
+#endif  // PHYSICS_H

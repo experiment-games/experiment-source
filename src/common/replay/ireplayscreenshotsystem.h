@@ -24,11 +24,11 @@ struct WriteReplayScreenshotParams_t;
 //
 class IReplayScreenshotSystem : public IBaseInterface
 {
-public:
-	virtual void	WriteReplayScreenshot( WriteReplayScreenshotParams_t &params ) = 0;
-	virtual void	UpdateReplayScreenshotCache() = 0;
+   public:
+    virtual void WriteReplayScreenshot( WriteReplayScreenshotParams_t &params ) = 0;
+    virtual void UpdateReplayScreenshotCache() = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif // IREPLAYSCREENSHOTSYSTEM_H
+#endif  // IREPLAYSCREENSHOTSYSTEM_H

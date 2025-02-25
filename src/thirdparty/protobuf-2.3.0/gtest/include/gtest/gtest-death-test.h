@@ -40,14 +40,15 @@
 
 #include <gtest/internal/gtest-death-test-internal.h>
 
-namespace testing {
+namespace testing
+{
 
 // This flag controls the style of death tests.  Valid values are "threadsafe",
 // meaning that the death test child process will re-execute the test binary
 // from the start, running only a single death test, or "fast",
 // meaning that the child process will execute the test logic immediately
 // after forking.
-GTEST_DECLARE_string_(death_test_style);
+GTEST_DECLARE_string_( death_test_style );
 
 #if GTEST_HAS_DEATH_TEST
 
@@ -154,48 +155,52 @@ GTEST_DECLARE_string_(death_test_style);
 // Asserts that a given statement causes the program to exit, with an
 // integer exit status that satisfies predicate, and emitting error output
 // that matches regex.
-#define ASSERT_EXIT(statement, predicate, regex) \
-  GTEST_DEATH_TEST_(statement, predicate, regex, GTEST_FATAL_FAILURE_)
+#define ASSERT_EXIT( statement, predicate, regex ) \
+    GTEST_DEATH_TEST_( statement, predicate, regex, GTEST_FATAL_FAILURE_ )
 
 // Like ASSERT_EXIT, but continues on to successive tests in the
 // test case, if any:
-#define EXPECT_EXIT(statement, predicate, regex) \
-  GTEST_DEATH_TEST_(statement, predicate, regex, GTEST_NONFATAL_FAILURE_)
+#define EXPECT_EXIT( statement, predicate, regex ) \
+    GTEST_DEATH_TEST_( statement, predicate, regex, GTEST_NONFATAL_FAILURE_ )
 
 // Asserts that a given statement causes the program to exit, either by
 // explicitly exiting with a nonzero exit code or being killed by a
 // signal, and emitting error output that matches regex.
-#define ASSERT_DEATH(statement, regex) \
-  ASSERT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, regex)
+#define ASSERT_DEATH( statement, regex ) \
+    ASSERT_EXIT( statement, ::testing::internal::ExitedUnsuccessfully, regex )
 
 // Like ASSERT_DEATH, but continues on to successive tests in the
 // test case, if any:
-#define EXPECT_DEATH(statement, regex) \
-  EXPECT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, regex)
+#define EXPECT_DEATH( statement, regex ) \
+    EXPECT_EXIT( statement, ::testing::internal::ExitedUnsuccessfully, regex )
 
 // Two predicate classes that can be used in {ASSERT,EXPECT}_EXIT*:
 
 // Tests that an exit code describes a normal exit with a given exit code.
-class ExitedWithCode {
- public:
-  explicit ExitedWithCode(int exit_code);
-  bool operator()(int exit_status) const;
- private:
-  // No implementation - assignment is unsupported.
-  void operator=(const ExitedWithCode& other);
+class ExitedWithCode
+{
+   public:
+    explicit ExitedWithCode( int exit_code );
+    bool operator()( int exit_status ) const;
 
-  const int exit_code_;
+   private:
+    // No implementation - assignment is unsupported.
+    void operator=( const ExitedWithCode& other );
+
+    const int exit_code_;
 };
 
 #if !GTEST_OS_WINDOWS
 // Tests that an exit code describes an exit due to termination by a
 // given signal.
-class KilledBySignal {
- public:
-  explicit KilledBySignal(int signum);
-  bool operator()(int exit_status) const;
- private:
-  const int signum_;
+class KilledBySignal
+{
+   public:
+    explicit KilledBySignal( int signum );
+    bool operator()( int exit_status ) const;
+
+   private:
+    const int signum_;
 };
 #endif  // !GTEST_OS_WINDOWS
 
@@ -244,19 +249,25 @@ class KilledBySignal {
 //
 #ifdef NDEBUG
 
-#define EXPECT_DEBUG_DEATH(statement, regex) \
-  do { statement; } while (::testing::internal::AlwaysFalse())
+#define EXPECT_DEBUG_DEATH( statement, regex ) \
+    do                                         \
+    {                                          \
+        statement;                             \
+    } while ( ::testing::internal::AlwaysFalse() )
 
-#define ASSERT_DEBUG_DEATH(statement, regex) \
-  do { statement; } while (::testing::internal::AlwaysFalse())
+#define ASSERT_DEBUG_DEATH( statement, regex ) \
+    do                                         \
+    {                                          \
+        statement;                             \
+    } while ( ::testing::internal::AlwaysFalse() )
 
 #else
 
-#define EXPECT_DEBUG_DEATH(statement, regex) \
-  EXPECT_DEATH(statement, regex)
+#define EXPECT_DEBUG_DEATH( statement, regex ) \
+    EXPECT_DEATH( statement, regex )
 
-#define ASSERT_DEBUG_DEATH(statement, regex) \
-  ASSERT_DEATH(statement, regex)
+#define ASSERT_DEBUG_DEATH( statement, regex ) \
+    ASSERT_DEATH( statement, regex )
 
 #endif  // NDEBUG for EXPECT_DEBUG_DEATH
 #endif  // GTEST_HAS_DEATH_TEST
@@ -267,15 +278,15 @@ class KilledBySignal {
 // useful when you are combining death test assertions with normal test
 // assertions in one test.
 #if GTEST_HAS_DEATH_TEST
-#define EXPECT_DEATH_IF_SUPPORTED(statement, regex) \
-    EXPECT_DEATH(statement, regex)
-#define ASSERT_DEATH_IF_SUPPORTED(statement, regex) \
-    ASSERT_DEATH(statement, regex)
+#define EXPECT_DEATH_IF_SUPPORTED( statement, regex ) \
+    EXPECT_DEATH( statement, regex )
+#define ASSERT_DEATH_IF_SUPPORTED( statement, regex ) \
+    ASSERT_DEATH( statement, regex )
 #else
-#define EXPECT_DEATH_IF_SUPPORTED(statement, regex) \
-    GTEST_UNSUPPORTED_DEATH_TEST_(statement, regex, )
-#define ASSERT_DEATH_IF_SUPPORTED(statement, regex) \
-    GTEST_UNSUPPORTED_DEATH_TEST_(statement, regex, return)
+#define EXPECT_DEATH_IF_SUPPORTED( statement, regex ) \
+    GTEST_UNSUPPORTED_DEATH_TEST_( statement, regex, )
+#define ASSERT_DEATH_IF_SUPPORTED( statement, regex ) \
+    GTEST_UNSUPPORTED_DEATH_TEST_( statement, regex, return )
 #endif
 
 }  // namespace testing

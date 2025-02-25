@@ -18,7 +18,7 @@ class LTextEntry : public TextEntry
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LTextEntry, "TextEntry" );
 
    public:
-    LTextEntry(Panel *parent, const char *panelName, lua_State *L = NULL );
+    LTextEntry( Panel *parent, const char *panelName, lua_State *L = NULL );
 
    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )

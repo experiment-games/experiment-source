@@ -228,9 +228,9 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
 #ifdef LUA_SDK
         LUA_CALL_HOOK_BEGIN( "PlayerSay" );
         CBasePlayer::PushLuaInstanceSafe( L, pPlayer );  // doc: speaker (The player who is speaking)
-        lua_pushstring( L, p ); // doc: chatMessage
-        lua_pushboolean( L, teamonly ); // doc: isTeamOnly
-        LUA_CALL_HOOK_END( 3, 1 ); // doc: string (return a replacement string or an empty string to block the message)
+        lua_pushstring( L, p );                          // doc: chatMessage
+        lua_pushboolean( L, teamonly );                  // doc: isTeamOnly
+        LUA_CALL_HOOK_END( 3, 1 );                       // doc: string (return a replacement string or an empty string to block the message)
 
         if ( lua_isboolean( L, -1 ) )
         {

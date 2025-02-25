@@ -2,7 +2,7 @@
 //
 // Purpose: This is the abstraction layer for the physics simulation system
 // Any calls to the external physics library (ipion) should be made through this
-// layer.  Eventually, the physics system will probably become a DLL and made 
+// layer.  Eventually, the physics system will probably become a DLL and made
 // accessible to the client & server side code.
 //
 // $Workfile:     $
@@ -27,19 +27,19 @@ class IPhysicsSurfaceProps;
 class CTakeDamageInfo;
 class ConVar;
 
-extern IPhysicsMaterial		*g_Material;
+extern IPhysicsMaterial *g_Material;
 extern ConVar phys_pushscale;
 extern ConVar phys_timescale;
 
 struct objectparams_t;
-extern IPhysicsGameTrace	*physgametrace;
+extern IPhysicsGameTrace *physgametrace;
 
 class IPhysicsCollisionSolver;
 class IPhysicsCollisionEvent;
 class IPhysicsObjectEvent;
-extern IPhysicsCollisionSolver * const g_pCollisionSolver;
-extern IPhysicsCollisionEvent * const g_pCollisionEventHandler;
-extern IPhysicsObjectEvent * const g_pObjectEventHandler;
+extern IPhysicsCollisionSolver *const g_pCollisionSolver;
+extern IPhysicsCollisionEvent *const g_pCollisionEventHandler;
+extern IPhysicsObjectEvent *const g_pObjectEventHandler;
 
 // HACKHACK: We treat anything >= 500kg as a special "large mass" that does more impact damage
 // and has special recovery on crushing/killing other objects
@@ -48,42 +48,42 @@ const float VPHYSICS_LARGE_OBJECT_MASS = 500.0f;
 
 struct gamevcollisionevent_t : public vcollisionevent_t
 {
-	Vector			preVelocity[2];
-	Vector			postVelocity[2];
-	AngularImpulse	preAngularVelocity[2];
-	CBaseEntity		*pEntities[2];
+    Vector preVelocity[2];
+    Vector postVelocity[2];
+    AngularImpulse preAngularVelocity[2];
+    CBaseEntity *pEntities[2];
 
-	void Init( vcollisionevent_t *pEvent ) 
-	{ 
-		*((vcollisionevent_t *)this) = *pEvent; 
-		pEntities[0] = NULL;
-		pEntities[1] = NULL;
-	}
+    void Init( vcollisionevent_t *pEvent )
+    {
+        *( ( vcollisionevent_t * )this ) = *pEvent;
+        pEntities[0] = NULL;
+        pEntities[1] = NULL;
+    }
 };
 
 struct triggerevent_t
 {
-	CBaseEntity		*pTriggerEntity;
-	IPhysicsObject	*pTriggerPhysics;
-	CBaseEntity		*pEntity;
-	IPhysicsObject	*pObject;
-	bool			bStart;
+    CBaseEntity *pTriggerEntity;
+    IPhysicsObject *pTriggerPhysics;
+    CBaseEntity *pEntity;
+    IPhysicsObject *pObject;
+    bool bStart;
 
-	inline void Init( CBaseEntity *triggerEntity, IPhysicsObject *triggerPhysics, CBaseEntity *entity, IPhysicsObject *object, bool startTouch )
-	{
-		pTriggerEntity = triggerEntity;
-		pTriggerPhysics= triggerPhysics;
-		pEntity = entity;
-		pObject = object;
-		bStart = startTouch;
-	}
-	inline void Clear()
-	{
-		memset( this, 0, sizeof(*this) );
-	}
+    inline void Init( CBaseEntity *triggerEntity, IPhysicsObject *triggerPhysics, CBaseEntity *entity, IPhysicsObject *object, bool startTouch )
+    {
+        pTriggerEntity = triggerEntity;
+        pTriggerPhysics = triggerPhysics;
+        pEntity = entity;
+        pObject = object;
+        bStart = startTouch;
+    }
+    inline void Clear()
+    {
+        memset( this, 0, sizeof( *this ) );
+    }
 };
 
-// parse solid parameter overrides out of a string 
+// parse solid parameter overrides out of a string
 void PhysSolidOverride( solid_t &solid, string_t overrideScript );
 
 extern CEntityList *g_pShadowEntities;
@@ -117,7 +117,7 @@ void PhysCallbackImpulse( IPhysicsObject *pPhysicsObject, const Vector &vecCente
 void PhysCallbackSetVelocity( IPhysicsObject *pPhysicsObject, const Vector &vecVelocity );
 
 // queue up a delete on this object
-void PhysCallbackRemove(IServerNetworkable *pRemove);
+void PhysCallbackRemove( IServerNetworkable *pRemove );
 
 bool PhysGetDamageInflictorVelocityStartOfFrame( IPhysicsObject *pInflictor, Vector &velocity, AngularImpulse &angVelocity );
 
@@ -127,7 +127,7 @@ void PhysForceEntityToSleep( CBaseEntity *pEntity, IPhysicsObject *pObject );
 // teleport an entity to it's position relative to an object it's constrained to
 void PhysTeleportConstrainedEntity( CBaseEntity *pTeleportSource, IPhysicsObject *pObject0, IPhysicsObject *pObject1, const Vector &prevPosition, const QAngle &prevAngles, bool physicsRotate );
 
-void PhysGetListOfPenetratingEntities( CBaseEntity *pSearch, CUtlVector<CBaseEntity *> &list );
+void PhysGetListOfPenetratingEntities( CBaseEntity *pSearch, CUtlVector< CBaseEntity * > &list );
 bool PhysShouldCollide( IPhysicsObject *pObj0, IPhysicsObject *pObj1 );
 
 // returns true when processing a callback - so we can defer things that can't be done inside a callback
@@ -145,37 +145,37 @@ void PhysOnCleanupDeleteList();
 
 struct masscenteroverride_t
 {
-	enum align_type
-	{
-		ALIGN_POINT = 0,
-		ALIGN_AXIS = 1,
-	};
+    enum align_type
+    {
+        ALIGN_POINT = 0,
+        ALIGN_AXIS = 1,
+    };
 
-	void Defaults()
-	{
-		entityName = NULL_STRING;
-	}
+    void Defaults()
+    {
+        entityName = NULL_STRING;
+    }
 
-	void SnapToPoint( string_t name, const Vector &pointWS )
-	{
-		entityName = name;
-		center = pointWS;
-		axis.Init();
-		alignType = ALIGN_POINT;
-	}
+    void SnapToPoint( string_t name, const Vector &pointWS )
+    {
+        entityName = name;
+        center = pointWS;
+        axis.Init();
+        alignType = ALIGN_POINT;
+    }
 
-	void SnapToAxis( string_t name, const Vector &axisStartWS, const Vector &unitAxisDirWS )
-	{
-		entityName = name;
-		center = axisStartWS;
-		axis = unitAxisDirWS;
-		alignType = ALIGN_AXIS;
-	}
+    void SnapToAxis( string_t name, const Vector &axisStartWS, const Vector &unitAxisDirWS )
+    {
+        entityName = name;
+        center = axisStartWS;
+        axis = unitAxisDirWS;
+        alignType = ALIGN_AXIS;
+    }
 
-	Vector		center;
-	Vector		axis;
-	int			alignType;
-	string_t	entityName;
+    Vector center;
+    Vector axis;
+    int alignType;
+    string_t entityName;
 };
 
 void PhysSetMassCenterOverride( masscenteroverride_t &override );
@@ -184,6 +184,6 @@ void PhysGetMassCenterOverride( CBaseEntity *pEntity, vcollide_t *pCollide, soli
 float PhysGetEntityMass( CBaseEntity *pEntity );
 void PhysSetEntityGameFlags( CBaseEntity *pEntity, unsigned short flags );
 
-void DebugDrawContactPoints(IPhysicsObject *pPhysics);
+void DebugDrawContactPoints( IPhysicsObject *pPhysics );
 
-#endif		// PHYSICS_H
+#endif  // PHYSICS_H

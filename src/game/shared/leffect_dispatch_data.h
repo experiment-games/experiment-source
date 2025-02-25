@@ -4,27 +4,20 @@
 #pragma once
 #endif
 
-
 /* type for CEffectData functions */
 typedef CEffectData lua_CEffectData;
-
-
 
 /*
 ** access functions (stack -> C)
 */
 
-LUA_API lua_CEffectData     &(lua_toeffect) (lua_State *L, int idx);
-
+LUA_API lua_CEffectData &( lua_toeffect )( lua_State *L, int idx );
 
 /*
 ** push functions (C -> stack)
 */
-LUA_API void  (lua_pusheffect) (lua_State *L, lua_CEffectData &data);
+LUA_API void( lua_pusheffect )( lua_State *L, lua_CEffectData &data );
 
+LUALIB_API lua_CEffectData &( luaL_checkeffect )( lua_State *L, int narg );
 
-
-LUALIB_API lua_CEffectData &(luaL_checkeffect) (lua_State *L, int narg);
-
-
-#endif // LEFFECT_DISPATCH_DATA_H
+#endif  // LEFFECT_DISPATCH_DATA_H

@@ -28,26 +28,26 @@ class BitmapImage;
 
 class CEntityImageHealthPanel : public CEntityPanel
 {
-public:
-	DECLARE_CLASS( CEntityImageHealthPanel, CEntityPanel );
+   public:
+    DECLARE_CLASS( CEntityImageHealthPanel, CEntityPanel );
 
-	// constructor
-	CEntityImageHealthPanel( vgui::Panel *parent, const char *panelName );
-	~CEntityImageHealthPanel();
+    // constructor
+    CEntityImageHealthPanel( vgui::Panel *parent, const char *panelName );
+    ~CEntityImageHealthPanel();
 
-	// initialization
-	bool Init( KeyValues* pInitData, C_BaseEntity* pEntity );
+    // initialization
+    bool Init( KeyValues *pInitData, C_BaseEntity *pEntity );
 
-	// called when we're ticked...
-	virtual void OnTick();
-	virtual bool ShouldDraw( void );
-	virtual void ComputeAndSetSize( void );
+    // called when we're ticked...
+    virtual void OnTick();
+    virtual bool ShouldDraw( void );
+    virtual void ComputeAndSetSize( void );
 
-private:
-	CHealthBarPanel			*m_CommanderHealthBar;
-	CHealthBarPanel			*m_NormalHealthBar;
-	CHealthBarPanel			*m_ResourceLevelBar;
-	CEntityTeamImagePanel	*m_pImagePanel;
+   private:
+    CHealthBarPanel *m_CommanderHealthBar;
+    CHealthBarPanel *m_NormalHealthBar;
+    CHealthBarPanel *m_ResourceLevelBar;
+    CEntityTeamImagePanel *m_pImagePanel;
 };
 
-#endif //  VGUI_IMAGEHEALTHPANEL_H
+#endif  //  VGUI_IMAGEHEALTHPANEL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,20 +11,21 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_BreakableProp : public C_BaseAnimating
 {
-	typedef C_BaseAnimating BaseClass;
-public:
-	DECLARE_CLIENTCLASS();
+    typedef C_BaseAnimating BaseClass;
 
-	C_BreakableProp();
-	
-	virtual void SetFadeMinMax( float fademin, float fademax );
+   public:
+    DECLARE_CLIENTCLASS();
 
-	// Copy fade from another breakable prop
-	void CopyFadeFrom( C_BreakableProp *pSource );
+    C_BreakableProp();
+
+    virtual void SetFadeMinMax( float fademin, float fademax );
+
+    // Copy fade from another breakable prop
+    void CopyFadeFrom( C_BreakableProp *pSource );
 };
 
-#endif // C_BREAKABLEPROP_H
+#endif  // C_BREAKABLEPROP_H

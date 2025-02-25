@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,10 +10,9 @@
 #pragma once
 #endif
 
-
 class CBaseEntity;
 class IPhysicsFluidController;
 
 void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CBaseEntity *pEntity );
 
-#endif // PHYSICS_FX_H
+#endif  // PHYSICS_FX_H

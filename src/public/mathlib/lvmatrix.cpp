@@ -588,7 +588,6 @@ LUA_BINDING_BEGIN( Matrixes, Create3x4, "library", "Creates a new 3x4 matrix." )
             LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "m33" ),
             LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "m34" ) );
 
-
         lua_pushmatrix( L, matrix );
     }
 

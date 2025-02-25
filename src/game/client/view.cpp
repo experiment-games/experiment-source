@@ -1259,7 +1259,7 @@ void CViewRender::Render( vrect_t *rect )
             }
         }
 #ifdef LUA_SDK
-    } // if ( !bOverrideRenderScene )
+    }  // if ( !bOverrideRenderScene )
 #endif
 
     // TODO: should these be inside or outside the stereo eye stuff?

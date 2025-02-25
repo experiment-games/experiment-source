@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,40 +16,35 @@
 #ifndef PARTICLEDRAW_H
 #define PARTICLEDRAW_H
 
-
 class IMaterial;
 class CMeshBuilder;
 class CParticleSubTexture;
 
-
 class ParticleDraw
 {
-friend class CParticleEffectBinding;
+    friend class CParticleEffectBinding;
 
-public:
+   public:
+    ParticleDraw();
 
-					ParticleDraw();
+    void Init( CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta );
 
-	void			Init( CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta );
+    // Time delta..
+    float GetTimeDelta() const;
 
-	// Time delta..
-	float			GetTimeDelta() const;
+    // Get the material being used (mostly useful for getting the tcoord padding).
+    // IMaterial*		GetPMaterial();
 
-	// Get the material being used (mostly useful for getting the tcoord padding).
-	//IMaterial*		GetPMaterial();
+    // This can return NULL if the particle system is only being simulated.
+    CMeshBuilder *GetMeshBuilder();
 
-	// This can return NULL if the particle system is only being simulated.
-	CMeshBuilder*	GetMeshBuilder();
+    CParticleSubTexture *m_pSubTexture;
 
-	CParticleSubTexture	*m_pSubTexture;
-
-private:
-	CMeshBuilder	*m_pMeshBuilder;
-	IMaterial		*m_pMaterial;
-	float			m_fTimeDelta;
+   private:
+    CMeshBuilder *m_pMeshBuilder;
+    IMaterial *m_pMaterial;
+    float m_fTimeDelta;
 };
-
-
 
 // ------------------------------------------------------------------------- //
 // Inlines
@@ -57,25 +52,24 @@ private:
 
 inline ParticleDraw::ParticleDraw()
 {
-	m_pMaterial = 0;
+    m_pMaterial = 0;
 }
 
 inline void ParticleDraw::Init( CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta )
 {
-	m_pMeshBuilder = pMeshBuilder;
-	m_pMaterial = pMaterial;
-	m_fTimeDelta = fTimeDelta;
+    m_pMeshBuilder = pMeshBuilder;
+    m_pMaterial = pMaterial;
+    m_fTimeDelta = fTimeDelta;
 }
 
 inline float ParticleDraw::GetTimeDelta() const
 {
-	return m_fTimeDelta;
+    return m_fTimeDelta;
 }
 
-inline CMeshBuilder* ParticleDraw::GetMeshBuilder()
+inline CMeshBuilder *ParticleDraw::GetMeshBuilder()
 {
-	return m_pMeshBuilder;
+    return m_pMeshBuilder;
 }
 
 #endif
-

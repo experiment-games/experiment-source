@@ -2,17 +2,17 @@
 #define GARRYSMOD_LUA_USERDATA_H
 
 #ifdef GMOD_ALLOW_DEPRECATED
-    namespace GarrysMod
-    {
-        namespace Lua
-        {
-            struct UserData
-            {
-                void*         data;
-                unsigned char type;
-            };
-        }
-    }
+namespace GarrysMod
+{
+namespace Lua
+{
+struct UserData
+{
+    void* data;
+    unsigned char type;
+};
+}  // namespace Lua
+}  // namespace GarrysMod
 #endif
 
 #endif

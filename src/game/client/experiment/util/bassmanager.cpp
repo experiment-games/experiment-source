@@ -75,55 +75,55 @@ void CBassManager::PlayUrl( const char *url, int flags /* = 0 */ )
     m_Streams.AddToTail( stream );
 }
 
-//template < class T >
-//struct PlayUrlCallbackDataWrapper
+// template < class T >
+// struct PlayUrlCallbackDataWrapper
 //{
-//    T *callback;
-//    IBassManagerCallbackData *callbackData;
-//    CBassManager *manager;
-//};
+//     T *callback;
+//     IBassManagerCallbackData *callbackData;
+//     CBassManager *manager;
+// };
 //
-//void CALLBACK EnqueueBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
+// void CALLBACK EnqueueBlockDownloadedCallback( const void *buffer, DWORD length, void *user )
 //{
-//    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback > * )user;
+//     auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback > * )user;
 //
-//    wrapper->manager->EnqueueCallbackTask(
-//        [wrapper, buffer, length]()
-//        {
-//            if ( wrapper->callback )
-//            {
-//                wrapper->callback( buffer, length, wrapper->callbackData );
-//            }
+//     wrapper->manager->EnqueueCallbackTask(
+//         [wrapper, buffer, length]()
+//         {
+//             if ( wrapper->callback )
+//             {
+//                 wrapper->callback( buffer, length, wrapper->callbackData );
+//             }
 //
-//            // Done downloading the sound, clean up the callback data
-//            if ( !buffer )
-//            {
-//                wrapper->callbackData->Release();
-//                delete wrapper;
-//            }
-//        } );
-//}
+//             // Done downloading the sound, clean up the callback data
+//             if ( !buffer )
+//             {
+//                 wrapper->callbackData->Release();
+//                 delete wrapper;
+//             }
+//         } );
+// }
 
-//void CALLBACK EnqueueReadyCallback( HSYNC handle, DWORD channel, DWORD data, void *user )
+// void CALLBACK EnqueueReadyCallback( HSYNC handle, DWORD channel, DWORD data, void *user )
 //{
-//    auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerReadyCallback > * )user;
+//     auto *wrapper = ( PlayUrlCallbackDataWrapper< CBassManagerReadyCallback > * )user;
 //
-//    wrapper->manager->EnqueueCallbackTask(
-//        [wrapper, handle, channel, data]()
-//        {
-//            if ( wrapper->callback )
-//            {
-//                wrapper->callback( handle, channel, data, wrapper->callbackData );
-//            }
+//     wrapper->manager->EnqueueCallbackTask(
+//         [wrapper, handle, channel, data]()
+//         {
+//             if ( wrapper->callback )
+//             {
+//                 wrapper->callback( handle, channel, data, wrapper->callbackData );
+//             }
 //
-//            // Done downloading the sound, clean up the callback data
-//            if ( !handle )
-//            {
-//                wrapper->callbackData->Release();
-//                delete wrapper;
-//            }
-//        } );
-//}
+//             // Done downloading the sound, clean up the callback data
+//             if ( !handle )
+//             {
+//                 wrapper->callbackData->Release();
+//                 delete wrapper;
+//             }
+//         } );
+// }
 
 /// <summary>
 /// Plays a sound from a URL, calling the provided callback (on the main thread) when the sound is ready to play.
@@ -165,37 +165,37 @@ IAudioChannel *CBassManager::PlayUrlGetAudioChannel(
 ///// <param name="flags"></param>
 ///// <param name="blockDownloadedCallback"></param>
 ///// <param name="callbackData"></param>
-//void CBassManager::PlayUrlWithBlockCallback(
-//    const char *url,
-//    int flags,
-//    CBassManagerBlockDownloadedCallback blockDownloadedCallback,
-//    IBassManagerCallbackData *callbackData )
+// void CBassManager::PlayUrlWithBlockCallback(
+//     const char *url,
+//     int flags,
+//     CBassManagerBlockDownloadedCallback blockDownloadedCallback,
+//     IBassManagerCallbackData *callbackData )
 //{
-//    int bassFlags = ToBassFlags( flags );
+//     int bassFlags = ToBassFlags( flags );
 //
-//    auto *wrapper = new PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback >;
-//    wrapper->callback = blockDownloadedCallback;
-//    wrapper->callbackData = callbackData;
-//    wrapper->manager = this;
+//     auto *wrapper = new PlayUrlCallbackDataWrapper< CBassManagerBlockDownloadedCallback >;
+//     wrapper->callback = blockDownloadedCallback;
+//     wrapper->callbackData = callbackData;
+//     wrapper->manager = this;
 //
-//    HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueBlockDownloadedCallback, wrapper );
+//     HSTREAM stream = BASS_StreamCreateURL( url, 0, bassFlags, EnqueueBlockDownloadedCallback, wrapper );
 //
-//    if ( !stream )
-//    {
-//        DevWarning( "Failed to create stream from URL: %s\n", url );
-//        return;
-//    }
+//     if ( !stream )
+//     {
+//         DevWarning( "Failed to create stream from URL: %s\n", url );
+//         return;
+//     }
 //
-//    if ( ( flags & BassManagerFlags::DONT_PLAY ) == 0 && !BASS_ChannelPlay( stream, TRUE ) )
-//    {
-//        DevWarning( "Failed to play stream from URL: %s\n", url );
-//        BASS_StreamFree( stream );
-//        return;
-//    }
+//     if ( ( flags & BassManagerFlags::DONT_PLAY ) == 0 && !BASS_ChannelPlay( stream, TRUE ) )
+//     {
+//         DevWarning( "Failed to play stream from URL: %s\n", url );
+//         BASS_StreamFree( stream );
+//         return;
+//     }
 //
-//    // We don't have the stream cleaned up, since the callback might use it to replay the sound:
-//    // m_Streams.AddToTail( stream ); // hence this is commented out
-//}
+//     // We don't have the stream cleaned up, since the callback might use it to replay the sound:
+//     // m_Streams.AddToTail( stream ); // hence this is commented out
+// }
 
 void CBassManager::PlayFile( const char *filename, int flags /* = 0 */ )
 {
@@ -276,7 +276,7 @@ BOOL CALLBACK SourceFileSeekProc( QWORD offset, void *user )
 {
     FileHandle_t fileHandle = ( FileHandle_t )user;
 
-    if (!fileHandle)
+    if ( !fileHandle )
     {
         return false;
     }
@@ -335,20 +335,20 @@ void CBassManager::Update( float frametime )
         }
     }
 
-    //AUTO_LOCK( m_TaskQueueMutex );
-    //while ( !m_TaskQueue.empty() )
+    // AUTO_LOCK( m_TaskQueueMutex );
+    // while ( !m_TaskQueue.empty() )
     //{
-    //    // Execute the callback task on the main thread
-    //    m_TaskQueue.front()();
-    //    m_TaskQueue.pop();
-    //}
+    //     // Execute the callback task on the main thread
+    //     m_TaskQueue.front()();
+    //     m_TaskQueue.pop();
+    // }
 }
 
-//void CBassManager::EnqueueCallbackTask( std::function< void() > task )
+// void CBassManager::EnqueueCallbackTask( std::function< void() > task )
 //{
-//    AUTO_LOCK( m_TaskQueueMutex );
-//    m_TaskQueue.push( task );
-//}
+//     AUTO_LOCK( m_TaskQueueMutex );
+//     m_TaskQueue.push( task );
+// }
 
 /*
  * Wrapper around a BASS handle

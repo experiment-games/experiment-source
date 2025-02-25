@@ -8,7 +8,7 @@
 #include <steam/isteamhttp.h>
 #include "utlbuffer.h"
 
-class CLuaWebConnectionManager; // Forward declaration
+class CLuaWebConnectionManager;  // Forward declaration
 
 class LuaWebConnectionHandle
 {
@@ -85,7 +85,7 @@ class CLuaWebConnectionManager
 
         if ( index != m_WebConnectionsMap.InvalidIndex() )
         {
-            return m_WebConnectionsMap[ index ];
+            return m_WebConnectionsMap[index];
         }
 
         return nullptr;

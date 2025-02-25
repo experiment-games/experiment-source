@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,4 +18,4 @@ extern ConVar mp_allowspectators;
 extern ConVar friendlyfire;
 extern ConVar mp_fadetoblack;
 
-#endif // CS_GAMEVARS_SHARED_H
+#endif  // CS_GAMEVARS_SHARED_H

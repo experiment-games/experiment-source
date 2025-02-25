@@ -20,8 +20,8 @@ void lua_pushuserdata_associateinstance( lua_State *L, void *p )
         // Let's not use weak tables for now (they went away too fast).
         // instead we manually remove the instance from the registry when
         // the entity to which the userdata points is destroyed.
-        //lua_pushliteral( L, "v" );
-        //lua_setfield( L, -2, "__mode" ); /* Weak values (udata). */
+        // lua_pushliteral( L, "v" );
+        // lua_setfield( L, -2, "__mode" ); /* Weak values (udata). */
     }
     lua_pushlightuserdata( L, p ); /* Key. */
     lua_pushvalue( L, -3 );        /* Value. */

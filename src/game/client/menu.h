@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,75 +15,77 @@
 #include "hudelement.h"
 #include <vgui_controls/Panel.h>
 
-#define MENU_SELECTION_TIMEOUT	5.0f
+#define MENU_SELECTION_TIMEOUT 5.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudMenu : public CHudElement, public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CHudMenu, vgui::Panel );
-public:
-	CHudMenu( const char *pElementName );
-	void Init( void );
-	void VidInit( void );
-	void Reset( void );
-	virtual bool ShouldDraw( void );
-	void MsgFunc_ShowMenu( bf_read &msg );
-	void HideMenu( void );
-	void ShowMenu( const char * menuName, int keySlot );
-	void ShowMenu_KeyValueItems( KeyValues *pKV );
+    DECLARE_CLASS_SIMPLE( CHudMenu, vgui::Panel );
 
-	bool IsMenuOpen( void );
-	void SelectMenuItem( int menu_item );
+   public:
+    CHudMenu( const char *pElementName );
+    void Init( void );
+    void VidInit( void );
+    void Reset( void );
+    virtual bool ShouldDraw( void );
+    void MsgFunc_ShowMenu( bf_read &msg );
+    void HideMenu( void );
+    void ShowMenu( const char *menuName, int keySlot );
+    void ShowMenu_KeyValueItems( KeyValues *pKV );
 
-private:
-	virtual void OnThink();
-	virtual void Paint();
-	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-private:
-	void		ProcessText( void );
+    bool IsMenuOpen( void );
+    void SelectMenuItem( int menu_item );
 
-	void PaintString( const wchar_t *text, int textlen, vgui::HFont& font, int x, int y );
+   private:
+    virtual void OnThink();
+    virtual void Paint();
+    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-	struct ProcessedLine
-	{
-		int	menuitem; // -1 for just text
-		int startchar;
-		int length;
-		int pixels;
-		int height;
-	};
+   private:
+    void ProcessText( void );
 
-	CUtlVector< ProcessedLine >	m_Processed;
+    void PaintString( const wchar_t *text, int textlen, vgui::HFont &font, int x, int y );
 
-	int				m_nMaxPixels;
-	int				m_nHeight;
+    struct ProcessedLine
+    {
+        int menuitem;  // -1 for just text
+        int startchar;
+        int length;
+        int pixels;
+        int height;
+    };
 
-	bool			m_bMenuDisplayed;
-	int				m_bitsValidSlots;
-	float			m_flShutoffTime;
-	int				m_fWaitingForMore;
-	int				m_nSelectedItem;
-	bool			m_bMenuTakesInput;
+    CUtlVector< ProcessedLine > m_Processed;
 
-	float			m_flSelectionTime;
+    int m_nMaxPixels;
+    int m_nHeight;
 
-	CPanelAnimationVar( float, m_flOpenCloseTime, "OpenCloseTime", "1" );
+    bool m_bMenuDisplayed;
+    int m_bitsValidSlots;
+    float m_flShutoffTime;
+    int m_fWaitingForMore;
+    int m_nSelectedItem;
+    bool m_bMenuTakesInput;
 
-	CPanelAnimationVar( float, m_flBlur, "Blur", "0" );
-	CPanelAnimationVar( float, m_flTextScan, "TextScane", "1" );
+    float m_flSelectionTime;
 
-	CPanelAnimationVar( float, m_flAlphaOverride, "Alpha", "255.0" );
-	CPanelAnimationVar( float, m_flSelectionAlphaOverride, "SelectionAlpha", "255.0" );
+    CPanelAnimationVar( float, m_flOpenCloseTime, "OpenCloseTime", "1" );
 
-	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "MenuTextFont" );
-	CPanelAnimationVar( vgui::HFont, m_hItemFont, "ItemFont", "MenuItemFont" );
-	CPanelAnimationVar( vgui::HFont, m_hItemFontPulsing, "ItemFontPulsing", "MenuItemFontPulsing" );
+    CPanelAnimationVar( float, m_flBlur, "Blur", "0" );
+    CPanelAnimationVar( float, m_flTextScan, "TextScane", "1" );
 
-	CPanelAnimationVar( Color, m_MenuColor, "MenuColor", "MenuColor" );
-	CPanelAnimationVar( Color, m_ItemColor, "MenuItemColor", "ItemColor" );
-	CPanelAnimationVar( Color, m_BoxColor, "MenuBoxColor", "MenuBoxBg" );
+    CPanelAnimationVar( float, m_flAlphaOverride, "Alpha", "255.0" );
+    CPanelAnimationVar( float, m_flSelectionAlphaOverride, "SelectionAlpha", "255.0" );
+
+    CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "MenuTextFont" );
+    CPanelAnimationVar( vgui::HFont, m_hItemFont, "ItemFont", "MenuItemFont" );
+    CPanelAnimationVar( vgui::HFont, m_hItemFontPulsing, "ItemFontPulsing", "MenuItemFontPulsing" );
+
+    CPanelAnimationVar( Color, m_MenuColor, "MenuColor", "MenuColor" );
+    CPanelAnimationVar( Color, m_ItemColor, "MenuItemColor", "ItemColor" );
+    CPanelAnimationVar( Color, m_BoxColor, "MenuBoxColor", "MenuBoxBg" );
 };
 
-#endif // HUD_MENU_H
+#endif  // HUD_MENU_H

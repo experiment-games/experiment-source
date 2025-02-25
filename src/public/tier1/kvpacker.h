@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,27 +23,26 @@
 //-----------------------------------------------------------------------------
 class KVPacker
 {
-public:
-	bool WriteAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
-	bool ReadAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
+   public:
+    bool WriteAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
+    bool ReadAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
 
-private:
-	// These types are used for serialization of KeyValues nodes.
-	// Do not renumber them or you will break serialization across
-	// branches.
-	enum EPackType
-	{
-		PACKTYPE_NONE = 0,
-		PACKTYPE_STRING,
-		PACKTYPE_INT,
-		PACKTYPE_FLOAT,
-		PACKTYPE_PTR,
-		PACKTYPE_WSTRING,
-		PACKTYPE_COLOR,
-		PACKTYPE_UINT64,
-		PACKTYPE_NULLMARKER,				// used to mark the end of a block in the binary format
-	};
+   private:
+    // These types are used for serialization of KeyValues nodes.
+    // Do not renumber them or you will break serialization across
+    // branches.
+    enum EPackType
+    {
+        PACKTYPE_NONE = 0,
+        PACKTYPE_STRING,
+        PACKTYPE_INT,
+        PACKTYPE_FLOAT,
+        PACKTYPE_PTR,
+        PACKTYPE_WSTRING,
+        PACKTYPE_COLOR,
+        PACKTYPE_UINT64,
+        PACKTYPE_NULLMARKER,  // used to mark the end of a block in the binary format
+    };
 };
 
-
-#endif // KVPACKER_H
+#endif  // KVPACKER_H

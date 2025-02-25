@@ -4,7 +4,6 @@
 //
 //===========================================================================//
 
-
 #ifndef TIER3_H
 #define TIER3_H
 
@@ -13,7 +12,6 @@
 #endif
 
 #include "tier2/tier2.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -30,15 +28,14 @@ class IVTex;
 
 namespace vgui
 {
-	class ISurface;
-	class IVGui;
-	class IInput;
-	class IPanel;
-	class ILocalize;
-	class ISchemeManager;
-	class ISystem;
-}
-
+class ISurface;
+class IVGui;
+class IInput;
+class IPanel;
+class ILocalize;
+class ISchemeManager;
+class ISystem;
+}  // namespace vgui
 
 //-----------------------------------------------------------------------------
 // These tier3 libraries must be set by any users of this library.
@@ -56,7 +53,7 @@ extern vgui::IPanel *g_pVGuiPanel;
 extern vgui::ILocalize *g_pVGuiLocalize;
 extern vgui::ISchemeManager *g_pVGuiSchemeManager;
 extern vgui::ISystem *g_pVGuiSystem;
-extern IDataCache *g_pDataCache;	// FIXME: Should IDataCache be in tier2?
+extern IDataCache *g_pDataCache;  // FIXME: Should IDataCache be in tier2?
 extern IMDLCache *g_pMDLCache;
 extern IMDLCache *mdlcache;
 extern IVideoServices *g_pVideo;
@@ -64,7 +61,6 @@ extern IDmeMakefileUtils *g_pDmeMakefileUtils;
 extern IPhysicsCollision *g_pPhysicsCollision;
 extern ISoundEmitterSystemBase *g_pSoundEmitterSystem;
 extern IVTex *g_pVTex;
-
 
 //-----------------------------------------------------------------------------
 // Call this to connect to/disconnect from all tier 3 libraries.
@@ -76,42 +72,40 @@ void DisconnectTier3Libraries();
 // Experiment: Our own hacky additions to tier3
 void ConnectCustomTier3Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount );
 
-
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
+template < class IInterface, int ConVarFlag = 0 >
 class CTier3AppSystem : public CTier2AppSystem< IInterface, ConVarFlag >
 {
-	typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
+    typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
 
-public:
-	CTier3AppSystem( bool bIsPrimaryAppSystem = true ) : BaseClass(	bIsPrimaryAppSystem )
-	{
-	}
+   public:
+    CTier3AppSystem( bool bIsPrimaryAppSystem = true )
+        : BaseClass( bIsPrimaryAppSystem )
+    {
+    }
 
-	virtual bool Connect( CreateInterfaceFn factory ) 
-	{
-		if ( !BaseClass::Connect( factory ) )
-			return false;
+    virtual bool Connect( CreateInterfaceFn factory )
+    {
+        if ( !BaseClass::Connect( factory ) )
+            return false;
 
-		if ( BaseClass::IsPrimaryAppSystem() )
-		{
-			ConnectTier3Libraries( &factory, 1 );
-		}
-		return true;
-	}
+        if ( BaseClass::IsPrimaryAppSystem() )
+        {
+            ConnectTier3Libraries( &factory, 1 );
+        }
+        return true;
+    }
 
-	virtual void Disconnect() 
-	{
-		if ( BaseClass::IsPrimaryAppSystem() )
-		{
-			DisconnectTier3Libraries();
-		}
-		BaseClass::Disconnect();
-	}
+    virtual void Disconnect()
+    {
+        if ( BaseClass::IsPrimaryAppSystem() )
+        {
+            DisconnectTier3Libraries();
+        }
+        BaseClass::Disconnect();
+    }
 };
 
-
-#endif // TIER3_H
-
+#endif  // TIER3_H

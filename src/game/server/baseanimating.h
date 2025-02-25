@@ -411,7 +411,7 @@ class CBaseAnimating : public CBaseEntity
 
     bool PrefetchSequence( int iSequence );
 
-    void SetMaterialOverride(const char* pMaterialName)
+    void SetMaterialOverride( const char *pMaterialName )
     {
         Q_strncpy( m_MaterialOverride.GetForModify(), pMaterialName, MAX_PATH );
     }
@@ -421,7 +421,7 @@ class CBaseAnimating : public CBaseEntity
         Q_strncpy( pOut, m_MaterialOverride.Get(), nLength );
     }
 
-    void SetSubMaterialOverride( int iIndex, const char* pMaterialName )
+    void SetSubMaterialOverride( int iIndex, const char *pMaterialName )
     {
         if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
             return;

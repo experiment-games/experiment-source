@@ -12,7 +12,7 @@
 LUA_REGISTRATION_INIT( Utilities )
 
 // Experiment; disabled as this is not useful to Lua
-//static int luasrc_FStrEq( lua_State *L )
+// static int luasrc_FStrEq( lua_State *L )
 //{
 //    lua_pushboolean( L, FStrEq( luaL_checkstring( L, 1 ), luaL_checkstring( L, 2 ) ) );
 //    return 1;

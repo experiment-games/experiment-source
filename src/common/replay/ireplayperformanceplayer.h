@@ -21,13 +21,13 @@ class CReplayPerformance;
 
 class IReplayPerformancePlayer : public IBaseInterface
 {
-public:
-	virtual void		BeginPerformancePlay( CReplayPerformance *pPerformance ) = 0;
-	virtual void		EndPerformancePlay() = 0;
+   public:
+    virtual void BeginPerformancePlay( CReplayPerformance *pPerformance ) = 0;
+    virtual void EndPerformancePlay() = 0;
 
-	virtual bool		IsPlaying() const = 0;
+    virtual bool IsPlaying() const = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif // IREPLAYPERFORMANCEPLAYER_H
+#endif  // IREPLAYPERFORMANCEPLAYER_H

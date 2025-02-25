@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,15 +18,14 @@
 #pragma once
 #endif
 
-
 #include "mathlib/mathlib.h"
 
 // Note: These flags need to match the bspfile.h DISPTRI_TAG_* flags.
-#define DISPSURF_FLAG_SURFACE		(1<<0)
-#define DISPSURF_FLAG_WALKABLE		(1<<1)
-#define DISPSURF_FLAG_BUILDABLE		(1<<2)
-#define DISPSURF_FLAG_SURFPROP1		(1<<3)
-#define DISPSURF_FLAG_SURFPROP2		(1<<4)
+#define DISPSURF_FLAG_SURFACE ( 1 << 0 )
+#define DISPSURF_FLAG_WALKABLE ( 1 << 1 )
+#define DISPSURF_FLAG_BUILDABLE ( 1 << 2 )
+#define DISPSURF_FLAG_SURFPROP1 ( 1 << 3 )
+#define DISPSURF_FLAG_SURFPROP2 ( 1 << 4 )
 
 //=============================================================================
 // Base Trace Structure
@@ -35,40 +34,53 @@
 
 class CBaseTrace
 {
-public:
+   public:
+    // Displacement flags tests.
+    bool IsDispSurface( void )
+    {
+        return ( ( dispFlags & DISPSURF_FLAG_SURFACE ) != 0 );
+    }
+    bool IsDispSurfaceWalkable( void )
+    {
+        return ( ( dispFlags & DISPSURF_FLAG_WALKABLE ) != 0 );
+    }
+    bool IsDispSurfaceBuildable( void )
+    {
+        return ( ( dispFlags & DISPSURF_FLAG_BUILDABLE ) != 0 );
+    }
+    bool IsDispSurfaceProp1( void )
+    {
+        return ( ( dispFlags & DISPSURF_FLAG_SURFPROP1 ) != 0 );
+    }
+    bool IsDispSurfaceProp2( void )
+    {
+        return ( ( dispFlags & DISPSURF_FLAG_SURFPROP2 ) != 0 );
+    }
 
-	// Displacement flags tests.
-	bool IsDispSurface( void )				{ return ( ( dispFlags & DISPSURF_FLAG_SURFACE ) != 0 ); }
-	bool IsDispSurfaceWalkable( void )		{ return ( ( dispFlags & DISPSURF_FLAG_WALKABLE ) != 0 ); }
-	bool IsDispSurfaceBuildable( void )		{ return ( ( dispFlags & DISPSURF_FLAG_BUILDABLE ) != 0 ); }
-	bool IsDispSurfaceProp1( void )			{ return ( ( dispFlags & DISPSURF_FLAG_SURFPROP1 ) != 0 ); }
-	bool IsDispSurfaceProp2( void )			{ return ( ( dispFlags & DISPSURF_FLAG_SURFPROP2 ) != 0 ); }
+   public:
+    // these members are aligned!!
+    Vector startpos;  // start position
+    Vector endpos;    // final position
+    cplane_t plane;   // surface normal at impact
 
-public:
+    float fraction;  // time completed, 1.0 = didn't hit anything
 
-	// these members are aligned!!
-	Vector			startpos;				// start position
-	Vector			endpos;					// final position
-	cplane_t		plane;					// surface normal at impact
+    int contents;              // contents on other side of surface hit
+    unsigned short dispFlags;  // displacement flags for marking surfaces with data
 
-	float			fraction;				// time completed, 1.0 = didn't hit anything
+    bool allsolid;    // if true, plane is not valid
+    bool startsolid;  // if true, the initial point was in a solid area
 
-	int				contents;				// contents on other side of surface hit
-	unsigned short	dispFlags;				// displacement flags for marking surfaces with data
+    CBaseTrace() {}
 
-	bool			allsolid;				// if true, plane is not valid
-	bool			startsolid;				// if true, the initial point was in a solid area
-
-	CBaseTrace() {}
-
-#if !defined(LUA_SDK)
-        // HACKHACK: We only do this for Lua, but Lua classes which use traces
-        // will throw errors when we compile, so define this outside of the Lua
-        // SDK.
-       private:
-        // No copy constructors allowed
-        CBaseTrace(const CBaseTrace& vOther);
+#if !defined( LUA_SDK )
+    // HACKHACK: We only do this for Lua, but Lua classes which use traces
+    // will throw errors when we compile, so define this outside of the Lua
+    // SDK.
+   private:
+    // No copy constructors allowed
+    CBaseTrace( const CBaseTrace& vOther );
 #endif
 };
 
-#endif // TRACE_H
+#endif  // TRACE_H

@@ -11,14 +11,14 @@
 class CUtlBuffer;
 class CNetPacket;
 
-#define NETWORK_MESSAGE_GROUP_BITS 4  // Max 16 groups
-#define NETWORK_MESSAGE_INDEX_BITS 12 // Max 4096 messages per group
+#define NETWORK_MESSAGE_GROUP_BITS 4   // Max 16 groups
+#define NETWORK_MESSAGE_INDEX_BITS 12  // Max 4096 messages per group
 
 // Ensure the header bits are divisible by 8
 #define NETWORK_MESSAGE_HEADER_BITS ( NETWORK_MESSAGE_GROUP_BITS + NETWORK_MESSAGE_INDEX_BITS )
 
 // The size of messages is sent first, so we know when a 'packet' is complete
-#define NETWORK_MESSAGE_LENGTH_DATATYPE uint16 // Max 64KB
+#define NETWORK_MESSAGE_LENGTH_DATATYPE uint16  // Max 64KB
 #define NETWORK_MAX_MESSAGE_LENGTH ( 1 << ( sizeof( NETWORK_MESSAGE_LENGTH_DATATYPE ) * 8 ) )
 
 enum

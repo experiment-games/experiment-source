@@ -117,16 +117,16 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
 
     png_destroy_read_struct( &readPointer, &infoPointer, NULL );
 
-//#ifdef CLIENT_DLL
-//    ImageFormat targetImageFormat = IMAGE_FORMAT_RGBA8888;
-//    int memRequired = ImageLoader::GetMemRequired( width, height, bitDepth, targetImageFormat, false );
-//    unsigned char *convertedImageData = ( unsigned char * )malloc( memRequired );
-//    ImageLoader::ConvertImageFormat( imageData, IMAGE_FORMAT_UNKNOWN, convertedImageData, targetImageFormat, width, height, 0, 0 );
-//    free( imageData );
-//    return convertedImageData;
-//#else
+    // #ifdef CLIENT_DLL
+    //     ImageFormat targetImageFormat = IMAGE_FORMAT_RGBA8888;
+    //     int memRequired = ImageLoader::GetMemRequired( width, height, bitDepth, targetImageFormat, false );
+    //     unsigned char *convertedImageData = ( unsigned char * )malloc( memRequired );
+    //     ImageLoader::ConvertImageFormat( imageData, IMAGE_FORMAT_UNKNOWN, convertedImageData, targetImageFormat, width, height, 0, 0 );
+    //     free( imageData );
+    //     return convertedImageData;
+    // #else
     return imageData;
-//#endif
+    // #endif
 }
 
 bool PNG_ReadInfoFromBuffer( CUtlBuffer &buffer, const char *pFilePath, int &width, int &height, int &colorType, int &bitDepth )
@@ -320,7 +320,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
             height,
             imageFormat,
             nFlags );
-        //pTexture->IncrementReferenceCount();
+        // pTexture->IncrementReferenceCount();
     }
 
     if ( pVMTKeyValues == nullptr )
@@ -350,7 +350,7 @@ IMaterial *CPngTextureRegen::GetOrCreateProceduralMaterial(
     {
         // DevWarning( "CPngTextureRegen::GetOrCreateProceduralMaterial: %s not precached\n", cleanMaterialName );
         pMaterial->Refresh();
-        //pMaterial->IncrementReferenceCount();
+        // pMaterial->IncrementReferenceCount();
     }
 
     return pMaterial;
@@ -439,7 +439,7 @@ bool CPngMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
     }
 
     m_pTexture = m_pTextureVar->GetTextureValue();
-    //DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
+    // DevWarning( "CPngMaterialProxy::Init: %s\n", m_pTexture->GetName() );
 
     m_pTexture->SetTextureRegenerator( &m_TextureRegen );
     // m_pTexture->Download(); // This will load it into memory, which will have us run out of memory quickly
@@ -531,7 +531,7 @@ void CPngMaterialProxy::LoadTexture( ITexture *pTexture, IVTFTexture *pVTFTextur
         pVTFTexture->ImageData( 0, 0, 0 ),
         pVTFTexture->RowSizeInBytes( 0 ) );
 
-    int bytesForFormat = 4; // IMAGE_FORMAT_RGBA8888
+    int bytesForFormat = 4;  // IMAGE_FORMAT_RGBA8888
     int xMax = pSubRect->x + pSubRect->width;
     int yMax = pSubRect->y + pSubRect->height;
     int x, y;
